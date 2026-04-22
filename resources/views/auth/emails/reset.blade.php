@@ -30,7 +30,7 @@
             </a>
         </div>
 
-        <p>Tautan ini akan kedaluwarsa dalam **60 menit**. Jika Anda tidak merasa melakukan permintaan ini, abaikan saja email ini.</p>
+        <p>Tautan ini akan kedaluwarsa dalam 5 menit. Jika Anda tidak merasa melakukan permintaan ini, abaikan saja email ini.</p>
         
         <hr style="border: none; border-top: 1px solid #eee; margin-top: 40px;">
         <p style="font-size: 12px; color: #999; text-align: center;">

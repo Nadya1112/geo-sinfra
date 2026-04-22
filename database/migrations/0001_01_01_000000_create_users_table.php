@@ -12,11 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
+            // 1. Mengubah ID menjadi id_user agar sinkron dengan Model
+            $table->id('id_user'); 
+            
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+
+            // 2. MENAMBAHKAN KOLOM ROLE (Penyebab error tadi)
+            $table->string('role')->default('surveyor'); 
+            
             $table->rememberToken();
             $table->timestamps();
         });

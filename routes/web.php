@@ -1,56 +1,66 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes - GEO-SINFRA
+|--------------------------------------------------------------------------
+*/
+
 // ==========================================================
-// 1. HALAMAN PUBLIK (Bisa diakses siapa saja tanpa login)
+// 1. HALAMAN PUBLIK (Bisa diakses tanpa Login)
 // ==========================================================
 
-// Landing Page / Beranda Publik
 Route::get('/', function () {
-    return view('dashboard'); 
+    return view('dashboard'); // Landing Page Utama
 });
 
-// Jalur Login & Logout
+// Autentikasi: Login & Logout
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Jalur Registrasi Akun Baru
+// Registrasi
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 
-// Jalur Lupa Password
-// showForgotPassword untuk nampilin formnya (GET)
+// Fitur Lupa Password
 Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.request');
-// sendResetLink untuk proses kirim emailnya (POST) - INI PERBAIKANNYA
 Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
-
-// Jalur Reset Password (Proses Ganti Sandi Baru via Token Email)
 Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])->name('password.reset');
 Route::post('/reset-password', [AuthController::class, 'updatePassword'])->name('password.update');
 
 
 // ==========================================================
-// 2. JALUR RAHASIA (Hanya bisa diakses jika SUDAH LOGIN)
+// 2. JALUR PRIVAT (Wajib Login & Cek Role)
 // ==========================================================
 
 Route::middleware(['auth'])->group(function () {
     
-    // Dashboard Admin
-    Route::get('/admin/dashboard', function () { 
-        return view('admin.dashboard'); 
-    })->middleware('role:admin');
+    // --- AREA ADMIN ---
+    // Menggunakan AdminController agar bisa menampilkan Statistik di Dashboard
+    Route::middleware(['role:admin'])->prefix('admin')->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+        
+        // Nanti kamu bisa tambah rute manajemen user di sini:
+        // Route::get('/users', [AdminController::class, 'manageUsers'])->name('admin.users');
+    });
 
-    // Dashboard Surveyor (Input Data Lapangan)
-    Route::get('/surveyor/dashboard', function () { 
-        return view('surveyor.dashboard'); 
-    })->middleware('role:surveyor');
+    // --- AREA SURVEYOR ---
+    Route::middleware(['role:surveyor'])->prefix('surveyor')->group(function () {
+        Route::get('/dashboard', function () { 
+            return view('surveyor.dashboard'); 
+        })->name('surveyor.dashboard');
+    });
 
-    // Dashboard Kabid (Validasi AI & Grafik)
-    Route::get('/kabid/dashboard', function () { 
-        return view('kabid.dashboard'); 
-    })->middleware('role:kabid');
+    // --- AREA KABID ---
+    Route::middleware(['role:kabid'])->prefix('kabid')->group(function () {
+        Route::get('/dashboard', function () { 
+            return view('kabid.dashboard'); 
+        })->name('kabid.dashboard');
+    });
     
 });
