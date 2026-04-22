@@ -6,7 +6,6 @@
     <title>Masuk | GEO-SINFRA</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
@@ -30,55 +29,63 @@
                     </svg>
                 </div>
                 
-                <h1 class="text-5xl font-extrabold text-white tracking-tight mb-4">
-                    GEO-SINFRA
-                </h1>
-                
+                <h1 class="text-5xl font-extrabold text-white tracking-tight mb-4 text-center">GEO-SINFRA</h1>
                 <p class="text-xl font-light text-blue-100 max-w-sm mx-auto leading-relaxed">
                     Sistem Pemetaan Infrastruktur Permukiman Kota Banjarmasin
                 </p>
-                
                 <div class="mt-16 w-12 h-1.5 bg-blue-400 rounded-full mx-auto opacity-50"></div>
             </div>
         </div>
 
         <div class="w-full md:w-1/2 bg-white flex flex-col items-center justify-center p-8 md:p-20">
             <div class="w-full max-w-md">
-                <a href="{{ url('/') }}" class="inline-flex items-center text-sm font-semibold text-gray-400 hover:text-blue-600 transition mb-12 group">
-                    <svg class="w-4 h-4 mr-2 group-hover:-translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                    </svg>
-                    Kembali ke Beranda
-                </a>
-
-                <div class="mb-10">
+                
+                <div class="mb-10 text-center">
                     <h2 class="text-4xl font-extrabold text-[#1e1b4b] mb-2 tracking-tight">Masuk</h2>
                     <p class="text-gray-500 font-medium">Silakan masukkan akun kedinasan Anda</p>
                 </div>
 
-                <form action="#" method="POST" class="space-y-6">
+                @if($errors->any())
+                    <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 text-sm">
+                        {{ $errors->first() }}
+                    </div>
+                @endif
+
+                <form action="{{ route('login') }}" method="POST" class="space-y-6">
+                    @csrf
+                    
                     <div>
-                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-2 ml-1">Email / NIP</label>
-                        <input type="text" name="email" placeholder="nama@disperkim.go.id" required
+                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-2 ml-1">
+                            Email / NIP <span class="text-red-500">*</span>
+                        </label>
+                        <input type="email" name="email" placeholder="nama@disperkim.go.id" value="{{ old('email') }}" required
                             class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none transition-all text-sm font-medium">
                     </div>
 
                     <div>
-                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-2 ml-1">Kata Sandi</label>
-                        <div class="relative">
-                            <input type="password" name="password" placeholder="••••••••" required
-                                class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none transition-all text-sm font-medium">
-                        </div>
+                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-2 ml-1">
+                            Kata Sandi <span class="text-red-500">*</span>
+                        </label>
+                        <input type="password" name="password" placeholder="••••••••" required
+                            class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none transition-all text-sm font-medium">
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-2 ml-1">
+                            Verifikasi Keamanan: {{ $n1 }} + {{ $n2 }} <span class="text-red-500">*</span>
+                        </label>
+                        <input type="number" name="captcha" placeholder="Jawaban Anda" required
+                            class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none transition-all text-sm font-medium">
                     </div>
 
                     <button type="submit" 
-                        class="w-full py-4 bg-[#5c56e1] text-white text-sm font-bold rounded-xl shadow-lg shadow-blue-200 hover:bg-blue-800 transition-all active:scale-[0.98] uppercase tracking-widest">
+                        class="w-full py-4 bg-[#5c56e1] text-white text-sm font-bold rounded-xl shadow-lg shadow-blue-200 hover:bg-blue-800 transition-all active:scale-[0.98] uppercase tracking-widest text-center">
                         LOGIN SEKARANG
                     </button>
 
                     <div class="flex items-center justify-between font-semibold text-xs">
                         <label class="flex items-center gap-2 cursor-pointer text-gray-500 hover:text-gray-700 transition">
-                            <input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-0">
+                            <input type="checkbox" name="remember" class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-0">
                             <span>Ingat Saya</span>
                         </label>
                         <a href="#" class="text-blue-600 hover:underline">Lupa Password?</a>
@@ -88,7 +95,7 @@
                 <div class="mt-16 pt-8 border-t border-gray-100 text-center">
                     <p class="text-gray-500 text-sm">
                         Belum punya akun? 
-                        <a href="#" class="text-blue-600 font-bold hover:underline ml-1">Hubungi Admin IT</a>
+                        <a href="#" class="text-blue-600 font-bold hover:underline ml-1">Buat Akun Baru</a>
                     </p>
                 </div>
             </div>
