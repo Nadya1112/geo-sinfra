@@ -21,8 +21,11 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 
-// Jalur Lupa Password (Minta Link)
+// Jalur Lupa Password
+// showForgotPassword untuk nampilin formnya (GET)
 Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.request');
+// sendResetLink untuk proses kirim emailnya (POST) - INI PERBAIKANNYA
+Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
 
 // Jalur Reset Password (Proses Ganti Sandi Baru via Token Email)
 Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])->name('password.reset');

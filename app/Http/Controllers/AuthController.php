@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail; // WAJIB ADA
+use Illuminate\Support\Str;          // WAJIB ADA
 
 class AuthController extends Controller
 {
@@ -27,24 +29,21 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
+            'email' => 'required',
             'password' => 'required',
             'captcha' => 'required|numeric'
         ]);
 
-        // 1. Cek CAPTCHA
         if ($request->captcha != session('captcha_result')) {
             return back()->withErrors(['captcha' => 'Jawaban keamanan salah.'])->withInput();
         }
 
-        // 2. Cek Kredensial
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials, $request->has('remember'))) {
             $request->session()->regenerate();
             
             $user = Auth::user();
 
-            // 3. Pengalihan berdasarkan Role
             if ($user->role == 'admin') {
                 return redirect()->intended('/admin/dashboard');
             } elseif ($user->role == 'surveyor') {
@@ -57,7 +56,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'Email atau password tidak terdaftar di sistem kami.',
+            'email' => 'Email/NIP atau password tidak sesuai.',
         ])->withInput();
     }
 
@@ -66,11 +65,7 @@ class AuthController extends Controller
      */
     public function showRegister()
     {
-        $n1 = rand(1, 9);
-        $n2 = rand(1, 9);
-        session(['captcha_register' => $n1 + $n2]);
-
-        return view('auth.register', compact('n1', 'n2'));
+        return view('auth.register');
     }
 
     /**
@@ -80,14 +75,10 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|max:255|unique:users',
             'role' => 'required|in:surveyor,kabid',
             'password' => 'required|string|min:8|confirmed',
         ]);
-
-        if ($request->captcha != session('captcha_register')) {
-            return back()->withErrors(['captcha' => 'Jawaban keamanan salah.'])->withInput();
-        }
 
         User::create([
             'name' => $request->name,
@@ -105,6 +96,63 @@ class AuthController extends Controller
     public function showForgotPassword()
     {
         return view('auth.forgot-password');
+    }
+
+    /**
+     * PROSES KIRIM LINK (Sudah Diperbaiki Agar Mengirim Email Asli)
+     */
+    public function sendResetLink(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return back()->withErrors(['email' => 'Alamat email tidak terdaftar di sistem kami.']);
+        }
+
+        // Membuat token rahasia sementara
+        $token = Str::random(60);
+
+        // PERINTAH KIRIM EMAIL
+        Mail::send('auth.emails.reset', ['token' => $token, 'name' => $user->name], function($message) use($request){
+            $message->to($request->email);
+            $message->subject('Pemulihan Kata Sandi - GEO-SINFRA');
+        });
+
+        return back()->with('status', 'Link reset password telah dikirim ke email Anda. Silakan cek kotak masuk atau folder spam.');
+    }
+
+    /**
+     * Menampilkan Halaman Form Reset Password Baru
+     */
+    public function showResetPassword($token)
+    {
+        return view('auth.reset-password', ['token' => $token]);
+    }
+
+    /**
+     * Proses Update Password Baru ke Database
+     */
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return back()->withErrors(['email' => 'Email tidak terdaftar.']);
+        }
+
+        $user->update([
+            'password' => Hash::make($request->password)
+        ]);
+
+        return redirect('/login')->with('success', 'Sandi berhasil diperbarui. Silakan login.');
     }
 
     /**
