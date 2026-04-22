@@ -42,7 +42,6 @@
                 
                 <div class="mb-10">
                     <h2 class="text-4xl font-extrabold text-[#1e1b4b] mb-2 tracking-tight">Lupa Password?</h2>
-                    <p class="text-gray-500 font-medium px-4">Jangan khawatir, masukkan email kedinasan Anda untuk menerima instruksi pengaturan ulang.</p>
                 </div>
 
                 @if (session('status'))

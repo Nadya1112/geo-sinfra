@@ -42,7 +42,7 @@
                 
                 <div class="mb-10 text-center">
                     <h2 class="text-4xl font-extrabold text-[#1e1b4b] mb-2 tracking-tight">Masuk</h2>
-                    <p class="text-gray-500 font-medium">Silakan masukkan akun kedinasan Anda</p>
+                    <p class="text-gray-500 font-medium">Silakan masukkan akun Anda</p>
                 </div>
 
                 @if($errors->any())
@@ -88,14 +88,14 @@
                             <input type="checkbox" name="remember" class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-0">
                             <span>Ingat Saya</span>
                         </label>
-                        <a href="#" class="text-blue-600 hover:underline">Lupa Password?</a>
+                        <a href="{{ route('password.request') }}" class="text-blue-600 hover:underline">Lupa Password?</a>
                     </div>
                 </form>
 
                 <div class="mt-16 pt-8 border-t border-gray-100 text-center">
                     <p class="text-gray-500 text-sm">
                         Belum punya akun? 
-                        <a href="#" class="text-blue-600 font-bold hover:underline ml-1">Buat Akun Baru</a>
+                        <a href="{{ route('register') }}" class="text-blue-600 font-bold hover:underline ml-1">Buat Akun Baru</a>
                     </p>
                 </div>
             </div>

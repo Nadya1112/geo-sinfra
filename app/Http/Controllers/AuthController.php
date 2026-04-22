@@ -83,7 +83,6 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'role' => 'required|in:surveyor,kabid',
             'password' => 'required|string|min:8|confirmed',
-            'captcha' => 'required|numeric'
         ]);
 
         if ($request->captcha != session('captcha_register')) {
