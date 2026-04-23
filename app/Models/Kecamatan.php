@@ -4,23 +4,37 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Kecamatan extends Model
 {
-    // 1. Beritahu Laravel nama tabel aslinya
+    use SoftDeletes;
+
+    // 1. Nama tabel di database
     protected $table = 'kecamatan';
 
-    // 2. Beritahu Laravel nama kunci utamanya (karena bukan 'id')
+    // 2. Kunci utama tabel
     protected $primaryKey = 'id_kecamatan';
 
-    // 3. Matikan pencatatan waktu otomatis (created_at/updated_at) 
-    // karena data wilayah biasanya bersifat tetap
-    public $timestamps = false;
+    // 3. Aktifkan timestamps karena kita sudah menambahkannya di SQL tadi
+    public $timestamps = true;
 
-    // 4. Daftar kolom yang boleh diisi (untuk keamanan data)
+    // 4. Kolom yang boleh diisi secara massal
     protected $fillable = [
         'nama_kecamatan',
-        'warna'
+        'geometri',
+        'warna',
+    ];
+
+    /**
+     * 5. Casting Tipe Data
+     * Sangat penting agar kolom JSON 'geometri' otomatis menjadi array PHP
+     */
+    protected $casts = [
+        'geometri' => 'array',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
     /**
@@ -28,7 +42,7 @@ class Kecamatan extends Model
      */
     public function kelurahans(): HasMany
     {
-        // 'id_kecamatan' di sini adalah "kabel" penghubung di tabel kelurahan
-        return $this->hasMany(Kelurahan::class, 'id_kecamatan');
+        // Relasi ke model Kelurahan menggunakan id_kecamatan sebagai foreign key
+        return $this->hasMany(Kelurahan::class, 'id_kecamatan', 'id_kecamatan');
     }
 }

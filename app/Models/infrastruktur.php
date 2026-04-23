@@ -4,21 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Infrastruktur extends Model
 {
-    // 1. Nama tabel sesuai database kamu
+    use SoftDeletes;
+
+    // 1. Nama tabel
     protected $table = 'infrastruktur';
 
-    // 2. Kunci utama sesuai gambar kamu
+    // 2. Primary Key
     protected $primaryKey = 'id_infrastruktur';
 
-    // 3. Aktifkan timestamps karena ada created_at & updated_at di gambar
+    // 3. Timestamps aktif
     public $timestamps = true;
 
-    // 4. Daftar kolom yang boleh diisi (Mass Assignment)
-    // Saya urutkan persis sesuai urutan di gambar kamu
+    // 4. Kolom yang bisa diisi
     protected $fillable = [
         'id_user',
         'id_wilayah',
@@ -27,30 +28,34 @@ class Infrastruktur extends Model
         'jenis',
         'alamat',
         'latitude',
-        'longitude'
+        'longitude',
     ];
 
     /**
-     * Hubungan: Infrastruktur ini diinput oleh seorang User (Surveyor/Admin)
+     * 5. Casting Tipe Data
      */
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'id_user');
-    }
+    protected $casts = [
+        'latitude' => 'double',
+        'longitude' => 'double',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
+    ];
 
     /**
-     * Hubungan: Infrastruktur ini berada di suatu Wilayah (Kelurahan)
+     * Hubungan: Infrastruktur berada di satu Wilayah (Kelurahan)
      */
     public function wilayah(): BelongsTo
     {
-        return $this->belongsTo(Wilayah::class, 'id_wilayah');
+        // Menyambung ke id_wilayah di tabel wilayah
+        return $this->belongsTo(Wilayah::class, 'id_wilayah', 'id_wilayah');
     }
 
     /**
-     * Hubungan: Satu data infrastruktur memiliki satu hasil analisis AI (Decision Tree)
+     * Hubungan: Infrastruktur diinput/dikelola oleh satu User (Admin/Surveyor)
      */
-    public function analisis(): HasOne
+    public function user(): BelongsTo
     {
-        return $this->hasOne(AnalisisAi::class, 'id_infrastruktur');
+        return $this->belongsTo(User::class, 'id_user', 'id_user');
     }
 }
