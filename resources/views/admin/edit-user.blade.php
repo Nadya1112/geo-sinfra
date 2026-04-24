@@ -11,22 +11,24 @@
 </head>
 <body class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 text-left">
 
-    <aside class="w-64 bg-[#1e1b4b] text-white flex flex-col hidden md:flex shadow-2xl z-20 text-left">
-        <div class="p-6 flex-1">
-            <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 mb-10 hover:opacity-80 transition">
-                <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/20">
+    <aside class="w-64 bg-[#1e1b4b] text-white flex flex-col hidden md:flex shadow-2xl z-20">
+        <div class="p-6 flex-1 text-left">
+            <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 mb-10 hover:opacity-80 transition-opacity group">
+                <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
                     <i class="fas fa-city text-xs text-white"></i>
                 </div>
-                <span class="font-extrabold text-xl tracking-tighter uppercase">GEO-SINFRA</span>
+                <span class="font-extrabold text-xl tracking-tighter uppercase text-white">GEO-SINFRA</span>
             </a>
             <nav class="space-y-1">
-                <a href="{{ route('admin.users') }}" class="flex items-center gap-3 px-4 py-3 bg-blue-600 rounded-xl text-sm font-bold transition shadow-lg shadow-blue-900/20"><i class="fas fa-users-cog"></i> Manajemen Pengguna</a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition"><i class="fas fa-database"></i> Manajemen Infrastruktur</a>
-                <a href="{{ route('admin.peta') }}" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition"><i class="fas fa-map-marked-alt"></i> Peta Spasial</a>
-                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition"><i class="fas fa-chart-bar"></i> Statistik dan Laporan</a>
+                <a href="{{ route('admin.users') }}" class="flex items-center gap-3 px-4 py-3 bg-blue-600 rounded-xl text-sm font-bold transition shadow-lg shadow-blue-900/20 text-left">
+                    <i class="fas fa-users-cog"></i> Manajemen Pengguna
+                </a>
+                <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition text-left"><i class="fas fa-database"></i> Manajemen Infrastruktur</a>
+                <a href="{{ route('admin.peta') }}" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition text-left"><i class="fas fa-map-marked-alt"></i> Peta Spasial</a>
+                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition text-left"><i class="fas fa-chart-bar"></i> Statistik dan Laporan</a>
             </nav>
         </div>
-        <div class="p-6 border-t border-white/5 text-left">
+        <div class="p-6 border-t border-white/5">
             <form action="{{ route('logout') }}" method="POST">@csrf
                 <button class="flex items-center gap-3 text-red-400 hover:text-red-300 text-sm font-bold transition"><i class="fas fa-sign-out-alt"></i> Keluar Sistem</button>
             </form>
@@ -45,7 +47,7 @@
                     <p class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-gray-100"></div>
-                <div class="flex items-center gap-3 text-left">
+                <div class="flex items-center gap-3">
                     <div class="text-right">
                         <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase">Admin SINFRA</p>
                         <p class="text-[9px] font-bold text-green-500 uppercase mt-1">Online</p>
@@ -55,38 +57,57 @@
             </div>
         </header>
 
-        <div class="flex-1 p-8 overflow-y-auto text-left">
-            <div class="max-w-2xl bg-white rounded-[2.5rem] p-10 border border-gray-100 shadow-sm text-left">
-                <div class="mb-8 text-left">
-                    <h4 class="font-extrabold text-lg text-[#1e1b4b]">Informasi Akun</h4>
-                    <p class="text-xs text-gray-400 font-medium">Perbarui detail profil dan hak akses pengguna ini.</p>
-                </div>
-
-                <form action="{{ route('admin.users.update', $user->id) }}" method="POST" class="space-y-6 text-left">
+        <div class="flex-1 p-8 overflow-y-auto">
+            <div class="max-w-4xl bg-white rounded-[2.5rem] p-10 border border-gray-100 shadow-sm mx-auto text-left">
+                <form action="{{ route('admin.users.update', $user->id) }}" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     @csrf
                     @method('PUT')
                     
-                    <div class="text-left">
-                        <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Nama Lengkap</label>
-                        <input type="text" name="name" value="{{ $user->name }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none">
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Nama Pengguna <span class="text-red-500">*</span></label>
+                            <input type="text" name="name" value="{{ $user->name }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" required>
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Email <span class="text-red-500">*</span></label>
+                            <input type="email" name="email" value="{{ $user->email }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" required>
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Ganti Password (Kosongkan jika tetap)</label>
+                            <div class="relative">
+                                <input type="password" name="password" placeholder="••••••••" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all">
+                                <i class="fas fa-lock absolute right-5 top-1/2 -translate-y-1/2 text-gray-300"></i>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="text-left">
-                        <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Alamat Email</label>
-                        <input type="email" name="email" value="{{ $user->email }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none">
-                    </div>
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Role Akses <span class="text-red-500">*</span></label>
+                            <select id="role-select" name="role" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" onchange="toggleWilayah()">
+                                <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>ADMIN</option>
+                                <option value="surveyor" {{ $user->role == 'surveyor' ? 'selected' : '' }}>SURVEYOR</option>
+                            </select>
+                        </div>
 
-                    <div class="text-left">
-                        <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Peran / Role</label>
-                        <select name="role" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none appearance-none">
-                            <option value="surveyor" {{ $user->role == 'surveyor' ? 'selected' : '' }}>SURVEYOR</option>
-                            <option value="kabid" {{ $user->role == 'kabid' ? 'selected' : '' }}>KABID</option>
-                        </select>
-                    </div>
+                        <div id="wilayah-container" class="{{ $user->role == 'admin' ? 'hidden' : '' }}">
+                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Wilayah Tugas <span class="text-red-500">*</span></label>
+                            <select name="id_kecamatan" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all">
+                                <option value="">Pilih Wilayah...</option>
+                                @foreach($semuaWilayah as $wilayah)
+                                    <option value="{{ $wilayah->id_kecamatan }}" {{ $user->id_kecamatan == $wilayah->id_kecamatan ? 'selected' : '' }}>
+                                        Kec. {{ $wilayah->nama_kecamatan }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
 
-                    <div class="pt-6 flex gap-3 text-left">
-                        <button type="submit" class="bg-blue-600 text-white text-xs px-8 py-3.5 rounded-xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition">Simpan Perubahan</button>
-                        <a href="{{ route('admin.users') }}" class="bg-gray-100 text-gray-500 text-xs px-8 py-3.5 rounded-xl font-bold hover:bg-gray-200 transition">Batal</a>
+                        <div class="pt-10 flex gap-3">
+                            <button type="submit" class="flex-1 bg-blue-600 text-white text-xs px-6 py-4 rounded-2xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition">Simpan Perubahan</button>
+                            <a href="{{ route('admin.users') }}" class="flex-1 bg-gray-100 text-gray-500 text-xs px-6 py-4 rounded-2xl font-bold hover:bg-gray-200 transition text-center flex items-center justify-center">Batal</a>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -94,11 +115,24 @@
     </main>
 
     <script>
+        // Fungsi Update Jam
         function updateClock() {
             const now = new Date();
             document.getElementById('mini-clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WITA`;
         }
         setInterval(updateClock, 1000); updateClock();
+
+        // Fungsi Sembunyikan/Tampilkan Wilayah Tugas
+        function toggleWilayah() {
+            const roleSelect = document.getElementById('role-select');
+            const wilayahContainer = document.getElementById('wilayah-container');
+            
+            if (roleSelect.value === 'admin') {
+                wilayahContainer.classList.add('hidden');
+            } else {
+                wilayahContainer.classList.remove('hidden');
+            }
+        }
     </script>
 </body>
 </html>

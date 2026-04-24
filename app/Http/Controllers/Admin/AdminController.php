@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Infrastruktur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -15,53 +16,126 @@ class AdminController extends Controller
      */
     public function index()
     {
-        // 1. Statistik User berdasarkan Role
         $jumlahSurveyor = User::where('role', 'surveyor')->count();
         $jumlahKabid = User::where('role', 'kabid')->count();
-        
-        // 2. Statistik Data Geografis & Fisik
-        // Menggunakan tabel kecamatan karena tabel wilayah sudah dihapus
         $jumlahWilayah = DB::table('kecamatan')->count();
         $jumlahInfrastruktur = Infrastruktur::count();
-        
-        // 3. Statistik Analisis AI (Jalur Aman menggunakan DB Table)
-        // Menghitung data yang belum dihapus (soft delete)
-        $jumlahAnalisis = DB::table('analisis_ai')
-            ->whereNull('deleted_at')
-            ->count();
+        $jumlahAnalisis = DB::table('analisis_ai')->whereNull('deleted_at')->count();
 
         return view('admin.dashboard', compact(
-            'jumlahSurveyor', 
-            'jumlahKabid', 
-            'jumlahWilayah', 
-            'jumlahInfrastruktur',
-            'jumlahAnalisis'
+            'jumlahSurveyor', 'jumlahKabid', 'jumlahWilayah', 'jumlahInfrastruktur', 'jumlahAnalisis'
         ));
     }
 
     /**
-     * Menampilkan Halaman Peta Spasial (GIS)
-     * Mengambil data poligon kecamatan dan titik-titik infrastruktur
+     * Menampilkan Daftar Manajemen Pengguna + Fitur Cari
+     */
+    public function users(Request $request)
+    {
+        $search = $request->query('search');
+        $query = User::query();
+
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                  ->orWhere('email', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $users = $query->get();
+
+        return view('admin.users', compact('users'));
+    }
+
+    /**
+     * Fitur Baru: Menampilkan Form Tambah User
+     */
+    public function createUser()
+    {
+        // Ambil data wilayah untuk dropdown tugas surveyor
+        $semuaWilayah = DB::table('kecamatan')->whereNull('deleted_at')->get();
+        return view('admin.create-user', compact('semuaWilayah'));
+    }
+
+    /**
+     * Fitur Baru: Menyimpan User Baru ke Database
+     */
+    public function storeUser(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8',
+            'role' => 'required|in:admin,surveyor',
+            'id_kecamatan' => 'nullable|required_if:role,surveyor|exists:kecamatan,id_kecamatan',
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+            'id_kecamatan' => ($request->role === 'admin') ? null : $request->id_kecamatan,
+        ]);
+
+        return redirect()->route('admin.users')->with('success', 'User baru berhasil ditambahkan!');
+    }
+
+    /**
+     * Menampilkan Form Edit User
+     */
+    public function editUser($id)
+    {
+        $user = User::findOrFail($id);
+        
+        // Akun Kabid tidak boleh diedit
+        if ($user->role === 'kabid') {
+            return redirect()->route('admin.users')->with('error', 'Akun Kabid terkunci.');
+        }
+        
+        $semuaWilayah = DB::table('kecamatan')->whereNull('deleted_at')->get();
+        return view('admin.edit-user', compact('user', 'semuaWilayah'));
+    }
+
+    /**
+     * Menyimpan Perubahan User
+     */
+    public function updateUser(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        if ($user->role === 'kabid') return redirect()->route('admin.users');
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'role' => 'required|in:admin,surveyor',
+            'id_kecamatan' => 'nullable|required_if:role,surveyor|exists:kecamatan,id_kecamatan',
+            'password' => 'nullable|string|min:8',
+        ]);
+
+        $updateData = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+            'id_kecamatan' => ($request->role === 'admin') ? null : $request->id_kecamatan,
+        ];
+
+        if ($request->filled('password')) {
+            $updateData['password'] = Hash::make($request->password);
+        }
+
+        $user->update($updateData);
+        return redirect()->route('admin.users')->with('success', 'Data user berhasil diperbarui!');
+    }
+
+    /**
+     * Menampilkan Halaman Peta Spasial
      */
     public function peta()
     {
-        // 1. Ambil data poligon dari tabel kecamatan untuk background peta
-        $semuaWilayah = DB::table('kecamatan')
-            ->whereNull('deleted_at')
-            ->get();
-
-        // 2. Ambil data titik koordinat dari tabel infrastruktur untuk marker
-        $dataInfrastruktur = DB::table('infrastruktur')
-            ->whereNull('deleted_at')
-            ->get();
+        $semuaWilayah = DB::table('kecamatan')->whereNull('deleted_at')->get();
+        $dataInfrastruktur = DB::table('infrastruktur')->whereNull('deleted_at')->get();
 
         return view('admin.peta', compact('semuaWilayah', 'dataInfrastruktur'));
     }
-    public function users()
-{
-    // Mengambil data pengguna dengan role selain admin
-    $users = User::whereIn('role', ['surveyor', 'kabid'])->get();
-    
-    return view('admin.users', compact('users'));
-}
 }

@@ -45,8 +45,10 @@ Route::middleware(['auth'])->group(function () {
     // --- AREA ADMIN SINFRA ---
     Route::middleware(['role:admin'])->prefix('admin')->group(function () {
         
-        // 1. MANAJEMEN PENGGUNA (Fitur Lengkap: List, Edit, Update)
+        // 1. MANAJEMEN PENGGUNA (Fitur Lengkap: List, Create, Store, Edit, Update)
         Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
+        Route::get('/users/create', [AdminController::class, 'createUser'])->name('admin.users.create');
+        Route::post('/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
         Route::get('/users/{id}/edit', [AdminController::class, 'editUser'])->name('admin.users.edit');
         Route::put('/users/{id}', [AdminController::class, 'updateUser'])->name('admin.users.update');
 
