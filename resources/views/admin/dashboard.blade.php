@@ -115,7 +115,7 @@
                     <div class="flex justify-between items-center mb-8">
                         <div>
                             <h4 class="font-extrabold text-lg text-[#1e1b4b]">Prediksi Prioritas Perbaikan</h4>
-                            <p class="text-xs text-gray-400 font-medium">Berdasarkan klasifikasi Hybrid Model (CNN-Random Forest)</p>
+                            <p class="text-xs text-gray-400 font-medium">Berdasarkan klasifikasi Hybrid Model (CNN)</p>
                         </div>
                         <button class="text-[10px] font-bold bg-gray-50 px-4 py-2 rounded-xl border border-gray-100 hover:bg-gray-100 transition">Lihat Semua</button>
                     </div>
@@ -145,6 +145,19 @@
                                 </div>
                             </div>
                             <i class="fas fa-chevron-right text-yellow-300 text-xs"></i>
+                        </div>
+
+                        <div class="flex items-center justify-between p-4 bg-emerald-50/50 rounded-2xl border border-emerald-100/50">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-emerald-500 text-white rounded-xl flex items-center justify-center shadow-lg shadow-emerald-200">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-emerald-900 leading-none">Kondisi Baik (Normal)</p>
+                                    <p class="text-[10px] text-emerald-600 mt-1">215 Titik dalam kondisi layak dan stabil</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right text-emerald-300 text-xs"></i>
                         </div>
                     </div>
                 </div>
@@ -183,7 +196,6 @@
     </main>
 
     <script>
-        // SCRIPT JAM MINIMALIS
         function updateClock() {
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');

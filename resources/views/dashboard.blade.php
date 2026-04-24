@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth"> 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GEO-SINFRA | Kota Banjarmasin</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
     <style>
@@ -16,7 +15,35 @@
         .bg-government-gradient {
             background: linear-gradient(135deg, #1e3a8a 0%, #1e1b4b 100%);
         }
-        #map { height: 500px; border-radius: 1rem; z-index: 10; }
+        
+        #map { height: 550px; border-radius: 1rem; z-index: 10; }
+
+        .leaflet-control-zoom a {
+            width: 26px !important;
+            height: 26px !important;
+            line-height: 26px !important;
+            font-size: 14px !important;
+        }
+        .leaflet-control-zoom {
+            border: none !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+            margin-top: 20px !important;
+            margin-left: 20px !important;
+        }
+
+        /* Style Item Wilayah Baru */
+        .kecamatan-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+        .kecamatan-item:hover { background: #f8fafc; }
+        .color-box { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased">
@@ -42,9 +69,8 @@
                 
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#" class="text-gray-600 hover:text-blue-700 font-semibold transition text-sm">Data Statistik</a>
-                    <a href="#" class="text-gray-600 hover:text-blue-700 font-semibold transition text-sm">Peta Sebaran</a>
-                    <a href="{{ url('/login') }}" class="inline-flex items-center px-8 py-2.5 bg-[#5c56e1] text-white text-sm font-bold rounded-xl hover:bg-blue-800 shadow-lg shadow-blue-200 transition-all active:scale-95 uppercase tracking-wider">LOGIN
-                   </a>
+                    <a href="#peta" class="text-gray-600 hover:text-blue-700 font-semibold transition text-sm">Peta Sebaran</a>
+                    <a href="{{ url('/login') }}" class="inline-flex items-center px-8 py-2.5 bg-[#5c56e1] text-white text-sm font-bold rounded-xl hover:bg-blue-800 shadow-lg shadow-blue-200 transition-all active:scale-95 uppercase tracking-wider">LOGIN</a>
                 </div>
             </div>
         </div>
@@ -75,7 +101,39 @@
         <h3 class="text-3xl font-extrabold text-[#1e1b4b] mb-2">Peta Sebaran Infrastruktur</h3>
         <p class="text-gray-500 mb-10">Visualisasi data spasial permukiman Kota Banjarmasin secara real-time.</p>
         
-        <div id="map" class="shadow-2xl border-[10px] border-white ring-1 ring-gray-200"></div>
+        <div class="relative">
+            <div id="map" class="shadow-2xl border-[10px] border-white ring-1 ring-gray-200"></div>
+
+            <div class="absolute top-8 right-8 z-[1000] w-[220px]">
+                <button onclick="toggleLegend()" class="w-full bg-white/95 backdrop-blur-sm px-4 py-2.5 rounded-xl shadow-lg border border-gray-100 flex justify-between items-center hover:bg-white transition focus:outline-none">
+                    <span class="text-[10px] font-black text-[#1e1b4b] uppercase tracking-wider">Daftar Wilayah</span>
+                    <i id="legend-icon" class="fas fa-chevron-down text-gray-400 text-xs transition-transform duration-300"></i>
+                </button>
+
+                <div id="legend-content" class="hidden mt-2 bg-white/95 backdrop-blur-sm p-3 rounded-xl shadow-xl border border-gray-100 text-left">
+                    <div class="mb-3 px-2 border-b border-gray-100 pb-2">
+                        <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Kecamatan</span>
+                    </div>
+                    
+                    <div class="max-h-[30vh] overflow-y-auto pr-1 custom-scrollbar">
+                        @foreach($semuaWilayah as $wilayah)
+                        <div class="kecamatan-item">
+                            <input type="checkbox" checked 
+                                onchange="toggleLayer('{{ $wilayah->id_kecamatan }}', this.checked)"
+                                class="w-3.5 h-3.5 text-blue-600 border-gray-300 rounded cursor-pointer">
+                            
+                            <span class="text-[10px] font-bold text-[#1e1b4b] flex-1 cursor-pointer hover:text-blue-600 transition" 
+                                onclick="zoomKeKecamatan('{{ $wilayah->id_kecamatan }}')">
+                                {{ $wilayah->nama_kecamatan }}
+                            </span>
+                            
+                            <div class="color-box" style="background-color: {{ $wilayah->warna }}"></div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer class="bg-white border-t border-gray-200 py-10 text-center">
@@ -84,9 +142,76 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        var map = L.map('map').setView([-3.316694, 114.590111], 13);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-        L.marker([-3.316694, 114.590111]).addTo(map).bindPopup("<b>Banjarmasin Tengah</b>");
+        function toggleLegend() {
+            const content = document.getElementById('legend-content');
+            const icon = document.getElementById('legend-icon');
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+
+        var map = L.map('map', { zoomControl: false, scrollWheelZoom: true }).setView([-3.316694, 114.590111], 12);
+        L.control.zoom({ position: 'topleft' }).addTo(map);
+        
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+        }).addTo(map);
+
+        var geoLayers = {};
+
+        @foreach($semuaWilayah as $wilayah)
+            @if($wilayah->geometri)
+                try {
+                    var poly = L.geoJSON({!! $wilayah->geometri !!}, {
+                        style: {
+                            fillColor: "{{ $wilayah->warna ?? '#3b82f6' }}",
+                            weight: 1.5, opacity: 1, color: 'white', fillOpacity: 0.2
+                        }
+                    }).addTo(map);
+
+                    geoLayers['{{ $wilayah->id_kecamatan }}'] = poly;
+
+                    poly.bindPopup("<div class='text-center p-1 font-bold text-[10px] uppercase'>Kec. {{ $wilayah->nama_kecamatan }}</div>");
+                    
+                    poly.on('mouseover', function() { this.setStyle({ fillOpacity: 0.4 }); });
+                    poly.on('mouseout', function() { this.setStyle({ fillOpacity: 0.2 }); });
+                } catch (e) { console.error("Error Geometri"); }
+            @endif
+        @endforeach
+
+        @foreach($dataInfrastruktur as $infra)
+            @if($infra->latitude && $infra->longitude)
+                L.circleMarker([{{ $infra->latitude }}, {{ $infra->longitude }}], {
+                    radius: 6, fillColor: "#3b82f6", color: "#ffffff", weight: 2, opacity: 1, fillOpacity: 0.9
+                }).addTo(map).bindPopup(`
+                    <div class="p-2 w-40 text-center">
+                        <img src="{{ asset('storage/' . $infra->foto_terbaru) }}" class="rounded-lg mb-2 w-full h-20 object-cover border" onerror="this.src='https://via.placeholder.com/150?text=No+Image'">
+                        <h4 class="text-[10px] font-black text-slate-800 uppercase leading-tight">{{ $infra->nama_objek }}</h4>
+                        <p class="text-[9px] text-blue-600 font-bold uppercase mt-1">{{ $infra->jenis }}</p>
+                    </div>
+                `);
+            @endif
+        @endforeach
+
+        // Fungsi Baru: Sembunyikan/Munculkan Layer
+        function toggleLayer(id, isChecked) {
+            if (geoLayers[id]) {
+                if (isChecked) {
+                    map.addLayer(geoLayers[id]);
+                } else {
+                    map.removeLayer(geoLayers[id]);
+                }
+            }
+        }
+
+        function zoomKeKecamatan(id) {
+            if (geoLayers[id]) {
+                var layer = geoLayers[id];
+                map.fitBounds(layer.getBounds(), { padding: [30, 30], maxZoom: 14 });
+                layer.openPopup();
+            }
+        }
+
+        setTimeout(function() { map.invalidateSize(); }, 500);
     </script>
 </body>
 </html>
