@@ -3,7 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\DB; // Tambahkan ini agar bisa memanggil database
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,11 +16,9 @@ use Illuminate\Support\Facades\DB; // Tambahkan ini agar bisa memanggil database
 // ==========================================================
 
 Route::get('/', function () {
-    // PERBAIKAN: Ambil data agar peta di Landing Page tidak error
     $semuaWilayah = DB::table('kecamatan')->whereNull('deleted_at')->get();
     $dataInfrastruktur = DB::table('infrastruktur')->whereNull('deleted_at')->get();
 
-    // Kirim data ke view dashboard
     return view('dashboard', compact('semuaWilayah', 'dataInfrastruktur')); 
 });
 
@@ -44,13 +42,22 @@ Route::post('/reset-password', [AuthController::class, 'updatePassword'])->name(
 
 Route::middleware(['auth'])->group(function () {
     
-    // --- AREA ADMIN ---
+    // --- AREA ADMIN SINFRA ---
     Route::middleware(['role:admin'])->prefix('admin')->group(function () {
-        // Dashboard Statistik
-        Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
         
-        // PETA SPASIAL
+        // 1. MANAJEMEN PENGGUNA (Fitur Lengkap: List, Edit, Update)
+        Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
+        Route::get('/users/{id}/edit', [AdminController::class, 'editUser'])->name('admin.users.edit');
+        Route::put('/users/{id}', [AdminController::class, 'updateUser'])->name('admin.users.update');
+
+        // 2. MANAJEMEN INFRASTRUKTUR (Persiapan)
+        // Route::get('/infrastruktur', [AdminController::class, 'infrastruktur'])->name('admin.infrastruktur');
+        
+        // 3. PETA SPASIAL
         Route::get('/peta', [AdminController::class, 'peta'])->name('admin.peta');
+
+        // 4. STATISTIK DAN LAPORAN (Dashboard Utama)
+        Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     });
 
     // --- AREA SURVEYOR ---

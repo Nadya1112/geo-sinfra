@@ -57,4 +57,11 @@ class AdminController extends Controller
 
         return view('admin.peta', compact('semuaWilayah', 'dataInfrastruktur'));
     }
+    public function users()
+{
+    // Mengambil data pengguna dengan role selain admin
+    $users = User::whereIn('role', ['surveyor', 'kabid'])->get();
+    
+    return view('admin.users', compact('users'));
+}
 }
