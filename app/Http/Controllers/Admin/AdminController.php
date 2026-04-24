@@ -48,17 +48,16 @@ class AdminController extends Controller
     }
 
     /**
-     * Fitur Baru: Menampilkan Form Tambah User
+     * Menampilkan Form Tambah User
      */
     public function createUser()
     {
-        // Ambil data wilayah untuk dropdown tugas surveyor
         $semuaWilayah = DB::table('kecamatan')->whereNull('deleted_at')->get();
         return view('admin.create-user', compact('semuaWilayah'));
     }
 
     /**
-     * Fitur Baru: Menyimpan User Baru ke Database
+     * Menyimpan User Baru ke Database
      */
     public function storeUser(Request $request)
     {
@@ -67,7 +66,8 @@ class AdminController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
             'role' => 'required|in:admin,surveyor',
-            'id_kecamatan' => 'nullable|required_if:role,surveyor|exists:kecamatan,id_kecamatan',
+            // PERBAIKAN: id_kecamatan sekarang opsional (nullable) untuk semua role
+            'id_kecamatan' => 'nullable|exists:kecamatan,id_kecamatan',
         ]);
 
         User::create([
@@ -75,6 +75,7 @@ class AdminController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
+            // Logika: Tetap paksa null jika role admin, selain itu ikuti input (bisa null)
             'id_kecamatan' => ($request->role === 'admin') ? null : $request->id_kecamatan,
         ]);
 
@@ -88,7 +89,6 @@ class AdminController extends Controller
     {
         $user = User::findOrFail($id);
         
-        // Akun Kabid tidak boleh diedit
         if ($user->role === 'kabid') {
             return redirect()->route('admin.users')->with('error', 'Akun Kabid terkunci.');
         }
@@ -109,7 +109,8 @@ class AdminController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'role' => 'required|in:admin,surveyor',
-            'id_kecamatan' => 'nullable|required_if:role,surveyor|exists:kecamatan,id_kecamatan',
+            // PERBAIKAN: id_kecamatan sekarang opsional (nullable) untuk semua role
+            'id_kecamatan' => 'nullable|exists:kecamatan,id_kecamatan',
             'password' => 'nullable|string|min:8',
         ]);
 
@@ -117,6 +118,7 @@ class AdminController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'role' => $request->role,
+            // Logika: Tetap paksa null jika role admin, selain itu ikuti input (bisa null)
             'id_kecamatan' => ($request->role === 'admin') ? null : $request->id_kecamatan,
         ];
 

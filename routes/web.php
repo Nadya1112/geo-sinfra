@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 */
 
 // ==========================================================
-// 1. HALAMAN PUBLIK (Tanpa Login)
+// 1. HALAMAN PUBLIK (Akses Tanpa Login)
 // ==========================================================
 
 Route::get('/', function () {
@@ -22,12 +22,12 @@ Route::get('/', function () {
     return view('dashboard', compact('semuaWilayah', 'dataInfrastruktur')); 
 });
 
-// Autentikasi
+/** * Grup Autentikasi 
+ */
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Registrasi & Lupa Password
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.request');
@@ -37,7 +37,7 @@ Route::post('/reset-password', [AuthController::class, 'updatePassword'])->name(
 
 
 // ==========================================================
-// 2. JALUR PRIVAT (Wajib Login)
+// 2. JALUR PRIVAT (Wajib Login / Auth)
 // ==========================================================
 
 Route::middleware(['auth'])->group(function () {
@@ -45,21 +45,29 @@ Route::middleware(['auth'])->group(function () {
     // --- AREA ADMIN SINFRA ---
     Route::middleware(['role:admin'])->prefix('admin')->group(function () {
         
-        // 1. MANAJEMEN PENGGUNA (Fitur Lengkap: List, Create, Store, Edit, Update)
+        /** * 1. DASHBOARD & STATISTIK (Sudah Dipisah)
+         */
+        // Halaman Welcome/Beranda Admin
+        Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+        
+        // Halaman Khusus Angka & Laporan
+        Route::get('/statistik', [AdminController::class, 'statistik'])->name('admin.statistik');
+
+        /** * 2. MANAJEMEN PENGGUNA (Fitur Lengkap)
+         */
         Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
         Route::get('/users/create', [AdminController::class, 'createUser'])->name('admin.users.create');
         Route::post('/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
         Route::get('/users/{id}/edit', [AdminController::class, 'editUser'])->name('admin.users.edit');
         Route::put('/users/{id}', [AdminController::class, 'updateUser'])->name('admin.users.update');
 
-        // 2. MANAJEMEN INFRASTRUKTUR (Persiapan)
+        /** * 3. MANAJEMEN INFRASTRUKTUR (Persiapan/Bakal Datang)
+         */
         // Route::get('/infrastruktur', [AdminController::class, 'infrastruktur'])->name('admin.infrastruktur');
         
-        // 3. PETA SPASIAL
+        /** * 4. PETA SPASIAL
+         */
         Route::get('/peta', [AdminController::class, 'peta'])->name('admin.peta');
-
-        // 4. STATISTIK DAN LAPORAN (Dashboard Utama)
-        Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     });
 
     // --- AREA SURVEYOR ---
