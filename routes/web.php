@@ -45,27 +45,34 @@ Route::middleware(['auth'])->group(function () {
     // --- AREA ADMIN SINFRA ---
     Route::middleware(['role:admin'])->prefix('admin')->group(function () {
         
-        /** * 1. DASHBOARD & STATISTIK (Sudah Dipisah)
+        /** * 1. DASHBOARD & STATISTIK 
          */
-        // Halaman Welcome/Beranda Admin
         Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-        
-        // Halaman Khusus Angka & Laporan
         Route::get('/statistik', [AdminController::class, 'statistik'])->name('admin.statistik');
 
-        /** * 2. MANAJEMEN PENGGUNA (Fitur Lengkap)
+        /** * 2. MANAJEMEN PENGGUNA (Fitur Lengkap CRUD)
          */
         Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
         Route::get('/users/create', [AdminController::class, 'createUser'])->name('admin.users.create');
         Route::post('/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
         Route::get('/users/{id}/edit', [AdminController::class, 'editUser'])->name('admin.users.edit');
         Route::put('/users/{id}', [AdminController::class, 'updateUser'])->name('admin.users.update');
+        Route::delete('/users/{id}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
 
-        /** * 3. MANAJEMEN INFRASTRUKTUR (Persiapan/Bakal Datang)
+        /** * 3. MANAJEMEN WILAYAH (Data Master Kecamatan)
+         */
+        Route::get('/wilayah', [AdminController::class, 'wilayah'])->name('admin.wilayah');
+        Route::get('/wilayah/create', [AdminController::class, 'createWilayah'])->name('admin.wilayah.create');
+        Route::post('/wilayah', [AdminController::class, 'storeWilayah'])->name('admin.wilayah.store');
+        Route::get('/wilayah/{id}/edit', [AdminController::class, 'editWilayah'])->name('admin.wilayah.edit');
+        Route::put('/wilayah/{id}', [AdminController::class, 'updateWilayah'])->name('admin.wilayah.update');
+        Route::delete('/wilayah/{id}', [AdminController::class, 'destroyWilayah'])->name('admin.wilayah.destroy');
+
+        /** * 4. MANAJEMEN INFRASTRUKTUR 
          */
         // Route::get('/infrastruktur', [AdminController::class, 'infrastruktur'])->name('admin.infrastruktur');
         
-        /** * 4. PETA SPASIAL
+        /** * 5. PETA SPASIAL
          */
         Route::get('/peta', [AdminController::class, 'peta'])->name('admin.peta');
     });

@@ -41,6 +41,10 @@
                     <i class="fas fa-users-cog group-hover:text-blue-400"></i> Manajemen Pengguna
                 </a>
 
+                <a href="{{ route('admin.wilayah') }}" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition group">
+                    <i class="fas fa-draw-polygon group-hover:text-blue-400"></i> Manajemen Wilayah
+                </a>
+
                 <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition group">
                     <i class="fas fa-database group-hover:text-blue-400"></i> Manajemen Infrastruktur
                 </a>
@@ -98,7 +102,7 @@
                 
                 <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 text-left">
                     <div class="text-left">
-                        <p class="text-blue-200 text-sm font-bold tracking-widest uppercase mb-2">Portal SIKC Poliban</p>
+                        <p class="text-blue-200 text-sm font-bold tracking-widest uppercase mb-2">Portal SIGAP-K</p>
                         <h3 class="text-3xl font-black text-white mb-2 leading-tight">Selamat Datang, Administrator!</h3>
                         <p class="text-blue-100 text-sm font-medium max-w-xl text-left">Pusat kendali manajemen infrastruktur dan pengguna Geographic Information System SINFRA. Apa yang ingin Anda kerjakan hari ini?</p>
                     </div>
@@ -122,6 +126,14 @@
                         <p class="text-[10px] text-gray-400 font-medium leading-relaxed text-left">Daftarkan Surveyor atau Admin baru ke dalam sistem.</p>
                     </a>
 
+                    <a href="{{ route('admin.wilayah') }}" class="group bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-indigo-500/10 hover:border-indigo-200 transition-all text-left">
+                        <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-draw-polygon text-lg"></i>
+                        </div>
+                        <h5 class="font-black text-[#1e1b4b] mb-1">Kelola Wilayah</h5>
+                        <p class="text-[10px] text-gray-400 font-medium leading-relaxed text-left">Atur batas kecamatan dan zonasi warna pada peta.</p>
+                    </a>
+
                     <a href="{{ route('admin.peta') }}" class="group bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-emerald-500/10 hover:border-emerald-200 transition-all text-left">
                         <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                             <i class="fas fa-map-marked-alt text-lg"></i>
@@ -138,14 +150,6 @@
                         <p class="text-[10px] text-gray-400 font-medium leading-relaxed text-left">Lihat rekapitulasi data dan prediksi prioritas harian.</p>
                     </a>
 
-                    <a href="#" class="group bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-orange-500/10 hover:border-orange-200 transition-all text-left">
-                        <div class="w-12 h-12 bg-orange-50 text-orange-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                            <i class="fas fa-database text-lg"></i>
-                        </div>
-                        <h5 class="font-black text-[#1e1b4b] mb-1">Kelola Infrastruktur</h5>
-                        <p class="text-[10px] text-gray-400 font-medium leading-relaxed text-left">Verifikasi dan edit data objek infrastruktur masuk.</p>
-                    </a>
-
                 </div>
             </div>
 
@@ -154,7 +158,6 @@
                     <i class="fas fa-info text-sm"></i>
                 </div>
                 <div>
-                    <h6 class="text-xs font-black text-indigo-900 uppercase tracking-widest mb-1 text-left">Status Server SIKC</h6>
                     <p class="text-[11px] text-indigo-700 font-medium text-left">Sistem berjalan optimal. Hybrid Model (CNN) aktif dan siap memproses data survei terbaru.</p>
                 </div>
             </div>

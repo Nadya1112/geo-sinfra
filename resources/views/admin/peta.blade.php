@@ -35,19 +35,19 @@
             </a>
             
             <nav class="space-y-1">
+                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition group">
+                    <i class="fas fa-home group-hover:text-blue-400"></i> Dashboard
+                </a>
                 <a href="{{ route('admin.users') }}" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition group">
                     <i class="fas fa-users-cog group-hover:text-blue-400"></i> Manajemen Pengguna
                 </a>
-
                 <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition group">
                     <i class="fas fa-database group-hover:text-blue-400"></i> Manajemen Infrastruktur
                 </a>
-
-                <a href="#" class="flex items-center gap-3 px-4 py-3 bg-blue-600 rounded-xl text-sm font-bold transition shadow-lg shadow-blue-900/20">
+                <a href="{{ route('admin.peta') }}" class="flex items-center gap-3 px-4 py-3 bg-blue-600 rounded-xl text-sm font-bold transition shadow-lg shadow-blue-900/20">
                     <i class="fas fa-map-marked-alt"></i> Peta Spasial
                 </a>
-
-                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition">
+                <a href="{{ route('admin.statistik') }}" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition">
                     <i class="fas fa-chart-bar"></i> Statistik dan Laporan
                 </a>
             </nav>
@@ -64,10 +64,17 @@
     </aside>
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden text-left">
-        <header class="bg-white border-b border-gray-100 px-8 py-5 flex justify-between items-center z-10">
-            <div>
-                <p class="text-[10px] font-extrabold text-blue-600 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
-                <h2 class="text-xl font-black text-[#1e1b4b]">Peta Spasial Wilayah</h2>
+        <header class="bg-white border-b border-gray-100 px-8 py-5 flex justify-between items-center z-10 text-left">
+            <div class="flex items-center gap-4 text-left">
+                <a href="{{ route('admin.dashboard') }}" 
+                   class="w-10 h-10 bg-white border border-gray-100 rounded-xl flex items-center justify-center text-gray-400 hover:text-blue-600 hover:border-blue-100 hover:shadow-lg hover:shadow-blue-500/5 transition-all group"
+                   title="Kembali ke Dashboard">
+                    <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
+                </a>
+                <div class="text-left">
+                    <p class="text-[10px] font-extrabold text-blue-600 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
+                    <h2 class="text-xl font-black text-[#1e1b4b]">Peta Spasial Wilayah</h2>
+                </div>
             </div>
             
             <div class="flex items-center gap-6">
@@ -78,8 +85,8 @@
                 
                 <div class="h-8 w-[1px] bg-gray-100"></div>
                 
-                <div class="flex items-center gap-3">
-                    <div class="text-right">
+                <div class="flex items-center gap-3 text-left">
+                    <div class="text-right text-left">
                         <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase">Admin SINFRA</p>
                         <p class="text-[9px] font-bold text-green-500 uppercase mt-1">Online</p>
                     </div>
