@@ -14,7 +14,7 @@
     <aside class="w-64 bg-[#1e1b4b] text-white flex flex-col hidden md:flex shadow-2xl z-20">
         <div class="p-6 flex-1 text-left">
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 mb-10">
-                <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/20">
                     <i class="fas fa-city text-xs text-white"></i>
                 </div>
                 <span class="font-extrabold text-xl tracking-tighter uppercase text-white">GEO-SINFRA</span>
@@ -23,13 +23,13 @@
                 <a href="{{ route('admin.users') }}" class="flex items-center gap-3 px-4 py-3 bg-blue-600 rounded-xl text-sm font-bold shadow-lg shadow-blue-900/20">
                     <i class="fas fa-users-cog"></i> Manajemen Pengguna
                 </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-400 text-sm font-semibold hover:bg-white/5 rounded-xl"><i class="fas fa-database"></i> Manajemen Infrastruktur</a>
-                <a href="{{ route('admin.peta') }}" class="flex items-center gap-3 px-4 py-3 text-gray-400 text-sm font-semibold hover:bg-white/5 rounded-xl"><i class="fas fa-map-marked-alt"></i> Peta Spasial</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-400 text-sm font-semibold hover:bg-white/5 rounded-xl transition"><i class="fas fa-database"></i> Manajemen Infrastruktur</a>
+                <a href="{{ route('admin.peta') }}" class="flex items-center gap-3 px-4 py-3 text-gray-400 text-sm font-semibold hover:bg-white/5 rounded-xl transition"><i class="fas fa-map-marked-alt"></i> Peta Spasial</a>
             </nav>
         </div>
     </aside>
 
-    <main class="flex-1 flex flex-col h-screen overflow-hidden">
+    <main class="flex-1 flex flex-col h-screen overflow-hidden text-left">
         <header class="bg-white border-b border-gray-100 px-8 py-5 flex justify-between items-center text-left">
             <div>
                 <p class="text-[10px] font-extrabold text-blue-600 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
@@ -37,14 +37,14 @@
             </div>
             <div class="flex items-center gap-3">
                 <div class="text-right">
-                    <p class="text-[11px] font-black text-[#1e1b4b] uppercase">Admin SINFRA</p>
-                    <p class="text-[9px] font-bold text-green-500 uppercase">Online</p>
+                    <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase">Admin SINFRA</p>
+                    <p class="text-[9px] font-bold text-green-500 uppercase mt-1">Online</p>
                 </div>
-                <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600"><i class="fas fa-user-plus text-xl"></i></div>
+                <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100"><i class="fas fa-user-plus text-xl"></i></div>
             </div>
         </header>
 
-        <div class="flex-1 p-8 overflow-y-auto">
+        <div class="flex-1 p-8 overflow-y-auto text-left">
             <div class="max-w-4xl bg-white rounded-[2.5rem] p-10 border border-gray-100 shadow-sm mx-auto text-left">
                 <form action="{{ route('admin.users.store') }}" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     @csrf
@@ -56,7 +56,7 @@
                         </div>
                         <div>
                             <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Email <span class="text-red-500">*</span></label>
-                            <input type="email" name="email" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" placeholder="contoh@mail.com" required>
+                            <input type="email" name="email" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" placeholder="email@contoh.com" required>
                         </div>
                         <div>
                             <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Password <span class="text-red-500">*</span></label>
@@ -82,7 +82,7 @@
                             </select>
                         </div>
                         <div class="pt-10 flex gap-3">
-                            <button type="submit" class="flex-1 bg-blue-600 text-white text-xs px-6 py-4 rounded-2xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition">Tambah Sekarang</button>
+                            <button type="submit" class="flex-1 bg-blue-600 text-white text-xs px-6 py-4 rounded-2xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition">Tambah User</button>
                             <a href="{{ route('admin.users') }}" class="flex-1 bg-gray-100 text-gray-500 text-xs px-6 py-4 rounded-2xl font-bold hover:bg-gray-200 transition text-center flex items-center justify-center">Batal</a>
                         </div>
                     </div>

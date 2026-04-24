@@ -66,9 +66,9 @@
                 </div>
                 <div class="h-8 w-[1px] bg-gray-100"></div>
                 <div class="flex items-center gap-3 text-left">
-                    <div class="text-right">
-                        <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase">Admin SINFRA</p>
-                        <p class="text-[9px] font-bold text-green-500 uppercase mt-1">Online</p>
+                    <div class="text-right text-left">
+                        <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase text-left">Admin SINFRA</p>
+                        <p class="text-[9px] font-bold text-green-500 uppercase mt-1 text-left">Online</p>
                     </div>
                     <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100">
                         <i class="fas fa-user-circle text-xl"></i>
@@ -77,14 +77,14 @@
             </div>
         </header>
 
-        <div class="flex-1 p-8 overflow-y-auto custom-scrollbar">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-                <div>
+        <div class="flex-1 p-8 overflow-y-auto custom-scrollbar text-left">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 text-left">
+                <div class="text-left">
                     <h4 class="font-extrabold text-lg text-[#1e1b4b]">Daftar Pengguna Sistem</h4>
                     <p class="text-xs text-gray-400 font-medium text-left">Kelola hak akses untuk Admin, Surveyor, dan Kabid</p>
                 </div>
                 
-                <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
+                <div class="flex flex-wrap items-center gap-3 w-full md:w-auto text-left">
                     <form action="{{ route('admin.users') }}" method="GET" class="flex items-center flex-1 md:w-80">
                         <input type="text" 
                             name="search"
@@ -96,14 +96,14 @@
                         </button>
                     </form>
 
-                    <button class="bg-blue-600 text-white text-xs px-6 py-2.5 rounded-2xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition flex items-center gap-2 whitespace-nowrap">
+                    <a href="{{ route('admin.users.create') }}" class="bg-blue-600 text-white text-xs px-6 py-2.5 rounded-2xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition flex items-center gap-2 whitespace-nowrap text-left">
                         <i class="fas fa-user-plus text-[10px]"></i> Tambah User
-                    </button>
+                    </a>
                 </div>
             </div>
 
             <div class="bg-white rounded-[2.5rem] border border-gray-100 shadow-sm overflow-hidden text-left">
-                <table class="w-full text-left border-collapse">
+                <table class="w-full text-left border-collapse text-left">
                     <thead>
                         <tr class="bg-gray-50/50 border-b border-gray-100">
                             <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest text-left">Nama User</th>
@@ -112,41 +112,41 @@
                             <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest text-left">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-50">
+                    <tbody class="divide-y divide-gray-50 text-left">
                         @foreach($users as $user)
-                        <tr class="hover:bg-gray-50/50 transition">
-                            <td class="px-8 py-5">
+                        <tr class="hover:bg-gray-50/50 transition text-left">
+                            <td class="px-8 py-5 text-left">
                                 <div class="flex items-center gap-4 text-left">
-                                    <div class="w-10 h-10 {{ $user->role == 'admin' ? 'bg-blue-50 text-blue-600 border-blue-100' : ($user->role == 'kabid' ? 'bg-purple-50 text-purple-600 border-purple-100' : 'bg-orange-50 text-orange-600 border-orange-100') }} rounded-xl flex items-center justify-center font-bold text-xs border">
+                                    <div class="w-10 h-10 {{ $user->role == 'admin' ? 'bg-blue-50 text-blue-600 border-blue-100' : ($user->role == 'kabid' ? 'bg-purple-50 text-purple-600 border-purple-100' : 'bg-orange-50 text-orange-600 border-orange-100') }} rounded-xl flex items-center justify-center font-bold text-xs border text-left">
                                         {{ substr($user->name, 0, 1) }}
                                     </div>
-                                    <div>
-                                        <p class="text-xs font-black text-[#1e1b4b] uppercase leading-none">{{ $user->name }}</p>
+                                    <div class="text-left">
+                                        <p class="text-xs font-black text-[#1e1b4b] uppercase leading-none text-left">{{ $user->name }}</p>
                                         <p class="text-[9px] text-gray-400 font-bold uppercase mt-1 italic text-left">ID: #{{ str_pad($user->id, 4, '0', STR_PAD_LEFT) }}</p>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-8 py-5 text-[11px] font-medium text-gray-500 text-left">{{ $user->email }}</td>
-                            <td class="px-8 py-5">
-                                <span class="px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-tighter 
+                            <td class="px-8 py-5 text-left">
+                                <span class="px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-tighter text-left 
                                     {{ $user->role == 'admin' ? 'bg-blue-100 text-blue-600' : ($user->role == 'kabid' ? 'bg-purple-100 text-purple-600' : 'bg-orange-100 text-orange-600') }}">
                                     {{ $user->role }}
                                 </span>
                             </td>
-                            <td class="px-8 py-5">
-                                <div class="flex gap-2">
+                            <td class="px-8 py-5 text-left">
+                                <div class="flex gap-2 text-left">
                                     @if($user->role !== 'kabid')
-                                    <a href="{{ route('admin.users.edit', $user->id) }}" title="Edit User" class="w-8 h-8 bg-gray-50 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition flex items-center justify-center">
-                                        <i class="fas fa-edit text-[10px]"></i>
+                                    <a href="{{ route('admin.users.edit', $user->id) }}" title="Edit User" class="w-8 h-8 bg-gray-50 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition flex items-center justify-center text-left">
+                                        <i class="fas fa-edit text-[10px] text-left"></i>
                                     </a>
                                     @else
-                                    <span title="Role Kabid Terkunci" class="w-8 h-8 bg-gray-100 text-gray-300 rounded-lg flex items-center justify-center cursor-not-allowed">
-                                        <i class="fas fa-lock text-[10px]"></i>
+                                    <span title="Role Kabid Terkunci" class="w-8 h-8 bg-gray-100 text-gray-300 rounded-lg flex items-center justify-center cursor-not-allowed text-left">
+                                        <i class="fas fa-lock text-[10px] text-left"></i>
                                     </span>
                                     @endif
                                     
-                                    <button title="Hapus User" class="w-8 h-8 bg-gray-50 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition flex items-center justify-center">
-                                        <i class="fas fa-trash text-[10px]"></i>
+                                    <button title="Hapus User" class="w-8 h-8 bg-gray-50 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition flex items-center justify-center text-left">
+                                        <i class="fas fa-trash text-[10px] text-left"></i>
                                     </button>
                                 </div>
                             </td>
@@ -155,7 +155,7 @@
                         
                         @if($users->isEmpty())
                         <tr>
-                            <td colspan="4" class="px-8 py-10 text-center text-xs font-bold text-gray-400 italic">
+                            <td colspan="4" class="px-8 py-10 text-center text-xs font-bold text-gray-400 italic text-left">
                                 Tidak ada pengguna ditemukan dengan kata kunci tersebut.
                             </td>
                         </tr>
