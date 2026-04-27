@@ -102,7 +102,6 @@
                 
                 <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 text-left">
                     <div class="text-left">
-                        <p class="text-blue-200 text-sm font-bold tracking-widest uppercase mb-2">Portal SIGAP-K</p>
                         <h3 class="text-3xl font-black text-white mb-2 leading-tight">Selamat Datang, Administrator!</h3>
                         <p class="text-blue-100 text-sm font-medium max-w-xl text-left">Pusat kendali manajemen infrastruktur dan pengguna Geographic Information System SINFRA. Apa yang ingin Anda kerjakan hari ini?</p>
                     </div>

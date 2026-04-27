@@ -13,7 +13,6 @@
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        .color-preview { width: 24px; height: 24px; border-radius: 6px; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 text-left">
@@ -113,7 +112,7 @@
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
                 <div>
                     <h4 class="font-extrabold text-lg text-[#1e1b4b]">Daftar Master Kecamatan</h4>
-                    <p class="text-xs text-gray-400 font-medium text-left">Kelola data wilayah batas pemetaan (GeoJSON) dan Zonasi Warna</p>
+                    <p class="text-xs text-gray-400 font-medium text-left">Kelola data wilayah cakupan pemetaan infrastruktur</p>
                 </div>
                 
                 <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
@@ -134,11 +133,10 @@
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-gray-50/50 border-b border-gray-100">
-                            <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest">ID / Kode</th>
+                            <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest w-24">ID / Kode</th>
                             <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest">Nama Kecamatan</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">Zonasi Warna</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">Status Peta (GeoJSON)</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest">Aksi</th>
+                            <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest">Kelurahan</th>
+                            <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest w-32">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-50">
@@ -150,23 +148,12 @@
                                 </span>
                             </td>
                             <td class="px-8 py-5">
-                                <p class="text-xs font-black text-[#1e1b4b] uppercase leading-none">Kec. {{ $wly->nama_kecamatan }}</p>
+                                <p class="text-xs font-black text-[#1e1b4b] uppercase leading-none">{{ $wly->nama_kecamatan }}</p>
                             </td>
-                            <td class="px-8 py-5 text-center">
-                                <div class="flex justify-center">
-                                    <div class="color-preview" style="background-color: {{ $wly->warna ?? '#cbd5e1' }};" title="{{ $wly->warna ?? 'Tidak diatur' }}"></div>
-                                </div>
-                            </td>
-                            <td class="px-8 py-5 text-center">
-                                @if($wly->geometri)
-                                    <span class="px-3 py-1 bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-full text-[10px] font-bold flex items-center justify-center gap-1 w-max mx-auto">
-                                        <i class="fas fa-check-circle"></i> Tersedia
-                                    </span>
-                                @else
-                                    <span class="px-3 py-1 bg-red-50 text-red-500 border border-red-100 rounded-full text-[10px] font-bold flex items-center justify-center gap-1 w-max mx-auto">
-                                        <i class="fas fa-times-circle"></i> Kosong
-                                    </span>
-                                @endif
+                            <td class="px-8 py-5">
+                                <p class="text-xs font-medium text-gray-500 leading-relaxed max-w-sm truncate" title="{{ $wly->kelurahan ?? 'Belum ada data kelurahan' }}">
+                                    {{ $wly->kelurahan ?? '-' }}
+                                </p>
                             </td>
                             <td class="px-8 py-5">
                                 <div class="flex gap-2">
@@ -174,10 +161,36 @@
                                         <i class="fas fa-edit text-[10px]"></i>
                                     </a>
                                     
-                                    <form action="{{ route('admin.wilayah.destroy', $wly->id_kecamatan) }}" method="POST" class="inline-block m-0 p-0" onsubmit="return confirm('PERINGATAN!\n\nApakah Anda yakin ingin menghapus Kecamatan {{ $wly->nama_kecamatan }}?\nData surveyor yang ditugaskan di wilayah ini mungkin akan terdampak.');">
+                                    <form action="{{ route('admin.wilayah.destroy', $wly->id_kecamatan) }}" method="POST" class="inline-block m-0 p-0" onsubmit="return confirm('PERINGATAN!\n\nApakah Anda yakin ingin menghapus wilayah {{ $wly->nama_kecamatan }}?\nData yang terkait dengan wilayah ini mungkin akan terdampak.');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" title="Hapus Wilayah" class="w-8 h-8 bg-gray-50 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition flex items-center justify-center">
                                             <i class="fas fa-trash text-[10px]"></i>
                                         </button>
                                     </form>
+                                </div>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="4" class="px-8 py-10 text-center text-sm font-semibold text-gray-400">
+                                <i class="fas fa-folder-open text-2xl mb-2 block text-gray-300"></i>
+                                Belum ada data Master Wilayah yang ditambahkan.
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('mini-clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WITA`;
+        }
+        setInterval(updateClock, 1000); updateClock();
+    </script>
+</body>
+</html>
