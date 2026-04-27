@@ -27,17 +27,25 @@
             </a>
             
             <nav class="space-y-1">
+                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition group">
+                    <i class="fas fa-home group-hover:text-blue-400"></i> Dashboard
+                </a>
                 <a href="{{ route('admin.users') }}" class="flex items-center gap-3 px-4 py-3 bg-blue-600 rounded-xl text-sm font-bold transition shadow-lg shadow-blue-900/20 text-left">
                     <i class="fas fa-users-cog"></i> Manajemen Pengguna
                 </a>
+                
+                <a href="{{ route('admin.wilayah') }}" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition group text-left">
+                    <i class="fas fa-draw-polygon group-hover:text-blue-400"></i> Manajemen Wilayah
+                </a>
+
                 <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition group text-left">
-                    <i class="fas fa-database"></i> Manajemen Infrastruktur
+                    <i class="fas fa-database group-hover:text-blue-400"></i> Manajemen Infrastruktur
                 </a>
                 <a href="{{ route('admin.peta') }}" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition group text-left">
-                    <i class="fas fa-map-marked-alt"></i> Peta Spasial
+                    <i class="fas fa-map-marked-alt group-hover:text-blue-400"></i> Peta Spasial
                 </a>
-                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition text-left">
-                    <i class="fas fa-chart-bar"></i> Statistik dan Laporan
+                <a href="{{ route('admin.statistik') }}" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition text-left">
+                    <i class="fas fa-chart-bar group-hover:text-blue-400"></i> Statistik dan Laporan
                 </a>
             </nav>
         </div>
@@ -86,6 +94,21 @@
         </header>
 
         <div class="flex-1 p-8 overflow-y-auto custom-scrollbar text-left">
+            
+            @if ($errors->any())
+            <div class="max-w-4xl mx-auto mb-6 px-6 py-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl">
+                <div class="flex items-center gap-3 mb-2">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p class="text-xs font-bold">Gagal menyimpan data. Silakan periksa kembali:</p>
+                </div>
+                <ul class="list-disc list-inside text-[11px] font-medium ml-4">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+
             <div class="max-w-4xl bg-white rounded-[2.5rem] p-10 border border-gray-100 shadow-sm mx-auto text-left">
                 <form action="{{ route('admin.users.store') }}" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
                     @csrf
@@ -95,14 +118,14 @@
                             <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">
                                 Nama Pengguna <span class="text-red-500">*</span>
                             </label>
-                            <input type="text" name="name" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" placeholder="Masukkan Nama Lengkap" required>
+                            <input type="text" name="name" value="{{ old('name') }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" placeholder="Masukkan Nama Lengkap" required>
                         </div>
 
                         <div class="text-left">
                             <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">
                                 Email <span class="text-red-500">*</span>
                             </label>
-                            <input type="email" name="email" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" placeholder="email@contoh.com" required>
+                            <input type="email" name="email" value="{{ old('email') }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" placeholder="email@contoh.com" required>
                         </div>
 
                         <div class="text-left">
@@ -122,8 +145,8 @@
                                 Role Akses <span class="text-red-500">*</span>
                             </label>
                             <select id="role-select" name="role" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" onchange="toggleWilayah()" required>
-                                <option value="surveyor">SURVEYOR</option>
-                                <option value="admin">ADMIN</option>
+                                <option value="surveyor" {{ old('role') == 'surveyor' ? 'selected' : '' }}>SURVEYOR</option>
+                                <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>ADMIN</option>
                             </select>
                         </div>
 
@@ -134,7 +157,7 @@
                             <select name="id_kecamatan" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all">
                                 <option value="">Pilih Wilayah</option>
                                 @foreach($semuaWilayah as $wilayah)
-                                    <option value="{{ $wilayah->id_kecamatan }}">Kec. {{ $wilayah->nama_kecamatan }}</option>
+                                    <option value="{{ $wilayah->id_kecamatan }}" {{ old('id_kecamatan') == $wilayah->id_kecamatan ? 'selected' : '' }}>{{ $wilayah->nama_kecamatan }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -163,7 +186,7 @@
         function toggleWilayah() {
             const role = document.getElementById('role-select').value;
             const container = document.getElementById('wilayah-container');
-            // Jika role Admin, kolom wilayah otomatis hilang (biar rapi)
+            // Jika role Admin, kolom wilayah otomatis hilang
             container.classList.toggle('hidden', role === 'admin');
         }
         
