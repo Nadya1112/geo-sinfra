@@ -111,13 +111,13 @@
 
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
                 <div>
-                    <h4 class="font-extrabold text-lg text-[#1e1b4b]">Daftar Master Kecamatan</h4>
+                    <h4 class="font-extrabold text-lg text-[#1e1b4b]">DATA MASTER WILAYAH</h4>
                     <p class="text-xs text-gray-400 font-medium text-left">Kelola data wilayah cakupan pemetaan infrastruktur</p>
                 </div>
                 
                 <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
                     <form action="{{ route('admin.wilayah') }}" method="GET" class="flex items-center flex-1 md:w-80">
-                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama kecamatan..." class="flex-1 pl-6 pr-4 py-2.5 bg-white border border-gray-100 rounded-l-2xl text-xs font-semibold focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all shadow-sm">
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama kecamatan atau kelurahan..." class="flex-1 pl-6 pr-4 py-2.5 bg-white border border-gray-100 rounded-l-2xl text-xs font-semibold focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all shadow-sm">
                         <button type="submit" class="bg-white border-y border-r border-gray-100 px-5 py-2.5 rounded-r-2xl hover:bg-gray-50 transition-all shadow-sm group">
                             <i class="fas fa-search text-gray-400 group-hover:text-blue-600 transition-colors text-xs"></i>
                         </button>
@@ -133,9 +133,9 @@
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-gray-50/50 border-b border-gray-100">
-                            <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest w-24">ID / Kode</th>
+                            <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest w-24">ID Data</th>
                             <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest">Nama Kecamatan</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest">Kelurahan</th>
+                            <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest">Kelurahan & Koordinat</th>
                             <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest w-32">Aksi</th>
                         </tr>
                     </thead>
@@ -144,24 +144,29 @@
                         <tr class="hover:bg-gray-50/50 transition">
                             <td class="px-8 py-5">
                                 <span class="px-3 py-1.5 bg-gray-100 text-gray-600 rounded-lg text-xs font-bold font-mono">
-                                    {{ $wly->id_kecamatan }}
+                                    {{ $wly->id_kelurahan }}
                                 </span>
                             </td>
                             <td class="px-8 py-5">
                                 <p class="text-xs font-black text-[#1e1b4b] uppercase leading-none">{{ $wly->nama_kecamatan }}</p>
                             </td>
                             <td class="px-8 py-5">
-                                <p class="text-xs font-medium text-gray-500 leading-relaxed max-w-sm truncate" title="{{ $wly->kelurahan ?? 'Belum ada data kelurahan' }}">
-                                    {{ $wly->kelurahan ?? '-' }}
+                                <p class="text-sm font-bold text-[#1e1b4b] leading-relaxed max-w-sm truncate" title="{{ $wly->nama_kelurahan ?? 'Belum ada data' }}">
+                                    {{ $wly->nama_kelurahan ?? '-' }}
                                 </p>
+                                @if($wly->latitude && $wly->longitude)
+                                <p class="text-[10px] font-bold text-blue-500 mt-1">
+                                    <i class="fas fa-map-marker-alt mr-1"></i> Lat: {{ $wly->latitude }} | Lng: {{ $wly->longitude }}
+                                </p>
+                                @endif
                             </td>
                             <td class="px-8 py-5">
                                 <div class="flex gap-2">
-                                    <a href="{{ route('admin.wilayah.edit', $wly->id_kecamatan) }}" title="Edit Wilayah" class="w-8 h-8 bg-gray-50 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition flex items-center justify-center">
+                                    <a href="{{ route('admin.wilayah.edit', $wly->id_kelurahan) }}" title="Edit Wilayah" class="w-8 h-8 bg-gray-50 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition flex items-center justify-center">
                                         <i class="fas fa-edit text-[10px]"></i>
                                     </a>
                                     
-                                    <form action="{{ route('admin.wilayah.destroy', $wly->id_kecamatan) }}" method="POST" class="inline-block m-0 p-0" onsubmit="return confirm('PERINGATAN!\n\nApakah Anda yakin ingin menghapus wilayah {{ $wly->nama_kecamatan }}?\nData yang terkait dengan wilayah ini mungkin akan terdampak.');">
+                                    <form action="{{ route('admin.wilayah.destroy', $wly->id_kelurahan) }}" method="POST" class="inline-block m-0 p-0" onsubmit="return confirm('PERINGATAN!\n\nApakah Anda yakin ingin menghapus data kelurahan {{ $wly->nama_kelurahan }}?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" title="Hapus Wilayah" class="w-8 h-8 bg-gray-50 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition flex items-center justify-center">

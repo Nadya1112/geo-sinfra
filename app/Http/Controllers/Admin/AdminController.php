@@ -57,7 +57,8 @@ class AdminController extends Controller
 
     public function createUser()
     {
-        $semuaWilayah = DB::table('kecamatan')->whereNull('deleted_at')->get();
+        // Dropdown wilayah untuk user mengarah ke master kecamatan
+        $semuaWilayah = DB::table('kecamatan')->get();
         return view('admin.create-user', compact('semuaWilayah'));
     }
 
@@ -90,7 +91,7 @@ class AdminController extends Controller
             return redirect()->route('admin.users')->with('error', 'Akun Kabid terkunci.');
         }
         
-        $semuaWilayah = DB::table('kecamatan')->whereNull('deleted_at')->get();
+        $semuaWilayah = DB::table('kecamatan')->get();
         return view('admin.edit-user', compact('user', 'semuaWilayah'));
     }
 
@@ -140,92 +141,117 @@ class AdminController extends Controller
 
 
     // ==========================================================
-    // MODUL MANAJEMEN WILAYAH (KECAMATAN)
+    // MODUL MANAJEMEN WILAYAH (TERFOKUS PADA KELURAHAN)
     // ==========================================================
 
     public function wilayah(Request $request)
     {
         $search = $request->query('search');
-        $query = DB::table('kecamatan')->whereNull('deleted_at');
+        
+        // Mengambil data kelurahan dan digabungkan (join) dengan master kecamatan
+        $query = DB::table('kelurahan')
+            ->join('kecamatan', 'kelurahan.id_kecamatan', '=', 'kecamatan.id_kecamatan')
+            ->select('kelurahan.*', 'kecamatan.nama_kecamatan');
 
         if ($search) {
-            $query->where('nama_kecamatan', 'LIKE', "%{$search}%");
+            $query->where('kelurahan.nama_kelurahan', 'LIKE', "%{$search}%")
+                  ->orWhere('kecamatan.nama_kecamatan', 'LIKE', "%{$search}%");
         }
 
-        $wilayah = $query->orderBy('id_kecamatan')->get();
+        $wilayah = $query->orderBy('kelurahan.id_kelurahan', 'desc')->get();
         return view('admin.wilayah', compact('wilayah'));
     }
 
     public function createWilayah()
     {
-        return view('admin.create-wilayah');
+        // Mengirim daftar master kecamatan untuk dropdown di form
+        $semuaKecamatan = DB::table('kecamatan')->get();
+        return view('admin.create-wilayah', compact('semuaKecamatan'));
     }
 
     public function storeWilayah(Request $request)
     {
         $request->validate([
-            'id_kecamatan' => 'required|string|max:10|unique:kecamatan,id_kecamatan',
-            'nama_kecamatan' => 'required|string|max:100',
-            'warna' => 'nullable|string|max:20',
-            'geometri' => 'nullable|json',
+            'id_kecamatan' => 'required|exists:kecamatan,id_kecamatan',
+            'nama_kelurahan' => 'required|string|max:100',
+            'latitude' => 'required|string|max:50',
+            'longitude' => 'required|string|max:50',
         ]);
 
-        DB::table('kecamatan')->insert([
+        // Menyimpan data langsung ke tabel kelurahan tanpa kolom geometri
+        DB::table('kelurahan')->insert([
             'id_kecamatan' => $request->id_kecamatan,
-            'nama_kecamatan' => $request->nama_kecamatan,
-            'warna' => $request->warna ?? '#3b82f6',
-            'geometri' => $request->geometri,
+            'nama_kelurahan' => $request->nama_kelurahan,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
-        return redirect()->route('admin.wilayah')->with('success', 'Data Kecamatan berhasil ditambahkan!');
+        return redirect()->route('admin.wilayah')->with('success', 'Data Wilayah berhasil ditambahkan!');
     }
 
     public function editWilayah($id)
     {
-        $wilayah = DB::table('kecamatan')->where('id_kecamatan', $id)->whereNull('deleted_at')->first();
+        // Mengambil data kelurahan berdasarkan ID kelurahan
+        $wilayah = DB::table('kelurahan')->where('id_kelurahan', $id)->first();
         
         if (!$wilayah) {
-            return redirect()->route('admin.wilayah')->with('error', 'Data Kecamatan tidak ditemukan.');
+            return redirect()->route('admin.wilayah')->with('error', 'Data Wilayah tidak ditemukan.');
         }
 
-        return view('admin.edit-wilayah', compact('wilayah'));
+        $semuaKecamatan = DB::table('kecamatan')->get();
+        return view('admin.edit-wilayah', compact('wilayah', 'semuaKecamatan'));
     }
 
     public function updateWilayah(Request $request, $id)
     {
         $request->validate([
-            'nama_kecamatan' => 'required|string|max:100',
-            'warna' => 'nullable|string|max:20',
-            'geometri' => 'nullable|json',
+            'id_kecamatan' => 'required|exists:kecamatan,id_kecamatan',
+            'nama_kelurahan' => 'required|string|max:100',
+            'latitude' => 'required|string|max:50',
+            'longitude' => 'required|string|max:50',
         ]);
 
-        DB::table('kecamatan')
-            ->where('id_kecamatan', $id)
+        DB::table('kelurahan')
+            ->where('id_kelurahan', $id)
             ->update([
-                'nama_kecamatan' => $request->nama_kecamatan,
-                'warna' => $request->warna ?? '#3b82f6',
-                'geometri' => $request->geometri,
+                'id_kecamatan' => $request->id_kecamatan,
+                'nama_kelurahan' => $request->nama_kelurahan,
+                'latitude' => $request->latitude,
+                'longitude' => $request->longitude,
                 'updated_at' => now(),
             ]);
 
-        return redirect()->route('admin.wilayah')->with('success', 'Data Kecamatan berhasil diperbarui!');
+        return redirect()->route('admin.wilayah')->with('success', 'Data Wilayah berhasil diperbarui!');
     }
 
     public function destroyWilayah($id)
     {
-        // Pengecekan: Jangan hapus jika masih ada user yang bertugas di wilayah ini
-        $userTerkait = User::where('id_kecamatan', $id)->count();
-        if ($userTerkait > 0) {
-            return redirect()->route('admin.wilayah')->with('error', "Gagal menghapus! Wilayah ini sedang ditugaskan kepada {$userTerkait} Surveyor.");
+        // Langsung menghapus kelurahan (tidak mempengaruhi kecamatan master)
+        DB::table('kelurahan')->where('id_kelurahan', $id)->delete();
+
+        return redirect()->route('admin.wilayah')->with('success', 'Data Wilayah berhasil dihapus.');
+    }
+
+
+    // ==========================================================
+    // MODUL MANAJEMEN INFRASTRUKTUR
+    // ==========================================================
+    public function infrastruktur(Request $request)
+    {
+        $search = $request->query('search');
+        
+        // Memanggil data infrastruktur
+        $query = DB::table('infrastruktur')->whereNull('deleted_at');
+
+        if ($search) {
+            $query->where('nama_infrastruktur', 'LIKE', "%{$search}%");
         }
 
-        DB::table('kecamatan')
-            ->where('id_kecamatan', $id)
-            ->update(['deleted_at' => now()]);
-
-        return redirect()->route('admin.wilayah')->with('success', 'Data Kecamatan berhasil dihapus.');
+        $infrastruktur = $query->orderBy('id_infrastruktur', 'desc')->get();
+        
+        return view('admin.infrastruktur', compact('infrastruktur'));
     }
 
 
@@ -234,7 +260,7 @@ class AdminController extends Controller
     // ==========================================================
     public function peta()
     {
-        $semuaWilayah = DB::table('kecamatan')->whereNull('deleted_at')->get();
+        $semuaWilayah = DB::table('kecamatan')->get();
         $dataInfrastruktur = DB::table('infrastruktur')->whereNull('deleted_at')->get();
 
         return view('admin.peta', compact('semuaWilayah', 'dataInfrastruktur'));

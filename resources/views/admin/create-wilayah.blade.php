@@ -39,27 +39,14 @@
                 <a href="{{ route('admin.peta') }}" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition text-left">
                     <i class="fas fa-map-marked-alt"></i> Peta Spasial
                 </a>
-                <a href="{{ route('admin.statistik') }}" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition text-left">
-                    <i class="fas fa-chart-bar"></i> Statistik dan Laporan
-                </a>
             </nav>
-        </div>
-        <div class="p-6 border-t border-white/5">
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button class="flex items-center gap-3 text-red-400 hover:text-red-300 text-sm font-bold transition group">
-                    <i class="fas fa-sign-out-alt group-hover:-translate-x-1 transition-transform"></i> Keluar Sistem
-                </button>
-            </form>
         </div>
     </aside>
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden text-left">
         <header class="bg-white border-b border-gray-100 px-8 py-5 flex justify-between items-center z-10 text-left">
             <div class="flex items-center gap-4 text-left">
-                <a href="{{ route('admin.wilayah') }}" 
-                   class="w-10 h-10 bg-white border border-gray-100 rounded-xl flex items-center justify-center text-gray-400 hover:text-blue-600 hover:border-blue-100 hover:shadow-lg hover:shadow-blue-500/5 transition-all group"
-                   title="Kembali ke Daftar">
+                <a href="{{ route('admin.wilayah') }}" class="w-10 h-10 bg-white border border-gray-100 rounded-xl flex items-center justify-center text-gray-400 hover:text-blue-600 transition-all group">
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
                 <div>
@@ -67,33 +54,13 @@
                     <h2 class="text-xl font-black text-[#1e1b4b]">Tambah Data Wilayah</h2>
                 </div>
             </div>
-
-            <div class="flex items-center gap-6">
-                <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-[#1e1b4b]" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
-                </div>
-                <div class="h-8 w-[1px] bg-gray-100"></div>
-                <div class="flex items-center gap-3">
-                    <div class="text-right">
-                        <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase">Admin SINFRA</p>
-                        <p class="text-[9px] font-bold text-green-500 uppercase mt-1">Online</p>
-                    </div>
-                    <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100">
-                        <i class="fas fa-user-circle text-xl"></i>
-                    </div>
-                </div>
-            </div>
         </header>
 
         <div class="flex-1 p-8 overflow-y-auto custom-scrollbar">
             
             @if ($errors->any())
-            <div class="mb-6 px-6 py-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl">
-                <div class="flex items-center gap-3 mb-2">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <p class="text-xs font-bold">Gagal menyimpan data. Silakan periksa kembali:</p>
-                </div>
+            <div class="max-w-3xl mx-auto mb-6 px-6 py-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl">
+                <p class="text-xs font-bold mb-2">Gagal menyimpan data:</p>
                 <ul class="list-disc list-inside text-[11px] font-medium ml-4">
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -108,20 +75,40 @@
                     
                     <div class="space-y-6">
                         <div>
-                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">ID / Kode Kecamatan <span class="text-red-500">*</span></label>
-                            <input type="text" name="id_kecamatan" value="{{ old('id_kecamatan') }}" placeholder="Contoh: 1, 2, atau BJM-TGH" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" required>
-                            <p class="text-[10px] text-gray-400 mt-2 font-medium">Gunakan kode unik untuk setiap kecamatan (tidak boleh sama dengan yang lain).</p>
+                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Pilih Kecamatan <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <select name="id_kecamatan" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none appearance-none" required>
+                                    <option value="" disabled selected>-- Pilih Kecamatan --</option>
+                                    @foreach($semuaKecamatan as $kec)
+                                        <option value="{{ $kec->id_kecamatan }}" {{ old('id_kecamatan') == $kec->id_kecamatan ? 'selected' : '' }}>
+                                            {{ $kec->nama_kecamatan }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <i class="fas fa-chevron-down absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none"></i>
+                            </div>
                         </div>
 
                         <div>
-                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Nama Kecamatan <span class="text-red-500">*</span></label>
-                            <input type="text" name="nama_kecamatan" value="{{ old('nama_kecamatan') }}" placeholder="Contoh: Banjarmasin Tengah" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" required>
+                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Nama Kelurahan <span class="text-red-500">*</span></label>
+                            <input type="text" name="nama_kelurahan" value="{{ old('nama_kelurahan') }}" placeholder="Contoh: Antasan Besar" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" required>
                         </div>
 
-                        <div>
-                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Daftar Kelurahan <span class="text-gray-400 font-medium">(Opsional)</span></label>
-                            <textarea name="kelurahan" rows="3" placeholder="Contoh: Antasan Besar, Kelayan Luar, Pekapuran Laut..." class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all custom-scrollbar">{{ old('kelurahan') }}</textarea>
-                            <p class="text-[10px] text-gray-400 mt-2 font-medium">Pisahkan nama kelurahan dengan koma jika lebih dari satu.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Latitude <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <input type="text" name="latitude" value="{{ old('latitude') }}" placeholder="-3.328..." class="w-full pl-10 pr-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none" required>
+                                    <i class="fas fa-map-marker-alt absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Longitude <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <input type="text" name="longitude" value="{{ old('longitude') }}" placeholder="114.590..." class="w-full pl-10 pr-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none" required>
+                                    <i class="fas fa-location-arrow absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="pt-8 flex gap-3">
@@ -129,7 +116,7 @@
                                 <i class="fas fa-save mr-2"></i> Simpan Data Wilayah
                             </button>
                             <a href="{{ route('admin.wilayah') }}" class="flex-1 bg-gray-100 text-gray-500 text-xs px-6 py-4 rounded-2xl font-bold hover:bg-gray-200 transition text-center flex items-center justify-center gap-2">
-                                <i class="fas fa-times-circle text-[10px]"></i> Batal
+                                Batal
                             </a>
                         </div>
                     </div>
@@ -137,13 +124,5 @@
             </div>
         </div>
     </main>
-
-    <script>
-        function updateClock() {
-            const now = new Date();
-            document.getElementById('mini-clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WITA`;
-        }
-        setInterval(updateClock, 1000); updateClock();
-    </script>
 </body>
 </html>

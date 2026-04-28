@@ -70,7 +70,7 @@ Route::middleware(['auth'])->group(function () {
 
         /** * 4. MANAJEMEN INFRASTRUKTUR 
          */
-        // Route::get('/infrastruktur', [AdminController::class, 'infrastruktur'])->name('admin.infrastruktur');
+        Route::get('/infrastruktur', [AdminController::class, 'infrastruktur'])->name('admin.infrastruktur');
         
         /** * 5. PETA SPASIAL
          */
