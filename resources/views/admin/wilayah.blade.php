@@ -61,13 +61,6 @@
             </div>
             @endif
 
-            @if(session('error'))
-            <div class="mb-6 px-6 py-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl flex items-center gap-3">
-                <i class="fas fa-exclamation-triangle"></i>
-                <p class="text-xs font-bold">{{ session('error') }}</p>
-            </div>
-            @endif
-
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
                 <div>
                     <h4 class="font-extrabold text-lg text-[#1e1b4b]">DATA MASTER WILAYAH</h4>
@@ -94,7 +87,7 @@
                         <tr class="bg-gray-50/50 border-b border-gray-100">
                             <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest w-24">ID Data</th>
                             <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest">Nama Kecamatan</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest">Kelurahan & Koordinat</th>
+                            <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest">Kelurahan</th>
                             <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest w-32">Aksi</th>
                         </tr>
                     </thead>
@@ -110,14 +103,9 @@
                                 <p class="text-xs font-black text-[#1e1b4b] uppercase leading-none">{{ $wly->nama_kecamatan }}</p>
                             </td>
                             <td class="px-8 py-5">
-                                <p class="text-sm font-bold text-[#1e1b4b] leading-relaxed max-w-sm truncate" title="{{ $wly->nama_kelurahan ?? 'Belum ada data' }}">
+                                <p class="text-sm font-bold text-[#1e1b4b] leading-relaxed max-w-sm truncate" title="{{ $wly->nama_kelurahan }}">
                                     {{ $wly->nama_kelurahan ?? '-' }}
                                 </p>
-                                @if($wly->latitude && $wly->longitude)
-                                <p class="text-[10px] font-bold text-blue-500 mt-1">
-                                    <i class="fas fa-map-marker-alt mr-1"></i> Lat: {{ $wly->latitude }} | Lng: {{ $wly->longitude }}
-                                </p>
-                                @endif
                             </td>
                             <td class="px-8 py-5">
                                 <div class="flex gap-2">

@@ -254,6 +254,44 @@ class AdminController extends Controller
         return view('admin.infrastruktur', compact('infrastruktur'));
     }
 
+    public function createInfrastruktur()
+    {
+        // Ambil data kelurahan untuk relasi lokasi aset
+        $semuaKelurahan = DB::table('kelurahan')->get();
+        return view('admin.create-infrastruktur', compact('semuaKelurahan'));
+    }
+
+    public function storeInfrastruktur(Request $request)
+    {
+        $request->validate([
+            'nama_infrastruktur' => 'required|string|max:255',
+            'jenis_infrastruktur' => 'required|string',
+            'id_kelurahan' => 'required|exists:kelurahan,id_kelurahan',
+            'latitude' => 'required|string',
+            'longitude' => 'required|string',
+        ]);
+
+        DB::table('infrastruktur')->insert([
+            'nama_infrastruktur' => $request->nama_infrastruktur,
+            'jenis_infrastruktur' => $request->jenis_infrastruktur,
+            'id_kelurahan' => $request->id_kelurahan,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'kondisi' => $request->kondisi ?? 'Baik',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return redirect()->route('admin.infrastruktur')->with('success', 'Data Infrastruktur berhasil ditambahkan!');
+    }
+
+    public function destroyInfrastruktur($id)
+    {
+        // Melakukan soft delete dengan mengisi deleted_at
+        DB::table('infrastruktur')->where('id_infrastruktur', $id)->update(['deleted_at' => now()]);
+        return redirect()->route('admin.infrastruktur')->with('success', 'Data Infrastruktur berhasil dihapus.');
+    }
+
 
     // ==========================================================
     // MODUL PETA SPASIAL

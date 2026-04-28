@@ -27,7 +27,7 @@
                    title="Kembali ke Daftar">
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
-                <div>
+                <div class="text-left">
                     <p class="text-[10px] font-extrabold text-blue-600 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
                     <h2 class="text-xl font-black text-[#1e1b4b]">Edit Data Wilayah</h2>
                 </div>
@@ -68,34 +68,53 @@
             @endif
 
             <div class="max-w-3xl bg-white rounded-[2.5rem] p-10 border border-gray-100 shadow-sm mx-auto text-left">
-                <form action="{{ route('admin.wilayah.update', $wilayah->id_kecamatan) }}" method="POST">
+                <form action="{{ route('admin.wilayah.update', $wilayah->id_kelurahan) }}" method="POST">
                     @csrf
                     @method('PUT')
                     
                     <div class="space-y-6">
                         <div>
-                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">ID / Kode Kecamatan</label>
-                            <input type="text" value="{{ $wilayah->id_kecamatan }}" class="w-full px-5 py-3 bg-gray-100 border border-gray-200 text-gray-500 rounded-2xl text-sm font-bold outline-none cursor-not-allowed" readonly title="ID Kecamatan tidak dapat diubah">
-                            <p class="text-[10px] text-gray-400 mt-2 font-medium">ID Kecamatan bersifat tetap untuk menjaga relasi data pemetaan.</p>
+                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2 text-left">Pilih Kecamatan <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <select name="id_kecamatan" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none appearance-none" required>
+                                    @foreach($semuaKecamatan as $kec)
+                                        <option value="{{ $kec->id_kecamatan }}" {{ $wilayah->id_kecamatan == $kec->id_kecamatan ? 'selected' : '' }}>
+                                            {{ $kec->nama_kecamatan }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <i class="fas fa-chevron-down absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none"></i>
+                            </div>
                         </div>
 
                         <div>
-                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Nama Kecamatan <span class="text-red-500">*</span></label>
-                            <input type="text" name="nama_kecamatan" value="{{ old('nama_kecamatan', $wilayah->nama_kecamatan) }}" placeholder="Contoh: Banjarmasin Tengah" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" required>
+                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2 text-left">Nama Kelurahan <span class="text-red-500">*</span></label>
+                            <input type="text" name="nama_kelurahan" value="{{ old('nama_kelurahan', $wilayah->nama_kelurahan) }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" required>
                         </div>
 
-                        <div>
-                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Daftar Kelurahan <span class="text-gray-400 font-medium">(Opsional)</span></label>
-                            <textarea name="kelurahan" rows="3" placeholder="Contoh: Antasan Besar, Kelayan Luar, Pekapuran Laut..." class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all custom-scrollbar">{{ old('kelurahan', $wilayah->kelurahan) }}</textarea>
-                            <p class="text-[10px] text-gray-400 mt-2 font-medium">Pisahkan nama kelurahan dengan koma jika lebih dari satu.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2 text-left">Latitude <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <input type="text" name="latitude" value="{{ old('latitude', $wilayah->latitude) }}" class="w-full pl-10 pr-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none" required>
+                                    <i class="fas fa-map-marker-alt absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2 text-left">Longitude <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <input type="text" name="longitude" value="{{ old('longitude', $wilayah->longitude) }}" class="w-full pl-10 pr-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none" required>
+                                    <i class="fas fa-location-arrow absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="pt-8 flex gap-3">
+                        <div class="pt-8 flex gap-3 text-left">
                             <button type="submit" class="flex-1 bg-blue-600 text-white text-xs px-6 py-4 rounded-2xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition">
                                 <i class="fas fa-save mr-2"></i> Simpan Perubahan
                             </button>
                             <a href="{{ route('admin.wilayah') }}" class="flex-1 bg-gray-100 text-gray-500 text-xs px-6 py-4 rounded-2xl font-bold hover:bg-gray-200 transition text-center flex items-center justify-center gap-2">
-                                <i class="fas fa-times-circle text-[10px]"></i> Batal
+                                Batal
                             </a>
                         </div>
                     </div>

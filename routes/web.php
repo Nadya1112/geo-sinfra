@@ -59,7 +59,7 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/users/{id}', [AdminController::class, 'updateUser'])->name('admin.users.update');
         Route::delete('/users/{id}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
 
-        /** * 3. MANAJEMEN WILAYAH (Data Master Kecamatan)
+        /** * 3. MANAJEMEN WILAYAH (Data Master Kecamatan & Kelurahan)
          */
         Route::get('/wilayah', [AdminController::class, 'wilayah'])->name('admin.wilayah');
         Route::get('/wilayah/create', [AdminController::class, 'createWilayah'])->name('admin.wilayah.create');
@@ -68,9 +68,16 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/wilayah/{id}', [AdminController::class, 'updateWilayah'])->name('admin.wilayah.update');
         Route::delete('/wilayah/{id}', [AdminController::class, 'destroyWilayah'])->name('admin.wilayah.destroy');
 
-        /** * 4. MANAJEMEN INFRASTRUKTUR 
+        /** * 4. MANAJEMEN INFRASTRUKTUR (Lengkap CRUD)
          */
+        // Halaman Utama Tabel Infrastruktur
         Route::get('/infrastruktur', [AdminController::class, 'infrastruktur'])->name('admin.infrastruktur');
+        // Form Tambah Aset
+        Route::get('/infrastruktur/create', [AdminController::class, 'createInfrastruktur'])->name('admin.infrastruktur.create');
+        // Proses Simpan Aset
+        Route::post('/infrastruktur', [AdminController::class, 'storeInfrastruktur'])->name('admin.infrastruktur.store');
+        // Proses Hapus Aset
+        Route::delete('/infrastruktur/{id}', [AdminController::class, 'destroyInfrastruktur'])->name('admin.infrastruktur.destroy');
         
         /** * 5. PETA SPASIAL
          */
