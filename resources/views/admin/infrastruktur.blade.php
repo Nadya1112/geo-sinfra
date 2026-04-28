@@ -3,62 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manajemen Infrastruktur | Admin SINFRA</title>
+    <title>Tambah Infrastruktur | Admin SINFRA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #e5e1d8; }
+        .neo-brutalism { border: 3px solid #000000; box-shadow: 4px 4px 0px 0px #000000; }
+        .neo-brutalism-sm { border: 2px solid #000000; }
+        .neo-brutalism-btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px 0px #000000; }
+        .neo-brutalism-btn:active { transform: translate(1px, 1px); box-shadow: 2px 2px 0px 0px #000000; }
     </style>
 </head>
-<body class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 text-left">
-    <main class="flex-1 flex flex-col h-screen overflow-hidden">
-        <header class="bg-white border-b border-gray-100 px-8 py-5 flex justify-between items-center">
-            <h2 class="text-xl font-black text-[#1e1b4b]">Manajemen Infrastruktur</h2>
-        </header>
+<body class="flex h-screen overflow-hidden p-6">
 
-        <div class="flex-1 p-8 overflow-y-auto">
-            <div class="flex justify-between items-center mb-8">
+    @include('admin.partials.sidebar')
+
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto p-4">
+        <div class="max-w-4xl mx-auto w-full bg-white rounded-[2rem] neo-brutalism p-10 my-10">
+            <div class="mb-10 border-b-2 border-black pb-5">
+                <h3 class="text-2xl font-black uppercase tracking-tight">Identitas Objek</h3>
+                <p class="text-xs font-bold text-gray-500 uppercase">Tambah Data Infrastruktur Baru</p>
+            </div>
+
+            <form action="{{ route('admin.infrastruktur.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
+                @csrf
+                
                 <div>
-                    <h4 class="font-extrabold text-lg text-[#1e1b4b]">DATA INFRASTRUKTUR</h4>
-                    <p class="text-xs text-gray-400 font-medium">Kelola titik aset infrastruktur di Banjarmasin</p>
+                    <label class="block text-[10px] font-black uppercase mb-2">Nama Infrastruktur *</label>
+                    <input type="text" name="nama_infrastruktur" class="w-full px-5 py-3 rounded-xl neo-brutalism-sm font-bold focus:outline-none" placeholder="Masukkan nama objek..." required>
                 </div>
-                <a href="{{ route('admin.infrastruktur.create') }}" class="bg-blue-600 text-white text-xs px-6 py-2.5 rounded-2xl font-bold shadow-lg hover:bg-blue-700 transition">
-                    <i class="fas fa-plus mr-2"></i> Tambah Aset
-                </a>
-            </div>
 
-            <div class="bg-white rounded-[2.5rem] border border-gray-100 shadow-sm overflow-hidden">
-                <table class="w-full text-left">
-                    <thead>
-                        <tr class="bg-gray-50/50 border-b border-gray-100">
-                            <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest">Nama Aset</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest">Jenis</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest">Kondisi</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest w-32">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-50">
-                        @forelse($infrastruktur as $inf)
-                        <tr class="hover:bg-gray-50 transition">
-                            <td class="px-8 py-5 text-sm font-bold text-[#1e1b4b]">{{ $inf->nama_infrastruktur }}</td>
-                            <td class="px-8 py-5 text-xs text-gray-500">{{ $inf->jenis_infrastruktur }}</td>
-                            <td class="px-8 py-5">
-                                <span class="px-3 py-1 bg-green-50 text-green-600 rounded-lg text-[10px] font-bold">{{ $inf->kondisi }}</span>
-                            </td>
-                            <td class="px-8 py-5">
-                                <form action="{{ route('admin.infrastruktur.destroy', $inf->id_infrastruktur) }}" method="POST">
-                                    @csrf @method('DELETE')
-                                    <button type="submit" class="text-red-400 hover:text-red-600"><i class="fas fa-trash text-xs"></i></button>
-                                </form>
-                            </td>
-                        </tr>
-                        @empty
-                        <tr><td colspan="4" class="px-8 py-10 text-center text-gray-400">Belum ada data infrastruktur.</td></tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <label class="block text-[10px] font-black uppercase mb-2">Jenis Infrastruktur</label>
+                        <select name="jenis_infrastruktur" class="w-full px-5 py-3 rounded-xl neo-brutalism-sm font-bold focus:outline-none bg-white">
+                            <option value="Jalan">Jalan</option>
+                            <option value="Jembatan">Jembatan</option>
+                            <option value="Drainase">Drainase</option>
+                            <option value="Titian">Titian</option> </select>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-black uppercase mb-2">Dokumentasi Lapangan</label>
+                        <input type="file" name="foto" class="w-full px-4 py-2 rounded-xl neo-brutalism-sm font-bold text-xs bg-gray-50 cursor-pointer">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <label class="block text-[10px] font-black uppercase mb-2">Kecamatan</label>
+                        <select name="id_kecamatan" class="w-full px-5 py-3 rounded-xl neo-brutalism-sm font-bold bg-white">
+                            @foreach($semuaKecamatan as $kec)
+                                <option value="{{ $kec->id_kecamatan }}">{{ $kec->nama_kecamatan }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-black uppercase mb-2">Kelurahan</label>
+                        <select name="id_kelurahan" class="w-full px-5 py-3 rounded-xl neo-brutalism-sm font-bold bg-white">
+                            @foreach($semuaKelurahan as $kel)
+                                <option value="{{ $kel->id_kelurahan }}">{{ $kel->nama_kelurahan }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div>
+                        <label class="block text-[10px] font-black uppercase mb-2">Kondisi Awal</label>
+                        <select name="kondisi" class="w-full px-5 py-3 rounded-xl neo-brutalism-sm font-bold bg-white">
+                            <option value="Baik">Baik</option>
+                            <option value="Rusak Ringan">Rusak Ringan</option>
+                            <option value="Rusak Berat">Rusak Berat</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-black uppercase mb-2">Latitude</label>
+                        <input type="text" name="latitude" placeholder="-3.31..." class="w-full px-5 py-3 rounded-xl neo-brutalism-sm font-bold focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-black uppercase mb-2">Longitude</label>
+                        <input type="text" name="longitude" placeholder="114.59..." class="w-full px-5 py-3 rounded-xl neo-brutalism-sm font-bold focus:outline-none">
+                    </div>
+                </div>
+
+                <div class="flex gap-4 pt-6">
+                    <button type="submit" class="flex-1 bg-[#2ecc71] py-4 rounded-2xl neo-brutalism neo-brutalism-btn font-black uppercase text-sm tracking-widest transition-all">
+                        SIMPAN DATA
+                    </button>
+                    <a href="{{ route('admin.infrastruktur') }}" class="flex-1 bg-white py-4 rounded-2xl neo-brutalism neo-brutalism-btn font-black uppercase text-sm text-center tracking-widest transition-all">
+                        BATAL
+                    </a>
+                </div>
+            </form>
         </div>
     </main>
 </body>

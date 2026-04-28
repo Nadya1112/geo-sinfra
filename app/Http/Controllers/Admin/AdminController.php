@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 class AdminController extends Controller
 {
     /**
-     * Menampilkan Dashboard Utama (Halaman Welcome)
+     * Menampilkan Dashboard Utama
      */
     public function index()
     {
@@ -27,7 +27,7 @@ class AdminController extends Controller
         $jumlahSurveyor = User::where('role', 'surveyor')->count();
         $jumlahKabid = User::where('role', 'kabid')->count();
         $jumlahWilayah = DB::table('kecamatan')->count();
-        $jumlahInfrastruktur = Infrastruktur::count();
+        $jumlahInfrastruktur = DB::table('infrastruktur')->whereNull('deleted_at')->count();
         $jumlahAnalisis = DB::table('analisis_ai')->whereNull('deleted_at')->count();
 
         return view('admin.statistik', compact(
@@ -57,7 +57,6 @@ class AdminController extends Controller
 
     public function createUser()
     {
-        // Dropdown wilayah untuk user mengarah ke master kecamatan
         $semuaWilayah = DB::table('kecamatan')->get();
         return view('admin.create-user', compact('semuaWilayah'));
     }
@@ -86,10 +85,7 @@ class AdminController extends Controller
     public function editUser($id)
     {
         $user = User::findOrFail($id);
-        
-        if ($user->role === 'kabid') {
-            return redirect()->route('admin.users')->with('error', 'Akun Kabid terkunci.');
-        }
+        if ($user->role === 'kabid') return redirect()->route('admin.users')->with('error', 'Akun Kabid terkunci.');
         
         $semuaWilayah = DB::table('kecamatan')->get();
         return view('admin.edit-user', compact('user', 'semuaWilayah'));
@@ -98,14 +94,11 @@ class AdminController extends Controller
     public function updateUser(Request $request, $id)
     {
         $user = User::findOrFail($id);
-        if ($user->role === 'kabid') return redirect()->route('admin.users');
-
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'role' => 'required|in:admin,surveyor',
             'id_kecamatan' => 'nullable|exists:kecamatan,id_kecamatan',
-            'password' => 'nullable|string|min:8',
         ]);
 
         $updateData = [
@@ -126,29 +119,21 @@ class AdminController extends Controller
     public function destroyUser($id)
     {
         $user = User::findOrFail($id);
-
-        if ($user->role === 'kabid') {
-            return redirect()->route('admin.users')->with('error', 'Akun Kabid dilindungi dan tidak dapat dihapus.');
-        }
-
-        if (auth()->id() == $user->id) {
-            return redirect()->route('admin.users')->with('error', 'Anda tidak dapat menghapus akun yang sedang Anda gunakan.');
-        }
+        if ($user->role === 'kabid') return redirect()->route('admin.users')->with('error', 'Akun Kabid dilindungi.');
+        if (auth()->id() == $user->id) return redirect()->route('admin.users')->with('error', 'Tidak bisa menghapus akun sendiri.');
 
         $user->delete();
-        return redirect()->route('admin.users')->with('success', 'Data pengguna berhasil dihapus dari sistem!');
+        return redirect()->route('admin.users')->with('success', 'Data pengguna berhasil dihapus!');
     }
 
 
     // ==========================================================
-    // MODUL MANAJEMEN WILAYAH (TERFOKUS PADA KELURAHAN)
+    // MODUL MANAJEMEN WILAYAH
     // ==========================================================
 
     public function wilayah(Request $request)
     {
         $search = $request->query('search');
-        
-        // Mengambil data kelurahan dan digabungkan (join) dengan master kecamatan
         $query = DB::table('kelurahan')
             ->join('kecamatan', 'kelurahan.id_kecamatan', '=', 'kecamatan.id_kecamatan')
             ->select('kelurahan.*', 'kecamatan.nama_kecamatan');
@@ -164,7 +149,6 @@ class AdminController extends Controller
 
     public function createWilayah()
     {
-        // Mengirim daftar master kecamatan untuk dropdown di form
         $semuaKecamatan = DB::table('kecamatan')->get();
         return view('admin.create-wilayah', compact('semuaKecamatan'));
     }
@@ -174,11 +158,10 @@ class AdminController extends Controller
         $request->validate([
             'id_kecamatan' => 'required|exists:kecamatan,id_kecamatan',
             'nama_kelurahan' => 'required|string|max:100',
-            'latitude' => 'required|string|max:50',
-            'longitude' => 'required|string|max:50',
+            'latitude' => 'required|string',
+            'longitude' => 'required|string',
         ]);
 
-        // Menyimpan data langsung ke tabel kelurahan tanpa kolom geometri
         DB::table('kelurahan')->insert([
             'id_kecamatan' => $request->id_kecamatan,
             'nama_kelurahan' => $request->nama_kelurahan,
@@ -191,58 +174,14 @@ class AdminController extends Controller
         return redirect()->route('admin.wilayah')->with('success', 'Data Wilayah berhasil ditambahkan!');
     }
 
-    public function editWilayah($id)
-    {
-        // Mengambil data kelurahan berdasarkan ID kelurahan
-        $wilayah = DB::table('kelurahan')->where('id_kelurahan', $id)->first();
-        
-        if (!$wilayah) {
-            return redirect()->route('admin.wilayah')->with('error', 'Data Wilayah tidak ditemukan.');
-        }
-
-        $semuaKecamatan = DB::table('kecamatan')->get();
-        return view('admin.edit-wilayah', compact('wilayah', 'semuaKecamatan'));
-    }
-
-    public function updateWilayah(Request $request, $id)
-    {
-        $request->validate([
-            'id_kecamatan' => 'required|exists:kecamatan,id_kecamatan',
-            'nama_kelurahan' => 'required|string|max:100',
-            'latitude' => 'required|string|max:50',
-            'longitude' => 'required|string|max:50',
-        ]);
-
-        DB::table('kelurahan')
-            ->where('id_kelurahan', $id)
-            ->update([
-                'id_kecamatan' => $request->id_kecamatan,
-                'nama_kelurahan' => $request->nama_kelurahan,
-                'latitude' => $request->latitude,
-                'longitude' => $request->longitude,
-                'updated_at' => now(),
-            ]);
-
-        return redirect()->route('admin.wilayah')->with('success', 'Data Wilayah berhasil diperbarui!');
-    }
-
-    public function destroyWilayah($id)
-    {
-        // Langsung menghapus kelurahan (tidak mempengaruhi kecamatan master)
-        DB::table('kelurahan')->where('id_kelurahan', $id)->delete();
-
-        return redirect()->route('admin.wilayah')->with('success', 'Data Wilayah berhasil dihapus.');
-    }
-
 
     // ==========================================================
     // MODUL MANAJEMEN INFRASTRUKTUR
     // ==========================================================
+
     public function infrastruktur(Request $request)
     {
         $search = $request->query('search');
-        
-        // Memanggil data infrastruktur
         $query = DB::table('infrastruktur')->whereNull('deleted_at');
 
         if ($search) {
@@ -250,15 +189,16 @@ class AdminController extends Controller
         }
 
         $infrastruktur = $query->orderBy('id_infrastruktur', 'desc')->get();
-        
         return view('admin.infrastruktur', compact('infrastruktur'));
     }
 
     public function createInfrastruktur()
     {
-        // Ambil data kelurahan untuk relasi lokasi aset
+        // FIX: Tambahkan pengambilan data kecamatan agar tidak error
+        $semuaKecamatan = DB::table('kecamatan')->get();
         $semuaKelurahan = DB::table('kelurahan')->get();
-        return view('admin.create-infrastruktur', compact('semuaKelurahan'));
+        
+        return view('admin.create-infrastruktur', compact('semuaKecamatan', 'semuaKelurahan'));
     }
 
     public function storeInfrastruktur(Request $request)
@@ -287,7 +227,6 @@ class AdminController extends Controller
 
     public function destroyInfrastruktur($id)
     {
-        // Melakukan soft delete dengan mengisi deleted_at
         DB::table('infrastruktur')->where('id_infrastruktur', $id)->update(['deleted_at' => now()]);
         return redirect()->route('admin.infrastruktur')->with('success', 'Data Infrastruktur berhasil dihapus.');
     }

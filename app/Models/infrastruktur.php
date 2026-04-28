@@ -19,16 +19,19 @@ class Infrastruktur extends Model
     // 3. Timestamps aktif
     public $timestamps = true;
 
-    // 4. Kolom yang bisa diisi (Mass Assignment)
+    /**
+     * 4. Kolom yang bisa diisi (Mass Assignment)
+     * Disesuaikan dengan controller: nama_infrastruktur, jenis_infrastruktur, id_kelurahan, kondisi
+     */
     protected $fillable = [
         'id_user',
-        'id_kecamatan', // <--- Sudah diubah dari id_wilayah
-        'nama_objek',
-        'foto_terbaru',
-        'jenis',
-        'alamat',
+        'id_kelurahan',      // Mengacu pada wilayah terkecil (Kelurahan)
+        'nama_infrastruktur', // Nama kolom yang benar (bukan nama_objek)
+        'jenis_infrastruktur',// Nama kolom yang benar (bukan jenis)
+        'foto',              // Nama field untuk dokumentasi lapangan
         'latitude',
         'longitude',
+        'kondisi',           // Untuk menyimpan status: Baik, Rusak Ringan, Rusak Berat
     ];
 
     /**
@@ -43,12 +46,12 @@ class Infrastruktur extends Model
     ];
 
     /**
-     * Hubungan: Infrastruktur berada di satu Kecamatan
+     * Hubungan: Infrastruktur berada di satu Kelurahan
+     * Melalui kelurahan, kita bisa mendapatkan data Kecamatan (Infrastruktur -> Kelurahan -> Kecamatan)
      */
-    public function kecamatan(): BelongsTo
+    public function kelurahan(): BelongsTo
     {
-        // Menyambung ke id_kecamatan di tabel kecamatan
-        return $this->belongsTo(Kecamatan::class, 'id_kecamatan', 'id_kecamatan');
+        return $this->belongsTo(Kelurahan::class, 'id_kelurahan', 'id_kelurahan');
     }
 
     /**
@@ -56,7 +59,6 @@ class Infrastruktur extends Model
      */
     public function user(): BelongsTo
     {
-        // Primary Key di tabel users adalah 'id', foreign key di infrastruktur adalah 'id_user'
         return $this->belongsTo(User::class, 'id_user', 'id');
     }
 }
