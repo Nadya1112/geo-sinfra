@@ -124,15 +124,41 @@
                     <h4 class="font-extrabold text-lg text-[#1e1b4b] mb-8 text-left">Log Aktivitas</h4>
                     <div class="relative space-y-8">
                         @forelse($recentActivities as $activity)
+                        @php
+                            $icon = 'fa-plus';
+                            $bgColor = 'bg-blue-100';
+                            $textColor = 'text-blue-600';
+                            $title = 'Aktivitas';
+
+                            if($activity->type == 'survey') {
+                                $icon = 'fa-road'; $bgColor = 'bg-emerald-100'; $textColor = 'text-emerald-600';
+                                $title = 'Log Infrastruktur';
+                            } elseif($activity->type == 'user') {
+                                $icon = 'fa-user-cog'; $bgColor = 'bg-orange-100'; $textColor = 'text-orange-600';
+                                $title = 'Manajemen User';
+                            } elseif($activity->type == 'wilayah') {
+                                $icon = 'fa-map-marked-alt'; $bgColor = 'bg-purple-100'; $textColor = 'text-purple-600';
+                                $title = 'Manajemen Wilayah';
+                            } elseif($activity->type == 'profil') {
+                                $icon = 'fa-id-card'; $bgColor = 'bg-indigo-100'; $textColor = 'text-indigo-600';
+                                $title = 'Update Profil';
+                            }
+                        @endphp
                         <div class="flex gap-4 group">
-                            <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center border-4 border-white z-10 transition-transform group-hover:scale-110 shadow-sm"><i class="fas fa-plus text-[10px] text-blue-600"></i></div>
+                            <div class="w-8 h-8 {{ $bgColor }} rounded-full flex items-center justify-center border-4 border-white z-10 transition-transform group-hover:scale-110 shadow-sm">
+                                <i class="fas {{ $icon }} text-[10px] {{ $textColor }}"></i>
+                            </div>
                             <div class="flex-1">
                                 <div class="flex justify-between items-start">
-                                    <p class="text-xs font-black text-[#1e1b4b]">Survey Baru: {{ $activity->nama_infrastruktur }}</p>
-                                    <p class="text-[9px] text-gray-400 italic">{{ \Carbon\Carbon::parse($activity->created_at)->diffForHumans() }}</p>
+                                    <p class="text-xs font-black text-[#1e1b4b]">{{ $title }}</p>
+                                    <p class="text-[9px] text-gray-400 italic">{{ $activity->created_at->diffForHumans() }}</p>
                                 </div>
-                                <p class="text-[10px] text-gray-500 mt-0.5">Oleh: <span class="font-bold text-blue-600">{{ $activity->surveyor_name ?? 'Surveyor' }}</span></p>
-                                <a href="{{ route('admin.infrastruktur.show', $activity->id_infrastruktur) }}" class="inline-block text-[9px] font-black text-indigo-500 uppercase tracking-tighter mt-2 hover:text-indigo-700">Lihat Detail <i class="fas fa-arrow-right ml-1"></i></a>
+                                <p class="text-[10px] text-gray-500 mt-0.5">{{ $activity->description }}</p>
+                                <p class="text-[9px] text-gray-400 mt-1 uppercase font-bold tracking-tighter">Oleh: <span class="text-gray-600">{{ $activity->user->name ?? 'System' }}</span></p>
+                                
+                                @if($activity->type == 'survey' && $activity->reference_id)
+                                <a href="{{ route('admin.infrastruktur.show', $activity->reference_id) }}" class="inline-block text-[9px] font-black text-indigo-500 uppercase tracking-tighter mt-2 hover:text-indigo-700 transition-colors">Buka Detail <i class="fas fa-arrow-right ml-1"></i></a>
+                                @endif
                             </div>
                         </div>
                         @empty

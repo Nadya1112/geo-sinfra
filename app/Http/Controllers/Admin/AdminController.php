@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Models\ActivityLog;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminController extends Controller
@@ -19,6 +20,19 @@ class AdminController extends Controller
     public function index()
     {
         return view('admin.dashboard');
+    }
+
+    /**
+     * Helper untuk mencatat aktivitas
+     */
+    private function logActivity($type, $description, $referenceId = null)
+    {
+        ActivityLog::create([
+            'user_id' => auth()->id(),
+            'type' => $type,
+            'description' => $description,
+            'reference_id' => $referenceId
+        ]);
     }
 
     /**
@@ -37,13 +51,10 @@ class AdminController extends Controller
         $jumlahRusakRingan = DB::table('infrastruktur')->whereNull('deleted_at')->where('kondisi', 'Rusak Ringan')->count();
         $jumlahBaik = DB::table('infrastruktur')->whereNull('deleted_at')->where('kondisi', 'Baik')->count();
 
-        // Aktivitas Terbaru (Data infrastruktur terbaru beserta surveyornya)
-        $recentActivities = DB::table('infrastruktur')
-            ->leftJoin('users', 'infrastruktur.id_user', '=', 'users.id')
-            ->whereNull('infrastruktur.deleted_at')
-            ->select('infrastruktur.*', 'users.name as surveyor_name')
-            ->orderBy('infrastruktur.created_at', 'desc')
-            ->limit(5)
+        // Aktivitas Terbaru (Data dari tabel activity_logs)
+        $recentActivities = ActivityLog::with('user')
+            ->orderBy('created_at', 'desc')
+            ->limit(10)
             ->get();
 
         return view('admin.statistik', compact(
@@ -89,13 +100,15 @@ class AdminController extends Controller
             'id_kecamatan' => 'nullable|exists:kecamatan,id_kecamatan',
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
             'id_kecamatan' => ($request->role === 'admin') ? null : $request->id_kecamatan,
         ]);
+
+        $this->logActivity('user', "Menambahkan user baru: {$user->name} ({$user->role})", $user->id);
 
         return redirect()->route('admin.users')->with('success', 'USER BARU BERHASIL DITAMBAHKAN!');
     }
@@ -131,6 +144,9 @@ class AdminController extends Controller
         }
 
         $user->update($updateData);
+
+        $this->logActivity('user', "Memperbarui data user: {$user->name}", $user->id);
+
         return redirect()->route('admin.users')->with('success', 'DATA USER BERHASIL DIPERBARUI!');
     }
 
@@ -140,8 +156,12 @@ class AdminController extends Controller
         if ($user->role === 'kabid') return redirect()->route('admin.users')->with('error', 'AKUN KABID DILINDUNGI.');
         if (auth()->id() == $user->id) return redirect()->route('admin.users')->with('error', 'TIDAK BISA MENGHAPUS AKUN SENDIRI.');
 
+        $name = $user->name;
         $user->delete();
-        return redirect()->route('admin.users')->with('success', 'DATA PENGGUNA BERHASIL DIHAPUS!');
+
+        $this->logActivity('user', "Menghapus user: {$name}");
+
+        return redirect()->route('admin.users')->with('success', 'USER BERHASIL DIHAPUS!');
     }
 
 
@@ -189,6 +209,8 @@ class AdminController extends Controller
             'updated_at' => now(),
         ]);
 
+        $this->logActivity('wilayah', "Menambahkan wilayah baru: Kelurahan {$request->nama_kelurahan}");
+
         return redirect()->route('admin.wilayah')->with('success', 'DATA WILAYAH BERHASIL DITAMBAHKAN!');
     }
 
@@ -218,12 +240,18 @@ class AdminController extends Controller
             'updated_at' => now(),
         ]);
 
+        $this->logActivity('wilayah', "Memperbarui data wilayah: Kelurahan {$request->nama_kelurahan}", $id);
+
         return redirect()->route('admin.wilayah')->with('success', 'DATA WILAYAH BERHASIL DIPERBARUI!');
     }
 
     public function destroyWilayah($id)
     {
+        $wilayah = DB::table('kelurahan')->where('id_kelurahan', $id)->first();
         DB::table('kelurahan')->where('id_kelurahan', $id)->delete();
+
+        $this->logActivity('wilayah', "Menghapus wilayah: Kelurahan {$wilayah->nama_kelurahan}");
+
         return redirect()->route('admin.wilayah')->with('success', 'DATA WILAYAH BERHASIL DIHAPUS.');
     }
 
@@ -406,12 +434,18 @@ class AdminController extends Controller
             'updated_at' => now(),
         ]);
 
+        $this->logActivity('survey', "Memperbarui data infrastruktur: {$request->nama_infrastruktur}", $id);
+
         return redirect()->route('admin.infrastruktur')->with('success', 'DATA INFRASTRUKTUR BERHASIL DIPERBARUI!');
     }
 
     public function destroyInfrastruktur($id)
     {
+        $infra = DB::table('infrastruktur')->where('id_infrastruktur', $id)->first();
         DB::table('infrastruktur')->where('id_infrastruktur', $id)->update(['deleted_at' => now()]);
+
+        $this->logActivity('survey', "Menghapus data infrastruktur: {$infra->nama_infrastruktur}");
+
         return redirect()->route('admin.infrastruktur')->with('success', 'DATA INFRASTRUKTUR BERHASIL DIHAPUS.');
     }
 
@@ -454,6 +488,8 @@ class AdminController extends Controller
         }
 
         $user->save();
+
+        $this->logActivity('profil', 'Memperbarui informasi profil pribadi');
 
         return redirect()->route('admin.dashboard')->with('success', 'Profil Anda berhasil diperbarui!');
     }
