@@ -91,8 +91,8 @@
                             <div class="flex items-center gap-4">
                                 <div class="w-10 h-10 bg-red-500 text-white rounded-xl flex items-center justify-center shadow-lg shadow-red-200"><i class="fas fa-exclamation-triangle"></i></div>
                                 <div>
-                                    <p class="text-xs font-bold text-red-900 leading-none">Prioritas Tinggi (Sangat Rusak)</p>
-                                    <p class="text-[10px] text-red-600 mt-1">48 Titik ditemukan butuh penanganan segera</p>
+                                    <p class="text-xs font-bold text-red-900 leading-none">Prioritas Tinggi (Rusak Berat)</p>
+                                    <p class="text-[10px] text-red-600 mt-1">{{ $jumlahRusakBerat }} Titik ditemukan butuh penanganan segera</p>
                                 </div>
                             </div>
                             <i class="fas fa-chevron-right text-red-300 text-xs"></i>
@@ -102,7 +102,7 @@
                                 <div class="w-10 h-10 bg-yellow-500 text-white rounded-xl flex items-center justify-center shadow-lg shadow-yellow-200"><i class="fas fa-tools"></i></div>
                                 <div>
                                     <p class="text-xs font-bold text-yellow-900 leading-none">Prioritas Sedang (Rusak Ringan)</p>
-                                    <p class="text-[10px] text-yellow-600 mt-1 text-left">102 Titik butuh pemeliharaan berkala</p>
+                                    <p class="text-[10px] text-yellow-600 mt-1 text-left">{{ $jumlahRusakRingan }} Titik butuh pemeliharaan berkala</p>
                                 </div>
                             </div>
                             <i class="fas fa-chevron-right text-yellow-300 text-xs"></i>
@@ -112,7 +112,7 @@
                                 <div class="w-10 h-10 bg-emerald-500 text-white rounded-xl flex items-center justify-center shadow-lg shadow-emerald-200"><i class="fas fa-check-circle"></i></div>
                                 <div>
                                     <p class="text-xs font-bold text-emerald-900 leading-none">Kondisi Baik (Normal)</p>
-                                    <p class="text-[10px] text-emerald-600 mt-1">215 Titik dalam kondisi layak dan stabil</p>
+                                    <p class="text-[10px] text-emerald-600 mt-1">{{ $jumlahBaik }} Titik dalam kondisi layak dan stabil</p>
                                 </div>
                             </div>
                             <i class="fas fa-chevron-right text-emerald-300 text-xs"></i>
@@ -123,20 +123,17 @@
                 <div class="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm text-left">
                     <h4 class="font-extrabold text-lg text-[#1e1b4b] mb-8 text-left">Log Aktivitas</h4>
                     <div class="relative space-y-8">
+                        @forelse($recentActivities as $activity)
                         <div class="flex gap-4">
                             <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center border-4 border-white z-10"><i class="fas fa-plus text-[10px] text-blue-600"></i></div>
                             <div>
-                                <p class="text-xs font-bold text-gray-800">Laporan Survey Masuk</p>
-                                <p class="text-[10px] text-gray-400 italic">Baru saja</p>
+                                <p class="text-xs font-bold text-gray-800">Survey: {{ $activity->nama_infrastruktur }}</p>
+                                <p class="text-[10px] text-gray-400 italic">{{ \Carbon\Carbon::parse($activity->created_at)->diffForHumans() }}</p>
                             </div>
                         </div>
-                        <div class="flex gap-4">
-                            <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center border-4 border-white z-10"><i class="fas fa-brain text-[10px] text-purple-600"></i></div>
-                            <div>
-                                <p class="text-xs font-bold text-gray-800 text-left">Analisis AI Selesai</p>
-                                <p class="text-[10px] text-gray-400 italic">15 menit yang lalu</p>
-                            </div>
-                        </div>
+                        @empty
+                        <p class="text-xs text-gray-400 italic">Belum ada aktivitas terbaru.</p>
+                        @endforelse
                     </div>
                 </div>
             </div>

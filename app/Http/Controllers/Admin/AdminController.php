@@ -32,8 +32,22 @@ class AdminController extends Controller
         $jumlahInfrastruktur = DB::table('infrastruktur')->whereNull('deleted_at')->count();
         $jumlahAnalisis = DB::table('analisis_ai')->whereNull('deleted_at')->count();
 
+        // Data Kondisi untuk Chart/Statistik
+        $jumlahRusakBerat = DB::table('infrastruktur')->whereNull('deleted_at')->where('kondisi', 'Rusak Berat')->count();
+        $jumlahRusakRingan = DB::table('infrastruktur')->whereNull('deleted_at')->where('kondisi', 'Rusak Ringan')->count();
+        $jumlahBaik = DB::table('infrastruktur')->whereNull('deleted_at')->where('kondisi', 'Baik')->count();
+
+        // Aktivitas Terbaru (Simulasi dari created_at infrastruktur terbaru)
+        $recentActivities = DB::table('infrastruktur')
+            ->whereNull('deleted_at')
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
+
         return view('admin.statistik', compact(
-            'jumlahSurveyor', 'jumlahKabid', 'jumlahWilayah', 'jumlahInfrastruktur', 'jumlahAnalisis'
+            'jumlahSurveyor', 'jumlahKabid', 'jumlahWilayah', 'jumlahInfrastruktur', 
+            'jumlahAnalisis', 'jumlahRusakBerat', 'jumlahRusakRingan', 'jumlahBaik',
+            'recentActivities'
         ));
     }
 
