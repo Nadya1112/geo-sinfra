@@ -103,9 +103,7 @@ Route::middleware(['auth'])->group(function () {
 
     // --- AREA KABID ---
     Route::middleware(['role:kabid'])->prefix('kabid')->group(function () {
-        Route::get('/dashboard', function () { 
-            return view('kabid.dashboard'); 
-        })->name('kabid.dashboard');
+        Route::get('/dashboard', [App\Http\Controllers\Kabid\KabidController::class, 'index'])->name('kabid.dashboard');
     });
     
 });
