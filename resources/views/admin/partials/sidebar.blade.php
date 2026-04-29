@@ -22,7 +22,7 @@
 
             <a href="{{ route('admin.wilayah') }}" 
                class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.wilayah*') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-900/20' : 'text-gray-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-draw-polygon {{ request()->routeIs('admin.wilayah*') ? '' : 'group-hover:text-blue-400' }}"></i> 
+                <i class="fas fa-sitemap {{ request()->routeIs('admin.wilayah*') ? '' : 'group-hover:text-blue-400' }}"></i> 
                 Manajemen Wilayah
             </a>
 
@@ -32,11 +32,7 @@
                 Manajemen Infrastruktur
             </a>
 
-            <a href="{{ route('admin.peta') }}" 
-               class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.peta') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-900/20' : 'text-gray-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-map-marked-alt {{ request()->routeIs('admin.peta') ? '' : 'group-hover:text-blue-400' }}"></i> 
-                Peta Spasial
-            </a>
+
 
             <a href="{{ route('admin.statistik') }}" 
                class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.statistik') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-900/20' : 'text-gray-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">

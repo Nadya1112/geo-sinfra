@@ -24,16 +24,30 @@
                     <h2 class="text-xl font-black text-[#1e1b4b]">Edit Data Wilayah</h2>
                 </div>
             </div>
-            <div class="text-right">
-                <p class="text-[11px] font-black text-[#1e1b4b]">{{ now()->translatedFormat('H:i') }} WITA</p>
+            
+            <div class="flex items-center gap-6">
+                <div class="text-right hidden sm:block">
+                    <p class="text-[11px] font-black text-[#1e1b4b]" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                </div>
+                <div class="h-8 w-[1px] bg-gray-100"></div>
+                <div class="flex items-center gap-3">
+                    <div class="text-right">
+                        <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase">Admin SINFRA</p>
+                        <p class="text-[9px] font-bold text-green-500 uppercase mt-1">Online</p>
+                    </div>
+                    <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100">
+                        <i class="fas fa-user-circle text-xl"></i>
+                    </div>
+                </div>
             </div>
         </header>
 
-        <div class="p-8 uppercase">
+        <div class="p-8">
             <div class="max-w-4xl bg-white rounded-[2.5rem] p-10 border border-gray-100 shadow-sm mx-auto">
                 <div class="mb-10 border-b border-gray-50 pb-5">
-                    <h3 class="text-lg font-black text-[#1e1b4b] tracking-tight">Informasi Kelurahan</h3>
-                    <p class="text-xs text-gray-400 font-medium tracking-tighter">Perbarui Koordinat Dan Nama Wilayah</p>
+                    <h3 class="text-lg font-black text-[#1e1b4b] tracking-tight">Informasi Wilayah</h3>
+                    <p class="text-xs text-gray-400 font-medium">Perbarui koordinat dan nama wilayah administratif</p>
                 </div>
 
                 <form action="{{ route('admin.wilayah.update', $wilayah->id_kelurahan) }}" method="POST" class="space-y-8">
@@ -42,11 +56,11 @@
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
-                            <label class="block text-[10px] font-black text-[#1e1b4b] tracking-widest mb-2">Nama Kelurahan *</label>
+                            <label class="block text-[10px] font-black text-[#1e1b4b] tracking-widest mb-2 uppercase">Nama Kelurahan <span class="text-red-500">*</span></label>
                             <input type="text" name="nama_kelurahan" value="{{ $wilayah->nama_kelurahan }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500" required>
                         </div>
                         <div>
-                            <label class="block text-[10px] font-black text-[#1e1b4b] tracking-widest mb-2">Kecamatan</label>
+                            <label class="block text-[10px] font-black text-[#1e1b4b] tracking-widest mb-2 uppercase">Kecamatan <span class="text-red-500">*</span></label>
                             <select name="id_kecamatan" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500">
                                 @foreach($semuaKecamatan as $kec)
                                     <option value="{{ $kec->id_kecamatan }}" {{ $wilayah->id_kecamatan == $kec->id_kecamatan ? 'selected' : '' }}>
@@ -59,22 +73,29 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
-                            <label class="block text-[10px] font-black text-[#1e1b4b] tracking-widest mb-2">Latitude</label>
+                            <label class="block text-[10px] font-black text-[#1e1b4b] tracking-widest mb-2 uppercase">Latitude <span class="text-red-500">*</span></label>
                             <input type="text" name="latitude" value="{{ $wilayah->latitude }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500">
                         </div>
                         <div>
-                            <label class="block text-[10px] font-black text-[#1e1b4b] tracking-widest mb-2">Longitude</label>
+                            <label class="block text-[10px] font-black text-[#1e1b4b] tracking-widest mb-2 uppercase">Longitude <span class="text-red-500">*</span></label>
                             <input type="text" name="longitude" value="{{ $wilayah->longitude }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500">
                         </div>
                     </div>
 
                     <div class="flex gap-4 pt-6">
-                        <button type="submit" class="flex-1 bg-blue-600 text-white py-4 rounded-2xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition tracking-widest text-sm">UPDATE WILAYAH</button>
-                        <a href="{{ route('admin.wilayah') }}" class="flex-1 bg-gray-100 text-gray-500 py-4 rounded-2xl font-bold hover:bg-gray-200 transition text-center leading-[1.2rem] tracking-widest text-sm">BATAL</a>
+                        <button type="submit" class="flex-1 bg-blue-600 text-white py-4 rounded-2xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition tracking-widest text-xs uppercase">Simpan Perubahan</button>
+                        <a href="{{ route('admin.wilayah') }}" class="flex-1 bg-gray-100 text-gray-500 py-4 rounded-2xl font-bold hover:bg-gray-200 transition text-center leading-[1.2rem] tracking-widest text-xs uppercase">Batal</a>
                     </div>
                 </form>
             </div>
         </div>
     </main>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('mini-clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WITA`;
+        }
+        setInterval(updateClock, 1000); updateClock();
+    </script>
 </body>
 </html>

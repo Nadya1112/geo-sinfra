@@ -15,7 +15,7 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     </style>
 </head>
-<body class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 text-left uppercase">
+<body class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 text-left">
 
     @include('admin.partials.sidebar')
 
@@ -27,7 +27,7 @@
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
                 <div>
-                    <p class="text-[10px] font-extrabold text-blue-600 tracking-[0.2em] mb-1 uppercase">Administrator Portal</p>
+                    <p class="text-[10px] font-extrabold text-blue-600 tracking-[0.2em] mb-1">Administrator Portal</p>
                     <h2 class="text-xl font-black text-[#1e1b4b]">Manajemen Infrastruktur</h2>
                 </div>
             </div>
@@ -39,13 +39,17 @@
                 </div>
                 <div class="h-8 w-[1px] bg-gray-100"></div>
                 <div class="flex items-center gap-3">
-                    <div class="text-right uppercase">
-                        <p class="text-[11px] font-black text-[#1e1b4b] leading-none">Admin SINFRA</p>
-                        <p class="text-[9px] font-bold text-green-500 mt-1">Online</p>
-                    </div>
-                    <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100">
-                        <i class="fas fa-user-circle text-xl"></i>
-                    </div>
+                    <a href="{{ route('admin.profile') }}" class="text-right group">
+                        <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase group-hover:text-blue-600 transition-all">{{ auth()->user()->name }}</p>
+                        <p class="text-[9px] font-bold text-green-500 uppercase mt-1">Online</p>
+                    </a>
+                    <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100 overflow-hidden hover:shadow-lg hover:shadow-indigo-500/10 transition-all">
+                        @if(auth()->user()->profile_photo)
+                            <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
+                        @else
+                            <i class="fas fa-user-circle text-xl"></i>
+                        @endif
+                    </a>
                 </div>
             </div>
         </header>
@@ -53,12 +57,16 @@
         <div class="flex-1 p-8 overflow-y-auto custom-scrollbar">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 text-left">
                 <div>
-                    <h4 class="font-extrabold text-lg text-[#1e1b4b]">Data Master Infrastruktur</h4>
-                    <p class="text-xs text-gray-400 font-medium tracking-tighter lowercase italic">Pemetaan dan analisis kondisi infrastruktur permukiman</p>
+                    <h4 class="font-extrabold text-lg text-[#1e1b4b]">Data Manajemen Infrastruktur</h4>
                 </div>
                 
-                <div class="flex items-center gap-3 w-full md:w-auto">
-                    <a href="{{ route('admin.infrastruktur.create') }}" class="bg-blue-600 text-white text-[10px] px-6 py-3 rounded-2xl font-black shadow-lg shadow-blue-200 hover:bg-blue-700 transition flex items-center gap-2 whitespace-nowrap tracking-widest">
+                <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+                    <form action="{{ route('admin.infrastruktur') }}" method="GET" class="relative w-full sm:w-64">
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari infrastruktur..." class="w-full pl-10 pr-4 py-3 bg-white border border-gray-100 rounded-2xl text-[10px] font-bold outline-none focus:border-blue-500 transition-all shadow-sm placeholder-gray-400 text-gray-600">
+                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[10px]"></i>
+                    </form>
+                    
+                    <a href="{{ route('admin.infrastruktur.create') }}" class="bg-blue-600 text-white text-[10px] px-6 py-3 rounded-2xl font-black shadow-lg shadow-blue-200 hover:bg-blue-700 transition flex items-center justify-center gap-2 whitespace-nowrap tracking-widest w-full sm:w-auto">
                         <i class="fas fa-plus"></i> Tambah Data
                     </a>
                 </div>
@@ -75,15 +83,15 @@
                             <th class="px-6 py-5 text-[10px] font-black text-gray-400 tracking-widest text-center">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-50 font-bold text-xs uppercase">
+                    <tbody class="divide-y divide-gray-50 font-bold text-xs">
                         @forelse($infrastruktur as $inf)
                         <tr class="hover:bg-gray-50/50 transition">
                             <td class="px-6 py-5">
-                                <p class="text-sm font-black text-[#1e1b4b]">{{ $inf->nama_infrastruktur }}</p>
+                                <p class="text-sm font-black text-[#1e1b4b]">{{ $inf->jenis_infrastruktur }}</p>
                                 <p class="text-[9px] text-gray-400 mt-1 font-bold">ID: INF-{{ $inf->id_infrastruktur }}</p>
                             </td>
                             <td class="px-6 py-5">
-                                <span class="text-[10px] text-gray-500 font-extrabold">{{ $inf->nama_kelurahan ?? 'Banjarmasin' }}</span>
+                                <span class="text-[10px] text-gray-500 font-extrabold">{{ $inf->nama_infrastruktur }}</span>
                             </td>
                             
                             <td class="px-6 py-5">

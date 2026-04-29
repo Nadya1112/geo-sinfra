@@ -20,8 +20,8 @@
     @include('admin.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden text-left">
-        <header class="bg-white border-b border-gray-100 px-8 py-5 flex justify-between items-center z-10 text-left">
-            <div class="flex items-center gap-4 text-left">
+        <header class="bg-white border-b border-gray-100 px-8 py-5 flex justify-between items-center z-10">
+            <div class="flex items-center gap-4">
                 <a href="{{ route('admin.dashboard') }}" 
                    class="w-10 h-10 bg-white border border-gray-100 rounded-xl flex items-center justify-center text-gray-400 hover:text-blue-600 hover:border-blue-100 hover:shadow-lg hover:shadow-blue-500/5 transition-all group"
                    title="Kembali ke Dashboard">
@@ -41,13 +41,17 @@
                 </div>
                 <div class="h-8 w-[1px] bg-gray-100"></div>
                 <div class="flex items-center gap-3">
-                    <div class="text-right">
-                        <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase">Admin SINFRA</p>
+                    <a href="{{ route('admin.profile') }}" class="text-right group">
+                        <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase group-hover:text-blue-600 transition-all">{{ auth()->user()->name }}</p>
                         <p class="text-[9px] font-bold text-green-500 uppercase mt-1">Online</p>
-                    </div>
-                    <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100">
-                        <i class="fas fa-user-circle text-xl"></i>
-                    </div>
+                    </a>
+                    <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100 overflow-hidden hover:shadow-lg hover:shadow-indigo-500/10 transition-all">
+                        @if(auth()->user()->profile_photo)
+                            <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
+                        @else
+                            <i class="fas fa-user-circle text-xl"></i>
+                        @endif
+                    </a>
                 </div>
             </div>
         </header>

@@ -86,10 +86,10 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/infrastruktur/{id}', [AdminController::class, 'updateInfrastruktur'])->name('admin.infrastruktur.update');
         // Proses Hapus Aset
         Route::delete('/infrastruktur/{id}', [AdminController::class, 'destroyInfrastruktur'])->name('admin.infrastruktur.destroy');
-        
-        /** * 5. PETA SPASIAL
-         */
-        Route::get('/peta', [AdminController::class, 'peta'])->name('admin.peta');
+        // Manajemen Profil
+        Route::get('/profile', [AdminController::class, 'profile'])->name('admin.profile');
+        Route::put('/profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
+
     });
 
     // --- AREA SURVEYOR ---

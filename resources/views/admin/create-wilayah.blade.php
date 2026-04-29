@@ -18,14 +18,31 @@
     @include('admin.partials.sidebar')
     
     <main class="flex-1 flex flex-col h-screen overflow-hidden text-left">
-        <header class="bg-white border-b border-gray-100 px-8 py-5 flex justify-between items-center z-10 text-left">
-            <div class="flex items-center gap-4 text-left">
+        <header class="bg-white border-b border-gray-100 px-8 py-5 flex justify-between items-center z-10">
+            <div class="flex items-center gap-4">
                 <a href="{{ route('admin.wilayah') }}" class="w-10 h-10 bg-white border border-gray-100 rounded-xl flex items-center justify-center text-gray-400 hover:text-blue-600 transition-all group">
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
                 <div>
                     <p class="text-[10px] font-extrabold text-blue-600 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
                     <h2 class="text-xl font-black text-[#1e1b4b]">Tambah Data Wilayah</h2>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-6">
+                <div class="text-right hidden sm:block">
+                    <p class="text-[11px] font-black text-[#1e1b4b]" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                </div>
+                <div class="h-8 w-[1px] bg-gray-100"></div>
+                <div class="flex items-center gap-3">
+                    <div class="text-right">
+                        <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase">Admin SINFRA</p>
+                        <p class="text-[9px] font-bold text-green-500 uppercase mt-1">Online</p>
+                    </div>
+                    <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100">
+                        <i class="fas fa-user-circle text-xl"></i>
+                    </div>
                 </div>
             </div>
         </header>
@@ -98,5 +115,12 @@
             </div>
         </div>
     </main>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('mini-clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WITA`;
+        }
+        setInterval(updateClock, 1000); updateClock();
+    </script>
 </body>
 </html>

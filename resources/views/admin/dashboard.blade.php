@@ -39,18 +39,28 @@
                 </div>
                 <div class="h-8 w-[1px] bg-gray-100"></div>
                 <div class="flex items-center gap-3">
-                    <div class="text-right text-left">
-                        <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase">Admin SINFRA</p>
+                    <a href="{{ route('admin.profile') }}" class="text-right group">
+                        <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase group-hover:text-blue-600 transition-all">{{ auth()->user()->name }}</p>
                         <p class="text-[9px] font-bold text-green-500 uppercase mt-1">Online</p>
-                    </div>
-                    <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100">
-                        <i class="fas fa-user-circle text-xl"></i>
-                    </div>
+                    </a>
+                    <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100 overflow-hidden hover:shadow-lg hover:shadow-indigo-500/10 transition-all">
+                        @if(auth()->user()->profile_photo)
+                            <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
+                        @else
+                            <i class="fas fa-user-circle text-xl"></i>
+                        @endif
+                    </a>
                 </div>
             </div>
         </header>
 
         <div class="p-8 text-left">
+            @if(session('success'))
+            <div class="mb-6 px-6 py-4 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-2xl flex items-center gap-3 shadow-sm">
+                <i class="fas fa-check-circle"></i>
+                <p class="text-xs font-bold">{{ session('success') }}</p>
+            </div>
+            @endif
             
             <div class="relative bg-gradient-to-br from-blue-600 to-indigo-800 rounded-[2.5rem] p-10 mb-8 overflow-hidden shadow-lg shadow-blue-900/10 text-left">
                 <div class="absolute inset-0 bg-pattern opacity-50"></div>
@@ -83,18 +93,10 @@
 
                     <a href="{{ route('admin.wilayah') }}" class="group bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-indigo-500/10 hover:border-indigo-200 transition-all text-left">
                         <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                            <i class="fas fa-draw-polygon text-lg"></i>
+                            <i class="fas fa-sitemap text-lg"></i>
                         </div>
                         <h5 class="font-black text-[#1e1b4b] mb-1">Kelola Wilayah</h5>
-                        <p class="text-[10px] text-gray-400 font-medium leading-relaxed text-left">Atur batas kecamatan dan zonasi warna pada peta.</p>
-                    </a>
-
-                    <a href="{{ route('admin.peta') }}" class="group bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-emerald-500/10 hover:border-emerald-200 transition-all text-left">
-                        <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                            <i class="fas fa-map-marked-alt text-lg"></i>
-                        </div>
-                        <h5 class="font-black text-[#1e1b4b] mb-1">Lihat Peta</h5>
-                        <p class="text-[10px] text-gray-400 font-medium leading-relaxed text-left">Pantau titik persebaran infrastruktur secara real-time.</p>
+                        <p class="text-[10px] text-gray-400 font-medium leading-relaxed text-left">Kelola data master wilayah kecamatan dan kelurahan.</p>
                     </a>
 
                     <a href="{{ route('admin.statistik') }}" class="group bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-purple-500/10 hover:border-purple-200 transition-all text-left">

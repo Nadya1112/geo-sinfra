@@ -225,7 +225,12 @@ class AdminController extends Controller
             ->whereNull('infrastruktur.deleted_at');
 
         if ($search) {
-            $query->where('nama_infrastruktur', 'LIKE', "%{$search}%");
+            $query->where(function($q) use ($search) {
+                $q->where('infrastruktur.nama_infrastruktur', 'LIKE', "%{$search}%")
+                  ->orWhere('infrastruktur.jenis_infrastruktur', 'LIKE', "%{$search}%")
+                  ->orWhere('infrastruktur.id_infrastruktur', 'LIKE', "%{$search}%")
+                  ->orWhere('kelurahan.nama_kelurahan', 'LIKE', "%{$search}%");
+            });
         }
 
         $infrastruktur = $query->orderBy('infrastruktur.id_infrastruktur', 'desc')
@@ -394,15 +399,47 @@ class AdminController extends Controller
         return redirect()->route('admin.infrastruktur')->with('success', 'DATA INFRASTRUKTUR BERHASIL DIHAPUS.');
     }
 
+    // ==========================================================
+    // MODUL PROFIL ADMIN
+    // ==========================================================
 
-    // ==========================================================
-    // MODUL PETA SPASIAL
-    // ==========================================================
-    public function peta()
+    public function profile()
     {
-        $semuaWilayah = DB::table('kecamatan')->get();
-        $dataInfrastruktur = DB::table('infrastruktur')->whereNull('deleted_at')->get();
+        $user = auth()->user();
+        return view('admin.profile', compact('user'));
+    }
 
-        return view('admin.peta', compact('semuaWilayah', 'dataInfrastruktur'));
+    public function updateProfile(Request $request)
+    {
+        $user = User::find(auth()->id());
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|min:8|confirmed',
+            'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
+
+        if ($request->hasFile('profile_photo')) {
+            // Hapus foto lama jika ada
+            if ($user->profile_photo && Storage::disk('public')->exists($user->profile_photo)) {
+                Storage::disk('public')->delete($user->profile_photo);
+            }
+
+            $path = $request->file('profile_photo')->store('profile_photos', 'public');
+            $user->profile_photo = $path;
+        }
+
+        $user->save();
+
+        return redirect()->route('admin.dashboard')->with('success', 'Profil Anda berhasil diperbarui!');
     }
 }
+

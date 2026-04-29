@@ -7,9 +7,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style> body { font-family: 'Plus Jakarta Sans', sans-serif; } </style>
 </head>
-<body class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 text-left uppercase">
+<body class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 text-left">
 
     @include('admin.partials.sidebar')
 
@@ -62,11 +64,11 @@
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div>
-                                <label class="block text-[10px] font-black text-[#1e1b4b] tracking-widest mb-2">Nama Infrastruktur *</label>
+                                <label class="block text-[10px] font-black text-[#1e1b4b] tracking-widest mb-2">Nama Infrastruktur <span class="text-red-500">*</span></label>
                                 <input type="text" name="nama_infrastruktur" value="{{ $inf->nama_infrastruktur }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500 transition-all" required>
                             </div>
                             <div>
-                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Jenis Infrastruktur</label>
+                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Jenis Infrastruktur <span class="text-red-500">*</span></label>
                                 <select name="jenis_infrastruktur" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500">
                                     <option value="Jalan" {{ $inf->jenis_infrastruktur == 'Jalan' ? 'selected' : '' }}>Jalan</option>
                                     <option value="Jembatan" {{ $inf->jenis_infrastruktur == 'Jembatan' ? 'selected' : '' }}>Jembatan</option>
@@ -78,7 +80,7 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div>
-                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Kecamatan</label>
+                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Kecamatan <span class="text-red-500">*</span></label>
                                 <select name="id_kecamatan" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500">
                                     @foreach($semuaKecamatan as $kec)
                                         <option value="{{ $kec->id_kecamatan }}" {{ $inf->id_kecamatan == $kec->id_kecamatan ? 'selected' : '' }}>
@@ -88,7 +90,7 @@
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Kelurahan</label>
+                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Kelurahan <span class="text-red-500">*</span></label>
                                 <select name="id_kelurahan" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500">
                                     @foreach($semuaKelurahan as $kel)
                                         <option value="{{ $kel->id_kelurahan }}" {{ $inf->id_kelurahan == $kel->id_kelurahan ? 'selected' : '' }}>
@@ -107,13 +109,19 @@
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div>
-                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Latitude</label>
-                                <input type="text" name="latitude" value="{{ $inf->latitude }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500">
+                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Latitude <span class="text-red-500">*</span></label>
+                                <input type="text" name="latitude" id="lat-input" value="{{ $inf->latitude }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500 transition-all">
                             </div>
                             <div>
-                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Longitude</label>
-                                <input type="text" name="longitude" value="{{ $inf->longitude }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500">
+                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Longitude <span class="text-red-500">*</span></label>
+                                <input type="text" name="longitude" id="lng-input" value="{{ $inf->longitude }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500 transition-all">
                             </div>
+                        </div>
+
+                        <!-- Interactive Mini Map -->
+                        <div class="mt-6">
+                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-3">Geser Pin Untuk Ubah Lokasi (Interactive Map)</label>
+                            <div id="edit-map" class="w-full h-48 rounded-3xl border border-gray-100 shadow-inner z-0"></div>
                         </div>
                     </div>
 
@@ -150,9 +158,8 @@
                         </div>
                         <div class="grid grid-cols-1 gap-8">
                             <div>
-                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Upload Foto Baru (Opsional)</label>
+                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Upload Foto Baru</label>
                                 <input type="file" name="foto" class="w-full px-5 py-2.5 bg-gray-50 border border-gray-100 rounded-2xl text-xs font-semibold file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-emerald-50 file:text-emerald-600 hover:file:bg-emerald-100 transition-all">
-                                <p class="text-[9px] font-bold text-gray-400 mt-2">*Biarkan kosong jika tidak ingin mengubah foto saat ini.</p>
                             </div>
                         </div>
                     </div>
@@ -173,6 +180,42 @@
             document.getElementById('mini-clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WITA`;
         }
         setInterval(updateClock, 1000); updateClock();
+
+        // Initialize Interactive Map
+        const latInput = document.getElementById('lat-input');
+        const lngInput = document.getElementById('lng-input');
+        
+        const lat = parseFloat(latInput.value);
+        const lng = parseFloat(lngInput.value);
+        
+        const map = L.map('edit-map').setView([lat, lng], 15);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        const marker = L.marker([lat, lng], {
+            draggable: true
+        }).addTo(map);
+
+        // Update inputs when marker is dragged
+        marker.on('dragend', function (event) {
+            const position = marker.getLatLng();
+            latInput.value = position.lat.toFixed(8);
+            lngInput.value = position.lng.toFixed(8);
+        });
+
+        // Update marker when inputs change
+        [latInput, lngInput].forEach(input => {
+            input.addEventListener('input', () => {
+                const newLat = parseFloat(latInput.value);
+                const newLng = parseFloat(lngInput.value);
+                if (!isNaN(newLat) && !isNaN(newLng)) {
+                    marker.setLatLng([newLat, newLng]);
+                    map.panTo([newLat, newLng]);
+                }
+            });
+        });
     </script>
 </body>
 </html>
