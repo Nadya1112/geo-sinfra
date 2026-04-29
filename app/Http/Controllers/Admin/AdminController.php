@@ -8,6 +8,7 @@ use App\Models\Infrastruktur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -20,7 +21,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Menampilkan Pusat Statistik dan Laporan
+     * Menampilkan Pusat Statistik dan Laporan (SINFRA)
      */
     public function statistik()
     {
@@ -174,27 +175,70 @@ class AdminController extends Controller
         return redirect()->route('admin.wilayah')->with('success', 'Data Wilayah berhasil ditambahkan!');
     }
 
+    public function editWilayah($id)
+    {
+        $wilayah = DB::table('kelurahan')->where('id_kelurahan', $id)->first();
+        if (!$wilayah) return redirect()->route('admin.wilayah')->with('error', 'Wilayah tidak ditemukan.');
+        
+        $semuaKecamatan = DB::table('kecamatan')->get();
+        return view('admin.edit-wilayah', compact('wilayah', 'semuaKecamatan'));
+    }
+
+    public function updateWilayah(Request $request, $id)
+    {
+        $request->validate([
+            'id_kecamatan' => 'required|exists:kecamatan,id_kecamatan',
+            'nama_kelurahan' => 'required|string|max:100',
+            'latitude' => 'required|string',
+            'longitude' => 'required|string',
+        ]);
+
+        DB::table('kelurahan')->where('id_kelurahan', $id)->update([
+            'id_kecamatan' => $request->id_kecamatan,
+            'nama_kelurahan' => $request->nama_kelurahan,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'updated_at' => now(),
+        ]);
+
+        return redirect()->route('admin.wilayah')->with('success', 'Data Wilayah berhasil diperbarui!');
+    }
+
+    public function destroyWilayah($id)
+    {
+        DB::table('kelurahan')->where('id_kelurahan', $id)->delete();
+        return redirect()->route('admin.wilayah')->with('success', 'Data Wilayah berhasil dihapus.');
+    }
+
 
     // ==========================================================
-    // MODUL MANAJEMEN INFRASTRUKTUR
+    // MODUL MANAJEMEN INFRASTRUKTUR (SINFRA)
     // ==========================================================
 
     public function infrastruktur(Request $request)
     {
         $search = $request->query('search');
-        $query = DB::table('infrastruktur')->whereNull('deleted_at');
+        
+        $query = DB::table('infrastruktur')
+            ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
+            ->whereNull('infrastruktur.deleted_at');
 
         if ($search) {
             $query->where('nama_infrastruktur', 'LIKE', "%{$search}%");
         }
 
-        $infrastruktur = $query->orderBy('id_infrastruktur', 'desc')->get();
-        return view('admin.infrastruktur', compact('infrastruktur'));
+        $infrastruktur = $query->orderBy('infrastruktur.id_infrastruktur', 'desc')
+                               ->select('infrastruktur.*', 'kelurahan.nama_kelurahan')
+                               ->get();
+
+        $semuaKecamatan = DB::table('kecamatan')->get();
+        $semuaKelurahan = DB::table('kelurahan')->get(); 
+        
+        return view('admin.infrastruktur', compact('infrastruktur', 'semuaKecamatan', 'semuaKelurahan'));
     }
 
     public function createInfrastruktur()
     {
-        // FIX: Tambahkan pengambilan data kecamatan agar tidak error
         $semuaKecamatan = DB::table('kecamatan')->get();
         $semuaKelurahan = DB::table('kelurahan')->get();
         
@@ -206,23 +250,102 @@ class AdminController extends Controller
         $request->validate([
             'nama_infrastruktur' => 'required|string|max:255',
             'jenis_infrastruktur' => 'required|string',
+            'id_kecamatan' => 'required|exists:kecamatan,id_kecamatan',
             'id_kelurahan' => 'required|exists:kelurahan,id_kelurahan',
             'latitude' => 'required|string',
             'longitude' => 'required|string',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
+        $namaFoto = 'default.jpg';
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $namaFoto = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('public/infrastruktur', $namaFoto);
+        }
+
+        $jenisEnum = strtolower($request->jenis_infrastruktur);
+        $allowedEnum = ['jalan', 'drainase', 'jembatan', 'pju'];
+        if (!in_array($jenisEnum, $allowedEnum)) {
+            $jenisEnum = 'jalan'; 
+        }
+
         DB::table('infrastruktur')->insert([
+            'id_user' => auth()->id(), 
+            'id_kecamatan' => $request->id_kecamatan,
+            'id_kelurahan' => $request->id_kelurahan,
             'nama_infrastruktur' => $request->nama_infrastruktur,
             'jenis_infrastruktur' => $request->jenis_infrastruktur,
-            'id_kelurahan' => $request->id_kelurahan,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
             'kondisi' => $request->kondisi ?? 'Baik',
+            'foto_terbaru' => $namaFoto,
+            'nama_objek' => $request->nama_infrastruktur, 
+            'jenis' => $jenisEnum,
+            'alamat' => $request->alamat ?? '-',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
         return redirect()->route('admin.infrastruktur')->with('success', 'Data Infrastruktur berhasil ditambahkan!');
+    }
+
+    public function editInfrastruktur($id)
+    {
+        $inf = DB::table('infrastruktur')->where('id_infrastruktur', $id)->first();
+        if (!$inf) return redirect()->route('admin.infrastruktur')->with('error', 'Aset tidak ditemukan.');
+        
+        $semuaKecamatan = DB::table('kecamatan')->get();
+        $semuaKelurahan = DB::table('kelurahan')->get();
+        
+        return view('admin.edit-infrastruktur', compact('inf', 'semuaKecamatan', 'semuaKelurahan'));
+    }
+
+    public function updateInfrastruktur(Request $request, $id)
+    {
+        $request->validate([
+            'nama_infrastruktur' => 'required|string|max:255',
+            'jenis_infrastruktur' => 'required|string',
+            'id_kecamatan' => 'required|exists:kecamatan,id_kecamatan',
+            'id_kelurahan' => 'required|exists:kelurahan,id_kelurahan',
+            'latitude' => 'required|string',
+            'longitude' => 'required|string',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        $infraLama = DB::table('infrastruktur')->where('id_infrastruktur', $id)->first();
+        $namaFoto = $infraLama->foto_terbaru;
+
+        if ($request->hasFile('foto')) {
+            if ($namaFoto != 'default.jpg') {
+                Storage::delete('public/infrastruktur/' . $namaFoto);
+            }
+            $file = $request->file('foto');
+            $namaFoto = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('public/infrastruktur', $namaFoto);
+        }
+
+        $jenisEnum = strtolower($request->jenis_infrastruktur);
+        $allowedEnum = ['jalan', 'drainase', 'jembatan', 'pju'];
+        if (!in_array($jenisEnum, $allowedEnum)) {
+            $jenisEnum = 'jalan'; 
+        }
+
+        DB::table('infrastruktur')->where('id_infrastruktur', $id)->update([
+            'id_kecamatan' => $request->id_kecamatan,
+            'id_kelurahan' => $request->id_kelurahan,
+            'nama_infrastruktur' => $request->nama_infrastruktur,
+            'jenis_infrastruktur' => $request->jenis_infrastruktur,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'kondisi' => $request->kondisi,
+            'foto_terbaru' => $namaFoto,
+            'nama_objek' => $request->nama_infrastruktur, 
+            'jenis' => $jenisEnum,
+            'updated_at' => now(),
+        ]);
+
+        return redirect()->route('admin.infrastruktur')->with('success', 'Data Infrastruktur berhasil diperbarui!');
     }
 
     public function destroyInfrastruktur($id)

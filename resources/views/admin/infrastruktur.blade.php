@@ -3,100 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Infrastruktur | Admin SINFRA</title>
+    <title>Manajemen Infrastruktur | Admin SINFRA</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #e5e1d8; }
-        .neo-brutalism { border: 3px solid #000000; box-shadow: 4px 4px 0px 0px #000000; }
-        .neo-brutalism-sm { border: 2px solid #000000; }
-        .neo-brutalism-btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px 0px #000000; }
-        .neo-brutalism-btn:active { transform: translate(1px, 1px); box-shadow: 2px 2px 0px 0px #000000; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     </style>
 </head>
-<body class="flex h-screen overflow-hidden p-6">
+<body class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 text-left uppercase">
 
     @include('admin.partials.sidebar')
 
-    <main class="flex-1 flex flex-col h-screen overflow-y-auto p-4">
-        <div class="max-w-4xl mx-auto w-full bg-white rounded-[2rem] neo-brutalism p-10 my-10">
-            <div class="mb-10 border-b-2 border-black pb-5">
-                <h3 class="text-2xl font-black uppercase tracking-tight">Identitas Objek</h3>
-                <p class="text-xs font-bold text-gray-500 uppercase">Tambah Data Infrastruktur Baru</p>
-            </div>
-
-            <form action="{{ route('admin.infrastruktur.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
-                @csrf
-                
+    <main class="flex-1 flex flex-col h-screen overflow-hidden text-left">
+        <header class="bg-white border-b border-gray-100 px-8 py-5 flex justify-between items-center z-10">
+            <div class="flex items-center gap-4">
+                <a href="{{ route('admin.dashboard') }}" 
+                   class="w-10 h-10 bg-white border border-gray-100 rounded-xl flex items-center justify-center text-gray-400 hover:text-blue-600 transition-all group">
+                    <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
+                </a>
                 <div>
-                    <label class="block text-[10px] font-black uppercase mb-2">Nama Infrastruktur *</label>
-                    <input type="text" name="nama_infrastruktur" class="w-full px-5 py-3 rounded-xl neo-brutalism-sm font-bold focus:outline-none" placeholder="Masukkan nama objek..." required>
+                    <p class="text-[10px] font-extrabold text-blue-600 tracking-[0.2em] mb-1 uppercase">Administrator Portal</p>
+                    <h2 class="text-xl font-black text-[#1e1b4b]">Manajemen Infrastruktur</h2>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <label class="block text-[10px] font-black uppercase mb-2">Jenis Infrastruktur</label>
-                        <select name="jenis_infrastruktur" class="w-full px-5 py-3 rounded-xl neo-brutalism-sm font-bold focus:outline-none bg-white">
-                            <option value="Jalan">Jalan</option>
-                            <option value="Jembatan">Jembatan</option>
-                            <option value="Drainase">Drainase</option>
-                            <option value="Titian">Titian</option> </select>
-                    </div>
-                    <div>
-                        <label class="block text-[10px] font-black uppercase mb-2">Dokumentasi Lapangan</label>
-                        <input type="file" name="foto" class="w-full px-4 py-2 rounded-xl neo-brutalism-sm font-bold text-xs bg-gray-50 cursor-pointer">
-                    </div>
+            </div>
+            
+            <div class="flex items-center gap-6">
+                <div class="text-right hidden sm:block">
+                    <p class="text-[11px] font-black text-[#1e1b4b]" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[9px] font-bold text-gray-400 tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <label class="block text-[10px] font-black uppercase mb-2">Kecamatan</label>
-                        <select name="id_kecamatan" class="w-full px-5 py-3 rounded-xl neo-brutalism-sm font-bold bg-white">
-                            @foreach($semuaKecamatan as $kec)
-                                <option value="{{ $kec->id_kecamatan }}">{{ $kec->nama_kecamatan }}</option>
-                            @endforeach
-                        </select>
+                <div class="h-8 w-[1px] bg-gray-100"></div>
+                <div class="flex items-center gap-3">
+                    <div class="text-right uppercase">
+                        <p class="text-[11px] font-black text-[#1e1b4b] leading-none">Admin SINFRA</p>
+                        <p class="text-[9px] font-bold text-green-500 mt-1">Online</p>
                     </div>
-                    <div>
-                        <label class="block text-[10px] font-black uppercase mb-2">Kelurahan</label>
-                        <select name="id_kelurahan" class="w-full px-5 py-3 rounded-xl neo-brutalism-sm font-bold bg-white">
-                            @foreach($semuaKelurahan as $kel)
-                                <option value="{{ $kel->id_kelurahan }}">{{ $kel->nama_kelurahan }}</option>
-                            @endforeach
-                        </select>
+                    <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100">
+                        <i class="fas fa-user-circle text-xl"></i>
                     </div>
                 </div>
+            </div>
+        </header>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div>
-                        <label class="block text-[10px] font-black uppercase mb-2">Kondisi Awal</label>
-                        <select name="kondisi" class="w-full px-5 py-3 rounded-xl neo-brutalism-sm font-bold bg-white">
-                            <option value="Baik">Baik</option>
-                            <option value="Rusak Ringan">Rusak Ringan</option>
-                            <option value="Rusak Berat">Rusak Berat</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-[10px] font-black uppercase mb-2">Latitude</label>
-                        <input type="text" name="latitude" placeholder="-3.31..." class="w-full px-5 py-3 rounded-xl neo-brutalism-sm font-bold focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-[10px] font-black uppercase mb-2">Longitude</label>
-                        <input type="text" name="longitude" placeholder="114.59..." class="w-full px-5 py-3 rounded-xl neo-brutalism-sm font-bold focus:outline-none">
-                    </div>
+        <div class="flex-1 p-8 overflow-y-auto custom-scrollbar">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 text-left">
+                <div>
+                    <h4 class="font-extrabold text-lg text-[#1e1b4b]">Data Master Infrastruktur</h4>
+                    <p class="text-xs text-gray-400 font-medium tracking-tighter lowercase italic">Pemetaan dan analisis kondisi infrastruktur permukiman</p>
                 </div>
-
-                <div class="flex gap-4 pt-6">
-                    <button type="submit" class="flex-1 bg-[#2ecc71] py-4 rounded-2xl neo-brutalism neo-brutalism-btn font-black uppercase text-sm tracking-widest transition-all">
-                        SIMPAN DATA
-                    </button>
-                    <a href="{{ route('admin.infrastruktur') }}" class="flex-1 bg-white py-4 rounded-2xl neo-brutalism neo-brutalism-btn font-black uppercase text-sm text-center tracking-widest transition-all">
-                        BATAL
+                
+                <div class="flex items-center gap-3 w-full md:w-auto">
+                    <a href="{{ route('admin.infrastruktur.create') }}" class="bg-blue-600 text-white text-[10px] px-6 py-3 rounded-2xl font-black shadow-lg shadow-blue-200 hover:bg-blue-700 transition flex items-center gap-2 whitespace-nowrap tracking-widest">
+                        <i class="fas fa-plus"></i> Tambah Data
                     </a>
                 </div>
-            </form>
+            </div>
+
+            <div class="bg-white rounded-[2.5rem] border border-gray-100 shadow-sm overflow-hidden text-left">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-gray-50/50 border-b border-gray-100">
+                            <th class="px-6 py-5 text-[10px] font-black text-gray-400 tracking-widest">Infrastruktur</th>
+                            <th class="px-6 py-5 text-[10px] font-black text-gray-400 tracking-widest">Wilayah</th>
+                            <th class="px-6 py-5 text-[10px] font-black text-gray-400 tracking-widest text-center">Logika AI</th>
+                            <th class="px-6 py-5 text-[10px] font-black text-gray-400 tracking-widest text-center">Status</th>
+                            <th class="px-6 py-5 text-[10px] font-black text-gray-400 tracking-widest text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-50 font-bold text-xs uppercase">
+                        @forelse($infrastruktur as $inf)
+                        <tr class="hover:bg-gray-50/50 transition">
+                            <td class="px-6 py-5">
+                                <p class="text-sm font-black text-[#1e1b4b]">{{ $inf->nama_infrastruktur }}</p>
+                                <p class="text-[9px] text-gray-400 mt-1 font-bold">ID: INF-{{ $inf->id_infrastruktur }}</p>
+                            </td>
+                            <td class="px-6 py-5">
+                                <span class="text-[10px] text-gray-500 font-extrabold">{{ $inf->nama_kelurahan ?? 'Banjarmasin' }}</span>
+                            </td>
+                            
+                            <td class="px-6 py-5">
+                                <div class="flex flex-col items-center gap-1.5">
+                                    <div class="flex items-center gap-1">
+                                        <span class="px-1.5 py-0.5 bg-purple-50 text-purple-600 border border-purple-100 rounded text-[8px] font-black">CNN</span>
+                                        <span class="text-[9px] {{ $inf->kondisi == 'Baik' ? 'text-green-500' : 'text-red-500' }} italic">
+                                            {{ $inf->kondisi == 'Baik' ? '✓ Baik (88%)' : '⚠️ Rusak (92%)' }}
+                                        </span>
+                                    </div>
+                                    <div class="flex items-center gap-1">
+                                        <span class="px-1.5 py-0.5 bg-blue-50 text-blue-600 border border-blue-100 rounded text-[8px] font-black">DT</span>
+                                        <span class="text-gray-400 text-[9px]">Kategori: {{ $inf->kondisi == 'Baik' ? 'Normal' : 'Prioritas' }}</span>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td class="px-6 py-5 text-center">
+                                <span class="px-4 py-1.5 rounded-lg text-[9px] font-black tracking-widest border {{ $inf->kondisi == 'Baik' ? 'bg-blue-50 text-blue-600 border-blue-100' : 'bg-yellow-50 text-yellow-600 border-yellow-100' }}">
+                                    {{ $inf->kondisi == 'Baik' ? 'VERIFIED' : 'PENDING' }}
+                                </span>
+                            </td>
+
+                            <td class="px-6 py-5">
+                                <div class="flex items-center justify-center gap-2">
+                                    @if($inf->kondisi == 'Baik')
+                                        <button class="bg-gray-50 text-gray-300 px-3 py-2 rounded-xl text-[8px] font-black flex items-center gap-1 cursor-not-allowed border border-gray-100">
+                                            <i class="fas fa-check-double"></i> Selesai
+                                        </button>
+                                    @else
+                                        <button class="bg-emerald-500 text-white px-3 py-2 rounded-xl text-[8px] font-black hover:bg-emerald-600 transition shadow-sm flex items-center gap-1">
+                                            <i class="fas fa-check"></i> Verifikasi
+                                        </button>
+                                    @endif
+
+                                    <a href="{{ route('admin.infrastruktur.edit', $inf->id_infrastruktur) }}" class="bg-indigo-600 text-white px-3 py-2 rounded-xl text-[8px] font-black hover:bg-indigo-700 transition shadow-sm flex items-center gap-1">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+
+                                    <a href="#" class="bg-yellow-400 text-white px-3 py-2 rounded-xl text-[8px] font-black hover:bg-yellow-500 transition shadow-sm flex items-center gap-1">
+                                        <i class="fas fa-eye"></i> Detail
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr><td colspan="5" class="px-8 py-16 text-center text-gray-400 italic font-bold">Belum Ada Data Infrastruktur.</td></tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
     </main>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('mini-clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WITA`;
+        }
+        setInterval(updateClock, 1000); updateClock();
+    </script>
 </body>
 </html>
