@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Surveyor;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Infrastruktur;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class SurveyorController extends Controller
@@ -73,5 +75,42 @@ class SurveyorController extends Controller
     {
         $dataMap = Infrastruktur::where('id_user', auth()->id())->get();
         return view('surveyor.map', compact('dataMap'));
+    }
+
+    public function profile()
+    {
+        $user = auth()->user();
+        return view('surveyor.profile', compact('user'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = User::find(auth()->id());
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|min:8|confirmed',
+            'profile_photo' => 'nullable|image|max:2048'
+        ]);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        if ($request->hasFile('profile_photo')) {
+            if ($user->profile_photo) {
+                Storage::disk('public')->delete($user->profile_photo);
+            }
+            $path = $request->file('profile_photo')->store('profile_photos', 'public');
+            $user->profile_photo = $path;
+        }
+
+        $user->save();
+
+        return redirect()->route('surveyor.dashboard')->with('success', 'Profil Anda berhasil diperbarui!');
     }
 }
