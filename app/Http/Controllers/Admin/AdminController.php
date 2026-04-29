@@ -37,10 +37,12 @@ class AdminController extends Controller
         $jumlahRusakRingan = DB::table('infrastruktur')->whereNull('deleted_at')->where('kondisi', 'Rusak Ringan')->count();
         $jumlahBaik = DB::table('infrastruktur')->whereNull('deleted_at')->where('kondisi', 'Baik')->count();
 
-        // Aktivitas Terbaru (Simulasi dari created_at infrastruktur terbaru)
+        // Aktivitas Terbaru (Data infrastruktur terbaru beserta surveyornya)
         $recentActivities = DB::table('infrastruktur')
-            ->whereNull('deleted_at')
-            ->orderBy('created_at', 'desc')
+            ->leftJoin('users', 'infrastruktur.id_user', '=', 'users.id')
+            ->whereNull('infrastruktur.deleted_at')
+            ->select('infrastruktur.*', 'users.name as surveyor_name')
+            ->orderBy('infrastruktur.created_at', 'desc')
             ->limit(5)
             ->get();
 
