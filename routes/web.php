@@ -94,9 +94,7 @@ Route::middleware(['auth'])->group(function () {
 
     // --- AREA SURVEYOR ---
     Route::middleware(['role:surveyor'])->prefix('surveyor')->group(function () {
-        Route::get('/dashboard', function () { 
-            return view('surveyor.dashboard'); 
-        })->name('surveyor.dashboard');
+        Route::get('/dashboard', [App\Http\Controllers\Surveyor\SurveyorController::class, 'index'])->name('surveyor.dashboard');
     });
 
     // --- AREA KABID ---

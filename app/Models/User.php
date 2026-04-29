@@ -32,7 +32,8 @@ class User extends Authenticatable
         'email', 
         'password', 
         'role', 
-        'id_kecamatan'
+        'id_kecamatan',
+        'profile_photo'
     ];
 
     /**
@@ -61,6 +62,14 @@ class User extends Authenticatable
     {
         // 'id_user' adalah nama foreign key di tabel infrastruktur
         return $this->hasMany(Infrastruktur::class, 'id_user', 'id');
+    }
+
+    /**
+     * Hubungan: User (Surveyor) memiliki satu wilayah tugas (Kecamatan).
+     */
+    public function kecamatan()
+    {
+        return $this->belongsTo(\App\Models\Kecamatan::class, 'id_kecamatan', 'id_kecamatan');
     }
 
     /**
