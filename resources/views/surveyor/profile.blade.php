@@ -79,7 +79,7 @@
                             <div class="mt-6 pt-6 border-t border-gray-50">
                                 <div class="flex items-center justify-center gap-2 text-emerald-600">
                                     <i class="fas fa-map-marker-alt text-xs"></i>
-                                    <span class="text-[10px] font-black uppercase tracking-widest">{{ auth()->user()->kecamatan->nama_kecamatan ?? 'Seluruh Wilayah' }}</span>
+                                    <span class="text-[10px] font-black uppercase tracking-widest">{{ auth()->user()->kecamatan->nama_kecamatan ?? 'Belum Ditugaskan' }}</span>
                                 </div>
                             </div>
                         </div>

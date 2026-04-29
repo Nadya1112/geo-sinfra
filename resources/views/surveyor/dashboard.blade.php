@@ -121,7 +121,7 @@
                                         <i class="fas fa-map-marker-alt"></i>
                                     </div>
                                     <div>
-                                        <h5 class="text-xl font-black">{{ auth()->user()->kecamatan->nama_kecamatan ?? 'Seluruh Wilayah' }}</h5>
+                                        <h5 class="text-xl font-black">{{ auth()->user()->kecamatan->nama_kecamatan ?? 'Belum Ditugaskan' }}</h5>
                                         <p class="text-xs text-blue-200 font-medium">Kota Banjarmasin</p>
                                     </div>
                                 </div>
