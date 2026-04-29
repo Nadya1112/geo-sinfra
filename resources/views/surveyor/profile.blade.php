@@ -15,14 +15,9 @@
 
     <main class="flex-1 flex flex-col h-screen overflow-y-auto">
         <header class="bg-white border-b border-gray-100 px-8 py-5 flex justify-between items-center z-10">
-            <div class="flex items-center gap-4">
-                <a href="{{ route('surveyor.dashboard') }}" class="w-10 h-10 bg-white border border-gray-100 rounded-xl flex items-center justify-center text-gray-400 hover:text-emerald-600 transition-all">
-                    <i class="fas fa-arrow-left text-xs"></i>
-                </a>
-                <div>
-                    <p class="text-[10px] font-extrabold text-emerald-600 uppercase tracking-[0.2em] mb-1">Surveyor Portal</p>
-                    <h2 class="text-xl font-black text-[#1e1b4b]">Pengaturan Profil</h2>
-                </div>
+            <div>
+                <p class="text-[10px] font-extrabold text-emerald-600 uppercase tracking-[0.2em] mb-1">Pengaturan Akun</p>
+                <h2 class="text-xl font-black text-[#1e1b4b]">Profil Saya</h2>
             </div>
             
             <div class="flex items-center gap-6">
