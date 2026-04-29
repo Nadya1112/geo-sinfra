@@ -26,7 +26,7 @@
                     <p class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-gray-100"></div>
-                <div class="flex items-center gap-3">
+                <a href="{{ route('surveyor.profile') }}" class="flex items-center gap-3">
                     <div class="text-right">
                         <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase">{{ auth()->user()->name }}</p>
                         <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
@@ -38,7 +38,7 @@
                             <i class="fas fa-user-circle text-xl"></i>
                         @endif
                     </div>
-                </div>
+                </a>
             </div>
         </header>
 
