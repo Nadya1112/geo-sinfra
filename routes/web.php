@@ -78,6 +78,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/infrastruktur', [AdminController::class, 'storeInfrastruktur'])->name('admin.infrastruktur.store');
         // Form Edit Aset
         Route::get('/infrastruktur/{id}/edit', [AdminController::class, 'editInfrastruktur'])->name('admin.infrastruktur.edit');
+        // Detail Aset
+        Route::get('/infrastruktur/{id}', [AdminController::class, 'showInfrastruktur'])->name('admin.infrastruktur.show');
         // Proses Update Aset
         Route::put('/infrastruktur/{id}', [AdminController::class, 'updateInfrastruktur'])->name('admin.infrastruktur.update');
         // Proses Hapus Aset

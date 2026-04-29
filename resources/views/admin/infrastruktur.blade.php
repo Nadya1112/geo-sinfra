@@ -123,7 +123,7 @@
                                         <i class="fas fa-edit"></i> Edit
                                     </a>
 
-                                    <a href="#" class="bg-yellow-400 text-white px-3 py-2 rounded-xl text-[8px] font-black hover:bg-yellow-500 transition shadow-sm flex items-center gap-1">
+                                    <a href="{{ route('admin.infrastruktur.show', $inf->id_infrastruktur) }}" class="bg-yellow-400 text-white px-3 py-2 rounded-xl text-[8px] font-black hover:bg-yellow-500 transition shadow-sm flex items-center gap-1">
                                         <i class="fas fa-eye"></i> Detail
                                     </a>
                                 </div>

@@ -80,13 +80,13 @@ class AdminController extends Controller
             'id_kecamatan' => ($request->role === 'admin') ? null : $request->id_kecamatan,
         ]);
 
-        return redirect()->route('admin.users')->with('success', 'User baru berhasil ditambahkan!');
+        return redirect()->route('admin.users')->with('success', 'USER BARU BERHASIL DITAMBAHKAN!');
     }
 
     public function editUser($id)
     {
         $user = User::findOrFail($id);
-        if ($user->role === 'kabid') return redirect()->route('admin.users')->with('error', 'Akun Kabid terkunci.');
+        if ($user->role === 'kabid') return redirect()->route('admin.users')->with('error', 'AKUN KABID TERKUNCI.');
         
         $semuaWilayah = DB::table('kecamatan')->get();
         return view('admin.edit-user', compact('user', 'semuaWilayah'));
@@ -114,17 +114,17 @@ class AdminController extends Controller
         }
 
         $user->update($updateData);
-        return redirect()->route('admin.users')->with('success', 'Data user berhasil diperbarui!');
+        return redirect()->route('admin.users')->with('success', 'DATA USER BERHASIL DIPERBARUI!');
     }
 
     public function destroyUser($id)
     {
         $user = User::findOrFail($id);
-        if ($user->role === 'kabid') return redirect()->route('admin.users')->with('error', 'Akun Kabid dilindungi.');
-        if (auth()->id() == $user->id) return redirect()->route('admin.users')->with('error', 'Tidak bisa menghapus akun sendiri.');
+        if ($user->role === 'kabid') return redirect()->route('admin.users')->with('error', 'AKUN KABID DILINDUNGI.');
+        if (auth()->id() == $user->id) return redirect()->route('admin.users')->with('error', 'TIDAK BISA MENGHAPUS AKUN SENDIRI.');
 
         $user->delete();
-        return redirect()->route('admin.users')->with('success', 'Data pengguna berhasil dihapus!');
+        return redirect()->route('admin.users')->with('success', 'DATA PENGGUNA BERHASIL DIHAPUS!');
     }
 
 
@@ -172,13 +172,13 @@ class AdminController extends Controller
             'updated_at' => now(),
         ]);
 
-        return redirect()->route('admin.wilayah')->with('success', 'Data Wilayah berhasil ditambahkan!');
+        return redirect()->route('admin.wilayah')->with('success', 'DATA WILAYAH BERHASIL DITAMBAHKAN!');
     }
 
     public function editWilayah($id)
     {
         $wilayah = DB::table('kelurahan')->where('id_kelurahan', $id)->first();
-        if (!$wilayah) return redirect()->route('admin.wilayah')->with('error', 'Wilayah tidak ditemukan.');
+        if (!$wilayah) return redirect()->route('admin.wilayah')->with('error', 'WILAYAH TIDAK DITEMUKAN.');
         
         $semuaKecamatan = DB::table('kecamatan')->get();
         return view('admin.edit-wilayah', compact('wilayah', 'semuaKecamatan'));
@@ -201,13 +201,13 @@ class AdminController extends Controller
             'updated_at' => now(),
         ]);
 
-        return redirect()->route('admin.wilayah')->with('success', 'Data Wilayah berhasil diperbarui!');
+        return redirect()->route('admin.wilayah')->with('success', 'DATA WILAYAH BERHASIL DIPERBARUI!');
     }
 
     public function destroyWilayah($id)
     {
         DB::table('kelurahan')->where('id_kelurahan', $id)->delete();
-        return redirect()->route('admin.wilayah')->with('success', 'Data Wilayah berhasil dihapus.');
+        return redirect()->route('admin.wilayah')->with('success', 'DATA WILAYAH BERHASIL DIHAPUS.');
     }
 
 
@@ -287,18 +287,32 @@ class AdminController extends Controller
             'updated_at' => now(),
         ]);
 
-        return redirect()->route('admin.infrastruktur')->with('success', 'Data Infrastruktur berhasil ditambahkan!');
+        return redirect()->route('admin.infrastruktur')->with('success', 'DATA INFRASTRUKTUR BERHASIL DITAMBAHKAN!');
     }
 
     public function editInfrastruktur($id)
     {
         $inf = DB::table('infrastruktur')->where('id_infrastruktur', $id)->first();
-        if (!$inf) return redirect()->route('admin.infrastruktur')->with('error', 'Aset tidak ditemukan.');
+        if (!$inf) return redirect()->route('admin.infrastruktur')->with('error', 'ASET TIDAK DITEMUKAN.');
         
         $semuaKecamatan = DB::table('kecamatan')->get();
         $semuaKelurahan = DB::table('kelurahan')->get();
         
         return view('admin.edit-infrastruktur', compact('inf', 'semuaKecamatan', 'semuaKelurahan'));
+    }
+
+    public function showInfrastruktur($id)
+    {
+        $inf = DB::table('infrastruktur')
+            ->leftJoin('kecamatan', 'infrastruktur.id_kecamatan', '=', 'kecamatan.id_kecamatan')
+            ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
+            ->where('infrastruktur.id_infrastruktur', $id)
+            ->select('infrastruktur.*', 'kecamatan.nama_kecamatan', 'kelurahan.nama_kelurahan')
+            ->first();
+            
+        if (!$inf) return redirect()->route('admin.infrastruktur')->with('error', 'ASET TIDAK DITEMUKAN.');
+        
+        return view('admin.detail-infrastruktur', compact('inf'));
     }
 
     public function updateInfrastruktur(Request $request, $id)
@@ -316,6 +330,7 @@ class AdminController extends Controller
         $infraLama = DB::table('infrastruktur')->where('id_infrastruktur', $id)->first();
         $namaFoto = $infraLama->foto_terbaru;
 
+        // Logika Penggantian Foto
         if ($request->hasFile('foto')) {
             if ($namaFoto != 'default.jpg') {
                 Storage::delete('public/infrastruktur/' . $namaFoto);
@@ -331,6 +346,7 @@ class AdminController extends Controller
             $jenisEnum = 'jalan'; 
         }
 
+        // Proses Update Tanpa Mengubah Manual Hasil AI
         DB::table('infrastruktur')->where('id_infrastruktur', $id)->update([
             'id_kecamatan' => $request->id_kecamatan,
             'id_kelurahan' => $request->id_kelurahan,
@@ -338,20 +354,20 @@ class AdminController extends Controller
             'jenis_infrastruktur' => $request->jenis_infrastruktur,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
-            'kondisi' => $request->kondisi,
+            'kondisi' => $request->kondisi, // Diambil dari hidden input hasil deteksi terakhir
             'foto_terbaru' => $namaFoto,
             'nama_objek' => $request->nama_infrastruktur, 
             'jenis' => $jenisEnum,
             'updated_at' => now(),
         ]);
 
-        return redirect()->route('admin.infrastruktur')->with('success', 'Data Infrastruktur berhasil diperbarui!');
+        return redirect()->route('admin.infrastruktur')->with('success', 'DATA INFRASTRUKTUR BERHASIL DIPERBARUI!');
     }
 
     public function destroyInfrastruktur($id)
     {
         DB::table('infrastruktur')->where('id_infrastruktur', $id)->update(['deleted_at' => now()]);
-        return redirect()->route('admin.infrastruktur')->with('success', 'Data Infrastruktur berhasil dihapus.');
+        return redirect()->route('admin.infrastruktur')->with('success', 'DATA INFRASTRUKTUR BERHASIL DIHAPUS.');
     }
 
 
