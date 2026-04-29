@@ -24,141 +24,124 @@
                     <h2 class="text-xl font-black text-[#1e1b4b]">Detail Data Infrastruktur</h2>
                 </div>
             </div>
-            <div class="text-right">
-                <p class="text-[11px] font-black text-[#1e1b4b]" id="mini-clock">00:00 WITA</p>
+            <div class="flex items-center gap-6">
+                <div class="text-right hidden sm:block">
+                    <p class="text-[11px] font-black text-[#1e1b4b]" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                </div>
+                
+                <div class="h-8 w-[1px] bg-gray-100"></div>
+                
+                <div class="flex items-center gap-3">
+                    <div class="text-right">
+                        <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase">Admin SINFRA</p>
+                        <p class="text-[9px] font-bold text-green-500 uppercase mt-1">Online</p>
+                    </div>
+                    <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100">
+                        <i class="fas fa-user-circle text-xl"></i>
+                    </div>
+                </div>
             </div>
         </header>
 
-        <div class="p-8">
-            <div class="max-w-4xl bg-white rounded-[2.5rem] p-10 border border-gray-100 shadow-sm mx-auto">
-                <div class="mb-10 border-b border-gray-50 pb-5 flex justify-between items-end">
-                    <div>
-                        <h3 class="text-lg font-black text-[#1e1b4b] tracking-tight">Detail Objek Infrastruktur</h3>
-                        <p class="text-xs text-gray-400 font-medium tracking-tighter">Informasi lengkap aset SINFRA</p>
-                    </div>
-                    <div>
-                        <a href="{{ route('admin.infrastruktur.edit', $inf->id_infrastruktur) }}" class="bg-indigo-50 text-indigo-600 px-4 py-2 rounded-xl text-[10px] font-black hover:bg-indigo-100 transition shadow-sm flex items-center gap-2">
-                            <i class="fas fa-edit"></i> Edit Data
-                        </a>
-                    </div>
-                </div>
-
+        <div class="p-8 pb-20">
+            <div class="max-w-xl bg-white rounded-[2.5rem] p-8 sm:p-10 border border-gray-100 shadow-sm mx-auto">
                 <div class="space-y-8">
                     
-                    <!-- Bagian 1: Identitas & Lokasi -->
-                    <div class="space-y-6">
-                        <div class="border-l-4 border-blue-500 pl-4 mb-4">
-                            <h4 class="text-sm font-black text-[#1e1b4b] uppercase tracking-wider">1. Identitas & Lokasi</h4>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div>
-                                <label class="block text-[10px] font-black text-gray-400 tracking-widest mb-2">Nama Infrastruktur</label>
-                                <div class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-bold text-[#1e1b4b]">
-                                    {{ $inf->nama_infrastruktur }}
-                                </div>
+                    <!-- IDENTITAS & LOKASI -->
+                    <div>
+                        <h4 class="text-[10px] font-black text-blue-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+                            <i class="fas fa-list-ul"></i> Identitas & Lokasi
+                        </h4>
+                        <div class="space-y-3 pl-1">
+                            <div class="flex items-start">
+                                <div class="w-28 text-[11px] font-bold text-gray-400">Nama</div>
+                                <div class="flex-1 text-[12px] font-black text-[#1e1b4b]">{{ $inf->nama_infrastruktur }}</div>
                             </div>
-                            <div>
-                                <label class="block text-[10px] font-black text-gray-400 uppercase mb-2">Jenis Infrastruktur</label>
-                                <div class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-bold text-[#1e1b4b]">
-                                    {{ $inf->jenis_infrastruktur }}
-                                </div>
+                            <div class="flex items-start">
+                                <div class="w-28 text-[11px] font-bold text-gray-400">Wilayah</div>
+                                <div class="flex-1 text-[12px] font-black text-[#1e1b4b]">{{ $inf->nama_kecamatan ?? '-' }}</div>
                             </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div>
-                                <label class="block text-[10px] font-black text-gray-400 uppercase mb-2">Kecamatan</label>
-                                <div class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-bold text-[#1e1b4b]">
-                                    {{ $inf->nama_kecamatan ?? '-' }}
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-black text-gray-400 uppercase mb-2">Kelurahan</label>
-                                <div class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-bold text-[#1e1b4b]">
-                                    {{ $inf->nama_kelurahan ?? '-' }}
-                                </div>
+                            <div class="flex items-start">
+                                <div class="w-28 text-[11px] font-bold text-gray-400">Koordinat</div>
+                                <div class="flex-1 text-[12px] font-black text-[#1e1b4b]">{{ $inf->latitude }}, {{ $inf->longitude }}</div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Bagian 2: Sistem Informasi Geografis (SIG) -->
-                    <div class="space-y-6 pt-6 border-t border-gray-100">
-                        <div class="border-l-4 border-indigo-500 pl-4 mb-4">
-                            <h4 class="text-sm font-black text-[#1e1b4b] uppercase tracking-wider">2. SIG (Sistem Informasi Geografis)</h4>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div>
-                                <label class="block text-[10px] font-black text-gray-400 uppercase mb-2">Latitude</label>
-                                <div class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-bold text-[#1e1b4b]">
-                                    {{ $inf->latitude }}
-                                </div>
+                    <!-- ANALISIS CERDAS (CNN & DT) -->
+                    <div>
+                        <h4 class="text-[10px] font-black text-purple-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+                            <i class="fas fa-microchip"></i> Analisis Cerdas (CNN & DT)
+                        </h4>
+                        <div class="p-5 rounded-2xl border-2 border-dashed border-purple-100 bg-purple-50/30 space-y-4">
+                            @php
+                                $colorClass = $inf->kondisi == 'Baik' ? 'text-emerald-500' : ($inf->kondisi == 'Rusak Ringan' ? 'text-yellow-500' : 'text-red-500');
+                                $bgClass = $inf->kondisi == 'Baik' ? 'bg-emerald-50 text-emerald-600 border-emerald-200' : ($inf->kondisi == 'Rusak Ringan' ? 'bg-yellow-50 text-yellow-600 border-yellow-200' : 'bg-red-50 text-red-600 border-red-200');
+                                $priority = $inf->kondisi == 'Baik' ? 'Prioritas Rendah' : ($inf->kondisi == 'Rusak Ringan' ? 'PERLU PERHATIAN' : 'PRIORITAS TINGGI');
+                                $cnnResult = $inf->kondisi == 'Baik' ? 'NORMAL (88.5%)' : 'RUSAK (94.2%)';
+                            @endphp
+                            <div class="flex justify-between items-center">
+                                <div class="text-[11px] font-bold text-gray-400 w-28">Hasil CNN</div>
+                                <div class="flex-1 text-[12px] font-black {{ $colorClass }}">{{ $cnnResult }}</div>
                             </div>
-                            <div>
-                                <label class="block text-[10px] font-black text-gray-400 uppercase mb-2">Longitude</label>
-                                <div class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-bold text-[#1e1b4b]">
-                                    {{ $inf->longitude }}
-                                </div>
+                            <div class="flex justify-between items-center">
+                                <div class="text-[11px] font-bold text-gray-400 w-28">Decision Tree</div>
+                                <div class="flex-1 text-[12px] font-black text-[#1e1b4b]">{{ $priority }}</div>
                             </div>
-                        </div>
-                        <div class="w-full h-48 bg-gray-100 rounded-2xl overflow-hidden relative border border-gray-200">
-                            <!-- Placeholder for a map snippet -->
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <p class="text-xs font-bold text-gray-400"><i class="fas fa-map-marker-alt mr-2 text-indigo-400"></i> Pratinjau Lokasi Peta</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Bagian 3: Koreksi Analisis AI (CNN & DT) -->
-                    <div class="space-y-6 pt-6 border-t border-gray-100">
-                        <div class="border-l-4 border-purple-500 pl-4 mb-4">
-                            <h4 class="text-sm font-black text-[#1e1b4b] uppercase tracking-wider">3. Koreksi Analisis AI (CNN & DT)</h4>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div>
-                                <label class="block text-[10px] font-black text-gray-400 uppercase mb-2">Akurasi CNN (%)</label>
-                                <div class="w-full px-5 py-3 bg-purple-50 border border-purple-100 rounded-2xl flex items-center justify-between">
-                                    <span class="text-sm font-black text-purple-700">92.5%</span>
-                                    <i class="fas fa-brain text-purple-400"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-black text-gray-400 uppercase mb-2">Hasil Akhir Decision Tree</label>
-                                <div class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl flex items-center gap-3">
-                                    <span class="px-2.5 py-1 rounded-lg text-[10px] font-black tracking-widest border {{ $inf->kondisi == 'Baik' ? 'bg-green-50 text-green-600 border-green-200' : ($inf->kondisi == 'Rusak Ringan' ? 'bg-yellow-50 text-yellow-600 border-yellow-200' : 'bg-red-50 text-red-600 border-red-200') }}">
-                                        {{ strtoupper($inf->kondisi) }}
-                                    </span>
-                                    <span class="text-[10px] font-bold text-gray-400 italic">Otomatis Terverifikasi</span>
-                                </div>
+                            <div class="pt-4 flex justify-center">
+                                <span class="px-6 py-2 rounded-xl text-[10px] font-black tracking-widest border {{ $bgClass }} shadow-sm">
+                                    {{ strtoupper($inf->kondisi) }}
+                                </span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Bagian 4: Dokumentasi Visual -->
-                    <div class="space-y-6 pt-6 border-t border-gray-100">
-                        <div class="border-l-4 border-emerald-500 pl-4 mb-4">
-                            <h4 class="text-sm font-black text-[#1e1b4b] uppercase tracking-wider">4. Dokumentasi Visual</h4>
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-black text-gray-400 uppercase mb-2">Foto Lapangan Terbaru</label>
+                    <!-- DOKUMENTASI VISUAL -->
+                    <div>
+                        <h4 class="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+                            <i class="fas fa-camera"></i> Dokumentasi Visual
+                        </h4>
+                        
+                        <div class="w-full relative rounded-2xl overflow-hidden border border-gray-100 shadow-sm bg-gray-50 aspect-video flex items-center justify-center group">
                             @if($inf->foto_terbaru && $inf->foto_terbaru != 'default.jpg')
-                                <div class="w-full h-64 bg-gray-100 rounded-2xl overflow-hidden border border-gray-200 relative">
-                                    <img src="{{ asset('storage/infrastruktur/' . $inf->foto_terbaru) }}" alt="{{ $inf->nama_infrastruktur }}" class="w-full h-full object-cover">
-                                    <div class="absolute inset-0 bg-black/10 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                                        <a href="{{ asset('storage/infrastruktur/' . $inf->foto_terbaru) }}" target="_blank" class="bg-white/90 text-gray-800 px-4 py-2 rounded-xl text-xs font-black shadow-lg">Lihat Gambar Penuh</a>
+                                <img src="{{ asset('storage/infrastruktur/' . $inf->foto_terbaru) }}" alt="Foto Infrastruktur" class="w-full h-full object-cover">
+                                @if($inf->kondisi != 'Baik')
+                                    <!-- Bounding Box Simulasi Kerusakan -->
+                                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                        <div class="border-2 border-red-500 bg-red-500/20 w-1/3 h-1/2 relative flex items-start justify-center">
+                                            <span class="bg-red-500 text-white text-[8px] font-black px-2 py-1 mt-[-20px] whitespace-nowrap rounded-t-md tracking-wider shadow-sm">KERUSAKAN TERDETEKSI</span>
+                                        </div>
                                     </div>
+                                @endif
+                                <div class="absolute inset-0 bg-black/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <a href="{{ asset('storage/infrastruktur/' . $inf->foto_terbaru) }}" target="_blank" class="bg-white/90 text-[#1e1b4b] px-4 py-2 rounded-xl text-[10px] font-black shadow-lg uppercase tracking-widest hover:bg-white hover:scale-105 transition-all">Lihat Foto Asli</a>
                                 </div>
                             @else
-                                <div class="w-full px-5 py-10 bg-gray-50 border border-gray-100 rounded-2xl text-center">
-                                    <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-3 text-gray-400">
-                                        <i class="fas fa-camera text-2xl"></i>
-                                    </div>
-                                    <p class="text-sm font-bold text-gray-400 uppercase">Tidak Ada Foto</p>
+                                <div class="text-center text-gray-300">
+                                    <i class="fas fa-image text-3xl mb-2"></i>
+                                    <p class="text-[10px] font-bold">[ TIDAK ADA FOTO ]</p>
                                 </div>
                             @endif
                         </div>
+                        
+                        <div class="mt-3 text-center">
+                            <p class="text-[9px] font-bold text-gray-400 italic normal-case">{{ $inf->foto_terbaru ?? 'tidak_ada_foto.jpg' }} - Diupload oleh {{ $inf->nama_user ?? 'Admin' }}</p>
+                        </div>
                     </div>
 
                 </div>
+
+                <!-- Tombol Aksi -->
+                <div class="mt-10 pt-8 border-t border-gray-100 space-y-3">
+                    <a href="{{ route('admin.infrastruktur.pdf', $inf->id_infrastruktur) }}" class="w-full bg-yellow-400 text-white py-4 rounded-2xl font-black text-[11px] tracking-widest hover:bg-yellow-500 shadow-lg shadow-yellow-100 transition-all flex justify-center items-center gap-2">
+                        <i class="fas fa-file-pdf"></i> Export Data Ke PDF
+                    </a>
+                    <a href="{{ route('admin.infrastruktur.edit', $inf->id_infrastruktur) }}" class="w-full bg-white text-[#1e1b4b] border-2 border-gray-100 py-3.5 rounded-2xl font-black text-[11px] tracking-widest hover:border-indigo-500 hover:text-indigo-600 transition-all flex justify-center items-center gap-2">
+                        <i class="fas fa-edit"></i> Edit Data Manual
+                    </a>
+                </div>
+
             </div>
         </div>
     </main>

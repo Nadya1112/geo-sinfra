@@ -80,6 +80,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/infrastruktur/{id}/edit', [AdminController::class, 'editInfrastruktur'])->name('admin.infrastruktur.edit');
         // Detail Aset
         Route::get('/infrastruktur/{id}', [AdminController::class, 'showInfrastruktur'])->name('admin.infrastruktur.show');
+        // Export PDF
+        Route::get('/infrastruktur/{id}/pdf', [AdminController::class, 'exportPdf'])->name('admin.infrastruktur.pdf');
         // Proses Update Aset
         Route::put('/infrastruktur/{id}', [AdminController::class, 'updateInfrastruktur'])->name('admin.infrastruktur.update');
         // Proses Hapus Aset

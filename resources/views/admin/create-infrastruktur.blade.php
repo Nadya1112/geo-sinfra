@@ -28,8 +28,23 @@
                     <h2 class="text-xl font-black text-[#1e1b4b]">Tambah Aset Infrastruktur</h2>
                 </div>
             </div>
-            <div class="text-right">
-                <p class="text-[11px] font-black text-[#1e1b4b]" id="mini-clock">00:00 WITA</p>
+            <div class="flex items-center gap-6">
+                <div class="text-right hidden sm:block">
+                    <p class="text-[11px] font-black text-[#1e1b4b]" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                </div>
+                
+                <div class="h-8 w-[1px] bg-gray-100"></div>
+                
+                <div class="flex items-center gap-3">
+                    <div class="text-right">
+                        <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase">Admin SINFRA</p>
+                        <p class="text-[9px] font-bold text-green-500 uppercase mt-1">Online</p>
+                    </div>
+                    <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100">
+                        <i class="fas fa-user-circle text-xl"></i>
+                    </div>
+                </div>
             </div>
         </header>
 

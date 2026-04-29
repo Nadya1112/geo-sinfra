@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminController extends Controller
 {
@@ -306,13 +307,36 @@ class AdminController extends Controller
         $inf = DB::table('infrastruktur')
             ->leftJoin('kecamatan', 'infrastruktur.id_kecamatan', '=', 'kecamatan.id_kecamatan')
             ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
+            ->leftJoin('users', 'infrastruktur.id_user', '=', 'users.id')
             ->where('infrastruktur.id_infrastruktur', $id)
-            ->select('infrastruktur.*', 'kecamatan.nama_kecamatan', 'kelurahan.nama_kelurahan')
+            ->select('infrastruktur.*', 'kecamatan.nama_kecamatan', 'kelurahan.nama_kelurahan', 'users.name as nama_user')
             ->first();
             
         if (!$inf) return redirect()->route('admin.infrastruktur')->with('error', 'ASET TIDAK DITEMUKAN.');
         
         return view('admin.detail-infrastruktur', compact('inf'));
+    }
+
+    public function exportPdf($id)
+    {
+        $inf = DB::table('infrastruktur')
+            ->leftJoin('kecamatan', 'infrastruktur.id_kecamatan', '=', 'kecamatan.id_kecamatan')
+            ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
+            ->leftJoin('users', 'infrastruktur.id_user', '=', 'users.id')
+            ->where('infrastruktur.id_infrastruktur', $id)
+            ->select('infrastruktur.*', 'kecamatan.nama_kecamatan', 'kelurahan.nama_kelurahan', 'users.name as nama_user')
+            ->first();
+            
+        if (!$inf) return redirect()->route('admin.infrastruktur')->with('error', 'ASET TIDAK DITEMUKAN.');
+        
+        $pdf = Pdf::loadView('admin.pdf-infrastruktur', compact('inf'));
+        
+        // Optional: Atur ukuran dan orientasi kertas
+        $pdf->setPaper('A4', 'portrait');
+        
+        // Download file dengan nama yang dinamis
+        $fileName = 'Laporan_Infrastruktur_' . str_replace(' ', '_', $inf->nama_infrastruktur) . '.pdf';
+        return $pdf->download($fileName);
     }
 
     public function updateInfrastruktur(Request $request, $id)

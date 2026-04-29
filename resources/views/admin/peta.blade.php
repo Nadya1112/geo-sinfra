@@ -65,19 +65,80 @@
             <div class="relative flex-1 rounded-[2.5rem] overflow-hidden shadow-sm border border-gray-200/60">
                 <div id="map" class="absolute inset-0 z-0"></div>
 
+                <!-- Floating Stats Card -->
+                <div class="absolute bottom-6 left-6 z-[1000] hidden md:block">
+                    <div class="bg-white/95 backdrop-blur-sm p-5 rounded-3xl shadow-xl border border-white/80 w-[280px]">
+                        <h3 class="text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-4 border-b border-gray-100 pb-3 flex items-center justify-between">
+                            Status Infrastruktur
+                            <i class="fas fa-chart-pie text-blue-500"></i>
+                        </h3>
+                        <div class="space-y-4">
+                            @php
+                                $baik = $dataInfrastruktur->where('kondisi', 'Baik')->count();
+                                $rusakRingan = $dataInfrastruktur->where('kondisi', 'Rusak Ringan')->count();
+                                $rusakBerat = $dataInfrastruktur->where('kondisi', 'Rusak Berat')->count();
+                                $total = $baik + $rusakRingan + $rusakBerat;
+                            @endphp
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 rounded-full bg-emerald-500 shadow-sm ring-4 ring-emerald-50"></div>
+                                    <span class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wide">Kondisi Baik</span>
+                                </div>
+                                <span class="text-xs font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">{{ $baik }}</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 rounded-full bg-yellow-400 shadow-sm ring-4 ring-yellow-50"></div>
+                                    <span class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wide">Rusak Ringan</span>
+                                </div>
+                                <span class="text-xs font-black text-yellow-600 bg-yellow-50 px-2 py-0.5 rounded-md">{{ $rusakRingan }}</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 rounded-full bg-red-500 shadow-sm ring-4 ring-red-50"></div>
+                                    <span class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wide">Rusak Berat</span>
+                                </div>
+                                <span class="text-xs font-black text-red-600 bg-red-50 px-2 py-0.5 rounded-md">{{ $rusakBerat }}</span>
+                            </div>
+                            
+                            <div class="pt-3 mt-3 border-t border-gray-100 flex items-center justify-between">
+                                <span class="text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest">Total Titik</span>
+                                <span class="text-xs font-black text-white bg-blue-600 px-2 py-0.5 rounded-md shadow-sm">{{ $total }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="absolute top-6 right-6 z-[1000] w-[240px]">
                     <button onclick="toggleLegend()" class="w-full bg-white/95 backdrop-blur-sm px-5 py-3 rounded-2xl shadow-xl border border-white/80 flex justify-between items-center hover:bg-white transition group focus:outline-none">
                         <span class="text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest flex items-center">
-                            <i class="fas fa-list-ul mr-3 text-blue-600 group-hover:scale-110 transition-transform"></i> Wilayah
+                            <i class="fas fa-layer-group mr-3 text-blue-600 group-hover:scale-110 transition-transform"></i> Layer Peta
                         </span>
                         <i id="legend-icon" class="fas fa-chevron-down text-gray-400 text-xs transition-transform duration-300"></i>
                     </button>
 
                     <div id="legend-content" class="hidden mt-3 bg-white/95 backdrop-blur-sm p-4 rounded-2xl shadow-xl border border-white/80 text-left">
                         <div class="mb-3 px-2 border-b border-gray-100 pb-2">
-                            <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Kecamatan</span>
+                            <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Jenis Infrastruktur</span>
                         </div>
-                        <div class="max-h-[40vh] overflow-y-auto pr-1 custom-scrollbar">
+                        <div class="mb-4 space-y-1 pr-1 custom-scrollbar max-h-[150px] overflow-y-auto">
+                            @php
+                                $jenisList = ['Jalan', 'Jembatan', 'Drainase', 'Titian'];
+                            @endphp
+                            @foreach($jenisList as $jenis)
+                            <div class="kecamatan-item !py-2 !px-3">
+                                <input type="checkbox" checked onchange="toggleInfraJenisLayer('{{ $jenis }}', this.checked)" class="w-3.5 h-3.5 text-blue-600 border-gray-300 rounded cursor-pointer">
+                                <span class="text-[10px] font-extrabold text-[#1e1b4b] flex-1 uppercase cursor-pointer" onclick="this.previousElementSibling.click()">
+                                    {{ $jenis }}
+                                </span>
+                            </div>
+                            @endforeach
+                        </div>
+
+                        <div class="mb-3 px-2 border-b border-gray-100 pb-2">
+                            <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Batas Kecamatan</span>
+                        </div>
+                        <div class="max-h-[30vh] overflow-y-auto pr-1 custom-scrollbar">
                             @foreach($semuaWilayah as $wilayah)
                             <div class="kecamatan-item">
                                 <input type="checkbox" checked onchange="toggleLayer('{{ $wilayah->id_kecamatan }}', this.checked)" class="w-4 h-4 text-blue-600 border-gray-300 rounded cursor-pointer">
@@ -107,19 +168,92 @@
         L.control.zoom({ position: 'topleft' }).addTo(map);
         L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { attribution: '&copy; CARTO' }).addTo(map);
 
+        // Geometri Wilayah
         var geoLayers = {};
         @foreach($semuaWilayah as $wilayah)
             @if($wilayah->geometri)
                 try {
-                    var poly = L.geoJSON({!! $wilayah->geometri !!}, { style: { fillColor: "{{ $wilayah->warna ?? '#3b82f6' }}", weight: 2, opacity: 1, color: 'white', fillOpacity: 0.5 } }).addTo(map);
+                    var poly = L.geoJSON({!! $wilayah->geometri !!}, { style: { fillColor: "{{ $wilayah->warna ?? '#3b82f6' }}", weight: 2, opacity: 1, color: 'white', fillOpacity: 0.3 } }).addTo(map);
                     geoLayers['{{ $wilayah->id_kecamatan }}'] = poly;
                     poly.bindPopup(`<div class="text-center p-1"><h3 class="text-xs font-black text-[#1e1b4b] uppercase">Kec. {{ $wilayah->nama_kecamatan }}</h3></div>`);
                 } catch (e) { console.error("Error geometri"); }
             @endif
         @endforeach
 
+        // Data Infrastruktur
+        var infraLayerGroups = {
+            'Jalan': L.layerGroup().addTo(map),
+            'Jembatan': L.layerGroup().addTo(map),
+            'Drainase': L.layerGroup().addTo(map),
+            'Titian': L.layerGroup().addTo(map),
+            'Lainnya': L.layerGroup().addTo(map)
+        };
+        var infraData = @json($dataInfrastruktur);
+        
+        infraData.forEach(function(item) {
+            if (item.latitude && item.longitude) {
+                var lat = parseFloat(item.latitude);
+                var lng = parseFloat(item.longitude);
+                
+                if (!isNaN(lat) && !isNaN(lng)) {
+                    var color = '#10b981'; // emerald
+                    var status = 'Kondisi Baik';
+                    if (item.kondisi === 'Rusak Ringan') { color = '#facc15'; status = 'Rusak Ringan'; } // yellow
+                    if (item.kondisi === 'Rusak Berat') { color = '#ef4444'; status = 'Rusak Berat'; } // red
+                    
+                    var marker = L.circleMarker([lat, lng], {
+                        radius: 7,
+                        fillColor: color,
+                        color: '#ffffff',
+                        weight: 2,
+                        opacity: 1,
+                        fillOpacity: 0.9
+                    });
+                    
+                    var jenisStr = item.jenis_infrastruktur ? item.jenis_infrastruktur : 'Lainnya';
+                    // capitalize first letter to match keys if needed, but DB values should match
+                    var layerGroup = infraLayerGroups[jenisStr] || infraLayerGroups['Lainnya'];
+                    marker.addTo(layerGroup);
+                    
+                    var popupContent = `
+                        <div class="p-3 min-w-[200px]">
+                            <div class="border-b border-gray-100 pb-2 mb-2">
+                                <span class="px-2.5 py-1 rounded-lg text-[8px] font-black tracking-widest text-white mb-2 inline-block uppercase shadow-sm" style="background-color: ${color}">
+                                    ${status}
+                                </span>
+                                <h3 class="text-sm font-black text-[#1e1b4b] uppercase leading-tight">${item.nama_infrastruktur}</h3>
+                            </div>
+                            <div class="space-y-1 mb-3">
+                                <p class="text-[9px] font-bold text-gray-500 uppercase flex items-center gap-1"><i class="fas fa-layer-group text-blue-400 w-3"></i> ${jenisStr}</p>
+                            </div>
+                            <div class="mt-2 text-center bg-blue-50 py-2 rounded-xl border border-blue-100 hover:bg-blue-100 transition">
+                                <a href="/admin/infrastruktur/${item.id_infrastruktur}" class="text-[10px] text-blue-600 font-black flex justify-center items-center gap-1 uppercase">Lihat Detail <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    `;
+                    
+                    marker.bindPopup(popupContent, {
+                        className: 'custom-popup rounded-2xl overflow-hidden shadow-xl border-0'
+                    });
+                    
+                    marker.bindTooltip(`<span class="font-extrabold text-[10px] uppercase text-[#1e1b4b]">${item.nama_infrastruktur}</span>`, {
+                        direction: 'top',
+                        className: 'bg-white/95 border border-gray-100 shadow-md rounded-xl px-3 py-1.5 backdrop-blur-sm'
+                    });
+                }
+            }
+        });
+
+        // Toggle Functions
         function toggleLayer(id, isChecked) {
             if (geoLayers[id]) { if (isChecked) { map.addLayer(geoLayers[id]); } else { map.removeLayer(geoLayers[id]); } }
+        }
+        
+        function toggleInfraJenisLayer(jenis, isChecked) {
+            var group = infraLayerGroups[jenis];
+            if (group) {
+                if (isChecked) { map.addLayer(group); } else { map.removeLayer(group); }
+            }
         }
 
         function zoomKeKecamatan(id) {
