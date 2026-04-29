@@ -48,13 +48,13 @@
                             <div class="space-y-5">
                                 <div>
                                     <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Nama Infrastruktur <span class="text-red-500">*</span></label>
-                                    <input type="text" name="nama_infrastruktur" placeholder="Contoh: Jembatan Dewi" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none" required>
+                                    <input type="text" name="nama_infrastruktur" placeholder="Contoh: Jembatan Dewi" class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none" required>
                                 </div>
 
                                 <div class="grid grid-cols-2 gap-4">
                                     <div>
                                         <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Jenis <span class="text-red-500">*</span></label>
-                                        <select name="jenis_infrastruktur" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none appearance-none" required>
+                                        <select name="jenis_infrastruktur" class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none appearance-none" required>
                                             <option value="Jalan">Jalan</option>
                                             <option value="Jembatan">Jembatan</option>
                                             <option value="Drainase">Drainase</option>
@@ -62,7 +62,7 @@
                                     </div>
                                     <div>
                                         <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Wilayah (Kec) <span class="text-red-500">*</span></label>
-                                        <select name="id_kecamatan" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none appearance-none" required>
+                                        <select name="id_kecamatan" class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none appearance-none" required>
                                             @foreach($semuaKecamatan as $kec)
                                                 <option value="{{ $kec->id_kecamatan }}" {{ auth()->user()->id_kecamatan == $kec->id_kecamatan ? 'selected' : '' }}>
                                                     {{ $kec->nama_kecamatan }}
@@ -103,11 +103,11 @@
                             <div class="grid grid-cols-2 gap-4 mb-6">
                                 <div>
                                     <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Latitude</label>
-                                    <input type="text" name="latitude" id="lat-input" placeholder="-3.31..." class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold outline-none focus:border-emerald-500" required>
+                                    <input type="text" name="latitude" id="lat-input" placeholder="-3.31..." class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold outline-none focus:border-emerald-500" required>
                                 </div>
                                 <div>
                                     <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Longitude</label>
-                                    <input type="text" name="longitude" id="lng-input" placeholder="114.59..." class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold outline-none focus:border-emerald-500" required>
+                                    <input type="text" name="longitude" id="lng-input" placeholder="114.59..." class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold outline-none focus:border-emerald-500" required>
                                 </div>
                             </div>
 
