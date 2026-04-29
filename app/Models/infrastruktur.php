@@ -25,13 +25,15 @@ class Infrastruktur extends Model
      */
     protected $fillable = [
         'id_user',
-        'id_kelurahan',      // Mengacu pada wilayah terkecil (Kelurahan)
-        'nama_infrastruktur', // Nama kolom yang benar (bukan nama_objek)
-        'jenis_infrastruktur',// Nama kolom yang benar (bukan jenis)
-        'foto',              // Nama field untuk dokumentasi lapangan
+        'id_kelurahan',
+        'id_kecamatan',
+        'nama_infrastruktur',
+        'jenis_infrastruktur',
+        'foto_terbaru',
         'latitude',
         'longitude',
-        'kondisi',           // Untuk menyimpan status: Baik, Rusak Ringan, Rusak Berat
+        'kondisi',
+        'status_verifikasi',
     ];
 
     /**

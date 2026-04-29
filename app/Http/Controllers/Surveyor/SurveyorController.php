@@ -53,8 +53,9 @@ class SurveyorController extends Controller
             'id_kecamatan' => $request->id_kecamatan,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
-            'foto' => $path,
+            'foto_terbaru' => $path,
             'kondisi' => 'Baik', // Default awal
+            'status_verifikasi' => 'Pending',
         ]);
 
         return redirect()->route('surveyor.history')->with('success', 'Data berhasil dikirim!');

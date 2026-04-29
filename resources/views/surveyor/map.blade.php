@@ -92,7 +92,7 @@
             const popupContent = `
                 <div class="p-2 text-left" style="min-width: 200px;">
                     <div class="w-full h-24 rounded-lg bg-gray-100 mb-3 overflow-hidden">
-                        <img src="/storage/${point.foto}" class="w-full h-full object-cover">
+                        <img src="/storage/${point.foto_terbaru}" class="w-full h-full object-cover">
                     </div>
                     <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1">${point.jenis_infrastruktur}</p>
                     <h4 class="text-sm font-black text-[#1e1b4b] mb-2 leading-tight">${point.nama_infrastruktur}</h4>

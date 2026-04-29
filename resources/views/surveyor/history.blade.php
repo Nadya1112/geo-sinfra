@@ -55,8 +55,8 @@
                                     <div class="flex items-center gap-4">
                                         <span class="text-[10px] font-black text-gray-400">#{{ $item->id_infrastruktur }}</span>
                                         <div class="w-12 h-12 rounded-xl bg-gray-100 border border-gray-100 overflow-hidden shadow-sm">
-                                            @if($item->foto)
-                                                <img src="{{ asset('storage/' . $item->foto) }}" class="w-full h-full object-cover">
+                                            @if($item->foto_terbaru)
+                                                <img src="{{ asset('storage/' . $item->foto_terbaru) }}" class="w-full h-full object-cover">
                                             @else
                                                 <div class="w-full h-full flex items-center justify-center text-gray-300"><i class="fas fa-image"></i></div>
                                             @endif

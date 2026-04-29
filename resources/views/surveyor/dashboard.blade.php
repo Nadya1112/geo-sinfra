@@ -138,7 +138,7 @@
                             @forelse($recentUploads as $upload)
                             <div class="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-2xl transition-all">
                                 <div class="w-12 h-12 rounded-xl bg-gray-100 overflow-hidden flex-shrink-0">
-                                    <img src="{{ asset('storage/' . $upload->foto) }}" class="w-full h-full object-cover">
+                                    <img src="{{ asset('storage/' . $upload->foto_terbaru) }}" class="w-full h-full object-cover">
                                 </div>
                                 <div class="flex-1 min-w-0">
                                     <p class="text-xs font-black text-[#1e1b4b] truncate uppercase">{{ $upload->nama_infrastruktur }}</p>
