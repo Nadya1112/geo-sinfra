@@ -89,14 +89,27 @@
                             </div>
 
                             <div class="space-y-6">
-                                <div>
-                                    <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Nama Lengkap</label>
-                                    <input type="text" name="name" value="{{ auth()->user()->name }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold outline-none focus:border-emerald-500 transition-all" required>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Nama Lengkap</label>
+                                        <input type="text" name="name" value="{{ auth()->user()->name }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold outline-none focus:border-emerald-500 transition-all" required>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Alamat Email</label>
+                                        <input type="email" name="email" value="{{ auth()->user()->email }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold outline-none focus:border-emerald-500 transition-all" required>
+                                    </div>
                                 </div>
 
                                 <div>
-                                    <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Alamat Email</label>
-                                    <input type="email" name="email" value="{{ auth()->user()->email }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold outline-none focus:border-emerald-500 transition-all" required>
+                                    <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Wilayah Tugas (Kecamatan)</label>
+                                    <select name="id_kecamatan" class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold outline-none focus:border-emerald-500 transition-all appearance-none" required>
+                                        @foreach($semuaKecamatan as $kec)
+                                            <option value="{{ $kec->id_kecamatan }}" {{ $user->id_kecamatan == $kec->id_kecamatan ? 'selected' : '' }}>
+                                                {{ $kec->nama_kecamatan }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                                 <div class="pt-4 border-t border-gray-50">

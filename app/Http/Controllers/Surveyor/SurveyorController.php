@@ -80,7 +80,8 @@ class SurveyorController extends Controller
     public function profile()
     {
         $user = auth()->user();
-        return view('surveyor.profile', compact('user'));
+        $semuaKecamatan = DB::table('kecamatan')->get();
+        return view('surveyor.profile', compact('user', 'semuaKecamatan'));
     }
 
     public function updateProfile(Request $request)
@@ -90,12 +91,14 @@ class SurveyorController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
+            'id_kecamatan' => 'required|exists:kecamatan,id_kecamatan',
             'password' => 'nullable|min:8|confirmed',
             'profile_photo' => 'nullable|image|max:2048'
         ]);
 
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->id_kecamatan = $request->id_kecamatan;
 
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
