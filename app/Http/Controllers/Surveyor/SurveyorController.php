@@ -32,32 +32,49 @@ class SurveyorController extends Controller
     public function create()
     {
         $semuaKecamatan = DB::table('kecamatan')->get();
-        return view('surveyor.input', compact('semuaKecamatan'));
+        $semuaKelurahan = DB::table('kelurahan')->get();
+        return view('surveyor.input', compact('semuaKecamatan', 'semuaKelurahan'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'nama_infrastruktur' => 'required|string|max:255',
-            'jenis_infrastruktur' => 'required|in:Jalan,Jembatan,Drainase',
+            'jenis_infrastruktur' => 'required',
             'id_kecamatan' => 'required|exists:kecamatan,id_kecamatan',
+            'id_kelurahan' => 'required|exists:kelurahan,id_kelurahan',
             'latitude' => 'required',
             'longitude' => 'required',
-            'foto' => 'required|image|max:5120', // Max 5MB
+            'kondisi' => 'required',
+            'foto' => 'required|image|max:5120',
         ]);
 
         $path = $request->file('foto')->store('infrastruktur', 'public');
 
-        Infrastruktur::create([
+        // Logic sync with Admin for mapping 'jenis'
+        $jenisMapping = [
+            'Jalan' => 'Jalan',
+            'Jembatan' => 'Jembatan',
+            'Drainase' => 'Drainase'
+        ];
+        $jenisEnum = $jenisMapping[$request->jenis_infrastruktur] ?? 'Lainnya';
+
+        DB::table('infrastruktur')->insert([
             'id_user' => auth()->id(),
             'nama_infrastruktur' => $request->nama_infrastruktur,
+            'nama_objek' => $request->nama_infrastruktur,
             'jenis_infrastruktur' => $request->jenis_infrastruktur,
+            'jenis' => $jenisEnum,
             'id_kecamatan' => $request->id_kecamatan,
+            'id_kelurahan' => $request->id_kelurahan,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
+            'kondisi' => $request->kondisi,
+            'alamat' => $request->alamat ?? '-',
             'foto_terbaru' => $path,
-            'kondisi' => 'Baik', // Default awal
             'status_verifikasi' => 'Pending',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         return redirect()->route('surveyor.history')->with('success', 'Data berhasil dikirim!');
