@@ -108,27 +108,47 @@
                 </div>
 
                 <!-- Info Wilayah Tugas -->
-                <div class="bg-[#1e1b4b] rounded-[2.5rem] p-8 text-white relative overflow-hidden shadow-2xl shadow-indigo-900/40">
-                    <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-blue-600 opacity-10 rounded-full blur-3xl"></div>
-                    <div class="relative z-10">
-                        <h4 class="font-black text-lg mb-2">Wilayah Tugas Anda</h4>
-                        <p class="text-blue-200 text-[10px] uppercase tracking-widest font-bold mb-8">Data Kecamatan Terdaftar</p>
-                        
-                        <div class="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-md">
-                            <div class="flex items-center gap-4 mb-4">
-                                <div class="w-12 h-12 bg-emerald-500 rounded-2xl flex items-center justify-center text-xl shadow-lg shadow-emerald-500/20">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                </div>
-                                <div>
-                                    <h5 class="text-xl font-black">{{ auth()->user()->kecamatan->nama_kecamatan ?? 'Seluruh Wilayah' }}</h5>
-                                    <p class="text-xs text-blue-200 font-medium">Kota Banjarmasin</p>
+                <div class="space-y-6">
+                    <div class="bg-[#1e1b4b] rounded-[2.5rem] p-8 text-white relative overflow-hidden shadow-2xl shadow-indigo-900/40">
+                        <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-blue-600 opacity-10 rounded-full blur-3xl"></div>
+                        <div class="relative z-10">
+                            <h4 class="font-black text-lg mb-2">Wilayah Tugas Anda</h4>
+                            <p class="text-blue-200 text-[10px] uppercase tracking-widest font-bold mb-8">Data Kecamatan Terdaftar</p>
+                            
+                            <div class="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-md">
+                                <div class="flex items-center gap-4 mb-4">
+                                    <div class="w-12 h-12 bg-emerald-500 rounded-2xl flex items-center justify-center text-xl shadow-lg shadow-emerald-500/20">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-xl font-black">{{ auth()->user()->kecamatan->nama_kecamatan ?? 'Seluruh Wilayah' }}</h5>
+                                        <p class="text-xs text-blue-200 font-medium">Kota Banjarmasin</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="pt-4 border-t border-white/10 mt-4">
-                                <p class="text-[10px] text-blue-200 italic font-medium leading-relaxed">
-                                    "Anda bertanggung jawab untuk memantau dan melaporkan kondisi infrastruktur di wilayah ini secara berkala."
-                                </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm">
+                        <div class="flex justify-between items-center mb-6">
+                            <h4 class="font-black text-lg text-[#1e1b4b]">Upload Terbaru</h4>
+                            <a href="{{ route('surveyor.history') }}" class="text-[10px] font-black text-emerald-600 uppercase tracking-widest hover:underline">Semua</a>
+                        </div>
+                        <div class="space-y-4">
+                            @forelse($recentUploads as $upload)
+                            <div class="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-2xl transition-all">
+                                <div class="w-12 h-12 rounded-xl bg-gray-100 overflow-hidden flex-shrink-0">
+                                    <img src="{{ asset('storage/' . $upload->foto) }}" class="w-full h-full object-cover">
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-xs font-black text-[#1e1b4b] truncate uppercase">{{ $upload->nama_infrastruktur }}</p>
+                                    <p class="text-[9px] text-gray-400 font-bold uppercase">{{ $upload->created_at->diffForHumans() }}</p>
+                                </div>
+                                <div class="w-2 h-2 rounded-full {{ $upload->status_verifikasi == 'Verified' ? 'bg-emerald-500' : 'bg-amber-500' }}"></div>
                             </div>
+                            @empty
+                            <p class="text-xs text-gray-400 italic text-center py-4">Belum ada data diunggah.</p>
+                            @endforelse
                         </div>
                     </div>
                 </div>

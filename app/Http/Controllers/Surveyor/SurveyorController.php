@@ -14,11 +14,17 @@ class SurveyorController extends Controller
     {
         $userId = auth()->id();
         $totalSurvey = Infrastruktur::where('id_user', $userId)->count();
-        // Simulasi hitung validasi dan AI (bisa disesuaikan nanti)
-        $waitingValidation = 0; // Sementara
-        $verifiedAI = 0; // Sementara
+        // Hitung status nyata
+        $waitingValidation = Infrastruktur::where('id_user', $userId)->where('status_verifikasi', 'Pending')->count();
+        $verifiedAI = Infrastruktur::where('id_user', $userId)->where('status_verifikasi', 'Verified')->count();
 
-        return view('surveyor.dashboard', compact('totalSurvey', 'waitingValidation', 'verifiedAI'));
+        // Ambil 5 upload terakhir
+        $recentUploads = Infrastruktur::where('id_user', $userId)
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
+
+        return view('surveyor.dashboard', compact('totalSurvey', 'waitingValidation', 'verifiedAI', 'recentUploads'));
     }
 
     public function create()
