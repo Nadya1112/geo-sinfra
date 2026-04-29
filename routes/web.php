@@ -95,6 +95,10 @@ Route::middleware(['auth'])->group(function () {
     // --- AREA SURVEYOR ---
     Route::middleware(['role:surveyor'])->prefix('surveyor')->group(function () {
         Route::get('/dashboard', [App\Http\Controllers\Surveyor\SurveyorController::class, 'index'])->name('surveyor.dashboard');
+        Route::get('/input', [App\Http\Controllers\Surveyor\SurveyorController::class, 'create'])->name('surveyor.input');
+        Route::post('/input', [App\Http\Controllers\Surveyor\SurveyorController::class, 'store'])->name('surveyor.store');
+        Route::get('/history', [App\Http\Controllers\Surveyor\SurveyorController::class, 'history'])->name('surveyor.history');
+        Route::get('/map', [App\Http\Controllers\Surveyor\SurveyorController::class, 'map'])->name('surveyor.map');
     });
 
     // --- AREA KABID ---

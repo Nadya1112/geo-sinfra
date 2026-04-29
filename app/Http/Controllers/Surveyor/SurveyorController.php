@@ -4,11 +4,67 @@ namespace App\Http\Controllers\Surveyor;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Infrastruktur;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class SurveyorController extends Controller
 {
     public function index()
     {
-        return view('surveyor.dashboard');
+        $userId = auth()->id();
+        $totalSurvey = Infrastruktur::where('id_user', $userId)->count();
+        // Simulasi hitung validasi dan AI (bisa disesuaikan nanti)
+        $waitingValidation = 0; // Sementara
+        $verifiedAI = 0; // Sementara
+
+        return view('surveyor.dashboard', compact('totalSurvey', 'waitingValidation', 'verifiedAI'));
+    }
+
+    public function create()
+    {
+        $semuaKecamatan = DB::table('kecamatan')->get();
+        return view('surveyor.input', compact('semuaKecamatan'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nama_infrastruktur' => 'required|string|max:255',
+            'jenis_infrastruktur' => 'required|in:Jalan,Jembatan,Drainase',
+            'id_kecamatan' => 'required|exists:kecamatan,id_kecamatan',
+            'latitude' => 'required',
+            'longitude' => 'required',
+            'foto' => 'required|image|max:5120', // Max 5MB
+        ]);
+
+        $path = $request->file('foto')->store('infrastruktur', 'public');
+
+        Infrastruktur::create([
+            'id_user' => auth()->id(),
+            'nama_infrastruktur' => $request->nama_infrastruktur,
+            'jenis_infrastruktur' => $request->jenis_infrastruktur,
+            'id_kecamatan' => $request->id_kecamatan,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'foto' => $path,
+            'kondisi' => 'Baik', // Default awal
+        ]);
+
+        return redirect()->route('surveyor.history')->with('success', 'Data berhasil dikirim!');
+    }
+
+    public function history()
+    {
+        $riwayat = Infrastruktur::where('id_user', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return view('surveyor.history', compact('riwayat'));
+    }
+
+    public function map()
+    {
+        $dataMap = Infrastruktur::where('id_user', auth()->id())->get();
+        return view('surveyor.map', compact('dataMap'));
     }
 }

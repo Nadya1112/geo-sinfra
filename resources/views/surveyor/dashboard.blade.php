@@ -64,17 +64,17 @@
                 <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
                     <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-file-alt"></i></div>
                     <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Total Survey Saya</p>
-                    <h3 class="text-2xl font-black text-[#1e1b4b]">0 <span class="text-xs font-medium text-gray-400">Laporan</span></h3>
+                    <h3 class="text-2xl font-black text-[#1e1b4b]">{{ $totalSurvey }} <span class="text-xs font-medium text-gray-400">Laporan</span></h3>
                 </div>
                 <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
                     <div class="w-10 h-10 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-clock"></i></div>
                     <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Menunggu Validasi</p>
-                    <h3 class="text-2xl font-black text-[#1e1b4b]">0 <span class="text-xs font-medium text-gray-400">Objek</span></h3>
+                    <h3 class="text-2xl font-black text-[#1e1b4b]">{{ $waitingValidation }} <span class="text-xs font-medium text-gray-400">Objek</span></h3>
                 </div>
                 <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
                     <div class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-check-double"></i></div>
                     <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Terverifikasi AI</p>
-                    <h3 class="text-2xl font-black text-[#1e1b4b]">0 <span class="text-xs font-medium text-gray-400">Selesai</span></h3>
+                    <h3 class="text-2xl font-black text-[#1e1b4b]">{{ $verifiedAI }} <span class="text-xs font-medium text-gray-400">Selesai</span></h3>
                 </div>
             </div>
 
