@@ -153,7 +153,7 @@
 
                         <div class="relative rounded-[2rem] overflow-hidden border border-gray-100 shadow-inner">
                             <div id="map" class="h-[250px] w-full z-0"></div>
-                            <div class="absolute bottom-4 right-4 z-10">
+                            <div class="absolute bottom-4 left-4 z-10">
                                 <a href="https://www.google.com/maps/search/?api=1&query={{ $infrastruktur->latitude }},{{ $infrastruktur->longitude }}" target="_blank" class="px-4 py-2 bg-white/90 backdrop-blur text-[#1e1b4b] rounded-xl text-[9px] font-black uppercase tracking-widest shadow-xl border border-gray-100 flex items-center gap-2 hover:bg-emerald-600 hover:text-white transition-all">
                                     <i class="fas fa-external-link-alt"></i> Buka di Google Maps
                                 </a>
