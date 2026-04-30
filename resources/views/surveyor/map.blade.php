@@ -238,9 +238,8 @@
                     }).addTo(map);
 
                     poly.bindPopup(`
-                        <div class="px-3 py-1">
-                            <p class="text-[10px] font-black uppercase tracking-widest text-[#1e1b4b] mb-1">${kec.nama_kecamatan}</p>
-                            <div class="h-1 w-full rounded-full" style="background-color: ${kec.warna || '#3b82f6'}"></div>
+                        <div class="px-2 py-0.5 text-center">
+                            <p class="text-[9px] font-black uppercase tracking-widest text-[#1e1b4b]">${kec.nama_kecamatan}</p>
                         </div>
                     `, {
                         className: 'custom-polygon-popup',
