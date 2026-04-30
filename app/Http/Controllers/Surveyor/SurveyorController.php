@@ -184,7 +184,8 @@ class SurveyorController extends Controller
     public function map()
     {
         $dataMap = Infrastruktur::with(['cnn', 'analisis'])->where('id_user', auth()->id())->get();
-        return view('surveyor.map', compact('dataMap'));
+        $myKecamatans = auth()->user()->kecamatans;
+        return view('surveyor.map', compact('dataMap', 'myKecamatans'));
     }
 
     public function profile()
