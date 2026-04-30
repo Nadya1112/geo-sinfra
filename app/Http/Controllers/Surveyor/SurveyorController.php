@@ -31,7 +31,14 @@ class SurveyorController extends Controller
 
     public function create()
     {
-        $semuaKecamatan = DB::table('kecamatan')->get();
+        $user = auth()->user();
+        $semuaKecamatan = $user->kecamatans;
+
+        // Jika belum memilih di profil, tampilkan semua agar bisa pilih pertama kali
+        if ($semuaKecamatan->isEmpty()) {
+            $semuaKecamatan = DB::table('kecamatan')->get();
+        }
+
         $semuaKelurahan = DB::table('kelurahan')->get();
         return view('surveyor.input', compact('semuaKecamatan', 'semuaKelurahan'));
     }
@@ -103,7 +110,14 @@ class SurveyorController extends Controller
             ->where('id_infrastruktur', $id)
             ->where('id_user', auth()->id())
             ->firstOrFail();
-        $semuaKecamatan = DB::table('kecamatan')->get();
+            
+        $user = auth()->user();
+        $semuaKecamatan = $user->kecamatans;
+
+        if ($semuaKecamatan->isEmpty()) {
+            $semuaKecamatan = DB::table('kecamatan')->get();
+        }
+
         $semuaKelurahan = DB::table('kelurahan')->get();
         return view('surveyor.edit', compact('infrastruktur', 'semuaKecamatan', 'semuaKelurahan'));
     }
@@ -169,16 +183,22 @@ class SurveyorController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'id_kecamatan' => 'required|exists:kecamatan,id_kecamatan',
+            'id_kecamatan' => 'required|array',
+            'id_kecamatan.*' => 'exists:kecamatan,id_kecamatan',
             'password' => 'nullable|min:8|confirmed',
             'profile_photo' => 'nullable|image|max:2048'
         ]);
 
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->id_kecamatan = $request->id_kecamatan;
+        
+        // Sync ke tabel pivot
+        $user->kecamatans()->sync($request->id_kecamatan);
+        
+        // Simpan satu id_kecamatan utama di tabel users untuk kompatibilitas
+        $user->id_kecamatan = $request->id_kecamatan[0];
 
-        if ($request->filled('password')) {
+        if ($request->password) {
             $user->password = Hash::make($request->password);
         }
 
@@ -186,8 +206,7 @@ class SurveyorController extends Controller
             if ($user->profile_photo) {
                 Storage::disk('public')->delete($user->profile_photo);
             }
-            $path = $request->file('profile_photo')->store('profile_photos', 'public');
-            $user->profile_photo = $path;
+            $user->profile_photo = $request->file('profile_photo')->store('profile_photos', 'public');
         }
 
         $user->save();

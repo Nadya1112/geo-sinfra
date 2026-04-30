@@ -5,8 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -65,7 +64,15 @@ class User extends Authenticatable
     }
 
     /**
-     * Hubungan: User (Surveyor) memiliki satu wilayah tugas (Kecamatan).
+     * Hubungan: User (Surveyor) memiliki banyak wilayah tugas (Kecamatan).
+     */
+    public function kecamatans(): BelongsToMany
+    {
+        return $this->belongsToMany(Kecamatan::class, 'user_kecamatan', 'id_user', 'id_kecamatan')->withTimestamps();
+    }
+
+    /**
+     * Hubungan: User (Surveyor) memiliki satu wilayah tugas (Kecamatan) - Legacy helper
      */
     public function kecamatan()
     {
