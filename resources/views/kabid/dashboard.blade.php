@@ -16,8 +16,8 @@
     <main class="flex-1 flex flex-col h-screen overflow-y-auto">
         <header class="bg-white border-b border-gray-100 px-8 py-5 flex justify-between items-center z-10">
             <div>
-                <p class="text-[10px] font-extrabold text-indigo-600 uppercase tracking-[0.2em] mb-1">Kepala Bidang Portal</p>
-                <h2 class="text-xl font-black text-[#1e1b4b]">Overview Pengawasan</h2>
+                <p class="text-[10px] font-extrabold text-indigo-600 uppercase tracking-[0.2em] mb-1">Portal Kepala Bidang</p>
+                <h2 class="text-xl font-black text-[#1e1b4b]">Panel Pengawasan</h2>
             </div>
             
             <div class="flex items-center gap-6">
@@ -29,135 +29,186 @@
                 <div class="flex items-center gap-3">
                     <div class="text-right">
                         <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase">{{ auth()->user()->name }}</p>
-                        <p class="text-[9px] font-bold text-indigo-500 uppercase mt-1">Status: Pengawas</p>
+                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1 italic">AKTIF</p>
                     </div>
-                    <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100 overflow-hidden">
+                    <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100 overflow-hidden shadow-sm">
                         @if(auth()->user()->profile_photo)
                             <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
                         @else
-                            <i class="fas fa-user-shield text-xl"></i>
+                            <i class="fas fa-user-tie text-xl"></i>
                         @endif
                     </div>
                 </div>
             </div>
         </header>
 
-        <div class="p-8">
-            <!-- Stats Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm relative overflow-hidden group">
-                    <div class="relative z-10">
-                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Butuh Validasi</p>
-                        <h3 class="text-3xl font-black text-amber-500">{{ $totalPending }}</h3>
-                        <p class="text-[9px] text-gray-400 mt-2 font-bold">Laporan masuk baru</p>
-                    </div>
-                    <i class="fas fa-clock absolute -right-4 -bottom-4 text-6xl text-gray-50 opacity-50 group-hover:text-amber-50 transition-colors"></i>
+        <div class="p-8 space-y-10">
+            <!-- Welcome Section -->
+            <div class="relative bg-[#1e1b4b] rounded-[3rem] p-10 overflow-hidden shadow-2xl shadow-indigo-900/20">
+                <div class="absolute -right-20 -top-20 w-80 h-80 bg-indigo-500/20 rounded-full blur-[100px]"></div>
+                <div class="absolute -left-10 -bottom-10 w-60 h-60 bg-purple-500/10 rounded-full blur-[80px]"></div>
+                
+                <div class="relative z-10">
+                    <h1 class="text-3xl font-black text-white mb-2">Selamat Datang, Bapak {{ auth()->user()->name }}</h1>
+                    <p class="text-indigo-200/80 text-sm font-medium tracking-wide">Berikut ringkasan kondisi infrastruktur Banjarmasin saat ini.</p>
                 </div>
-                <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm relative overflow-hidden group">
-                    <div class="relative z-10">
-                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Terverifikasi</p>
-                        <h3 class="text-3xl font-black text-emerald-500">{{ $totalVerified }}</h3>
-                        <p class="text-[9px] text-gray-400 mt-2 font-bold">Disetujui pimpinan</p>
+
+                <!-- Stats Bar -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
+                    <div class="bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 group hover:bg-white/10 transition-all">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-indigo-500/20 rounded-2xl flex items-center justify-center text-indigo-400">
+                                <i class="fas fa-database text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] font-black text-indigo-300 uppercase tracking-widest">Total Terdata</p>
+                                <h3 class="text-2xl font-black text-white">{{ $totalInfrastruktur }} <span class="text-[10px] font-bold text-indigo-300/50 italic ml-1">Objek</span></h3>
+                            </div>
+                        </div>
                     </div>
-                    <i class="fas fa-check-double absolute -right-4 -bottom-4 text-6xl text-gray-50 opacity-50 group-hover:text-emerald-50 transition-colors"></i>
-                </div>
-                <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm relative overflow-hidden group">
-                    <div class="relative z-10">
-                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Total Objek</p>
-                        <h3 class="text-3xl font-black text-indigo-600">{{ $totalInfrastruktur }}</h3>
-                        <p class="text-[9px] text-gray-400 mt-2 font-bold">Infrastruktur terdata</p>
+                    <div class="bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 group hover:bg-white/10 transition-all border-l-red-500/50 border-l-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-red-500/20 rounded-2xl flex items-center justify-center text-red-400">
+                                <i class="fas fa-triangle-exclamation text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] font-black text-red-300 uppercase tracking-widest">Rusak Berat</p>
+                                <h3 class="text-2xl font-black text-white">{{ $totalRusakBerat }} <span class="text-[10px] font-bold text-red-300/50 italic ml-1">Lokasi</span></h3>
+                            </div>
+                        </div>
                     </div>
-                    <i class="fas fa-database absolute -right-4 -bottom-4 text-6xl text-gray-50 opacity-50 group-hover:text-indigo-50 transition-colors"></i>
-                </div>
-                <div class="bg-gradient-to-br from-indigo-600 to-purple-700 p-6 rounded-3xl shadow-lg shadow-indigo-900/10 text-white flex flex-col justify-between">
-                    <p class="text-[10px] font-bold text-indigo-100 uppercase tracking-widest">Aksi Cepat</p>
-                    <button class="w-full py-2 bg-white/20 hover:bg-white/30 rounded-xl text-[10px] font-black uppercase transition-all backdrop-blur-sm border border-white/10">
-                        Cetak Summary PDF
-                    </button>
+                    <div class="bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 group hover:bg-white/10 transition-all border-l-amber-500/50 border-l-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-amber-500/20 rounded-2xl flex items-center justify-center text-amber-400">
+                                <i class="fas fa-bolt text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] font-black text-amber-300 uppercase tracking-widest">Prioritas Utama</p>
+                                <h3 class="text-2xl font-black text-white">{{ $totalPrioritas }} <span class="text-[10px] font-bold text-amber-300/50 italic ml-1">Tindakan</span></h3>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Pending Validation List -->
-                <div class="lg:col-span-2 bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm">
-                    <div class="flex justify-between items-center mb-8">
-                        <h4 class="font-black text-lg text-[#1e1b4b]">Menunggu Validasi Anda</h4>
-                        <a href="#" class="text-[10px] font-black text-indigo-600 uppercase tracking-widest hover:underline">Lihat Semua <i class="fas fa-chevron-right ml-1"></i></a>
+            <!-- Main Menu Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <a href="#" class="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group relative overflow-hidden">
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-indigo-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
+                    <div class="relative z-10 flex flex-col h-full justify-between gap-6">
+                        <div class="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-indigo-200">
+                            <i class="fas fa-map-location-dot text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-black text-[#1e1b4b] text-sm uppercase tracking-tight mb-2">Monitoring Peta Sebaran</h4>
+                            <p class="text-[10px] text-gray-400 font-medium leading-relaxed">Pantau persebaran infrastruktur di seluruh wilayah Banjarmasin secara real-time.</p>
+                        </div>
                     </div>
+                </a>
 
-                    <div class="space-y-4">
-                        @forelse($recentReports as $report)
-                        <div class="flex items-center gap-6 p-4 rounded-3xl border border-gray-50 hover:border-indigo-100 hover:bg-indigo-50/30 transition-all group">
-                            <div class="w-16 h-16 rounded-2xl bg-gray-100 overflow-hidden shadow-sm">
-                                <img src="{{ asset('storage/' . $report->foto) }}" class="w-full h-full object-cover">
-                            </div>
-                            <div class="flex-1">
-                                <p class="text-[9px] font-black text-indigo-500 uppercase tracking-widest mb-0.5">{{ $report->jenis_infrastruktur }}</p>
-                                <h5 class="text-sm font-black text-[#1e1b4b] leading-tight mb-1">{{ $report->nama_infrastruktur }}</h5>
-                                <div class="flex items-center gap-3">
-                                    <p class="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Oleh: <span class="text-gray-600">{{ $report->user->name ?? 'Surveyor' }}</span></p>
-                                    <div class="w-1 h-1 bg-gray-200 rounded-full"></div>
-                                    <p class="text-[10px] text-gray-400 font-medium italic">{{ $report->created_at->diffForHumans() }}</p>
-                                </div>
-                            </div>
-                            <button class="px-5 py-2.5 bg-[#1e1b4b] text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-indigo-900/10 opacity-0 group-hover:opacity-100 transition-all">
-                                Validasi
-                            </button>
+                <a href="#" class="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group relative overflow-hidden">
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-emerald-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
+                    <div class="relative z-10 flex flex-col h-full justify-between gap-6">
+                        <div class="w-14 h-14 bg-emerald-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-emerald-200">
+                            <i class="fas fa-file-circle-check text-xl"></i>
                         </div>
-                        @empty
-                        <div class="text-center py-20 bg-gray-50/50 rounded-3xl border border-dashed border-gray-200">
-                            <i class="fas fa-clipboard-check text-4xl text-gray-200 mb-4"></i>
-                            <p class="text-xs text-gray-400 font-bold italic">Tidak ada laporan yang menunggu validasi.</p>
+                        <div>
+                            <h4 class="font-black text-[#1e1b4b] text-sm uppercase tracking-tight mb-2">Verifikasi Usulan Perbaikan</h4>
+                            <p class="text-[10px] text-gray-400 font-medium leading-relaxed">Tinjau dan beri persetujuan pada laporan kerusakan dari surveyor lapangan.</p>
                         </div>
-                        @endforelse
                     </div>
+                </a>
+
+                <a href="#" class="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group relative overflow-hidden">
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-amber-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
+                    <div class="relative z-10 flex flex-col h-full justify-between gap-6">
+                        <div class="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-amber-200">
+                            <i class="fas fa-chart-line text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-black text-[#1e1b4b] text-sm uppercase tracking-tight mb-2">Laporan Statistik Tahunan</h4>
+                            <p class="text-[10px] text-gray-400 font-medium leading-relaxed">Lihat tren kondisi infrastruktur dan capaian perbaikan dalam satu tahun terakhir.</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="#" class="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group relative overflow-hidden">
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-rose-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
+                    <div class="relative z-10 flex flex-col h-full justify-between gap-6">
+                        <div class="w-14 h-14 bg-rose-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-rose-200">
+                            <i class="fas fa-file-pdf text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-black text-[#1e1b4b] text-sm uppercase tracking-tight mb-2">Cetak Laporan Resmi PDF</h4>
+                            <p class="text-[10px] text-gray-400 font-medium leading-relaxed">Ekspor ringkasan data pengawasan menjadi dokumen resmi siap cetak.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Recent Activity Table (Secondary) -->
+            <div class="bg-white rounded-[3rem] p-8 border border-gray-100 shadow-sm overflow-hidden">
+                <div class="flex justify-between items-center mb-8 px-4">
+                    <div>
+                        <h4 class="font-black text-xl text-[#1e1b4b]">Laporan Terbaru</h4>
+                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">Update masuk dari surveyor</p>
+                    </div>
+                    <a href="#" class="text-[10px] font-black text-indigo-600 uppercase tracking-widest hover:bg-indigo-50 px-4 py-2 rounded-xl transition-all">Semua Laporan <i class="fas fa-arrow-right ml-2"></i></a>
                 </div>
-
-                <!-- Distribution Summary -->
-                <div class="space-y-6">
-                    <div class="bg-[#1e1b4b] rounded-[2.5rem] p-8 text-white relative overflow-hidden shadow-xl">
-                        <div class="absolute -right-10 -top-10 w-40 h-40 bg-indigo-500 opacity-20 rounded-full blur-3xl"></div>
-                        <h4 class="font-black text-base mb-6 relative z-10 italic">Ringkasan Kondisi</h4>
-                        <div class="space-y-4 relative z-10">
-                            <div>
-                                <div class="flex justify-between text-[10px] font-black uppercase mb-2 tracking-widest">
-                                    <span>Kondisi Baik</span>
-                                    <span class="text-emerald-400">75%</span>
-                                </div>
-                                <div class="w-full h-2 bg-white/10 rounded-full overflow-hidden">
-                                    <div class="w-[75%] h-full bg-emerald-500"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between text-[10px] font-black uppercase mb-2 tracking-widest">
-                                    <span>Rusak Ringan</span>
-                                    <span class="text-amber-400">20%</span>
-                                </div>
-                                <div class="w-full h-2 bg-white/10 rounded-full overflow-hidden">
-                                    <div class="w-[20%] h-full bg-amber-500"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between text-[10px] font-black uppercase mb-2 tracking-widest">
-                                    <span>Rusak Berat</span>
-                                    <span class="text-red-400">5%</span>
-                                </div>
-                                <div class="w-full h-2 bg-white/10 rounded-full overflow-hidden">
-                                    <div class="w-[5%] h-full bg-red-500"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm">
-                        <h4 class="font-black text-[#1e1b4b] mb-4 italic">Butuh Perhatian</h4>
-                        <p class="text-[10px] text-gray-500 leading-relaxed font-medium mb-6">
-                            Sistem AI mendeteksi lonjakan laporan kerusakan di area **Banjarmasin Tengah** dalam 24 jam terakhir.
-                        </p>
-                        <button class="w-full py-3 bg-red-50 text-red-600 rounded-2xl text-[10px] font-black uppercase tracking-widest border border-red-100 hover:bg-red-100 transition-all">
-                            Cek Wilayah Prioritas
-                        </button>
-                    </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-separate border-spacing-y-3">
+                        <thead>
+                            <tr class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">
+                                <th class="px-6 py-4">Infrastruktur</th>
+                                <th class="px-6 py-4">Wilayah</th>
+                                <th class="px-6 py-4">Kondisi</th>
+                                <th class="px-6 py-4">Surveyor</th>
+                                <th class="px-6 py-4">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($recentReports as $report)
+                            <tr class="group hover:bg-gray-50/80 transition-all rounded-3xl">
+                                <td class="px-6 py-4 bg-gray-50/50 group-hover:bg-white first:rounded-l-3xl transition-all border-y border-transparent group-hover:border-gray-100">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-12 h-12 rounded-2xl bg-gray-200 overflow-hidden shadow-inner">
+                                            <img src="{{ asset('storage/' . $report->foto_terbaru) }}" class="w-full h-full object-cover">
+                                        </div>
+                                        <div>
+                                            <p class="font-black text-sm text-[#1e1b4b]">{{ $report->nama_infrastruktur }}</p>
+                                            <p class="text-[9px] font-bold text-gray-400 uppercase">{{ $report->jenis_infrastruktur }}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 bg-gray-50/50 group-hover:bg-white transition-all border-y border-transparent group-hover:border-gray-100">
+                                    <div class="flex flex-col">
+                                        <p class="text-xs font-bold text-gray-600">{{ $report->kecamatan->nama_kecamatan ?? 'Banjarmasin' }}</p>
+                                        <p class="text-[9px] text-gray-400">{{ $report->kelurahan->nama_kelurahan ?? '-' }}</p>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 bg-gray-50/50 group-hover:bg-white transition-all border-y border-transparent group-hover:border-gray-100">
+                                    <span class="px-3 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest {{ $report->kondisi == 'Rusak Berat' ? 'bg-red-50 text-red-600 border border-red-100' : 'bg-amber-50 text-amber-600 border border-amber-100' }}">
+                                        {{ $report->kondisi }}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 bg-gray-50/50 group-hover:bg-white transition-all border-y border-transparent group-hover:border-gray-100">
+                                    <p class="text-xs font-bold text-gray-600">{{ $report->user->name ?? 'User' }}</p>
+                                    <p class="text-[9px] text-gray-400 italic">{{ $report->created_at->diffForHumans() }}</p>
+                                </td>
+                                <td class="px-6 py-4 bg-gray-50/50 group-hover:bg-white last:rounded-r-3xl transition-all border-y border-transparent group-hover:border-gray-100">
+                                    <button class="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition-all shadow-sm">
+                                        <i class="fas fa-arrow-right text-[10px]"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="5" class="text-center py-10 text-gray-400 italic text-xs font-bold">Belum ada laporan masuk.</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

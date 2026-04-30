@@ -11,9 +11,11 @@ class KabidController extends Controller
 {
     public function index()
     {
-        $totalPending = Infrastruktur::where('status_verifikasi', 'Pending')->count();
-        $totalVerified = Infrastruktur::where('status_verifikasi', 'Verified')->count();
         $totalInfrastruktur = Infrastruktur::count();
+        $totalRusakBerat = Infrastruktur::where('kondisi', 'Rusak Berat')->count();
+        $totalPrioritas = Infrastruktur::where('status_verifikasi', 'Pending')
+            ->where('kondisi', 'Rusak Berat')
+            ->count();
         
         $recentReports = Infrastruktur::with('user')
             ->where('status_verifikasi', 'Pending')
@@ -21,6 +23,11 @@ class KabidController extends Controller
             ->limit(5)
             ->get();
 
-        return view('kabid.dashboard', compact('totalPending', 'totalVerified', 'totalInfrastruktur', 'recentReports'));
+        return view('kabid.dashboard', compact(
+            'totalInfrastruktur', 
+            'totalRusakBerat', 
+            'totalPrioritas', 
+            'recentReports'
+        ));
     }
 }
