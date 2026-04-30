@@ -63,16 +63,16 @@
             @endif
 
             <!-- Welcome Card -->
-            <div class="relative bg-gradient-to-br from-emerald-600 to-teal-800 rounded-[2.5rem] p-10 mb-8 overflow-hidden shadow-lg shadow-emerald-900/10">
+            <div id="v2-welcome-card" class="relative bg-gradient-to-br from-emerald-700 to-teal-900 rounded-[2.5rem] p-10 mb-8 overflow-hidden shadow-lg shadow-emerald-900/10">
                 <div class="absolute -right-10 -top-10 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl"></div>
                 <div class="relative z-10">
-                    <h3 class="text-3xl font-black text-white mb-2 leading-tight">Selamat Datang, {{ auth()->user()->name }}!</h3>
-                    <p class="text-emerald-50 text-sm font-medium max-w-xl leading-relaxed">
+                    <h3 class="text-3xl font-black text-white mb-4 leading-tight">Selamat Datang, {{ auth()->user()->name }}!</h3>
+                    <p class="text-white text-sm font-semibold max-w-2xl leading-relaxed mb-8 opacity-95">
                         Mari mulai mendata infrastruktur hari ini untuk membantu pemetaan aset daerah yang lebih akurat. Pastikan GPS aktif dan foto yang diambil jelas untuk hasil analisis AI yang maksimal.
                     </p>
-                    <div class="mt-8 flex gap-4">
-                        <a href="{{ route('surveyor.input') }}" class="px-6 py-3 bg-white text-emerald-700 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-emerald-50 transition-all inline-block">
-                            Mulai Survey Sekarang
+                    <div class="flex gap-4">
+                        <a href="{{ route('surveyor.input') }}" class="px-8 py-4 bg-white text-emerald-800 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-emerald-50 transition-all inline-block shadow-2xl">
+                            <i class="fas fa-camera mr-2"></i> Mulai Survey Sekarang
                         </a>
                     </div>
                 </div>
