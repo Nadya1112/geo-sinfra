@@ -52,48 +52,82 @@
         <div class="flex-1 relative">
             <div id="main-map" class="absolute inset-0 z-0"></div>
             
-            <!-- Map Overlay UI -->
-            <div class="absolute top-6 left-6 z-10 space-y-4 max-w-xs">
-                <div class="bg-white/90 backdrop-blur-md p-6 rounded-[2rem] border border-gray-100 shadow-xl">
-                    <h4 class="text-xs font-black text-[#1e1b4b] uppercase tracking-widest mb-4">Legenda Kondisi</h4>
-                    <div class="space-y-3">
-                        <div class="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-1 rounded-lg transition-all" onclick="filterByCondition('Baik')">
-                            <div class="w-3 h-3 bg-emerald-500 rounded-full shadow-lg shadow-emerald-500/20"></div>
-                            <span class="text-[10px] font-bold text-gray-600">Baik / Normal</span>
-                        </div>
-                        <div class="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-1 rounded-lg transition-all" onclick="filterByCondition('Rusak Ringan')">
-                            <div class="w-3 h-3 bg-yellow-500 rounded-full shadow-lg shadow-yellow-500/20"></div>
-                            <span class="text-[10px] font-bold text-gray-600">Rusak Ringan</span>
-                        </div>
-                        <div class="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-1 rounded-lg transition-all" onclick="filterByCondition('Rusak Berat')">
-                            <div class="w-3 h-3 bg-red-500 rounded-full shadow-lg shadow-red-500/20"></div>
-                            <span class="text-[10px] font-bold text-gray-600">Rusak Berat</span>
-                        </div>
+            <!-- Floating Header/Search -->
+            <div class="absolute top-6 left-1/2 -translate-x-1/2 z-10 w-full max-w-lg px-4">
+                <div class="bg-white/90 backdrop-blur-xl p-2 rounded-3xl border border-white shadow-2xl flex items-center gap-2">
+                    <div class="flex-1 flex items-center gap-3 px-4">
+                        <i class="fas fa-search text-gray-400 text-sm"></i>
+                        <input type="text" id="map-search" placeholder="Cari nama infrastruktur..." 
+                            class="w-full bg-transparent border-none outline-none text-sm font-bold text-[#1e1b4b] placeholder-gray-400 py-2">
                     </div>
-                </div>
-
-                <div class="bg-[#1e1b4b]/90 backdrop-blur-md p-6 rounded-[2rem] border border-white/10 shadow-xl text-white">
-                    <p class="text-[9px] font-bold text-blue-200 uppercase tracking-widest mb-1">Ringkasan Lokasi</p>
-                    <h5 class="text-lg font-black"><span id="total-points">{{ $dataMap->count() }}</span> <span class="text-xs font-medium text-blue-300">Titik Laporan</span></h5>
+                    <div class="h-8 w-[1px] bg-gray-100"></div>
+                    <button onclick="resetView()" class="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-emerald-600 transition-all">
+                        <i class="fas fa-location-crosshairs"></i>
+                    </button>
                 </div>
             </div>
 
-            <!-- Floating Type Filters -->
-            <div class="absolute top-6 right-6 z-10">
-                <div class="bg-white/90 backdrop-blur-md p-6 rounded-[2rem] border border-gray-100 shadow-xl flex flex-col gap-4 min-w-[140px]">
-                    <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-100 pb-3">Tipe Objek</p>
+            <!-- Map Overlay UI Left -->
+            <div class="absolute top-6 left-6 z-10 space-y-4 max-w-xs">
+                <div class="bg-white/90 backdrop-blur-xl p-6 rounded-[2.5rem] border border-white shadow-2xl">
+                    <div class="flex items-center gap-3 mb-5 border-b border-gray-50 pb-4">
+                        <div class="w-8 h-8 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-list-check text-xs"></i>
+                        </div>
+                        <h4 class="text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest">Kondisi</h4>
+                    </div>
+                    <div class="space-y-4">
+                        <button onclick="filterByCondition('Baik')" class="w-full flex items-center justify-between group">
+                            <div class="flex items-center gap-3">
+                                <div class="w-2.5 h-2.5 bg-emerald-500 rounded-full"></div>
+                                <span class="text-[11px] font-bold text-gray-500 group-hover:text-[#1e1b4b] transition-colors">Baik / Normal</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-[8px] text-gray-300 group-hover:translate-x-1 transition-all"></i>
+                        </button>
+                        <button onclick="filterByCondition('Rusak Ringan')" class="w-full flex items-center justify-between group">
+                            <div class="flex items-center gap-3">
+                                <div class="w-2.5 h-2.5 bg-amber-500 rounded-full"></div>
+                                <span class="text-[11px] font-bold text-gray-500 group-hover:text-[#1e1b4b] transition-colors">Rusak Ringan</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-[8px] text-gray-300 group-hover:translate-x-1 transition-all"></i>
+                        </button>
+                        <button onclick="filterByCondition('Rusak Berat')" class="w-full flex items-center justify-between group">
+                            <div class="flex items-center gap-3">
+                                <div class="w-2.5 h-2.5 bg-red-500 rounded-full"></div>
+                                <span class="text-[11px] font-bold text-gray-500 group-hover:text-[#1e1b4b] transition-colors">Rusak Berat</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-[8px] text-gray-300 group-hover:translate-x-1 transition-all"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-[#1e1b4b]/95 backdrop-blur-xl p-6 rounded-[2.5rem] border border-white/10 shadow-2xl text-white overflow-hidden relative group">
+                    <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-blue-500/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-700"></div>
+                    <p class="text-[9px] font-black text-blue-300 uppercase tracking-widest mb-1 relative z-10">Total Terdata</p>
+                    <h5 class="text-2xl font-black relative z-10"><span id="total-points">{{ $dataMap->count() }}</span> <span class="text-[10px] font-medium text-blue-300">Titik</span></h5>
+                </div>
+            </div>
+
+            <!-- Floating Type Filters Right -->
+            <div class="absolute top-24 right-6 z-10">
+                <div class="bg-white/90 backdrop-blur-xl p-6 rounded-[2.5rem] border border-white shadow-2xl flex flex-col gap-3 min-w-[160px]">
+                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 border-b border-gray-50 pb-3">Kategori</p>
                     <div class="flex flex-col gap-2">
-                        <button onclick="filterByType('Semua')" class="filter-btn active w-full px-4 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-widest bg-[#1e1b4b] text-white transition-all shadow-lg shadow-indigo-900/20 text-left">
-                            <i class="fas fa-layer-group mr-2 opacity-50"></i> Semua
+                        <button onclick="filterByType('Semua')" class="filter-btn active w-full px-5 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-[#1e1b4b] text-white transition-all shadow-xl shadow-indigo-900/20 text-left flex items-center justify-between">
+                            <span>Semua</span>
+                            <i class="fas fa-layer-group opacity-30"></i>
                         </button>
-                        <button onclick="filterByType('Jalan')" class="filter-btn w-full px-4 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-widest bg-gray-50 text-gray-400 hover:bg-emerald-50 hover:text-emerald-600 transition-all text-left">
-                            <i class="fas fa-road mr-2 opacity-50"></i> Jalan
+                        <button onclick="filterByType('Jalan')" class="filter-btn w-full px-5 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-gray-50 text-gray-400 hover:bg-emerald-50 hover:text-emerald-700 transition-all text-left flex items-center justify-between">
+                            <span>Jalan</span>
+                            <i class="fas fa-road opacity-30"></i>
                         </button>
-                        <button onclick="filterByType('Jembatan')" class="filter-btn w-full px-4 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-widest bg-gray-50 text-gray-400 hover:bg-emerald-50 hover:text-emerald-600 transition-all text-left">
-                            <i class="fas fa-bridge mr-2 opacity-50"></i> Jembatan
+                        <button onclick="filterByType('Jembatan')" class="filter-btn w-full px-5 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-gray-50 text-gray-400 hover:bg-emerald-50 hover:text-emerald-700 transition-all text-left flex items-center justify-between">
+                            <span>Jembatan</span>
+                            <i class="fas fa-bridge opacity-30"></i>
                         </button>
-                        <button onclick="filterByType('Drainase')" class="filter-btn w-full px-4 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-widest bg-gray-50 text-gray-400 hover:bg-emerald-50 hover:text-emerald-600 transition-all text-left">
-                            <i class="fas fa-water mr-2 opacity-50"></i> Drainase
+                        <button onclick="filterByType('Drainase')" class="filter-btn w-full px-5 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-gray-50 text-gray-400 hover:bg-emerald-50 hover:text-emerald-700 transition-all text-left flex items-center justify-between">
+                            <span>Drainase</span>
+                            <i class="fas fa-water opacity-30"></i>
                         </button>
                     </div>
                 </div>
@@ -108,71 +142,85 @@
         }
         setInterval(updateClock, 1000); updateClock();
 
-        const map = L.map('main-map').setView([-3.316694, 114.590111], 13);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors'
-        }).addTo(map);
+        const map = L.map('main-map', {
+            zoomControl: false,
+            attributionControl: false
+        }).setView([-3.316694, 114.590111], 13);
+        
+        // Premium Tile Layer
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png').addTo(map);
 
         const dataPoints = @json($dataMap);
         let activeMarkers = [];
 
         function renderMarkers(points) {
-            // Hapus marker lama
             activeMarkers.forEach(m => map.removeLayer(m));
             activeMarkers = [];
 
             points.forEach(point => {
                 const color = point.kondisi == 'Baik' ? '#10b981' : (point.kondisi == 'Rusak Ringan' ? '#f59e0b' : '#ef4444');
                 
-                const markerHtml = `
-                    <div style="background-color: ${color}; width: 14px; height: 14px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 10px rgba(0,0,0,0.1);"></div>
-                `;
-
                 const icon = L.divIcon({
-                    html: markerHtml,
+                    html: `
+                        <div class="relative group">
+                            <div class="absolute -inset-2 bg-white/50 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <div style="background-color: ${color}; width: 16px; height: 16px; border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);" class="relative z-10"></div>
+                        </div>
+                    `,
                     className: '',
-                    iconSize: [14, 14],
-                    iconAnchor: [7, 7]
+                    iconSize: [16, 16],
+                    iconAnchor: [8, 8]
                 });
 
                 const popupContent = `
-                    <div class="p-2 text-left" style="min-width: 220px;">
-                        <div class="w-full h-32 rounded-lg bg-gray-100 mb-3 overflow-hidden border border-gray-100 shadow-inner">
+                    <div class="p-1" style="min-width: 240px;">
+                        <div class="relative h-36 rounded-2xl bg-gray-100 mb-4 overflow-hidden shadow-inner">
                             <img src="/storage/${point.foto_terbaru}" class="w-full h-full object-cover">
-                        </div>
-                        <div class="flex justify-between items-start mb-1">
-                            <p class="text-[9px] font-black text-emerald-600 uppercase tracking-widest">${point.jenis_infrastruktur}</p>
-                            <span class="text-[8px] font-bold text-gray-400 uppercase tracking-tighter">${new Date(point.updated_at).toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric'})}</span>
-                        </div>
-                        <h4 class="text-sm font-black text-[#1e1b4b] mb-2 leading-tight">${point.nama_infrastruktur}</h4>
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-tighter" style="background-color: ${color}20; color: ${color}; border: 1px solid ${color}40;">
-                                ${point.kondisi}
-                            </span>
-                            <span class="px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-tighter ${point.status_verifikasi == 'Verified' ? 'bg-blue-50 text-blue-600 border border-blue-200' : 'bg-amber-50 text-amber-600 border border-amber-200'}">
-                                ${point.status_verifikasi ?? 'Pending'}
-                            </span>
-                        </div>
-                        <div class="flex flex-col gap-1 mb-3 bg-gray-50 p-2 rounded-lg border border-gray-100 shadow-sm">
-                            <div class="flex justify-between items-center">
-                                <span class="text-[7px] font-black text-gray-400 uppercase tracking-widest">CNN Score</span>
-                                <span class="text-[8px] font-bold text-emerald-600">${point.cnn ? (point.cnn.skor_cnn * 100).toFixed(1) + '%' : '-'}</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-[7px] font-black text-gray-400 uppercase tracking-widest">Decision Tree</span>
-                                <span class="text-[8px] font-bold text-blue-600">${point.analisis ? point.analisis.label_prioritas : '-'}</span>
+                            <div class="absolute top-3 left-3 px-3 py-1 bg-white/90 backdrop-blur-md rounded-lg text-[8px] font-black uppercase tracking-widest text-[#1e1b4b] shadow-sm">
+                                ${point.jenis_infrastruktur}
                             </div>
                         </div>
-                        <div class="pt-2 border-t border-gray-50 flex justify-between items-center">
-                            <p class="text-[9px] text-gray-400 italic font-medium">Klik marker untuk detail</p>
-                            <a href="/surveyor/infrastruktur/${point.id_infrastruktur}/edit" class="px-3 py-1 bg-gray-100 text-[#1e1b4b] rounded-lg text-[9px] font-black uppercase tracking-widest hover:bg-[#1e1b4b] hover:text-white transition-all shadow-sm">Edit</a>
+                        
+                        <div class="px-2">
+                            <h4 class="text-sm font-black text-[#1e1b4b] mb-1 leading-tight">${point.nama_infrastruktur}</h4>
+                            <p class="text-[9px] text-gray-400 font-bold uppercase tracking-tighter mb-4">${new Date(point.updated_at).toLocaleDateString('id-ID', {day:'numeric', month:'long', year:'numeric'})}</p>
+                            
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest" style="background-color: ${color}15; color: ${color}; border: 1px solid ${color}30;">
+                                    ${point.kondisi}
+                                </span>
+                                <span class="px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest ${point.status_verifikasi == 'Verified' ? 'bg-blue-50 text-blue-600 border border-blue-100' : 'bg-amber-50 text-amber-600 border border-amber-100'}">
+                                    ${point.status_verifikasi ?? 'Pending'}
+                                </span>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-2 mb-4 bg-gray-50/50 p-3 rounded-2xl border border-gray-100">
+                                <div>
+                                    <p class="text-[7px] font-black text-gray-400 uppercase tracking-widest mb-0.5">CNN Score</p>
+                                    <p class="text-[10px] font-bold text-emerald-600">${point.cnn ? (point.cnn.skor_cnn * 100).toFixed(1) + '%' : '-'}</p>
+                                </div>
+                                <div>
+                                    <p class="text-[7px] font-black text-gray-400 uppercase tracking-widest mb-0.5">Priority</p>
+                                    <p class="text-[10px] font-bold text-blue-600">${point.analisis ? point.analisis.label_prioritas : '-'}</p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-2 pt-2 border-t border-gray-50">
+                                <a href="/surveyor/infrastruktur/${point.id_infrastruktur}/edit" class="flex-1 py-2.5 bg-[#1e1b4b] text-white rounded-xl text-[9px] font-black uppercase tracking-widest text-center hover:bg-emerald-600 transition-all shadow-lg shadow-indigo-900/10">Edit Data</a>
+                                <a href="/surveyor/infrastruktur/${point.id_infrastruktur}" class="w-10 h-10 flex items-center justify-center bg-gray-100 text-gray-400 rounded-xl hover:bg-emerald-50 hover:text-emerald-600 transition-all">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 `;
 
                 const marker = L.marker([point.latitude, point.longitude], {icon: icon})
                     .addTo(map)
-                    .bindPopup(popupContent);
+                    .bindPopup(popupContent, {
+                        maxWidth: 300,
+                        className: 'premium-popup'
+                    });
                 
                 activeMarkers.push(marker);
             });
@@ -181,17 +229,30 @@
 
             if (points.length > 0) {
                 const group = new L.featureGroup(activeMarkers);
-                map.fitBounds(group.getBounds().pad(0.1));
+                map.fitBounds(group.getBounds().pad(0.2));
+            }
+        }
+
+        // Search Functionality
+        document.getElementById('map-search').addEventListener('input', function(e) {
+            const val = e.target.value.toLowerCase();
+            const filtered = dataPoints.filter(p => p.nama_infrastruktur.toLowerCase().includes(val));
+            renderMarkers(filtered);
+        });
+
+        function resetView() {
+            if (activeMarkers.length > 0) {
+                const group = new L.featureGroup(activeMarkers);
+                map.fitBounds(group.getBounds().pad(0.2));
             }
         }
 
         function filterByType(type) {
-            // Update UI buttons
             document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active', 'bg-[#1e1b4b]', 'text-white', 'shadow-lg', 'shadow-indigo-900/20');
+                btn.classList.remove('active', 'bg-[#1e1b4b]', 'text-white', 'shadow-xl', 'shadow-indigo-900/20');
                 btn.classList.add('bg-gray-50', 'text-gray-400');
             });
-            event.currentTarget.classList.add('active', 'bg-[#1e1b4b]', 'text-white', 'shadow-lg', 'shadow-indigo-900/20');
+            event.currentTarget.classList.add('active', 'bg-[#1e1b4b]', 'text-white', 'shadow-xl', 'shadow-indigo-900/20');
             event.currentTarget.classList.remove('bg-gray-50', 'text-gray-400');
 
             if (type === 'Semua') {
@@ -207,7 +268,6 @@
             renderMarkers(filtered);
         }
 
-        // Initial render
         renderMarkers(dataPoints);
     </script>
 
