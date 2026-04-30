@@ -26,19 +26,19 @@
                     <p class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter"><?php echo e(now()->translatedFormat('l, d F Y')); ?></p>
                 </div>
                 <div class="h-8 w-[1px] bg-gray-100"></div>
-                <div class="flex items-center gap-3">
+                <a href="<?php echo e(route('kabid.profile')); ?>" class="flex items-center gap-3 group">
                     <div class="text-right">
-                        <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase"><?php echo e(auth()->user()->name); ?></p>
+                        <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase group-hover:text-indigo-600 transition-colors"><?php echo e(auth()->user()->name); ?></p>
                         <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1 italic">ONLINE</p>
                     </div>
-                    <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100 overflow-hidden shadow-sm">
+                    <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100 overflow-hidden shadow-sm group-hover:border-indigo-300 group-hover:shadow-md transition-all">
                         <?php if(auth()->user()->profile_photo): ?>
                             <img src="<?php echo e(asset('storage/' . auth()->user()->profile_photo)); ?>" class="w-full h-full object-cover">
                         <?php else: ?>
                             <i class="fas fa-user-tie text-xl"></i>
                         <?php endif; ?>
                     </div>
-                </div>
+                </a>
             </div>
         </header>
 

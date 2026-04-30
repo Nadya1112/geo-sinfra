@@ -11,12 +11,12 @@
 </head>
 <body class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 text-left">
 
-    @include('kabid.partials.sidebar')
+    <?php echo $__env->make('kabid.partials.sidebar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
     <main class="flex-1 flex flex-col h-screen overflow-y-auto">
         <header class="bg-white border-b border-gray-100 px-8 py-5 flex justify-between items-center z-10">
             <div class="flex items-center gap-4">
-                <a href="{{ route('kabid.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-gray-50 text-gray-400 rounded-xl hover:bg-indigo-50 hover:text-indigo-600 transition-all border border-gray-100">
+                <a href="<?php echo e(route('kabid.dashboard')); ?>" class="w-10 h-10 flex items-center justify-center bg-gray-50 text-gray-400 rounded-xl hover:bg-indigo-50 hover:text-indigo-600 transition-all border border-gray-100">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
@@ -28,8 +28,8 @@
 
         <div class="p-8">
             <div class="max-w-4xl mx-auto">
-                <form action="{{ route('kabid.profile.update') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
-                    @csrf
+                <form action="<?php echo e(route('kabid.profile.update')); ?>" method="POST" enctype="multipart/form-data" class="space-y-8">
+                    <?php echo csrf_field(); ?>
                     
                     <!-- Profile Card -->
                     <div class="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm relative overflow-hidden">
@@ -38,14 +38,14 @@
                         <div class="relative z-10 flex flex-col md:flex-row items-center gap-10">
                             <div class="relative group">
                                 <div class="w-32 h-32 rounded-[2.5rem] bg-indigo-100 overflow-hidden border-4 border-white shadow-xl relative">
-                                    @if($user->profile_photo)
-                                        <img src="{{ asset('storage/' . $user->profile_photo) }}" id="preview" class="w-full h-full object-cover">
-                                    @else
+                                    <?php if($user->profile_photo): ?>
+                                        <img src="<?php echo e(asset('storage/' . $user->profile_photo)); ?>" id="preview" class="w-full h-full object-cover">
+                                    <?php else: ?>
                                         <div id="placeholder" class="w-full h-full flex items-center justify-center text-indigo-400">
                                             <i class="fas fa-user-tie text-5xl"></i>
                                         </div>
                                         <img id="preview" class="w-full h-full object-cover hidden">
-                                    @endif
+                                    <?php endif; ?>
                                 </div>
                                 <label for="profile_photo" class="absolute -bottom-2 -right-2 w-10 h-10 bg-[#1e1b4b] text-white rounded-xl flex items-center justify-center cursor-pointer hover:bg-indigo-600 transition-all shadow-lg border-2 border-white">
                                     <i class="fas fa-camera text-xs"></i>
@@ -54,10 +54,10 @@
                             </div>
 
                             <div class="flex-1 text-center md:text-left">
-                                <h3 class="text-2xl font-black text-[#1e1b4b] mb-1">{{ $user->name }}</h3>
+                                <h3 class="text-2xl font-black text-[#1e1b4b] mb-1"><?php echo e($user->name); ?></h3>
                                 <p class="text-xs font-bold text-indigo-500 uppercase tracking-widest mb-4">Kepala Bidang</p>
                                 <div class="flex flex-wrap justify-center md:justify-start gap-3">
-                                    <span class="px-4 py-1.5 bg-gray-100 rounded-full text-[10px] font-black text-gray-500 uppercase tracking-widest">Email: {{ $user->email }}</span>
+                                    <span class="px-4 py-1.5 bg-gray-100 rounded-full text-[10px] font-black text-gray-500 uppercase tracking-widest">Email: <?php echo e($user->email); ?></span>
                                     <span class="px-4 py-1.5 bg-emerald-50 rounded-full text-[10px] font-black text-emerald-600 uppercase tracking-widest border border-emerald-100">Status: Aktif</span>
                                 </div>
                             </div>
@@ -71,11 +71,11 @@
                             <div class="space-y-5">
                                 <div>
                                     <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 px-1">Nama Lengkap</label>
-                                    <input type="text" name="name" value="{{ $user->name }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500 outline-none transition-all" required>
+                                    <input type="text" name="name" value="<?php echo e($user->name); ?>" class="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500 outline-none transition-all" required>
                                 </div>
                                 <div>
                                     <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 px-1">Alamat Email</label>
-                                    <input type="email" name="email" value="{{ $user->email }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500 outline-none transition-all" required>
+                                    <input type="email" name="email" value="<?php echo e($user->email); ?>" class="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500 outline-none transition-all" required>
                                 </div>
                             </div>
                         </div>
@@ -123,3 +123,4 @@
     </script>
 </body>
 </html>
+<?php /**PATH C:\laragon1\laragon\www\geo-sinfra\resources\views/kabid/profile.blade.php ENDPATH**/ ?>
