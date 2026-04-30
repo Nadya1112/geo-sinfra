@@ -89,12 +89,6 @@
                     </div>
                 </div>
 
-                <!-- Total Stats -->
-                <div class="bg-[#1e1b4b]/95 backdrop-blur-xl p-5 rounded-[2.5rem] border border-white/10 shadow-2xl text-white overflow-hidden relative group flex flex-col justify-center min-w-[140px]">
-                    <div class="absolute -right-4 -bottom-4 w-16 h-16 bg-blue-500/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-700"></div>
-                    <p class="text-[8px] font-black text-blue-300 uppercase tracking-widest mb-1 relative z-10">Total Terdata</p>
-                    <h5 class="text-xl font-black relative z-10"><span id="total-points">{{ $dataMap->count() }}</span> <span class="text-[9px] font-medium text-blue-300">Titik</span></h5>
-                </div>
             </div>
 
             <!-- Floating Type Filters Right -->
@@ -222,8 +216,6 @@
                 
                 activeMarkers.push(marker);
             });
-
-            document.getElementById('total-points').textContent = points.length;
 
             if (points.length > 0) {
                 const group = new L.featureGroup(activeMarkers);

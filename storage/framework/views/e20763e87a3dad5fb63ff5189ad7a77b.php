@@ -89,34 +89,37 @@
                     </div>
                 </div>
 
-                <!-- Total Stats -->
-                <div class="bg-[#1e1b4b]/95 backdrop-blur-xl p-5 rounded-[2.5rem] border border-white/10 shadow-2xl text-white overflow-hidden relative group flex flex-col justify-center min-w-[140px]">
-                    <div class="absolute -right-4 -bottom-4 w-16 h-16 bg-blue-500/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-700"></div>
-                    <p class="text-[8px] font-black text-blue-300 uppercase tracking-widest mb-1 relative z-10">Total Terdata</p>
-                    <h5 class="text-xl font-black relative z-10"><span id="total-points"><?php echo e($dataMap->count()); ?></span> <span class="text-[9px] font-medium text-blue-300">Titik</span></h5>
-                </div>
             </div>
 
             <!-- Floating Type Filters Right -->
-            <div class="absolute top-24 right-6 z-10">
-                <div class="bg-white/90 backdrop-blur-xl p-6 rounded-[2.5rem] border border-white shadow-2xl flex flex-col gap-3 min-w-[160px]">
-                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 border-b border-gray-50 pb-3">Kategori</p>
-                    <div class="flex flex-col gap-2">
-                        <button onclick="filterByType('Semua')" class="filter-btn active w-full px-5 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-[#1e1b4b] text-white transition-all shadow-xl shadow-indigo-900/20 text-left flex items-center justify-between">
-                            <span>Semua</span>
-                            <i class="fas fa-layer-group opacity-30"></i>
+            <div class="absolute top-6 right-6 z-10">
+                <div id="category-card" class="bg-white/90 backdrop-blur-xl p-2 rounded-[2rem] border border-white shadow-2xl min-w-[180px] transition-all duration-300">
+                    <button onclick="toggleCategoryMenu()" class="w-full px-6 py-4 rounded-[1.8rem] text-[10px] font-black uppercase tracking-widest bg-[#1e1b4b] text-white flex items-center justify-between shadow-xl hover:bg-[#2d2a6e] transition-all group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-6 h-6 bg-white/10 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-layer-group text-[10px]"></i>
+                            </div>
+                            <span id="current-cat-label">Semua Kategori</span>
+                        </div>
+                        <i id="cat-chevron" class="fas fa-chevron-down text-[8px] transition-transform duration-300"></i>
+                    </button>
+                    
+                    <div id="category-options" class="hidden mt-2 p-2 flex flex-col gap-1 overflow-hidden">
+                        <button onclick="handleCategorySelect('Semua')" class="cat-opt-btn w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-400 hover:bg-emerald-50 hover:text-emerald-700 transition-all text-left flex items-center gap-3 group">
+                            <div class="w-1.5 h-1.5 rounded-full bg-gray-200 group-hover:bg-emerald-500 transition-colors"></div>
+                            Semua
                         </button>
-                        <button onclick="filterByType('Jalan')" class="filter-btn w-full px-5 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-gray-50 text-gray-400 hover:bg-emerald-50 hover:text-emerald-700 transition-all text-left flex items-center justify-between">
-                            <span>Jalan</span>
-                            <i class="fas fa-road opacity-30"></i>
+                        <button onclick="handleCategorySelect('Jalan')" class="cat-opt-btn w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-400 hover:bg-emerald-50 hover:text-emerald-700 transition-all text-left flex items-center gap-3 group">
+                            <div class="w-1.5 h-1.5 rounded-full bg-gray-200 group-hover:bg-emerald-500 transition-colors"></div>
+                            Jalan
                         </button>
-                        <button onclick="filterByType('Jembatan')" class="filter-btn w-full px-5 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-gray-50 text-gray-400 hover:bg-emerald-50 hover:text-emerald-700 transition-all text-left flex items-center justify-between">
-                            <span>Jembatan</span>
-                            <i class="fas fa-bridge opacity-30"></i>
+                        <button onclick="handleCategorySelect('Jembatan')" class="cat-opt-btn w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-400 hover:bg-emerald-50 hover:text-emerald-700 transition-all text-left flex items-center gap-3 group">
+                            <div class="w-1.5 h-1.5 rounded-full bg-gray-200 group-hover:bg-emerald-500 transition-colors"></div>
+                            Jembatan
                         </button>
-                        <button onclick="filterByType('Drainase')" class="filter-btn w-full px-5 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-gray-50 text-gray-400 hover:bg-emerald-50 hover:text-emerald-700 transition-all text-left flex items-center justify-between">
-                            <span>Drainase</span>
-                            <i class="fas fa-water opacity-30"></i>
+                        <button onclick="handleCategorySelect('Drainase')" class="cat-opt-btn w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-400 hover:bg-emerald-50 hover:text-emerald-700 transition-all text-left flex items-center gap-3 group">
+                            <div class="w-1.5 h-1.5 rounded-full bg-gray-200 group-hover:bg-emerald-500 transition-colors"></div>
+                            Drainase
                         </button>
                     </div>
                 </div>
@@ -214,28 +217,44 @@
                 activeMarkers.push(marker);
             });
 
-            document.getElementById('total-points').textContent = points.length;
-
             if (points.length > 0) {
                 const group = new L.featureGroup(activeMarkers);
                 map.fitBounds(group.getBounds().pad(0.2));
             }
         }
 
-        function filterByType(type) {
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active', 'bg-[#1e1b4b]', 'text-white', 'shadow-xl', 'shadow-indigo-900/20');
-                btn.classList.add('bg-gray-50', 'text-gray-400');
-            });
-            event.currentTarget.classList.add('active', 'bg-[#1e1b4b]', 'text-white', 'shadow-xl', 'shadow-indigo-900/20');
-            event.currentTarget.classList.remove('bg-gray-50', 'text-gray-400');
+        function toggleCategoryMenu() {
+            const menu = document.getElementById('category-options');
+            const chevron = document.getElementById('cat-chevron');
+            menu.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
 
+        function handleCategorySelect(type) {
+            // Update Label
+            document.getElementById('current-cat-label').textContent = type === 'Semua' ? 'Semua Kategori' : type;
+            
+            // Close Menu
+            toggleCategoryMenu();
+
+            // Filter logic
             if (type === 'Semua') {
                 renderMarkers(dataPoints);
             } else {
                 const filtered = dataPoints.filter(p => p.jenis_infrastruktur === type);
                 renderMarkers(filtered);
             }
+
+            // Update UI Active State
+            document.querySelectorAll('.cat-opt-btn').forEach(btn => {
+                if (btn.innerText.includes(type)) {
+                    btn.classList.add('bg-emerald-50', 'text-emerald-700');
+                    btn.classList.remove('text-gray-400');
+                } else {
+                    btn.classList.remove('bg-emerald-50', 'text-emerald-700');
+                    btn.classList.add('text-gray-400');
+                }
+            });
         }
 
         function filterByCondition(condition) {
