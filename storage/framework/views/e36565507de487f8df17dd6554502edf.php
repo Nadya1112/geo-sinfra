@@ -29,8 +29,8 @@
             
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-[#1e1b4b]"><?php echo e(now()->translatedFormat('l, d F Y')); ?></p>
-                    <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">DATA REAL-TIME</p>
+                    <p class="text-[11px] font-black text-[#1e1b4b]" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter"><?php echo e(now()->translatedFormat('l, d F Y')); ?></p>
                 </div>
                 <div class="h-8 w-[1px] bg-gray-100"></div>
                 <div class="flex items-center gap-3">

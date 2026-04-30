@@ -22,15 +22,20 @@
     <main class="flex-1 flex flex-col h-screen overflow-y-auto custom-scrollbar">
         <!-- HEADER -->
         <header class="bg-white border-b border-gray-100 px-8 py-5 flex justify-between items-center z-10 sticky top-0">
-            <div>
-                <p class="text-[10px] font-extrabold text-indigo-600 uppercase tracking-[0.2em] mb-1">Manajemen Validasi</p>
-                <h2 class="text-xl font-black text-[#1e1b4b]">Verifikasi Usulan Masuk</h2>
+            <div class="flex items-center gap-4">
+                <a href="{{ route('kabid.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-gray-50 text-gray-400 rounded-xl hover:bg-indigo-50 hover:text-indigo-600 transition-all border border-gray-100">
+                    <i class="fas fa-arrow-left text-sm"></i>
+                </a>
+                <div>
+                    <p class="text-[10px] font-extrabold text-indigo-600 uppercase tracking-[0.2em] mb-1">Manajemen Validasi</p>
+                    <h2 class="text-xl font-black text-[#1e1b4b]">Verifikasi Usulan Masuk</h2>
+                </div>
             </div>
             
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-[#1e1b4b]">{{ now()->translatedFormat('l, d F Y') }}</p>
-                    <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">DATA REAL-TIME</p>
+                    <p class="text-[11px] font-black text-[#1e1b4b]" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-gray-100"></div>
                 <div class="flex items-center gap-3">

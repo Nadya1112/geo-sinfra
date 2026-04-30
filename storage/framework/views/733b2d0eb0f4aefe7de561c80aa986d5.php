@@ -113,7 +113,7 @@
                                     $vLabel = match($infrastruktur->status_verifikasi) {
                                         'Verified' => 'Diterima',
                                         'Rejected' => 'Ditolak',
-                                        default => 'Menunggu'
+                                        default => 'Menunggu Verifikasi Kabid'
                                     };
                                 ?>
                                 <div class="flex items-center gap-2">
