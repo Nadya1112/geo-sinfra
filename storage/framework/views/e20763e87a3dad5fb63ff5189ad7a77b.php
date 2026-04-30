@@ -177,7 +177,41 @@
         L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png').addTo(map);
 
         const dataPoints = <?php echo json_encode($dataMap, 15, 512) ?>;
+        const myKecamatans = <?php echo json_encode($myKecamatans, 15, 512) ?>;
         let activeMarkers = [];
+        let geoLayers = {};
+
+        // Render Polygons (Territories)
+        myKecamatans.forEach(kec => {
+            if (kec.geometri) {
+                try {
+                    const geoJson = JSON.parse(kec.geometri);
+                    const poly = L.geoJSON(geoJson, {
+                        style: {
+                            fillColor: kec.warna || '#3b82f6',
+                            weight: 2,
+                            opacity: 1,
+                            color: 'white',
+                            fillOpacity: 0.15
+                        }
+                    }).addTo(map);
+
+                    poly.bindTooltip(`Kec. ${kec.nama_kecamatan}`, {
+                        sticky: true,
+                        className: 'custom-tooltip'
+                    });
+
+                    poly.on('mouseover', function() {
+                        this.setStyle({ fillOpacity: 0.3, weight: 3 });
+                    });
+                    poly.on('mouseout', function() {
+                        this.setStyle({ fillOpacity: 0.15, weight: 2 });
+                    });
+
+                    geoLayers[kec.id_kecamatan] = poly;
+                } catch (e) { console.error("Error parsing geometry for Kecamatan: " + kec.nama_kecamatan); }
+            }
+        });
 
         function renderMarkers(points) {
             activeMarkers.forEach(m => map.removeLayer(m));
@@ -302,6 +336,11 @@
             toggleTerritoryMenu();
             activeTerritory = id;
             applyFilters();
+
+            // Zoom ke Wilayah yang dipilih
+            if (id !== 'Semua' && geoLayers[id]) {
+                map.fitBounds(geoLayers[id].getBounds(), { padding: [50, 50], maxZoom: 15 });
+            }
         }
 
         function toggleConditionMenu() {
@@ -317,7 +356,6 @@
                 applyFilters();
             } else {
                 let filtered = dataPoints.filter(p => p.kondisi === cond);
-                // Also respect other active filters if possible, but condition filter usually is independent in this UI
                 renderMarkers(filtered);
             }
         }
@@ -326,8 +364,20 @@
     </script>
 
     <style>
-        .leaflet-popup-content-wrapper { border-radius: 1.5rem; padding: 5px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+        .leaflet-popup-content-wrapper { border-radius: 2rem; padding: 5px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.2); }
         .leaflet-popup-tip-container { display: none; }
+        .custom-tooltip {
+            background: #1e1b4b;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 4px 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
     </style>
 </body>
 </html>

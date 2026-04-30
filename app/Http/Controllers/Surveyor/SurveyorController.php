@@ -185,6 +185,12 @@ class SurveyorController extends Controller
     {
         $dataMap = Infrastruktur::with(['cnn', 'analisis'])->where('id_user', auth()->id())->get();
         $myKecamatans = auth()->user()->kecamatans;
+
+        // Fallback: Jika surveyor belum ditugaskan wilayah tertentu, tampilkan semua agar peta tidak kosong
+        if ($myKecamatans->isEmpty()) {
+            $myKecamatans = \App\Models\Kecamatan::all();
+        }
+
         return view('surveyor.map', compact('dataMap', 'myKecamatans'));
     }
 
