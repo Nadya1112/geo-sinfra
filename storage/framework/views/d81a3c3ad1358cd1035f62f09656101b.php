@@ -13,12 +13,12 @@
 </head>
 <body class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 text-left">
 
-    @include('kabid.partials.sidebar')
+    <?php echo $__env->make('kabid.partials.sidebar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden">
         <header class="bg-white border-b border-gray-100 px-8 py-5 flex justify-between items-center z-10">
             <div class="flex items-center gap-4">
-                <a href="{{ route('kabid.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-gray-50 text-gray-400 rounded-xl hover:bg-indigo-50 hover:text-indigo-600 transition-all border border-gray-100">
+                <a href="<?php echo e(route('kabid.dashboard')); ?>" class="w-10 h-10 flex items-center justify-center bg-gray-50 text-gray-400 rounded-xl hover:bg-indigo-50 hover:text-indigo-600 transition-all border border-gray-100">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
@@ -30,20 +30,20 @@
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
                     <p class="text-[11px] font-black text-[#1e1b4b]" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter"><?php echo e(now()->translatedFormat('l, d F Y')); ?></p>
                 </div>
                 <div class="h-8 w-[1px] bg-gray-100"></div>
-                <a href="{{ route('kabid.profile') }}" class="flex items-center gap-3">
+                <a href="<?php echo e(route('kabid.profile')); ?>" class="flex items-center gap-3">
                     <div class="text-right">
-                        <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase">{{ auth()->user()->name }}</p>
+                        <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase"><?php echo e(auth()->user()->name); ?></p>
                         <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
                     </div>
                     <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100 overflow-hidden shadow-sm">
-                        @if(auth()->user()->profile_photo)
-                            <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
-                        @else
+                        <?php if(auth()->user()->profile_photo): ?>
+                            <img src="<?php echo e(asset('storage/' . auth()->user()->profile_photo)); ?>" class="w-full h-full object-cover">
+                        <?php else: ?>
                             <i class="fas fa-user-tie text-xl"></i>
-                        @endif
+                        <?php endif; ?>
                     </div>
                 </a>
             </div>
@@ -62,61 +62,56 @@
                 </button>
             </div>
 
-            <!-- Floating Filters Right (Combined) -->
-            <div class="absolute top-6 right-6 z-10">
-                <div class="bg-[#1e1b4b]/80 backdrop-blur-xl p-2 rounded-[2.8rem] border border-white/10 shadow-2xl min-w-[220px]">
-                    
-                    <!-- Kategori Section -->
-                    <div class="p-1">
-                        <button onclick="toggleMenu('category-options')" class="w-full px-5 py-3.5 rounded-[2rem] text-[9px] font-black uppercase tracking-widest bg-indigo-600/90 text-white flex items-center justify-between shadow-lg hover:bg-indigo-600 transition-all group">
-                            <div class="flex items-center gap-3">
-                                <i class="fas fa-layer-group text-[10px] opacity-70"></i>
-                                <span id="current-cat-label">Semua Kategori</span>
-                            </div>
-                            <i class="fas fa-chevron-down text-[7px]"></i>
-                        </button>
-                        <div id="category-options" class="hidden mt-2 p-1 flex flex-col gap-1">
-                            <button onclick="handleTypeFilter('Semua', 'Semua Kategori')" class="filter-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group active-filter" data-type="Semua">
-                                <span class="group-hover:text-white transition-colors">Semua Kategori</span>
-                                <div class="w-2.5 h-2.5 rounded-full bg-indigo-400/50"></div>
-                            </button>
-                            <button onclick="handleTypeFilter('Jalan', 'Jalan')" class="filter-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Jalan">
-                                <span class="group-hover:text-white transition-colors">Infrastruktur Jalan</span>
-                                <div class="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-lg shadow-blue-500/40"></div>
-                            </button>
-                            <button onclick="handleTypeFilter('Jembatan', 'Jembatan')" class="filter-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Jembatan">
-                                <span class="group-hover:text-white transition-colors">Jembatan</span>
-                                <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/40"></div>
-                            </button>
-                            <button onclick="handleTypeFilter('Drainase', 'Drainase')" class="filter-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Drainase">
-                                <span class="group-hover:text-white transition-colors">Drainase</span>
-                                <div class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-lg shadow-amber-500/40"></div>
-                            </button>
+            <!-- Floating Filters Right -->
+            <div class="absolute top-6 right-6 z-10 w-64 space-y-3">
+                <!-- Filter Kategori -->
+                <div class="bg-[#1e1b4b]/80 backdrop-blur-xl p-2 rounded-[2.5rem] border border-white/10 shadow-2xl">
+                    <button onclick="toggleMenu('category-options')" class="w-full px-5 py-3.5 rounded-[2rem] text-[9px] font-black uppercase tracking-widest bg-indigo-600 text-white flex items-center justify-between shadow-lg hover:bg-indigo-500 transition-all group">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-layer-group text-[10px] opacity-70"></i>
+                            <span>Kategori Objek</span>
                         </div>
+                        <i class="fas fa-chevron-down text-[7px]"></i>
+                    </button>
+                    <div id="category-options" class="hidden mt-2 p-2 flex flex-col gap-1">
+                        <button onclick="handleTypeFilter('Semua')" class="filter-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-300 hover:bg-white/10 transition-all flex items-center justify-between group active-filter" data-type="Semua">
+                            <span>Semua Kategori</span>
+                            <div class="w-2 h-2 rounded-full bg-indigo-400"></div>
+                        </button>
+                        <button onclick="handleTypeFilter('Jalan')" class="filter-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Jalan">
+                            <span>Infrastruktur Jalan</span>
+                            <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                        </button>
+                        <button onclick="handleTypeFilter('Jembatan')" class="filter-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Jembatan">
+                            <span>Jembatan</span>
+                            <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+                        </button>
+                        <button onclick="handleTypeFilter('Drainase')" class="filter-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Drainase">
+                            <span>Drainase & Sanitasi</span>
+                            <div class="w-2 h-2 rounded-full bg-amber-500"></div>
+                        </button>
                     </div>
+                </div>
 
-                    <div class="h-[1px] bg-white/5 mx-4 my-1"></div>
-
-                    <!-- Kecamatan Section -->
-                    <div class="p-1">
-                        <button onclick="toggleMenu('territory-options')" class="w-full px-5 py-3.5 rounded-[2rem] text-[9px] font-black uppercase tracking-widest bg-white/10 text-white flex items-center justify-between shadow-lg hover:bg-white/20 transition-all group border border-white/5">
-                            <div class="flex items-center gap-3">
-                                <i class="fas fa-map-location-dot text-[10px] opacity-70 text-indigo-400"></i>
-                                <span id="current-kec-label">Semua Wilayah</span>
-                            </div>
-                            <i class="fas fa-chevron-down text-[7px]"></i>
-                        </button>
-                        <div id="territory-options" class="hidden mt-2 p-1 flex flex-col gap-1 max-h-48 overflow-y-auto custom-scrollbar">
-                            <button onclick="handleKecamatanFilter('Semua', 'Semua Wilayah')" class="kec-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group active-kec" data-id="Semua">
-                                <span class="group-hover:text-white transition-colors">Semua Wilayah</span>
-                            </button>
-                            @foreach($kecamatan as $kec)
-                            <button onclick="handleKecamatanFilter('{{ $kec->id_kecamatan }}', '{{ $kec->nama_kecamatan }}')" class="kec-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="{{ $kec->id_kecamatan }}">
-                                <span class="truncate max-w-[120px] group-hover:text-white transition-colors">{{ $kec->nama_kecamatan }}</span>
-                                <div class="w-3 h-3 rounded shadow-inner flex-shrink-0" style="background-color: {{ $kec->warna ?? '#6366f1' }}; box-shadow: 0 0 8px {{ $kec->warna ?? '#6366f1' }}60;"></div>
-                            </button>
-                            @endforeach
+                <!-- Filter Wilayah -->
+                <div class="bg-[#1e1b4b]/80 backdrop-blur-xl p-2 rounded-[2.5rem] border border-white/10 shadow-2xl">
+                    <button onclick="toggleMenu('territory-options')" class="w-full px-5 py-3.5 rounded-[2rem] text-[9px] font-black uppercase tracking-widest bg-white/10 text-white flex items-center justify-between shadow-lg hover:bg-white/20 transition-all group border border-white/5">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-map-location-dot text-[10px] opacity-70 text-indigo-400"></i>
+                            <span>Filter Kecamatan</span>
                         </div>
+                        <i class="fas fa-chevron-down text-[7px]"></i>
+                    </button>
+                    <div id="territory-options" class="hidden mt-2 p-2 flex flex-col gap-1 max-h-48 overflow-y-auto custom-scrollbar">
+                        <button onclick="handleKecamatanFilter('Semua')" class="kec-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-300 hover:bg-white/10 transition-all flex items-center justify-between group active-kec" data-id="Semua">
+                            <span>Semua Wilayah</span>
+                        </button>
+                        <?php $__currentLoopData = $kecamatan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kec): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <button onclick="handleKecamatanFilter('<?php echo e($kec->id_kecamatan); ?>')" class="kec-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="<?php echo e($kec->id_kecamatan); ?>">
+                            <span class="truncate max-w-[120px]"><?php echo e($kec->nama_kecamatan); ?></span>
+                            <div class="w-3 h-3 rounded shadow-inner" style="background-color: <?php echo e($kec->warna ?? '#6366f1'); ?>"></div>
+                        </button>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
                 </div>
             </div>
@@ -162,8 +157,8 @@
         map.createPane('markersPane');
         map.getPane('markersPane').style.zIndex = 650;
 
-        const dataPoints = @json($infrastruktur);
-        const kecamatans = @json($kecamatan);
+        const dataPoints = <?php echo json_encode($infrastruktur, 15, 512) ?>;
+        const kecamatans = <?php echo json_encode($kecamatan, 15, 512) ?>;
         let activeMarkers = [];
         let geoLayers = {};
 
@@ -253,9 +248,8 @@
             renderMarkers(filtered);
         }
 
-        function handleTypeFilter(type, label) {
+        function handleTypeFilter(type) {
             filterType = type;
-            document.getElementById('current-cat-label').textContent = label;
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.toggle('active-filter', btn.getAttribute('data-type') === type);
             });
@@ -263,9 +257,8 @@
             toggleMenu('category-options');
         }
 
-        function handleKecamatanFilter(kecId, label) {
+        function handleKecamatanFilter(kecId) {
             filterKec = kecId;
-            document.getElementById('current-kec-label').textContent = label;
             document.querySelectorAll('.kec-btn').forEach(btn => {
                 btn.classList.toggle('active-kec', btn.getAttribute('data-id') === kecId.toString());
             });
@@ -304,3 +297,4 @@
     </style>
 </body>
 </html>
+<?php /**PATH C:\laragon1\laragon\www\geo-sinfra\resources\views/kabid/monitoring.blade.php ENDPATH**/ ?>
