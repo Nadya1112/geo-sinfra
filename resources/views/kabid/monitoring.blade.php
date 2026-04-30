@@ -283,25 +283,36 @@
                 renderMarkers([]);
                 return;
             }
-            let filtered = dataPoints.filter(p =>
-                activeTypes.includes(p.jenis_infrastruktur) &&
-                activeKecs.includes(p.id_kecamatan ? p.id_kecamatan.toString() : '')
-            );
+
+            // Normalise types for comparison
+            const normalisedActiveTypes = activeTypes.map(t => t.toLowerCase().trim());
+
+            let filtered = dataPoints.filter(p => {
+                const pType = (p.jenis_infrastruktur || '').toLowerCase().trim();
+                const pKec = (p.id_kecamatan || '').toString();
+                
+                return normalisedActiveTypes.includes(pType) && activeKecs.includes(pKec);
+            });
+            
             renderMarkers(filtered);
         }
 
         function toggleType(type) {
+            const normalizedType = type.toLowerCase().trim();
             if (activeTypes.includes(type)) {
                 activeTypes = activeTypes.filter(t => t !== type);
             } else {
                 activeTypes.push(type);
             }
+            
             document.querySelectorAll('.type-btn').forEach(btn => {
-                const isActive = activeTypes.includes(btn.getAttribute('data-type'));
+                const btnType = btn.getAttribute('data-type').toLowerCase().trim();
+                const isActive = activeTypes.some(t => t.toLowerCase().trim() === btnType);
                 const icon = btn.querySelector('.check-icon');
                 if (icon) icon.style.opacity = isActive ? '1' : '0';
                 btn.classList.toggle('text-white', isActive);
             });
+
             const label = activeTypes.length === 0 ? 'Kategori Objek' :
                           activeTypes.length === 3 ? 'Semua Kategori' :
                           activeTypes.join(', ');
