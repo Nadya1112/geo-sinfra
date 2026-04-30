@@ -97,9 +97,10 @@
                 </div>
             </div>
 
-            <!-- Floating Type Filters Right -->
-            <div class="absolute top-6 right-6 z-10">
-                <div id="category-card" class="bg-white/90 backdrop-blur-xl p-2 rounded-[2rem] border border-white shadow-2xl min-w-[180px] transition-all duration-300">
+            <!-- Floating Filters Right -->
+            <div class="absolute top-6 right-6 z-10 space-y-4">
+                <!-- Category Filter -->
+                <div id="category-card" class="bg-white/90 backdrop-blur-xl p-2 rounded-[2rem] border border-white shadow-2xl min-w-[200px] transition-all duration-300">
                     <button onclick="toggleCategoryMenu()" class="w-full px-6 py-4 rounded-[1.8rem] text-[10px] font-black uppercase tracking-widest bg-[#1e1b4b] text-white flex items-center justify-between shadow-xl hover:bg-[#2d2a6e] transition-all group">
                         <div class="flex items-center gap-3">
                             <div class="w-6 h-6 bg-white/10 rounded-lg flex items-center justify-center">
@@ -127,6 +128,33 @@
                             <div class="w-1.5 h-1.5 rounded-full bg-gray-200 group-hover:bg-emerald-500 transition-colors"></div>
                             Drainase
                         </button>
+                    </div>
+                </div>
+
+                <!-- Territory Filter (NEW) -->
+                <div id="territory-card" class="bg-white/90 backdrop-blur-xl p-2 rounded-[2rem] border border-white shadow-2xl min-w-[200px] transition-all duration-300">
+                    <button onclick="toggleTerritoryMenu()" class="w-full px-6 py-4 rounded-[1.8rem] text-[10px] font-black uppercase tracking-widest bg-emerald-600 text-white flex items-center justify-between shadow-xl hover:bg-emerald-700 transition-all group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-6 h-6 bg-white/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-map-location-dot text-[10px]"></i>
+                            </div>
+                            <span id="current-territory-label">Semua Wilayah</span>
+                        </div>
+                        <i id="territory-chevron" class="fas fa-chevron-down text-[8px] transition-transform duration-300"></i>
+                    </button>
+                    
+                    <div id="territory-options" class="hidden mt-2 p-2 flex flex-col gap-1 overflow-hidden">
+                        <button onclick="handleTerritorySelect('Semua')" class="territory-opt-btn w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-400 hover:bg-emerald-50 hover:text-emerald-700 transition-all text-left flex items-center gap-3 group">
+                            <div class="w-1.5 h-1.5 rounded-full bg-gray-200 group-hover:bg-emerald-500 transition-colors"></div>
+                            Semua Wilayah
+                        </button>
+                        <?php $__currentLoopData = $myKecamatans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kec): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <button onclick="handleTerritorySelect('<?php echo e($kec->id_kecamatan); ?>', '<?php echo e($kec->nama_kecamatan); ?>')" class="territory-opt-btn w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-400 hover:bg-emerald-50 hover:text-emerald-700 transition-all text-left flex items-center gap-3 group">
+                            <div class="w-1.5 h-1.5 rounded-full bg-gray-200 group-hover:bg-emerald-500 transition-colors"></div>
+                            <?php echo e($kec->nama_kecamatan); ?>
+
+                        </button>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
                 </div>
             </div>
@@ -229,6 +257,25 @@
             }
         }
 
+        let activeType = 'Semua';
+        let activeTerritory = 'Semua';
+
+        function applyFilters() {
+            let filtered = dataPoints;
+            
+            // Filter by Type
+            if (activeType !== 'Semua') {
+                filtered = filtered.filter(p => p.jenis_infrastruktur === activeType);
+            }
+            
+            // Filter by Territory
+            if (activeTerritory !== 'Semua') {
+                filtered = filtered.filter(p => p.id_kecamatan == activeTerritory);
+            }
+            
+            renderMarkers(filtered);
+        }
+
         function toggleCategoryMenu() {
             const menu = document.getElementById('category-options');
             const chevron = document.getElementById('cat-chevron');
@@ -239,12 +286,22 @@
         function handleCategorySelect(type) {
             document.getElementById('current-cat-label').textContent = type === 'Semua' ? 'Semua Kategori' : type;
             toggleCategoryMenu();
-            if (type === 'Semua') {
-                renderMarkers(dataPoints);
-            } else {
-                const filtered = dataPoints.filter(p => p.jenis_infrastruktur === type);
-                renderMarkers(filtered);
-            }
+            activeType = type;
+            applyFilters();
+        }
+
+        function toggleTerritoryMenu() {
+            const menu = document.getElementById('territory-options');
+            const chevron = document.getElementById('territory-chevron');
+            menu.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
+
+        function handleTerritorySelect(id, name) {
+            document.getElementById('current-territory-label').textContent = id === 'Semua' ? 'Semua Wilayah' : name;
+            toggleTerritoryMenu();
+            activeTerritory = id;
+            applyFilters();
         }
 
         function toggleConditionMenu() {
@@ -255,13 +312,12 @@
         }
 
         function handleConditionSelect(cond) {
-            // Judul tetap "Kondisi Objek" sesuai permintaan user
             toggleConditionMenu();
-            
             if (cond === 'Semua') {
-                renderMarkers(dataPoints);
+                applyFilters();
             } else {
-                const filtered = dataPoints.filter(p => p.kondisi === cond);
+                let filtered = dataPoints.filter(p => p.kondisi === cond);
+                // Also respect other active filters if possible, but condition filter usually is independent in this UI
                 renderMarkers(filtered);
             }
         }
