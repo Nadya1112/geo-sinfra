@@ -30,6 +30,14 @@ class KabidController extends Controller
             'recentReports'
         ));
     }
+    public function monitoring()
+    {
+        $infrastruktur = Infrastruktur::with(['kecamatan', 'user'])->get();
+        $kecamatan = \App\Models\Kecamatan::all();
+        
+        return view('kabid.monitoring', compact('infrastruktur', 'kecamatan'));
+    }
+
     public function profile()
     {
         $user = auth()->user();

@@ -14,9 +14,9 @@
                 Dashboard
             </a>
 
-            <a href="#" 
-               class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-map-marked-alt group-hover:text-indigo-400"></i> 
+            <a href="{{ route('kabid.monitoring') }}" 
+               class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('kabid.monitoring') ? 'bg-indigo-600 text-white font-bold shadow-lg shadow-indigo-900/20' : 'text-gray-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
+                <i class="fas fa-map-marked-alt {{ request()->routeIs('kabid.monitoring') ? '' : 'group-hover:text-indigo-400' }}"></i> 
                 Monitoring Peta
             </a>
 
