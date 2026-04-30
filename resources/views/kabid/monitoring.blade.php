@@ -199,9 +199,13 @@
                         <i class="fas fa-layer-group text-sm"></i>
                     </button>
                     <div id="layer-options" class="hidden absolute bottom-full right-0 mb-3 p-2 bg-[#1e1b4b]/90 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl flex flex-col gap-2 min-w-[140px]">
+                        <button onclick="changeBaseLayer('osm')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 transition-all group">
+                            <i class="fas fa-map-marked-alt text-indigo-400 text-[10px]"></i>
+                            <span class="text-[9px] font-black uppercase tracking-widest text-gray-300">Standar</span>
+                        </button>
                         <button onclick="changeBaseLayer('street')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 transition-all group">
                             <i class="fas fa-road text-blue-400 text-[10px]"></i>
-                            <span class="text-[9px] font-black uppercase tracking-widest text-gray-300">Jalan</span>
+                            <span class="text-[9px] font-black uppercase tracking-widest text-gray-300">Voyager</span>
                         </button>
                         <button onclick="changeBaseLayer('satellite')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 transition-all group">
                             <i class="fas fa-satellite text-emerald-400 text-[10px]"></i>
@@ -219,13 +223,14 @@
 
     <script>
         const baseLayers = {
+            osm: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'),
             street: L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'),
             satellite: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'),
             dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png')
         };
 
         const map = L.map('main-map', { zoomControl: false, attributionControl: false }).setView([-3.316694, 114.590111], 13);
-        let currentBaseLayer = baseLayers.street.addTo(map);
+        let currentBaseLayer = baseLayers.osm.addTo(map);
 
         // Create panes to manage layering
         map.createPane('polygonsPane');

@@ -247,12 +247,19 @@
                         pane: 'polygonsPane',
                         style: {
                             fillColor: kec.warna || '#6366f1',
-                            weight: 2,
+                            weight: 2.5,
                             opacity: 1,
                             color: 'white',
-                            fillOpacity: 0.15
+                            fillOpacity: 0.35
                         },
                         interactive: true
+                    });
+
+                    poly.on('mouseover', function() {
+                        this.setStyle({ fillOpacity: 0.6, weight: 4 });
+                    });
+                    poly.on('mouseout', function() {
+                        this.setStyle({ fillOpacity: 0.35, weight: 2.5 });
                     }); // Do NOT add to map yet — applyFilters() controls visibility
 
                     poly.bindPopup(`<p class="text-[10px] font-black text-[#1e1b4b] uppercase">${kec.nama_kecamatan}</p>`, { 
