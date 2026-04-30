@@ -131,17 +131,18 @@
                         </button>
                         
                         <div id="territory-options" class="hidden mt-2 p-1 flex flex-col gap-1 max-h-48 overflow-y-auto custom-scrollbar">
-                            <button onclick="handleTerritorySelect('Semua')" class="territory-opt-btn w-full px-4 py-2.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-gray-50 transition-all text-left flex items-center gap-3 group">
-                                <div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div>
-                                Semua Wilayah
+                            <button onclick="handleTerritorySelect('Semua')" class="territory-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-gray-50 transition-all flex items-center justify-between group">
+                                <span>Semua Wilayah</span>
+                                <div class="w-4 h-4 rounded bg-gray-200 flex items-center justify-center">
+                                    <i class="fas fa-check text-[7px] text-white opacity-0 group-hover:opacity-100"></i>
+                                </div>
                             </button>
                             <?php $__currentLoopData = $myKecamatans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kec): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <button onclick="handleTerritorySelect('<?php echo e($kec->id_kecamatan); ?>', '<?php echo e($kec->nama_kecamatan); ?>')" class="territory-opt-btn w-full px-4 py-2.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-500 hover:bg-gray-50 transition-all text-left flex items-center justify-between group">
-                                <div class="flex items-center gap-2">
-                                    <div class="w-2 h-2 rounded-full" style="background-color: <?php echo e($kec->warna ?? '#cbd5e1'); ?>"></div>
-                                    <span class="truncate max-w-[110px] group-hover:text-[#1e1b4b] transition-colors"><?php echo e($kec->nama_kecamatan); ?></span>
+                            <button onclick="handleTerritorySelect('<?php echo e($kec->id_kecamatan); ?>', '<?php echo e($kec->nama_kecamatan); ?>')" class="territory-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-500 hover:bg-gray-50 transition-all flex items-center justify-between group">
+                                <span class="truncate max-w-[130px] group-hover:text-[#1e1b4b] transition-colors"><?php echo e($kec->nama_kecamatan); ?></span>
+                                <div class="w-4 h-4 rounded shadow-sm border border-black/5 flex items-center justify-center transition-all" style="background-color: <?php echo e($kec->warna ?? '#cbd5e1'); ?>">
+                                    <i class="fas fa-check text-[7px] text-white opacity-0 group-hover:opacity-100"></i>
                                 </div>
-                                <i class="fas fa-chevron-right text-[6px] text-gray-300"></i>
                             </button>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
@@ -187,11 +188,6 @@
                             fillOpacity: 0.2
                         }
                     }).addTo(map);
-
-                    poly.bindTooltip(`Kec. ${kec.nama_kecamatan}`, {
-                        sticky: true,
-                        className: 'custom-tooltip'
-                    });
 
                     poly.on('mouseover', function() {
                         this.setStyle({ fillOpacity: 0.4, weight: 3 });
@@ -360,18 +356,6 @@
     <style>
         .leaflet-popup-content-wrapper { border-radius: 2rem; padding: 5px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.2); }
         .leaflet-popup-tip-container { display: none; }
-        .custom-tooltip {
-            background: #1e1b4b;
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-size: 10px;
-            font-weight: 800;
-            padding: 4px 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-        }
     </style>
 </body>
 </html>
