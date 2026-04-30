@@ -43,6 +43,26 @@
         </header>
 
         <div class="p-8">
+            @if(!auth()->user()->id_kecamatan)
+            <!-- Warning: Kecamatan Belum Dipilih -->
+            <div class="bg-amber-50 border-l-4 border-amber-500 p-6 rounded-[2.5rem] mb-8 flex flex-col md:flex-row items-center justify-between shadow-sm shadow-amber-900/5 border border-amber-100">
+                <div class="flex items-center gap-5 mb-4 md:mb-0 text-left">
+                    <div class="w-14 h-14 bg-white rounded-2xl flex-shrink-0 flex items-center justify-center text-amber-500 shadow-sm border border-amber-100 text-2xl">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-black text-amber-900 uppercase tracking-tight">Wilayah Tugas Belum Ditentukan!</h4>
+                        <p class="text-xs text-amber-700 font-medium mt-1">
+                            Anda belum memilih wilayah tugas (Kecamatan). Harap tentukan wilayah Anda di halaman profil agar laporan dapat diproses dengan benar dan GPS tersinkronisasi.
+                        </p>
+                    </div>
+                </div>
+                <a href="{{ route('surveyor.profile') }}" class="px-6 py-3 bg-amber-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-amber-700 transition-all shadow-lg shadow-amber-900/10 flex items-center gap-2">
+                    <i class="fas fa-map-marked-alt"></i> Pilih Wilayah Sekarang
+                </a>
+            </div>
+            @endif
+
             <!-- Welcome Card -->
             <div class="relative bg-gradient-to-br from-emerald-600 to-teal-800 rounded-[2.5rem] p-10 mb-8 overflow-hidden shadow-lg shadow-emerald-900/10">
                 <div class="absolute -right-10 -top-10 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl"></div>
