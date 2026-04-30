@@ -63,7 +63,7 @@
             <?php endif; ?>
 
             <!-- Welcome Card -->
-            <div id="v2-welcome-card" class="relative bg-gradient-to-br from-emerald-700 to-teal-900 rounded-[2.5rem] p-10 mb-8 overflow-hidden shadow-lg shadow-emerald-900/10">
+            <div id="v2-welcome-card" style="border: 5px solid red !important;" class="relative bg-gradient-to-br from-emerald-700 to-teal-900 rounded-[2.5rem] p-10 mb-8 overflow-hidden shadow-lg shadow-emerald-900/10">
                 <div class="absolute -right-10 -top-10 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl"></div>
                 <div class="relative z-10">
                     <h3 class="text-3xl font-black text-white mb-4 leading-tight">Selamat Datang, <?php echo e(auth()->user()->name); ?>!</h3>

@@ -67,12 +67,12 @@
                 <div class="absolute -right-10 -top-10 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl"></div>
                 <div class="relative z-10">
                     <h3 class="text-3xl font-black text-white mb-4 leading-tight">Selamat Datang, {{ auth()->user()->name }}!</h3>
-                    <p class="text-white text-sm font-semibold max-w-2xl leading-relaxed mb-8 opacity-95">
+                    <div style="color: white !important; font-size: 14px !important; font-weight: 600 !important; display: block !important; margin-bottom: 24px !important; line-height: 1.6 !important; max-width: 600px !important; opacity: 1 !important; visibility: visible !important;">
                         Mari mulai mendata infrastruktur hari ini untuk membantu pemetaan aset daerah yang lebih akurat. Pastikan GPS aktif dan foto yang diambil jelas untuk hasil analisis AI yang maksimal.
-                    </p>
-                    <div class="flex gap-4">
-                        <a href="{{ route('surveyor.input') }}" class="px-8 py-4 bg-white text-emerald-800 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-emerald-50 transition-all inline-block shadow-2xl">
-                            <i class="fas fa-camera mr-2"></i> Mulai Survey Sekarang
+                    </div>
+                    <div style="display: flex !important; gap: 16px !important; visibility: visible !important;">
+                        <a href="{{ route('surveyor.input') }}" style="background: white !important; color: #064e3b !important; padding: 16px 32px !important; border-radius: 16px !important; font-weight: 900 !important; text-transform: uppercase !important; font-size: 11px !important; letter-spacing: 0.1em !important; text-decoration: none !important; display: inline-block !important; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;">
+                             Mulai Survey Sekarang
                         </a>
                     </div>
                 </div>
