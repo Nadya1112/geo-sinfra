@@ -76,10 +76,18 @@
                             <i class="fas fa-chevron-down text-[7px]"></i>
                         </button>
                         <div id="category-options" class="hidden mt-2 p-1 flex flex-col gap-1">
+                            <button onclick="toggleType('Semua')" class="type-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="Semua">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-indigo-400 transition-colors">
+                                        <i class="fas fa-check text-[7px] text-indigo-400 check-icon" style="opacity:1"></i>
+                                    </div>
+                                    <span class="group-hover:text-white transition-colors">Semua Objek</span>
+                                </div>
+                            </button>
                             <button onclick="toggleType('Jalan')" class="type-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Jalan">
                                 <div class="flex items-center gap-3">
                                     <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors">
-                                        <i class="fas fa-check text-[7px] text-blue-400 check-icon" style="opacity:0"></i>
+                                        <i class="fas fa-check text-[7px] text-blue-400 check-icon" style="opacity:1"></i>
                                     </div>
                                     <span class="group-hover:text-white transition-colors">Infrastruktur Jalan</span>
                                 </div>
@@ -88,7 +96,7 @@
                             <button onclick="toggleType('Jembatan')" class="type-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Jembatan">
                                 <div class="flex items-center gap-3">
                                     <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
-                                        <i class="fas fa-check text-[7px] text-emerald-400 check-icon" style="opacity:0"></i>
+                                        <i class="fas fa-check text-[7px] text-emerald-400 check-icon" style="opacity:1"></i>
                                     </div>
                                     <span class="group-hover:text-white transition-colors">Jembatan</span>
                                 </div>
@@ -97,7 +105,7 @@
                             <button onclick="toggleType('Drainase')" class="type-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Drainase">
                                 <div class="flex items-center gap-3">
                                     <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-amber-400 transition-colors">
-                                        <i class="fas fa-check text-[7px] text-amber-400 check-icon" style="opacity:0"></i>
+                                        <i class="fas fa-check text-[7px] text-amber-400 check-icon" style="opacity:1"></i>
                                     </div>
                                     <span class="group-hover:text-white transition-colors">Drainase</span>
                                 </div>
@@ -262,14 +270,14 @@
             });
         }
 
-        // Kategori: empty by default (user must select)
-        // Wilayah: ALL selected by default (like Surveyor)
-        let activeTypes = [];
+        // 1. Inisialisasi: Semua Objek & Wilayah Aktif by Default
+        const allAvailableTypes = ['Jalan', 'Jembatan', 'Drainase'];
+        let activeTypes = [...allAvailableTypes];
         let activeKecs = kecamatans.map(k => k.id_kecamatan.toString());
         const totalKec = kecamatans.length;
 
         function applyFilters() {
-            // 1. Wilayah HANYA mengontrol Warna Area (Poligon)
+            // ... (logika poligon tetap sama)
             Object.keys(geoLayers).forEach(id => {
                 if (activeKecs.includes(id.toString())) {
                     if (!map.hasLayer(geoLayers[id])) geoLayers[id].addTo(map);
@@ -278,42 +286,44 @@
                 }
             });
 
-            // 2. Kategori mengontrol Titik Objek (Marker) di SELURUH peta
             if (activeTypes.length === 0) {
                 renderMarkers([]);
                 return;
             }
 
             const normalisedActiveTypes = activeTypes.map(t => t.toLowerCase().trim());
-
             let filtered = dataPoints.filter(p => {
                 const pType = (p.jenis_infrastruktur || '').toLowerCase().trim();
-                // Marker tetap muncul selama kategorinya cocok (tidak peduli wilayah dicentang atau tidak)
                 return normalisedActiveTypes.some(type => pType.includes(type));
             });
             
-            console.log(`Filter Debug: Found ${filtered.length} markers.`);
             renderMarkers(filtered);
         }
 
         function toggleType(type) {
-            const normalizedType = type.toLowerCase().trim();
-            if (activeTypes.includes(type)) {
-                activeTypes = activeTypes.filter(t => t !== type);
+            if (type === 'Semua') {
+                activeTypes = activeTypes.length === allAvailableTypes.length ? [] : [...allAvailableTypes];
             } else {
-                activeTypes.push(type);
+                if (activeTypes.includes(type)) {
+                    activeTypes = activeTypes.filter(t => t !== type);
+                } else {
+                    activeTypes.push(type);
+                }
             }
-            
+
+            // Update UI
+            const allChecked = activeTypes.length === allAvailableTypes.length;
             document.querySelectorAll('.type-btn').forEach(btn => {
-                const btnType = btn.getAttribute('data-type').toLowerCase().trim();
-                const isActive = activeTypes.some(t => t.toLowerCase().trim() === btnType);
+                const bId = btn.getAttribute('data-id');
+                const bType = btn.getAttribute('data-type');
+                const isActive = bId === 'Semua' ? allChecked : activeTypes.includes(bType);
                 const icon = btn.querySelector('.check-icon');
                 if (icon) icon.style.opacity = isActive ? '1' : '0';
                 btn.classList.toggle('text-white', isActive);
             });
 
             const label = activeTypes.length === 0 ? 'Kategori Objek' :
-                          activeTypes.length === 3 ? 'Semua Kategori' :
+                          activeTypes.length === allAvailableTypes.length ? 'Semua Kategori' :
                           activeTypes.join(', ');
             document.getElementById('current-cat-label').textContent = label;
             applyFilters();

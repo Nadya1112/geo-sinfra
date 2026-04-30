@@ -62,6 +62,49 @@
                 </button>
             </div>
 
+            <!-- Stats & Legend UI Bottom Left -->
+            <div class="absolute bottom-10 left-6 z-10">
+                <div id="condition-card" class="bg-[#1e1b4b]/80 backdrop-blur-xl p-2 rounded-[2.5rem] border border-white/10 shadow-2xl min-w-[200px]">
+                    <button onclick="toggleMenu('condition-options')" class="w-full px-6 py-4 rounded-[1.8rem] text-[10px] font-black uppercase tracking-widest bg-white/10 text-white flex items-center justify-between shadow-sm hover:bg-white/20 transition-all group border border-white/5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-6 h-6 bg-indigo-500/20 text-indigo-400 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-chart-pie text-[10px]"></i>
+                            </div>
+                            <span>Statistik Kondisi</span>
+                        </div>
+                        <i class="fas fa-chevron-up text-[8px]"></i>
+                    </button>
+                    
+                    <div id="condition-options" class="mt-2 p-2 flex flex-col gap-1">
+                        <div class="w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-300 flex items-center justify-between group">
+                            <span>Total Terpantau</span>
+                            <span id="stat-total" class="text-[9px] font-black text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-lg border border-blue-400/20">0</span>
+                        </div>
+                        <div class="w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-400 flex items-center justify-between group">
+                            <div class="flex items-center gap-3">
+                                <div class="w-2.5 h-2.5 bg-emerald-500 rounded-full shadow-lg shadow-emerald-500/40"></div>
+                                <span>Kondisi Baik</span>
+                            </div>
+                            <span id="stat-baik" class="text-[9px] font-black text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-400/20">0</span>
+                        </div>
+                        <div class="w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-400 flex items-center justify-between group">
+                            <div class="flex items-center gap-3">
+                                <div class="w-2.5 h-2.5 bg-amber-500 rounded-full shadow-lg shadow-amber-500/40"></div>
+                                <span>Rusak Ringan</span>
+                            </div>
+                            <span id="stat-ringan" class="text-[9px] font-black text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-lg border border-amber-400/20">0</span>
+                        </div>
+                        <div class="w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-400 flex items-center justify-between group">
+                            <div class="flex items-center gap-3">
+                                <div class="w-2.5 h-2.5 bg-red-500 rounded-full shadow-lg shadow-red-500/40"></div>
+                                <span>Rusak Berat</span>
+                            </div>
+                            <span id="stat-berat" class="text-[9px] font-black text-red-400 bg-red-500/10 px-2.5 py-1 rounded-lg border border-red-400/20">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Floating Filters Right (Combined) -->
             <div class="absolute top-6 right-6 z-10">
                 <div class="bg-[#1e1b4b]/80 backdrop-blur-xl p-2 rounded-[2.8rem] border border-white/10 shadow-2xl min-w-[220px]">
@@ -298,6 +341,21 @@
             });
             
             renderMarkers(filtered);
+            updateStats(filtered);
+        }
+
+        function updateStats(points) {
+            const stats = {
+                total: points.length,
+                baik: points.filter(p => p.kondisi === 'Baik').length,
+                ringan: points.filter(p => p.kondisi === 'Rusak Ringan').length,
+                berat: points.filter(p => p.kondisi === 'Rusak Berat').length
+            };
+
+            document.getElementById('stat-total').textContent = stats.total;
+            document.getElementById('stat-baik').textContent = stats.baik;
+            document.getElementById('stat-ringan').textContent = stats.ringan;
+            document.getElementById('stat-berat').textContent = stats.berat;
         }
 
         function toggleType(type) {
