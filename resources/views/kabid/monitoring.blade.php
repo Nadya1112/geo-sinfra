@@ -151,27 +151,38 @@
         const map = L.map('main-map', { zoomControl: false, attributionControl: false }).setView([-3.316694, 114.590111], 13);
         let currentBaseLayer = baseLayers.street.addTo(map);
 
+        // Create panes to manage layering
+        map.createPane('polygonsPane');
+        map.getPane('polygonsPane').style.zIndex = 400;
+        map.createPane('markersPane');
+        map.getPane('markersPane').style.zIndex = 650;
+
         const dataPoints = @json($infrastruktur);
         const kecamatans = @json($kecamatan);
         let activeMarkers = [];
         let geoLayers = {};
 
-        // Render Polygons
+        // Render Polygons first in lower pane
         kecamatans.forEach(kec => {
             if (kec.geometri) {
                 try {
                     const geoData = typeof kec.geometri === 'string' ? JSON.parse(kec.geometri) : kec.geometri;
                     const poly = L.geoJSON(geoData, {
+                        pane: 'polygonsPane',
                         style: {
                             fillColor: kec.warna || '#6366f1',
                             weight: 2,
                             opacity: 1,
                             color: 'white',
                             fillOpacity: 0.15
-                        }
+                        },
+                        interactive: true // Keep true for kecamatan popup
                     }).addTo(map);
 
-                    poly.bindPopup(`<p class="text-[10px] font-black text-[#1e1b4b] uppercase">${kec.nama_kecamatan}</p>`, { className: 'custom-polygon-popup', closeButton: false });
+                    poly.bindPopup(`<p class="text-[10px] font-black text-[#1e1b4b] uppercase">${kec.nama_kecamatan}</p>`, { 
+                        className: 'custom-polygon-popup', 
+                        closeButton: false 
+                    });
                     
                     poly.on('mouseover', function() { this.setStyle({ fillOpacity: 0.3, weight: 3 }); });
                     poly.on('mouseout', function() { this.setStyle({ fillOpacity: 0.15, weight: 2 }); });
@@ -188,7 +199,7 @@
             points.forEach(point => {
                 const color = point.kondisi == 'Baik' ? '#10b981' : (point.kondisi == 'Rusak Ringan' ? '#f59e0b' : '#ef4444');
                 const icon = L.divIcon({
-                    html: `<div style="background-color: ${color}; width: 14px; height: 14px; border-radius: 50%; border: 2.5px solid white; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"></div>`,
+                    html: `<div style="background-color: ${color}; width: 14px; height: 14px; border-radius: 50%; border: 2.5px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);"></div>`,
                     className: '', iconSize: [14, 14], iconAnchor: [7, 7]
                 });
 
@@ -213,12 +224,15 @@
                                 </span>
                             </div>
 
-                            <a href="#" class="block w-full py-2 bg-[#1e1b4b] text-white rounded-xl text-[8px] font-black uppercase tracking-widest text-center hover:bg-indigo-600 transition-all">Detail Laporan</a>
+                            <a href="#" class="block w-full py-2 bg-[#1e1b4b] text-white rounded-xl text-[8px] font-black uppercase tracking-widest text-center hover:bg-indigo-600 transition-all shadow-lg shadow-indigo-900/10">Detail Laporan</a>
                         </div>
                     </div>
                 `;
 
-                const marker = L.marker([point.latitude, point.longitude], {icon: icon}).addTo(map).bindPopup(popupContent, { className: 'premium-popup', maxWidth: 300 });
+                const marker = L.marker([point.latitude, point.longitude], {
+                    icon: icon,
+                    pane: 'markersPane'
+                }).addTo(map).bindPopup(popupContent, { className: 'premium-popup', maxWidth: 300 });
                 activeMarkers.push(marker);
             });
         }
@@ -249,7 +263,9 @@
                 btn.classList.toggle('active-kec', btn.getAttribute('data-id') === kecId.toString());
             });
             applyFilters();
-            if (kecId !== 'Semua' && geoLayers[kecId]) map.fitBounds(geoLayers[id].getBounds());
+            if (kecId !== 'Semua' && geoLayers[kecId]) {
+                map.fitBounds(geoLayers[kecId].getBounds(), { padding: [50, 50] });
+            }
             toggleMenu('territory-options');
         }
 
