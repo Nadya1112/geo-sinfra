@@ -53,6 +53,13 @@ class KabidController extends Controller
         return view('kabid.verifikasi', compact('allUsulan', 'counts'));
     }
 
+    public function show($id)
+    {
+        $infrastruktur = Infrastruktur::with(['kelurahan.kecamatan', 'user', 'analisis', 'cnn'])
+            ->findOrFail($id);
+        return view('kabid.show', compact('infrastruktur'));
+    }
+
     public function prosesVerifikasi(Request $request, $id)
     {
         $request->validate([

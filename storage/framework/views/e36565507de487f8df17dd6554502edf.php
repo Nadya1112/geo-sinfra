@@ -174,9 +174,8 @@
                                 <td class="px-8 py-6">
                                     <div class="flex items-center justify-center gap-2 flex-wrap">
                                         
-                                        <a href="<?php echo e(route('surveyor.infrastruktur.show', $item->id_infrastruktur)); ?>" target="_blank" class="flex items-center gap-1.5 px-3 py-2 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all border border-indigo-100 shadow-sm">
-                                            <i class="fas fa-eye text-[10px]"></i>
-                                            <span class="text-[9px] font-black uppercase tracking-widest">Detail</span>
+                                        <a href="<?php echo e(route('surveyor.infrastruktur.show', $item->id_infrastruktur)); ?>" target="_blank" title="Lihat Detail" class="w-9 h-9 flex items-center justify-center bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all border border-indigo-100 shadow-sm">
+                                            <i class="fas fa-eye text-xs"></i>
                                         </a>
 
                                         

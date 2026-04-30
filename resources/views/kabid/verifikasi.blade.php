@@ -172,7 +172,7 @@
                                 <td class="px-8 py-6">
                                     <div class="flex items-center justify-center gap-2 flex-wrap">
                                         {{-- Lihat Detail - icon only --}}
-                                        <a href="{{ route('surveyor.infrastruktur.show', $item->id_infrastruktur) }}" target="_blank" title="Lihat Detail" class="w-9 h-9 flex items-center justify-center bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all border border-indigo-100 shadow-sm">
+                                        <a href="{{ route('kabid.infrastruktur.show', $item->id_infrastruktur) }}" class="w-9 h-9 flex items-center justify-center bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all border border-indigo-100 shadow-sm" title="Lihat Detail">
                                             <i class="fas fa-eye text-xs"></i>
                                         </a>
 
