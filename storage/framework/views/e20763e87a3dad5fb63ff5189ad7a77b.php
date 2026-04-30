@@ -197,10 +197,45 @@
                     </div>
                 </div>
             </div>
+            <!-- Map Style Switcher Bottom Right -->
+            <div class="absolute bottom-10 right-6 z-10">
+                <div id="layer-card" class="bg-[#1e1b4b]/80 backdrop-blur-xl p-2 rounded-[2.5rem] border border-white/10 shadow-2xl transition-all duration-300">
+                    <button onclick="toggleLayerMenu()" class="w-12 h-12 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-all group border border-white/5">
+                        <i class="fas fa-layer-group text-sm group-hover:scale-110 transition-transform"></i>
+                    </button>
+                    
+                    <div id="layer-options" class="hidden absolute bottom-full right-0 mb-3 p-2 bg-[#1e1b4b]/90 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl flex flex-col gap-2 min-w-[140px]">
+                        <button onclick="changeBaseLayer('street')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 transition-all group">
+                            <div class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all">
+                                <i class="fas fa-road text-[10px]"></i>
+                            </div>
+                            <span class="text-[9px] font-black uppercase tracking-widest text-gray-300 group-hover:text-white">Jalan</span>
+                        </button>
+                        <button onclick="changeBaseLayer('satellite')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 transition-all group">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white transition-all">
+                                <i class="fas fa-satellite text-[10px]"></i>
+                            </div>
+                            <span class="text-[9px] font-black uppercase tracking-widest text-gray-300 group-hover:text-white">Satelit</span>
+                        </button>
+                        <button onclick="changeBaseLayer('dark')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 transition-all group">
+                            <div class="w-8 h-8 rounded-lg bg-gray-500/20 flex items-center justify-center text-gray-400 group-hover:bg-gray-500 group-hover:text-white transition-all">
+                                <i class="fas fa-moon text-[10px]"></i>
+                            </div>
+                            <span class="text-[9px] font-black uppercase tracking-widest text-gray-300 group-hover:text-white">Gelap</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
     <script>
+        let currentBaseLayer;
+        const baseLayers = {
+            street: L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'),
+            satellite: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'),
+            dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png')
+        };
         function updateClock() {
             const now = new Date();
             document.getElementById('mini-clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WITA`;
@@ -212,8 +247,21 @@
             attributionControl: false
         }).setView([-3.316694, 114.590111], 13);
         
-        // Premium Tile Layer
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png').addTo(map);
+        // Set Initial Base Layer
+        currentBaseLayer = baseLayers.street;
+        currentBaseLayer.addTo(map);
+
+        function toggleLayerMenu() {
+            const menu = document.getElementById('layer-options');
+            menu.classList.toggle('hidden');
+        }
+
+        function changeBaseLayer(type) {
+            map.removeLayer(currentBaseLayer);
+            currentBaseLayer = baseLayers[type];
+            currentBaseLayer.addTo(map);
+            toggleLayerMenu();
+        }
 
         const dataPoints = <?php echo json_encode($dataMap, 15, 512) ?>;
         const myKecamatans = <?php echo json_encode($myKecamatans, 15, 512) ?>;
