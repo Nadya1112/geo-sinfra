@@ -103,12 +103,22 @@
 
                                 <div class="grid grid-cols-2 gap-4">
                                     <div>
-                                        <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Kecamatan <span class="text-red-500">*</span></label>
-                                        <select name="id_kecamatan" id="id_kecamatan" class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold focus:border-emerald-500 outline-none appearance-none cursor-pointer" required onchange="filterKelurahan()">
-                                            @foreach($semuaKecamatan as $kec)
-                                                <option value="{{ $kec->id_kecamatan }}" {{ $infrastruktur->id_kecamatan == $kec->id_kecamatan ? 'selected' : '' }}>{{ $kec->nama_kecamatan }}</option>
-                                            @endforeach
-                                        </select>
+                                        <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">
+                                            Kecamatan <span class="text-red-500">*</span>
+                                            @if(auth()->user()->id_kecamatan)
+                                                <span class="ml-2 text-[8px] text-emerald-500 bg-emerald-50 px-2 py-0.5 rounded-full font-bold">WILAYAH TUGAS ANDA</span>
+                                            @endif
+                                        </label>
+                                        <div class="relative">
+                                            <select name="id_kecamatan" id="id_kecamatan" class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold focus:border-emerald-500 outline-none appearance-none {{ auth()->user()->id_kecamatan ? 'bg-gray-100 cursor-not-allowed pointer-events-none' : 'cursor-pointer' }}" required onchange="filterKelurahan()">
+                                                @foreach($semuaKecamatan as $kec)
+                                                    @if(!auth()->user()->id_kecamatan || auth()->user()->id_kecamatan == $kec->id_kecamatan)
+                                                        <option value="{{ $kec->id_kecamatan }}" {{ $infrastruktur->id_kecamatan == $kec->id_kecamatan ? 'selected' : '' }}>{{ $kec->nama_kecamatan }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                            <i class="fas fa-chevron-down absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-xs"></i>
+                                        </div>
                                     </div>
                                     <div>
                                         <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Kelurahan <span class="text-red-500">*</span></label>
