@@ -111,10 +111,42 @@
                         </button>
                         
                         <div id="category-options" class="hidden mt-2 p-1 flex flex-col gap-1">
-                            <button onclick="handleCategorySelect('Semua')" class="cat-opt-btn w-full px-4 py-2.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 hover:text-white transition-all text-left flex items-center gap-3">Semua</button>
-                            <button onclick="handleCategorySelect('Jalan')" class="cat-opt-btn w-full px-4 py-2.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 hover:text-white transition-all text-left flex items-center gap-3">Jalan</button>
-                            <button onclick="handleCategorySelect('Jembatan')" class="cat-opt-btn w-full px-4 py-2.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 hover:text-white transition-all text-left flex items-center gap-3">Jembatan</button>
-                            <button onclick="handleCategorySelect('Drainase')" class="cat-opt-btn w-full px-4 py-2.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 hover:text-white transition-all text-left flex items-center gap-3">Drainase</button>
+                            <button onclick="handleCategorySelect('Semua')" class="cat-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors">
+                                        <i class="fas fa-check text-[7px] text-blue-400 opacity-0 group-hover:opacity-100"></i>
+                                    </div>
+                                    <span class="group-hover:text-white transition-colors">Semua Kategori</span>
+                                </div>
+                                <div class="w-3.5 h-3.5 rounded bg-gray-500/30"></div>
+                            </button>
+                            <button onclick="handleCategorySelect('Jalan')" class="cat-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors">
+                                        <i class="fas fa-check text-[7px] text-blue-400 opacity-0 group-hover:opacity-100"></i>
+                                    </div>
+                                    <span class="group-hover:text-white transition-colors">Jalan</span>
+                                </div>
+                                <div class="w-3.5 h-3.5 rounded bg-blue-500 shadow-lg shadow-blue-500/20"></div>
+                            </button>
+                            <button onclick="handleCategorySelect('Jembatan')" class="cat-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors">
+                                        <i class="fas fa-check text-[7px] text-blue-400 opacity-0 group-hover:opacity-100"></i>
+                                    </div>
+                                    <span class="group-hover:text-white transition-colors">Jembatan</span>
+                                </div>
+                                <div class="w-3.5 h-3.5 rounded bg-emerald-500 shadow-lg shadow-emerald-500/20"></div>
+                            </button>
+                            <button onclick="handleCategorySelect('Drainase')" class="cat-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors">
+                                        <i class="fas fa-check text-[7px] text-blue-400 opacity-0 group-hover:opacity-100"></i>
+                                    </div>
+                                    <span class="group-hover:text-white transition-colors">Drainase</span>
+                                </div>
+                                <div class="w-3.5 h-3.5 rounded bg-amber-500 shadow-lg shadow-amber-500/20"></div>
+                            </button>
                         </div>
                     </div>
 
