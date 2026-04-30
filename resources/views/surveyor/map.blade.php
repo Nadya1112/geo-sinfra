@@ -69,29 +69,29 @@
                     
                     <div id="condition-options" class="hidden mt-2 p-2 flex flex-col gap-1">
                         <button onclick="handleConditionSelect('Semua')" class="w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-400 hover:bg-gray-50 transition-all flex items-center justify-between group">
-                            <span>Semua Kondisi</span>
-                            <i class="fas fa-layer-group text-[8px] opacity-30"></i>
+                            <span class="group-hover:text-[#1e1b4b] transition-colors">Semua Kondisi</span>
+                            <span class="text-[9px] font-black text-blue-600 bg-blue-50 px-2.5 py-1 rounded-lg border border-blue-100 shadow-sm">{{ $dataMap->count() }}</span>
                         </button>
                         <button onclick="handleConditionSelect('Baik')" class="w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-500 hover:bg-emerald-50 hover:text-emerald-700 transition-all flex items-center justify-between group">
                             <div class="flex items-center gap-3">
-                                <div class="w-2 h-2 bg-emerald-500 rounded-full shadow-lg shadow-emerald-500/20"></div>
-                                <span>Baik</span>
+                                <div class="w-2.5 h-2.5 bg-emerald-500 rounded-full shadow-lg shadow-emerald-500/20"></div>
+                                <span class="group-hover:text-emerald-700 transition-colors">Kondisi Baik</span>
                             </div>
-                            <span class="text-[9px] font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-100">{{ $dataMap->where('kondisi', 'Baik')->count() }}</span>
+                            <span class="text-[9px] font-black text-emerald-600 bg-white px-2.5 py-1 rounded-lg border border-emerald-200 shadow-sm">{{ $dataMap->where('kondisi', 'Baik')->count() }}</span>
                         </button>
                         <button onclick="handleConditionSelect('Rusak Ringan')" class="w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-500 hover:bg-amber-50 hover:text-amber-700 transition-all flex items-center justify-between group">
                             <div class="flex items-center gap-3">
-                                <div class="w-2 h-2 bg-amber-500 rounded-full shadow-lg shadow-amber-500/20"></div>
-                                <span>Rusak Ringan</span>
+                                <div class="w-2.5 h-2.5 bg-amber-500 rounded-full shadow-lg shadow-amber-500/20"></div>
+                                <span class="group-hover:text-amber-700 transition-colors">Rusak Ringan</span>
                             </div>
-                            <span class="text-[9px] font-black text-amber-600 bg-amber-50 px-2 py-0.5 rounded-lg border border-amber-100">{{ $dataMap->where('kondisi', 'Rusak Ringan')->count() }}</span>
+                            <span class="text-[9px] font-black text-amber-600 bg-white px-2.5 py-1 rounded-lg border border-amber-200 shadow-sm">{{ $dataMap->where('kondisi', 'Rusak Ringan')->count() }}</span>
                         </button>
                         <button onclick="handleConditionSelect('Rusak Berat')" class="w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-500 hover:bg-red-50 hover:text-red-700 transition-all flex items-center justify-between group">
                             <div class="flex items-center gap-3">
-                                <div class="w-2 h-2 bg-red-500 rounded-full shadow-lg shadow-red-500/20"></div>
-                                <span>Rusak Berat</span>
+                                <div class="w-2.5 h-2.5 bg-red-500 rounded-full shadow-lg shadow-red-500/20"></div>
+                                <span class="group-hover:text-red-700 transition-colors">Rusak Berat</span>
                             </div>
-                            <span class="text-[9px] font-black text-red-600 bg-red-50 px-2 py-0.5 rounded-lg border border-red-100">{{ $dataMap->where('kondisi', 'Rusak Berat')->count() }}</span>
+                            <span class="text-[9px] font-black text-red-600 bg-white px-2.5 py-1 rounded-lg border border-red-200 shadow-sm">{{ $dataMap->where('kondisi', 'Rusak Berat')->count() }}</span>
                         </button>
                     </div>
                 </div>

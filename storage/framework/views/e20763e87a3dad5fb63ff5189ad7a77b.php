@@ -68,6 +68,10 @@
                     </button>
                     
                     <div id="condition-options" class="hidden mt-2 p-2 flex flex-col gap-1">
+                        <button onclick="handleConditionSelect('Semua')" class="w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-400 hover:bg-gray-50 transition-all flex items-center justify-between group">
+                            <span>Semua Kondisi</span>
+                            <i class="fas fa-layer-group text-[8px] opacity-30"></i>
+                        </button>
                         <button onclick="handleConditionSelect('Baik')" class="w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-500 hover:bg-emerald-50 hover:text-emerald-700 transition-all flex items-center justify-between group">
                             <div class="flex items-center gap-3">
                                 <div class="w-2 h-2 bg-emerald-500 rounded-full shadow-lg shadow-emerald-500/20"></div>
@@ -251,10 +255,15 @@
         }
 
         function handleConditionSelect(cond) {
-            document.getElementById('current-cond-label').textContent = cond;
+            // Judul tetap "Kondisi Objek" sesuai permintaan user
             toggleConditionMenu();
-            const filtered = dataPoints.filter(p => p.kondisi === cond);
-            renderMarkers(filtered);
+            
+            if (cond === 'Semua') {
+                renderMarkers(dataPoints);
+            } else {
+                const filtered = dataPoints.filter(p => p.kondisi === cond);
+                renderMarkers(filtered);
+            }
         }
 
         renderMarkers(dataPoints);
