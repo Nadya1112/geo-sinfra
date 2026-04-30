@@ -110,6 +110,8 @@ Route::middleware(['auth'])->group(function () {
     // --- AREA KABID ---
     Route::middleware(['role:kabid'])->prefix('kabid')->group(function () {
         Route::get('/dashboard', [App\Http\Controllers\Kabid\KabidController::class, 'index'])->name('kabid.dashboard');
+        Route::get('/profile', [App\Http\Controllers\Kabid\KabidController::class, 'profile'])->name('kabid.profile');
+        Route::post('/profile', [App\Http\Controllers\Kabid\KabidController::class, 'updateProfile'])->name('kabid.profile.update');
     });
     
 });

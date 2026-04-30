@@ -37,6 +37,11 @@
                 <i class="fas fa-file-pdf group-hover:text-indigo-400"></i> 
                 Cetak Laporan Resmi
             </a>
+            <a href="{{ route('kabid.profile') }}" 
+               class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('kabid.profile') ? 'bg-indigo-600 text-white font-bold shadow-lg shadow-indigo-900/20' : 'text-gray-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
+                <i class="fas fa-user-circle {{ request()->routeIs('kabid.profile') ? '' : 'group-hover:text-indigo-400' }}"></i> 
+                Profil Saya
+            </a>
         </nav>
     </div>
 
