@@ -88,6 +88,15 @@ class SurveyorController extends Controller
         return view('surveyor.history', compact('riwayat'));
     }
 
+    public function show($id)
+    {
+        $infrastruktur = Infrastruktur::with(['kelurahan', 'cnn', 'analisis'])
+            ->where('id_infrastruktur', $id)
+            ->where('id_user', auth()->id())
+            ->firstOrFail();
+        return view('surveyor.show', compact('infrastruktur'));
+    }
+
     public function edit($id)
     {
         $infrastruktur = Infrastruktur::with(['cnn', 'analisis'])

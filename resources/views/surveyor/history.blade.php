@@ -110,7 +110,7 @@
                                         <a href="{{ route('surveyor.infrastruktur.edit', $item->id_infrastruktur) }}" class="w-8 h-8 flex items-center justify-center bg-gray-100 text-gray-500 rounded-lg hover:bg-blue-500 hover:text-white transition-colors cursor-pointer" title="Edit Data">
                                             <i class="fas fa-pen text-xs"></i>
                                         </a>
-                                        <a href="#" class="w-8 h-8 flex items-center justify-center bg-gray-100 text-gray-500 rounded-lg hover:bg-emerald-500 hover:text-white transition-colors cursor-pointer" title="Lihat Detail">
+                                        <a href="{{ route('surveyor.infrastruktur.show', $item->id_infrastruktur) }}" class="w-8 h-8 flex items-center justify-center bg-blue-50 text-blue-600 rounded-lg hover:bg-[#1e1b4b] hover:text-white transition-all shadow-sm border border-blue-100" title="Lihat Detail">
                                             <i class="fas fa-eye text-xs"></i>
                                         </a>
                                     </div>
