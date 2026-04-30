@@ -80,13 +80,21 @@
 
             <!-- Floating Type Filters -->
             <div class="absolute top-6 right-6 z-10">
-                <div class="bg-white/90 backdrop-blur-md px-6 py-3 rounded-2xl border border-gray-100 shadow-xl flex items-center gap-4">
-                    <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest border-r border-gray-100 pr-4">Tipe</p>
-                    <div class="flex gap-2">
-                        <button onclick="filterByType('Semua')" class="filter-btn active px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest bg-[#1e1b4b] text-white transition-all shadow-lg shadow-indigo-900/20">Semua</button>
-                        <button onclick="filterByType('Jalan')" class="filter-btn px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest bg-gray-50 text-gray-400 hover:bg-emerald-50 hover:text-emerald-600 transition-all">Jalan</button>
-                        <button onclick="filterByType('Jembatan')" class="filter-btn px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest bg-gray-50 text-gray-400 hover:bg-emerald-50 hover:text-emerald-600 transition-all">Jembatan</button>
-                        <button onclick="filterByType('Drainase')" class="filter-btn px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest bg-gray-50 text-gray-400 hover:bg-emerald-50 hover:text-emerald-600 transition-all">Drainase</button>
+                <div class="bg-white/90 backdrop-blur-md p-6 rounded-[2rem] border border-gray-100 shadow-xl flex flex-col gap-4 min-w-[140px]">
+                    <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-100 pb-3">Tipe Objek</p>
+                    <div class="flex flex-col gap-2">
+                        <button onclick="filterByType('Semua')" class="filter-btn active w-full px-4 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-widest bg-[#1e1b4b] text-white transition-all shadow-lg shadow-indigo-900/20 text-left">
+                            <i class="fas fa-layer-group mr-2 opacity-50"></i> Semua
+                        </button>
+                        <button onclick="filterByType('Jalan')" class="filter-btn w-full px-4 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-widest bg-gray-50 text-gray-400 hover:bg-emerald-50 hover:text-emerald-600 transition-all text-left">
+                            <i class="fas fa-road mr-2 opacity-50"></i> Jalan
+                        </button>
+                        <button onclick="filterByType('Jembatan')" class="filter-btn w-full px-4 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-widest bg-gray-50 text-gray-400 hover:bg-emerald-50 hover:text-emerald-600 transition-all text-left">
+                            <i class="fas fa-bridge mr-2 opacity-50"></i> Jembatan
+                        </button>
+                        <button onclick="filterByType('Drainase')" class="filter-btn w-full px-4 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-widest bg-gray-50 text-gray-400 hover:bg-emerald-50 hover:text-emerald-600 transition-all text-left">
+                            <i class="fas fa-water mr-2 opacity-50"></i> Drainase
+                        </button>
                     </div>
                 </div>
             </div>
