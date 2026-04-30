@@ -12,19 +12,16 @@
         .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
     </style>
 </head>
-<body class="text-gray-800 antialiased">
+<body class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 text-left">
 
-    <div class="min-h-screen flex flex-col">
+    <?php echo $__env->make('kabid.partials.sidebar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
         <!-- HEADER -->
-        <header class="bg-white border-b border-gray-100 px-8 py-5 flex justify-between items-center sticky top-0 z-50">
-            <div class="flex items-center gap-4">
-                <a href="<?php echo e(route('kabid.dashboard')); ?>" class="w-10 h-10 flex items-center justify-center bg-gray-50 text-gray-400 rounded-xl hover:bg-indigo-50 hover:text-indigo-600 transition-all border border-gray-100">
-                    <i class="fas fa-arrow-left text-sm"></i>
-                </a>
-                <div>
-                    <p class="text-[10px] font-extrabold text-indigo-600 uppercase tracking-[0.2em] mb-1">Manajemen Validasi</p>
-                    <h2 class="text-xl font-black text-[#1e1b4b]">Verifikasi Usulan Masuk</h2>
-                </div>
+        <header class="bg-white border-b border-gray-100 px-8 py-5 flex justify-between items-center z-10">
+            <div>
+                <p class="text-[10px] font-extrabold text-indigo-600 uppercase tracking-[0.2em] mb-1">Manajemen Validasi</p>
+                <h2 class="text-xl font-black text-[#1e1b4b]">Verifikasi Usulan Masuk</h2>
             </div>
             
             <div class="flex items-center gap-6">
@@ -36,7 +33,7 @@
                 <div class="flex items-center gap-3">
                     <div class="text-right">
                         <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase"><?php echo e(auth()->user()->name); ?></p>
-                        <p class="text-[9px] font-bold text-indigo-500 uppercase mt-1">KABID</p>
+                        <p class="text-[9px] font-bold text-indigo-500 uppercase mt-1 leading-none">KABID</p>
                     </div>
                     <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100 overflow-hidden">
                         <?php if(auth()->user()->profile_photo): ?>
@@ -50,7 +47,7 @@
         </header>
 
         <!-- MAIN CONTENT -->
-        <main class="flex-1 p-8 max-w-7xl mx-auto w-full">
+        <div class="p-8 space-y-8">
             
             <?php if(session('success')): ?>
                 <div class="mb-6 p-4 bg-emerald-50 border border-emerald-100 rounded-2xl flex items-center gap-3 text-emerald-600 shadow-sm animate-bounce">
@@ -194,17 +191,17 @@
                 <?php endif; ?>
             </div>
 
-        </main>
+        </div>
 
         <!-- FOOTER -->
-        <footer class="bg-white border-t border-gray-100 px-8 py-4 flex justify-between items-center text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+        <footer class="bg-white border-t border-gray-100 px-8 py-4 flex justify-between items-center text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-auto">
             <p>&copy; 2026 DISPERKIM BANJARMASIN - GEO-SINFRA</p>
             <div class="flex gap-4">
                 <a href="#" class="hover:text-indigo-600 transition-colors">Panduan</a>
                 <a href="#" class="hover:text-indigo-600 transition-colors">Bantuan</a>
             </div>
         </footer>
-    </div>
+    </main>
 
 </body>
 </html>

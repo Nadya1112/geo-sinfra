@@ -40,12 +40,17 @@ class KabidController extends Controller
 
     public function verifikasi()
     {
-        $usulan = Infrastruktur::with(['kelurahan', 'user', 'analisis', 'cnn'])
-            ->where('status_verifikasi', 'Pending')
+        $allUsulan = Infrastruktur::with(['kelurahan', 'user', 'analisis', 'cnn'])
             ->orderBy('created_at', 'desc')
             ->get();
             
-        return view('kabid.verifikasi', compact('usulan'));
+        $counts = [
+            'pending' => $allUsulan->where('status_verifikasi', 'Pending')->count(),
+            'verified' => $allUsulan->where('status_verifikasi', 'Verified')->count(),
+            'rejected' => $allUsulan->where('status_verifikasi', 'Rejected')->count(),
+        ];
+
+        return view('kabid.verifikasi', compact('allUsulan', 'counts'));
     }
 
     public function prosesVerifikasi(Request $request, $id)
