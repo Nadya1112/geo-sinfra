@@ -32,7 +32,11 @@ class KabidController extends Controller
     }
     public function monitoring()
     {
-        $infrastruktur = Infrastruktur::with(['kelurahan', 'user'])->get();
+        // Hanya tampilkan data yang sudah diverifikasi Kabid di peta monitoring utama
+        $infrastruktur = Infrastruktur::with(['kelurahan', 'user'])
+            ->where('status_verifikasi', 'Verified')
+            ->get();
+            
         $kecamatan = \App\Models\Kecamatan::all();
         
         return view('kabid.monitoring', compact('infrastruktur', 'kecamatan'));

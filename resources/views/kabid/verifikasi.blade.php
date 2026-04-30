@@ -36,7 +36,7 @@
                 <div class="flex items-center gap-3">
                     <div class="text-right">
                         <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase">{{ auth()->user()->name }}</p>
-                        <p class="text-[9px] font-bold text-indigo-500 uppercase mt-1 leading-none">KABID</p>
+                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1 leading-none">ONLINE</p>
                     </div>
                     <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100 overflow-hidden shadow-sm">
                         @if(auth()->user()->profile_photo)
@@ -166,7 +166,7 @@
                                     @endphp
                                     <span class="px-3 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest border flex items-center gap-2 w-fit {{ $statusClass }}">
                                         <i class="fas {{ $statusIcon }} text-[10px]"></i>
-                                        {{ $item->status_verifikasi == 'Verified' ? 'Diterima' : ($item->status_verifikasi == 'Rejected' ? 'Ditolak' : 'Menunggu') }}
+                                        {{ $item->status_verifikasi == 'Verified' ? 'Diterima' : ($item->status_verifikasi == 'Rejected' ? 'Ditolak' : 'Menunggu Verifikasi Kabid') }}
                                     </span>
                                 </td>
                                 <td class="px-8 py-6">

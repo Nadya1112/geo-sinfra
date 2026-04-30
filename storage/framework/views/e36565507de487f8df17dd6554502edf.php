@@ -36,7 +36,7 @@
                 <div class="flex items-center gap-3">
                     <div class="text-right">
                         <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase"><?php echo e(auth()->user()->name); ?></p>
-                        <p class="text-[9px] font-bold text-indigo-500 uppercase mt-1 leading-none">KABID</p>
+                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1 leading-none">ONLINE</p>
                     </div>
                     <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100 overflow-hidden shadow-sm">
                         <?php if(auth()->user()->profile_photo): ?>
@@ -167,14 +167,14 @@
                                     ?>
                                     <span class="px-3 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest border flex items-center gap-2 w-fit <?php echo e($statusClass); ?>">
                                         <i class="fas <?php echo e($statusIcon); ?> text-[10px]"></i>
-                                        <?php echo e($item->status_verifikasi == 'Verified' ? 'Diterima' : ($item->status_verifikasi == 'Rejected' ? 'Ditolak' : 'Menunggu')); ?>
+                                        <?php echo e($item->status_verifikasi == 'Verified' ? 'Diterima' : ($item->status_verifikasi == 'Rejected' ? 'Ditolak' : 'Menunggu Verifikasi Kabid')); ?>
 
                                     </span>
                                 </td>
                                 <td class="px-8 py-6">
                                     <div class="flex items-center justify-center gap-2 flex-wrap">
                                         
-                                        <a href="<?php echo e(route('surveyor.infrastruktur.show', $item->id_infrastruktur)); ?>" target="_blank" title="Lihat Detail" class="w-9 h-9 flex items-center justify-center bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all border border-indigo-100 shadow-sm">
+                                        <a href="<?php echo e(route('kabid.infrastruktur.show', $item->id_infrastruktur)); ?>" class="w-9 h-9 flex items-center justify-center bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all border border-indigo-100 shadow-sm" title="Lihat Detail">
                                             <i class="fas fa-eye text-xs"></i>
                                         </a>
 
