@@ -107,85 +107,85 @@
 
             <!-- Floating Filters Right (Combined) -->
             <div class="absolute top-6 right-6 z-10">
-                <div class="bg-[#1e1b4b]/80 backdrop-blur-xl p-2 rounded-[2.8rem] border border-white/10 shadow-2xl min-w-[220px]">
+                <div class="bg-[#1e1b4b]/80 backdrop-blur-xl p-1.5 rounded-[2.5rem] border border-white/10 shadow-2xl min-w-[170px]">
                     
                     <!-- Kategori Section -->
-                    <div class="p-1">
-                        <button onclick="toggleMenu('category-options')" class="w-full px-5 py-3.5 rounded-[2rem] text-[9px] font-black uppercase tracking-widest bg-indigo-600/90 text-white flex items-center justify-between shadow-lg hover:bg-indigo-600 transition-all group">
-                            <div class="flex items-center gap-3">
-                                <i class="fas fa-layer-group text-[10px] opacity-70"></i>
-                                <span id="current-cat-label">Kategori Objek</span>
+                    <div class="p-0.5">
+                        <button onclick="toggleMenu('category-options')" class="w-full px-4 py-2.5 rounded-[1.5rem] text-[8px] font-black uppercase tracking-widest bg-indigo-600/90 text-white flex items-center justify-between shadow-lg hover:bg-indigo-600 transition-all group">
+                            <div class="flex items-center gap-2.5">
+                                <i class="fas fa-layer-group text-[9px] opacity-70"></i>
+                                <span id="current-cat-label" class="truncate max-w-[90px]">Kategori Objek</span>
                             </div>
                             <i class="fas fa-chevron-down text-[7px]"></i>
                         </button>
-                        <div id="category-options" class="hidden mt-2 p-1 flex flex-col gap-1">
-                            <button onclick="toggleType('Semua')" class="type-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="Semua">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-indigo-400 transition-colors">
-                                        <i class="fas fa-check text-[7px] text-indigo-400 check-icon" style="opacity:1"></i>
+                        <div id="category-options" class="hidden mt-1.5 p-1 flex flex-col gap-0.5">
+                            <button onclick="toggleType('Semua')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="Semua">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-indigo-400 transition-colors">
+                                        <i class="fas fa-check text-[6px] text-indigo-400 check-icon" style="opacity:1"></i>
                                     </div>
                                     <span class="group-hover:text-white transition-colors">Semua Objek</span>
                                 </div>
                             </button>
-                            <button onclick="toggleType('Jalan')" class="type-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Jalan">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors">
-                                        <i class="fas fa-check text-[7px] text-blue-400 check-icon" style="opacity:1"></i>
+                            <button onclick="toggleType('Jalan')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Jalan">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors">
+                                        <i class="fas fa-check text-[6px] text-blue-400 check-icon" style="opacity:1"></i>
                                     </div>
-                                    <span class="group-hover:text-white transition-colors">Infrastruktur Jalan</span>
+                                    <span class="group-hover:text-white transition-colors text-left">Infrastruktur Jalan</span>
                                 </div>
-                                <div class="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-lg shadow-blue-500/40"></div>
+                                <div class="w-2 h-2 rounded-full bg-blue-500 shadow-lg shadow-blue-500/40"></div>
                             </button>
-                            <button onclick="toggleType('Jembatan')" class="type-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Jembatan">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
-                                        <i class="fas fa-check text-[7px] text-emerald-400 check-icon" style="opacity:1"></i>
+                            <button onclick="toggleType('Jembatan')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Jembatan">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
+                                        <i class="fas fa-check text-[6px] text-emerald-400 check-icon" style="opacity:1"></i>
                                     </div>
-                                    <span class="group-hover:text-white transition-colors">Jembatan</span>
+                                    <span class="group-hover:text-white transition-colors text-left">Jembatan</span>
                                 </div>
-                                <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/40"></div>
+                                <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/40"></div>
                             </button>
-                            <button onclick="toggleType('Drainase')" class="type-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Drainase">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-amber-400 transition-colors">
-                                        <i class="fas fa-check text-[7px] text-amber-400 check-icon" style="opacity:1"></i>
+                            <button onclick="toggleType('Drainase')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Drainase">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-amber-400 transition-colors">
+                                        <i class="fas fa-check text-[6px] text-amber-400 check-icon" style="opacity:1"></i>
                                     </div>
-                                    <span class="group-hover:text-white transition-colors">Drainase</span>
+                                    <span class="group-hover:text-white transition-colors text-left">Drainase</span>
                                 </div>
-                                <div class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-lg shadow-amber-500/40"></div>
+                                <div class="w-2 h-2 rounded-full bg-amber-500 shadow-lg shadow-amber-500/40"></div>
                             </button>
                         </div>
                     </div>
 
-                    <div class="h-[1px] bg-white/5 mx-4 my-1"></div>
+                    <div class="h-[1px] bg-white/5 mx-3 my-0.5"></div>
 
                     <!-- Kecamatan Section -->
-                    <div class="p-1">
-                        <button onclick="toggleMenu('territory-options')" class="w-full px-5 py-3.5 rounded-[2rem] text-[9px] font-black uppercase tracking-widest bg-white/10 text-white flex items-center justify-between shadow-lg hover:bg-white/20 transition-all group border border-white/5">
-                            <div class="flex items-center gap-3">
-                                <i class="fas fa-map-location-dot text-[10px] opacity-70 text-indigo-400"></i>
-                                <span id="current-kec-label">Filter Kecamatan</span>
+                    <div class="p-0.5">
+                        <button onclick="toggleMenu('territory-options')" class="w-full px-4 py-2.5 rounded-[1.5rem] text-[8px] font-black uppercase tracking-widest bg-white/10 text-white flex items-center justify-between shadow-lg hover:bg-white/20 transition-all group border border-white/5">
+                            <div class="flex items-center gap-2.5">
+                                <i class="fas fa-map-location-dot text-[9px] opacity-70 text-indigo-400"></i>
+                                <span id="current-kec-label" class="truncate max-w-[90px]">Wilayah</span>
                             </div>
                             <i class="fas fa-chevron-down text-[7px]"></i>
                         </button>
-                        <div id="territory-options" class="hidden mt-2 p-1 flex flex-col gap-1 max-h-48 overflow-y-auto custom-scrollbar">
-                            <button onclick="toggleKecamatan('Semua')" class="kec-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="Semua">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-indigo-400 transition-colors">
-                                        <i class="fas fa-check text-[7px] text-indigo-400 check-icon" style="opacity:1"></i>
+                        <div id="territory-options" class="hidden mt-1.5 p-1 flex flex-col gap-0.5 max-h-40 overflow-y-auto custom-scrollbar">
+                            <button onclick="toggleKecamatan('Semua')" class="kec-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="Semua">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-indigo-400 transition-colors">
+                                        <i class="fas fa-check text-[6px] text-indigo-400 check-icon" style="opacity:1"></i>
                                     </div>
                                     <span class="group-hover:text-white transition-colors">Semua Wilayah</span>
                                 </div>
                             </button>
                             @foreach($kecamatan as $kec)
-                            <button onclick="toggleKecamatan('{{ $kec->id_kecamatan }}')" class="kec-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="{{ $kec->id_kecamatan }}">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-indigo-400 transition-colors">
-                                        <i class="fas fa-check text-[7px] text-indigo-400 check-icon" style="opacity:1"></i>
+                            <button onclick="toggleKecamatan('{{ $kec->id_kecamatan }}')" class="kec-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="{{ $kec->id_kecamatan }}">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-indigo-400 transition-colors">
+                                        <i class="fas fa-check text-[6px] text-indigo-400 check-icon" style="opacity:1"></i>
                                     </div>
-                                    <span class="truncate max-w-[100px] group-hover:text-white transition-colors">{{ $kec->nama_kecamatan }}</span>
+                                    <span class="truncate max-w-[80px] group-hover:text-white transition-colors text-left">{{ $kec->nama_kecamatan }}</span>
                                 </div>
-                                <div class="w-3 h-3 rounded flex-shrink-0" style="background-color: {{ $kec->warna ?? '#6366f1' }}; box-shadow: 0 0 8px {{ $kec->warna ?? '#6366f1' }}60;"></div>
+                                <div class="w-2.5 h-2.5 rounded shadow-sm" style="background-color: {{ $kec->warna ?? '#6366f1' }};"></div>
                             </button>
                             @endforeach
                         </div>
@@ -247,12 +247,19 @@
                         pane: 'polygonsPane',
                         style: {
                             fillColor: kec.warna || '#6366f1',
-                            weight: 2,
+                            weight: 2.5,
                             opacity: 1,
                             color: 'white',
-                            fillOpacity: 0.15
+                            fillOpacity: 0.35
                         },
                         interactive: true
+                    });
+
+                    poly.on('mouseover', function() {
+                        this.setStyle({ fillOpacity: 0.6, weight: 4 });
+                    });
+                    poly.on('mouseout', function() {
+                        this.setStyle({ fillOpacity: 0.35, weight: 2.5 });
                     }); // Do NOT add to map yet — applyFilters() controls visibility
 
                     poly.bindPopup(`<p class="text-[10px] font-black text-[#1e1b4b] uppercase">${kec.nama_kecamatan}</p>`, { 
