@@ -188,11 +188,6 @@
                         }
                     }).addTo(map);
 
-                    poly.bindTooltip(`Kec. ${kec.nama_kecamatan}`, {
-                        sticky: true,
-                        className: 'custom-tooltip'
-                    });
-
                     poly.on('mouseover', function() {
                         this.setStyle({ fillOpacity: 0.4, weight: 3 });
                     });
@@ -360,18 +355,6 @@
     <style>
         .leaflet-popup-content-wrapper { border-radius: 2rem; padding: 5px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.2); }
         .leaflet-popup-tip-container { display: none; }
-        .custom-tooltip {
-            background: #1e1b4b;
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-size: 10px;
-            font-weight: 800;
-            padding: 4px 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-        }
     </style>
 </body>
 </html>

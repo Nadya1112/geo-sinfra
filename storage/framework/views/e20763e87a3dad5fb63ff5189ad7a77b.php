@@ -97,66 +97,54 @@
                 </div>
             </div>
 
-            <!-- Floating Filters Right -->
-            <div class="absolute top-6 right-6 z-10 space-y-4">
-                <!-- Category Filter -->
-                <div id="category-card" class="bg-white/90 backdrop-blur-xl p-2 rounded-[2rem] border border-white shadow-2xl min-w-[200px] transition-all duration-300">
-                    <button onclick="toggleCategoryMenu()" class="w-full px-6 py-4 rounded-[1.8rem] text-[10px] font-black uppercase tracking-widest bg-[#1e1b4b] text-white flex items-center justify-between shadow-xl hover:bg-[#2d2a6e] transition-all group">
-                        <div class="flex items-center gap-3">
-                            <div class="w-6 h-6 bg-white/10 rounded-lg flex items-center justify-center">
-                                <i class="fas fa-layer-group text-[10px]"></i>
-                            </div>
-                            <span id="current-cat-label">Semua Kategori</span>
-                        </div>
-                        <i id="cat-chevron" class="fas fa-chevron-down text-[8px] transition-transform duration-300"></i>
-                    </button>
-                    
-                    <div id="category-options" class="hidden mt-2 p-2 flex flex-col gap-1 overflow-hidden">
-                        <button onclick="handleCategorySelect('Semua')" class="cat-opt-btn w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-400 hover:bg-emerald-50 hover:text-emerald-700 transition-all text-left flex items-center gap-3 group">
-                            <div class="w-1.5 h-1.5 rounded-full bg-gray-200 group-hover:bg-emerald-500 transition-colors"></div>
-                            Semua
-                        </button>
-                        <button onclick="handleCategorySelect('Jalan')" class="cat-opt-btn w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-400 hover:bg-emerald-50 hover:text-emerald-700 transition-all text-left flex items-center gap-3 group">
-                            <div class="w-1.5 h-1.5 rounded-full bg-gray-200 group-hover:bg-emerald-500 transition-colors"></div>
-                            Jalan
-                        </button>
-                        <button onclick="handleCategorySelect('Jembatan')" class="cat-opt-btn w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-400 hover:bg-emerald-50 hover:text-emerald-700 transition-all text-left flex items-center gap-3 group">
-                            <div class="w-1.5 h-1.5 rounded-full bg-gray-200 group-hover:bg-emerald-500 transition-colors"></div>
-                            Jembatan
-                        </button>
-                        <button onclick="handleCategorySelect('Drainase')" class="cat-opt-btn w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-400 hover:bg-emerald-50 hover:text-emerald-700 transition-all text-left flex items-center gap-3 group">
-                            <div class="w-1.5 h-1.5 rounded-full bg-gray-200 group-hover:bg-emerald-500 transition-colors"></div>
-                            Drainase
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Territory Filter (NEW) -->
-                <div id="territory-card" class="bg-white/90 backdrop-blur-xl p-2 rounded-[2rem] border border-white shadow-2xl min-w-[200px] transition-all duration-300">
-                    <button onclick="toggleTerritoryMenu()" class="w-full px-6 py-4 rounded-[1.8rem] text-[10px] font-black uppercase tracking-widest bg-emerald-600 text-white flex items-center justify-between shadow-xl hover:bg-emerald-700 transition-all group">
-                        <div class="flex items-center gap-3">
-                            <div class="w-6 h-6 bg-white/20 rounded-lg flex items-center justify-center">
-                                <i class="fas fa-map-location-dot text-[10px]"></i>
-                            </div>
-                            <span id="current-territory-label">Semua Wilayah</span>
-                        </div>
-                        <i id="territory-chevron" class="fas fa-chevron-down text-[8px] transition-transform duration-300"></i>
-                    </button>
-                    
-                    <div id="territory-options" class="hidden mt-2 p-2 flex flex-col gap-1 overflow-hidden">
-                        <button onclick="handleTerritorySelect('Semua')" class="territory-opt-btn w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-400 hover:bg-gray-50 transition-all text-left flex items-center gap-3 group">
-                            <div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div>
-                            Semua Wilayah
-                        </button>
-                        <?php $__currentLoopData = $myKecamatans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kec): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <button onclick="handleTerritorySelect('<?php echo e($kec->id_kecamatan); ?>', '<?php echo e($kec->nama_kecamatan); ?>')" class="territory-opt-btn w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-500 hover:bg-gray-50 transition-all text-left flex items-center justify-between group">
+            <!-- Floating Filters Right (Combined) -->
+            <div class="absolute top-6 right-6 z-10">
+                <div class="bg-white/90 backdrop-blur-xl p-2 rounded-[2.8rem] border border-white shadow-2xl min-w-[220px] transition-all duration-300">
+                    <!-- Category Section -->
+                    <div id="category-card" class="p-1">
+                        <button onclick="toggleCategoryMenu()" class="w-full px-5 py-3.5 rounded-[2rem] text-[9px] font-black uppercase tracking-widest bg-[#1e1b4b] text-white flex items-center justify-between shadow-lg hover:bg-[#2d2a6e] transition-all group">
                             <div class="flex items-center gap-3">
-                                <div class="w-2.5 h-2.5 rounded-full shadow-sm" style="background-color: <?php echo e($kec->warna ?? '#cbd5e1'); ?>"></div>
-                                <span class="group-hover:text-[#1e1b4b] transition-colors"><?php echo e($kec->nama_kecamatan); ?></span>
+                                <i class="fas fa-layer-group text-[10px] opacity-70"></i>
+                                <span id="current-cat-label" class="truncate max-w-[100px]">Semua Kategori</span>
                             </div>
-                            <i class="fas fa-chevron-right text-[7px] text-gray-300 group-hover:translate-x-1 transition-all"></i>
+                            <i id="cat-chevron" class="fas fa-chevron-down text-[7px] transition-transform duration-300"></i>
                         </button>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        
+                        <div id="category-options" class="hidden mt-2 p-1 flex flex-col gap-1">
+                            <button onclick="handleCategorySelect('Semua')" class="cat-opt-btn w-full px-4 py-2.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-emerald-50 hover:text-emerald-700 transition-all text-left flex items-center gap-3">Semua</button>
+                            <button onclick="handleCategorySelect('Jalan')" class="cat-opt-btn w-full px-4 py-2.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-emerald-50 hover:text-emerald-700 transition-all text-left flex items-center gap-3">Jalan</button>
+                            <button onclick="handleCategorySelect('Jembatan')" class="cat-opt-btn w-full px-4 py-2.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-emerald-50 hover:text-emerald-700 transition-all text-left flex items-center gap-3">Jembatan</button>
+                            <button onclick="handleCategorySelect('Drainase')" class="cat-opt-btn w-full px-4 py-2.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-emerald-50 hover:text-emerald-700 transition-all text-left flex items-center gap-3">Drainase</button>
+                        </div>
+                    </div>
+
+                    <div class="h-[1px] bg-gray-100/50 mx-4 my-1"></div>
+
+                    <!-- Territory Section -->
+                    <div id="territory-card" class="p-1">
+                        <button onclick="toggleTerritoryMenu()" class="w-full px-5 py-3.5 rounded-[2rem] text-[9px] font-black uppercase tracking-widest bg-emerald-600 text-white flex items-center justify-between shadow-lg hover:bg-emerald-700 transition-all group">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-map-location-dot text-[10px] opacity-70"></i>
+                                <span id="current-territory-label" class="truncate max-w-[100px]">Semua Wilayah</span>
+                            </div>
+                            <i id="territory-chevron" class="fas fa-chevron-down text-[7px] transition-transform duration-300"></i>
+                        </button>
+                        
+                        <div id="territory-options" class="hidden mt-2 p-1 flex flex-col gap-1 max-h-48 overflow-y-auto custom-scrollbar">
+                            <button onclick="handleTerritorySelect('Semua')" class="territory-opt-btn w-full px-4 py-2.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-gray-50 transition-all text-left flex items-center gap-3 group">
+                                <div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div>
+                                Semua Wilayah
+                            </button>
+                            <?php $__currentLoopData = $myKecamatans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kec): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <button onclick="handleTerritorySelect('<?php echo e($kec->id_kecamatan); ?>', '<?php echo e($kec->nama_kecamatan); ?>')" class="territory-opt-btn w-full px-4 py-2.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-500 hover:bg-gray-50 transition-all text-left flex items-center justify-between group">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-2 h-2 rounded-full" style="background-color: <?php echo e($kec->warna ?? '#cbd5e1'); ?>"></div>
+                                    <span class="truncate max-w-[110px] group-hover:text-[#1e1b4b] transition-colors"><?php echo e($kec->nama_kecamatan); ?></span>
+                                </div>
+                                <i class="fas fa-chevron-right text-[6px] text-gray-300"></i>
+                            </button>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </div>
                     </div>
                 </div>
             </div>
