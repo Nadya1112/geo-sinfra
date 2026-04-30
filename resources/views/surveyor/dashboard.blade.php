@@ -68,7 +68,7 @@
                 <div class="relative z-10">
                     <h3 class="text-3xl font-black text-white mb-2 leading-tight">Selamat Datang, {{ auth()->user()->name }}!</h3>
                     <p class="text-emerald-50 text-sm font-medium max-w-xl leading-relaxed">
-                        Siap untuk mendata infrastruktur hari ini? Pastikan GPS aktif dan foto yang diambil jelas untuk hasil analisis AI yang akurat.
+                        Mari mulai mendata infrastruktur hari ini untuk membantu pemetaan aset daerah yang lebih akurat. Pastikan GPS aktif dan foto yang diambil jelas untuk hasil analisis AI yang maksimal.
                     </p>
                     <div class="mt-8 flex gap-4">
                         <a href="{{ route('surveyor.input') }}" class="px-6 py-3 bg-white text-emerald-700 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-emerald-50 transition-all inline-block">
