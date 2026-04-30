@@ -176,7 +176,7 @@
                                         
                                         <a href="<?php echo e(route('surveyor.infrastruktur.show', $item->id_infrastruktur)); ?>" target="_blank" class="flex items-center gap-1.5 px-3 py-2 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all border border-indigo-100 shadow-sm">
                                             <i class="fas fa-eye text-[10px]"></i>
-                                            <span class="text-[9px] font-black uppercase tracking-widest">Lihat Detail</span>
+                                            <span class="text-[9px] font-black uppercase tracking-widest">Detail</span>
                                         </a>
 
                                         
