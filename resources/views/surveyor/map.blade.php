@@ -237,6 +237,17 @@
                         }
                     }).addTo(map);
 
+                    poly.bindPopup(`
+                        <div class="px-3 py-1">
+                            <p class="text-[10px] font-black uppercase tracking-widest text-[#1e1b4b] mb-1">${kec.nama_kecamatan}</p>
+                            <div class="h-1 w-full rounded-full" style="background-color: ${kec.warna || '#3b82f6'}"></div>
+                        </div>
+                    `, {
+                        className: 'custom-polygon-popup',
+                        closeButton: false,
+                        offset: [0, -10]
+                    });
+
                     poly.on('mouseover', function() {
                         this.setStyle({ fillOpacity: 0.4, weight: 3 });
                     });
@@ -451,6 +462,21 @@
     <style>
         .leaflet-popup-content-wrapper { border-radius: 2rem; padding: 5px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.2); }
         .leaflet-popup-tip-container { display: none; }
+        .custom-polygon-popup .leaflet-popup-content-wrapper {
+            background: rgba(255, 255, 255, 0.8) !important;
+            backdrop-filter: blur(10px) !important;
+            border-radius: 12px !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+            padding: 0 !important;
+        }
+        .custom-polygon-popup .leaflet-popup-tip {
+            background: rgba(255, 255, 255, 0.8) !important;
+            backdrop-filter: blur(10px) !important;
+        }
+        .custom-polygon-popup .leaflet-popup-content {
+            margin: 8px !important;
+        }
     </style>
 </body>
 </html>

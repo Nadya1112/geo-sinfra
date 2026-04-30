@@ -86,16 +86,13 @@
                                         <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">
                                             Kecamatan <span class="text-red-500">*</span>
                                             <?php if(auth()->user()->id_kecamatan): ?>
-                                                <span class="ml-2 text-[8px] text-emerald-500 bg-emerald-50 px-2 py-0.5 rounded-full font-bold">WILAYAH TUGAS ANDA</span>
                                             <?php endif; ?>
                                         </label>
                                         <div class="relative">
                                             <select name="id_kecamatan" id="id_kecamatan" class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500 outline-none appearance-none cursor-pointer transition-all" required onchange="filterKelurahan()">
-                                                <?php if($semuaKecamatan->count() > 1 || !auth()->user()->id_kecamatan): ?>
-                                                    <option value="">Pilih Kecamatan...</option>
-                                                <?php endif; ?>
+                                                <option value="">Pilih Kecamatan...</option>
                                                 <?php $__currentLoopData = $semuaKecamatan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kec): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    <option value="<?php echo e($kec->id_kecamatan); ?>" <?php echo e((auth()->user()->id_kecamatan == $kec->id_kecamatan || $semuaKecamatan->count() == 1) ? 'selected' : ''); ?>><?php echo e($kec->nama_kecamatan); ?></option>
+                                                    <option value="<?php echo e($kec->id_kecamatan); ?>"><?php echo e($kec->nama_kecamatan); ?></option>
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </select>
                                             <i class="fas fa-chevron-down absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-xs"></i>
@@ -113,14 +110,14 @@
                                 </div>
 
                                 <div>
-                                    <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Alamat Detail / Catatan Lokasi</label>
+                                    <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Alamat Detail / Catatan Lokasi <span class="text-red-500">*</span></label>
                                     <textarea name="alamat" rows="2" placeholder="Sebutkan patokan atau alamat detail..." class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold focus:border-emerald-500 outline-none transition-all resize-none"></textarea>
                                 </div>
                             </div>
                         </div>
 
                         <div class="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm">
-                            <h4 class="font-black text-[#1e1b4b] mb-6 border-b border-gray-50 pb-4 italic">Unggah Dokumentasi</h4>
+                            <h4 class="font-black text-[#1e1b4b] mb-6 border-b border-gray-50 pb-4 italic">Unggah Dokumentasi<span class="text-red-500">*</span></h4>
                             <div class="relative group cursor-pointer">
                                 <input type="file" name="foto" id="foto" class="hidden" accept="image/*" capture="environment" required onchange="previewImage(this)">
                                 <label for="foto" class="block w-full h-52 rounded-[2rem] border-2 border-dashed border-gray-300 flex flex-col items-center justify-center bg-gray-50 group-hover:bg-emerald-50 group-hover:border-emerald-200 transition-all cursor-pointer overflow-hidden relative">
@@ -148,11 +145,11 @@
 
                             <div class="grid grid-cols-2 gap-4 mb-6">
                                 <div>
-                                    <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Latitude</label>
+                                    <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Latitude<span class="text-red-500">*</span></label>
                                     <input type="text" name="latitude" id="lat-input" placeholder="-3.31..." class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold outline-none focus:border-emerald-500" required>
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Longitude</label>
+                                    <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Longitude<span class="text-red-500">*</span></label>
                                     <input type="text" name="longitude" id="lng-input" placeholder="114.59..." class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold outline-none focus:border-emerald-500" required>
                                 </div>
                             </div>
