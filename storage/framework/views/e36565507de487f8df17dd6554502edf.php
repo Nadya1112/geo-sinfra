@@ -172,26 +172,46 @@
                                     </span>
                                 </td>
                                 <td class="px-8 py-6">
-                                    <div class="flex items-center justify-center gap-2">
-                                        <?php if($item->status_verifikasi == 'Pending'): ?>
-                                        <form action="<?php echo e(route('kabid.verifikasi.proses', $item->id_infrastruktur)); ?>" method="POST" class="inline">
-                                            <?php echo csrf_field(); ?>
-                                            <input type="hidden" name="status" value="Verified">
-                                            <button type="submit" title="Terima Usulan" class="w-9 h-9 flex items-center justify-center bg-emerald-500 text-white rounded-xl hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-500/20 group/btn">
-                                                <i class="fas fa-check text-xs group-hover/btn:scale-110 transition-transform"></i>
-                                            </button>
-                                        </form>
-                                        <form action="<?php echo e(route('kabid.verifikasi.proses', $item->id_infrastruktur)); ?>" method="POST" class="inline">
-                                            <?php echo csrf_field(); ?>
-                                            <input type="hidden" name="status" value="Rejected">
-                                            <button type="submit" title="Tolak Usulan" class="w-9 h-9 flex items-center justify-center bg-white border border-gray-200 text-gray-400 rounded-xl hover:bg-red-50 hover:text-red-500 hover:border-red-100 transition-all group/btn">
-                                                <i class="fas fa-times text-xs group-hover/btn:scale-110 transition-transform"></i>
-                                            </button>
-                                        </form>
-                                        <?php endif; ?>
-                                        <a href="<?php echo e(route('surveyor.infrastruktur.show', $item->id_infrastruktur)); ?>" target="_blank" title="Detail Teknis" class="w-9 h-9 flex items-center justify-center bg-gray-50 text-gray-400 rounded-xl hover:bg-indigo-50 hover:text-indigo-600 transition-all border border-gray-100 group/btn">
-                                            <i class="fas fa-eye text-xs group-hover/btn:scale-110 transition-transform"></i>
+                                    <div class="flex items-center justify-center gap-2 flex-wrap">
+                                        
+                                        <a href="<?php echo e(route('surveyor.infrastruktur.show', $item->id_infrastruktur)); ?>" target="_blank" class="flex items-center gap-1.5 px-3 py-2 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all border border-indigo-100 shadow-sm">
+                                            <i class="fas fa-eye text-[10px]"></i>
+                                            <span class="text-[9px] font-black uppercase tracking-widest">Lihat Detail</span>
                                         </a>
+
+                                        
+                                        <?php if($item->status_verifikasi == 'Pending'): ?>
+                                            <form action="<?php echo e(route('kabid.verifikasi.proses', $item->id_infrastruktur)); ?>" method="POST" class="inline">
+                                                <?php echo csrf_field(); ?>
+                                                <input type="hidden" name="status" value="Verified">
+                                                <button type="submit" class="flex items-center gap-1.5 px-3 py-2 bg-emerald-500 text-white rounded-xl hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-500/20">
+                                                    <i class="fas fa-check text-[10px]"></i>
+                                                    <span class="text-[9px] font-black uppercase tracking-widest">Diterima</span>
+                                                </button>
+                                            </form>
+                                        <?php else: ?>
+                                            <button disabled class="flex items-center gap-1.5 px-3 py-2 bg-gray-50 text-gray-300 rounded-xl border border-gray-100 cursor-not-allowed">
+                                                <i class="fas fa-check text-[10px]"></i>
+                                                <span class="text-[9px] font-black uppercase tracking-widest">Diterima</span>
+                                            </button>
+                                        <?php endif; ?>
+
+                                        
+                                        <?php if($item->status_verifikasi == 'Pending'): ?>
+                                            <form action="<?php echo e(route('kabid.verifikasi.proses', $item->id_infrastruktur)); ?>" method="POST" class="inline">
+                                                <?php echo csrf_field(); ?>
+                                                <input type="hidden" name="status" value="Rejected">
+                                                <button type="submit" class="flex items-center gap-1.5 px-3 py-2 bg-white border border-red-200 text-red-400 rounded-xl hover:bg-red-50 hover:text-red-600 hover:border-red-300 transition-all">
+                                                    <i class="fas fa-times text-[10px]"></i>
+                                                    <span class="text-[9px] font-black uppercase tracking-widest">Ditolak</span>
+                                                </button>
+                                            </form>
+                                        <?php else: ?>
+                                            <button disabled class="flex items-center gap-1.5 px-3 py-2 bg-gray-50 text-gray-300 rounded-xl border border-gray-100 cursor-not-allowed">
+                                                <i class="fas fa-times text-[10px]"></i>
+                                                <span class="text-[9px] font-black uppercase tracking-widest">Ditolak</span>
+                                            </button>
+                                        <?php endif; ?>
                                     </div>
                                 </td>
                             </tr>
@@ -212,17 +232,7 @@
                 </div>
             </div>
 
-        </div>
-
-        <!-- FOOTER -->
-        <footer class="bg-white border-t border-gray-100 px-8 py-4 flex justify-between items-center text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-auto">
-            <p>&copy; 2026 DISPERKIM BANJARMASIN - GEO-SINFRA</p>
-            <div class="flex gap-4">
-                <a href="#" class="hover:text-indigo-600 transition-colors">Panduan</a>
-                <a href="#" class="hover:text-indigo-600 transition-colors">Bantuan</a>
-            </div>
-        </footer>
-    </main>
+         </main>
 
 </body>
 </html>

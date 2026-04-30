@@ -170,31 +170,45 @@
                                     </span>
                                 </td>
                                 <td class="px-8 py-6">
-                                    <div class="flex items-center justify-center gap-2">
-                                        <a href="{{ route('surveyor.infrastruktur.show', $item->id_infrastruktur) }}" target="_blank" class="flex items-center gap-2 px-3 py-2 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all border border-indigo-100 group/btn shadow-sm">
+                                    <div class="flex items-center justify-center gap-2 flex-wrap">
+                                        {{-- Lihat Detail - always visible --}}
+                                        <a href="{{ route('surveyor.infrastruktur.show', $item->id_infrastruktur) }}" target="_blank" class="flex items-center gap-1.5 px-3 py-2 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all border border-indigo-100 shadow-sm">
                                             <i class="fas fa-eye text-[10px]"></i>
-                                            <span class="text-[9px] font-black uppercase tracking-widest">Detail</span>
+                                            <span class="text-[9px] font-black uppercase tracking-widest">Lihat Detail</span>
                                         </a>
 
+                                        {{-- Diterima --}}
                                         @if($item->status_verifikasi == 'Pending')
-                                        <div class="h-6 w-[1px] bg-gray-100 mx-1"></div>
-
-                                        <form action="{{ route('kabid.verifikasi.proses', $item->id_infrastruktur) }}" method="POST" class="inline">
-                                            @csrf
-                                            <input type="hidden" name="status" value="Verified">
-                                            <button type="submit" class="flex items-center gap-2 px-3 py-2 bg-emerald-500 text-white rounded-xl hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-500/20 group/btn">
+                                            <form action="{{ route('kabid.verifikasi.proses', $item->id_infrastruktur) }}" method="POST" class="inline">
+                                                @csrf
+                                                <input type="hidden" name="status" value="Verified">
+                                                <button type="submit" class="flex items-center gap-1.5 px-3 py-2 bg-emerald-500 text-white rounded-xl hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-500/20">
+                                                    <i class="fas fa-check text-[10px]"></i>
+                                                    <span class="text-[9px] font-black uppercase tracking-widest">Diterima</span>
+                                                </button>
+                                            </form>
+                                        @else
+                                            <button disabled class="flex items-center gap-1.5 px-3 py-2 bg-gray-50 text-gray-300 rounded-xl border border-gray-100 cursor-not-allowed">
                                                 <i class="fas fa-check text-[10px]"></i>
-                                                <span class="text-[9px] font-black uppercase tracking-widest">Terima</span>
+                                                <span class="text-[9px] font-black uppercase tracking-widest">Diterima</span>
                                             </button>
-                                        </form>
-                                        <form action="{{ route('kabid.verifikasi.proses', $item->id_infrastruktur) }}" method="POST" class="inline">
-                                            @csrf
-                                            <input type="hidden" name="status" value="Rejected">
-                                            <button type="submit" class="flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 text-gray-400 rounded-xl hover:bg-red-50 hover:text-red-500 hover:border-red-100 transition-all group/btn">
+                                        @endif
+
+                                        {{-- Ditolak --}}
+                                        @if($item->status_verifikasi == 'Pending')
+                                            <form action="{{ route('kabid.verifikasi.proses', $item->id_infrastruktur) }}" method="POST" class="inline">
+                                                @csrf
+                                                <input type="hidden" name="status" value="Rejected">
+                                                <button type="submit" class="flex items-center gap-1.5 px-3 py-2 bg-white border border-red-200 text-red-400 rounded-xl hover:bg-red-50 hover:text-red-600 hover:border-red-300 transition-all">
+                                                    <i class="fas fa-times text-[10px]"></i>
+                                                    <span class="text-[9px] font-black uppercase tracking-widest">Ditolak</span>
+                                                </button>
+                                            </form>
+                                        @else
+                                            <button disabled class="flex items-center gap-1.5 px-3 py-2 bg-gray-50 text-gray-300 rounded-xl border border-gray-100 cursor-not-allowed">
                                                 <i class="fas fa-times text-[10px]"></i>
-                                                <span class="text-[9px] font-black uppercase tracking-widest">Tolak</span>
+                                                <span class="text-[9px] font-black uppercase tracking-widest">Ditolak</span>
                                             </button>
-                                        </form>
                                         @endif
                                     </div>
                                 </td>
@@ -216,17 +230,7 @@
                 </div>
             </div>
 
-        </div>
-
-        <!-- FOOTER -->
-        <footer class="bg-white border-t border-gray-100 px-8 py-4 flex justify-between items-center text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-auto">
-            <p>&copy; 2026 DISPERKIM BANJARMASIN - GEO-SINFRA</p>
-            <div class="flex gap-4">
-                <a href="#" class="hover:text-indigo-600 transition-colors">Panduan</a>
-                <a href="#" class="hover:text-indigo-600 transition-colors">Bantuan</a>
-            </div>
-        </footer>
-    </main>
+         </main>
 
 </body>
 </html>
