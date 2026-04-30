@@ -269,7 +269,7 @@
         const totalKec = kecamatans.length;
 
         function applyFilters() {
-            // Control polygon visibility
+            // 1. Wilayah HANYA mengontrol Warna Area (Poligon)
             Object.keys(geoLayers).forEach(id => {
                 if (activeKecs.includes(id.toString())) {
                     if (!map.hasLayer(geoLayers[id])) geoLayers[id].addTo(map);
@@ -278,6 +278,7 @@
                 }
             });
 
+            // 2. Kategori mengontrol Titik Objek (Marker) di SELURUH peta
             if (activeTypes.length === 0) {
                 renderMarkers([]);
                 return;
@@ -287,21 +288,11 @@
 
             let filtered = dataPoints.filter(p => {
                 const pType = (p.jenis_infrastruktur || '').toLowerCase().trim();
-                
-                // AMBIL ID KECAMATAN DARI RELATIONSHIP KELURAHAN
-                // Karena di tabel infrastruktur id_kecamatan kosong
-                const pKec = (p.id_kecamatan || p.kelurahan?.id_kecamatan || '').toString();
-                
-                // Cek kategori
-                const matchType = normalisedActiveTypes.some(type => pType.includes(type));
-                
-                // Cek wilayah
-                const matchKec = activeKecs.includes(pKec);
-                
-                return matchType && matchKec;
+                // Marker tetap muncul selama kategorinya cocok (tidak peduli wilayah dicentang atau tidak)
+                return normalisedActiveTypes.some(type => pType.includes(type));
             });
             
-            console.log(`Filter Debug: Found ${filtered.length} items. Active Kecs: ${activeKecs.length}`);
+            console.log(`Filter Debug: Found ${filtered.length} markers.`);
             renderMarkers(filtered);
         }
 
