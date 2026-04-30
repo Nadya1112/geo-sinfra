@@ -56,10 +56,10 @@
 
             <!-- Map Overlay UI Bottom Left -->
             <div class="absolute bottom-10 left-6 z-10">
-                <div id="condition-card" class="bg-white/90 backdrop-blur-xl p-2 rounded-[2.5rem] border border-white shadow-2xl min-w-[200px] transition-all duration-300">
-                    <button onclick="toggleConditionMenu()" class="w-full px-6 py-4 rounded-[1.8rem] text-[10px] font-black uppercase tracking-widest bg-white text-[#1e1b4b] flex items-center justify-between shadow-sm hover:bg-gray-50 transition-all group border border-gray-100">
+                <div id="condition-card" class="bg-white/70 backdrop-blur-xl p-2 rounded-[2.5rem] border border-white/40 shadow-2xl min-w-[200px] transition-all duration-300">
+                    <button onclick="toggleConditionMenu()" class="w-full px-6 py-4 rounded-[1.8rem] text-[10px] font-black uppercase tracking-widest bg-white/50 text-[#1e1b4b] flex items-center justify-between shadow-sm hover:bg-white/80 transition-all group border border-white/20">
                         <div class="flex items-center gap-3">
-                            <div class="w-6 h-6 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center">
+                            <div class="w-6 h-6 bg-emerald-50/50 text-emerald-600 rounded-lg flex items-center justify-center">
                                 <i class="fas fa-list-check text-[10px]"></i>
                             </div>
                             <span id="current-cond-label">Kondisi Objek</span>
@@ -68,30 +68,30 @@
                     </button>
                     
                     <div id="condition-options" class="hidden mt-2 p-2 flex flex-col gap-1">
-                        <button onclick="handleConditionSelect('Semua')" class="w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-400 hover:bg-gray-50 transition-all flex items-center justify-between group">
+                        <button onclick="handleConditionSelect('Semua')" class="w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-500 hover:bg-white/40 transition-all flex items-center justify-between group">
                             <span class="group-hover:text-[#1e1b4b] transition-colors">Semua Kondisi</span>
-                            <span class="text-[9px] font-black text-blue-600 bg-blue-50 px-2.5 py-1 rounded-lg border border-blue-100 shadow-sm"><?php echo e($dataMap->count()); ?></span>
+                            <span class="text-[9px] font-black text-blue-600 bg-blue-50/50 px-2.5 py-1 rounded-lg border border-blue-100/50 shadow-sm"><?php echo e($dataMap->count()); ?></span>
                         </button>
-                        <button onclick="handleConditionSelect('Baik')" class="w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-500 hover:bg-emerald-50 hover:text-emerald-700 transition-all flex items-center justify-between group">
+                        <button onclick="handleConditionSelect('Baik')" class="w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-500 hover:bg-emerald-50/40 hover:text-emerald-700 transition-all flex items-center justify-between group">
                             <div class="flex items-center gap-3">
                                 <div class="w-2.5 h-2.5 bg-emerald-500 rounded-full shadow-lg shadow-emerald-500/20"></div>
                                 <span class="group-hover:text-emerald-700 transition-colors">Kondisi Baik</span>
                             </div>
-                            <span class="text-[9px] font-black text-emerald-600 bg-white px-2.5 py-1 rounded-lg border border-emerald-200 shadow-sm"><?php echo e($dataMap->where('kondisi', 'Baik')->count()); ?></span>
+                            <span class="text-[9px] font-black text-emerald-600 bg-white/60 px-2.5 py-1 rounded-lg border border-emerald-200/50 shadow-sm"><?php echo e($dataMap->where('kondisi', 'Baik')->count()); ?></span>
                         </button>
-                        <button onclick="handleConditionSelect('Rusak Ringan')" class="w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-500 hover:bg-amber-50 hover:text-amber-700 transition-all flex items-center justify-between group">
+                        <button onclick="handleConditionSelect('Rusak Ringan')" class="w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-500 hover:bg-amber-50/40 hover:text-amber-700 transition-all flex items-center justify-between group">
                             <div class="flex items-center gap-3">
                                 <div class="w-2.5 h-2.5 bg-amber-500 rounded-full shadow-lg shadow-amber-500/20"></div>
                                 <span class="group-hover:text-amber-700 transition-colors">Rusak Ringan</span>
                             </div>
-                            <span class="text-[9px] font-black text-amber-600 bg-white px-2.5 py-1 rounded-lg border border-amber-200 shadow-sm"><?php echo e($dataMap->where('kondisi', 'Rusak Ringan')->count()); ?></span>
+                            <span class="text-[9px] font-black text-amber-600 bg-white/60 px-2.5 py-1 rounded-lg border border-amber-200/50 shadow-sm"><?php echo e($dataMap->where('kondisi', 'Rusak Ringan')->count()); ?></span>
                         </button>
-                        <button onclick="handleConditionSelect('Rusak Berat')" class="w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-500 hover:bg-red-50 hover:text-red-700 transition-all flex items-center justify-between group">
+                        <button onclick="handleConditionSelect('Rusak Berat')" class="w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-500 hover:bg-red-50/40 hover:text-red-700 transition-all flex items-center justify-between group">
                             <div class="flex items-center gap-3">
                                 <div class="w-2.5 h-2.5 bg-red-500 rounded-full shadow-lg shadow-red-500/20"></div>
                                 <span class="group-hover:text-red-700 transition-colors">Rusak Berat</span>
                             </div>
-                            <span class="text-[9px] font-black text-red-600 bg-white px-2.5 py-1 rounded-lg border border-red-200 shadow-sm"><?php echo e($dataMap->where('kondisi', 'Rusak Berat')->count()); ?></span>
+                            <span class="text-[9px] font-black text-red-600 bg-white/60 px-2.5 py-1 rounded-lg border border-red-200/50 shadow-sm"><?php echo e($dataMap->where('kondisi', 'Rusak Berat')->count()); ?></span>
                         </button>
                     </div>
                 </div>
@@ -99,10 +99,10 @@
 
             <!-- Floating Filters Right (Combined) -->
             <div class="absolute top-6 right-6 z-10">
-                <div class="bg-white/90 backdrop-blur-xl p-2 rounded-[2.8rem] border border-white shadow-2xl min-w-[220px] transition-all duration-300">
+                <div class="bg-white/70 backdrop-blur-xl p-2 rounded-[2.8rem] border border-white/40 shadow-2xl min-w-[220px] transition-all duration-300">
                     <!-- Category Section -->
                     <div id="category-card" class="p-1">
-                        <button onclick="toggleCategoryMenu()" class="w-full px-5 py-3.5 rounded-[2rem] text-[9px] font-black uppercase tracking-widest bg-[#1e1b4b] text-white flex items-center justify-between shadow-lg hover:bg-[#2d2a6e] transition-all group">
+                        <button onclick="toggleCategoryMenu()" class="w-full px-5 py-3.5 rounded-[2rem] text-[9px] font-black uppercase tracking-widest bg-[#1e1b4b]/90 text-white flex items-center justify-between shadow-lg hover:bg-[#1e1b4b] transition-all group">
                             <div class="flex items-center gap-3">
                                 <i class="fas fa-layer-group text-[10px] opacity-70"></i>
                                 <span id="current-cat-label" class="truncate max-w-[100px]">Semua Kategori</span>
@@ -111,18 +111,18 @@
                         </button>
                         
                         <div id="category-options" class="hidden mt-2 p-1 flex flex-col gap-1">
-                            <button onclick="handleCategorySelect('Semua')" class="cat-opt-btn w-full px-4 py-2.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-emerald-50 hover:text-emerald-700 transition-all text-left flex items-center gap-3">Semua</button>
-                            <button onclick="handleCategorySelect('Jalan')" class="cat-opt-btn w-full px-4 py-2.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-emerald-50 hover:text-emerald-700 transition-all text-left flex items-center gap-3">Jalan</button>
-                            <button onclick="handleCategorySelect('Jembatan')" class="cat-opt-btn w-full px-4 py-2.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-emerald-50 hover:text-emerald-700 transition-all text-left flex items-center gap-3">Jembatan</button>
-                            <button onclick="handleCategorySelect('Drainase')" class="cat-opt-btn w-full px-4 py-2.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-emerald-50 hover:text-emerald-700 transition-all text-left flex items-center gap-3">Drainase</button>
+                            <button onclick="handleCategorySelect('Semua')" class="cat-opt-btn w-full px-4 py-2.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/40 transition-all text-left flex items-center gap-3">Semua</button>
+                            <button onclick="handleCategorySelect('Jalan')" class="cat-opt-btn w-full px-4 py-2.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/40 transition-all text-left flex items-center gap-3">Jalan</button>
+                            <button onclick="handleCategorySelect('Jembatan')" class="cat-opt-btn w-full px-4 py-2.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/40 transition-all text-left flex items-center gap-3">Jembatan</button>
+                            <button onclick="handleCategorySelect('Drainase')" class="cat-opt-btn w-full px-4 py-2.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/40 transition-all text-left flex items-center gap-3">Drainase</button>
                         </div>
                     </div>
 
-                    <div class="h-[1px] bg-gray-100/50 mx-4 my-1"></div>
+                    <div class="h-[1px] bg-white/20 mx-4 my-1"></div>
 
                     <!-- Territory Section -->
                     <div id="territory-card" class="p-1">
-                        <button onclick="toggleTerritoryMenu()" class="w-full px-5 py-3.5 rounded-[2rem] text-[9px] font-black uppercase tracking-widest bg-emerald-600 text-white flex items-center justify-between shadow-lg hover:bg-emerald-700 transition-all group">
+                        <button onclick="toggleTerritoryMenu()" class="w-full px-5 py-3.5 rounded-[2rem] text-[9px] font-black uppercase tracking-widest bg-emerald-600/90 text-white flex items-center justify-between shadow-lg hover:bg-emerald-600 transition-all group">
                             <div class="flex items-center gap-3">
                                 <i class="fas fa-map-location-dot text-[10px] opacity-70"></i>
                                 <span id="current-territory-label" class="truncate max-w-[100px]">Semua Wilayah</span>
@@ -131,19 +131,19 @@
                         </button>
                         
                         <div id="territory-options" class="hidden mt-2 p-1 flex flex-col gap-1 max-h-48 overflow-y-auto custom-scrollbar">
-                            <button onclick="handleTerritorySelect('Semua')" class="territory-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-gray-50 transition-all flex items-center justify-between group">
+                            <button onclick="handleTerritorySelect('Semua')" class="territory-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/40 transition-all flex items-center justify-between group">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-3.5 h-3.5 rounded border border-gray-200 flex items-center justify-center group-hover:border-emerald-500 transition-colors">
+                                    <div class="w-3.5 h-3.5 rounded border border-white/40 flex items-center justify-center group-hover:border-emerald-500 transition-colors">
                                         <i class="fas fa-check text-[7px] text-emerald-500 opacity-0 group-hover:opacity-100"></i>
                                     </div>
                                     <span>Semua Wilayah</span>
                                 </div>
-                                <div class="w-3.5 h-3.5 rounded bg-gray-200 shadow-inner"></div>
+                                <div class="w-3.5 h-3.5 rounded bg-gray-200 shadow-inner opacity-50"></div>
                             </button>
                             <?php $__currentLoopData = $myKecamatans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kec): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <button onclick="handleTerritorySelect('<?php echo e($kec->id_kecamatan); ?>', '<?php echo e($kec->nama_kecamatan); ?>')" class="territory-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-500 hover:bg-gray-50 transition-all flex items-center justify-between group">
+                            <button onclick="handleTerritorySelect('<?php echo e($kec->id_kecamatan); ?>', '<?php echo e($kec->nama_kecamatan); ?>')" class="territory-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-500 hover:bg-white/40 transition-all flex items-center justify-between group">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-3.5 h-3.5 rounded border border-gray-200 flex items-center justify-center group-hover:border-emerald-500 transition-colors">
+                                    <div class="w-3.5 h-3.5 rounded border border-white/40 flex items-center justify-center group-hover:border-emerald-500 transition-colors">
                                         <i class="fas fa-check text-[7px] text-emerald-500 opacity-0 group-hover:opacity-100"></i>
                                     </div>
                                     <span class="truncate max-w-[110px] group-hover:text-[#1e1b4b] transition-colors"><?php echo e($kec->nama_kecamatan); ?></span>
