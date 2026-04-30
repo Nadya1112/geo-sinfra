@@ -106,6 +106,24 @@
                                     </div>
                                 </div>
 
+                                <div class="bg-gray-50 p-6 rounded-[2rem] border border-gray-100 shadow-inner">
+                                    <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-4">Daftar Wilayah Tugas</label>
+                                    <div class="flex flex-wrap gap-3">
+                                        @forelse(auth()->user()->kecamatans as $assignedKec)
+                                        <div class="px-4 py-2 bg-white rounded-xl border border-gray-200 shadow-sm flex items-center gap-2">
+                                            <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+                                            <span class="text-[11px] font-bold text-[#1e1b4b]">{{ $assignedKec->nama_kecamatan }}</span>
+                                        </div>
+                                        @empty
+                                        <p class="text-[10px] text-gray-400 italic">Belum ada wilayah tugas yang dipilih.</p>
+                                        @endforelse
+                                    </div>
+                                    <div class="mt-4 pt-4 border-t border-gray-200/50 flex justify-between items-center">
+                                        <p class="text-[9px] text-gray-400 italic font-medium uppercase tracking-tighter">Pengelolaan wilayah dilakukan di Dashboard</p>
+                                        <a href="{{ route('surveyor.dashboard') }}" class="text-[9px] font-black text-emerald-600 uppercase hover:underline">Ke Dashboard</a>
+                                    </div>
+                                </div>
+
                                 <div class="pt-4 border-t border-gray-50">
                                     <p class="text-xs font-bold text-gray-400 mb-4 italic">Kosongkan jika tidak ingin mengubah kata sandi</p>
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
