@@ -319,6 +319,20 @@
             toggleMenu('layer-options');
         }
 
+        // Auto-close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+            const filterPanel = document.querySelector('.absolute.top-6.right-6');
+            const layerPanel = document.querySelector('.absolute.bottom-10.right-6');
+            
+            if (filterPanel && !filterPanel.contains(e.target)) {
+                document.getElementById('category-options').classList.add('hidden');
+                document.getElementById('territory-options').classList.add('hidden');
+            }
+            if (layerPanel && !layerPanel.contains(e.target)) {
+                document.getElementById('layer-options').classList.add('hidden');
+            }
+        });
+
         renderMarkers(dataPoints);
 
         function updateClock() {
