@@ -14,7 +14,7 @@ class AnalisisAi extends Model
     protected $table = 'analisis_ai';
 
     // 2. Kunci utama (Primary Key)
-    protected $primaryKey = 'id_analisis';
+    protected $primaryKey = 'id_ai';
 
     // 3. Aktifkan timestamps
     public $timestamps = true;
@@ -22,19 +22,22 @@ class AnalisisAi extends Model
     // 4. Daftar kolom yang boleh diisi
     protected $fillable = [
         'id_infrastruktur',
-        'skor_kerusakan',
+        'id_kabid',
+        'param_kondisi',
+        'param_kepadatan',
+        'skor_dt',
         'label_prioritas',
+        'rekomendasi',
+        'catatan_validasi',
         'status_validasi',
-        'catatan_kabid',
         'tgl_validasi'
     ];
 
     /**
      * 5. Casting Tipe Data
-     * Mengonversi skor menjadi float dan tanggal validasi menjadi objek Carbon
      */
     protected $casts = [
-        'skor_kerusakan' => 'float',
+        'skor_dt' => 'float',
         'tgl_validasi' => 'datetime',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',

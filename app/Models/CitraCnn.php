@@ -22,6 +22,8 @@ class CitraCnn extends Model
     // 4. Daftar kolom yang boleh diisi
     protected $fillable = [
         'id_infrastruktur',
+        'id_user',
+        'file_foto',
         'skor_cnn',
         'label_kondisi'
     ];

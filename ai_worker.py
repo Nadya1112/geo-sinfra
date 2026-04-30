@@ -43,6 +43,7 @@ def process_pending_images():
     
     for row in pending_data:
         infra_id = row['id_infrastruktur']
+        user_id = row['id_user'] # Ambil ID Surveyor
         nama_infra = row['nama_infrastruktur']
         foto = row['foto_terbaru']
         
@@ -71,15 +72,21 @@ def process_pending_images():
         skor_cnn = confidence / 100.0
         # Bersihkan data lama jika ada (untuk re-analisis saat edit)
         cursor.execute("DELETE FROM citra_cnn WHERE id_infrastruktur = %s", (infra_id,))
-        insert_cnn = "INSERT INTO citra_cnn (id_infrastruktur, skor_cnn, label_kondisi, created_at, updated_at) VALUES (%s, %s, %s, NOW(), NOW())"
-        cursor.execute(insert_cnn, (infra_id, skor_cnn, hasil_kondisi))
+        insert_cnn = """
+            INSERT INTO citra_cnn (id_infrastruktur, id_user, file_foto, skor_cnn, label_kondisi, created_at, updated_at) 
+            VALUES (%s, %s, %s, %s, %s, NOW(), NOW())
+        """
+        cursor.execute(insert_cnn, (infra_id, user_id, foto, skor_cnn, hasil_kondisi))
         
         # SIMULASI Tabel Analisis AI (Menyimpan hasil Decision Tree)
         prioritas = "Tinggi" if hasil_kondisi == 'Rusak Berat' else ("Sedang" if hasil_kondisi == 'Rusak Ringan' else "Rendah")
         # Bersihkan data lama jika ada
         cursor.execute("DELETE FROM analisis_ai WHERE id_infrastruktur = %s", (infra_id,))
-        insert_dtree = "INSERT INTO analisis_ai (id_infrastruktur, skor_kerusakan, label_prioritas, status_validasi, created_at, updated_at) VALUES (%s, %s, %s, %s, NOW(), NOW())"
-        cursor.execute(insert_dtree, (infra_id, skor_cnn, prioritas, 'Verified'))
+        insert_dtree = """
+            INSERT INTO analisis_ai (id_infrastruktur, skor_dt, label_prioritas, status_validasi, created_at, updated_at) 
+            VALUES (%s, %s, %s, 'pending', NOW(), NOW())
+        """
+        cursor.execute(insert_dtree, (infra_id, skor_cnn, prioritas))
 
         conn.commit()
 
