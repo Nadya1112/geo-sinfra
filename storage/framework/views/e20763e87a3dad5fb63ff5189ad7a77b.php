@@ -132,17 +132,23 @@
                         
                         <div id="territory-options" class="hidden mt-2 p-1 flex flex-col gap-1 max-h-48 overflow-y-auto custom-scrollbar">
                             <button onclick="handleTerritorySelect('Semua')" class="territory-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-gray-50 transition-all flex items-center justify-between group">
-                                <span>Semua Wilayah</span>
-                                <div class="w-4 h-4 rounded bg-gray-200 flex items-center justify-center">
-                                    <i class="fas fa-check text-[7px] text-white opacity-0 group-hover:opacity-100"></i>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3.5 h-3.5 rounded border border-gray-200 flex items-center justify-center group-hover:border-emerald-500 transition-colors">
+                                        <i class="fas fa-check text-[7px] text-emerald-500 opacity-0 group-hover:opacity-100"></i>
+                                    </div>
+                                    <span>Semua Wilayah</span>
                                 </div>
+                                <div class="w-3.5 h-3.5 rounded bg-gray-200 shadow-inner"></div>
                             </button>
                             <?php $__currentLoopData = $myKecamatans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kec): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <button onclick="handleTerritorySelect('<?php echo e($kec->id_kecamatan); ?>', '<?php echo e($kec->nama_kecamatan); ?>')" class="territory-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-500 hover:bg-gray-50 transition-all flex items-center justify-between group">
-                                <span class="truncate max-w-[130px] group-hover:text-[#1e1b4b] transition-colors"><?php echo e($kec->nama_kecamatan); ?></span>
-                                <div class="w-4 h-4 rounded shadow-sm border border-black/5 flex items-center justify-center transition-all" style="background-color: <?php echo e($kec->warna ?? '#cbd5e1'); ?>">
-                                    <i class="fas fa-check text-[7px] text-white opacity-0 group-hover:opacity-100"></i>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3.5 h-3.5 rounded border border-gray-200 flex items-center justify-center group-hover:border-emerald-500 transition-colors">
+                                        <i class="fas fa-check text-[7px] text-emerald-500 opacity-0 group-hover:opacity-100"></i>
+                                    </div>
+                                    <span class="truncate max-w-[110px] group-hover:text-[#1e1b4b] transition-colors"><?php echo e($kec->nama_kecamatan); ?></span>
                                 </div>
+                                <div class="w-3.5 h-3.5 rounded shadow-sm border border-black/5" style="background-color: <?php echo e($kec->warna ?? '#cbd5e1'); ?>"></div>
                             </button>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
