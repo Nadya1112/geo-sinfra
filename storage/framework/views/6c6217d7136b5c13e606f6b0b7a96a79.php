@@ -20,9 +20,9 @@
                 Monitoring Peta
             </a>
 
-            <a href="#" 
-               class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-file-circle-check group-hover:text-indigo-400"></i> 
+            <a href="<?php echo e(route('kabid.verifikasi')); ?>" 
+               class="flex items-center gap-3 px-4 py-3 <?php echo e(request()->routeIs('kabid.verifikasi') ? 'bg-indigo-600 text-white font-bold shadow-lg shadow-indigo-900/20' : 'text-gray-400 hover:text-white hover:bg-white/5'); ?> rounded-xl text-sm font-semibold transition group text-left">
+                <i class="fas fa-file-circle-check <?php echo e(request()->routeIs('kabid.verifikasi') ? '' : 'group-hover:text-indigo-400'); ?>"></i> 
                 Verifikasi Usulan
             </a>
 
