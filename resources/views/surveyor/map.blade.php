@@ -55,40 +55,42 @@
 
 
             <!-- Map Overlay UI Bottom Left -->
-            <div class="absolute bottom-10 left-6 z-10 flex items-stretch gap-4">
-                <!-- Legend -->
-                <div class="bg-white/90 backdrop-blur-xl p-5 rounded-[2.5rem] border border-white shadow-2xl min-w-[220px]">
-                    <div class="flex items-center gap-3 mb-4 border-b border-gray-50 pb-3">
-                        <div class="w-7 h-7 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-list-check text-[10px]"></i>
+            <div class="absolute bottom-10 left-6 z-10">
+                <div id="condition-card" class="bg-white/90 backdrop-blur-xl p-2 rounded-[2.5rem] border border-white shadow-2xl min-w-[200px] transition-all duration-300">
+                    <button onclick="toggleConditionMenu()" class="w-full px-6 py-4 rounded-[1.8rem] text-[10px] font-black uppercase tracking-widest bg-white text-[#1e1b4b] flex items-center justify-between shadow-sm hover:bg-gray-50 transition-all group border border-gray-100">
+                        <div class="flex items-center gap-3">
+                            <div class="w-6 h-6 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-list-check text-[10px]"></i>
+                            </div>
+                            <span id="current-cond-label">Kondisi Objek</span>
                         </div>
-                        <h4 class="text-[9px] font-black text-[#1e1b4b] uppercase tracking-widest">Kondisi Objek</h4>
-                    </div>
-                    <div class="flex flex-col gap-3">
-                        <button onclick="filterByCondition('Baik')" class="flex items-center justify-between group">
+                        <i id="cond-chevron" class="fas fa-chevron-up text-[8px] transition-transform duration-300"></i>
+                    </button>
+                    
+                    <div id="condition-options" class="hidden mt-2 p-2 flex flex-col gap-1">
+                        <button onclick="handleConditionSelect('Baik')" class="w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-500 hover:bg-emerald-50 hover:text-emerald-700 transition-all flex items-center justify-between group">
                             <div class="flex items-center gap-3">
-                                <div class="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                                <span class="text-[10px] font-bold text-gray-500 group-hover:text-[#1e1b4b] transition-colors">Baik / Normal</span>
+                                <div class="w-2 h-2 bg-emerald-500 rounded-full shadow-lg shadow-emerald-500/20"></div>
+                                <span>Baik</span>
                             </div>
-                            <i class="fas fa-chevron-right text-[7px] text-gray-300 group-hover:translate-x-1 transition-all"></i>
+                            <span class="text-[9px] font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-100">{{ $dataMap->where('kondisi', 'Baik')->count() }}</span>
                         </button>
-                        <button onclick="filterByCondition('Rusak Ringan')" class="flex items-center justify-between group">
+                        <button onclick="handleConditionSelect('Rusak Ringan')" class="w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-500 hover:bg-amber-50 hover:text-amber-700 transition-all flex items-center justify-between group">
                             <div class="flex items-center gap-3">
-                                <div class="w-2 h-2 bg-amber-500 rounded-full"></div>
-                                <span class="text-[10px] font-bold text-gray-500 group-hover:text-[#1e1b4b] transition-colors">Rusak Ringan</span>
+                                <div class="w-2 h-2 bg-amber-500 rounded-full shadow-lg shadow-amber-500/20"></div>
+                                <span>Rusak Ringan</span>
                             </div>
-                            <i class="fas fa-chevron-right text-[7px] text-gray-300 group-hover:translate-x-1 transition-all"></i>
+                            <span class="text-[9px] font-black text-amber-600 bg-amber-50 px-2 py-0.5 rounded-lg border border-amber-100">{{ $dataMap->where('kondisi', 'Rusak Ringan')->count() }}</span>
                         </button>
-                        <button onclick="filterByCondition('Rusak Berat')" class="flex items-center justify-between group">
+                        <button onclick="handleConditionSelect('Rusak Berat')" class="w-full px-5 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest text-gray-500 hover:bg-red-50 hover:text-red-700 transition-all flex items-center justify-between group">
                             <div class="flex items-center gap-3">
-                                <div class="w-2 h-2 bg-red-500 rounded-full"></div>
-                                <span class="text-[10px] font-bold text-gray-500 group-hover:text-[#1e1b4b] transition-colors">Rusak Berat</span>
+                                <div class="w-2 h-2 bg-red-500 rounded-full shadow-lg shadow-red-500/20"></div>
+                                <span>Rusak Berat</span>
                             </div>
-                            <i class="fas fa-chevron-right text-[7px] text-gray-300 group-hover:translate-x-1 transition-all"></i>
+                            <span class="text-[9px] font-black text-red-600 bg-red-50 px-2 py-0.5 rounded-lg border border-red-100">{{ $dataMap->where('kondisi', 'Rusak Berat')->count() }}</span>
                         </button>
                     </div>
                 </div>
-
             </div>
 
             <!-- Floating Type Filters Right -->
@@ -231,34 +233,27 @@
         }
 
         function handleCategorySelect(type) {
-            // Update Label
             document.getElementById('current-cat-label').textContent = type === 'Semua' ? 'Semua Kategori' : type;
-            
-            // Close Menu
             toggleCategoryMenu();
-
-            // Filter logic
             if (type === 'Semua') {
                 renderMarkers(dataPoints);
             } else {
                 const filtered = dataPoints.filter(p => p.jenis_infrastruktur === type);
                 renderMarkers(filtered);
             }
-
-            // Update UI Active State
-            document.querySelectorAll('.cat-opt-btn').forEach(btn => {
-                if (btn.innerText.includes(type)) {
-                    btn.classList.add('bg-emerald-50', 'text-emerald-700');
-                    btn.classList.remove('text-gray-400');
-                } else {
-                    btn.classList.remove('bg-emerald-50', 'text-emerald-700');
-                    btn.classList.add('text-gray-400');
-                }
-            });
         }
 
-        function filterByCondition(condition) {
-            const filtered = dataPoints.filter(p => p.kondisi === condition);
+        function toggleConditionMenu() {
+            const menu = document.getElementById('condition-options');
+            const chevron = document.getElementById('cond-chevron');
+            menu.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
+
+        function handleConditionSelect(cond) {
+            document.getElementById('current-cond-label').textContent = cond;
+            toggleConditionMenu();
+            const filtered = dataPoints.filter(p => p.kondisi === cond);
             renderMarkers(filtered);
         }
 
