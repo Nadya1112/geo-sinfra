@@ -111,6 +111,8 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['role:kabid'])->prefix('kabid')->group(function () {
         Route::get('/dashboard', [App\Http\Controllers\Kabid\KabidController::class, 'index'])->name('kabid.dashboard');
         Route::get('/monitoring', [App\Http\Controllers\Kabid\KabidController::class, 'monitoring'])->name('kabid.monitoring');
+        Route::get('/verifikasi', [App\Http\Controllers\Kabid\KabidController::class, 'verifikasi'])->name('kabid.verifikasi');
+        Route::post('/verifikasi/{id}', [App\Http\Controllers\Kabid\KabidController::class, 'prosesVerifikasi'])->name('kabid.verifikasi.proses');
         Route::get('/profile', [App\Http\Controllers\Kabid\KabidController::class, 'profile'])->name('kabid.profile');
         Route::post('/profile', [App\Http\Controllers\Kabid\KabidController::class, 'updateProfile'])->name('kabid.profile.update');
     });

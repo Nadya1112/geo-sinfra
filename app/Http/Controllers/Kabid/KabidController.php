@@ -38,6 +38,32 @@ class KabidController extends Controller
         return view('kabid.monitoring', compact('infrastruktur', 'kecamatan'));
     }
 
+    public function verifikasi()
+    {
+        $usulan = Infrastruktur::with(['kelurahan', 'user', 'analisis', 'cnn'])
+            ->where('status_verifikasi', 'Pending')
+            ->orderBy('created_at', 'desc')
+            ->get();
+            
+        return view('kabid.verifikasi', compact('usulan'));
+    }
+
+    public function prosesVerifikasi(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:Verified,Rejected',
+            'catatan' => 'nullable|string|max:500'
+        ]);
+
+        $infra = Infrastruktur::findOrFail($id);
+        $infra->status_verifikasi = $request->status;
+        // Jika ada kolom catatan verifikasi di database bisa ditambahkan di sini
+        $infra->save();
+
+        $message = $request->status == 'Verified' ? 'Usulan berhasil diverifikasi!' : 'Usulan telah ditolak.';
+        return redirect()->back()->with('success', $message);
+    }
+
     public function profile()
     {
         $user = auth()->user();

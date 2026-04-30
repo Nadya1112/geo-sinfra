@@ -106,7 +106,7 @@
                     </div>
                 </a>
 
-                <a href="#" class="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group relative overflow-hidden">
+                <a href="{{ route('kabid.verifikasi') }}" class="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group relative overflow-hidden">
                     <div class="absolute -right-6 -top-6 w-24 h-24 bg-emerald-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
                     <div class="relative z-10 flex flex-col h-full justify-between gap-6">
                         <div class="w-14 h-14 bg-emerald-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-emerald-200">
@@ -153,7 +153,7 @@
                         <h4 class="font-black text-xl text-[#1e1b4b]">Laporan Terbaru</h4>
                         <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">Update masuk dari surveyor</p>
                     </div>
-                    <a href="#" class="text-[10px] font-black text-indigo-600 uppercase tracking-widest hover:bg-indigo-50 px-4 py-2 rounded-xl transition-all">Semua Laporan <i class="fas fa-arrow-right ml-2"></i></a>
+                    <a href="{{ route('kabid.verifikasi') }}" class="text-[10px] font-black text-indigo-600 uppercase tracking-widest hover:bg-indigo-50 px-4 py-2 rounded-xl transition-all">Semua Laporan <i class="fas fa-arrow-right ml-2"></i></a>
                 </div>
                 
                 <div class="overflow-x-auto">
