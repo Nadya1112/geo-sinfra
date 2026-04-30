@@ -67,44 +67,46 @@
                 </div>
             </div>
 
-            <!-- Map Overlay UI Left -->
-            <div class="absolute top-6 left-6 z-10 space-y-4 max-w-xs">
-                <div class="bg-white/90 backdrop-blur-xl p-6 rounded-[2.5rem] border border-white shadow-2xl">
-                    <div class="flex items-center gap-3 mb-5 border-b border-gray-50 pb-4">
-                        <div class="w-8 h-8 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center">
-                            <i class="fas fa-list-check text-xs"></i>
+            <!-- Map Overlay UI Bottom Left -->
+            <div class="absolute bottom-10 left-6 z-10 flex items-stretch gap-4">
+                <!-- Legend -->
+                <div class="bg-white/90 backdrop-blur-xl p-5 rounded-[2.5rem] border border-white shadow-2xl min-w-[220px]">
+                    <div class="flex items-center gap-3 mb-4 border-b border-gray-50 pb-3">
+                        <div class="w-7 h-7 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-list-check text-[10px]"></i>
                         </div>
-                        <h4 class="text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest">Kondisi</h4>
+                        <h4 class="text-[9px] font-black text-[#1e1b4b] uppercase tracking-widest">Kondisi Objek</h4>
                     </div>
-                    <div class="space-y-4">
-                        <button onclick="filterByCondition('Baik')" class="w-full flex items-center justify-between group">
+                    <div class="flex flex-col gap-3">
+                        <button onclick="filterByCondition('Baik')" class="flex items-center justify-between group">
                             <div class="flex items-center gap-3">
-                                <div class="w-2.5 h-2.5 bg-emerald-500 rounded-full"></div>
-                                <span class="text-[11px] font-bold text-gray-500 group-hover:text-[#1e1b4b] transition-colors">Baik / Normal</span>
+                                <div class="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                                <span class="text-[10px] font-bold text-gray-500 group-hover:text-[#1e1b4b] transition-colors">Baik / Normal</span>
                             </div>
-                            <i class="fas fa-chevron-right text-[8px] text-gray-300 group-hover:translate-x-1 transition-all"></i>
+                            <i class="fas fa-chevron-right text-[7px] text-gray-300 group-hover:translate-x-1 transition-all"></i>
                         </button>
-                        <button onclick="filterByCondition('Rusak Ringan')" class="w-full flex items-center justify-between group">
+                        <button onclick="filterByCondition('Rusak Ringan')" class="flex items-center justify-between group">
                             <div class="flex items-center gap-3">
-                                <div class="w-2.5 h-2.5 bg-amber-500 rounded-full"></div>
-                                <span class="text-[11px] font-bold text-gray-500 group-hover:text-[#1e1b4b] transition-colors">Rusak Ringan</span>
+                                <div class="w-2 h-2 bg-amber-500 rounded-full"></div>
+                                <span class="text-[10px] font-bold text-gray-500 group-hover:text-[#1e1b4b] transition-colors">Rusak Ringan</span>
                             </div>
-                            <i class="fas fa-chevron-right text-[8px] text-gray-300 group-hover:translate-x-1 transition-all"></i>
+                            <i class="fas fa-chevron-right text-[7px] text-gray-300 group-hover:translate-x-1 transition-all"></i>
                         </button>
-                        <button onclick="filterByCondition('Rusak Berat')" class="w-full flex items-center justify-between group">
+                        <button onclick="filterByCondition('Rusak Berat')" class="flex items-center justify-between group">
                             <div class="flex items-center gap-3">
-                                <div class="w-2.5 h-2.5 bg-red-500 rounded-full"></div>
-                                <span class="text-[11px] font-bold text-gray-500 group-hover:text-[#1e1b4b] transition-colors">Rusak Berat</span>
+                                <div class="w-2 h-2 bg-red-500 rounded-full"></div>
+                                <span class="text-[10px] font-bold text-gray-500 group-hover:text-[#1e1b4b] transition-colors">Rusak Berat</span>
                             </div>
-                            <i class="fas fa-chevron-right text-[8px] text-gray-300 group-hover:translate-x-1 transition-all"></i>
+                            <i class="fas fa-chevron-right text-[7px] text-gray-300 group-hover:translate-x-1 transition-all"></i>
                         </button>
                     </div>
                 </div>
 
-                <div class="bg-[#1e1b4b]/95 backdrop-blur-xl p-6 rounded-[2.5rem] border border-white/10 shadow-2xl text-white overflow-hidden relative group">
-                    <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-blue-500/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-700"></div>
-                    <p class="text-[9px] font-black text-blue-300 uppercase tracking-widest mb-1 relative z-10">Total Terdata</p>
-                    <h5 class="text-2xl font-black relative z-10"><span id="total-points"><?php echo e($dataMap->count()); ?></span> <span class="text-[10px] font-medium text-blue-300">Titik</span></h5>
+                <!-- Total Stats -->
+                <div class="bg-[#1e1b4b]/95 backdrop-blur-xl p-5 rounded-[2.5rem] border border-white/10 shadow-2xl text-white overflow-hidden relative group flex flex-col justify-center min-w-[140px]">
+                    <div class="absolute -right-4 -bottom-4 w-16 h-16 bg-blue-500/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-700"></div>
+                    <p class="text-[8px] font-black text-blue-300 uppercase tracking-widest mb-1 relative z-10">Total Terdata</p>
+                    <h5 class="text-xl font-black relative z-10"><span id="total-points"><?php echo e($dataMap->count()); ?></span> <span class="text-[9px] font-medium text-blue-300">Titik</span></h5>
                 </div>
             </div>
 

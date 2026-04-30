@@ -52,20 +52,7 @@
         <div class="flex-1 relative">
             <div id="main-map" class="absolute inset-0 z-0"></div>
             
-            <!-- Floating Header/Search -->
-            <div class="absolute top-6 left-1/2 -translate-x-1/2 z-10 w-full max-w-lg px-4">
-                <div class="bg-white/90 backdrop-blur-xl p-2 rounded-3xl border border-white shadow-2xl flex items-center gap-2">
-                    <div class="flex-1 flex items-center gap-3 px-4">
-                        <i class="fas fa-search text-gray-400 text-sm"></i>
-                        <input type="text" id="map-search" placeholder="Cari nama infrastruktur..." 
-                            class="w-full bg-transparent border-none outline-none text-sm font-bold text-[#1e1b4b] placeholder-gray-400 py-2">
-                    </div>
-                    <div class="h-8 w-[1px] bg-gray-100"></div>
-                    <button onclick="resetView()" class="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-emerald-600 transition-all">
-                        <i class="fas fa-location-crosshairs"></i>
-                    </button>
-                </div>
-            </div>
+
 
             <!-- Map Overlay UI Bottom Left -->
             <div class="absolute bottom-10 left-6 z-10 flex items-stretch gap-4">
@@ -230,20 +217,6 @@
             document.getElementById('total-points').textContent = points.length;
 
             if (points.length > 0) {
-                const group = new L.featureGroup(activeMarkers);
-                map.fitBounds(group.getBounds().pad(0.2));
-            }
-        }
-
-        // Search Functionality
-        document.getElementById('map-search').addEventListener('input', function(e) {
-            const val = e.target.value.toLowerCase();
-            const filtered = dataPoints.filter(p => p.nama_infrastruktur.toLowerCase().includes(val));
-            renderMarkers(filtered);
-        });
-
-        function resetView() {
-            if (activeMarkers.length > 0) {
                 const group = new L.featureGroup(activeMarkers);
                 map.fitBounds(group.getBounds().pad(0.2));
             }
