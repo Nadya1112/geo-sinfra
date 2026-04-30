@@ -118,11 +118,19 @@
                             <i class="fas fa-chevron-down text-[7px]"></i>
                         </button>
                         <div id="territory-options" class="hidden mt-2 p-1 flex flex-col gap-1 max-h-48 overflow-y-auto custom-scrollbar">
+                            <button onclick="toggleKecamatan('Semua')" class="kec-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="Semua">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-indigo-400 transition-colors">
+                                        <i class="fas fa-check text-[7px] text-indigo-400 check-icon" style="opacity:1"></i>
+                                    </div>
+                                    <span class="group-hover:text-white transition-colors">Semua Wilayah</span>
+                                </div>
+                            </button>
                             @foreach($kecamatan as $kec)
                             <button onclick="toggleKecamatan('{{ $kec->id_kecamatan }}')" class="kec-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="{{ $kec->id_kecamatan }}">
                                 <div class="flex items-center gap-3">
                                     <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-indigo-400 transition-colors">
-                                        <i class="fas fa-check text-[7px] text-indigo-400 check-icon" style="opacity:0"></i>
+                                        <i class="fas fa-check text-[7px] text-indigo-400 check-icon" style="opacity:1"></i>
                                     </div>
                                     <span class="truncate max-w-[100px] group-hover:text-white transition-colors">{{ $kec->nama_kecamatan }}</span>
                                 </div>
@@ -254,13 +262,15 @@
             });
         }
 
-        // Multi-select filter state (empty = show nothing)
+        // Kategori: empty by default (user must select)
+        // Wilayah: ALL selected by default (like Surveyor)
         let activeTypes = [];
-        let activeKecs = [];
+        let activeKecs = kecamatans.map(k => k.id_kecamatan.toString());
+        const totalKec = kecamatans.length;
 
         function applyFilters() {
-            // If nothing selected in either filter, show nothing
-            if (activeTypes.length === 0 || activeKecs.length === 0) {
+            // If no category selected, show nothing
+            if (activeTypes.length === 0) {
                 renderMarkers([]);
                 return;
             }
@@ -277,14 +287,12 @@
             } else {
                 activeTypes.push(type);
             }
-            // Update UI
             document.querySelectorAll('.type-btn').forEach(btn => {
                 const isActive = activeTypes.includes(btn.getAttribute('data-type'));
                 const icon = btn.querySelector('.check-icon');
                 if (icon) icon.style.opacity = isActive ? '1' : '0';
                 btn.classList.toggle('text-white', isActive);
             });
-            // Update label
             const label = activeTypes.length === 0 ? 'Kategori Objek' :
                           activeTypes.length === 3 ? 'Semua Kategori' :
                           activeTypes.join(', ');
@@ -293,29 +301,36 @@
         }
 
         function toggleKecamatan(kecId) {
-            kecId = kecId.toString();
-            if (activeKecs.includes(kecId)) {
-                activeKecs = activeKecs.filter(k => k !== kecId);
+            if (kecId === 'Semua') {
+                // Toggle all
+                if (activeKecs.length === totalKec) {
+                    activeKecs = [];
+                } else {
+                    activeKecs = kecamatans.map(k => k.id_kecamatan.toString());
+                }
             } else {
-                activeKecs.push(kecId);
+                kecId = kecId.toString();
+                if (activeKecs.includes(kecId)) {
+                    activeKecs = activeKecs.filter(k => k !== kecId);
+                } else {
+                    activeKecs.push(kecId);
+                    if (geoLayers[kecId]) map.fitBounds(geoLayers[kecId].getBounds(), { padding: [50, 50] });
+                }
             }
-            // Update UI
+            // Update all checkboxes
+            const allChecked = activeKecs.length === totalKec;
             document.querySelectorAll('.kec-btn').forEach(btn => {
-                const isActive = activeKecs.includes(btn.getAttribute('data-id'));
+                const id = btn.getAttribute('data-id');
+                const isActive = id === 'Semua' ? allChecked : activeKecs.includes(id);
                 const icon = btn.querySelector('.check-icon');
                 if (icon) icon.style.opacity = isActive ? '1' : '0';
                 btn.classList.toggle('text-white', isActive);
             });
             // Update label
-            const total = {{ $kecamatan->count() }};
             const label = activeKecs.length === 0 ? 'Filter Kecamatan' :
-                          activeKecs.length === total ? 'Semua Wilayah' :
+                          activeKecs.length === totalKec ? 'Semua Wilayah' :
                           activeKecs.length + ' Wilayah Dipilih';
             document.getElementById('current-kec-label').textContent = label;
-            // Zoom to last selected
-            if (activeKecs.length > 0 && geoLayers[kecId]) {
-                map.fitBounds(geoLayers[kecId].getBounds(), { padding: [50, 50] });
-            }
             applyFilters();
         }
 

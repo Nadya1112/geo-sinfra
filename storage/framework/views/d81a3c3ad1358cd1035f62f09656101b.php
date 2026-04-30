@@ -71,41 +71,32 @@
                         <button onclick="toggleMenu('category-options')" class="w-full px-5 py-3.5 rounded-[2rem] text-[9px] font-black uppercase tracking-widest bg-indigo-600/90 text-white flex items-center justify-between shadow-lg hover:bg-indigo-600 transition-all group">
                             <div class="flex items-center gap-3">
                                 <i class="fas fa-layer-group text-[10px] opacity-70"></i>
-                                <span id="current-cat-label">Semua Kategori</span>
+                                <span id="current-cat-label">Kategori Objek</span>
                             </div>
                             <i class="fas fa-chevron-down text-[7px]"></i>
                         </button>
                         <div id="category-options" class="hidden mt-2 p-1 flex flex-col gap-1">
-                            <button onclick="handleTypeFilter('Semua', 'Semua Kategori')" class="filter-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group active-filter" data-type="Semua">
+                            <button onclick="toggleType('Jalan')" class="type-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Jalan">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-indigo-400 transition-colors check-box">
-                                        <i class="fas fa-check text-[7px] text-indigo-400 check-icon" style="opacity:1"></i>
-                                    </div>
-                                    <span class="group-hover:text-white transition-colors">Semua Kategori</span>
-                                </div>
-                                <div class="w-2.5 h-2.5 rounded-full bg-indigo-400/50"></div>
-                            </button>
-                            <button onclick="handleTypeFilter('Jalan', 'Jalan')" class="filter-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Jalan">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors check-box">
+                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors">
                                         <i class="fas fa-check text-[7px] text-blue-400 check-icon" style="opacity:0"></i>
                                     </div>
                                     <span class="group-hover:text-white transition-colors">Infrastruktur Jalan</span>
                                 </div>
                                 <div class="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-lg shadow-blue-500/40"></div>
                             </button>
-                            <button onclick="handleTypeFilter('Jembatan', 'Jembatan')" class="filter-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Jembatan">
+                            <button onclick="toggleType('Jembatan')" class="type-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Jembatan">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors check-box">
+                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
                                         <i class="fas fa-check text-[7px] text-emerald-400 check-icon" style="opacity:0"></i>
                                     </div>
                                     <span class="group-hover:text-white transition-colors">Jembatan</span>
                                 </div>
                                 <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/40"></div>
                             </button>
-                            <button onclick="handleTypeFilter('Drainase', 'Drainase')" class="filter-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Drainase">
+                            <button onclick="toggleType('Drainase')" class="type-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Drainase">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-amber-400 transition-colors check-box">
+                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-amber-400 transition-colors">
                                         <i class="fas fa-check text-[7px] text-amber-400 check-icon" style="opacity:0"></i>
                                     </div>
                                     <span class="group-hover:text-white transition-colors">Drainase</span>
@@ -122,23 +113,15 @@
                         <button onclick="toggleMenu('territory-options')" class="w-full px-5 py-3.5 rounded-[2rem] text-[9px] font-black uppercase tracking-widest bg-white/10 text-white flex items-center justify-between shadow-lg hover:bg-white/20 transition-all group border border-white/5">
                             <div class="flex items-center gap-3">
                                 <i class="fas fa-map-location-dot text-[10px] opacity-70 text-indigo-400"></i>
-                                <span id="current-kec-label">Semua Wilayah</span>
+                                <span id="current-kec-label">Filter Kecamatan</span>
                             </div>
                             <i class="fas fa-chevron-down text-[7px]"></i>
                         </button>
                         <div id="territory-options" class="hidden mt-2 p-1 flex flex-col gap-1 max-h-48 overflow-y-auto custom-scrollbar">
-                            <button onclick="handleKecamatanFilter('Semua', 'Semua Wilayah')" class="kec-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group active-kec" data-id="Semua">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-indigo-400 transition-colors check-box">
-                                        <i class="fas fa-check text-[7px] text-indigo-400 check-icon" style="opacity:1"></i>
-                                    </div>
-                                    <span class="group-hover:text-white transition-colors">Semua Wilayah</span>
-                                </div>
-                            </button>
                             <?php $__currentLoopData = $kecamatan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kec): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <button onclick="handleKecamatanFilter('<?php echo e($kec->id_kecamatan); ?>', '<?php echo e($kec->nama_kecamatan); ?>')" class="kec-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="<?php echo e($kec->id_kecamatan); ?>">
+                            <button onclick="toggleKecamatan('<?php echo e($kec->id_kecamatan); ?>')" class="kec-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="<?php echo e($kec->id_kecamatan); ?>">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-indigo-400 transition-colors check-box">
+                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-indigo-400 transition-colors">
                                         <i class="fas fa-check text-[7px] text-indigo-400 check-icon" style="opacity:0"></i>
                                     </div>
                                     <span class="truncate max-w-[100px] group-hover:text-white transition-colors"><?php echo e($kec->nama_kecamatan); ?></span>
@@ -150,7 +133,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- Layer Switcher -->
             <div class="absolute bottom-10 right-6 z-10">
                 <div class="bg-[#1e1b4b]/80 backdrop-blur-xl p-2 rounded-[2.5rem] border border-white/10 shadow-2xl">
@@ -272,44 +254,69 @@
             });
         }
 
-        let filterType = 'Semua';
-        let filterKec = 'Semua';
+        // Multi-select filter state (empty = show nothing)
+        let activeTypes = [];
+        let activeKecs = [];
 
         function applyFilters() {
-            let filtered = dataPoints;
-            if (filterType !== 'Semua') filtered = filtered.filter(p => p.jenis_infrastruktur === filterType);
-            if (filterKec !== 'Semua') filtered = filtered.filter(p => p.id_kecamatan.toString() === filterKec.toString());
-            
+            // If nothing selected in either filter, show nothing
+            if (activeTypes.length === 0 || activeKecs.length === 0) {
+                renderMarkers([]);
+                return;
+            }
+            let filtered = dataPoints.filter(p =>
+                activeTypes.includes(p.jenis_infrastruktur) &&
+                activeKecs.includes(p.id_kecamatan ? p.id_kecamatan.toString() : '')
+            );
             renderMarkers(filtered);
         }
 
-        function handleTypeFilter(type, label) {
-            filterType = type;
-            document.getElementById('current-cat-label').textContent = label;
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                const isActive = btn.getAttribute('data-type') === type;
-                btn.classList.toggle('active-filter', isActive);
+        function toggleType(type) {
+            if (activeTypes.includes(type)) {
+                activeTypes = activeTypes.filter(t => t !== type);
+            } else {
+                activeTypes.push(type);
+            }
+            // Update UI
+            document.querySelectorAll('.type-btn').forEach(btn => {
+                const isActive = activeTypes.includes(btn.getAttribute('data-type'));
                 const icon = btn.querySelector('.check-icon');
                 if (icon) icon.style.opacity = isActive ? '1' : '0';
+                btn.classList.toggle('text-white', isActive);
             });
+            // Update label
+            const label = activeTypes.length === 0 ? 'Kategori Objek' :
+                          activeTypes.length === 3 ? 'Semua Kategori' :
+                          activeTypes.join(', ');
+            document.getElementById('current-cat-label').textContent = label;
             applyFilters();
-            toggleMenu('category-options');
         }
 
-        function handleKecamatanFilter(kecId, label) {
-            filterKec = kecId;
-            document.getElementById('current-kec-label').textContent = label;
+        function toggleKecamatan(kecId) {
+            kecId = kecId.toString();
+            if (activeKecs.includes(kecId)) {
+                activeKecs = activeKecs.filter(k => k !== kecId);
+            } else {
+                activeKecs.push(kecId);
+            }
+            // Update UI
             document.querySelectorAll('.kec-btn').forEach(btn => {
-                const isActive = btn.getAttribute('data-id') === kecId.toString();
-                btn.classList.toggle('active-kec', isActive);
+                const isActive = activeKecs.includes(btn.getAttribute('data-id'));
                 const icon = btn.querySelector('.check-icon');
                 if (icon) icon.style.opacity = isActive ? '1' : '0';
+                btn.classList.toggle('text-white', isActive);
             });
-            applyFilters();
-            if (kecId !== 'Semua' && geoLayers[kecId]) {
+            // Update label
+            const total = <?php echo e($kecamatan->count()); ?>;
+            const label = activeKecs.length === 0 ? 'Filter Kecamatan' :
+                          activeKecs.length === total ? 'Semua Wilayah' :
+                          activeKecs.length + ' Wilayah Dipilih';
+            document.getElementById('current-kec-label').textContent = label;
+            // Zoom to last selected
+            if (activeKecs.length > 0 && geoLayers[kecId]) {
                 map.fitBounds(geoLayers[kecId].getBounds(), { padding: [50, 50] });
             }
-            toggleMenu('territory-options');
+            applyFilters();
         }
 
         function toggleMenu(id) { document.getElementById(id).classList.toggle('hidden'); }
