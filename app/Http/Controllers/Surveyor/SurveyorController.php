@@ -90,7 +90,10 @@ class SurveyorController extends Controller
 
     public function edit($id)
     {
-        $infrastruktur = Infrastruktur::where('id_infrastruktur', $id)->where('id_user', auth()->id())->firstOrFail();
+        $infrastruktur = Infrastruktur::with(['cnn', 'analisis'])
+            ->where('id_infrastruktur', $id)
+            ->where('id_user', auth()->id())
+            ->firstOrFail();
         $semuaKecamatan = DB::table('kecamatan')->get();
         $semuaKelurahan = DB::table('kelurahan')->get();
         return view('surveyor.edit', compact('infrastruktur', 'semuaKecamatan', 'semuaKelurahan'));

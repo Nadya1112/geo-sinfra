@@ -67,9 +67,21 @@
                         <div class="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm">
                             <div class="flex items-center justify-between mb-6 border-b border-gray-50 pb-4">
                                 <h4 class="font-black text-[#1e1b4b] italic">Status Terkini</h4>
-                                <span class="px-4 py-1.5 rounded-xl text-[10px] font-black tracking-widest border {{ $infrastruktur->kondisi == 'Baik' ? 'bg-emerald-50 text-emerald-600 border-emerald-200' : ($infrastruktur->kondisi == 'Rusak Ringan' ? 'bg-yellow-50 text-yellow-600 border-yellow-200' : ($infrastruktur->kondisi == 'Rusak Berat' ? 'bg-red-50 text-red-600 border-red-200' : 'bg-gray-50 text-gray-500 border-gray-200')) }}">
-                                    {{ strtoupper($infrastruktur->kondisi) }}
-                                </span>
+                                <div class="flex flex-col items-end gap-2">
+                                    <span class="px-4 py-1.5 rounded-xl text-[10px] font-black tracking-widest border {{ $infrastruktur->kondisi == 'Baik' ? 'bg-emerald-50 text-emerald-600 border-emerald-200' : ($infrastruktur->kondisi == 'Rusak Ringan' ? 'bg-yellow-50 text-yellow-600 border-yellow-200' : ($infrastruktur->kondisi == 'Rusak Berat' ? 'bg-red-50 text-red-600 border-red-200' : 'bg-gray-50 text-gray-500 border-gray-200')) }}">
+                                        {{ strtoupper($infrastruktur->kondisi) }}
+                                    </span>
+                                    @if($infrastruktur->cnn || $infrastruktur->analisis)
+                                    <div class="flex gap-3">
+                                        @if($infrastruktur->cnn)
+                                            <p class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter">CNN: <span class="text-emerald-500">{{ number_format($infrastruktur->cnn->skor_cnn * 100, 1) }}%</span></p>
+                                        @endif
+                                        @if($infrastruktur->analisis)
+                                            <p class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter">D-Tree: <span class="text-blue-500">{{ $infrastruktur->analisis->label_prioritas }}</span></p>
+                                        @endif
+                                    </div>
+                                    @endif
+                                </div>
                             </div>
                             
                             <h4 class="font-black text-[#1e1b4b] mb-6 border-b border-gray-50 pb-4 italic">Detail Infrastruktur</h4>
