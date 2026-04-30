@@ -91,11 +91,9 @@
                                         </label>
                                         <div class="relative">
                                             <select name="id_kecamatan" id="id_kecamatan" class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500 outline-none appearance-none cursor-pointer transition-all" required onchange="filterKelurahan()">
-                                                @if($semuaKecamatan->count() > 1 || !auth()->user()->id_kecamatan)
-                                                    <option value="">Pilih Kecamatan...</option>
-                                                @endif
+                                                <option value="">Pilih Kecamatan...</option>
                                                 @foreach($semuaKecamatan as $kec)
-                                                    <option value="{{ $kec->id_kecamatan }}" {{ (auth()->user()->id_kecamatan == $kec->id_kecamatan || $semuaKecamatan->count() == 1) ? 'selected' : '' }}>{{ $kec->nama_kecamatan }}</option>
+                                                    <option value="{{ $kec->id_kecamatan }}">{{ $kec->nama_kecamatan }}</option>
                                                 @endforeach
                                             </select>
                                             <i class="fas fa-chevron-down absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-xs"></i>

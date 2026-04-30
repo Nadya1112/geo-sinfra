@@ -90,14 +90,12 @@
                                             <?php endif; ?>
                                         </label>
                                         <div class="relative">
-                                            <select name="id_kecamatan" id="id_kecamatan" class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold focus:border-emerald-500 outline-none appearance-none <?php echo e(auth()->user()->id_kecamatan ? 'bg-gray-100 cursor-not-allowed pointer-events-none' : 'cursor-pointer'); ?>" required onchange="filterKelurahan()">
-                                                <?php if(!auth()->user()->id_kecamatan): ?>
+                                            <select name="id_kecamatan" id="id_kecamatan" class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500 outline-none appearance-none cursor-pointer transition-all" required onchange="filterKelurahan()">
+                                                <?php if($semuaKecamatan->count() > 1 || !auth()->user()->id_kecamatan): ?>
                                                     <option value="">Pilih Kecamatan...</option>
                                                 <?php endif; ?>
                                                 <?php $__currentLoopData = $semuaKecamatan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kec): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    <?php if(!auth()->user()->id_kecamatan || auth()->user()->id_kecamatan == $kec->id_kecamatan): ?>
-                                                        <option value="<?php echo e($kec->id_kecamatan); ?>" <?php echo e(auth()->user()->id_kecamatan == $kec->id_kecamatan ? 'selected' : ''); ?>><?php echo e($kec->nama_kecamatan); ?></option>
-                                                    <?php endif; ?>
+                                                    <option value="<?php echo e($kec->id_kecamatan); ?>" <?php echo e((auth()->user()->id_kecamatan == $kec->id_kecamatan || $semuaKecamatan->count() == 1) ? 'selected' : ''); ?>><?php echo e($kec->nama_kecamatan); ?></option>
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </select>
                                             <i class="fas fa-chevron-down absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-xs"></i>
