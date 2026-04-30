@@ -32,7 +32,7 @@ class KabidController extends Controller
     }
     public function monitoring()
     {
-        $infrastruktur = Infrastruktur::with(['kecamatan', 'user'])->get();
+        $infrastruktur = Infrastruktur::with(['kelurahan', 'user'])->get();
         $kecamatan = \App\Models\Kecamatan::all();
         
         return view('kabid.monitoring', compact('infrastruktur', 'kecamatan'));

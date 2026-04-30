@@ -213,7 +213,7 @@
                         </div>
                         <div class="px-1">
                             <h4 class="text-xs font-black text-[#1e1b4b] mb-1">${point.nama_infrastruktur}</h4>
-                            <p class="text-[8px] text-gray-400 font-bold uppercase mb-3">Wilayah: ${point.kecamatan?.nama_kecamatan ?? '-'}</p>
+                            <p class="text-[8px] text-gray-400 font-bold uppercase mb-3">Wilayah: ${point.kelurahan?.nama_kelurahan ?? '-'}</p>
                             
                             <div class="flex items-center gap-2 mb-3">
                                 <span class="px-2 py-1 rounded-full text-[7px] font-black uppercase tracking-widest" style="background-color: ${color}15; color: ${color}; border: 1px solid ${color}30;">
