@@ -66,13 +66,15 @@
             <div id="v2-welcome-card" style="border: 5px solid red !important;" class="relative bg-gradient-to-br from-emerald-700 to-teal-900 rounded-[2.5rem] p-10 mb-8 overflow-hidden shadow-lg shadow-emerald-900/10">
                 <div class="absolute -right-10 -top-10 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl"></div>
                 <div class="relative z-10">
-                    <h3 class="text-3xl font-black text-white mb-4 leading-tight">Selamat Datang, {{ auth()->user()->name }}!</h3>
-                    <div style="color: white !important; font-size: 14px !important; font-weight: 600 !important; display: block !important; margin-bottom: 24px !important; line-height: 1.6 !important; max-width: 600px !important; opacity: 1 !important; visibility: visible !important;">
-                        Mari mulai mendata infrastruktur hari ini untuk membantu pemetaan aset daerah yang lebih akurat. Pastikan GPS aktif dan foto yang diambil jelas untuk hasil analisis AI yang maksimal.
-                    </div>
-                    <div style="display: flex !important; gap: 16px !important; visibility: visible !important;">
-                        <a href="{{ route('surveyor.input') }}" style="background: white !important; color: #064e3b !important; padding: 16px 32px !important; border-radius: 16px !important; font-weight: 900 !important; text-transform: uppercase !important; font-size: 11px !important; letter-spacing: 0.1em !important; text-decoration: none !important; display: inline-block !important; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;">
-                             Mulai Survey Sekarang
+                    <h3 class="text-3xl font-black text-white mb-4 leading-tight">
+                        Selamat Datang, {{ auth()->user()->name }}!<br>
+                        <span style="font-size: 14px !important; font-weight: 500 !important; display: block !important; margin-top: 10px !important;">
+                            Mari mulai mendata infrastruktur hari ini untuk membantu pemetaan aset daerah yang lebih akurat. Pastikan GPS aktif dan foto yang diambil jelas untuk hasil analisis AI yang maksimal.
+                        </span>
+                    </h3>
+                    <div style="margin-top: 20px !important;">
+                        <a href="{{ route('surveyor.input') }}" style="background: white !important; color: blue !important; padding: 12px 24px !important; border-radius: 12px !important; font-weight: bold !important; text-decoration: none !important; display: inline-block !important;">
+                             MULAI SURVEY SEKARANG
                         </a>
                     </div>
                 </div>
