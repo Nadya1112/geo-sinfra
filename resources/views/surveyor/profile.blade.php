@@ -106,24 +106,6 @@
                                     </div>
                                 </div>
 
-                                <div>
-                                    <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-4">Wilayah Tugas (Kecamatan)</label>
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 bg-gray-50 p-6 rounded-3xl border border-gray-100 shadow-inner">
-                                        @php
-                                            $assignedKecamatans = auth()->user()->kecamatans->pluck('id_kecamatan')->toArray();
-                                        @endphp
-                                        @foreach($semuaKecamatan as $kec)
-                                        <label class="relative flex items-center gap-3 p-3 bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-emerald-500 transition-all group">
-                                            <input type="checkbox" name="id_kecamatan[]" value="{{ $kec->id_kecamatan }}" 
-                                                {{ in_array($kec->id_kecamatan, $assignedKecamatans) ? 'checked' : '' }}
-                                                class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-gray-300 transition-all">
-                                            <span class="text-xs font-bold text-gray-600 group-hover:text-[#1e1b4b]">{{ $kec->nama_kecamatan }}</span>
-                                        </label>
-                                        @endforeach
-                                    </div>
-                                    <p class="text-[9px] text-gray-400 mt-3 italic font-medium px-2">* Anda dapat memilih lebih dari satu kecamatan yang menjadi wilayah tanggung jawab Anda.</p>
-                                </div>
-
                                 <div class="pt-4 border-t border-gray-50">
                                     <p class="text-xs font-bold text-gray-400 mb-4 italic">Kosongkan jika tidak ingin mengubah kata sandi</p>
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

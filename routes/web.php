@@ -104,6 +104,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/map', [App\Http\Controllers\Surveyor\SurveyorController::class, 'map'])->name('surveyor.map');
         Route::get('/profile', [App\Http\Controllers\Surveyor\SurveyorController::class, 'profile'])->name('surveyor.profile');
         Route::post('/profile', [App\Http\Controllers\Surveyor\SurveyorController::class, 'updateProfile'])->name('surveyor.profile.update');
+        Route::post('/territory', [App\Http\Controllers\Surveyor\SurveyorController::class, 'updateTerritories'])->name('surveyor.territory.update');
     });
 
     // --- AREA KABID ---

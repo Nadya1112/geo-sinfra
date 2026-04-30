@@ -16,17 +16,35 @@ class SurveyorController extends Controller
     {
         $userId = auth()->id();
         $totalSurvey = Infrastruktur::where('id_user', $userId)->count();
-        // Hitung status nyata
         $waitingValidation = Infrastruktur::where('id_user', $userId)->where('status_verifikasi', 'Pending')->count();
         $verifiedAI = Infrastruktur::where('id_user', $userId)->where('status_verifikasi', 'Verified')->count();
 
-        // Ambil 5 upload terakhir
         $recentUploads = Infrastruktur::where('id_user', $userId)
             ->orderBy('created_at', 'desc')
             ->limit(5)
             ->get();
 
-        return view('surveyor.dashboard', compact('totalSurvey', 'waitingValidation', 'verifiedAI', 'recentUploads'));
+        $semuaKecamatan = DB::table('kecamatan')->get();
+        return view('surveyor.dashboard', compact('totalSurvey', 'waitingValidation', 'verifiedAI', 'recentUploads', 'semuaKecamatan'));
+    }
+
+    public function updateTerritories(Request $request)
+    {
+        $request->validate([
+            'id_kecamatan' => 'required|array',
+            'id_kecamatan.*' => 'exists:kecamatan,id_kecamatan',
+        ]);
+
+        $user = User::find(auth()->id());
+        $user->kecamatans()->sync($request->id_kecamatan);
+        
+        // Simpan id pertama untuk legacy support
+        if (!empty($request->id_kecamatan)) {
+            $user->id_kecamatan = $request->id_kecamatan[0];
+            $user->save();
+        }
+
+        return back()->with('success', 'Wilayah tugas berhasil diperbarui.');
     }
 
     public function create()
@@ -183,20 +201,12 @@ class SurveyorController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'id_kecamatan' => 'required|array',
-            'id_kecamatan.*' => 'exists:kecamatan,id_kecamatan',
             'password' => 'nullable|min:8|confirmed',
             'profile_photo' => 'nullable|image|max:2048'
         ]);
 
         $user->name = $request->name;
         $user->email = $request->email;
-        
-        // Sync ke tabel pivot
-        $user->kecamatans()->sync($request->id_kecamatan);
-        
-        // Simpan satu id_kecamatan utama di tabel users untuk kompatibilitas
-        $user->id_kecamatan = $request->id_kecamatan[0];
 
         if ($request->password) {
             $user->password = Hash::make($request->password);
