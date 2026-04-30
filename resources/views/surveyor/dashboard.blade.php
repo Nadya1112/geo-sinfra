@@ -66,7 +66,7 @@
             <div class="relative bg-gradient-to-br from-emerald-600 to-teal-800 rounded-[2.5rem] p-10 mb-8 overflow-hidden shadow-lg shadow-emerald-900/10">
                 <div class="absolute -right-10 -top-10 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl"></div>
                 <div class="relative z-10">
-                    <h3 class="text-3xl font-black text-white mb-2 leading-tight">Selamat Bekerja, {{ explode(' ', auth()->user()->name)[0] }}!</h3>
+                    <h3 class="text-3xl font-black text-white mb-2 leading-tight">Selamat Datang, {{ explode(' ', auth()->user()->name)[0] }}!</h3>
                     <p class="text-emerald-50 text-sm font-medium max-w-xl leading-relaxed">
                         Siap untuk mendata infrastruktur hari ini? Pastikan GPS aktif dan foto yang diambil jelas untuk hasil analisis AI yang akurat.
                     </p>
