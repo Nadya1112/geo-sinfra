@@ -54,6 +54,16 @@
             
 
 
+            <!-- Custom Zoom Controls Top Left -->
+            <div class="absolute top-6 left-6 z-10 flex flex-col gap-2">
+                <button onclick="map.zoomIn()" class="w-10 h-10 bg-[#1e1b4b]/80 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:bg-[#1e1b4b] transition-all group">
+                    <i class="fas fa-plus text-[10px] group-hover:scale-110 transition-transform"></i>
+                </button>
+                <button onclick="map.zoomOut()" class="w-10 h-10 bg-[#1e1b4b]/80 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:bg-[#1e1b4b] transition-all group">
+                    <i class="fas fa-minus text-[10px] group-hover:scale-110 transition-transform"></i>
+                </button>
+            </div>
+
             <!-- Map Overlay UI Bottom Left -->
             <div class="absolute bottom-10 left-6 z-10">
                 <div id="condition-card" class="bg-[#1e1b4b]/80 backdrop-blur-xl p-2 rounded-[2.5rem] border border-white/10 shadow-2xl min-w-[200px] transition-all duration-300">

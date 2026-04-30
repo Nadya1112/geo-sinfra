@@ -54,6 +54,16 @@
             
 
 
+            <!-- Custom Zoom Controls Top Left -->
+            <div class="absolute top-6 left-6 z-10 flex flex-col gap-2">
+                <button onclick="map.zoomIn()" class="w-10 h-10 bg-[#1e1b4b]/80 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:bg-[#1e1b4b] transition-all group">
+                    <i class="fas fa-plus text-[10px] group-hover:scale-110 transition-transform"></i>
+                </button>
+                <button onclick="map.zoomOut()" class="w-10 h-10 bg-[#1e1b4b]/80 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:bg-[#1e1b4b] transition-all group">
+                    <i class="fas fa-minus text-[10px] group-hover:scale-110 transition-transform"></i>
+                </button>
+            </div>
+
             <!-- Map Overlay UI Bottom Left -->
             <div class="absolute bottom-10 left-6 z-10">
                 <div id="condition-card" class="bg-[#1e1b4b]/80 backdrop-blur-xl p-2 rounded-[2.5rem] border border-white/10 shadow-2xl min-w-[200px] transition-all duration-300">
@@ -111,37 +121,37 @@
                         </button>
                         
                         <div id="category-options" class="hidden mt-2 p-1 flex flex-col gap-1">
-                            <button onclick="handleCategorySelect('Semua')" class="cat-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
+                            <button onclick="handleCategorySelect('Semua')" data-type="Semua" class="cat-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
                                 <div class="flex items-center gap-3">
                                     <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors">
-                                        <i class="fas fa-check text-[7px] text-blue-400 opacity-0 group-hover:opacity-100"></i>
+                                        <i class="fas fa-check text-[7px] text-blue-400 opacity-0 transition-opacity"></i>
                                     </div>
                                     <span class="group-hover:text-white transition-colors">Semua Kategori</span>
                                 </div>
                                 <div class="w-3.5 h-3.5 rounded bg-gray-500/30"></div>
                             </button>
-                            <button onclick="handleCategorySelect('Jalan')" class="cat-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
+                            <button onclick="handleCategorySelect('Jalan')" data-type="Jalan" class="cat-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
                                 <div class="flex items-center gap-3">
                                     <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors">
-                                        <i class="fas fa-check text-[7px] text-blue-400 opacity-0 group-hover:opacity-100"></i>
+                                        <i class="fas fa-check text-[7px] text-blue-400 opacity-0 transition-opacity"></i>
                                     </div>
                                     <span class="group-hover:text-white transition-colors">Jalan</span>
                                 </div>
                                 <div class="w-3.5 h-3.5 rounded bg-blue-500 shadow-lg shadow-blue-500/20"></div>
                             </button>
-                            <button onclick="handleCategorySelect('Jembatan')" class="cat-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
+                            <button onclick="handleCategorySelect('Jembatan')" data-type="Jembatan" class="cat-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
                                 <div class="flex items-center gap-3">
                                     <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors">
-                                        <i class="fas fa-check text-[7px] text-blue-400 opacity-0 group-hover:opacity-100"></i>
+                                        <i class="fas fa-check text-[7px] text-blue-400 opacity-0 transition-opacity"></i>
                                     </div>
                                     <span class="group-hover:text-white transition-colors">Jembatan</span>
                                 </div>
                                 <div class="w-3.5 h-3.5 rounded bg-emerald-500 shadow-lg shadow-emerald-500/20"></div>
                             </button>
-                            <button onclick="handleCategorySelect('Drainase')" class="cat-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
+                            <button onclick="handleCategorySelect('Drainase')" data-type="Drainase" class="cat-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
                                 <div class="flex items-center gap-3">
                                     <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors">
-                                        <i class="fas fa-check text-[7px] text-blue-400 opacity-0 group-hover:opacity-100"></i>
+                                        <i class="fas fa-check text-[7px] text-blue-400 opacity-0 transition-opacity"></i>
                                     </div>
                                     <span class="group-hover:text-white transition-colors">Drainase</span>
                                 </div>
@@ -163,20 +173,20 @@
                         </button>
                         
                         <div id="territory-options" class="hidden mt-2 p-1 flex flex-col gap-1 max-h-48 overflow-y-auto custom-scrollbar">
-                            <button onclick="handleTerritorySelect('Semua')" class="territory-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
+                            <button onclick="handleTerritorySelect('Semua')" data-id="Semua" class="territory-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
                                 <div class="flex items-center gap-3">
                                     <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
-                                        <i class="fas fa-check text-[7px] text-emerald-400 opacity-0 group-hover:opacity-100"></i>
+                                        <i class="fas fa-check text-[7px] text-emerald-400 opacity-0 transition-opacity"></i>
                                     </div>
                                     <span class="group-hover:text-white transition-colors">Semua Wilayah</span>
                                 </div>
-                                <div class="w-3.5 h-3.5 rounded bg-gray-500/30 shadow-inner"></div>
+                                <div class="w-3.5 h-3.5 rounded bg-gray-500/30 shadow-inner opacity-50"></div>
                             </button>
                             <?php $__currentLoopData = $myKecamatans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kec): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <button onclick="handleTerritorySelect('<?php echo e($kec->id_kecamatan); ?>', '<?php echo e($kec->nama_kecamatan); ?>')" class="territory-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
+                            <button onclick="handleTerritorySelect('<?php echo e($kec->id_kecamatan); ?>', '<?php echo e($kec->nama_kecamatan); ?>')" data-id="<?php echo e($kec->id_kecamatan); ?>" class="territory-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
                                 <div class="flex items-center gap-3">
                                     <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
-                                        <i class="fas fa-check text-[7px] text-emerald-400 opacity-0 group-hover:opacity-100"></i>
+                                        <i class="fas fa-check text-[7px] text-emerald-400 opacity-0 transition-opacity"></i>
                                     </div>
                                     <span class="truncate max-w-[110px] group-hover:text-white transition-colors"><?php echo e($kec->nama_kecamatan); ?></span>
                                 </div>
@@ -319,23 +329,53 @@
             }
         }
 
-        let activeType = 'Semua';
-        let activeTerritory = 'Semua';
+        let activeTypes = ['Jalan', 'Jembatan', 'Drainase'];
+        let activeTerritories = myKecamatans.map(k => k.id_kecamatan.toString());
 
         function applyFilters() {
-            let filtered = dataPoints;
-            
-            // Filter by Type
-            if (activeType !== 'Semua') {
-                filtered = filtered.filter(p => p.jenis_infrastruktur === activeType);
-            }
-            
-            // Filter by Territory
-            if (activeTerritory !== 'Semua') {
-                filtered = filtered.filter(p => p.id_kecamatan == activeTerritory);
-            }
-            
-            renderMarkers(filtered);
+            // Filter Markers
+            let filteredMarkers = dataPoints.filter(p => 
+                activeTypes.includes(p.jenis_infrastruktur) && 
+                activeTerritories.includes(p.id_kecamatan.toString())
+            );
+            renderMarkers(filteredMarkers);
+
+            // Filter Polygons
+            Object.keys(geoLayers).forEach(id => {
+                if (activeTerritories.includes(id.toString())) {
+                    if (!map.hasLayer(geoLayers[id])) geoLayers[id].addTo(map);
+                } else {
+                    if (map.hasLayer(geoLayers[id])) map.removeLayer(geoLayers[id]);
+                }
+            });
+
+            updateUIState();
+        }
+
+        function updateUIState() {
+            // Update Category Checkboxes
+            document.querySelectorAll('.cat-opt-btn').forEach(btn => {
+                const type = btn.getAttribute('data-type');
+                const check = btn.querySelector('.fa-check');
+                if (type === 'Semua') {
+                    const isAll = activeTypes.length === 3;
+                    check.style.opacity = isAll ? '1' : '0';
+                } else {
+                    check.style.opacity = activeTypes.includes(type) ? '1' : '0';
+                }
+            });
+
+            // Update Territory Checkboxes
+            document.querySelectorAll('.territory-opt-btn').forEach(btn => {
+                const id = btn.getAttribute('data-id');
+                const check = btn.querySelector('.fa-check');
+                if (id === 'Semua') {
+                    const isAll = activeTerritories.length === myKecamatans.length;
+                    check.style.opacity = isAll ? '1' : '0';
+                } else {
+                    check.style.opacity = activeTerritories.includes(id) ? '1' : '0';
+                }
+            });
         }
 
         function toggleCategoryMenu() {
@@ -346,9 +386,16 @@
         }
 
         function handleCategorySelect(type) {
-            document.getElementById('current-cat-label').textContent = type === 'Semua' ? 'Semua Kategori' : type;
-            toggleCategoryMenu();
-            activeType = type;
+            if (type === 'Semua') {
+                if (activeTypes.length === 3) activeTypes = [];
+                else activeTypes = ['Jalan', 'Jembatan', 'Drainase'];
+            } else {
+                if (activeTypes.includes(type)) {
+                    activeTypes = activeTypes.filter(t => t !== type);
+                } else {
+                    activeTypes.push(type);
+                }
+            }
             applyFilters();
         }
 
@@ -360,15 +407,20 @@
         }
 
         function handleTerritorySelect(id, name) {
-            document.getElementById('current-territory-label').textContent = id === 'Semua' ? 'Semua Wilayah' : name;
-            toggleTerritoryMenu();
-            activeTerritory = id;
-            applyFilters();
-
-            // Zoom ke Wilayah yang dipilih
-            if (id !== 'Semua' && geoLayers[id]) {
-                map.fitBounds(geoLayers[id].getBounds(), { padding: [50, 50], maxZoom: 15 });
+            if (id === 'Semua') {
+                if (activeTerritories.length === myKecamatans.length) activeTerritories = [];
+                else activeTerritories = myKecamatans.map(k => k.id_kecamatan.toString());
+            } else {
+                id = id.toString();
+                if (activeTerritories.includes(id)) {
+                    activeTerritories = activeTerritories.filter(t => t !== id);
+                } else {
+                    activeTerritories.push(id);
+                    // Zoom ke Wilayah yang baru dipilih jika hanya satu yang dipilih atau baru ditambah
+                    if (geoLayers[id]) map.fitBounds(geoLayers[id].getBounds(), { padding: [50, 50], maxZoom: 15 });
+                }
             }
+            applyFilters();
         }
 
         function toggleConditionMenu() {
@@ -383,12 +435,17 @@
             if (cond === 'Semua') {
                 applyFilters();
             } else {
-                let filtered = dataPoints.filter(p => p.kondisi === cond);
+                // Condition filter still behaves as a quick filter on top of current view
+                let filtered = dataPoints.filter(p => 
+                    p.kondisi === cond && 
+                    activeTypes.includes(p.jenis_infrastruktur) && 
+                    activeTerritories.includes(p.id_kecamatan.toString())
+                );
                 renderMarkers(filtered);
             }
         }
 
-        renderMarkers(dataPoints);
+        applyFilters();
     </script>
 
     <style>
