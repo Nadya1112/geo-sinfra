@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Infrastruktur extends Model
@@ -62,5 +63,21 @@ class Infrastruktur extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'id_user', 'id');
+    }
+
+    /**
+     * Hubungan: Infrastruktur memiliki satu hasil Analisis AI (Decision Tree)
+     */
+    public function analisis(): HasOne
+    {
+        return $this->hasOne(AnalisisAi::class, 'id_infrastruktur', 'id_infrastruktur');
+    }
+
+    /**
+     * Hubungan: Infrastruktur memiliki satu hasil Analisis Citra (CNN)
+     */
+    public function cnn(): HasOne
+    {
+        return $this->hasOne(CitraCnn::class, 'id_infrastruktur', 'id_infrastruktur');
     }
 }

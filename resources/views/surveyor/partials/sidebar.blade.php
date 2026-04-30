@@ -4,7 +4,7 @@
             <div class="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:scale-110 transition-transform">
                 <i class="fas fa-camera text-xs text-white"></i>
             </div>
-            <span class="font-extrabold text-xl tracking-tighter uppercase text-white">SINFRA-CORE</span>
+            <span class="font-extrabold text-xl tracking-tighter uppercase text-white">GEO-SINFRA</span>
         </a>
         
         <nav class="space-y-1">

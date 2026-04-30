@@ -17,9 +17,14 @@
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden">
         <header class="bg-white border-b border-gray-100 px-8 py-5 flex justify-between items-center z-10">
-            <div>
-                <p class="text-[10px] font-extrabold text-emerald-600 uppercase tracking-[0.2em] mb-1">Visualisasi Geografis</p>
-                <h2 class="text-xl font-black text-[#1e1b4b]">Peta Sebaran Laporan Saya</h2>
+            <div class="flex items-center gap-4">
+                <a href="{{ route('surveyor.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-gray-50 text-gray-400 rounded-xl hover:bg-emerald-50 hover:text-emerald-600 transition-all border border-gray-100">
+                    <i class="fas fa-arrow-left text-sm"></i>
+                </a>
+                <div>
+                    <p class="text-[10px] font-extrabold text-emerald-600 uppercase tracking-[0.2em] mb-1">Visualisasi Geografis</p>
+                    <h2 class="text-xl font-black text-[#1e1b4b]">Peta Sebaran Laporan Saya</h2>
+                </div>
             </div>
             
             <div class="flex items-center gap-6">
@@ -104,16 +109,36 @@
             });
 
             const popupContent = `
-                <div class="p-2 text-left" style="min-width: 200px;">
-                    <div class="w-full h-24 rounded-lg bg-gray-100 mb-3 overflow-hidden">
+                <div class="p-2 text-left" style="min-width: 220px;">
+                    <div class="w-full h-32 rounded-lg bg-gray-100 mb-3 overflow-hidden border border-gray-100">
                         <img src="/storage/${point.foto_terbaru}" class="w-full h-full object-cover">
                     </div>
-                    <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1">${point.jenis_infrastruktur}</p>
+                    <div class="flex justify-between items-start mb-1">
+                        <p class="text-[9px] font-black text-emerald-600 uppercase tracking-widest">${point.jenis_infrastruktur}</p>
+                        <span class="text-[8px] font-bold text-gray-400 uppercase tracking-tighter">${new Date(point.updated_at).toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric'})}</span>
+                    </div>
                     <h4 class="text-sm font-black text-[#1e1b4b] mb-2 leading-tight">${point.nama_infrastruktur}</h4>
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-2 mb-2">
                         <span class="px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-tighter" style="background-color: ${color}20; color: ${color}; border: 1px solid ${color}40;">
                             ${point.kondisi}
                         </span>
+                        <span class="px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-tighter ${point.status_verifikasi == 'Verified' ? 'bg-blue-50 text-blue-600 border border-blue-200' : 'bg-amber-50 text-amber-600 border border-amber-200'}">
+                            ${point.status_verifikasi ?? 'Pending'}
+                        </span>
+                    </div>
+                    <div class="flex flex-col gap-1 mb-3 bg-gray-50 p-2 rounded-lg border border-gray-100">
+                        <div class="flex justify-between items-center">
+                            <span class="text-[7px] font-black text-gray-400 uppercase tracking-widest">CNN Score</span>
+                            <span class="text-[8px] font-bold text-emerald-600">${point.cnn ? (point.cnn.skor_cnn * 100).toFixed(1) + '%' : '-'}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-[7px] font-black text-gray-400 uppercase tracking-widest">Decision Tree</span>
+                            <span class="text-[8px] font-bold text-blue-600">${point.analisis ? point.analisis.label_prioritas : '-'}</span>
+                        </div>
+                    </div>
+                    <div class="pt-2 border-t border-gray-50 flex justify-between items-center">
+                        <p class="text-[9px] text-gray-400 italic font-medium">Klik marker untuk detail</p>
+                        <a href="/surveyor/infrastruktur/${point.id_infrastruktur}/edit" class="px-3 py-1 bg-gray-100 text-[#1e1b4b] rounded-lg text-[9px] font-black uppercase tracking-widest hover:bg-[#1e1b4b] hover:text-white transition-all">Edit</a>
                     </div>
                 </div>
             `;

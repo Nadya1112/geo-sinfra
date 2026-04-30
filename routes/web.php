@@ -98,6 +98,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/input', [App\Http\Controllers\Surveyor\SurveyorController::class, 'create'])->name('surveyor.input');
         Route::post('/input', [App\Http\Controllers\Surveyor\SurveyorController::class, 'store'])->name('surveyor.store');
         Route::get('/history', [App\Http\Controllers\Surveyor\SurveyorController::class, 'history'])->name('surveyor.history');
+        Route::get('/infrastruktur/{id}/edit', [App\Http\Controllers\Surveyor\SurveyorController::class, 'edit'])->name('surveyor.infrastruktur.edit');
+        Route::put('/infrastruktur/{id}', [App\Http\Controllers\Surveyor\SurveyorController::class, 'update'])->name('surveyor.infrastruktur.update');
         Route::get('/map', [App\Http\Controllers\Surveyor\SurveyorController::class, 'map'])->name('surveyor.map');
         Route::get('/profile', [App\Http\Controllers\Surveyor\SurveyorController::class, 'profile'])->name('surveyor.profile');
         Route::post('/profile', [App\Http\Controllers\Surveyor\SurveyorController::class, 'updateProfile'])->name('surveyor.profile.update');

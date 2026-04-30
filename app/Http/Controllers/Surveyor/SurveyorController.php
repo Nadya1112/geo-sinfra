@@ -45,7 +45,6 @@ class SurveyorController extends Controller
             'id_kelurahan' => 'required|exists:kelurahan,id_kelurahan',
             'latitude' => 'required',
             'longitude' => 'required',
-            'kondisi' => 'required',
             'foto' => 'required|image|max:5120',
         ]);
 
@@ -67,9 +66,9 @@ class SurveyorController extends Controller
             'jenis' => $jenisEnum,
             'id_kecamatan' => $request->id_kecamatan,
             'id_kelurahan' => $request->id_kelurahan,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude,
-            'kondisi' => $request->kondisi,
+            'latitude' => str_replace(',', '.', $request->latitude),
+            'longitude' => str_replace(',', '.', $request->longitude),
+            'kondisi' => 'Menunggu AI',
             'alamat' => $request->alamat ?? '-',
             'foto_terbaru' => $path,
             'status_verifikasi' => 'Pending',
@@ -82,15 +81,65 @@ class SurveyorController extends Controller
 
     public function history()
     {
-        $riwayat = Infrastruktur::where('id_user', auth()->id())
+        $riwayat = Infrastruktur::with(['kelurahan', 'analisis', 'cnn'])
+            ->where('id_user', auth()->id())
             ->orderBy('created_at', 'desc')
             ->get();
         return view('surveyor.history', compact('riwayat'));
     }
 
+    public function edit($id)
+    {
+        $infrastruktur = Infrastruktur::where('id_infrastruktur', $id)->where('id_user', auth()->id())->firstOrFail();
+        $semuaKecamatan = DB::table('kecamatan')->get();
+        $semuaKelurahan = DB::table('kelurahan')->get();
+        return view('surveyor.edit', compact('infrastruktur', 'semuaKecamatan', 'semuaKelurahan'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $infrastruktur = Infrastruktur::where('id_infrastruktur', $id)->where('id_user', auth()->id())->firstOrFail();
+
+        $request->validate([
+            'nama_infrastruktur' => 'required|string|max:255',
+            'jenis_infrastruktur' => 'required|string',
+            'id_kecamatan' => 'required|exists:kecamatan,id_kecamatan',
+            'id_kelurahan' => 'required|exists:kelurahan,id_kelurahan',
+            'latitude' => 'required|string',
+            'longitude' => 'required|string',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
+        ]);
+
+        if ($request->hasFile('foto')) {
+            $path = $request->file('foto')->store('infrastruktur', 'public');
+            $infrastruktur->foto_terbaru = $path;
+            $infrastruktur->kondisi = 'Menunggu AI';
+            $infrastruktur->status_verifikasi = 'Pending';
+        }
+
+        $jenisEnum = strtolower($request->jenis_infrastruktur);
+        $allowedEnum = ['jalan', 'drainase', 'jembatan', 'pju'];
+        if (!in_array($jenisEnum, $allowedEnum)) {
+            $jenisEnum = 'jalan';
+        }
+
+        $infrastruktur->nama_infrastruktur = $request->nama_infrastruktur;
+        $infrastruktur->nama_objek = $request->nama_infrastruktur;
+        $infrastruktur->jenis_infrastruktur = $request->jenis_infrastruktur;
+        $infrastruktur->jenis = $jenisEnum;
+        $infrastruktur->id_kecamatan = $request->id_kecamatan;
+        $infrastruktur->id_kelurahan = $request->id_kelurahan;
+        $infrastruktur->latitude = str_replace(',', '.', $request->latitude);
+        $infrastruktur->longitude = str_replace(',', '.', $request->longitude);
+        $infrastruktur->alamat = $request->alamat ?? '-';
+        $infrastruktur->save();
+
+        return redirect()->route('surveyor.history')->with('success', 'Data berhasil diperbarui!');
+    }
+
     public function map()
     {
-        $dataMap = Infrastruktur::where('id_user', auth()->id())->get();
+        $dataMap = Infrastruktur::with(['cnn', 'analisis'])->where('id_user', auth()->id())->get();
         return view('surveyor.map', compact('dataMap'));
     }
 

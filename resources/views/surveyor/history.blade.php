@@ -15,9 +15,14 @@
 
     <main class="flex-1 flex flex-col h-screen overflow-y-auto">
         <header class="bg-white border-b border-gray-100 px-8 py-5 flex justify-between items-center z-10">
-            <div>
-                <p class="text-[10px] font-extrabold text-emerald-600 uppercase tracking-[0.2em] mb-1">Manajemen Laporan</p>
-                <h2 class="text-xl font-black text-[#1e1b4b]">Riwayat Survey Anda</h2>
+            <div class="flex items-center gap-4">
+                <a href="{{ route('surveyor.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-gray-50 text-gray-400 rounded-xl hover:bg-emerald-50 hover:text-emerald-600 transition-all border border-gray-100">
+                    <i class="fas fa-arrow-left text-sm"></i>
+                </a>
+                <div>
+                    <p class="text-[10px] font-extrabold text-emerald-600 uppercase tracking-[0.2em] mb-1">Manajemen Laporan</p>
+                    <h2 class="text-xl font-black text-[#1e1b4b]">Riwayat Survey Anda</h2>
+                </div>
             </div>
             
             <div class="flex items-center gap-6">
@@ -55,48 +60,60 @@
                     <table class="w-full text-left">
                         <thead>
                             <tr class="bg-gray-50/50 border-b border-gray-100">
-                                <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest">ID / Foto</th>
-                                <th class="px-6 py-5 text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest">Nama & Jenis</th>
-                                <th class="px-6 py-5 text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest text-center">Analisis AI</th>
-                                <th class="px-6 py-5 text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest">Status</th>
-                                <th class="px-8 py-5 text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest text-right">Tanggal</th>
+                                <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest w-16 text-center">NO</th>
+                                <th class="px-6 py-5 text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest">Nama Infrastruktur</th>
+                                <th class="px-6 py-5 text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest">Wilayah</th>
+                                <th class="px-6 py-5 text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest text-center">Kondisi</th>
+                                <th class="px-8 py-5 text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-50">
-                            @forelse($riwayat as $item)
+                            @forelse($riwayat as $index => $item)
                             <tr class="hover:bg-gray-50/50 transition-colors group">
-                                <td class="px-8 py-4">
-                                    <div class="flex items-center gap-4">
-                                        <span class="text-[10px] font-black text-gray-400">#{{ $item->id_infrastruktur }}</span>
-                                        <div class="w-12 h-12 rounded-xl bg-gray-100 border border-gray-100 overflow-hidden shadow-sm">
-                                            @if($item->foto_terbaru)
-                                                <img src="{{ asset('storage/' . $item->foto_terbaru) }}" class="w-full h-full object-cover">
-                                            @else
-                                                <div class="w-full h-full flex items-center justify-center text-gray-300"><i class="fas fa-image"></i></div>
-                                            @endif
-                                        </div>
-                                    </div>
+                                <td class="px-8 py-4 text-center">
+                                    <span class="text-xs font-black text-gray-400">{{ $index + 1 }}</span>
                                 </td>
                                 <td class="px-6 py-4">
                                     <p class="text-xs font-black text-[#1e1b4b] uppercase mb-0.5">{{ $item->nama_infrastruktur }}</p>
                                     <span class="px-2 py-0.5 bg-blue-50 text-blue-600 rounded-md text-[9px] font-black uppercase tracking-tighter">{{ $item->jenis_infrastruktur }}</span>
                                 </td>
-                                <td class="px-6 py-4 text-center">
-                                    <div class="flex flex-col items-center gap-1">
-                                        <span class="px-2.5 py-1 rounded-lg text-[10px] font-black tracking-widest border {{ $item->kondisi == 'Baik' ? 'bg-emerald-50 text-emerald-600 border-emerald-200' : ($item->kondisi == 'Rusak Ringan' ? 'bg-yellow-50 text-yellow-600 border-yellow-200' : 'bg-red-50 text-red-600 border-red-200') }}">
-                                            {{ strtoupper($item->kondisi) }}
-                                        </span>
-                                    </div>
-                                </td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-2">
-                                        <div class="w-1.5 h-1.5 rounded-full {{ $item->status_verifikasi == 'Verified' ? 'bg-emerald-500 shadow-lg shadow-emerald-500/50' : 'bg-amber-500 shadow-lg shadow-amber-500/50' }}"></div>
-                                        <span class="text-[10px] font-bold {{ $item->status_verifikasi == 'Verified' ? 'text-emerald-600' : 'text-amber-600' }} uppercase">{{ $item->status_verifikasi ?? 'Proses' }}</span>
+                                        <div class="w-8 h-8 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-500">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-xs font-bold text-gray-700">{{ $item->kelurahan ? $item->kelurahan->nama_kelurahan : '-' }}</p>
+                                            <p class="text-[9px] text-gray-400 font-medium uppercase tracking-widest">{{ $item->created_at->translatedFormat('d M Y') }}</p>
+                                        </div>
                                     </div>
                                 </td>
-                                <td class="px-8 py-4 text-right">
-                                    <p class="text-[10px] font-bold text-[#1e1b4b]">{{ $item->created_at->translatedFormat('d M Y') }}</p>
-                                    <p class="text-[9px] text-gray-400 font-medium italic">{{ $item->created_at->format('H:i') }} WITA</p>
+                                <td class="px-6 py-4 text-center">
+                                    <div class="flex flex-col items-center gap-1.5">
+                                        <span class="px-2.5 py-1 rounded-lg text-[9px] font-black tracking-widest border {{ $item->kondisi == 'Baik' ? 'bg-emerald-50 text-emerald-600 border-emerald-200' : ($item->kondisi == 'Rusak Ringan' ? 'bg-yellow-50 text-yellow-600 border-yellow-200' : ($item->kondisi == 'Rusak Berat' ? 'bg-red-50 text-red-600 border-red-200' : 'bg-gray-50 text-gray-500 border-gray-200')) }}">
+                                            {{ strtoupper($item->kondisi) }}
+                                        </span>
+                                        @if($item->cnn || $item->analisis)
+                                        <div class="flex flex-col items-center gap-0.5">
+                                            @if($item->cnn)
+                                                <p class="text-[8px] font-bold text-gray-400 uppercase tracking-tighter">CNN: <span class="text-emerald-500">{{ number_format($item->cnn->skor_cnn * 100, 1) }}%</span></p>
+                                            @endif
+                                            @if($item->analisis)
+                                                <p class="text-[8px] font-bold text-gray-400 uppercase tracking-tighter">D-Tree: <span class="text-blue-500">{{ $item->analisis->label_prioritas }}</span></p>
+                                            @endif
+                                        </div>
+                                        @endif
+                                    </div>
+                                </td>
+                                <td class="px-8 py-4 text-center">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <a href="{{ route('surveyor.infrastruktur.edit', $item->id_infrastruktur) }}" class="w-8 h-8 flex items-center justify-center bg-gray-100 text-gray-500 rounded-lg hover:bg-blue-500 hover:text-white transition-colors cursor-pointer" title="Edit Data">
+                                            <i class="fas fa-pen text-xs"></i>
+                                        </a>
+                                        <a href="#" class="w-8 h-8 flex items-center justify-center bg-gray-100 text-gray-500 rounded-lg hover:bg-emerald-500 hover:text-white transition-colors cursor-pointer" title="Lihat Detail">
+                                            <i class="fas fa-eye text-xs"></i>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                             @empty
