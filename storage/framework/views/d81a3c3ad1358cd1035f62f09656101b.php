@@ -269,7 +269,7 @@
         const totalKec = kecamatans.length;
 
         function applyFilters() {
-            // Control polygon visibility based on activeKecs
+            // Control polygon visibility
             Object.keys(geoLayers).forEach(id => {
                 if (activeKecs.includes(id.toString())) {
                     if (!map.hasLayer(geoLayers[id])) geoLayers[id].addTo(map);
@@ -278,22 +278,27 @@
                 }
             });
 
-            // If no category selected, show nothing
             if (activeTypes.length === 0) {
                 renderMarkers([]);
                 return;
             }
 
-            // Normalise types for comparison
             const normalisedActiveTypes = activeTypes.map(t => t.toLowerCase().trim());
 
             let filtered = dataPoints.filter(p => {
                 const pType = (p.jenis_infrastruktur || '').toLowerCase().trim();
                 const pKec = (p.id_kecamatan || '').toString();
                 
-                return normalisedActiveTypes.includes(pType) && activeKecs.includes(pKec);
+                // Cek kategori (partial match: e.g 'Jalan' matches 'Infrastruktur Jalan')
+                const matchType = normalisedActiveTypes.some(type => pType.includes(type));
+                
+                // Cek wilayah
+                const matchKec = activeKecs.includes(pKec);
+                
+                return matchType && matchKec;
             });
             
+            console.log(`Filter Debug: Found ${filtered.length} items from ${dataPoints.length} total.`);
             renderMarkers(filtered);
         }
 
