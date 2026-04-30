@@ -187,14 +187,16 @@
         myKecamatans.forEach(kec => {
             if (kec.geometri) {
                 try {
-                    const geoJson = JSON.parse(kec.geometri);
-                    const poly = L.geoJSON(geoJson, {
+                    // Handle both casted objects and raw strings
+                    const geoData = typeof kec.geometri === 'string' ? JSON.parse(kec.geometri) : kec.geometri;
+                    
+                    const poly = L.geoJSON(geoData, {
                         style: {
                             fillColor: kec.warna || '#3b82f6',
                             weight: 2,
                             opacity: 1,
                             color: 'white',
-                            fillOpacity: 0.15
+                            fillOpacity: 0.2
                         }
                     }).addTo(map);
 
@@ -204,14 +206,16 @@
                     });
 
                     poly.on('mouseover', function() {
-                        this.setStyle({ fillOpacity: 0.3, weight: 3 });
+                        this.setStyle({ fillOpacity: 0.4, weight: 3 });
                     });
                     poly.on('mouseout', function() {
-                        this.setStyle({ fillOpacity: 0.15, weight: 2 });
+                        this.setStyle({ fillOpacity: 0.2, weight: 2 });
                     });
 
                     geoLayers[kec.id_kecamatan] = poly;
-                } catch (e) { console.error("Error parsing geometry for Kecamatan: " + kec.nama_kecamatan); }
+                } catch (e) { 
+                    console.error("Error rendering Kecamatan: " + kec.nama_kecamatan, e); 
+                }
             }
         });
 
