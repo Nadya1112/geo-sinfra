@@ -287,9 +287,12 @@
 
             let filtered = dataPoints.filter(p => {
                 const pType = (p.jenis_infrastruktur || '').toLowerCase().trim();
-                const pKec = (p.id_kecamatan || '').toString();
                 
-                // Cek kategori (partial match: e.g 'Jalan' matches 'Infrastruktur Jalan')
+                // AMBIL ID KECAMATAN DARI RELATIONSHIP KELURAHAN
+                // Karena di tabel infrastruktur id_kecamatan kosong
+                const pKec = (p.id_kecamatan || p.kelurahan?.id_kecamatan || '').toString();
+                
+                // Cek kategori
                 const matchType = normalisedActiveTypes.some(type => pType.includes(type));
                 
                 // Cek wilayah
@@ -298,7 +301,7 @@
                 return matchType && matchKec;
             });
             
-            console.log(`Filter Debug: Found ${filtered.length} items from ${dataPoints.length} total.`);
+            console.log(`Filter Debug: Found ${filtered.length} items. Active Kecs: ${activeKecs.length}`);
             renderMarkers(filtered);
         }
 
