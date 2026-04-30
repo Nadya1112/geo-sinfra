@@ -171,25 +171,31 @@
                                 </td>
                                 <td class="px-8 py-6">
                                     <div class="flex items-center justify-center gap-2">
+                                        <a href="{{ route('surveyor.infrastruktur.show', $item->id_infrastruktur) }}" target="_blank" class="flex items-center gap-2 px-3 py-2 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all border border-indigo-100 group/btn shadow-sm">
+                                            <i class="fas fa-eye text-[10px]"></i>
+                                            <span class="text-[9px] font-black uppercase tracking-widest">Detail</span>
+                                        </a>
+
                                         @if($item->status_verifikasi == 'Pending')
+                                        <div class="h-6 w-[1px] bg-gray-100 mx-1"></div>
+
                                         <form action="{{ route('kabid.verifikasi.proses', $item->id_infrastruktur) }}" method="POST" class="inline">
                                             @csrf
                                             <input type="hidden" name="status" value="Verified">
-                                            <button type="submit" title="Terima Usulan" class="w-9 h-9 flex items-center justify-center bg-emerald-500 text-white rounded-xl hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-500/20 group/btn">
-                                                <i class="fas fa-check text-xs group-hover/btn:scale-110 transition-transform"></i>
+                                            <button type="submit" class="flex items-center gap-2 px-3 py-2 bg-emerald-500 text-white rounded-xl hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-500/20 group/btn">
+                                                <i class="fas fa-check text-[10px]"></i>
+                                                <span class="text-[9px] font-black uppercase tracking-widest">Terima</span>
                                             </button>
                                         </form>
                                         <form action="{{ route('kabid.verifikasi.proses', $item->id_infrastruktur) }}" method="POST" class="inline">
                                             @csrf
                                             <input type="hidden" name="status" value="Rejected">
-                                            <button type="submit" title="Tolak Usulan" class="w-9 h-9 flex items-center justify-center bg-white border border-gray-200 text-gray-400 rounded-xl hover:bg-red-50 hover:text-red-500 hover:border-red-100 transition-all group/btn">
-                                                <i class="fas fa-times text-xs group-hover/btn:scale-110 transition-transform"></i>
+                                            <button type="submit" class="flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 text-gray-400 rounded-xl hover:bg-red-50 hover:text-red-500 hover:border-red-100 transition-all group/btn">
+                                                <i class="fas fa-times text-[10px]"></i>
+                                                <span class="text-[9px] font-black uppercase tracking-widest">Tolak</span>
                                             </button>
                                         </form>
                                         @endif
-                                        <a href="{{ route('surveyor.infrastruktur.show', $item->id_infrastruktur) }}" target="_blank" title="Detail Teknis" class="w-9 h-9 flex items-center justify-center bg-gray-50 text-gray-400 rounded-xl hover:bg-indigo-50 hover:text-indigo-600 transition-all border border-gray-100 group/btn">
-                                            <i class="fas fa-eye text-xs group-hover/btn:scale-110 transition-transform"></i>
-                                        </a>
                                     </div>
                                 </td>
                             </tr>
