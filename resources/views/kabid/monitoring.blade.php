@@ -77,19 +77,39 @@
                         </button>
                         <div id="category-options" class="hidden mt-2 p-1 flex flex-col gap-1">
                             <button onclick="handleTypeFilter('Semua', 'Semua Kategori')" class="filter-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group active-filter" data-type="Semua">
-                                <span class="group-hover:text-white transition-colors">Semua Kategori</span>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-indigo-400 transition-colors check-box">
+                                        <i class="fas fa-check text-[7px] text-indigo-400 check-icon" style="opacity:1"></i>
+                                    </div>
+                                    <span class="group-hover:text-white transition-colors">Semua Kategori</span>
+                                </div>
                                 <div class="w-2.5 h-2.5 rounded-full bg-indigo-400/50"></div>
                             </button>
                             <button onclick="handleTypeFilter('Jalan', 'Jalan')" class="filter-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Jalan">
-                                <span class="group-hover:text-white transition-colors">Infrastruktur Jalan</span>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors check-box">
+                                        <i class="fas fa-check text-[7px] text-blue-400 check-icon" style="opacity:0"></i>
+                                    </div>
+                                    <span class="group-hover:text-white transition-colors">Infrastruktur Jalan</span>
+                                </div>
                                 <div class="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-lg shadow-blue-500/40"></div>
                             </button>
                             <button onclick="handleTypeFilter('Jembatan', 'Jembatan')" class="filter-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Jembatan">
-                                <span class="group-hover:text-white transition-colors">Jembatan</span>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors check-box">
+                                        <i class="fas fa-check text-[7px] text-emerald-400 check-icon" style="opacity:0"></i>
+                                    </div>
+                                    <span class="group-hover:text-white transition-colors">Jembatan</span>
+                                </div>
                                 <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/40"></div>
                             </button>
                             <button onclick="handleTypeFilter('Drainase', 'Drainase')" class="filter-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Drainase">
-                                <span class="group-hover:text-white transition-colors">Drainase</span>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-amber-400 transition-colors check-box">
+                                        <i class="fas fa-check text-[7px] text-amber-400 check-icon" style="opacity:0"></i>
+                                    </div>
+                                    <span class="group-hover:text-white transition-colors">Drainase</span>
+                                </div>
                                 <div class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-lg shadow-amber-500/40"></div>
                             </button>
                         </div>
@@ -108,12 +128,22 @@
                         </button>
                         <div id="territory-options" class="hidden mt-2 p-1 flex flex-col gap-1 max-h-48 overflow-y-auto custom-scrollbar">
                             <button onclick="handleKecamatanFilter('Semua', 'Semua Wilayah')" class="kec-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group active-kec" data-id="Semua">
-                                <span class="group-hover:text-white transition-colors">Semua Wilayah</span>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-indigo-400 transition-colors check-box">
+                                        <i class="fas fa-check text-[7px] text-indigo-400 check-icon" style="opacity:1"></i>
+                                    </div>
+                                    <span class="group-hover:text-white transition-colors">Semua Wilayah</span>
+                                </div>
                             </button>
                             @foreach($kecamatan as $kec)
                             <button onclick="handleKecamatanFilter('{{ $kec->id_kecamatan }}', '{{ $kec->nama_kecamatan }}')" class="kec-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="{{ $kec->id_kecamatan }}">
-                                <span class="truncate max-w-[120px] group-hover:text-white transition-colors">{{ $kec->nama_kecamatan }}</span>
-                                <div class="w-3 h-3 rounded shadow-inner flex-shrink-0" style="background-color: {{ $kec->warna ?? '#6366f1' }}; box-shadow: 0 0 8px {{ $kec->warna ?? '#6366f1' }}60;"></div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-indigo-400 transition-colors check-box">
+                                        <i class="fas fa-check text-[7px] text-indigo-400 check-icon" style="opacity:0"></i>
+                                    </div>
+                                    <span class="truncate max-w-[100px] group-hover:text-white transition-colors">{{ $kec->nama_kecamatan }}</span>
+                                </div>
+                                <div class="w-3 h-3 rounded flex-shrink-0" style="background-color: {{ $kec->warna ?? '#6366f1' }}; box-shadow: 0 0 8px {{ $kec->warna ?? '#6366f1' }}60;"></div>
                             </button>
                             @endforeach
                         </div>
@@ -257,7 +287,10 @@
             filterType = type;
             document.getElementById('current-cat-label').textContent = label;
             document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.toggle('active-filter', btn.getAttribute('data-type') === type);
+                const isActive = btn.getAttribute('data-type') === type;
+                btn.classList.toggle('active-filter', isActive);
+                const icon = btn.querySelector('.check-icon');
+                if (icon) icon.style.opacity = isActive ? '1' : '0';
             });
             applyFilters();
             toggleMenu('category-options');
@@ -267,7 +300,10 @@
             filterKec = kecId;
             document.getElementById('current-kec-label').textContent = label;
             document.querySelectorAll('.kec-btn').forEach(btn => {
-                btn.classList.toggle('active-kec', btn.getAttribute('data-id') === kecId.toString());
+                const isActive = btn.getAttribute('data-id') === kecId.toString();
+                btn.classList.toggle('active-kec', isActive);
+                const icon = btn.querySelector('.check-icon');
+                if (icon) icon.style.opacity = isActive ? '1' : '0';
             });
             applyFilters();
             if (kecId !== 'Semua' && geoLayers[kecId]) {
