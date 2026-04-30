@@ -69,19 +69,6 @@
                             </div>
                             <h4 class="font-black text-[#1e1b4b]">{{ auth()->user()->name }}</h4>
                             <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">{{ auth()->user()->role }}</p>
-                            
-                            <!-- Info Wilayah (Khusus Surveyor) -->
-                            <div class="mt-6 pt-6 border-t border-gray-50 space-y-2">
-                                <p class="text-[8px] font-black text-gray-400 uppercase tracking-[0.2em] mb-2 text-center">Wilayah Tugas</p>
-                                @forelse(auth()->user()->kecamatans as $assignedKec)
-                                <div class="flex items-center justify-center gap-2 text-emerald-600 bg-emerald-50 py-1 px-3 rounded-lg">
-                                    <i class="fas fa-map-marker-alt text-[10px]"></i>
-                                    <span class="text-[9px] font-black uppercase tracking-widest">{{ $assignedKec->nama_kecamatan }}</span>
-                                </div>
-                                @empty
-                                <span class="text-[9px] font-black uppercase tracking-widest text-gray-400">Belum Ditugaskan</span>
-                                @endforelse
-                            </div>
                         </div>
                     </div>
 
@@ -103,24 +90,6 @@
                                     <div>
                                         <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Alamat Email</label>
                                         <input type="email" name="email" value="{{ auth()->user()->email }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold outline-none focus:border-emerald-500 transition-all" required>
-                                    </div>
-                                </div>
-
-                                <div class="bg-gray-50 p-6 rounded-[2rem] border border-gray-100 shadow-inner">
-                                    <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-4">Daftar Wilayah Tugas</label>
-                                    <div class="flex flex-wrap gap-3">
-                                        @forelse(auth()->user()->kecamatans as $assignedKec)
-                                        <div class="px-4 py-2 bg-white rounded-xl border border-gray-200 shadow-sm flex items-center gap-2">
-                                            <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
-                                            <span class="text-[11px] font-bold text-[#1e1b4b]">{{ $assignedKec->nama_kecamatan }}</span>
-                                        </div>
-                                        @empty
-                                        <p class="text-[10px] text-gray-400 italic">Belum ada wilayah tugas yang dipilih.</p>
-                                        @endforelse
-                                    </div>
-                                    <div class="mt-4 pt-4 border-t border-gray-200/50 flex justify-between items-center">
-                                        <p class="text-[9px] text-gray-400 italic font-medium uppercase tracking-tighter">Pengelolaan wilayah dilakukan di Dashboard</p>
-                                        <a href="{{ route('surveyor.dashboard') }}" class="text-[9px] font-black text-emerald-600 uppercase hover:underline">Ke Dashboard</a>
                                     </div>
                                 </div>
 
