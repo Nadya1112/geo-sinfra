@@ -201,8 +201,8 @@
                             color: 'white',
                             fillOpacity: 0.15
                         },
-                        interactive: true // Keep true for kecamatan popup
-                    }).addTo(map);
+                        interactive: true
+                    }); // Do NOT add to map yet — applyFilters() controls visibility
 
                     poly.bindPopup(`<p class="text-[10px] font-black text-[#1e1b4b] uppercase">${kec.nama_kecamatan}</p>`, { 
                         className: 'custom-polygon-popup', 
@@ -269,6 +269,15 @@
         const totalKec = kecamatans.length;
 
         function applyFilters() {
+            // Control polygon visibility based on activeKecs
+            Object.keys(geoLayers).forEach(id => {
+                if (activeKecs.includes(id.toString())) {
+                    if (!map.hasLayer(geoLayers[id])) geoLayers[id].addTo(map);
+                } else {
+                    if (map.hasLayer(geoLayers[id])) map.removeLayer(geoLayers[id]);
+                }
+            });
+
             // If no category selected, show nothing
             if (activeTypes.length === 0) {
                 renderMarkers([]);
@@ -355,7 +364,7 @@
             }
         });
 
-        renderMarkers(dataPoints);
+        applyFilters(); // Initialize map state correctly
 
         function updateClock() {
             const now = new Date();
