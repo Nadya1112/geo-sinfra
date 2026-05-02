@@ -38,8 +38,9 @@ class KabidController extends Controller
             ->get();
             
         $kecamatan = \App\Models\Kecamatan::all();
+        $kelurahan = \App\Models\Kelurahan::with('kecamatan')->get();
         
-        return view('kabid.monitoring', compact('infrastruktur', 'kecamatan'));
+        return view('kabid.monitoring', compact('infrastruktur', 'kecamatan', 'kelurahan'));
     }
 
     public function verifikasi()

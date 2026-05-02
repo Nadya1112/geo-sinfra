@@ -315,7 +315,7 @@ class AdminController extends Controller
         }
 
         $jenisEnum = strtolower($request->jenis_infrastruktur);
-        $allowedEnum = ['jalan', 'drainase', 'jembatan', 'pju'];
+        $allowedEnum = ['jalan', 'sanitasi', 'titian'];
         if (!in_array($jenisEnum, $allowedEnum)) {
             $jenisEnum = 'jalan'; 
         }
@@ -414,7 +414,7 @@ class AdminController extends Controller
         }
 
         $jenisEnum = strtolower($request->jenis_infrastruktur);
-        $allowedEnum = ['jalan', 'drainase', 'jembatan', 'pju'];
+        $allowedEnum = ['jalan', 'sanitasi', 'titian'];
         if (!in_array($jenisEnum, $allowedEnum)) {
             $jenisEnum = 'jalan'; 
         }

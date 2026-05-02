@@ -54,10 +54,13 @@ class SurveyorController extends Controller
 
         // Jika belum memilih di profil, tampilkan semua agar bisa pilih pertama kali
         if ($semuaKecamatan->isEmpty()) {
-            $semuaKecamatan = DB::table('kecamatan')->get();
+            $semuaKecamatan = \App\Models\Kecamatan::all();
+            $semuaKelurahan = \App\Models\Kelurahan::all();
+        } else {
+            $kecamatanIds = $semuaKecamatan->pluck('id_kecamatan');
+            $semuaKelurahan = \App\Models\Kelurahan::whereIn('id_kecamatan', $kecamatanIds)->get();
         }
 
-        $semuaKelurahan = DB::table('kelurahan')->get();
         return view('surveyor.input', compact('semuaKecamatan', 'semuaKelurahan'));
     }
 
@@ -71,17 +74,24 @@ class SurveyorController extends Controller
             'latitude' => 'required',
             'longitude' => 'required',
             'foto' => 'required|image|max:5120',
+            'material_eksisting' => 'nullable|string',
+            'panjang' => 'nullable|numeric',
+            'lebar' => 'nullable|numeric',
+            'has_drainase' => 'nullable|boolean',
+            'has_gorong_gorong' => 'nullable|boolean',
+            'rencana_perbaikan' => 'nullable|string',
+            'tgl_survey' => 'nullable|date',
         ]);
 
         $path = $request->file('foto')->store('infrastruktur', 'public');
 
         // Logic sync with Admin for mapping 'jenis'
         $jenisMapping = [
-            'Jalan' => 'Jalan',
-            'Jembatan' => 'Jembatan',
-            'Drainase' => 'Drainase'
+            'Jalan' => 'jalan',
+            'Sanitasi' => 'sanitasi',
+            'Titian' => 'titian'
         ];
-        $jenisEnum = $jenisMapping[$request->jenis_infrastruktur] ?? 'Lainnya';
+        $jenisEnum = $jenisMapping[$request->jenis_infrastruktur] ?? 'jalan';
 
         DB::table('infrastruktur')->insert([
             'id_user' => auth()->id(),
@@ -95,6 +105,13 @@ class SurveyorController extends Controller
             'longitude' => str_replace(',', '.', $request->longitude),
             'kondisi' => 'Menunggu AI',
             'alamat' => $request->alamat ?? '-',
+            'material_eksisting' => $request->material_eksisting,
+            'panjang' => $request->panjang,
+            'lebar' => $request->lebar,
+            'has_drainase' => $request->has('has_drainase') ? 1 : 0,
+            'has_gorong_gorong' => $request->has('has_gorong_gorong') ? 1 : 0,
+            'rencana_perbaikan' => $request->rencana_perbaikan,
+            'tgl_survey' => $request->tgl_survey ?? now()->toDateString(),
             'foto_terbaru' => $path,
             'status_verifikasi' => 'Pending',
             'created_at' => now(),
@@ -133,10 +150,13 @@ class SurveyorController extends Controller
         $semuaKecamatan = $user->kecamatans;
 
         if ($semuaKecamatan->isEmpty()) {
-            $semuaKecamatan = DB::table('kecamatan')->get();
+            $semuaKecamatan = \App\Models\Kecamatan::all();
+            $semuaKelurahan = \App\Models\Kelurahan::all();
+        } else {
+            $kecamatanIds = $semuaKecamatan->pluck('id_kecamatan');
+            $semuaKelurahan = \App\Models\Kelurahan::whereIn('id_kecamatan', $kecamatanIds)->get();
         }
 
-        $semuaKelurahan = DB::table('kelurahan')->get();
         return view('surveyor.edit', compact('infrastruktur', 'semuaKecamatan', 'semuaKelurahan'));
     }
 
@@ -152,6 +172,13 @@ class SurveyorController extends Controller
             'latitude' => 'required|string',
             'longitude' => 'required|string',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
+            'material_eksisting' => 'nullable|string',
+            'panjang' => 'nullable|numeric',
+            'lebar' => 'nullable|numeric',
+            'has_drainase' => 'nullable|boolean',
+            'has_gorong_gorong' => 'nullable|boolean',
+            'rencana_perbaikan' => 'nullable|string',
+            'tgl_survey' => 'nullable|date',
         ]);
 
         if ($request->hasFile('foto')) {
@@ -176,6 +203,13 @@ class SurveyorController extends Controller
         $infrastruktur->latitude = str_replace(',', '.', $request->latitude);
         $infrastruktur->longitude = str_replace(',', '.', $request->longitude);
         $infrastruktur->alamat = $request->alamat ?? '-';
+        $infrastruktur->material_eksisting = $request->material_eksisting;
+        $infrastruktur->panjang = $request->panjang;
+        $infrastruktur->lebar = $request->lebar;
+        $infrastruktur->has_drainase = $request->has('has_drainase') ? 1 : 0;
+        $infrastruktur->has_gorong_gorong = $request->has('has_gorong_gorong') ? 1 : 0;
+        $infrastruktur->rencana_perbaikan = $request->rencana_perbaikan;
+        $infrastruktur->tgl_survey = $request->tgl_survey;
         $infrastruktur->save();
 
         return redirect()->route('surveyor.history')->with('success', 'Data berhasil diperbarui!');
@@ -185,13 +219,14 @@ class SurveyorController extends Controller
     {
         $dataMap = Infrastruktur::with(['cnn', 'analisis'])->where('id_user', auth()->id())->get();
         $myKecamatans = auth()->user()->kecamatans;
+        $allKelurahans = \App\Models\Kelurahan::all();
 
         // Fallback: Jika surveyor belum ditugaskan wilayah tertentu, tampilkan semua agar peta tidak kosong
         if ($myKecamatans->isEmpty()) {
             $myKecamatans = \App\Models\Kecamatan::all();
         }
 
-        return view('surveyor.map', compact('dataMap', 'myKecamatans'));
+        return view('surveyor.map', compact('dataMap', 'myKecamatans', 'allKelurahans'));
     }
 
     public function profile()

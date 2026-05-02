@@ -71,8 +71,7 @@
                                 <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Jenis Infrastruktur <span class="text-red-500">*</span></label>
                                 <select name="jenis_infrastruktur" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500">
                                     <option value="Jalan" {{ $inf->jenis_infrastruktur == 'Jalan' ? 'selected' : '' }}>Jalan</option>
-                                    <option value="Jembatan" {{ $inf->jenis_infrastruktur == 'Jembatan' ? 'selected' : '' }}>Jembatan</option>
-                                    <option value="Drainase" {{ $inf->jenis_infrastruktur == 'Drainase' ? 'selected' : '' }}>Drainase</option>
+                                    <option value="Sanitasi" {{ $inf->jenis_infrastruktur == 'Sanitasi' ? 'selected' : '' }}>Sanitasi</option>
                                     <option value="Titian" {{ $inf->jenis_infrastruktur == 'Titian' ? 'selected' : '' }}>Titian</option>
                                 </select>
                             </div>

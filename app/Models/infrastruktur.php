@@ -30,11 +30,21 @@ class Infrastruktur extends Model
         'id_kecamatan',
         'nama_infrastruktur',
         'jenis_infrastruktur',
+        'nama_objek',
         'foto_terbaru',
+        'jenis',
+        'material_eksisting',
+        'alamat',
         'latitude',
         'longitude',
         'kondisi',
+        'panjang',
+        'lebar',
+        'has_drainase',
+        'has_gorong_gorong',
+        'rencana_perbaikan',
         'status_verifikasi',
+        'tgl_survey',
     ];
 
     /**

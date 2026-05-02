@@ -148,14 +148,33 @@
                                 </div>
                                 <div class="w-3.5 h-3.5 rounded bg-emerald-500 shadow-lg shadow-emerald-500/20"></div>
                             </button>
-                            <button onclick="handleCategorySelect('Drainase')" data-type="Drainase" class="cat-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
+                            <button onclick="handleCategorySelect('Sanitasi')" data-type="Sanitasi" class="cat-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
                                 <div class="flex items-center gap-3">
                                     <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors">
                                         <i class="fas fa-check text-[7px] text-blue-400 opacity-0 transition-opacity"></i>
                                     </div>
-                                    <span class="group-hover:text-white transition-colors">Drainase</span>
+                                    <span class="group-hover:text-white transition-colors">Sanitasi</span>
                                 </div>
-                                <div class="w-3.5 h-3.5 rounded bg-amber-500 shadow-lg shadow-amber-500/20"></div>
+                                <div class="w-3.5 h-3.5 rounded bg-blue-500 shadow-lg shadow-blue-500/20"></div>
+                            </button>
+                            <button onclick="handleCategorySelect('Titian')" data-type="Titian" class="cat-opt-btn w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-purple-400 transition-colors">
+                                        <i class="fas fa-check text-[7px] text-purple-400 opacity-0 transition-opacity"></i>
+                                    </div>
+                                    <span class="group-hover:text-white transition-colors">Titian</span>
+                                </div>
+                                <div class="w-3.5 h-3.5 rounded bg-purple-500 shadow-lg shadow-purple-500/20"></div>
+                            </button>
+                            <div class="h-[1px] bg-white/5 my-1"></div>
+                            <button onclick="toggleKelurahanPoints()" class="w-full px-5 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" id="kel-toggle-btn">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
+                                        <i class="fas fa-check text-[7px] text-emerald-400" id="kel-check-icon" style="opacity:1"></i>
+                                    </div>
+                                    <span class="group-hover:text-white transition-colors">Titik Kelurahan</span>
+                                </div>
+                                <i class="fas fa-home text-emerald-500 text-[10px]"></i>
                             </button>
                         </div>
                     </div>
@@ -265,8 +284,11 @@
 
         const dataPoints = <?php echo json_encode($dataMap, 15, 512) ?>;
         const myKecamatans = <?php echo json_encode($myKecamatans, 15, 512) ?>;
+        const kelurahans = <?php echo json_encode($allKelurahans, 15, 512) ?>;
         let activeMarkers = [];
+        let kelurahanMarkers = [];
         let geoLayers = {};
+        let showKelurahan = true;
 
         // Render Polygons (Territories)
         myKecamatans.forEach(kec => {
@@ -387,7 +409,42 @@
             }
         }
 
-        let activeTypes = ['Jalan', 'Jembatan', 'Drainase'];
+        function renderKelurahanMarkers() {
+            kelurahanMarkers.forEach(m => map.removeLayer(m));
+            kelurahanMarkers = [];
+
+            if (!showKelurahan) return;
+
+            kelurahans.forEach(kel => {
+                if (kel.latitude && kel.longitude) {
+                    const icon = L.divIcon({
+                        className: '',
+                        html: `<div class="w-6 h-6 bg-emerald-500 rounded-full border-2 border-white shadow-lg flex items-center justify-center text-white text-[10px] transform hover:scale-110 transition-transform"><i class="fas fa-home"></i></div>`,
+                        iconSize: [24, 24],
+                        iconAnchor: [12, 12]
+                    });
+
+                    const marker = L.marker([kel.latitude, kel.longitude], {
+                        icon: icon
+                    }).addTo(map).bindPopup(`
+                        <div class="p-2 text-center">
+                            <p class="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">Titik Kelurahan</p>
+                            <h4 class="text-xs font-black text-[#1e1b4b] uppercase">${kel.nama_kelurahan}</h4>
+                        </div>
+                    `, { className: 'premium-popup' });
+                    kelurahanMarkers.push(marker);
+                }
+            });
+        }
+
+        function toggleKelurahanPoints() {
+            showKelurahan = !showKelurahan;
+            document.getElementById('kel-check-icon').style.opacity = showKelurahan ? '1' : '0';
+            document.getElementById('kel-toggle-btn').classList.toggle('text-white', showKelurahan);
+            renderKelurahanMarkers();
+        }
+
+        let activeTypes = ['Jalan', 'Sanitasi', 'Titian'];
         let activeTerritories = myKecamatans.map(k => k.id_kecamatan.toString());
 
         function applyFilters() {
@@ -446,7 +503,7 @@
         function handleCategorySelect(type) {
             if (type === 'Semua') {
                 if (activeTypes.length === 3) activeTypes = [];
-                else activeTypes = ['Jalan', 'Jembatan', 'Drainase'];
+                else activeTypes = ['Jalan', 'Sanitasi', 'Titian'];
             } else {
                 if (activeTypes.includes(type)) {
                     activeTypes = activeTypes.filter(t => t !== type);
@@ -504,6 +561,7 @@
         }
 
         applyFilters();
+        renderKelurahanMarkers();
     </script>
 
     <style>

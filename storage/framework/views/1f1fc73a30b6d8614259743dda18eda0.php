@@ -70,7 +70,7 @@
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#" class="text-gray-600 hover:text-blue-700 font-semibold transition text-sm">Data Statistik</a>
                     <a href="#peta" class="text-gray-600 hover:text-blue-700 font-semibold transition text-sm">Peta Sebaran</a>
-                    <a href="{{ url('/login') }}" class="inline-flex items-center px-8 py-2.5 bg-[#5c56e1] text-white text-sm font-bold rounded-xl hover:bg-blue-800 shadow-lg shadow-blue-200 transition-all active:scale-95 uppercase tracking-wider">LOGIN</a>
+                    <a href="<?php echo e(url('/login')); ?>" class="inline-flex items-center px-8 py-2.5 bg-[#5c56e1] text-white text-sm font-bold rounded-xl hover:bg-blue-800 shadow-lg shadow-blue-200 transition-all active:scale-95 uppercase tracking-wider">LOGIN</a>
                 </div>
             </div>
         </div>
@@ -116,20 +116,21 @@
                     </div>
                     
                     <div class="max-h-[30vh] overflow-y-auto pr-1 custom-scrollbar">
-                        @foreach($semuaWilayah as $wilayah)
+                        <?php $__currentLoopData = $semuaWilayah; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $wilayah): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="kecamatan-item">
                             <input type="checkbox" checked 
-                                onchange="toggleLayer('{{ $wilayah->id_kecamatan }}', this.checked)"
+                                onchange="toggleLayer('<?php echo e($wilayah->id_kecamatan); ?>', this.checked)"
                                 class="w-3.5 h-3.5 text-blue-600 border-gray-300 rounded cursor-pointer">
                             
                             <span class="text-[10px] font-bold text-[#1e1b4b] flex-1 cursor-pointer hover:text-blue-600 transition" 
-                                onclick="zoomKeKecamatan('{{ $wilayah->id_kecamatan }}')">
-                                {{ $wilayah->nama_kecamatan }}
+                                onclick="zoomKeKecamatan('<?php echo e($wilayah->id_kecamatan); ?>')">
+                                <?php echo e($wilayah->nama_kecamatan); ?>
+
                             </span>
                             
-                            <div class="color-box" style="background-color: {{ $wilayah->warna }}"></div>
+                            <div class="color-box" style="background-color: <?php echo e($wilayah->warna); ?>"></div>
                         </div>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
                 </div>
             </div>
@@ -158,43 +159,43 @@
 
         var geoLayers = {};
 
-        @foreach($semuaWilayah as $wilayah)
-            @if($wilayah->geometri)
+        <?php $__currentLoopData = $semuaWilayah; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $wilayah): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <?php if($wilayah->geometri): ?>
                 try {
-                    var poly = L.geoJSON({!! $wilayah->geometri !!}, {
+                    var poly = L.geoJSON(<?php echo $wilayah->geometri; ?>, {
                         style: {
-                            fillColor: "{{ $wilayah->warna ?? '#3b82f6' }}",
+                            fillColor: "<?php echo e($wilayah->warna ?? '#3b82f6'); ?>",
                             weight: 1.5, opacity: 1, color: 'white', fillOpacity: 0.2
                         }
                     }).addTo(map);
 
-                    geoLayers['{{ $wilayah->id_kecamatan }}'] = poly;
+                    geoLayers['<?php echo e($wilayah->id_kecamatan); ?>'] = poly;
 
-                    poly.bindPopup("<div class='text-center p-1 font-bold text-[10px] uppercase'>Kec. {{ $wilayah->nama_kecamatan }}</div>");
+                    poly.bindPopup("<div class='text-center p-1 font-bold text-[10px] uppercase'>Kec. <?php echo e($wilayah->nama_kecamatan); ?></div>");
                     
                     poly.on('mouseover', function() { this.setStyle({ fillOpacity: 0.4 }); });
                     poly.on('mouseout', function() { this.setStyle({ fillOpacity: 0.2 }); });
                 } catch (e) { console.error("Error Geometri"); }
-            @endif
-        @endforeach
+            <?php endif; ?>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-        @foreach($dataInfrastruktur as $infra)
-            @if($infra->latitude && $infra->longitude)
-                L.circleMarker([{{ $infra->latitude }}, {{ $infra->longitude }}], {
+        <?php $__currentLoopData = $dataInfrastruktur; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $infra): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <?php if($infra->latitude && $infra->longitude): ?>
+                L.circleMarker([<?php echo e($infra->latitude); ?>, <?php echo e($infra->longitude); ?>], {
                     radius: 6, fillColor: "#3b82f6", color: "#ffffff", weight: 2, opacity: 1, fillOpacity: 0.9
                 }).addTo(map).bindPopup(`
                     <div class="p-2 w-40 text-center">
-                        <img src="{{ asset('storage/' . $infra->foto_terbaru) }}" class="rounded-lg mb-2 w-full h-20 object-cover border" onerror="this.src='https://via.placeholder.com/150?text=No+Image'">
-                        <h4 class="text-[10px] font-black text-slate-800 uppercase leading-tight">{{ $infra->nama_objek }}</h4>
-                        <p class="text-[9px] text-blue-600 font-bold uppercase mt-1">{{ $infra->jenis }}</p>
+                        <img src="<?php echo e(asset('storage/' . $infra->foto_terbaru)); ?>" class="rounded-lg mb-2 w-full h-20 object-cover border" onerror="this.src='https://via.placeholder.com/150?text=No+Image'">
+                        <h4 class="text-[10px] font-black text-slate-800 uppercase leading-tight"><?php echo e($infra->nama_objek); ?></h4>
+                        <p class="text-[9px] text-blue-600 font-bold uppercase mt-1"><?php echo e($infra->jenis); ?></p>
                     </div>
                 `);
-            @endif
-        @endforeach
+            <?php endif; ?>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-        @foreach($dataKelurahan as $kel)
-            @if($kel->latitude && $kel->longitude)
-                L.marker([{{ $kel->latitude }}, {{ $kel->longitude }}], {
+        <?php $__currentLoopData = $dataKelurahan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <?php if($kel->latitude && $kel->longitude): ?>
+                L.marker([<?php echo e($kel->latitude); ?>, <?php echo e($kel->longitude); ?>], {
                     icon: L.divIcon({
                         className: 'custom-div-icon',
                         html: "<div class='w-6 h-6 bg-emerald-500 rounded-full border-2 border-white shadow-lg flex items-center justify-center text-white text-[10px]'><i class='fas fa-home'></i></div>",
@@ -204,11 +205,11 @@
                 }).addTo(map).bindPopup(`
                     <div class="p-1 text-center">
                         <p class="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">Titik Kelurahan</p>
-                        <h4 class="text-[11px] font-black text-[#1e1b4b] uppercase">{{ $kel->nama_kelurahan }}</h4>
+                        <h4 class="text-[11px] font-black text-[#1e1b4b] uppercase"><?php echo e($kel->nama_kelurahan); ?></h4>
                     </div>
                 `);
-            @endif
-        @endforeach
+            <?php endif; ?>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
         // Fungsi Baru: Sembunyikan/Munculkan Layer
         function toggleLayer(id, isChecked) {
@@ -232,4 +233,4 @@
         setTimeout(function() { map.invalidateSize(); }, 500);
     </script>
 </body>
-</html>
+</html><?php /**PATH C:\laragon1\laragon\www\geo-sinfra\resources\views/landing.blade.php ENDPATH**/ ?>

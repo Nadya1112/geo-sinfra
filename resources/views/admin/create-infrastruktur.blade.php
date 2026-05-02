@@ -68,8 +68,7 @@
                             <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Jenis Infrastruktur</label>
                             <select name="jenis_infrastruktur" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500">
                                 <option value="Jalan">Jalan</option>
-                                <option value="Jembatan">Jembatan</option>
-                                <option value="Drainase">Drainase</option>
+                                <option value="Sanitasi">Sanitasi</option>
                                 <option value="Titian">Titian</option>
                             </select>
                         </div>

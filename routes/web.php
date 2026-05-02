@@ -18,8 +18,9 @@ use Illuminate\Support\Facades\DB;
 Route::get('/', function () {
     $semuaWilayah = DB::table('kecamatan')->whereNull('deleted_at')->get();
     $dataInfrastruktur = DB::table('infrastruktur')->whereNull('deleted_at')->get();
+    $dataKelurahan = DB::table('kelurahan')->whereNull('deleted_at')->get();
 
-    return view('landing', compact('semuaWilayah', 'dataInfrastruktur')); 
+    return view('landing', compact('semuaWilayah', 'dataInfrastruktur', 'dataKelurahan')); 
 });
 
 /** * Grup Autentikasi 

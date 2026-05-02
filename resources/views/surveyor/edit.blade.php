@@ -94,11 +94,17 @@
 
                                 <div>
                                     <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Jenis <span class="text-red-500">*</span></label>
-                                    <select name="jenis_infrastruktur" class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold focus:border-emerald-500 outline-none appearance-none cursor-pointer" required>
-                                        <option value="Jalan" {{ $infrastruktur->jenis_infrastruktur == 'Jalan' ? 'selected' : '' }}>Jalan</option>
-                                        <option value="Jembatan" {{ $infrastruktur->jenis_infrastruktur == 'Jembatan' ? 'selected' : '' }}>Jembatan</option>
-                                        <option value="Drainase" {{ $infrastruktur->jenis_infrastruktur == 'Drainase' ? 'selected' : '' }}>Drainase</option>
-                                    </select>
+                                    <div class="grid grid-cols-3 gap-4">
+                                        @foreach(['Jalan', 'Sanitasi', 'Titian'] as $type)
+                                        <label class="cursor-pointer group">
+                                            <input type="radio" name="jenis_infrastruktur" value="{{ $type }}" class="peer hidden" {{ $infrastruktur->jenis_infrastruktur == $type ? 'checked' : '' }}>
+                                            <div class="px-2 py-4 bg-gray-50 border border-gray-100 rounded-2xl text-center transition-all peer-checked:bg-[#1e1b4b] peer-checked:border-[#1e1b4b] peer-checked:text-white shadow-sm hover:bg-emerald-50 group-hover:scale-[1.02]">
+                                                <i class="fas fa-{{ $type == 'Jalan' ? 'road' : ($type == 'Sanitasi' ? 'faucet-drip' : 'bridge-water') }} text-lg mb-2 block group-hover:animate-bounce"></i>
+                                                <span class="text-[9px] font-black uppercase tracking-tighter">{{ $type }}</span>
+                                            </div>
+                                        </label>
+                                        @endforeach
+                                    </div>
                                 </div>
 
                                 <div class="grid grid-cols-2 gap-4">
@@ -122,18 +128,89 @@
                                     </div>
                                     <div>
                                         <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Kelurahan <span class="text-red-500">*</span></label>
-                                        <select name="id_kelurahan" id="id_kelurahan" class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold focus:border-emerald-500 outline-none appearance-none cursor-pointer" required>
-                                            <option value="">Pilih Kelurahan...</option>
-                                            @foreach($semuaKelurahan as $kel)
-                                                <option value="{{ $kel->id_kelurahan }}" data-kecamatan="{{ $kel->id_kecamatan }}" {{ $infrastruktur->id_kelurahan == $kel->id_kelurahan ? 'selected' : '' }}>{{ $kel->nama_kelurahan }}</option>
-                                            @endforeach
-                                        </select>
+                                        <div class="relative">
+                                            <select name="id_kelurahan" id="id_kelurahan" class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold focus:border-emerald-500 outline-none appearance-none cursor-pointer transition-all" required onchange="focusToKelurahan()">
+                                                <option value="">Pilih Kelurahan...</option>
+                                                @foreach($semuaKelurahan as $kel)
+                                                    <option value="{{ $kel->id_kelurahan }}" 
+                                                            data-kecamatan="{{ $kel->id_kecamatan }}"
+                                                            data-lat="{{ $kel->latitude }}"
+                                                            data-lng="{{ $kel->longitude }}"
+                                                            {{ $infrastruktur->id_kelurahan == $kel->id_kelurahan ? 'selected' : '' }}>
+                                                        {{ $kel->nama_kelurahan }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            <i class="fas fa-chevron-down absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-xs"></i>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div>
                                     <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Alamat Detail / Catatan Lokasi</label>
                                     <textarea name="alamat" rows="2" placeholder="Sebutkan patokan atau alamat detail..." class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold focus:border-emerald-500 outline-none transition-all resize-none">{{ old('alamat', $infrastruktur->alamat) }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bagian Baru: Detail Teknis -->
+                        <div class="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm">
+                            <h4 class="font-black text-[#1e1b4b] mb-6 border-b border-gray-50 pb-4 italic">Detail Teknis & Dimensi</h4>
+                            <div class="space-y-5">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Panjang (m)</label>
+                                        <input type="number" step="0.01" name="panjang" value="{{ old('panjang', $infrastruktur->panjang) }}" placeholder="0.00" class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold focus:border-emerald-500 outline-none transition-all">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Lebar (m)</label>
+                                        <input type="number" step="0.01" name="lebar" value="{{ old('lebar', $infrastruktur->lebar) }}" placeholder="0.00" class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold focus:border-emerald-500 outline-none transition-all">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Material Utama</label>
+                                    <div class="relative group">
+                                        <i class="fas fa-layer-group absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#1e1b4b] transition-colors z-10"></i>
+                                        <select name="material_eksisting" class="w-full pl-12 pr-10 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-semibold focus:border-emerald-500 outline-none appearance-none cursor-pointer transition-all relative z-0">
+                                            <option value="">Pilih Material...</option>
+                                            @foreach(['Cor Beton', 'Aspal', 'Paving', 'Tanah Asli', 'Tanah Pemadatan', 'Tanah Lepas', 'Batapres', 'Makadam', 'Titian', 'Titian Ulin', 'Titian Rusak', 'WC', 'Lainnya'] as $mat)
+                                                <option value="{{ $mat }}" {{ (old('material_eksisting', $infrastruktur->material_eksisting) == $mat) ? 'selected' : '' }}>{{ $mat }}</option>
+                                            @endforeach
+                                        </select>
+                                        <i class="fas fa-chevron-down absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-[10px]"></i>
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-6 pt-2">
+                                    <label class="flex items-center gap-3 cursor-pointer group">
+                                        <div class="relative">
+                                            <input type="checkbox" name="has_drainase" value="1" {{ $infrastruktur->has_drainase ? 'checked' : '' }} class="peer hidden">
+                                            <div class="w-5 h-5 border-2 border-gray-300 rounded-lg peer-checked:bg-emerald-500 peer-checked:border-emerald-500 transition-all flex items-center justify-center">
+                                                <i class="fas fa-check text-[10px] text-white opacity-0 peer-checked:opacity-100"></i>
+                                            </div>
+                                        </div>
+                                        <span class="text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest">Ada Drainase</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 cursor-pointer group">
+                                        <div class="relative">
+                                            <input type="checkbox" name="has_gorong_gorong" value="1" {{ $infrastruktur->has_gorong_gorong ? 'checked' : '' }} class="peer hidden">
+                                            <div class="w-5 h-5 border-2 border-gray-300 rounded-lg peer-checked:bg-emerald-500 peer-checked:border-emerald-500 transition-all flex items-center justify-center">
+                                                <i class="fas fa-check text-[10px] text-white opacity-0 peer-checked:opacity-100"></i>
+                                            </div>
+                                        </div>
+                                        <span class="text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest">Ada Gorong-gorong</span>
+                                    </label>
+                                </div>
+
+                                <div>
+                                    <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Tanggal Survey</label>
+                                    <input type="date" name="tgl_survey" value="{{ old('tgl_survey', $infrastruktur->tgl_survey) }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold focus:border-emerald-500 outline-none transition-all">
+                                </div>
+
+                                <div>
+                                    <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Rencana Perbaikan / Catatan Tambahan</label>
+                                    <textarea name="rencana_perbaikan" rows="3" placeholder="Sebutkan rencana atau kebutuhan mendesak..." class="w-full px-5 py-3 bg-gray-50 border border-gray-300 rounded-2xl text-sm font-semibold focus:border-emerald-500 outline-none transition-all resize-none">{{ old('rencana_perbaikan', $infrastruktur->rencana_perbaikan) }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -252,29 +329,52 @@
         }
 
         function filterKelurahan() {
-            const idKecamatan = document.getElementById('id_kecamatan').value;
+            const idKecamatan = document.getElementById('id_kecamatan').value.trim();
             const kelurahanSelect = document.getElementById('id_kelurahan');
             const options = kelurahanSelect.querySelectorAll('option');
             
-            let firstVisible = null;
-            let currentSelected = kelurahanSelect.value;
+            const currentSelected = kelurahanSelect.value;
             let currentStillVisible = false;
 
             options.forEach(opt => {
-                if (opt.value === "") return;
-                if (opt.getAttribute('data-kecamatan') === idKecamatan) {
-                    opt.hidden = false;
+                const optKecId = opt.getAttribute('data-kecamatan');
+
+                // Selalu tampilkan opsi default "Pilih Kelurahan"
+                if (opt.value === "") {
+                    opt.style.display = "block";
                     opt.disabled = false;
-                    if (!firstVisible) firstVisible = opt.value;
+                    return;
+                }
+
+                if (idKecamatan && optKecId === idKecamatan) {
+                    opt.style.display = "block";
+                    opt.disabled = false;
+                    opt.hidden = false;
                     if (opt.value === currentSelected) currentStillVisible = true;
                 } else {
-                    opt.hidden = true;
+                    opt.style.display = "none";
                     opt.disabled = true;
+                    opt.hidden = true;
                 }
             });
             
-            if (!currentStillVisible) {
-                kelurahanSelect.value = firstVisible ? firstVisible : "";
+            if (!currentStillVisible && idKecamatan !== "") {
+                kelurahanSelect.value = "";
+            }
+        }
+
+        function focusToKelurahan() {
+            const kelurahanSelect = document.getElementById('id_kelurahan');
+            const selectedOption = kelurahanSelect.options[kelurahanSelect.selectedIndex];
+            
+            if (selectedOption && selectedOption.value !== "") {
+                const lat = parseFloat(selectedOption.getAttribute('data-lat'));
+                const lng = parseFloat(selectedOption.getAttribute('data-lng'));
+                
+                if (!isNaN(lat) && !isNaN(lng)) {
+                    map.setView([lat, lng], 16);
+                    updateMarker(lat, lng);
+                }
             }
         }
 
