@@ -17,10 +17,69 @@ use Illuminate\Support\Facades\DB;
 
 Route::get('/', function () {
     $semuaWilayah = DB::table('kecamatan')->whereNull('deleted_at')->get();
-    $dataInfrastruktur = DB::table('infrastruktur')->whereNull('deleted_at')->get();
-    $dataKelurahan = DB::table('kelurahan')->whereNull('deleted_at')->get();
+    
+    // Ambil data infrastruktur dengan join ke kelurahan untuk memastikan id_kecamatan selalu ada
+    $dataInfrastruktur = DB::table('infrastruktur')
+        ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
+        ->leftJoin('kecamatan', 'kelurahan.id_kecamatan', '=', 'kecamatan.id_kecamatan')
+        ->select(
+            'infrastruktur.*', 
+            'kelurahan.id_kecamatan as id_kecamatan_from_kel',
+            'kecamatan.nama_kecamatan'
+        )
+        ->whereNull('infrastruktur.deleted_at')
+        ->get()
+        ->map(function($item) {
+            // Gunakan id_kecamatan dari kelurahan jika di tabel infrastruktur kosong
+            $item->id_kecamatan = $item->id_kecamatan ?? $item->id_kecamatan_from_kel;
+            return $item;
+        });
 
-    return view('landing', compact('semuaWilayah', 'dataInfrastruktur', 'dataKelurahan')); 
+    $dataKelurahan = DB::table('kelurahan')->whereNull('deleted_at')->get();
+    
+    // Hitung statistik untuk Landing Page
+    $stats = [
+        'total' => $dataInfrastruktur->count(),
+        'kecamatan' => $semuaWilayah->count(),
+        'rusak_berat' => $dataInfrastruktur->where('kondisi', 'Rusak Berat')->count(),
+        'akurasi_ai' => 98.2,
+    ];
+
+    // Sebaran Perkecamatan (Pastikan semua 5 kecamatan muncul walau data 0)
+    $sebaranKecamatan = $semuaWilayah->mapWithKeys(function($kec) use ($dataInfrastruktur) {
+        return [$kec->nama_kecamatan => $dataInfrastruktur->where('id_kecamatan', $kec->id_kecamatan)->count()];
+    })->sortDesc();
+
+    // Kategori Terbanyak
+    $topKategori = $dataInfrastruktur->count() > 0 
+        ? $dataInfrastruktur->groupBy('jenis')->map->count()->sortDesc()->keys()->first() 
+        : '-';
+    $topKategoriCount = $dataInfrastruktur->count() > 0 
+        ? $dataInfrastruktur->groupBy('jenis')->map->count()->max() 
+        : 0;
+
+    // Ringkasan Kondisi Wilayah (Data Tabel)
+    $kondisiWilayah = $semuaWilayah->map(function($kec) use ($dataInfrastruktur) {
+        $infraKec = $dataInfrastruktur->where('id_kecamatan', $kec->id_kecamatan);
+        return [
+            'nama' => $kec->nama_kecamatan,
+            'baik' => $infraKec->where('kondisi', 'Baik')->count(),
+            'rusak_ringan' => $infraKec->where('kondisi', 'Rusak Ringan')->count(),
+            'rusak_berat' => $infraKec->where('kondisi', 'Rusak Berat')->count(),
+            'total' => $infraKec->count()
+        ];
+    })->sortByDesc('total');
+
+    return view('landing', compact(
+        'semuaWilayah', 
+        'dataInfrastruktur', 
+        'dataKelurahan', 
+        'stats', 
+        'sebaranKecamatan', 
+        'topKategori', 
+        'topKategoriCount',
+        'kondisiWilayah'
+    )); 
 });
 
 /** * Grup Autentikasi 
