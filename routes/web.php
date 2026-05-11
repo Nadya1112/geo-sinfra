@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\AnalisisAiController; // <-- TAMBAHAN: Import Controller AI
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 
@@ -147,6 +148,10 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/infrastruktur/{id}', [AdminController::class, 'updateInfrastruktur'])->name('admin.infrastruktur.update');
         // Proses Hapus Aset
         Route::delete('/infrastruktur/{id}', [AdminController::class, 'destroyInfrastruktur'])->name('admin.infrastruktur.destroy');
+        
+        // --- TAMBAHAN: RUTE ANALISIS AI (DECISION TREE) UNTUK ADMIN ---
+        Route::post('/infrastruktur/{id}/analisis-ai', [AnalisisAiController::class, 'prosesAnalisis'])->name('admin.infrastruktur.analisis-ai');
+
         // Manajemen Profil
         Route::get('/profile', [AdminController::class, 'profile'])->name('admin.profile');
         Route::put('/profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
@@ -177,6 +182,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/laporan', [App\Http\Controllers\Kabid\KabidController::class, 'laporan'])->name('kabid.laporan');
         Route::post('/verifikasi/{id}', [App\Http\Controllers\Kabid\KabidController::class, 'prosesVerifikasi'])->name('kabid.verifikasi.proses');
         Route::get('/infrastruktur/{id}', [App\Http\Controllers\Kabid\KabidController::class, 'show'])->name('kabid.infrastruktur.show');
+        
+        // --- TAMBAHAN: RUTE ANALISIS AI (DECISION TREE) UNTUK KABID ---
+        Route::post('/infrastruktur/{id}/analisis-ai', [AnalisisAiController::class, 'prosesAnalisis'])->name('kabid.infrastruktur.analisis-ai');
+
         Route::get('/profile', [App\Http\Controllers\Kabid\KabidController::class, 'profile'])->name('kabid.profile');
         Route::post('/profile', [App\Http\Controllers\Kabid\KabidController::class, 'updateProfile'])->name('kabid.profile.update');
     });
