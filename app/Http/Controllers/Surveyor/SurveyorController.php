@@ -99,7 +99,6 @@ class SurveyorController extends Controller
             'nama_objek' => $request->nama_infrastruktur,
             'jenis_infrastruktur' => $request->jenis_infrastruktur,
             'jenis' => $jenisEnum,
-            'id_kecamatan' => $request->id_kecamatan,
             'id_kelurahan' => $request->id_kelurahan,
             'latitude' => str_replace(',', '.', $request->latitude),
             'longitude' => str_replace(',', '.', $request->longitude),
@@ -141,10 +140,13 @@ class SurveyorController extends Controller
 
     public function edit($id)
     {
-        $infrastruktur = Infrastruktur::with(['cnn', 'analisis'])
+        $infrastruktur = Infrastruktur::with(['cnn', 'analisis', 'kelurahan'])
             ->where('id_infrastruktur', $id)
             ->where('id_user', auth()->id())
             ->firstOrFail();
+            
+        // Populate dynamic attribute for the view
+        $infrastruktur->id_kecamatan = $infrastruktur->kelurahan ? $infrastruktur->kelurahan->id_kecamatan : null;
             
         $user = auth()->user();
         $semuaKecamatan = $user->kecamatans;
@@ -198,7 +200,6 @@ class SurveyorController extends Controller
         $infrastruktur->nama_objek = $request->nama_infrastruktur;
         $infrastruktur->jenis_infrastruktur = $request->jenis_infrastruktur;
         $infrastruktur->jenis = $jenisEnum;
-        $infrastruktur->id_kecamatan = $request->id_kecamatan;
         $infrastruktur->id_kelurahan = $request->id_kelurahan;
         $infrastruktur->latitude = str_replace(',', '.', $request->latitude);
         $infrastruktur->longitude = str_replace(',', '.', $request->longitude);

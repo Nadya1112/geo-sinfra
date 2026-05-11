@@ -43,15 +43,18 @@ class AdminController extends Controller
         $jumlahSurveyor = User::where('role', 'surveyor')->count();
         $jumlahKabid = User::where('role', 'kabid')->count();
         $jumlahWilayah = DB::table('kecamatan')->count();
-        $jumlahInfrastruktur = DB::table('infrastruktur')->whereNull('deleted_at')->count();
-        $jumlahAnalisis = DB::table('analisis_ai')->whereNull('deleted_at')->count();
+        $jumlahInfrastruktur = Infrastruktur::whereNull('deleted_at')->count();
+        
+        // Menghitung jumlah data yang sudah dianalisis AI
+        $jumlahAnalisis = DB::table('analisis_ai')->count();
 
-        // Data Kondisi untuk Chart/Statistik
-        $jumlahRusakBerat = DB::table('infrastruktur')->whereNull('deleted_at')->where('kondisi', 'Rusak Berat')->count();
-        $jumlahRusakRingan = DB::table('infrastruktur')->whereNull('deleted_at')->where('kondisi', 'Rusak Ringan')->count();
-        $jumlahBaik = DB::table('infrastruktur')->whereNull('deleted_at')->where('kondisi', 'Baik')->count();
+        // Data Kondisi BERDASARKAN HASIL AI (Agar lebih akurat untuk laporan TA)
+        $hasilAi = DB::table('analisis_ai')->get();
+        $jumlahRusakBerat = $hasilAi->where('label_prioritas', 'Rusak Berat')->count();
+        $jumlahRusakSedang = $hasilAi->where('label_prioritas', 'Rusak Sedang')->count(); // Tambahan kategori
+        $jumlahRusakRingan = $hasilAi->where('label_prioritas', 'Rusak Ringan')->count();
+        $jumlahBaik = $jumlahInfrastruktur - ($jumlahRusakBerat + $jumlahRusakSedang + $jumlahRusakRingan);
 
-        // Aktivitas Terbaru (Data dari tabel activity_logs)
         $recentActivities = ActivityLog::with('user')
             ->orderBy('created_at', 'desc')
             ->limit(10)
@@ -59,7 +62,7 @@ class AdminController extends Controller
 
         return view('admin.statistik', compact(
             'jumlahSurveyor', 'jumlahKabid', 'jumlahWilayah', 'jumlahInfrastruktur', 
-            'jumlahAnalisis', 'jumlahRusakBerat', 'jumlahRusakRingan', 'jumlahBaik',
+            'jumlahAnalisis', 'jumlahRusakBerat', 'jumlahRusakSedang', 'jumlahRusakRingan', 'jumlahBaik',
             'recentActivities'
         ));
     }
@@ -368,34 +371,36 @@ class AdminController extends Controller
             $file->storeAs('public/infrastruktur', $namaFoto);
         }
 
-        $jenisEnum = strtolower($request->jenis_infrastruktur);
-        $allowedEnum = ['jalan', 'sanitasi', 'titian'];
-        if (!in_array($jenisEnum, $allowedEnum)) {
-            $jenisEnum = 'jalan'; 
-        }
-
-        DB::table('infrastruktur')->insert([
+        // MENGGUNAKAN ELOQUENT (Agar Observer AI Berjalan)
+        $infra = Infrastruktur::create([
             'id_user' => auth()->id(), 
             'id_kelurahan' => $request->id_kelurahan,
             'nama_infrastruktur' => $request->nama_infrastruktur,
             'jenis_infrastruktur' => $request->jenis_infrastruktur,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
-            'kondisi' => $request->kondisi ?? 'Baik',
+            'kondisi' => $request->kondisi ?? 'Baik', // Deskripsi mentah untuk AI
+            'material_eksisting' => $request->material_eksisting ?? '-',
+            'has_drainase' => $request->has_drainase ?? 'tidak',
             'foto_terbaru' => $namaFoto,
             'nama_objek' => $request->nama_infrastruktur, 
-            'jenis' => $jenisEnum,
+            'jenis' => strtolower($request->jenis_infrastruktur),
             'alamat' => $request->alamat ?? '-',
-            'created_at' => now(),
-            'updated_at' => now(),
         ]);
 
-        return redirect()->route('admin.infrastruktur')->with('success', 'DATA INFRASTRUKTUR BERHASIL DITAMBAHKAN!');
+        $this->logActivity('survey', "Input Aset Baru: {$infra->nama_infrastruktur}", $infra->id_infrastruktur);
+
+        return redirect()->route('admin.infrastruktur')->with('success', 'ASET BERHASIL DISIMPAN & DIANALISIS AI!');
     }
 
     public function editInfrastruktur($id)
     {
-        $inf = DB::table('infrastruktur')->where('id_infrastruktur', $id)->first();
+        $inf = DB::table('infrastruktur')
+            ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
+            ->select('infrastruktur.*', 'kelurahan.id_kecamatan')
+            ->where('id_infrastruktur', $id)
+            ->first();
+            
         if (!$inf) return redirect()->route('admin.infrastruktur')->with('error', 'ASET TIDAK DITEMUKAN.');
         
         $semuaKecamatan = DB::table('kecamatan')->get();
@@ -443,20 +448,15 @@ class AdminController extends Controller
 
     public function updateInfrastruktur(Request $request, $id)
     {
+        $infra = Infrastruktur::findOrFail($id);
+        
         $request->validate([
             'nama_infrastruktur' => 'required|string|max:255',
-            'jenis_infrastruktur' => 'required|string',
-            'id_kecamatan' => 'required|exists:kecamatan,id_kecamatan',
-            'id_kelurahan' => 'required|exists:kelurahan,id_kelurahan',
             'latitude' => 'required|string',
             'longitude' => 'required|string',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        $infraLama = DB::table('infrastruktur')->where('id_infrastruktur', $id)->first();
-        $namaFoto = $infraLama->foto_terbaru;
-
-        // Logika Penggantian Foto
+        $namaFoto = $infra->foto_terbaru;
         if ($request->hasFile('foto')) {
             if ($namaFoto != 'default.jpg') {
                 Storage::delete('public/infrastruktur/' . $namaFoto);
@@ -466,29 +466,24 @@ class AdminController extends Controller
             $file->storeAs('public/infrastruktur', $namaFoto);
         }
 
-        $jenisEnum = strtolower($request->jenis_infrastruktur);
-        $allowedEnum = ['jalan', 'sanitasi', 'titian'];
-        if (!in_array($jenisEnum, $allowedEnum)) {
-            $jenisEnum = 'jalan'; 
-        }
-
-        // Proses Update Tanpa Mengubah Manual Hasil AI
-        DB::table('infrastruktur')->where('id_infrastruktur', $id)->update([
+        // UPDATE MENGGUNAKAN MODEL (Memicu AI Update otomatis)
+        $infra->update([
             'id_kelurahan' => $request->id_kelurahan,
             'nama_infrastruktur' => $request->nama_infrastruktur,
             'jenis_infrastruktur' => $request->jenis_infrastruktur,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
-            'kondisi' => $request->kondisi, 
+            'kondisi' => $request->kondisi, // Jika ini diubah, AI hitung ulang
+            'material_eksisting' => $request->material_eksisting,
+            'has_drainase' => $request->has_drainase,
             'foto_terbaru' => $namaFoto,
             'nama_objek' => $request->nama_infrastruktur, 
-            'jenis' => $jenisEnum,
-            'updated_at' => now(),
+            'jenis' => strtolower($request->jenis_infrastruktur),
         ]);
 
-        $this->logActivity('survey', "Memperbarui data infrastruktur: {$request->nama_infrastruktur}", $id);
+        $this->logActivity('survey', "Update Aset: {$infra->nama_infrastruktur}", $id);
 
-        return redirect()->route('admin.infrastruktur')->with('success', 'DATA INFRASTRUKTUR BERHASIL DIPERBARUI!');
+        return redirect()->route('admin.infrastruktur')->with('success', 'DATA DIPERBARUI & SKOR AI DIKALKULASI ULANG!');
     }
 
     public function destroyInfrastruktur($id)
