@@ -65,14 +65,15 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div>
                                 <label class="block text-[10px] font-black text-[#1e1b4b] tracking-widest mb-2">Nama Infrastruktur <span class="text-red-500">*</span></label>
-                                <input type="text" name="nama_infrastruktur" value="{{ $inf->nama_infrastruktur }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500 transition-all" required>
+                                <input type="text" name="nama_infrastruktur" value="{{ $inf->nama_objek ?? $inf->nama_infrastruktur }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500 transition-all" required>
                             </div>
                             <div>
                                 <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Jenis Infrastruktur <span class="text-red-500">*</span></label>
                                 <select name="jenis_infrastruktur" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500">
-                                    <option value="Jalan" {{ $inf->jenis_infrastruktur == 'Jalan' ? 'selected' : '' }}>Jalan</option>
-                                    <option value="Sanitasi" {{ $inf->jenis_infrastruktur == 'Sanitasi' ? 'selected' : '' }}>Sanitasi</option>
-                                    <option value="Titian" {{ $inf->jenis_infrastruktur == 'Titian' ? 'selected' : '' }}>Titian</option>
+                                    @php $jenisAktif = strtolower($inf->jenis ?? $inf->jenis_infrastruktur); @endphp
+                                    <option value="Jalan" {{ $jenisAktif == 'jalan' ? 'selected' : '' }}>Jalan</option>
+                                    <option value="Sanitasi" {{ $jenisAktif == 'sanitasi' ? 'selected' : '' }}>Sanitasi</option>
+                                    <option value="Titian" {{ $jenisAktif == 'titian' ? 'selected' : '' }}>Titian</option>
                                 </select>
                             </div>
                         </div>

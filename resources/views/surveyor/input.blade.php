@@ -31,7 +31,7 @@
                 </a>
                 <div>
                     <p class="text-[9px] font-black text-emerald-600 uppercase tracking-[0.2em] mb-0.5">Sistem Input Geospasial</p>
-                    <h2 class="text-xl font-black text-[#1e1b4b] tracking-tight">Survey Infrastruktur Baru</h2>
+                    <h2 class="text-xl font-black text-[#1e1b4b] tracking-tight">Input Data Lapangan</h2>
                 </div>
             </div>
             

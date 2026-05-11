@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GEO-SINFRA | DISPERKIM Kota Banjarmasin</title>
+    <title>GEO-SINFRA</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -97,6 +97,57 @@
             transition: all 0.3s;
         }
         .btn-internal:hover { background-color: #c5a059; }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #c5a059;
+            color: white;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Custom Scrollbar */
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #c5a059; border-radius: 10px; }
+        
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .reveal-panel {
+            animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(10px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -129,7 +180,7 @@
                 <a href="#" class="nav-link">Beranda</a>
                 <a href="#statistik" class="nav-link">Statistik</a>
                 <a href="#peta" class="nav-link">Peta Sebaran</a>
-                <a href="{{ url('/login') }}" class="btn-internal">Portal Internal</a>
+                <a href="{{ url('/login') }}" class="btn-internal">Login</a>
             </div>
         </div>
     </nav>
@@ -138,49 +189,90 @@
     <section class="hero-section h-[450px] flex items-center text-center md:text-left">
         <div class="max-w-7xl mx-auto px-8 w-full fade-up" style="animation-delay: 0.8s;">
             <div class="max-w-2xl">
-                <p class="text-gold font-black text-[10px] uppercase tracking-[0.4em] mb-4">Layanan Transparansi Data</p>
+                <div class="flex items-center gap-3 mb-4">
+                </div>
                 <h3 class="text-4xl md:text-6xl font-black text-white tracking-tighter leading-tight mb-6">Selamat Datang di <br> <span class="text-gold">GEO-SINFRA</span></h3>
-                <p class="text-gray-300 font-bold text-lg mb-8">Sistem Informasi Pemetaan Infrastruktur Permukiman Kota Banjarmasin</p>
-                <a href="#peta" class="inline-block bg-gold text-white px-8 py-4 rounded-xl font-black text-[11px] uppercase tracking-widest hover:bg-white hover:text-navy transition-all shadow-lg">Lihat Peta Publik</a>
+                <p class="text-gray-300 font-bold text-lg mb-8">Sistem Informasi Pemetaan Infrastruktur Permukiman Kota Banjarmasin berbasis AI & GIS.</p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#peta" class="inline-block bg-gold text-white px-8 py-4 rounded-xl font-black text-[11px] uppercase tracking-widest hover:bg-white hover:text-navy transition-all shadow-lg">Lihat Peta Publik</a>
+                    <a href="#statistik" class="inline-block bg-white/10 backdrop-blur-md text-white border border-white/20 px-8 py-4 rounded-xl font-black text-[11px] uppercase tracking-widest hover:bg-white hover:text-navy transition-all">Statistik</a>
+                </div>
             </div>
         </div>
     </section>
 
+    <!-- Fitur Unggulan -->
+    <section class="py-12 bg-white relative -mt-12 z-20 max-w-7xl mx-auto px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white p-6 rounded-2xl shadow-xl border border-gray-100 flex gap-4 items-start hover:-translate-y-2 transition-all duration-300">
+                <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 shrink-0">
+                    <i class="fas fa-map-location-dot text-xl"></i>
+                </div>
+                <div>
+                    <h5 class="text-xs font-black text-navy uppercase mb-1">GIS</h5>
+                    <p class="text-[10px] text-gray-400 font-medium leading-relaxed">Visualisasi real-time sebaran infrastruktur jalan, titian, dan sanitasi.</p>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-xl border border-gray-100 flex gap-4 items-start hover:-translate-y-2 transition-all duration-300">
+                <div class="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center text-purple-600 shrink-0">
+                    <i class="fas fa-brain text-xl"></i>
+                </div>
+                <div>
+                    <h5 class="text-xs font-black text-navy uppercase mb-1">AI Prediction</h5>
+                    <p class="text-[10px] text-gray-400 font-medium leading-relaxed">Analisis kondisi otomatis menggunakan Machine Learning untuk akurasi data.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
     <!-- Statistik -->
-    <section id="statistik" class="py-20">
+    <section id="statistik" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-8">
-            <div class="text-center mb-16">
-                <h4 class="text-navy font-black text-2xl tracking-tighter">STATISTIK INFRASTRUKTUR KOTA</h4>
-                <p class="text-gray-400 text-sm mt-2">Ringkasan titik data yang telah terdata di sistem.</p>
+            <div class="text-center mb-16 reveal">
+                <h4 class="text-navy font-black text-3xl tracking-tighter mb-2">STATISTIK</h4>
+                <div class="w-20 h-1 bg-gold mx-auto rounded-full"></div>
+                <p class="text-gray-400 text-sm mt-4">Ringkasan titik data yang telah terdata dan terverifikasi di sistem GEO-SINFRA.</p>
             </div>
             
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="card-stat border-t-4 border-navy">
-                    <i class="fas fa-database text-navy text-2xl mb-4"></i>
-                    <p class="text-3xl font-black text-navy">{{ number_format($stats['total'] ?? 0) }}</p>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 reveal">
+                <div class="card-stat border-t-4 border-navy group hover:border-gold transition-all duration-500">
+                    <div class="w-12 h-12 bg-navy/5 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-navy group-hover:text-gold transition-all">
+                        <i class="fas fa-database text-navy text-xl group-hover:text-gold"></i>
+                    </div>
+                    <p class="text-4xl font-black text-navy">{{ number_format($stats['total'] ?? 0) }}</p>
                     <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">Total Data</p>
                 </div>
-                <div class="card-stat border-t-4 border-gold">
-                    <i class="fas fa-map-marked-alt text-gold text-2xl mb-4"></i>
-                    <p class="text-3xl font-black text-navy">{{ number_format($stats['kecamatan'] ?? 0) }}</p>
+                <div class="card-stat border-t-4 border-gold group hover:border-navy transition-all duration-500">
+                    <div class="w-12 h-12 bg-gold/5 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-gold group-hover:text-white transition-all">
+                        <i class="fas fa-map-marked-alt text-gold text-xl group-hover:text-white"></i>
+                    </div>
+                    <p class="text-4xl font-black text-navy">{{ number_format($stats['kecamatan'] ?? 0) }}</p>
                     <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">Kecamatan</p>
                 </div>
-                <div class="card-stat border-t-4 border-red-500">
-                    <i class="fas fa-exclamation-triangle text-red-500 text-2xl mb-4"></i>
-                    <p class="text-3xl font-black text-navy">{{ number_format($stats['rusak_berat'] ?? 0) }}</p>
+                <div class="card-stat border-t-4 border-red-500 group hover:border-red-600 transition-all duration-500">
+                    <div class="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-red-500 group-hover:text-white transition-all">
+                        <i class="fas fa-exclamation-triangle text-red-500 text-xl group-hover:text-white"></i>
+                    </div>
+                    <p class="text-4xl font-black text-navy">{{ number_format($stats['rusak_berat'] ?? 0) }}</p>
                     <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">Rusak Berat</p>
                 </div>
-                <div class="card-stat bg-navy text-white">
-                    <i class="fas fa-robot text-gold text-2xl mb-4"></i>
-                    <p class="text-3xl font-black text-white">{{ $stats['akurasi_ai'] ?? 0 }}%</p>
-                    <p class="text-[10px] font-bold text-gold uppercase tracking-widest mt-1">Akurasi AI</p>
+                <div class="card-stat bg-navy text-white group hover:bg-navy/90 transition-all duration-500 overflow-hidden relative">
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:rotate-12 transition-all">
+                            <i class="fas fa-robot text-gold text-xl"></i>
+                        </div>
+                        <p class="text-4xl font-black text-white">{{ $stats['akurasi_ai'] ?? 0 }}%</p>
+                        <p class="text-[10px] font-bold text-gold uppercase tracking-widest mt-1">Akurasi AI</p>
+                    </div>
+                    <i class="fas fa-brain absolute -right-4 -bottom-4 text-white/5 text-7xl"></i>
                 </div>
             </div>
 
             <!-- Detail Statistik Section -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12 reveal">
                 <!-- Sebaran Perkecamatan -->
-                <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+                <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500">
                     <div class="flex items-center gap-3 mb-6">
                         <div class="w-2 h-6 bg-gold rounded-full"></div>
                         <h5 class="text-sm font-black text-navy uppercase tracking-widest">Sebaran Perkecamatan</h5>
@@ -190,7 +282,9 @@
                             <div>
                                 <div class="flex justify-between text-[10px] font-bold uppercase mb-1">
                                     <span class="text-gray-500">{{ $nama ?: 'Tanpa Wilayah' }}</span>
-                                    <span class="text-navy">{{ $count }} Titik</span>
+                                    @if($count > 0)
+                                        <span class="text-navy">{{ $count }} Titik</span>
+                                    @endif
                                 </div>
                                 <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
                                     <div class="bg-navy h-full rounded-full" style="width: {{ $stats['total'] > 0 ? ($count / $stats['total'] * 100) : 0 }}%"></div>
@@ -251,7 +345,7 @@
     <section id="peta" class="py-20 bg-gray-50 border-t border-gray-100 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-8">
             <div class="mb-10">
-                <h4 class="text-navy font-black text-2xl tracking-tighter leading-none mb-3">Eksplorasi Peta Sebaran</h4>
+                <h4 class="text-navy font-black text-2xl tracking-tighter leading-none mb-3">Peta Sebaran</h4>
                 <p class="text-gray-400 text-sm">Visualisasi interaktif sebaran infrastruktur permukiman di seluruh wilayah.</p>
             </div>
 
@@ -269,73 +363,79 @@
                 </div>
 
                 <!-- Floating Basemap Toggle -->
-                <div class="absolute top-6 right-6 z-20 flex gap-2">
-                    <button onclick="setBasemap('google')" class="basemap-btn active bg-white/90 backdrop-blur-md px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest shadow-lg hover:bg-navy hover:text-white transition-all border border-gray-100">Peta</button>
-                    <button onclick="setBasemap('satelit')" class="basemap-btn bg-white/90 backdrop-blur-md px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest shadow-lg hover:bg-navy hover:text-white transition-all border border-gray-100">Satelit</button>
+                <div class="absolute top-6 right-3 z-20 flex gap-2">
+                    <button onclick="setBasemap('google')" class="basemap-btn active bg-white/95 backdrop-blur-md px-4 py-2 rounded-xl text-[9px] font-bold uppercase tracking-widest shadow-xl hover:bg-navy hover:text-white transition-all border border-gray-100">Biasa</button>
+                    <button onclick="setBasemap('satelit')" class="basemap-btn bg-white/95 backdrop-blur-md px-4 py-2 rounded-xl text-[9px] font-bold uppercase tracking-widest shadow-xl hover:bg-navy hover:text-white transition-all border border-gray-100">Satelit</button>
+                    <button onclick="setBasemap('osm')" class="basemap-btn bg-white/95 backdrop-blur-md px-4 py-2 rounded-xl text-[9px] font-bold uppercase tracking-widest shadow-xl hover:bg-navy hover:text-white transition-all border border-gray-100">OSM</button>
                 </div>
 
                 <!-- Side Filter Panel (Floating) -->
-                <div class="absolute bottom-6 right-6 z-20 w-80 space-y-4">
-                    <!-- Legenda Peta -->
-                    <div class="bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-gray-100">
-                        <h5 class="text-[10px] font-black text-navy uppercase tracking-widest mb-4 flex items-center gap-2">
-                            <i class="fas fa-info-circle text-gold"></i> Legenda Peta
-                        </h5>
-                        <div class="grid grid-cols-1 gap-3">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-lg bg-blue-500 flex items-center justify-center text-white shadow-sm"><i class="fas fa-road text-xs"></i></div>
-                                <span class="text-[10px] font-bold text-navy uppercase">Infrastruktur Jalan</span>
+                <div class="absolute top-20 right-3 z-20 w-[calc(100%-1.5rem)] md:w-60">
+                    <div class="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-100 overflow-hidden transition-all duration-300">
+                        <!-- Clickable Header Toggle -->
+                        <button onclick="toggleFilters()" class="w-full px-4 py-3 flex items-center justify-between bg-navy text-white hover:bg-navy/90 transition-all group">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-filter text-gold text-[10px] group-hover:scale-110 transition-transform"></i>
+                                <span class="text-[9px] font-black uppercase tracking-widest">Filter</span>
                             </div>
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-lg bg-amber-500 flex items-center justify-center text-white shadow-sm"><i class="fas fa-bridge text-xs"></i></div>
-                                <span class="text-[10px] font-bold text-navy uppercase">Infrastruktur Titian</span>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center text-white shadow-sm"><i class="fas fa-toilet text-xs"></i></div>
-                                <span class="text-[10px] font-bold text-navy uppercase">Sarana Sanitasi</span>
-                            </div>
-                        </div>
-                    </div>
+                            <i id="filter-chevron" class="fas fa-chevron-down text-[9px] text-gold transition-transform duration-300"></i>
+                        </button>
 
-                    <!-- Kategori Filter -->
-                    <div class="bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-gray-100">
-                        <h5 class="text-[10px] font-black text-navy uppercase tracking-widest mb-4 flex items-center gap-2">
-                            <i class="fas fa-filter text-gold"></i> Filter Kategori
-                        </h5>
-                        <div class="grid grid-cols-1 gap-2">
-                            <label class="flex items-center justify-between p-2 bg-gray-50/50 rounded-lg cursor-pointer hover:bg-gold/10 transition-all group">
-                                <span class="text-[10px] font-bold text-navy uppercase">Pilih Semua Jalan</span>
-                                <input type="checkbox" class="filter-category w-4 h-4 rounded border-gray-300 text-navy focus:ring-navy" value="jalan" checked>
-                            </label>
-                            <label class="flex items-center justify-between p-2 bg-gray-50/50 rounded-lg cursor-pointer hover:bg-gold/10 transition-all group">
-                                <span class="text-[10px] font-bold text-navy uppercase">Pilih Semua Titian</span>
-                                <input type="checkbox" class="filter-category w-4 h-4 rounded border-gray-300 text-navy focus:ring-navy" value="titian" checked>
-                            </label>
-                            <label class="flex items-center justify-between p-2 bg-gray-50/50 rounded-lg cursor-pointer hover:bg-gold/10 transition-all group">
-                                <span class="text-[10px] font-bold text-navy uppercase">Pilih Semua Sanitasi</span>
-                                <input type="checkbox" class="filter-category w-4 h-4 rounded border-gray-300 text-navy focus:ring-navy" value="sanitasi" checked>
-                            </label>
-                        </div>
-                    </div>
+                        <!-- Filter Content (Collapsible) -->
+                        <div id="filter-panel" class="hidden p-4 space-y-4 max-h-[400px] overflow-y-auto no-scrollbar">
+                            <!-- Filter Kategori & Legenda -->
+                            <div>
+                                <h5 class="text-[9px] font-black text-navy uppercase tracking-widest mb-3 flex items-center gap-2">
+                                    <i class="fas fa-layer-group text-gold"></i> Lapisan Data
+                                </h5>
+                                <div class="grid grid-cols-1 gap-1.5">
+                                    <label class="flex items-center justify-between p-1.5 bg-gray-50/50 rounded-lg cursor-pointer hover:bg-gold/10 transition-all group">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-7 h-7 rounded-lg bg-blue-500 flex items-center justify-center text-white shadow-sm"><i class="fas fa-road text-[10px]"></i></div>
+                                            <span class="text-[9px] font-bold text-navy uppercase">Jalan</span>
+                                        </div>
+                                        <input type="checkbox" class="filter-category w-3.5 h-3.5 rounded border-gray-300 text-navy focus:ring-navy" value="jalan" checked>
+                                    </label>
+                                    <label class="flex items-center justify-between p-1.5 bg-gray-50/50 rounded-lg cursor-pointer hover:bg-gold/10 transition-all group">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-7 h-7 rounded-lg bg-amber-500 flex items-center justify-center text-white shadow-sm"><i class="fas fa-bridge text-[10px]"></i></div>
+                                            <span class="text-[9px] font-bold text-navy uppercase">Titian</span>
+                                        </div>
+                                        <input type="checkbox" class="filter-category w-3.5 h-3.5 rounded border-gray-300 text-navy focus:ring-navy" value="titian" checked>
+                                    </label>
+                                    <label class="flex items-center justify-between p-1.5 bg-gray-50/50 rounded-lg cursor-pointer hover:bg-gold/10 transition-all group">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-7 h-7 rounded-lg bg-emerald-500 flex items-center justify-center text-white shadow-sm"><i class="fas fa-toilet text-[10px]"></i></div>
+                                            <span class="text-[9px] font-bold text-navy uppercase">Sanitasi</span>
+                                        </div>
+                                        <input type="checkbox" class="filter-category w-3.5 h-3.5 rounded border-gray-300 text-navy focus:ring-navy" value="sanitasi" checked>
+                                    </label>
+                                </div>
+                            </div>
 
-                    <!-- Wilayah Filter & Status Data -->
-                    <div class="bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-gray-100">
-                        <h5 class="text-[10px] font-black text-navy uppercase tracking-widest mb-4 flex items-center gap-2">
-                            <i class="fas fa-database text-gold"></i> Status Wilayah Terdata
-                        </h5>
-                        <div class="space-y-1 max-h-[150px] overflow-y-auto pr-2 custom-scrollbar">
-                            @foreach($semuaWilayah as $wil)
-                                @php $count = $dataInfrastruktur->where('id_kecamatan', $wil->id_kecamatan)->count(); @endphp
-                                <label class="district-item flex items-center justify-between p-2 {{ $count > 0 ? 'bg-gold/5' : '' }} hover:bg-gold/10 rounded-lg cursor-pointer transition-all border border-transparent {{ $count > 0 ? 'border-gold/20' : '' }}">
-                                    <div class="flex flex-col">
-                                        <span class="text-[9px] font-bold text-navy uppercase">{{ $wil->nama_kecamatan }}</span>
-                                        <span class="text-[7px] font-bold {{ $count > 0 ? 'text-gold' : 'text-gray-400' }} uppercase">
-                                            {{ $count > 0 ? $count . ' TITIK TERDATA' : 'BELUM ADA DATA' }}
-                                        </span>
-                                    </div>
-                                    <input type="checkbox" class="filter-district w-4 h-4 rounded border-gray-300 text-navy focus:ring-navy" value="{{ $wil->id_kecamatan }}" checked>
-                                </label>
-                            @endforeach
+                            <div class="h-px bg-gray-100"></div>
+
+                            <!-- Wilayah Filter -->
+                            <div>
+                                <h5 class="text-[9px] font-black text-navy uppercase tracking-widest mb-3 flex items-center gap-2">
+                                    <i class="fas fa-map-location-dot text-gold"></i> Wilayah
+                                </h5>
+                                <div id="district-list" class="space-y-1 max-h-[120px] overflow-y-auto pr-2 custom-scrollbar">
+                                    @php 
+                                        $kecColors = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#06b6d4']; 
+                                    @endphp
+                                    @foreach($semuaWilayah as $index => $wil)
+                                        @php $count = $dataInfrastruktur->where('id_kecamatan', $wil->id_kecamatan)->count(); @endphp
+                                        <label class="district-item flex items-center justify-between p-1.5 hover:bg-gray-50 rounded-lg cursor-pointer transition-all border border-transparent">
+                                            <div class="flex items-center gap-2">
+                                                <input type="checkbox" class="filter-district w-3 h-3 rounded border-gray-300 text-navy focus:ring-navy" value="{{ $wil->id_kecamatan }}" checked>
+                                                <span class="text-[8px] font-bold text-navy uppercase">{{ $wil->nama_kecamatan }}</span>
+                                            </div>
+                                            <div class="w-2 h-2 rounded-full shadow-sm" style="background: {{ $kecColors[$index % count($kecColors)] }}"></div>
+                                        </label>
+                                    @endforeach
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -354,6 +454,11 @@
         </div>
     </footer>
 
+    <!-- Back to Top -->
+    <div id="backToTop" class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
     <script>
         // Preloader Logic
         window.addEventListener('load', () => {
@@ -365,12 +470,20 @@
         });
 
         const dataInfra = @json($dataInfrastruktur);
+        const dataWilayah = @json($semuaWilayah);
         const map = L.map('map', { zoomControl: false }).setView([-3.316694, 114.590111], 13);
         
         const googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { subdomains:['mt0','mt1','mt2','mt3'] }).addTo(map);
         const satelit = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}');
+        const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        });
         
         const markersLayer = L.layerGroup().addTo(map);
+        const polygonsLayer = L.layerGroup().addTo(map);
+
+        // Map Colors (Sync with Filter)
+        const kecColors = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#06b6d4'];
 
         // Custom Icon Creator
         const createIcon = (type) => {
@@ -395,9 +508,33 @@
 
         function applyFilters() {
             markersLayer.clearLayers();
+            polygonsLayer.clearLayers();
+
             const checkedCategories = Array.from(document.querySelectorAll('.filter-category:checked')).map(el => el.value);
             const checkedDistricts = Array.from(document.querySelectorAll('.filter-district:checked')).map(el => el.value);
             
+            // 1. Render Polygons (Kecamatan)
+            dataWilayah.forEach((wil, index) => {
+                if (checkedDistricts.includes(wil.id_kecamatan.toString()) && wil.geometri) {
+                    try {
+                        const geoData = typeof wil.geometri === 'string' ? JSON.parse(wil.geometri) : wil.geometri;
+                        const color = wil.warna || kecColors[index % kecColors.length];
+                        
+                        L.geoJSON(geoData, {
+                            style: {
+                                color: color,
+                                weight: 2,
+                                fillOpacity: 0.2,
+                                dashArray: '3'
+                            }
+                        }).bindTooltip(wil.nama_kecamatan, { sticky: true }).addTo(polygonsLayer);
+                    } catch (e) {
+                        console.error("Error parsing geometry for " + wil.nama_kecamatan, e);
+                    }
+                }
+            });
+
+            // 2. Render Markers (Infrastruktur)
             let count = 0;
             dataInfra.forEach(item => {
                 if (checkedCategories.includes(item.jenis) && checkedDistricts.includes(item.id_kecamatan?.toString())) {
@@ -438,34 +575,71 @@
 
         // Event Listeners
         document.querySelectorAll('.filter-category, .filter-district').forEach(el => el.addEventListener('change', applyFilters));
-        
-        document.getElementById('search-wilayah').addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            document.querySelectorAll('.district-item').forEach(item => {
-                item.style.display = item.textContent.toLowerCase().includes(term) ? 'flex' : 'none';
-            });
-        });
 
         function setBasemap(type) {
             // Update UI
             document.querySelectorAll('.basemap-btn').forEach(btn => {
-                btn.classList.remove('bg-navy', 'text-white');
-                btn.classList.add('bg-white/90', 'text-navy');
+                btn.classList.remove('bg-navy', 'text-white', 'active');
+                btn.classList.add('bg-white/95', 'text-navy');
             });
-            event.target.classList.add('bg-navy', 'text-white');
-            event.target.classList.remove('bg-white/90', 'text-navy');
+            event.target.classList.add('bg-navy', 'text-white', 'active');
+            event.target.classList.remove('bg-white/95', 'text-navy');
 
+            // Remove all layers first
+            map.removeLayer(googleStreets);
+            map.removeLayer(satelit);
+            map.removeLayer(osm);
+
+            // Add selected layer
             if (type === 'satelit') { 
                 map.addLayer(satelit); 
-                map.removeLayer(googleStreets); 
+            } else if (type === 'osm') {
+                map.addLayer(osm);
             } else { 
                 map.addLayer(googleStreets); 
-                map.removeLayer(satelit); 
             }
         }
 
+        function toggleFilters() {
+            const panel = document.getElementById('filter-panel');
+            const chevron = document.getElementById('filter-chevron');
+            
+            if (panel.classList.contains('hidden')) {
+                panel.classList.remove('hidden');
+                chevron.style.transform = 'rotate(180deg)';
+            } else {
+                panel.classList.add('hidden');
+                chevron.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Scroll Reveal Logic
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+
+        // Back to Top Logic
+        window.addEventListener('scroll', () => {
+            const btt = document.getElementById('backToTop');
+            if (window.scrollY > 300) {
+                btt.classList.add('show');
+            } else {
+                btt.classList.remove('show');
+            }
+        });
+
         // Init
         applyFilters();
+        reveal();
     </script>
 </body>
 </html>

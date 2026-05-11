@@ -85,21 +85,12 @@
                             <input type="text" name="nama_kelurahan" value="{{ old('nama_kelurahan') }}" placeholder="Contoh: Antasan Besar" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" required>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Latitude <span class="text-red-500">*</span></label>
-                                <div class="relative">
-                                    <input type="text" name="latitude" value="{{ old('latitude') }}" placeholder="-3.328..." class="w-full pl-10 pr-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none" required>
-                                    <i class="fas fa-map-marker-alt absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Longitude <span class="text-red-500">*</span></label>
-                                <div class="relative">
-                                    <input type="text" name="longitude" value="{{ old('longitude') }}" placeholder="114.590..." class="w-full pl-10 pr-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none" required>
-                                    <i class="fas fa-location-arrow absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
-                                </div>
-                            </div>
+
+
+                        <div>
+                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Data Geometri (GeoJSON) <span class="text-gray-400 font-medium normal-case ml-1">(Opsional)</span></label>
+                            <textarea name="geometri" rows="5" placeholder='{"type": "Polygon", "coordinates": [...]}' class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-xs font-mono focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all">{{ old('geometri') }}</textarea>
+                            <p class="text-[9px] text-gray-400 mt-2 italic font-medium">Masukkan format GeoJSON untuk menampilkan poligon di peta.</p>
                         </div>
 
                         <div class="pt-8 flex gap-3">

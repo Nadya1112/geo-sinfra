@@ -17,7 +17,7 @@
             <a href="{{ route('surveyor.input') }}" 
                class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('surveyor.input') ? 'bg-emerald-600 text-white font-bold shadow-lg shadow-emerald-900/20' : 'text-gray-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
                 <i class="fas fa-plus-circle {{ request()->routeIs('surveyor.input') ? '' : 'group-hover:text-emerald-400' }}"></i> 
-                Input Data Baru
+                Input Data Lapangan
             </a>
 
             <a href="{{ route('surveyor.history') }}" 

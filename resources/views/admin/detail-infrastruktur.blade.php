@@ -71,13 +71,13 @@
                             <div>
                                 <label class="block text-[10px] font-black text-[#1e1b4b] tracking-widest mb-2">Nama Infrastruktur</label>
                                 <div class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold text-gray-600">
-                                    {{ $inf->nama_infrastruktur }}
+                                    {{ $inf->nama_objek ?? $inf->nama_infrastruktur }}
                                 </div>
                             </div>
                             <div>
                                 <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Jenis Infrastruktur</label>
-                                <div class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold text-gray-600">
-                                    {{ $inf->jenis_infrastruktur }}
+                                <div class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold text-gray-600 uppercase">
+                                    {{ $inf->jenis ?? $inf->jenis_infrastruktur }}
                                 </div>
                             </div>
                         </div>

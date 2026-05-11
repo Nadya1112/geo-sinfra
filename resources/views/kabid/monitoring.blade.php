@@ -158,9 +158,9 @@
                             <button onclick="toggleKelurahanPoints()" class="w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" id="kel-toggle-btn">
                                 <div class="flex items-center gap-2.5">
                                     <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
-                                        <i class="fas fa-check text-[6px] text-emerald-400" id="kel-check-icon" style="opacity:1"></i>
+                                        <i class="fas fa-check text-[6px] text-emerald-400" id="kel-check-icon" style="opacity:0"></i>
                                     </div>
-                                    <span class="group-hover:text-white transition-colors text-left">Titik Kelurahan</span>
+                                    <span class="group-hover:text-white transition-colors text-left">Wilayah Kelurahan</span>
                                 </div>
                                 <i class="fas fa-home text-emerald-500 text-[10px]"></i>
                             </button>
@@ -179,7 +179,17 @@
                             <i class="fas fa-chevron-down text-[7px]"></i>
                         </button>
                         <div id="territory-options" class="hidden mt-1.5 p-1 flex flex-col gap-0.5 max-h-40 overflow-y-auto custom-scrollbar">
-                            <button onclick="toggleKecamatan('Semua')" class="kec-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="Semua">
+                            <!-- Select All Territories -->
+                            <button onclick="toggleKecamatan('Semua')" class="w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-emerald-400 hover:bg-white/10 transition-all flex items-center justify-between group border-b border-white/5 mb-1" id="btn-select-all-kec">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-3 h-3 rounded border border-emerald-400/50 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
+                                        <i class="fas fa-check text-[6px] text-emerald-400 check-icon" id="icon-select-all-kec" style="opacity:1"></i>
+                                    </div>
+                                    <span class="group-hover:text-white transition-colors">Pilih Semua Wilayah</span>
+                                </div>
+                            </button>
+
+                            <button onclick="toggleKecamatan('Semua')" class="kec-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group hidden" data-id="Semua">
                                 <div class="flex items-center gap-2.5">
                                     <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-indigo-400 transition-colors">
                                         <i class="fas fa-check text-[6px] text-indigo-400 check-icon" style="opacity:1"></i>
@@ -253,8 +263,9 @@
         const kelurahans = @json($kelurahan);
         let activeMarkers = [];
         let kelurahanMarkers = [];
+        let kelurahanPolygons = [];
         let geoLayers = {};
-        let showKelurahan = true;
+        let showKelurahan = false;
 
         // Render Polygons first in lower pane
         kecamatans.forEach(kec => {
@@ -338,34 +349,43 @@
             });
         }
 
-        function renderKelurahanMarkers() {
+        function renderKelurahanData() {
             kelurahanMarkers.forEach(m => map.removeLayer(m));
+            kelurahanPolygons.forEach(p => map.removeLayer(p));
             kelurahanMarkers = [];
+            kelurahanPolygons = [];
 
             if (!showKelurahan) return;
 
             kelurahans.forEach(kel => {
-                if (kel.latitude && kel.longitude) {
-                    const icon = L.divIcon({
-                        className: '',
-                        html: `<div class="w-6 h-6 bg-emerald-500 rounded-full border-2 border-white shadow-lg flex items-center justify-center text-white text-[10px] transform hover:scale-110 transition-transform"><i class="fas fa-home"></i></div>`,
-                        iconSize: [24, 24],
-                        iconAnchor: [12, 12]
-                    });
+                // 1. Render Poligon Kelurahan (Hanya Garis Tepi)
+                if (kel.geometri) {
+                    try {
+                        const geoData = typeof kel.geometri === 'string' ? JSON.parse(kel.geometri) : kel.geometri;
+                        const poly = L.geoJSON(geoData, {
+                            pane: 'polygonsPane',
+                            filter: function(feature) {
+                                return feature.geometry.type !== 'Point';
+                            },
+                            style: {
+                                fillColor: 'transparent',
+                                weight: 1.5,
+                                opacity: 1,
+                                color: '#10b981',
+                                fillOpacity: 0
+                            }
+                        }).addTo(map);
 
-                    const marker = L.marker([kel.latitude, kel.longitude], {
-                        icon: icon,
-                        pane: 'markersPane'
-                    }).addTo(map).bindPopup(`
-                        <div class="p-2 text-center">
-                            <p class="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">Kantor / Titik Kelurahan</p>
-                            <h4 class="text-xs font-black text-[#1e1b4b] uppercase">${kel.nama_kelurahan}</h4>
-                            <div class="mt-2 pt-2 border-t border-gray-100">
-                                <p class="text-[8px] text-gray-500">Kecamatan: ${kel.kecamatan?.nama_kecamatan ?? '-'}</p>
-                            </div>
-                        </div>
-                    `, { className: 'premium-popup' });
-                    kelurahanMarkers.push(marker);
+                        poly.bindPopup(`<p class="text-[10px] font-black text-[#1e1b4b] uppercase">${kel.nama_kelurahan}</p>`, { 
+                            className: 'custom-polygon-popup', 
+                            closeButton: false 
+                        });
+
+                        poly.on('mouseover', function() { this.setStyle({ color: '#059669', weight: 2.5 }); });
+                        poly.on('mouseout', function() { this.setStyle({ color: '#10b981', weight: 1.5 }); });
+
+                        kelurahanPolygons.push(poly);
+                    } catch (e) { console.error(e); }
                 }
             });
         }
@@ -374,7 +394,7 @@
             showKelurahan = !showKelurahan;
             document.getElementById('kel-check-icon').style.opacity = showKelurahan ? '1' : '0';
             document.getElementById('kel-toggle-btn').classList.toggle('text-white', showKelurahan);
-            renderKelurahanMarkers();
+            renderKelurahanData();
         }
 
         // 1. Inisialisasi: Semua Objek & Wilayah Aktif by Default
@@ -453,7 +473,6 @@
 
         function toggleKecamatan(kecId) {
             if (kecId === 'Semua') {
-                // Toggle all
                 if (activeKecs.length === totalKec) {
                     activeKecs = [];
                 } else {
@@ -468,21 +487,32 @@
                     if (geoLayers[kecId]) map.fitBounds(geoLayers[kecId].getBounds(), { padding: [50, 50] });
                 }
             }
-            // Update all checkboxes
-            const allChecked = activeKecs.length === totalKec;
+            applyFilters();
+            updateSelectAllStatus();
+        }
+
+        function updateSelectAllStatus() {
+            const btnAll = document.getElementById('btn-select-all-kec');
+            const iconAll = document.getElementById('icon-select-all-kec');
+            const isAllSelected = activeKecs.length === totalKec && totalKec > 0;
+            
+            if (iconAll) iconAll.style.opacity = isAllSelected ? '1' : '0.2';
+            if (btnAll) btnAll.classList.toggle('text-emerald-400', isAllSelected);
+
             document.querySelectorAll('.kec-btn').forEach(btn => {
                 const id = btn.getAttribute('data-id');
-                const isActive = id === 'Semua' ? allChecked : activeKecs.includes(id);
+                if (id === 'Semua') return;
+                const isActive = activeKecs.includes(id);
                 const icon = btn.querySelector('.check-icon');
                 if (icon) icon.style.opacity = isActive ? '1' : '0';
                 btn.classList.toggle('text-white', isActive);
             });
+
             // Update label
             const label = activeKecs.length === 0 ? 'Filter Kecamatan' :
                           activeKecs.length === totalKec ? 'Semua Wilayah' :
                           activeKecs.length + ' Wilayah Dipilih';
             document.getElementById('current-kec-label').textContent = label;
-            applyFilters();
         }
 
         function toggleMenu(id) { document.getElementById(id).classList.toggle('hidden'); }
@@ -507,7 +537,7 @@
         });
 
         applyFilters(); // Initialize map state correctly
-        renderKelurahanMarkers(); // Render kelurahan points initially
+        renderKelurahanData(); // Render kelurahan data initially
 
         function updateClock() {
             const now = new Date();

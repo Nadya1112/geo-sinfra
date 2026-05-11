@@ -116,4 +116,98 @@ class KabidController extends Controller
 
         return redirect()->route('kabid.dashboard')->with('success', 'Profil Anda berhasil diperbarui!');
     }
+
+    public function statistikTahunan(Request $request)
+    {
+        $year = $request->get('year', date('Y'));
+        
+        // Ambil daftar tahun yang tersedia di database untuk dropdown
+        $availableYears = DB::table('infrastruktur')
+            ->select(DB::raw('YEAR(created_at) as year'))
+            ->whereNull('deleted_at')
+            ->distinct()
+            ->orderBy('year', 'desc')
+            ->pluck('year');
+
+        if ($availableYears->isEmpty()) {
+            $availableYears = collect([date('Y')]);
+        }
+        
+        // Data Perbulan (Jan - Des)
+        $monthlyData = DB::table('infrastruktur')
+            ->select(DB::raw('MONTH(created_at) as month'), DB::raw('count(*) as total'))
+            ->whereYear('created_at', $year)
+            ->whereNull('deleted_at')
+            ->groupBy('month')
+            ->get()
+            ->pluck('total', 'month')
+            ->all();
+
+        // Fill missing months with 0
+        $chartData = [];
+        for ($m = 1; $m <= 12; $m++) {
+            $chartData[] = $monthlyData[$m] ?? 0;
+        }
+
+        // Statistik per Jenis (Tahunan)
+        $statsJenis = DB::table('infrastruktur')
+            ->select('jenis', DB::raw('count(*) as total'))
+            ->whereYear('created_at', $year)
+            ->whereNull('deleted_at')
+            ->groupBy('jenis')
+            ->get();
+
+        // Sebaran Kondisi per Kecamatan (Tahunan)
+        $semuaKecamatan = DB::table('kecamatan')->get();
+        $kondisiKecamatan = [];
+        foreach($semuaKecamatan as $kec) {
+            $infraKec = DB::table('infrastruktur')
+                ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
+                ->where('kelurahan.id_kecamatan', $kec->id_kecamatan)
+                ->whereYear('infrastruktur.created_at', $year)
+                ->whereNull('infrastruktur.deleted_at')
+                ->select(
+                    DB::raw("COUNT(CASE WHEN kondisi = 'Baik' THEN 1 END) as baik"),
+                    DB::raw("COUNT(CASE WHEN kondisi = 'Rusak Ringan' THEN 1 END) as ringan"),
+                    DB::raw("COUNT(CASE WHEN kondisi = 'Rusak Berat' THEN 1 END) as berat")
+                )
+                ->first();
+            
+            $kondisiKecamatan[] = [
+                'nama' => $kec->nama_kecamatan,
+                'baik' => $infraKec->baik ?? 0,
+                'ringan' => $infraKec->ringan ?? 0,
+                'berat' => $infraKec->berat ?? 0,
+                'total' => ($infraKec->baik ?? 0) + ($infraKec->ringan ?? 0) + ($infraKec->berat ?? 0)
+            ];
+        }
+
+        return view('kabid.statistik-tahunan', compact('chartData', 'statsJenis', 'kondisiKecamatan', 'year', 'availableYears'));
+    }
+
+    public function laporan(Request $request)
+    {
+        $query = Infrastruktur::with(['kelurahan.kecamatan', 'user']);
+
+        // Filter
+        if ($request->kecamatan) {
+            $query->whereHas('kelurahan', function($q) use ($request) {
+                $q->where('id_kecamatan', $request->kecamatan);
+            });
+        }
+        if ($request->kondisi) {
+            $query->where('kondisi', $request->kondisi);
+        }
+        if ($request->jenis) {
+            $query->where('jenis_infrastruktur', $request->jenis);
+        }
+        if ($request->start_date && $request->end_date) {
+            $query->whereBetween('created_at', [$request->start_date, $request->end_date]);
+        }
+
+        $reports = $query->orderBy('created_at', 'desc')->get();
+        $kecamatan = \App\Models\Kecamatan::all();
+
+        return view('kabid.laporan', compact('reports', 'kecamatan'));
+    }
 }

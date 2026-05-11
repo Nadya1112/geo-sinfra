@@ -26,15 +26,15 @@
                 Verifikasi Usulan
             </a>
 
-            <a href="#" 
-               class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-chart-line group-hover:text-indigo-400"></i> 
-                Statistik Tahunan
+            <a href="<?php echo e(route('kabid.statistik.tahunan')); ?>" 
+               class="flex items-center gap-3 px-4 py-3 <?php echo e(request()->routeIs('kabid.statistik.tahunan') ? 'bg-indigo-600 text-white font-bold shadow-lg shadow-indigo-900/20' : 'text-gray-400 hover:text-white hover:bg-white/5'); ?> rounded-xl text-sm font-semibold transition group text-left">
+                <i class="fas fa-chart-line <?php echo e(request()->routeIs('kabid.statistik.tahunan') ? '' : 'group-hover:text-indigo-400'); ?>"></i> 
+                Statistik Laporan
             </a>
 
-            <a href="#" 
-               class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-print group-hover:text-indigo-400"></i> 
+            <a href="<?php echo e(route('kabid.laporan')); ?>" 
+               class="flex items-center gap-3 px-4 py-3 <?php echo e(request()->routeIs('kabid.laporan') ? 'bg-indigo-600 text-white font-bold shadow-lg shadow-indigo-900/20' : 'text-gray-400 hover:text-white hover:bg-white/5'); ?> rounded-xl text-sm font-semibold transition group text-left">
+                <i class="fas fa-print <?php echo e(request()->routeIs('kabid.laporan') ? '' : 'group-hover:text-indigo-400'); ?>"></i> 
                 Cetak Laporan
             </a>
         </nav>

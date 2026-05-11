@@ -119,20 +119,20 @@
                     </div>
                 </a>
 
-                <a href="#" class="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group relative overflow-hidden">
+                <a href="<?php echo e(route('kabid.statistik.tahunan')); ?>" class="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group relative overflow-hidden">
                     <div class="absolute -right-6 -top-6 w-24 h-24 bg-amber-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
                     <div class="relative z-10 flex flex-col h-full justify-between gap-6">
                         <div class="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-amber-200">
                             <i class="fas fa-chart-line text-xl"></i>
                         </div>
                         <div>
-                            <h4 class="font-black text-[#1e1b4b] text-sm uppercase tracking-tight mb-2">Laporan Statistik Tahunan</h4>
+                            <h4 class="font-black text-[#1e1b4b] text-sm uppercase tracking-tight mb-2">Statistik Laporan</h4>
                             <p class="text-[10px] text-gray-400 font-medium leading-relaxed">Lihat tren kondisi infrastruktur dan capaian perbaikan dalam satu tahun terakhir.</p>
                         </div>
                     </div>
                 </a>
 
-                <a href="#" class="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group relative overflow-hidden">
+                <a href="<?php echo e(route('kabid.laporan')); ?>" class="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group relative overflow-hidden">
                     <div class="absolute -right-6 -top-6 w-24 h-24 bg-rose-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
                     <div class="relative z-10 flex flex-col h-full justify-between gap-6">
                         <div class="w-14 h-14 bg-rose-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-rose-200">

@@ -17,12 +17,12 @@
 </head>
 <body class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 text-left">
 
-    @include('admin.partials.sidebar')
+    <?php echo $__env->make('admin.partials.sidebar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden text-left">
         <header class="bg-white border-b border-gray-100 px-8 py-5 flex justify-between items-center z-10">
             <div class="flex items-center gap-4">
-                <a href="{{ route('admin.dashboard') }}" 
+                <a href="<?php echo e(route('admin.dashboard')); ?>" 
                    class="w-10 h-10 bg-white border border-gray-100 rounded-xl flex items-center justify-center text-gray-400 hover:text-blue-600 transition-all group">
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
@@ -35,20 +35,20 @@
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
                     <p class="text-[11px] font-black text-[#1e1b4b]" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-gray-400 tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-[9px] font-bold text-gray-400 tracking-tighter"><?php echo e(now()->translatedFormat('l, d F Y')); ?></p>
                 </div>
                 <div class="h-8 w-[1px] bg-gray-100"></div>
                 <div class="flex items-center gap-3">
-                    <a href="{{ route('admin.profile') }}" class="text-right group">
-                        <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase group-hover:text-blue-600 transition-all">{{ auth()->user()->name }}</p>
+                    <a href="<?php echo e(route('admin.profile')); ?>" class="text-right group">
+                        <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase group-hover:text-blue-600 transition-all"><?php echo e(auth()->user()->name); ?></p>
                         <p class="text-[9px] font-bold text-green-500 uppercase mt-1">Online</p>
                     </a>
-                    <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100 overflow-hidden hover:shadow-lg hover:shadow-indigo-500/10 transition-all">
-                        @if(auth()->user()->profile_photo)
-                            <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
-                        @else
+                    <a href="<?php echo e(route('admin.profile')); ?>" class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100 overflow-hidden hover:shadow-lg hover:shadow-indigo-500/10 transition-all">
+                        <?php if(auth()->user()->profile_photo): ?>
+                            <img src="<?php echo e(asset('storage/' . auth()->user()->profile_photo)); ?>" class="w-full h-full object-cover">
+                        <?php else: ?>
                             <i class="fas fa-user-circle text-xl"></i>
-                        @endif
+                        <?php endif; ?>
                     </a>
                 </div>
             </div>
@@ -61,12 +61,12 @@
                 </div>
                 
                 <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
-                    <form action="{{ route('admin.infrastruktur') }}" method="GET" class="relative w-full sm:w-64">
-                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari infrastruktur..." class="w-full pl-10 pr-4 py-3 bg-white border border-gray-100 rounded-2xl text-[10px] font-bold outline-none focus:border-blue-500 transition-all shadow-sm placeholder-gray-400 text-gray-600">
+                    <form action="<?php echo e(route('admin.infrastruktur')); ?>" method="GET" class="relative w-full sm:w-64">
+                        <input type="text" name="search" value="<?php echo e(request('search')); ?>" placeholder="Cari infrastruktur..." class="w-full pl-10 pr-4 py-3 bg-white border border-gray-100 rounded-2xl text-[10px] font-bold outline-none focus:border-blue-500 transition-all shadow-sm placeholder-gray-400 text-gray-600">
                         <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[10px]"></i>
                     </form>
                     
-                    <a href="{{ route('admin.infrastruktur.create') }}" class="bg-blue-600 text-white text-[10px] px-6 py-3 rounded-2xl font-black shadow-lg shadow-blue-200 hover:bg-blue-700 transition flex items-center justify-center gap-2 whitespace-nowrap tracking-widest w-full sm:w-auto">
+                    <a href="<?php echo e(route('admin.infrastruktur.create')); ?>" class="bg-blue-600 text-white text-[10px] px-6 py-3 rounded-2xl font-black shadow-lg shadow-blue-200 hover:bg-blue-700 transition flex items-center justify-center gap-2 whitespace-nowrap tracking-widest w-full sm:w-auto">
                         <i class="fas fa-plus"></i> Tambah Data
                     </a>
                 </div>
@@ -84,19 +84,19 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-50 font-bold text-xs">
-                        @forelse($infrastruktur as $inf)
+                        <?php $__empty_1 = true; $__currentLoopData = $infrastruktur; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $inf): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                         <tr class="hover:bg-gray-50/50 transition">
                             <td class="px-6 py-5">
-                                <p class="text-sm font-black text-[#1e1b4b] uppercase leading-tight">{{ $inf->nama_objek ?? 'Tanpa Nama' }}</p>
-                                <p class="text-[9px] font-bold text-blue-600 uppercase mt-1 tracking-widest">{{ $inf->jenis ?? 'Tidak Terkategori' }}</p>
-                                <p class="text-[8px] text-gray-400 mt-0.5 font-bold">ID: INF-{{ $inf->id_infrastruktur }}</p>
+                                <p class="text-sm font-black text-[#1e1b4b] uppercase leading-tight"><?php echo e($inf->nama_objek ?? 'Tanpa Nama'); ?></p>
+                                <p class="text-[9px] font-bold text-blue-600 uppercase mt-1 tracking-widest"><?php echo e($inf->jenis ?? 'Tidak Terkategori'); ?></p>
+                                <p class="text-[8px] text-gray-400 mt-0.5 font-bold">ID: INF-<?php echo e($inf->id_infrastruktur); ?></p>
                             </td>
                             <td class="px-6 py-5">
-                                <p class="text-[10px] text-[#1e1b4b] font-black uppercase tracking-tight">{{ $inf->nama_kecamatan ?? '-' }}</p>
-                                <p class="text-[9px] text-blue-600 font-bold uppercase mt-0.5">{{ $inf->nama_kelurahan ?? '-' }}</p>
+                                <p class="text-[10px] text-[#1e1b4b] font-black uppercase tracking-tight"><?php echo e($inf->nama_kecamatan ?? '-'); ?></p>
+                                <p class="text-[9px] text-blue-600 font-bold uppercase mt-0.5"><?php echo e($inf->nama_kelurahan ?? '-'); ?></p>
                                 <div class="flex items-center gap-1 mt-1.5 text-gray-400">
                                     <i class="fas fa-map-marker-alt text-[8px]"></i>
-                                    <p class="text-[8px] font-medium leading-tight line-clamp-1 italic">{{ $inf->alamat ?? '-' }}</p>
+                                    <p class="text-[8px] font-medium leading-tight line-clamp-1 italic"><?php echo e($inf->alamat ?? '-'); ?></p>
                                 </div>
                             </td>
                             
@@ -104,48 +104,50 @@
                                 <div class="flex flex-col items-center gap-1.5">
                                     <div class="flex items-center gap-1">
                                         <span class="px-1.5 py-0.5 bg-purple-50 text-purple-600 border border-purple-100 rounded text-[8px] font-black">CNN</span>
-                                        <span class="text-[9px] {{ $inf->kondisi == 'Baik' ? 'text-green-500' : 'text-red-500' }} italic">
-                                            {{ $inf->kondisi == 'Baik' ? '✓ Baik (88%)' : '⚠️ Rusak (92%)' }}
+                                        <span class="text-[9px] <?php echo e($inf->kondisi == 'Baik' ? 'text-green-500' : 'text-red-500'); ?> italic">
+                                            <?php echo e($inf->kondisi == 'Baik' ? '✓ Baik (88%)' : '⚠️ Rusak (92%)'); ?>
+
                                         </span>
                                     </div>
                                     <div class="flex items-center gap-1">
                                         <span class="px-1.5 py-0.5 bg-blue-50 text-blue-600 border border-blue-100 rounded text-[8px] font-black">DT</span>
-                                        <span class="text-gray-400 text-[9px]">Kategori: {{ $inf->kondisi == 'Baik' ? 'Normal' : 'Prioritas' }}</span>
+                                        <span class="text-gray-400 text-[9px]">Kategori: <?php echo e($inf->kondisi == 'Baik' ? 'Normal' : 'Prioritas'); ?></span>
                                     </div>
                                 </div>
                             </td>
 
                             <td class="px-6 py-5 text-center">
-                                <span class="px-4 py-1.5 rounded-lg text-[9px] font-black tracking-widest border {{ $inf->kondisi == 'Baik' ? 'bg-blue-50 text-blue-600 border-blue-100' : 'bg-yellow-50 text-yellow-600 border-yellow-100' }}">
-                                    {{ $inf->kondisi == 'Baik' ? 'VERIFIED' : 'PENDING' }}
+                                <span class="px-4 py-1.5 rounded-lg text-[9px] font-black tracking-widest border <?php echo e($inf->kondisi == 'Baik' ? 'bg-blue-50 text-blue-600 border-blue-100' : 'bg-yellow-50 text-yellow-600 border-yellow-100'); ?>">
+                                    <?php echo e($inf->kondisi == 'Baik' ? 'VERIFIED' : 'PENDING'); ?>
+
                                 </span>
                             </td>
 
                             <td class="px-6 py-5">
                                 <div class="flex items-center justify-center gap-2">
-                                    @if($inf->kondisi == 'Baik')
+                                    <?php if($inf->kondisi == 'Baik'): ?>
                                         <button class="bg-gray-50 text-gray-300 px-3 py-2 rounded-xl text-[8px] font-black flex items-center gap-1 cursor-not-allowed border border-gray-100">
                                             <i class="fas fa-check-double"></i> Selesai
                                         </button>
-                                    @else
+                                    <?php else: ?>
                                         <button class="bg-emerald-500 text-white px-3 py-2 rounded-xl text-[8px] font-black hover:bg-emerald-600 transition shadow-sm flex items-center gap-1">
                                             <i class="fas fa-check"></i> Verifikasi
                                         </button>
-                                    @endif
+                                    <?php endif; ?>
 
-                                    <a href="{{ route('admin.infrastruktur.edit', $inf->id_infrastruktur) }}" class="bg-indigo-600 text-white px-3 py-2 rounded-xl text-[8px] font-black hover:bg-indigo-700 transition shadow-sm flex items-center gap-1">
+                                    <a href="<?php echo e(route('admin.infrastruktur.edit', $inf->id_infrastruktur)); ?>" class="bg-indigo-600 text-white px-3 py-2 rounded-xl text-[8px] font-black hover:bg-indigo-700 transition shadow-sm flex items-center gap-1">
                                         <i class="fas fa-edit"></i> Edit
                                     </a>
 
-                                    <a href="{{ route('admin.infrastruktur.show', $inf->id_infrastruktur) }}" class="bg-yellow-400 text-white px-3 py-2 rounded-xl text-[8px] font-black hover:bg-yellow-500 transition shadow-sm flex items-center gap-1">
+                                    <a href="<?php echo e(route('admin.infrastruktur.show', $inf->id_infrastruktur)); ?>" class="bg-yellow-400 text-white px-3 py-2 rounded-xl text-[8px] font-black hover:bg-yellow-500 transition shadow-sm flex items-center gap-1">
                                         <i class="fas fa-eye"></i> Detail
                                     </a>
                                 </div>
                             </td>
                         </tr>
-                        @empty
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                         <tr><td colspan="5" class="px-8 py-16 text-center text-gray-400 italic font-bold">Belum Ada Data Infrastruktur.</td></tr>
-                        @endforelse
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
@@ -160,4 +162,4 @@
         setInterval(updateClock, 1000); updateClock();
     </script>
 </body>
-</html>
+</html><?php /**PATH C:\laragon1\laragon\www\geo-sinfra\resources\views/admin/infrastruktur.blade.php ENDPATH**/ ?>

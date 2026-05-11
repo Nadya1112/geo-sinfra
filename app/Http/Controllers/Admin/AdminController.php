@@ -64,6 +64,62 @@ class AdminController extends Controller
         ));
     }
 
+    public function statistikTahunan()
+    {
+        $year = date('Y');
+        
+        // Data Perbulan (Jan - Des)
+        $monthlyData = DB::table('infrastruktur')
+            ->select(DB::raw('MONTH(created_at) as month'), DB::raw('count(*) as total'))
+            ->whereYear('created_at', $year)
+            ->whereNull('deleted_at')
+            ->groupBy('month')
+            ->get()
+            ->pluck('total', 'month')
+            ->all();
+
+        // Fill missing months with 0
+        $chartData = [];
+        for ($m = 1; $m <= 12; $m++) {
+            $chartData[] = $monthlyData[$m] ?? 0;
+        }
+
+        // Statistik per Jenis (Tahunan)
+        $statsJenis = DB::table('infrastruktur')
+            ->select('jenis', DB::raw('count(*) as total'))
+            ->whereYear('created_at', $year)
+            ->whereNull('deleted_at')
+            ->groupBy('jenis')
+            ->get();
+
+        // Sebaran Kondisi per Kecamatan (Tahunan)
+        $semuaKecamatan = DB::table('kecamatan')->get();
+        $kondisiKecamatan = [];
+        foreach($semuaKecamatan as $kec) {
+            $infraKec = DB::table('infrastruktur')
+                ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
+                ->where('kelurahan.id_kecamatan', $kec->id_kecamatan)
+                ->whereYear('infrastruktur.created_at', $year)
+                ->whereNull('infrastruktur.deleted_at')
+                ->select(
+                    DB::raw("COUNT(CASE WHEN kondisi = 'Baik' THEN 1 END) as baik"),
+                    DB::raw("COUNT(CASE WHEN kondisi = 'Rusak Ringan' THEN 1 END) as ringan"),
+                    DB::raw("COUNT(CASE WHEN kondisi = 'Rusak Berat' THEN 1 END) as berat")
+                )
+                ->first();
+            
+            $kondisiKecamatan[] = [
+                'nama' => $kec->nama_kecamatan,
+                'baik' => $infraKec->baik,
+                'ringan' => $infraKec->ringan,
+                'berat' => $infraKec->berat,
+                'total' => $infraKec->baik + $infraKec->ringan + $infraKec->berat
+            ];
+        }
+
+        return view('admin.statistik-tahunan', compact('chartData', 'statsJenis', 'kondisiKecamatan', 'year'));
+    }
+
     // ==========================================================
     // MODUL MANAJEMEN PENGGUNA
     // ==========================================================
@@ -196,15 +252,13 @@ class AdminController extends Controller
         $request->validate([
             'id_kecamatan' => 'required|exists:kecamatan,id_kecamatan',
             'nama_kelurahan' => 'required|string|max:100',
-            'latitude' => 'required|string',
-            'longitude' => 'required|string',
+            'geometri' => 'nullable|string',
         ]);
 
         DB::table('kelurahan')->insert([
             'id_kecamatan' => $request->id_kecamatan,
             'nama_kelurahan' => $request->nama_kelurahan,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude,
+            'geometri' => $request->geometri,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -228,15 +282,13 @@ class AdminController extends Controller
         $request->validate([
             'id_kecamatan' => 'required|exists:kecamatan,id_kecamatan',
             'nama_kelurahan' => 'required|string|max:100',
-            'latitude' => 'required|string',
-            'longitude' => 'required|string',
+            'geometri' => 'nullable|string',
         ]);
 
         DB::table('kelurahan')->where('id_kelurahan', $id)->update([
             'id_kecamatan' => $request->id_kecamatan,
             'nama_kelurahan' => $request->nama_kelurahan,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude,
+            'geometri' => $request->geometri,
             'updated_at' => now(),
         ]);
 
@@ -266,19 +318,21 @@ class AdminController extends Controller
         
         $query = DB::table('infrastruktur')
             ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
+            ->leftJoin('kecamatan', 'kelurahan.id_kecamatan', '=', 'kecamatan.id_kecamatan')
             ->whereNull('infrastruktur.deleted_at');
 
         if ($search) {
             $query->where(function($q) use ($search) {
-                $q->where('infrastruktur.nama_infrastruktur', 'LIKE', "%{$search}%")
-                  ->orWhere('infrastruktur.jenis_infrastruktur', 'LIKE', "%{$search}%")
+                $q->where('infrastruktur.nama_objek', 'LIKE', "%{$search}%")
+                  ->orWhere('infrastruktur.jenis', 'LIKE', "%{$search}%")
                   ->orWhere('infrastruktur.id_infrastruktur', 'LIKE', "%{$search}%")
-                  ->orWhere('kelurahan.nama_kelurahan', 'LIKE', "%{$search}%");
+                  ->orWhere('kelurahan.nama_kelurahan', 'LIKE', "%{$search}%")
+                  ->orWhere('kecamatan.nama_kecamatan', 'LIKE', "%{$search}%");
             });
         }
 
         $infrastruktur = $query->orderBy('infrastruktur.id_infrastruktur', 'desc')
-                               ->select('infrastruktur.*', 'kelurahan.nama_kelurahan')
+                               ->select('infrastruktur.*', 'kelurahan.nama_kelurahan', 'kecamatan.nama_kecamatan', 'kelurahan.id_kecamatan')
                                ->get();
 
         $semuaKecamatan = DB::table('kecamatan')->get();
@@ -322,7 +376,6 @@ class AdminController extends Controller
 
         DB::table('infrastruktur')->insert([
             'id_user' => auth()->id(), 
-            'id_kecamatan' => $request->id_kecamatan,
             'id_kelurahan' => $request->id_kelurahan,
             'nama_infrastruktur' => $request->nama_infrastruktur,
             'jenis_infrastruktur' => $request->jenis_infrastruktur,
@@ -354,8 +407,8 @@ class AdminController extends Controller
     public function showInfrastruktur($id)
     {
         $inf = DB::table('infrastruktur')
-            ->leftJoin('kecamatan', 'infrastruktur.id_kecamatan', '=', 'kecamatan.id_kecamatan')
             ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
+            ->leftJoin('kecamatan', 'kelurahan.id_kecamatan', '=', 'kecamatan.id_kecamatan')
             ->leftJoin('users', 'infrastruktur.id_user', '=', 'users.id')
             ->where('infrastruktur.id_infrastruktur', $id)
             ->select('infrastruktur.*', 'kecamatan.nama_kecamatan', 'kelurahan.nama_kelurahan', 'users.name as nama_user')
@@ -369,8 +422,8 @@ class AdminController extends Controller
     public function exportPdf($id)
     {
         $inf = DB::table('infrastruktur')
-            ->leftJoin('kecamatan', 'infrastruktur.id_kecamatan', '=', 'kecamatan.id_kecamatan')
             ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
+            ->leftJoin('kecamatan', 'kelurahan.id_kecamatan', '=', 'kecamatan.id_kecamatan')
             ->leftJoin('users', 'infrastruktur.id_user', '=', 'users.id')
             ->where('infrastruktur.id_infrastruktur', $id)
             ->select('infrastruktur.*', 'kecamatan.nama_kecamatan', 'kelurahan.nama_kelurahan', 'users.name as nama_user')
@@ -421,13 +474,12 @@ class AdminController extends Controller
 
         // Proses Update Tanpa Mengubah Manual Hasil AI
         DB::table('infrastruktur')->where('id_infrastruktur', $id)->update([
-            'id_kecamatan' => $request->id_kecamatan,
             'id_kelurahan' => $request->id_kelurahan,
             'nama_infrastruktur' => $request->nama_infrastruktur,
             'jenis_infrastruktur' => $request->jenis_infrastruktur,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
-            'kondisi' => $request->kondisi, // Diambil dari hidden input hasil deteksi terakhir
+            'kondisi' => $request->kondisi, 
             'foto_terbaru' => $namaFoto,
             'nama_objek' => $request->nama_infrastruktur, 
             'jenis' => $jenisEnum,

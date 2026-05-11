@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistik dan Laporan | Admin SINFRA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 text-left">
+
+    <?php echo $__env->make('admin.partials.sidebar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+
+    <main class="flex-1 overflow-y-auto custom-scrollbar">
+        <header class="sticky top-0 bg-white/80 backdrop-blur-md border-b border-gray-100 px-8 py-5 flex justify-between items-center z-40">
+            <div class="flex items-center gap-4 text-left">
+                <a href="<?php echo e(route('admin.dashboard')); ?>" 
+                   class="w-10 h-10 bg-white border border-gray-100 rounded-xl flex items-center justify-center text-gray-400 hover:text-blue-600 hover:border-blue-100 hover:shadow-lg hover:shadow-blue-500/5 transition-all group"
+                   title="Kembali ke Dashboard">
+                    <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
+                </a>
+
+                <div class="text-left">
+                    <p class="text-[10px] font-extrabold text-blue-600 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
+                    <h2 class="text-xl font-black text-[#1e1b4b]">Ringkasan Statistik</h2>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-6">
+                <div class="text-right hidden sm:block">
+                    <p class="text-[11px] font-black text-[#1e1b4b]" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter"><?php echo e(now()->translatedFormat('l, d F Y')); ?></p>
+                </div>
+                <div class="h-8 w-[1px] bg-gray-100"></div>
+                <div class="flex items-center gap-3">
+                    <a href="<?php echo e(route('admin.profile')); ?>" class="text-right group">
+                        <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase group-hover:text-blue-600 transition-all"><?php echo e(auth()->user()->name); ?></p>
+                        <p class="text-[9px] font-bold text-green-500 uppercase mt-1">Online</p>
+                    </a>
+                    <a href="<?php echo e(route('admin.profile')); ?>" class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100 overflow-hidden hover:shadow-lg hover:shadow-indigo-500/10 transition-all">
+                        <?php if(auth()->user()->profile_photo): ?>
+                            <img src="<?php echo e(asset('storage/' . auth()->user()->profile_photo)); ?>" class="w-full h-full object-cover">
+                        <?php else: ?>
+                            <i class="fas fa-user-circle text-xl"></i>
+                        <?php endif; ?>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <div class="p-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8 text-left">
+                <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm transition-transform hover:scale-[1.02]">
+                    <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-road"></i></div>
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Infrastruktur</p>
+                    <h3 class="text-2xl font-black text-[#1e1b4b]"><?php echo e($jumlahInfrastruktur); ?> <span class="text-xs font-medium text-gray-400">Objek</span></h3>
+                </div>
+                <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm transition-transform hover:scale-[1.02]">
+                    <div class="w-10 h-10 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-microchip"></i></div>
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Analisis AI</p>
+                    <h3 class="text-2xl font-black text-[#1e1b4b]"><?php echo e($jumlahAnalisis); ?> <span class="text-xs font-medium text-gray-400">Data</span></h3>
+                </div>
+                <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm transition-transform hover:scale-[1.02]">
+                    <div class="w-10 h-10 bg-orange-50 text-orange-600 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-user-check"></i></div>
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Surveyor & Kabid</p>
+                    <h3 class="text-2xl font-black text-[#1e1b4b]"><?php echo e($jumlahSurveyor + $jumlahKabid); ?> <span class="text-xs font-medium text-gray-400">User</span></h3>
+                </div>
+                <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm transition-transform hover:scale-[1.02]">
+                    <div class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center mb-4"><i class="fas fa-sitemap"></i></div>
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Wilayah</p>
+                    <h3 class="text-2xl font-black text-[#1e1b4b]"><?php echo e($jumlahWilayah); ?> <span class="text-xs font-medium text-gray-400">Kecamatan</span></h3>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm text-left">
+                    <div class="flex justify-between items-center mb-8">
+                        <div>
+                            <h4 class="font-extrabold text-lg text-[#1e1b4b]">Prediksi Prioritas Perbaikan</h4>
+                            <p class="text-xs text-gray-400 font-medium text-left">Berdasarkan klasifikasi Hybrid Model (CNN)</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 bg-red-50/50 rounded-2xl border border-red-100/50">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-red-500 text-white rounded-xl flex items-center justify-center shadow-lg shadow-red-200"><i class="fas fa-exclamation-triangle"></i></div>
+                                <div>
+                                    <p class="text-xs font-bold text-red-900 leading-none">Prioritas Tinggi (Rusak Berat)</p>
+                                    <p class="text-[10px] text-red-600 mt-1"><?php echo e($jumlahRusakBerat); ?> Titik ditemukan butuh penanganan segera</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right text-red-300 text-xs"></i>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-yellow-50/50 rounded-2xl border border-yellow-100/50">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-yellow-500 text-white rounded-xl flex items-center justify-center shadow-lg shadow-yellow-200"><i class="fas fa-tools"></i></div>
+                                <div>
+                                    <p class="text-xs font-bold text-yellow-900 leading-none">Prioritas Sedang (Rusak Ringan)</p>
+                                    <p class="text-[10px] text-yellow-600 mt-1 text-left"><?php echo e($jumlahRusakRingan); ?> Titik butuh pemeliharaan berkala</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right text-yellow-300 text-xs"></i>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-emerald-50/50 rounded-2xl border border-emerald-100/50">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-emerald-500 text-white rounded-xl flex items-center justify-center shadow-lg shadow-emerald-200"><i class="fas fa-check-circle"></i></div>
+                                <div>
+                                    <p class="text-xs font-bold text-emerald-900 leading-none">Kondisi Baik (Normal)</p>
+                                    <p class="text-[10px] text-emerald-600 mt-1"><?php echo e($jumlahBaik); ?> Titik dalam kondisi layak dan stabil</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right text-emerald-300 text-xs"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm text-left">
+                    <h4 class="font-extrabold text-lg text-[#1e1b4b] mb-8 text-left">Log Aktivitas</h4>
+                    <div class="relative space-y-8">
+                        <?php $__empty_1 = true; $__currentLoopData = $recentActivities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $activity): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                        <?php
+                            $icon = 'fa-plus';
+                            $bgColor = 'bg-blue-100';
+                            $textColor = 'text-blue-600';
+                            $title = 'Aktivitas';
+
+                            if($activity->type == 'survey') {
+                                $icon = 'fa-road'; $bgColor = 'bg-emerald-100'; $textColor = 'text-emerald-600';
+                                $title = 'Log Infrastruktur';
+                            } elseif($activity->type == 'user') {
+                                $icon = 'fa-user-cog'; $bgColor = 'bg-orange-100'; $textColor = 'text-orange-600';
+                                $title = 'Manajemen User';
+                            } elseif($activity->type == 'wilayah') {
+                                $icon = 'fa-map-marked-alt'; $bgColor = 'bg-purple-100'; $textColor = 'text-purple-600';
+                                $title = 'Manajemen Wilayah';
+                            } elseif($activity->type == 'profil') {
+                                $icon = 'fa-id-card'; $bgColor = 'bg-indigo-100'; $textColor = 'text-indigo-600';
+                                $title = 'Update Profil';
+                            }
+                        ?>
+                        <div class="flex gap-4 group">
+                            <div class="w-8 h-8 <?php echo e($bgColor); ?> rounded-full flex items-center justify-center border-4 border-white z-10 transition-transform group-hover:scale-110 shadow-sm">
+                                <i class="fas <?php echo e($icon); ?> text-[10px] <?php echo e($textColor); ?>"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start">
+                                    <p class="text-xs font-black text-[#1e1b4b]"><?php echo e($title); ?></p>
+                                    <p class="text-[9px] text-gray-400 italic"><?php echo e($activity->created_at->diffForHumans()); ?></p>
+                                </div>
+                                <p class="text-[10px] text-gray-500 mt-0.5"><?php echo e($activity->description); ?></p>
+                                <p class="text-[9px] text-gray-400 mt-1 uppercase font-bold tracking-tighter">Oleh: <span class="text-gray-600"><?php echo e($activity->user->name ?? 'System'); ?></span></p>
+                                
+                                <?php if($activity->type == 'survey' && $activity->reference_id): ?>
+                                <a href="<?php echo e(route('admin.infrastruktur.show', $activity->reference_id)); ?>" class="inline-block text-[9px] font-black text-indigo-500 uppercase tracking-tighter mt-2 hover:text-indigo-700 transition-colors">Buka Detail <i class="fas fa-arrow-right ml-1"></i></a>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                        <div class="text-center py-10">
+                            <p class="text-xs text-gray-400 italic font-bold">Belum ada aktivitas terbaru.</p>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('mini-clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WITA`;
+        }
+        setInterval(updateClock, 1000); updateClock();
+    </script>
+</body>
+</html><?php /**PATH C:\laragon1\laragon\www\geo-sinfra\resources\views/admin/statistik.blade.php ENDPATH**/ ?>

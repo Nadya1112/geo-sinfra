@@ -172,7 +172,7 @@
                                     <div class="w-3.5 h-3.5 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
                                         <i class="fas fa-check text-[7px] text-emerald-400" id="kel-check-icon" style="opacity:1"></i>
                                     </div>
-                                    <span class="group-hover:text-white transition-colors">Titik Kelurahan</span>
+                                    <span class="group-hover:text-white transition-colors">Wilayah Kelurahan</span>
                                 </div>
                                 <i class="fas fa-home text-emerald-500 text-[10px]"></i>
                             </button>
@@ -287,6 +287,7 @@
         const kelurahans = <?php echo json_encode($allKelurahans, 15, 512) ?>;
         let activeMarkers = [];
         let kelurahanMarkers = [];
+        let kelurahanPolygons = [];
         let geoLayers = {};
         let showKelurahan = true;
 
@@ -355,12 +356,12 @@
                         <div class="relative h-36 rounded-2xl bg-gray-100 mb-4 overflow-hidden shadow-inner">
                             <img src="/storage/${point.foto_terbaru}" class="w-full h-full object-cover">
                             <div class="absolute top-3 left-3 px-3 py-1 bg-white/90 backdrop-blur-md rounded-lg text-[8px] font-black uppercase tracking-widest text-[#1e1b4b] shadow-sm">
-                                ${point.jenis_infrastruktur}
+                                ${point.jenis_infrastruktur || point.jenis || 'Lainnya'}
                             </div>
                         </div>
                         
                         <div class="px-2">
-                            <h4 class="text-sm font-black text-[#1e1b4b] mb-1 leading-tight">${point.nama_infrastruktur}</h4>
+                            <h4 class="text-sm font-black text-[#1e1b4b] mb-1 leading-tight">${point.nama_infrastruktur || point.nama_objek || 'Tanpa Nama'}</h4>
                             <p class="text-[9px] text-gray-400 font-bold uppercase tracking-tighter mb-4">${new Date(point.updated_at).toLocaleDateString('id-ID', {day:'numeric', month:'long', year:'numeric'})}</p>
                             
                             <div class="flex items-center gap-2 mb-4">
@@ -409,30 +410,55 @@
             }
         }
 
-        function renderKelurahanMarkers() {
+        function renderKelurahanData() {
             kelurahanMarkers.forEach(m => map.removeLayer(m));
+            kelurahanPolygons.forEach(p => map.removeLayer(p));
             kelurahanMarkers = [];
+            kelurahanPolygons = [];
 
             if (!showKelurahan) return;
 
             kelurahans.forEach(kel => {
-                if (kel.latitude && kel.longitude) {
-                    const icon = L.divIcon({
-                        className: '',
-                        html: `<div class="w-6 h-6 bg-emerald-500 rounded-full border-2 border-white shadow-lg flex items-center justify-center text-white text-[10px] transform hover:scale-110 transition-transform"><i class="fas fa-home"></i></div>`,
-                        iconSize: [24, 24],
-                        iconAnchor: [12, 12]
-                    });
+                // 1. Render Poligon Kelurahan (Hanya Garis Tepi)
+                if (kel.geometri) {
+                    try {
+                        const geoData = typeof kel.geometri === 'string' ? JSON.parse(kel.geometri) : kel.geometri;
+                        const poly = L.geoJSON(geoData, {
+                            filter: function(feature) {
+                                // Hanya tampilkan jika bukan titik (Point)
+                                return feature.geometry.type !== 'Point';
+                            },
+                            style: {
+                                fillColor: 'transparent',
+                                weight: 2,
+                                opacity: 1,
+                                color: '#10b981',
+                                fillOpacity: 0
+                            }
+                        }).addTo(map);
 
-                    const marker = L.marker([kel.latitude, kel.longitude], {
-                        icon: icon
-                    }).addTo(map).bindPopup(`
-                        <div class="p-2 text-center">
-                            <p class="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">Titik Kelurahan</p>
-                            <h4 class="text-xs font-black text-[#1e1b4b] uppercase">${kel.nama_kelurahan}</h4>
-                        </div>
-                    `, { className: 'premium-popup' });
-                    kelurahanMarkers.push(marker);
+                        poly.bindPopup(`
+                            <div class="px-2 py-0.5 text-center">
+                                <p class="text-[8px] font-black text-emerald-600 uppercase tracking-[0.2em] mb-0.5">Kelurahan</p>
+                                <p class="text-[10px] font-black uppercase tracking-widest text-[#1e1b4b]">${kel.nama_kelurahan}</p>
+                            </div>
+                        `, {
+                            className: 'custom-polygon-popup',
+                            closeButton: false,
+                            offset: [0, -5]
+                        });
+
+                        poly.on('mouseover', function() {
+                            this.setStyle({ color: '#059669', weight: 3 });
+                        });
+                        poly.on('mouseout', function() {
+                            this.setStyle({ color: '#10b981', weight: 2 });
+                        });
+
+                        kelurahanPolygons.push(poly);
+                    } catch (e) {
+                        console.error("Error rendering Kelurahan Polygon: " + kel.nama_kelurahan, e);
+                    }
                 }
             });
         }
@@ -441,7 +467,7 @@
             showKelurahan = !showKelurahan;
             document.getElementById('kel-check-icon').style.opacity = showKelurahan ? '1' : '0';
             document.getElementById('kel-toggle-btn').classList.toggle('text-white', showKelurahan);
-            renderKelurahanMarkers();
+            renderKelurahanData();
         }
 
         let activeTypes = ['Jalan', 'Sanitasi', 'Titian'];
@@ -449,10 +475,14 @@
 
         function applyFilters() {
             // Filter Markers
-            let filteredMarkers = dataPoints.filter(p => 
-                activeTypes.includes(p.jenis_infrastruktur) && 
-                activeTerritories.includes(p.id_kecamatan.toString())
-            );
+            let filteredMarkers = dataPoints.filter(p => {
+                // Normalisasi kategori (handle null & case insensitive)
+                const rawType = p.jenis_infrastruktur || p.jenis || 'Lainnya';
+                const normalizedType = rawType.charAt(0).toUpperCase() + rawType.slice(1).toLowerCase();
+                
+                return (activeTypes.includes(normalizedType) || activeTypes.includes(rawType)) && 
+                       activeTerritories.includes(p.id_kecamatan.toString());
+            });
             renderMarkers(filteredMarkers);
 
             // Filter Polygons
@@ -561,7 +591,7 @@
         }
 
         applyFilters();
-        renderKelurahanMarkers();
+        renderKelurahanData();
     </script>
 
     <style>

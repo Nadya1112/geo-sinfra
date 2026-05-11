@@ -109,6 +109,7 @@ Route::middleware(['auth'])->group(function () {
          */
         Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
         Route::get('/statistik', [AdminController::class, 'statistik'])->name('admin.statistik');
+        Route::get('/statistik/tahunan', [AdminController::class, 'statistikTahunan'])->name('admin.statistik.tahunan');
 
         /** * 2. MANAJEMEN PENGGUNA (Fitur Lengkap CRUD)
          */
@@ -172,6 +173,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [App\Http\Controllers\Kabid\KabidController::class, 'index'])->name('kabid.dashboard');
         Route::get('/monitoring', [App\Http\Controllers\Kabid\KabidController::class, 'monitoring'])->name('kabid.monitoring');
         Route::get('/verifikasi', [App\Http\Controllers\Kabid\KabidController::class, 'verifikasi'])->name('kabid.verifikasi');
+        Route::get('/statistik/tahunan', [App\Http\Controllers\Kabid\KabidController::class, 'statistikTahunan'])->name('kabid.statistik.tahunan');
+        Route::get('/laporan', [App\Http\Controllers\Kabid\KabidController::class, 'laporan'])->name('kabid.laporan');
         Route::post('/verifikasi/{id}', [App\Http\Controllers\Kabid\KabidController::class, 'prosesVerifikasi'])->name('kabid.verifikasi.proses');
         Route::get('/infrastruktur/{id}', [App\Http\Controllers\Kabid\KabidController::class, 'show'])->name('kabid.infrastruktur.show');
         Route::get('/profile', [App\Http\Controllers\Kabid\KabidController::class, 'profile'])->name('kabid.profile');

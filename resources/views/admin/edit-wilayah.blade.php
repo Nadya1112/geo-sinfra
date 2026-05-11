@@ -71,15 +71,12 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div>
-                            <label class="block text-[10px] font-black text-[#1e1b4b] tracking-widest mb-2 uppercase">Latitude <span class="text-red-500">*</span></label>
-                            <input type="text" name="latitude" value="{{ $wilayah->latitude }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-black text-[#1e1b4b] tracking-widest mb-2 uppercase">Longitude <span class="text-red-500">*</span></label>
-                            <input type="text" name="longitude" value="{{ $wilayah->longitude }}" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500">
-                        </div>
+
+
+                    <div>
+                        <label class="block text-[10px] font-black text-[#1e1b4b] tracking-widest mb-2 uppercase">Data Geometri (GeoJSON) <span class="text-gray-400 font-medium normal-case ml-1">(Opsional)</span></label>
+                        <textarea name="geometri" rows="8" placeholder='{"type": "Polygon", "coordinates": [...]}' class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-xs font-mono focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all">{{ old('geometri', $wilayah->geometri) }}</textarea>
+                        <p class="text-[9px] text-gray-400 mt-2 italic font-medium text-left">Masukkan format GeoJSON untuk menampilkan poligon di peta.</p>
                     </div>
 
                     <div class="flex gap-4 pt-6">

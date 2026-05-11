@@ -37,7 +37,13 @@
             <a href="{{ route('admin.statistik') }}" 
                class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.statistik') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-900/20' : 'text-gray-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
                 <i class="fas fa-chart-bar {{ request()->routeIs('admin.statistik') ? '' : 'group-hover:text-blue-400' }}"></i> 
-                Statistik dan Laporan
+                Ringkasan Statistik
+            </a>
+
+            <a href="{{ route('admin.statistik.tahunan') }}" 
+               class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.statistik.tahunan') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-900/20' : 'text-gray-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
+                <i class="fas fa-calendar-alt {{ request()->routeIs('admin.statistik.tahunan') ? '' : 'group-hover:text-blue-400' }}"></i> 
+                Statistik Tahunan
             </a>
         </nav>
     </div>
