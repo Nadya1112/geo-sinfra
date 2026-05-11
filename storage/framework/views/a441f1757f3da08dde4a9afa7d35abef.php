@@ -13,12 +13,12 @@
 </head>
 <body class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 text-left">
 
-    @include('admin.partials.sidebar')
+    <?php echo $__env->make('admin.partials.sidebar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
     <main class="flex-1 flex flex-col h-screen overflow-y-auto">
         <header class="bg-white border-b border-gray-100 px-8 py-5 flex justify-between items-center z-10">
             <div class="flex items-center gap-4">
-                <a href="{{ route('admin.infrastruktur') }}" class="w-10 h-10 bg-white border border-gray-100 rounded-xl flex items-center justify-center text-gray-400 hover:text-blue-600 transition-all">
+                <a href="<?php echo e(route('admin.infrastruktur')); ?>" class="w-10 h-10 bg-white border border-gray-100 rounded-xl flex items-center justify-center text-gray-400 hover:text-blue-600 transition-all">
                     <i class="fas fa-arrow-left text-xs"></i>
                 </a>
                 <div>
@@ -29,7 +29,7 @@
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
                     <p class="text-[11px] font-black text-[#1e1b4b]" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter"><?php echo e(now()->translatedFormat('l, d F Y')); ?></p>
                 </div>
                 
                 <div class="h-8 w-[1px] bg-gray-100"></div>
@@ -47,15 +47,15 @@
         </header>
 
         <div class="p-8 pb-20">
-            @if(session('success'))
+            <?php if(session('success')): ?>
             <div class="max-w-4xl mx-auto mb-6 bg-emerald-50 border border-emerald-200 text-emerald-700 px-6 py-4 rounded-2xl flex items-center gap-3 shadow-sm">
                 <i class="fas fa-check-circle text-xl"></i>
                 <div>
                     <h4 class="font-bold text-sm">Berhasil!</h4>
-                    <p class="text-xs font-medium">{{ session('success') }}</p>
+                    <p class="text-xs font-medium"><?php echo e(session('success')); ?></p>
                 </div>
             </div>
-            @endif
+            <?php endif; ?>
 
             <div class="max-w-4xl bg-white rounded-[2.5rem] p-10 border border-gray-100 shadow-sm mx-auto">
                 <div class="mb-10 border-b border-gray-50 pb-5 flex justify-between items-end">
@@ -64,8 +64,9 @@
                         <p class="text-xs text-gray-400 font-medium tracking-tighter">Detail Informasi Aset SINFRA</p>
                     </div>
                     <div class="flex gap-3">
-                        <span class="px-4 py-2 rounded-xl text-[10px] font-black tracking-widest border {{ strtolower($inf->kondisi) == 'baik' ? 'bg-green-50 text-green-600 border-green-200' : (str_contains(strtolower($inf->kondisi), 'ringan') ? 'bg-yellow-50 text-yellow-600 border-yellow-200' : 'bg-red-50 text-red-600 border-red-200') }}">
-                            {{ strtoupper($inf->kondisi) }}
+                        <span class="px-4 py-2 rounded-xl text-[10px] font-black tracking-widest border <?php echo e(strtolower($inf->kondisi) == 'baik' ? 'bg-green-50 text-green-600 border-green-200' : (str_contains(strtolower($inf->kondisi), 'ringan') ? 'bg-yellow-50 text-yellow-600 border-yellow-200' : 'bg-red-50 text-red-600 border-red-200')); ?>">
+                            <?php echo e(strtoupper($inf->kondisi)); ?>
+
                         </span>
                     </div>
                 </div>
@@ -80,13 +81,15 @@
                             <div>
                                 <label class="block text-[10px] font-black text-[#1e1b4b] tracking-widest mb-2">Nama Infrastruktur</label>
                                 <div class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold text-gray-600">
-                                    {{ $inf->nama_objek ?? $inf->nama_infrastruktur }}
+                                    <?php echo e($inf->nama_objek ?? $inf->nama_infrastruktur); ?>
+
                                 </div>
                             </div>
                             <div>
                                 <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Jenis Infrastruktur</label>
                                 <div class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold text-gray-600 uppercase">
-                                    {{ $inf->jenis ?? $inf->jenis_infrastruktur }}
+                                    <?php echo e($inf->jenis ?? $inf->jenis_infrastruktur); ?>
+
                                 </div>
                             </div>
                         </div>
@@ -95,13 +98,15 @@
                             <div>
                                 <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Kecamatan</label>
                                 <div class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold text-gray-600">
-                                    {{ $inf->nama_kecamatan ?? '-' }}
+                                    <?php echo e($inf->nama_kecamatan ?? '-'); ?>
+
                                 </div>
                             </div>
                             <div>
                                 <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Kelurahan</label>
                                 <div class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold text-gray-600">
-                                    {{ $inf->nama_kelurahan ?? '-' }}
+                                    <?php echo e($inf->nama_kelurahan ?? '-'); ?>
+
                                 </div>
                             </div>
                         </div>
@@ -115,13 +120,15 @@
                             <div>
                                 <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Latitude</label>
                                 <div class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold text-gray-600">
-                                    {{ $inf->latitude }}
+                                    <?php echo e($inf->latitude); ?>
+
                                 </div>
                             </div>
                             <div>
                                 <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Longitude</label>
                                 <div class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold text-gray-600">
-                                    {{ $inf->longitude }}
+                                    <?php echo e($inf->longitude); ?>
+
                                 </div>
                             </div>
                         </div>
@@ -137,14 +144,14 @@
                             <h4 class="text-sm font-black text-[#1e1b4b] uppercase tracking-wider">3. Analisis Cerdas (AI)</h4>
                         </div>
 
-                        @php
+                        <?php
                             // Ambil data hasil AI dari database berdasarkan ID Infrastruktur ini
                             $hasilAi = \Illuminate\Support\Facades\DB::table('analisis_ai')
                                         ->where('id_infrastruktur', $inf->id_infrastruktur)
                                         ->first();
-                        @endphp
+                        ?>
 
-                        @if($hasilAi)
+                        <?php if($hasilAi): ?>
                         <div class="bg-gradient-to-br from-indigo-900 to-blue-900 rounded-2xl p-6 shadow-xl shadow-indigo-200 relative overflow-hidden text-white">
                             <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white opacity-5 rounded-full blur-2xl"></div>
                             
@@ -155,7 +162,7 @@
                                     </div>
                                     <div>
                                         <h4 class="font-black tracking-wider text-sm uppercase text-indigo-100">Keputusan Algoritma Decision Tree</h4>
-                                        <p class="text-[10px] text-indigo-200 font-medium">Dianalisis pada: {{ \Carbon\Carbon::parse($hasilAi->created_at)->format('d M Y - H:i') }} WITA</p>
+                                        <p class="text-[10px] text-indigo-200 font-medium">Dianalisis pada: <?php echo e(\Carbon\Carbon::parse($hasilAi->created_at)->format('d M Y - H:i')); ?> WITA</p>
                                     </div>
                                 </div>
                                 <div class="bg-white/10 px-3 py-1.5 rounded-lg border border-white/20">
@@ -166,21 +173,22 @@
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 text-left">
                                 <div class="bg-black/20 p-4 rounded-xl border border-white/10 backdrop-blur-md">
                                     <p class="text-[10px] text-indigo-200 uppercase font-bold tracking-wider mb-1">Skor Kerusakan</p>
-                                    <p class="text-2xl font-black text-white">{{ $hasilAi->skor_dt }}<span class="text-xs text-indigo-300 font-medium">/100</span></p>
+                                    <p class="text-2xl font-black text-white"><?php echo e($hasilAi->skor_dt); ?><span class="text-xs text-indigo-300 font-medium">/100</span></p>
                                 </div>
                                 <div class="bg-black/20 p-4 rounded-xl border border-white/10 backdrop-blur-md">
                                     <p class="text-[10px] text-indigo-200 uppercase font-bold tracking-wider mb-1">Status Prediksi AI</p>
-                                    <p class="text-lg font-black {{ $hasilAi->label_prioritas == 'Rusak Berat' ? 'text-red-400' : ($hasilAi->label_prioritas == 'Rusak Sedang' ? 'text-yellow-400' : 'text-emerald-400') }}">
-                                        {{ strtoupper($hasilAi->label_prioritas) }}
+                                    <p class="text-lg font-black <?php echo e($hasilAi->label_prioritas == 'Rusak Berat' ? 'text-red-400' : ($hasilAi->label_prioritas == 'Rusak Sedang' ? 'text-yellow-400' : 'text-emerald-400')); ?>">
+                                        <?php echo e(strtoupper($hasilAi->label_prioritas)); ?>
+
                                     </p>
                                 </div>
                                 <div class="bg-black/20 p-4 rounded-xl border border-white/10 backdrop-blur-md">
                                     <p class="text-[10px] text-indigo-200 uppercase font-bold tracking-wider mb-1">Rekomendasi Tindakan</p>
-                                    <p class="text-[11px] font-medium leading-relaxed text-gray-100">{{ $hasilAi->rekomendasi }}</p>
+                                    <p class="text-[11px] font-medium leading-relaxed text-gray-100"><?php echo e($hasilAi->rekomendasi); ?></p>
                                 </div>
                             </div>
                         </div>
-                        @else
+                        <?php else: ?>
                         <div class="bg-gray-50 border border-dashed border-gray-300 rounded-2xl p-8 text-center">
                             <div class="w-14 h-14 bg-gray-200 text-gray-400 rounded-full flex items-center justify-center mx-auto mb-3">
                                 <i class="fas fa-robot text-2xl"></i>
@@ -188,7 +196,7 @@
                             <h4 class="font-bold text-[#1e1b4b] text-sm">Belum Dianalisis oleh AI</h4>
                             <p class="text-xs text-gray-500 mt-2 max-w-sm mx-auto leading-relaxed">Data lapangan ini belum diproses oleh algoritma Decision Tree. Silakan tekan tombol <b>"Analisis AI"</b> di bawah untuk mengkalkulasi tingkat kerusakan secara otomatis.</p>
                         </div>
-                        @endif
+                        <?php endif; ?>
                     </div>
 
                     <div class="space-y-6 pt-6 border-t border-gray-100">
@@ -197,46 +205,46 @@
                         </div>
                         
                         <div class="w-full max-w-2xl mx-auto relative rounded-2xl overflow-hidden border border-gray-100 shadow-sm bg-gray-50 aspect-video flex items-center justify-center group">
-                            @if($inf->foto_terbaru && $inf->foto_terbaru != 'default.jpg')
-                                <img src="{{ asset('storage/infrastruktur/' . $inf->foto_terbaru) }}" alt="Foto Infrastruktur" class="w-full h-full object-cover">
-                                @if(strtolower($inf->kondisi) != 'baik')
+                            <?php if($inf->foto_terbaru && $inf->foto_terbaru != 'default.jpg'): ?>
+                                <img src="<?php echo e(asset('storage/infrastruktur/' . $inf->foto_terbaru)); ?>" alt="Foto Infrastruktur" class="w-full h-full object-cover">
+                                <?php if(strtolower($inf->kondisi) != 'baik'): ?>
                                     <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
                                         <div class="border-2 border-red-500 bg-red-500/20 w-1/3 h-1/2 relative flex items-start justify-center">
                                             <span class="bg-red-500 text-white text-[8px] font-black px-2 py-1 mt-[-20px] whitespace-nowrap rounded-t-md tracking-wider shadow-sm">AREA TERDAMPAK</span>
                                         </div>
                                     </div>
-                                @endif
+                                <?php endif; ?>
                                 <div class="absolute inset-0 bg-black/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <a href="{{ asset('storage/infrastruktur/' . $inf->foto_terbaru) }}" target="_blank" class="bg-white/90 text-[#1e1b4b] px-4 py-2 rounded-xl text-[10px] font-black shadow-lg uppercase tracking-widest hover:bg-white hover:scale-105 transition-all">Lihat Foto Asli</a>
+                                    <a href="<?php echo e(asset('storage/infrastruktur/' . $inf->foto_terbaru)); ?>" target="_blank" class="bg-white/90 text-[#1e1b4b] px-4 py-2 rounded-xl text-[10px] font-black shadow-lg uppercase tracking-widest hover:bg-white hover:scale-105 transition-all">Lihat Foto Asli</a>
                                 </div>
-                            @else
+                            <?php else: ?>
                                 <div class="text-center text-gray-300">
                                     <i class="fas fa-image text-4xl mb-3"></i>
                                     <p class="text-xs font-bold uppercase tracking-widest">[ TIDAK ADA FOTO ]</p>
                                 </div>
-                            @endif
+                            <?php endif; ?>
                         </div>
                         
                         <div class="mt-3 text-center">
-                            <p class="text-[9px] font-bold text-gray-400 italic normal-case">{{ $inf->foto_terbaru ?? 'tidak_ada_foto.jpg' }} - Diupload oleh {{ $inf->nama_user ?? 'Surveyor' }}</p>
+                            <p class="text-[9px] font-bold text-gray-400 italic normal-case"><?php echo e($inf->foto_terbaru ?? 'tidak_ada_foto.jpg'); ?> - Diupload oleh <?php echo e($inf->nama_user ?? 'Surveyor'); ?></p>
                         </div>
                     </div>
 
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-3 pt-8 mt-10 border-t border-gray-100">
-                    <form action="{{ route('admin.infrastruktur.analisis-ai', $inf->id_infrastruktur) }}" method="POST" class="flex-1 flex">
-                        @csrf
+                    <form action="<?php echo e(route('admin.infrastruktur.analisis-ai', $inf->id_infrastruktur)); ?>" method="POST" class="flex-1 flex">
+                        <?php echo csrf_field(); ?>
                         <button type="submit" class="w-full bg-gradient-to-r from-indigo-600 to-blue-500 text-white py-3.5 rounded-2xl font-black text-[11px] tracking-widest hover:from-indigo-700 hover:to-blue-600 shadow-lg shadow-indigo-200 transition-all flex justify-center items-center gap-2 uppercase" onclick="return confirm('Jalankan algoritma Decision Tree untuk menganalisis data kerusakan ini secara otomatis?')">
                             <i class="fas fa-brain text-sm"></i> Analisis AI
                         </button>
                     </form>
 
-                    <a href="{{ route('admin.infrastruktur.pdf', $inf->id_infrastruktur) }}" class="flex-1 bg-yellow-400 text-white py-3.5 rounded-2xl font-black text-[11px] tracking-widest hover:bg-yellow-500 shadow-lg shadow-yellow-100 transition-all flex justify-center items-center gap-2 uppercase">
+                    <a href="<?php echo e(route('admin.infrastruktur.pdf', $inf->id_infrastruktur)); ?>" class="flex-1 bg-yellow-400 text-white py-3.5 rounded-2xl font-black text-[11px] tracking-widest hover:bg-yellow-500 shadow-lg shadow-yellow-100 transition-all flex justify-center items-center gap-2 uppercase">
                         <i class="fas fa-file-pdf text-sm"></i> Export PDF
                     </a>
 
-                    <a href="{{ route('admin.infrastruktur.edit', $inf->id_infrastruktur) }}" class="flex-1 bg-white text-[#1e1b4b] border-2 border-gray-100 py-3.5 rounded-2xl font-black text-[11px] tracking-widest hover:border-indigo-500 hover:text-indigo-600 transition-all flex justify-center items-center gap-2 uppercase">
+                    <a href="<?php echo e(route('admin.infrastruktur.edit', $inf->id_infrastruktur)); ?>" class="flex-1 bg-white text-[#1e1b4b] border-2 border-gray-100 py-3.5 rounded-2xl font-black text-[11px] tracking-widest hover:border-indigo-500 hover:text-indigo-600 transition-all flex justify-center items-center gap-2 uppercase">
                         <i class="fas fa-edit text-sm"></i> Edit Manual
                     </a>
                 </div>
@@ -253,8 +261,8 @@
         setInterval(updateClock, 1000); updateClock();
 
         // Initialize Mini Map
-        const lat = {{ $inf->latitude ?? '-3.316694' }};
-        const lng = {{ $inf->longitude ?? '114.590111' }};
+        const lat = <?php echo e($inf->latitude ?? '-3.316694'); ?>;
+        const lng = <?php echo e($inf->longitude ?? '114.590111'); ?>;
         const map = L.map('mini-map').setView([lat, lng], 15);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -262,8 +270,8 @@
         }).addTo(map);
 
         L.marker([lat, lng]).addTo(map)
-            .bindPopup('{{ $inf->nama_objek ?? $inf->nama_infrastruktur }}')
+            .bindPopup('<?php echo e($inf->nama_objek ?? $inf->nama_infrastruktur); ?>')
             .openPopup();
     </script>
 </body>
-</html>
+</html><?php /**PATH C:\laragon1\laragon\www\geo-sinfra\resources\views/admin/detail-infrastruktur.blade.php ENDPATH**/ ?>
