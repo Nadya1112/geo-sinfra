@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verifikasi Usulan | GEO-SINFRA</title>
+    <title>Validasi Data | GEO-SINFRA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -28,7 +28,7 @@
                 </a>
                 <div>
                     <p class="text-[10px] font-extrabold text-indigo-600 uppercase tracking-[0.2em] mb-1">Manajemen Validasi</p>
-                    <h2 class="text-xl font-black text-[#1e1b4b]">Verifikasi Usulan Masuk</h2>
+                    <h2 class="text-xl font-black text-[#1e1b4b]">Validasi Data</h2>
                 </div>
             </div>
             
@@ -64,16 +64,63 @@
                 </div>
             @endif
 
+            <!-- STATS SUMMARY CARDS -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Menunggu -->
+                <div class="bg-white p-6 rounded-[2.5rem] border border-gray-100 shadow-sm relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 w-20 h-20 bg-amber-500/5 rounded-full blur-2xl group-hover:bg-amber-500/10 transition-all"></div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-10 h-10 bg-amber-50 text-amber-500 rounded-xl flex items-center justify-center border border-amber-100">
+                            <i class="fas fa-clock text-xs"></i>
+                        </div>
+                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Menunggu</p>
+                    </div>
+                    <div class="flex items-end gap-2">
+                        <h3 class="text-3xl font-black text-[#1e1b4b]">{{ $counts['pending'] }}</h3>
+                        <span class="text-[9px] font-bold text-amber-500 mb-1.5 uppercase">Usulan</span>
+                    </div>
+                </div>
+
+                <!-- Diterima -->
+                <div class="bg-white p-6 rounded-[2.5rem] border border-gray-100 shadow-sm relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 w-20 h-20 bg-emerald-500/5 rounded-full blur-2xl group-hover:bg-emerald-500/10 transition-all"></div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-10 h-10 bg-emerald-50 text-emerald-500 rounded-xl flex items-center justify-center border border-emerald-100">
+                            <i class="fas fa-check-double text-xs"></i>
+                        </div>
+                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Diterima</p>
+                    </div>
+                    <div class="flex items-end gap-2">
+                        <h3 class="text-3xl font-black text-[#1e1b4b]">{{ $counts['verified'] }}</h3>
+                        <span class="text-[9px] font-bold text-emerald-500 mb-1.5 uppercase">Verified</span>
+                    </div>
+                </div>
+
+                <!-- Ditolak -->
+                <div class="bg-white p-6 rounded-[2.5rem] border border-gray-100 shadow-sm relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 w-20 h-20 bg-rose-500/5 rounded-full blur-2xl group-hover:bg-rose-500/10 transition-all"></div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-10 h-10 bg-rose-50 text-rose-500 rounded-xl flex items-center justify-center border border-rose-100">
+                            <i class="fas fa-times-circle text-xs"></i>
+                        </div>
+                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Ditolak</p>
+                    </div>
+                    <div class="flex items-end gap-2">
+                        <h3 class="text-3xl font-black text-[#1e1b4b]">{{ $counts['rejected'] }}</h3>
+                        <span class="text-[9px] font-bold text-rose-500 mb-1.5 uppercase">Rejected</span>
+                    </div>
+                </div>
+            </div>
 
             <!-- TABLE SECTION -->
             <div class="bg-white rounded-[3rem] shadow-sm border border-gray-100 overflow-hidden mb-10">
                 <div class="px-8 py-6 border-b border-gray-50 flex justify-between items-center bg-gray-50/30">
                     <div>
-                        <h3 class="text-sm font-black text-[#1e1b4b] uppercase tracking-widest">Validasi Data Usulan</h3>
-                        <p class="text-[9px] text-gray-400 font-bold uppercase mt-1">Daftar riwayat dan usulan baru dari surveyor</p>
+                        <h3 class="text-sm font-black text-[#1e1b4b] uppercase tracking-widest">Validasi Data</h3>
+                        <p class="text-[9px] text-gray-400 font-bold uppercase mt-1">Daftar validasi dari data surveyor</p>
                     </div>
                     <div>
-                        <form action="{{ route('kabid.verifikasi') }}" method="GET" class="flex items-center gap-2">
+                        <form action="{{ route('kabid.validasi') }}" method="GET" class="flex items-center gap-2">
                             <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Tampilan:</label>
                             <select name="show" onchange="this.form.submit()" class="text-xs font-bold text-[#1e1b4b] bg-white border border-gray-200 rounded-xl px-3 py-1.5 focus:outline-none focus:border-indigo-500 transition-colors">
                                 <option value="10" {{ request('show') != 'all' ? 'selected' : '' }}>Per 10 Data</option>
@@ -89,9 +136,8 @@
                             <tr class="text-[10px] font-black text-gray-400 uppercase tracking-widest">
                                 <th class="px-6 py-3 w-16">No</th>
                                 <th class="px-6 py-3">Infrastruktur</th>
-                                <th class="px-6 py-3">Wilayah</th>
-                                <th class="px-6 py-3">Analisis AI</th>
-                                <th class="px-6 py-3">Status Admin</th>
+                                <th class="px-6 py-3">Surveyor</th>
+                                <th class="px-6 py-3">Status</th>
                                 <th class="px-6 py-3 text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -113,60 +159,42 @@
                                     </div>
                                 </td>
                                 <td class="px-6 py-3 whitespace-nowrap">
-                                    <p class="text-xs font-bold text-gray-600">{{ $item->kelurahan->nama_kelurahan ?? '-' }}</p>
-                                    <p class="text-[9px] text-gray-400 font-bold uppercase mt-0.5">{{ $item->kelurahan->kecamatan->nama_kecamatan ?? '-' }}</p>
-                                </td>
-                                <td class="px-6 py-3 whitespace-nowrap">
-                                    <div class="flex flex-col gap-1">
-                                        @if($item->cnn)
-                                            @php
-                                                $cnnLabel = strtolower($item->cnn->label_kondisi ?? '');
-                                                $cnnColor = str_contains($cnnLabel, 'berat') ? 'text-red-600' : (str_contains($cnnLabel, 'sedang') ? 'text-amber-600' : 'text-emerald-600');
-                                            @endphp
-                                            <span class="text-[9px] font-black {{ $cnnColor }} uppercase">CNN: {{ $item->cnn->label_kondisi ?? 'Memproses...' }}</span>
-                                        @else
-                                            <span class="text-[9px] font-black text-gray-400 uppercase">CNN: N/A</span>
-                                        @endif
-                                        @if($item->analisis)
-                                            @php
-                                                $aiLabel = strtolower($item->analisis->label_prioritas ?? '');
-                                                $aiColor = str_contains($aiLabel, 'berat') ? 'text-red-600' : (str_contains($aiLabel, 'sedang') ? 'text-amber-600' : 'text-emerald-600');
-                                            @endphp
-                                            <span class="text-[9px] font-bold {{ $aiColor }} uppercase">Status: {{ $item->analisis->label_prioritas ?? 'Memproses...' }}</span>
-                                        @else
-                                            <span class="text-[9px] font-bold text-gray-400 uppercase">Status: N/A</span>
-                                        @endif
+                                    <div class="flex items-center gap-2">
+                                        <i class="fas fa-user-tie text-indigo-400 text-[10px]"></i>
+                                        <p class="text-xs font-black text-[#1e1b4b]">{{ $item->user->name ?? 'Anonim' }}</p>
                                     </div>
                                 </td>
                                 <td class="px-6 py-3 whitespace-nowrap">
-                                    @php
-                                        $statusClass = match($item->status_verifikasi) {
-                                            'Verified' => 'bg-emerald-50 text-emerald-600 border-emerald-100',
-                                            'Rejected' => 'bg-rose-50 text-rose-600 border-rose-100',
-                                            default => 'bg-amber-50 text-amber-600 border-amber-100'
-                                        };
-                                        $statusIcon = match($item->status_verifikasi) {
-                                            'Verified' => 'fa-check-double',
-                                            'Rejected' => 'fa-times-circle',
-                                            default => 'fa-clock'
-                                        };
-                                    @endphp
-                                    <span class="px-3 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest border flex items-center gap-2 w-fit {{ $statusClass }}">
-                                        <i class="fas {{ $statusIcon }} text-[10px]"></i>
-                                        {{ $item->status_verifikasi == 'Verified' ? 'Diterima' : ($item->status_verifikasi == 'Rejected' ? 'Ditolak' : 'Menunggu Verifikasi') }}
-                                    </span>
+                                    <div class="flex flex-col gap-2">
+                                        @php
+                                            $statusClass = match($item->status_verifikasi) {
+                                                'Verified' => 'bg-emerald-50 text-emerald-600 border-emerald-100',
+                                                'Rejected' => 'bg-rose-50 text-rose-600 border-rose-100',
+                                                default => 'bg-amber-50 text-amber-600 border-amber-100'
+                                            };
+                                            $statusIcon = match($item->status_verifikasi) {
+                                                'Verified' => 'fa-check-double',
+                                                'Rejected' => 'fa-times-circle',
+                                                default => 'fa-clock'
+                                            };
+                                        @endphp
+                                        <span class="px-3 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest border flex items-center gap-2 w-fit {{ $statusClass }}">
+                                            <i class="fas {{ $statusIcon }} text-[10px]"></i>
+                                            {{ $item->status_verifikasi == 'Verified' ? 'Diterima' : ($item->status_verifikasi == 'Rejected' ? 'Ditolak' : 'Menunggu') }}
+                                        </span>
+                                    </div>
                                 </td>
                                 <td class="px-6 py-3 whitespace-nowrap">
                                     <div class="flex items-center justify-center gap-2 flex-wrap">
-                                        {{-- Tinjau --}}
-                                        <a href="{{ route('kabid.infrastruktur.show', $item->id_infrastruktur) }}" class="flex items-center gap-1.5 px-3 py-2 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all border border-indigo-100 shadow-sm" title="Tinjau Usulan">
+                                        {{-- Detail --}}
+                                        <a href="{{ route('kabid.infrastruktur.show', $item->id_infrastruktur) }}" class="flex items-center gap-1.5 px-3 py-2 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all border border-indigo-100 shadow-sm" title="Lihat Detail">
                                             <i class="fas fa-eye text-[10px]"></i>
-                                            <span class="text-[9px] font-black uppercase tracking-widest">Tinjau</span>
+                                            <span class="text-[9px] font-black uppercase tracking-widest">Detail</span>
                                         </a>
 
                                         {{-- ACC --}}
                                         @if($item->status_verifikasi == 'Pending')
-                                            <form action="{{ route('kabid.verifikasi.proses', $item->id_infrastruktur) }}" method="POST" class="inline">
+                                            <form action="{{ route('kabid.validasi.proses', $item->id_infrastruktur) }}" method="POST" class="inline">
                                                 @csrf
                                                 <input type="hidden" name="status" value="Verified">
                                                 <button type="submit" class="flex items-center gap-1.5 px-3 py-2 bg-emerald-500 text-white rounded-xl hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-500/20">
@@ -180,17 +208,34 @@
                                                 <span class="text-[9px] font-black uppercase tracking-widest">ACC</span>
                                             </button>
                                         @endif
+
+                                        {{-- Tolak --}}
+                                        @if($item->status_verifikasi == 'Pending')
+                                            <form action="{{ route('kabid.validasi.proses', $item->id_infrastruktur) }}" method="POST" class="inline">
+                                                @csrf
+                                                <input type="hidden" name="status" value="Rejected">
+                                                <button type="submit" class="flex items-center gap-1.5 px-3 py-2 bg-white border border-red-200 text-red-400 rounded-xl hover:bg-red-50 hover:text-red-600 hover:border-red-300 transition-all">
+                                                    <i class="fas fa-times text-[10px]"></i>
+                                                    <span class="text-[9px] font-black uppercase tracking-widest">Tolak</span>
+                                                </button>
+                                            </form>
+                                        @else
+                                            <button disabled class="flex items-center gap-1.5 px-3 py-2 bg-gray-50 text-gray-300 rounded-xl border border-gray-100 cursor-not-allowed">
+                                                <i class="fas fa-times text-[10px]"></i>
+                                                <span class="text-[9px] font-black uppercase tracking-widest">Tolak</span>
+                                            </button>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="6" class="px-8 py-20 text-center">
+                                <td colspan="5" class="px-8 py-20 text-center">
                                     <div class="flex flex-col items-center gap-3">
                                         <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center text-gray-300">
                                             <i class="fas fa-clipboard-check text-2xl"></i>
                                         </div>
-                                        <p class="text-sm font-bold text-gray-400 uppercase tracking-widest">Tidak ada usulan untuk divalidasi</p>
+                                        <p class="text-sm font-bold text-gray-400 uppercase tracking-widest">Tidak ada data untuk divalidasi</p>
                                     </div>
                                 </td>
                             </tr>

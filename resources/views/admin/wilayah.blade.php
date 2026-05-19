@@ -72,8 +72,12 @@
                 </div>
                 
                 <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
-                    <form action="{{ route('admin.wilayah') }}" method="GET" class="flex items-center flex-1 md:w-80">
-                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama kecamatan atau kelurahan..." class="flex-1 pl-6 pr-4 py-2.5 bg-white border border-gray-100 rounded-l-2xl text-xs font-semibold focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all shadow-sm">
+                    <form action="{{ route('admin.wilayah') }}" method="GET" class="flex items-center flex-1 md:w-[400px]">
+                        <select name="show" onchange="this.form.submit()" class="pl-4 pr-8 py-2.5 bg-white border border-gray-100 border-r-0 rounded-l-2xl text-[10px] font-bold text-[#1e1b4b] focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all shadow-sm">
+                            <option value="10" {{ request('show') != 'all' ? 'selected' : '' }}>Per 10 Data</option>
+                            <option value="all" {{ request('show') == 'all' ? 'selected' : '' }}>Semua Data</option>
+                        </select>
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama kecamatan atau kelurahan..." class="flex-1 pl-4 pr-4 py-2.5 bg-white border border-gray-100 text-xs font-semibold focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all shadow-sm">
                         <button type="submit" class="bg-white border-y border-r border-gray-100 px-5 py-2.5 rounded-r-2xl hover:bg-gray-50 transition-all shadow-sm group">
                             <i class="fas fa-search text-gray-400 group-hover:text-blue-600 transition-colors text-xs"></i>
                         </button>
@@ -85,22 +89,22 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-[2.5rem] border border-gray-100 shadow-sm overflow-hidden">
+            <div class="bg-white rounded-[2.5rem] border border-gray-100 shadow-sm overflow-hidden mb-10">
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-gray-50/50 border-b border-gray-100">
-                            <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest w-24">ID Data</th>
+                            <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest w-24 text-center">No.</th>
                             <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest">Nama Kecamatan</th>
                             <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest">Kelurahan</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest w-32">Aksi</th>
+                            <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center w-32">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-50">
-                        @forelse($wilayah as $wly)
+                        @forelse($wilayah as $index => $wly)
                         <tr class="hover:bg-gray-50/50 transition">
-                            <td class="px-8 py-5">
+                            <td class="px-8 py-5 text-center">
                                 <span class="px-3 py-1.5 bg-gray-100 text-gray-600 rounded-lg text-xs font-bold font-mono">
-                                    {{ $wly->id_kelurahan }}
+                                    {{ request('show') == 'all' ? $index + 1 : ($wilayah->currentPage() - 1) * $wilayah->perPage() + $index + 1 }}
                                 </span>
                             </td>
                             <td class="px-8 py-5">
@@ -112,7 +116,7 @@
                                 </p>
                             </td>
                             <td class="px-8 py-5">
-                                <div class="flex gap-2">
+                                <div class="flex justify-center gap-2">
                                     <a href="{{ route('admin.wilayah.edit', $wly->id_kelurahan) }}" title="Edit Wilayah" class="w-8 h-8 bg-gray-50 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition flex items-center justify-center">
                                         <i class="fas fa-edit text-[10px]"></i>
                                     </a>
@@ -137,6 +141,12 @@
                         @endforelse
                     </tbody>
                 </table>
+                
+                @if(request('show') != 'all' && isset($wilayah) && $wilayah instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                    <div class="px-8 py-4 border-t border-gray-50 bg-gray-50/10">
+                        {{ $wilayah->links() }}
+                    </div>
+                @endif
             </div>
         </div>
     </main>

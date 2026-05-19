@@ -136,21 +136,21 @@
                                 </div>
                                 <div class="w-2 h-2 rounded-full bg-blue-500 shadow-lg shadow-blue-500/40"></div>
                             </button>
-                            <button onclick="toggleType('Jembatan')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Jembatan">
+                            <button onclick="toggleType('Sanitasi')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Sanitasi">
                                 <div class="flex items-center gap-2.5">
                                     <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
                                         <i class="fas fa-check text-[6px] text-emerald-400 check-icon" style="opacity:1"></i>
                                     </div>
-                                    <span class="group-hover:text-white transition-colors text-left">Jembatan</span>
+                                    <span class="group-hover:text-white transition-colors text-left">Sanitasi / WC</span>
                                 </div>
                                 <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/40"></div>
                             </button>
-                            <button onclick="toggleType('Drainase')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Drainase">
+                            <button onclick="toggleType('Titian')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Titian">
                                 <div class="flex items-center gap-2.5">
                                     <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-amber-400 transition-colors">
                                         <i class="fas fa-check text-[6px] text-amber-400 check-icon" style="opacity:1"></i>
                                     </div>
-                                    <span class="group-hover:text-white transition-colors text-left">Drainase</span>
+                                    <span class="group-hover:text-white transition-colors text-left">Titian</span>
                                 </div>
                                 <div class="w-2 h-2 rounded-full bg-amber-500 shadow-lg shadow-amber-500/40"></div>
                             </button>
@@ -219,21 +219,25 @@
                         <i class="fas fa-layer-group text-sm"></i>
                     </button>
                     <div id="layer-options" class="hidden absolute bottom-full right-0 mb-3 p-2 bg-[#1e1b4b]/90 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl flex flex-col gap-2 min-w-[140px]">
-                        <button onclick="changeBaseLayer('osm')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 transition-all group">
-                            <i class="fas fa-map-marked-alt text-indigo-400 text-[10px]"></i>
-                            <span class="text-[9px] font-black uppercase tracking-widest text-gray-300">Standar</span>
-                        </button>
-                        <button onclick="changeBaseLayer('street')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 transition-all group">
-                            <i class="fas fa-road text-blue-400 text-[10px]"></i>
-                            <span class="text-[9px] font-black uppercase tracking-widest text-gray-300">Voyager</span>
+                        <button onclick="changeBaseLayer('google')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 transition-all group">
+                            <i class="fab fa-google text-blue-400 text-[10px]"></i>
+                            <span class="text-[9px] font-black uppercase tracking-widest text-gray-300">Google Maps</span>
                         </button>
                         <button onclick="changeBaseLayer('satellite')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 transition-all group">
                             <i class="fas fa-satellite text-emerald-400 text-[10px]"></i>
                             <span class="text-[9px] font-black uppercase tracking-widest text-gray-300">Satelit</span>
                         </button>
                         <button onclick="changeBaseLayer('dark')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 transition-all group">
-                            <i class="fas fa-moon text-gray-400 text-[10px]"></i>
-                            <span class="text-[9px] font-black uppercase tracking-widest text-gray-300">Gelap</span>
+                            <i class="fas fa-moon text-indigo-400 text-[10px]"></i>
+                            <span class="text-[9px] font-black uppercase tracking-widest text-gray-300">Dark Mode</span>
+                        </button>
+                        <button onclick="changeBaseLayer('greyscale')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 transition-all group">
+                            <i class="fas fa-adjust text-gray-300 text-[10px]"></i>
+                            <span class="text-[9px] font-black uppercase tracking-widest text-gray-300">Greyscale</span>
+                        </button>
+                        <button onclick="changeBaseLayer('osm')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 transition-all group">
+                            <i class="fas fa-map-marked-alt text-amber-400 text-[10px]"></i>
+                            <span class="text-[9px] font-black uppercase tracking-widest text-gray-300">OSM Default</span>
                         </button>
                     </div>
                 </div>
@@ -246,7 +250,9 @@
             osm: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'),
             street: L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'),
             satellite: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'),
-            dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png')
+            dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'),
+            google: L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3']}),
+            greyscale: L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png')
         };
 
         const map = L.map('main-map', { zoomControl: false, attributionControl: false }).setView([-3.316694, 114.590111], 13);
@@ -309,7 +315,10 @@
             activeMarkers = [];
 
             points.forEach(point => {
-                const color = point.kondisi == 'Baik' ? '#10b981' : (point.kondisi == 'Rusak Ringan' ? '#f59e0b' : '#ef4444');
+                const kondisiAktual = point.analisis?.label_prioritas || point.kondisi;
+                const isBaik = kondisiAktual.toLowerCase().includes('baik');
+                const isRingan = kondisiAktual.toLowerCase().includes('ringan') || kondisiAktual.toLowerCase().includes('sedang');
+                const color = isBaik ? '#10b981' : (isRingan ? '#f59e0b' : '#ef4444');
                 const icon = L.divIcon({
                     html: `<div style="background-color: ${color}; width: 14px; height: 14px; border-radius: 50%; border: 2.5px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);"></div>`,
                     className: '', iconSize: [14, 14], iconAnchor: [7, 7]
@@ -320,16 +329,16 @@
                         <div class="relative h-32 rounded-2xl bg-gray-100 mb-3 overflow-hidden shadow-inner">
                             <img src="/storage/${point.foto_terbaru}" class="w-full h-full object-cover">
                             <div class="absolute top-2 left-2 px-2 py-1 bg-white/90 backdrop-blur-md rounded-lg text-[7px] font-black uppercase tracking-widest text-[#1e1b4b]">
-                                ${point.jenis_infrastruktur}
+                                ${point.jenis_infrastruktur || point.jenis || '-'}
                             </div>
                         </div>
                         <div class="px-1">
-                            <h4 class="text-xs font-black text-[#1e1b4b] mb-1">${point.nama_infrastruktur}</h4>
+                            <h4 class="text-xs font-black text-[#1e1b4b] mb-1">${point.nama_objek || point.nama_infrastruktur || '-'}</h4>
                             <p class="text-[8px] text-gray-400 font-bold uppercase mb-3">Wilayah: ${point.kelurahan?.nama_kelurahan ?? '-'}</p>
                             
                             <div class="flex items-center gap-2 mb-3">
                                 <span class="px-2 py-1 rounded-full text-[7px] font-black uppercase tracking-widest" style="background-color: ${color}15; color: ${color}; border: 1px solid ${color}30;">
-                                    ${point.kondisi}
+                                    ${kondisiAktual}
                                 </span>
                                 <span class="px-2 py-1 bg-indigo-50 text-indigo-600 rounded-full text-[7px] font-black uppercase border border-indigo-100">
                                     By: ${point.user?.name ?? 'Surveyor'}
@@ -398,7 +407,7 @@
         }
 
         // 1. Inisialisasi: Semua Objek & Wilayah Aktif by Default
-        const allAvailableTypes = ['Jalan', 'Jembatan', 'Drainase'];
+        const allAvailableTypes = ['Jalan', 'Sanitasi', 'Titian'];
         let activeTypes = [...allAvailableTypes];
         let activeKecs = kecamatans.map(k => k.id_kecamatan.toString());
         const totalKec = kecamatans.length;
@@ -420,8 +429,11 @@
 
             const normalisedActiveTypes = activeTypes.map(t => t.toLowerCase().trim());
             let filtered = dataPoints.filter(p => {
-                const pType = (p.jenis_infrastruktur || '').toLowerCase().trim();
-                return normalisedActiveTypes.some(type => pType.includes(type));
+                const pType = (p.jenis_infrastruktur || p.jenis || '').toLowerCase().trim();
+                const typeMatch = normalisedActiveTypes.some(type => pType.includes(type));
+                const kecId = p.kelurahan?.id_kecamatan?.toString() || p.id_kecamatan?.toString();
+                const kecMatch = !kecId || activeKecs.includes(kecId);
+                return typeMatch && kecMatch;
             });
             
             renderMarkers(filtered);
@@ -431,9 +443,9 @@
         function updateStats(points) {
             const stats = {
                 total: points.length,
-                baik: points.filter(p => p.kondisi === 'Baik').length,
-                ringan: points.filter(p => p.kondisi === 'Rusak Ringan').length,
-                berat: points.filter(p => p.kondisi === 'Rusak Berat').length
+                baik: points.filter(p => { const k = (p.analisis?.label_prioritas || p.kondisi || '').toLowerCase(); return k.includes('baik'); }).length,
+                ringan: points.filter(p => { const k = (p.analisis?.label_prioritas || p.kondisi || '').toLowerCase(); return k.includes('ringan') || k.includes('sedang'); }).length,
+                berat: points.filter(p => { const k = (p.analisis?.label_prioritas || p.kondisi || '').toLowerCase(); return k.includes('berat'); }).length
             };
 
             document.getElementById('stat-total').textContent = stats.total;

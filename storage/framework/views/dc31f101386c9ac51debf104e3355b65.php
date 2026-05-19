@@ -128,7 +128,8 @@
                                 <tr class="text-[9px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-100">
                                     <th class="pb-4 px-2">Wilayah</th>
                                     <th class="pb-4 px-2 text-center">Baik</th>
-                                    <th class="pb-4 px-2 text-center text-amber-500">Ringan</th>
+                                    <th class="pb-4 px-2 text-center text-emerald-500">Ringan</th>
+                                    <th class="pb-4 px-2 text-center text-amber-500">Sedang</th>
                                     <th class="pb-4 px-2 text-center text-red-500">Berat</th>
                                     <th class="pb-4 px-2 text-right">Total</th>
                                 </tr>
@@ -143,7 +144,10 @@
                                         <span class="text-[10px] font-black text-emerald-600"><?php echo e($item['baik']); ?></span>
                                     </td>
                                     <td class="py-4 px-2 text-center">
-                                        <span class="text-[10px] font-black text-amber-600"><?php echo e($item['ringan']); ?></span>
+                                        <span class="text-[10px] font-black text-emerald-500"><?php echo e($item['ringan']); ?></span>
+                                    </td>
+                                    <td class="py-4 px-2 text-center">
+                                        <span class="text-[10px] font-black text-amber-600"><?php echo e($item['sedang']); ?></span>
                                     </td>
                                     <td class="py-4 px-2 text-center">
                                         <span class="text-[10px] font-black text-red-600"><?php echo e($item['berat']); ?></span>

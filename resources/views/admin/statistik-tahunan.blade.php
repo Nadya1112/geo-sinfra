@@ -46,14 +46,13 @@
         </header>
 
         <div class="p-8">
-            <!-- Growth Overview -->
             <div class="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm mb-8 overflow-hidden relative">
                 <div class="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full -mr-20 -mt-20 blur-3xl"></div>
                 <div class="relative z-10">
                     <div class="flex justify-between items-start mb-8">
                         <div>
                             <h4 class="font-extrabold text-lg text-[#1e1b4b]">Grafik Pertumbuhan Laporan</h4>
-                            <p class="text-xs text-gray-400 font-medium">Tren akumulasi data infrastruktur per bulan</p>
+                            <p class="text-xs text-gray-400 font-medium">Tren kuantitas data survey masuk per bulan</p>
                         </div>
                         <div class="px-4 py-2 bg-blue-50 rounded-xl">
                             <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest">Tahun {{ $year }}</span>
@@ -67,7 +66,6 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <!-- Distribution by Type -->
                 <div class="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm">
                     <h4 class="font-extrabold text-lg text-[#1e1b4b] mb-8">Distribusi Jenis Infrastruktur</h4>
                     <div class="space-y-6">
@@ -98,17 +96,16 @@
                     </div>
                 </div>
 
-                <!-- Condition Summary Table -->
                 <div class="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm">
                     <h4 class="font-extrabold text-lg text-[#1e1b4b] mb-8 text-left">Ringkasan Kondisi per Wilayah</h4>
-                    <div class="overflow-x-auto">
+                    <div class="overflow-x-auto custom-scrollbar">
                         <table class="w-full text-left">
                             <thead>
                                 <tr class="text-[9px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-100">
                                     <th class="pb-4 px-2">Kecamatan</th>
-                                    <th class="pb-4 px-2 text-center">Baik</th>
-                                    <th class="pb-4 px-2 text-center text-amber-500">Ringan</th>
-                                    <th class="pb-4 px-2 text-center text-red-500">Berat</th>
+                                    <th class="pb-4 px-2 text-center text-emerald-600">Baik</th>
+                                    <th class="pb-4 px-2 text-center text-yellow-600">Ringan</th>
+                                    <th class="pb-4 px-2 text-center text-amber-500">Sedang</th> <th class="pb-4 px-2 text-center text-red-500">Berat</th>
                                     <th class="pb-4 px-2 text-right">Total</th>
                                 </tr>
                             </thead>
@@ -122,7 +119,10 @@
                                         <span class="text-[10px] font-black text-emerald-600">{{ $item['baik'] }}</span>
                                     </td>
                                     <td class="py-4 px-2 text-center">
-                                        <span class="text-[10px] font-black text-amber-600">{{ $item['ringan'] }}</span>
+                                        <span class="text-[10px] font-black text-yellow-600">{{ $item['ringan'] }}</span>
+                                    </td>
+                                    <td class="py-4 px-2 text-center">
+                                        <span class="text-[10px] font-black text-amber-600">{{ $item['sedang'] }}</span>
                                     </td>
                                     <td class="py-4 px-2 text-center">
                                         <span class="text-[10px] font-black text-red-600">{{ $item['berat'] }}</span>
@@ -141,34 +141,50 @@
     </main>
 
     <script>
-        // Clock
+        // Clock Function
         function updateClock() {
             const now = new Date();
             document.getElementById('mini-clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WITA`;
         }
         setInterval(updateClock, 1000); updateClock();
 
-        // Chart.js
+        // 🌟 KONFIGURASI KURVA-S (S-CURVE CHART)
         const ctx = document.getElementById('yearlyChart').getContext('2d');
+        
+        // Sesuaikan hanya sampai bulan Mei (5 bulan pertama)
+        const monthLimit = 5; 
+        const allLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+        const chartLabels = allLabels.slice(0, monthLimit);
+
+        // Menghitung data kumulatif untuk Kurva-S (Hanya sampai Mei)
+        const rawData = @json($chartData).slice(0, monthLimit);
+        let cumulativeData = [];
+        let total = 0;
+        rawData.forEach(val => {
+            total += val;
+            cumulativeData.push(total);
+        });
+
+        // Membuat gradasi warna biru mewah untuk area bawah kurva
         const gradient = ctx.createLinearGradient(0, 0, 0, 300);
         gradient.addColorStop(0, 'rgba(37, 99, 235, 0.2)');
         gradient.addColorStop(1, 'rgba(37, 99, 235, 0.0)');
 
         new Chart(ctx, {
-            type: 'line',
+            type: 'line', // Menggunakan tipe line
             data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+                labels: chartLabels,
                 datasets: [{
-                    label: 'Total Survey',
-                    data: @json($chartData),
+                    label: 'Kumulatif Survey Masuk',
+                    data: cumulativeData,
                     borderColor: '#2563eb',
                     borderWidth: 4,
-                    pointBackgroundColor: '#fff',
+                    pointBackgroundColor: '#ffffff',
                     pointBorderColor: '#2563eb',
-                    pointBorderWidth: 2,
-                    pointRadius: 4,
-                    pointHoverRadius: 6,
-                    tension: 0.4,
+                    pointBorderWidth: 3,
+                    pointRadius: 5,
+                    pointHoverRadius: 7,
+                    tension: 0.4, // Memberikan efek kurva yang mulus (S-Curve)
                     fill: true,
                     backgroundColor: gradient
                 }]
@@ -182,8 +198,15 @@
                 scales: {
                     y: {
                         beginAtZero: true,
-                        grid: { borderDash: [5, 5], color: '#f1f5f9' },
-                        ticks: { font: { size: 10, weight: 'bold' }, color: '#94a3b8' }
+                        grid: { 
+                            borderDash: [5, 5], 
+                            color: '#f1f5f9' 
+                        },
+                        ticks: { 
+                            font: { size: 10, weight: 'bold' }, 
+                            color: '#94a3b8',
+                            stepSize: 1 // Skala grafik berupa bilangan bulat
+                        }
                     },
                     x: {
                         grid: { display: false },

@@ -36,9 +36,14 @@
             </div>
             
             <div class="flex items-center gap-6">
-                <button onclick="window.print()" class="no-print px-4 py-2 bg-indigo-50 text-indigo-600 rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-indigo-100 transition-all flex items-center gap-2 border border-indigo-100">
-                    <i class="fas fa-print"></i> Cetak Laporan
-                </button>
+                <div class="flex gap-2">
+                    <button onclick="window.print()" class="no-print px-4 py-2 bg-rose-50 text-rose-600 rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-rose-100 transition-all flex items-center gap-2 border border-rose-100 shadow-sm">
+                        <i class="fas fa-file-pdf"></i> Ekspor PDF
+                    </button>
+                    <button onclick="exportTableToCSV('Laporan-Infrastruktur-{{ date('Y-m-d') }}.csv')" class="no-print px-4 py-2 bg-emerald-50 text-emerald-600 rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-emerald-100 transition-all flex items-center gap-2 border border-emerald-100 shadow-sm">
+                        <i class="fas fa-file-excel"></i> Ekspor Excel
+                    </button>
+                </div>
                 <div class="text-right hidden sm:block">
                     <p class="text-[11px] font-black text-[#1e1b4b]" id="mini-clock">00:00 WITA</p>
                     <p class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
@@ -63,18 +68,21 @@
         <div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
             <!-- Filter Section (No Print) -->
             <div class="bg-white rounded-[2rem] p-8 border border-gray-100 shadow-sm mb-8 no-print">
-                <form action="{{ route('kabid.laporan') }}" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
-                    <div>
-                        <label class="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-2">Wilayah Kecamatan</label>
+                <form action="{{ route('kabid.laporan') }}" method="GET" class="flex flex-wrap md:flex-nowrap gap-6 items-end">
+                    <input type="hidden" name="show" value="{{ request('show') }}">
+                    <div class="w-full md:w-1/4">
+                        <label class="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-2">Kecamatan</label>
                         <select name="kecamatan" class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all">
                             <option value="">Semua Wilayah</option>
-                            @foreach($kecamatan as $k)
-                                <option value="{{ $k->id_kecamatan }}" {{ request('kecamatan') == $k->id_kecamatan ? 'selected' : '' }}>{{ $k->nama_kecamatan }}</option>
+                            @foreach($kecamatan as $kec)
+                                <option value="{{ $kec->id_kecamatan }}" {{ request('kecamatan') == $kec->id_kecamatan ? 'selected' : '' }}>
+                                    {{ $kec->nama_kecamatan }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
-                    <div>
-                        <label class="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-2">Kondisi</label>
+                    <div class="w-full md:w-1/4">
+                        <label class="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-2">Kondisi AI</label>
                         <select name="kondisi" class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all">
                             <option value="">Semua Kondisi</option>
                             <option value="Baik" {{ request('kondisi') == 'Baik' ? 'selected' : '' }}>Baik</option>
@@ -82,17 +90,17 @@
                             <option value="Rusak Berat" {{ request('kondisi') == 'Rusak Berat' ? 'selected' : '' }}>Rusak Berat</option>
                         </select>
                     </div>
-                    <div>
+                    <div class="w-full md:w-1/4">
                         <label class="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-2">Jenis Infrastruktur</label>
                         <select name="jenis" class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all">
                             <option value="">Semua Jenis</option>
                             <option value="Jalan" {{ request('jenis') == 'Jalan' ? 'selected' : '' }}>Jalan</option>
-                            <option value="Jembatan" {{ request('jenis') == 'Jembatan' ? 'selected' : '' }}>Jembatan</option>
-                            <option value="Drainase" {{ request('jenis') == 'Drainase' ? 'selected' : '' }}>Drainase</option>
+                            <option value="Titian" {{ request('jenis') == 'Titian' ? 'selected' : '' }}>Titian</option>
+                            <option value="Sanitasi" {{ request('jenis') == 'Sanitasi' ? 'selected' : '' }}>Sanitasi</option>
                         </select>
                     </div>
-                    <div class="flex gap-2">
-                        <button type="submit" class="flex-1 py-2.5 bg-indigo-50 text-indigo-600 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-indigo-100 transition-all">
+                    <div class="w-full md:w-1/4 flex gap-2 justify-end">
+                        <button type="submit" class="px-6 py-2.5 bg-indigo-50 text-indigo-600 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-indigo-100 transition-all">
                             Filter Data
                         </button>
                         <a href="{{ route('kabid.laporan') }}" class="px-4 py-2.5 bg-gray-50 text-gray-400 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-gray-100 transition-all flex items-center">
@@ -114,31 +122,79 @@
             </div>
 
             <!-- Data Table -->
-            <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden">
-                <table class="w-full text-left">
+            <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden mt-6">
+                <!-- Header with Tampilan Dropdown -->
+                <div class="px-8 py-6 border-b border-gray-50 flex justify-between items-center bg-gray-50/30 no-print">
+                    <div>
+                        <h3 class="text-sm font-black text-[#1e1b4b] uppercase tracking-widest">Data Laporan</h3>
+                        <p class="text-[9px] text-gray-400 font-bold uppercase mt-1">Hasil filter rekapitulasi data</p>
+                    </div>
+                    <div>
+                        <form action="{{ route('kabid.laporan') }}" method="GET" class="flex items-center gap-2">
+                            @foreach(request()->except('show') as $key => $value)
+                                @if(is_array($value))
+                                    @foreach($value as $v)
+                                        <input type="hidden" name="{{ $key }}[]" value="{{ $v }}">
+                                    @endforeach
+                                @else
+                                    <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                                @endif
+                            @endforeach
+                            <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Tampilan:</label>
+                            <select name="show" onchange="this.form.submit()" class="text-xs font-bold text-[#1e1b4b] bg-white border border-gray-200 rounded-xl px-3 py-1.5 focus:outline-none focus:border-indigo-500 transition-colors">
+                                <option value="10" {{ request('show') != 'all' ? 'selected' : '' }}>Per 10 Data</option>
+                                <option value="all" {{ request('show') == 'all' ? 'selected' : '' }}>Semua Data</option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
+                @if(request('kecamatan') || request('kondisi') || request('jenis'))
+                <div class="bg-indigo-50/50 px-6 py-4 border-b border-indigo-100/50 flex flex-wrap items-center gap-3 no-print">
+                    <span class="text-[9px] font-black text-indigo-400 uppercase tracking-widest mr-2">Filter Aktif:</span>
+                    @if(request('kecamatan'))
+                        <span class="px-3 py-1 bg-white text-indigo-600 rounded-full text-[10px] font-bold shadow-sm border border-indigo-100">
+                            <i class="fas fa-map-marker-alt mr-1"></i> {{ $kecamatan->find(request('kecamatan'))->nama_kecamatan ?? 'Wilayah' }}
+                        </span>
+                    @endif
+                    @if(request('kondisi'))
+                        <span class="px-3 py-1 bg-white text-indigo-600 rounded-full text-[10px] font-bold shadow-sm border border-indigo-100">
+                            <i class="fas fa-heartbeat mr-1"></i> {{ request('kondisi') }}
+                        </span>
+                    @endif
+                    @if(request('jenis'))
+                        <span class="px-3 py-1 bg-white text-indigo-600 rounded-full text-[10px] font-bold shadow-sm border border-indigo-100">
+                            <i class="fas fa-layer-group mr-1"></i> {{ request('jenis') }}
+                        </span>
+                    @endif
+                    <a href="{{ route('kabid.laporan') }}" class="ml-auto text-[10px] font-bold text-red-400 hover:text-red-600 transition-all">
+                        <i class="fas fa-times mr-1"></i> Hapus Filter
+                    </a>
+                </div>
+                @endif
+                <table id="laporanTable" class="w-full text-left">
                     <thead>
                         <tr class="bg-gray-50/50 text-[9px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-100">
-                            <th class="px-6 py-4">No</th>
-                            <th class="px-6 py-4">Infrastruktur</th>
-                            <th class="px-6 py-4">Wilayah</th>
-                            <th class="px-6 py-4 text-center">Kondisi</th>
-                            <th class="px-6 py-4">Surveyor</th>
-                            <th class="px-6 py-4">Tanggal</th>
+                            <th class="px-6 py-2">No</th>
+                            <th class="px-6 py-2">Infrastruktur</th>
+                            <th class="px-6 py-2">Wilayah</th>
+                            <th class="px-6 py-2 text-center">Kondisi</th>
+                            <th class="px-6 py-2">Surveyor</th>
+                            <th class="px-6 py-2">Tanggal</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-50">
                         @forelse($reports as $index => $item)
                         <tr class="group hover:bg-indigo-50/30 transition-all">
-                            <td class="px-6 py-4 text-xs font-bold text-gray-400">{{ $index + 1 }}</td>
-                            <td class="px-6 py-4">
-                                <p class="text-xs font-black text-[#1e1b4b] uppercase">{{ $item->nama_infrastruktur }}</p>
-                                <p class="text-[9px] text-indigo-500 font-bold uppercase mt-0.5">{{ $item->jenis_infrastruktur }}</p>
+                            <td class="px-6 py-2 text-xs font-bold text-gray-400">{{ request('show') == 'all' ? $index + 1 : ($reports->currentPage() - 1) * $reports->perPage() + $index + 1 }}</td>
+                            <td class="px-6 py-2">
+                                <p class="text-xs font-black text-[#1e1b4b] uppercase">{{ $item->nama_objek }}</p>
+                                <p class="text-[9px] text-indigo-500 font-bold uppercase mt-0.5">{{ $item->jenis }}</p>
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-2">
                                 <p class="text-xs font-bold text-gray-600">{{ $item->kelurahan->nama_kelurahan ?? '-' }}</p>
                                 <p class="text-[9px] text-gray-400 font-bold uppercase mt-0.5">{{ $item->kelurahan->kecamatan->nama_kecamatan ?? '-' }}</p>
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-2">
                                 <div class="flex justify-center">
                                     @php
                                         $color = $item->kondisi == 'Baik' ? 'emerald' : ($item->kondisi == 'Rusak Ringan' ? 'amber' : 'red');
@@ -148,10 +204,10 @@
                                     </span>
                                 </div>
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-2">
                                 <p class="text-xs font-bold text-gray-600">{{ $item->user->name ?? 'System' }}</p>
                             </td>
-                            <td class="px-6 py-4 text-xs font-bold text-gray-400">
+                            <td class="px-6 py-2 text-xs font-bold text-gray-400">
                                 {{ $item->created_at->format('d/m/Y') }}
                             </td>
                         </tr>
@@ -167,6 +223,12 @@
                         @endforelse
                     </tbody>
                 </table>
+                
+                @if(request('show') != 'all' && isset($reports) && $reports instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                    <div class="px-8 py-4 border-t border-gray-50 bg-gray-50/10 no-print">
+                        {{ $reports->links() }}
+                    </div>
+                @endif
             </div>
 
             <!-- Print Footer -->
@@ -183,7 +245,33 @@
     </main>
 
     <script>
-        // No additional scripts needed for basic print functionality
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('mini-clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WITA`;
+        }
+        setInterval(updateClock, 1000); updateClock();
+
+        function exportTableToCSV(filename) {
+            var csv = [];
+            var rows = document.querySelectorAll("table#laporanTable tr");
+            
+            for (var i = 0; i < rows.length; i++) {
+                var row = [], cols = rows[i].querySelectorAll("td, th");
+                
+                for (var j = 0; j < cols.length; j++) 
+                    row.push('"' + cols[j].innerText.replace(/"/g, '""').replace(/\n/g, ' ') + '"');
+                
+                csv.push(row.join(","));
+            }
+
+            var csvFile = new Blob([csv.join("\n")], {type: "text/csv"});
+            var downloadLink = document.createElement("a");
+            downloadLink.download = filename;
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+            downloadLink.style.display = "none";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+        }
     </script>
 </body>
 </html>

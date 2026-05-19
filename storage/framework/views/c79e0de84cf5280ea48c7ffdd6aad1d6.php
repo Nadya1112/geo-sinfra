@@ -92,22 +92,38 @@
                         <div class="border-l-4 border-orange-500 pl-4 mb-4">
                             <h4 class="text-sm font-black text-[#1e1b4b] uppercase tracking-wider">2. Detail Teknis & Kondisi (AI Parameter)</h4>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div>
-                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Material Eksisting</label>
-                                <input type="text" name="material_eksisting" value="<?php echo e($inf->material_eksisting); ?>" placeholder="Contoh: Kayu Ulin, Beton, Paving" class="w-full px-5 py-3 bg-orange-50/30 border border-orange-100 rounded-2xl text-sm font-semibold outline-none focus:border-orange-500">
+                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Material Utama <span class="text-red-500">*</span></label>
+                                <input type="text" name="material_eksisting" value="<?php echo e($inf->material_eksisting); ?>" placeholder="Contoh: Kayu Ulin, Beton, Paving" class="w-full px-5 py-3 bg-orange-50/30 border border-orange-100 rounded-2xl text-sm font-semibold outline-none focus:border-orange-500" required>
                             </div>
                             <div>
-                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Ketersediaan Drainase</label>
-                                <select name="has_drainase" class="w-full px-5 py-3 bg-orange-50/30 border border-orange-100 rounded-2xl text-sm font-semibold outline-none">
-                                    <option value="ya" <?php echo e($inf->has_drainase == 'ya' ? 'selected' : ''); ?>>Ada Drainase</option>
-                                    <option value="tidak" <?php echo e($inf->has_drainase == 'tidak' ? 'selected' : ''); ?>>Tidak Ada Drainase</option>
-                                </select>
+                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Panjang (m) <span class="text-red-500">*</span></label>
+                                <input type="number" step="0.01" name="panjang" value="<?php echo e($inf->panjang); ?>" placeholder="0.00" class="w-full px-5 py-3 bg-orange-50/30 border border-orange-100 rounded-2xl text-sm font-semibold outline-none focus:border-orange-500" required>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Lebar (m) <span class="text-red-500">*</span></label>
+                                <input type="number" step="0.01" name="lebar" value="<?php echo e($inf->lebar); ?>" placeholder="0.00" class="w-full px-5 py-3 bg-orange-50/30 border border-orange-100 rounded-2xl text-sm font-semibold outline-none focus:border-orange-500" required>
                             </div>
                         </div>
                         <div>
-                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Deskripsi Kerusakan (Trigger Decision Tree)</label>
-                            <textarea name="kondisi" rows="3" class="w-full px-5 py-3 bg-orange-50/30 border border-orange-100 rounded-2xl text-sm font-semibold outline-none focus:border-orange-500" placeholder="Contoh: titian putus, cor beton retak, amblas"><?php echo e($inf->kondisi); ?></textarea>
+                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Ketersediaan Drainase</label>
+                            <select name="has_drainase" class="w-full px-5 py-3 bg-orange-50/30 border border-orange-100 rounded-2xl text-sm font-semibold outline-none focus:border-orange-500">
+                                <option value="ya" <?php echo e($inf->has_drainase == 'ya' ? 'selected' : ''); ?>>Ada Drainase</option>
+                                <option value="tidak" <?php echo e($inf->has_drainase == 'tidak' ? 'selected' : ''); ?>>Tidak Ada Drainase</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Deskripsi Kerusakan (Trigger Decision Tree) <span class="text-red-500">*</span></label>
+                            <textarea name="kondisi" id="kondisi-textarea" rows="3" class="w-full px-5 py-3 bg-orange-50/30 border border-orange-100 rounded-2xl text-sm font-semibold outline-none focus:border-orange-500" placeholder="Contoh: titian putus, cor beton retak, amblas" required><?php echo e($inf->kondisi); ?></textarea>
+                            <div class="mt-2 flex flex-wrap gap-2">
+                                <?php $__currentLoopData = ['Putus', 'Hancur', 'Amblas', 'Retak', 'Lubang', 'Goyang', 'Total', 'Parah']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $keyword): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <button type="button" onclick="addKeyword('<?php echo e($keyword); ?>')" class="px-2 py-0.5 bg-white border border-gray-100 rounded-lg text-[8px] font-bold text-gray-500 hover:bg-orange-500 hover:text-white transition-all shadow-sm">
+                                        + <?php echo e($keyword); ?>
+
+                                    </button>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </div>
                             <p class="text-[9px] text-gray-400 mt-2 italic font-medium">* Perubahan teks ini akan otomatis mengupdate skor AI saat disimpan.</p>
                         </div>
                     </div>
@@ -129,6 +145,28 @@
                         <div id="edit-map" class="w-full h-48 rounded-3xl border border-gray-100 shadow-inner z-0"></div>
                     </div>
 
+                    <div class="space-y-6 pt-6 border-t border-gray-100">
+                        <div class="border-l-4 border-emerald-500 pl-4 mb-4">
+                            <h4 class="text-sm font-black text-[#1e1b4b] uppercase tracking-wider">4. Dokumentasi Visual (Read-Only)</h4>
+                        </div>
+                        <div class="relative rounded-3xl overflow-hidden border border-gray-100 bg-gray-50 h-56 flex items-center justify-center group">
+                            <?php if($inf->foto_terbaru && $inf->foto_terbaru != 'default.jpg'): ?>
+                                <?php $cleanPath = str_replace('\\', '/', $inf->foto_terbaru); ?>
+                                <img src="<?php echo e(asset('storage/' . (str_contains($cleanPath, 'infrastruktur/') ? $cleanPath : 'infrastruktur/' . $cleanPath))); ?>" class="absolute inset-0 w-full h-full object-cover">
+                            <?php else: ?>
+                                <div class="text-center">
+                                    <i class="fas fa-image text-4xl text-gray-200 mb-2"></i>
+                                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Tidak ada foto</p>
+                                </div>
+                            <?php endif; ?>
+                            <div class="absolute inset-0 bg-black/20 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 px-4 py-2 rounded-xl text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest shadow-xl">
+                                    <i class="fas fa-lock mr-2 text-red-500"></i> Foto Tidak Dapat Diedit
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="flex gap-4 pt-8 mt-4 border-t border-gray-100">
                         <button type="submit" class="flex-1 bg-[#1e1b4b] text-white py-4 rounded-2xl font-black text-[11px] tracking-widest hover:bg-black transition-all shadow-xl shadow-indigo-100 uppercase">
                             <i class="fas fa-save mr-2"></i> Update & Jalankan AI
@@ -143,6 +181,17 @@
     </main>
 
     <script>
+        function addKeyword(word) {
+            const textarea = document.getElementById('kondisi-textarea');
+            const currentVal = textarea.value.trim();
+            if (currentVal === "") {
+                textarea.value = word;
+            } else {
+                textarea.value = currentVal + ", " + word;
+            }
+            textarea.focus();
+        }
+
         function updateClock() {
             const now = new Date();
             document.getElementById('mini-clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WITA`;

@@ -35,26 +35,50 @@
                 </div>
             </div>
             
-            <button onclick="window.print()" class="px-6 py-2.5 bg-[#1e1b4b] text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-indigo-900/10 hover:bg-indigo-600 transition-all flex items-center gap-2">
-                <i class="fas fa-print"></i> Cetak Laporan
-            </button>
+            <div class="flex items-center gap-6">
+                <button onclick="window.print()" class="no-print px-4 py-2 bg-indigo-50 text-indigo-600 rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-indigo-100 transition-all flex items-center gap-2 border border-indigo-100">
+                    <i class="fas fa-print"></i> Cetak Laporan
+                </button>
+                <div class="text-right hidden sm:block">
+                    <p class="text-[11px] font-black text-[#1e1b4b]" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter"><?php echo e(now()->translatedFormat('l, d F Y')); ?></p>
+                </div>
+                <div class="h-8 w-[1px] bg-gray-100"></div>
+                <a href="<?php echo e(route('kabid.profile')); ?>" class="flex items-center gap-3 group">
+                    <div class="text-right">
+                        <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase group-hover:text-indigo-600 transition-colors"><?php echo e(auth()->user()->name); ?></p>
+                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1 italic">ONLINE</p>
+                    </div>
+                    <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100 overflow-hidden shadow-sm group-hover:border-indigo-300 group-hover:shadow-md transition-all">
+                        <?php if(auth()->user()->profile_photo): ?>
+                            <img src="<?php echo e(asset('storage/' . auth()->user()->profile_photo)); ?>" class="w-full h-full object-cover">
+                        <?php else: ?>
+                            <i class="fas fa-user-tie text-xl"></i>
+                        <?php endif; ?>
+                    </div>
+                </a>
+            </div>
         </header>
 
         <div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
             <!-- Filter Section (No Print) -->
             <div class="bg-white rounded-[2rem] p-8 border border-gray-100 shadow-sm mb-8 no-print">
-                <form action="<?php echo e(route('kabid.laporan')); ?>" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
-                    <div>
-                        <label class="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-2">Wilayah Kecamatan</label>
+                <form action="<?php echo e(route('kabid.laporan')); ?>" method="GET" class="flex flex-wrap md:flex-nowrap gap-6 items-end">
+                    <input type="hidden" name="show" value="<?php echo e(request('show')); ?>">
+                    <div class="w-full md:w-1/4">
+                        <label class="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-2">Kecamatan</label>
                         <select name="kecamatan" class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all">
                             <option value="">Semua Wilayah</option>
-                            <?php $__currentLoopData = $kecamatan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $k): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($k->id_kecamatan); ?>" <?php echo e(request('kecamatan') == $k->id_kecamatan ? 'selected' : ''); ?>><?php echo e($k->nama_kecamatan); ?></option>
+                            <?php $__currentLoopData = $kecamatan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kec): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($kec->id_kecamatan); ?>" <?php echo e(request('kecamatan') == $kec->id_kecamatan ? 'selected' : ''); ?>>
+                                    <?php echo e($kec->nama_kecamatan); ?>
+
+                                </option>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
-                    <div>
-                        <label class="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-2">Kondisi</label>
+                    <div class="w-full md:w-1/4">
+                        <label class="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-2">Kondisi AI</label>
                         <select name="kondisi" class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all">
                             <option value="">Semua Kondisi</option>
                             <option value="Baik" <?php echo e(request('kondisi') == 'Baik' ? 'selected' : ''); ?>>Baik</option>
@@ -62,17 +86,17 @@
                             <option value="Rusak Berat" <?php echo e(request('kondisi') == 'Rusak Berat' ? 'selected' : ''); ?>>Rusak Berat</option>
                         </select>
                     </div>
-                    <div>
+                    <div class="w-full md:w-1/4">
                         <label class="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-2">Jenis Infrastruktur</label>
                         <select name="jenis" class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all">
                             <option value="">Semua Jenis</option>
                             <option value="Jalan" <?php echo e(request('jenis') == 'Jalan' ? 'selected' : ''); ?>>Jalan</option>
-                            <option value="Jembatan" <?php echo e(request('jenis') == 'Jembatan' ? 'selected' : ''); ?>>Jembatan</option>
-                            <option value="Drainase" <?php echo e(request('jenis') == 'Drainase' ? 'selected' : ''); ?>>Drainase</option>
+                            <option value="Titian" <?php echo e(request('jenis') == 'Titian' ? 'selected' : ''); ?>>Titian</option>
+                            <option value="Sanitasi" <?php echo e(request('jenis') == 'Sanitasi' ? 'selected' : ''); ?>>Sanitasi</option>
                         </select>
                     </div>
-                    <div class="flex gap-2">
-                        <button type="submit" class="flex-1 py-2.5 bg-indigo-50 text-indigo-600 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-indigo-100 transition-all">
+                    <div class="w-full md:w-1/4 flex gap-2 justify-end">
+                        <button type="submit" class="px-6 py-2.5 bg-indigo-50 text-indigo-600 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-indigo-100 transition-all">
                             Filter Data
                         </button>
                         <a href="<?php echo e(route('kabid.laporan')); ?>" class="px-4 py-2.5 bg-gray-50 text-gray-400 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-gray-100 transition-all flex items-center">
@@ -94,31 +118,82 @@
             </div>
 
             <!-- Data Table -->
-            <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden">
+            <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden mt-6">
+                <!-- Header with Tampilan Dropdown -->
+                <div class="px-8 py-6 border-b border-gray-50 flex justify-between items-center bg-gray-50/30 no-print">
+                    <div>
+                        <h3 class="text-sm font-black text-[#1e1b4b] uppercase tracking-widest">Data Laporan</h3>
+                        <p class="text-[9px] text-gray-400 font-bold uppercase mt-1">Hasil filter rekapitulasi data</p>
+                    </div>
+                    <div>
+                        <form action="<?php echo e(route('kabid.laporan')); ?>" method="GET" class="flex items-center gap-2">
+                            <?php $__currentLoopData = request()->except('show'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php if(is_array($value)): ?>
+                                    <?php $__currentLoopData = $value; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $v): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <input type="hidden" name="<?php echo e($key); ?>[]" value="<?php echo e($v); ?>">
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php else: ?>
+                                    <input type="hidden" name="<?php echo e($key); ?>" value="<?php echo e($value); ?>">
+                                <?php endif; ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Tampilan:</label>
+                            <select name="show" onchange="this.form.submit()" class="text-xs font-bold text-[#1e1b4b] bg-white border border-gray-200 rounded-xl px-3 py-1.5 focus:outline-none focus:border-indigo-500 transition-colors">
+                                <option value="10" <?php echo e(request('show') != 'all' ? 'selected' : ''); ?>>Per 10 Data</option>
+                                <option value="all" <?php echo e(request('show') == 'all' ? 'selected' : ''); ?>>Semua Data</option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
+                <?php if(request('kecamatan') || request('kondisi') || request('jenis')): ?>
+                <div class="bg-indigo-50/50 px-6 py-4 border-b border-indigo-100/50 flex flex-wrap items-center gap-3 no-print">
+                    <span class="text-[9px] font-black text-indigo-400 uppercase tracking-widest mr-2">Filter Aktif:</span>
+                    <?php if(request('kecamatan')): ?>
+                        <span class="px-3 py-1 bg-white text-indigo-600 rounded-full text-[10px] font-bold shadow-sm border border-indigo-100">
+                            <i class="fas fa-map-marker-alt mr-1"></i> <?php echo e($kecamatan->find(request('kecamatan'))->nama_kecamatan ?? 'Wilayah'); ?>
+
+                        </span>
+                    <?php endif; ?>
+                    <?php if(request('kondisi')): ?>
+                        <span class="px-3 py-1 bg-white text-indigo-600 rounded-full text-[10px] font-bold shadow-sm border border-indigo-100">
+                            <i class="fas fa-heartbeat mr-1"></i> <?php echo e(request('kondisi')); ?>
+
+                        </span>
+                    <?php endif; ?>
+                    <?php if(request('jenis')): ?>
+                        <span class="px-3 py-1 bg-white text-indigo-600 rounded-full text-[10px] font-bold shadow-sm border border-indigo-100">
+                            <i class="fas fa-layer-group mr-1"></i> <?php echo e(request('jenis')); ?>
+
+                        </span>
+                    <?php endif; ?>
+                    <a href="<?php echo e(route('kabid.laporan')); ?>" class="ml-auto text-[10px] font-bold text-red-400 hover:text-red-600 transition-all">
+                        <i class="fas fa-times mr-1"></i> Hapus Filter
+                    </a>
+                </div>
+                <?php endif; ?>
                 <table class="w-full text-left">
                     <thead>
                         <tr class="bg-gray-50/50 text-[9px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-100">
-                            <th class="px-6 py-4">No</th>
-                            <th class="px-6 py-4">Infrastruktur</th>
-                            <th class="px-6 py-4">Wilayah</th>
-                            <th class="px-6 py-4 text-center">Kondisi</th>
-                            <th class="px-6 py-4">Surveyor</th>
-                            <th class="px-6 py-4">Tanggal</th>
+                            <th class="px-6 py-2">No</th>
+                            <th class="px-6 py-2">Infrastruktur</th>
+                            <th class="px-6 py-2">Wilayah</th>
+                            <th class="px-6 py-2 text-center">Kondisi</th>
+                            <th class="px-6 py-2">Surveyor</th>
+                            <th class="px-6 py-2">Tanggal</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-50">
                         <?php $__empty_1 = true; $__currentLoopData = $reports; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                         <tr class="group hover:bg-indigo-50/30 transition-all">
-                            <td class="px-6 py-4 text-xs font-bold text-gray-400"><?php echo e($index + 1); ?></td>
-                            <td class="px-6 py-4">
-                                <p class="text-xs font-black text-[#1e1b4b] uppercase"><?php echo e($item->nama_infrastruktur); ?></p>
-                                <p class="text-[9px] text-indigo-500 font-bold uppercase mt-0.5"><?php echo e($item->jenis_infrastruktur); ?></p>
+                            <td class="px-6 py-2 text-xs font-bold text-gray-400"><?php echo e(request('show') == 'all' ? $index + 1 : ($reports->currentPage() - 1) * $reports->perPage() + $index + 1); ?></td>
+                            <td class="px-6 py-2">
+                                <p class="text-xs font-black text-[#1e1b4b] uppercase"><?php echo e($item->nama_objek); ?></p>
+                                <p class="text-[9px] text-indigo-500 font-bold uppercase mt-0.5"><?php echo e($item->jenis); ?></p>
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-2">
                                 <p class="text-xs font-bold text-gray-600"><?php echo e($item->kelurahan->nama_kelurahan ?? '-'); ?></p>
                                 <p class="text-[9px] text-gray-400 font-bold uppercase mt-0.5"><?php echo e($item->kelurahan->kecamatan->nama_kecamatan ?? '-'); ?></p>
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-2">
                                 <div class="flex justify-center">
                                     <?php
                                         $color = $item->kondisi == 'Baik' ? 'emerald' : ($item->kondisi == 'Rusak Ringan' ? 'amber' : 'red');
@@ -129,10 +204,10 @@
                                     </span>
                                 </div>
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-2">
                                 <p class="text-xs font-bold text-gray-600"><?php echo e($item->user->name ?? 'System'); ?></p>
                             </td>
-                            <td class="px-6 py-4 text-xs font-bold text-gray-400">
+                            <td class="px-6 py-2 text-xs font-bold text-gray-400">
                                 <?php echo e($item->created_at->format('d/m/Y')); ?>
 
                             </td>
@@ -149,6 +224,13 @@
                         <?php endif; ?>
                     </tbody>
                 </table>
+                
+                <?php if(request('show') != 'all' && isset($reports) && $reports instanceof \Illuminate\Pagination\LengthAwarePaginator): ?>
+                    <div class="px-8 py-4 border-t border-gray-50 bg-gray-50/10 no-print">
+                        <?php echo e($reports->links()); ?>
+
+                    </div>
+                <?php endif; ?>
             </div>
 
             <!-- Print Footer -->
@@ -165,7 +247,11 @@
     </main>
 
     <script>
-        // No additional scripts needed for basic print functionality
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('mini-clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WITA`;
+        }
+        setInterval(updateClock, 1000); updateClock();
     </script>
 </body>
 </html>

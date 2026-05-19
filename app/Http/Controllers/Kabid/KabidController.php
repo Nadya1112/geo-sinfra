@@ -32,9 +32,8 @@ class KabidController extends Controller
     }
     public function monitoring()
     {
-        // Hanya tampilkan data yang sudah diverifikasi Kabid di peta monitoring utama
-        $infrastruktur = Infrastruktur::with(['kelurahan', 'user'])
-            ->where('status_verifikasi', 'Verified')
+        // Tampilkan semua data di peta monitoring utama
+        $infrastruktur = Infrastruktur::with(['kelurahan', 'user', 'analisis', 'cnn'])
             ->get();
             
         $kecamatan = \App\Models\Kecamatan::all();
@@ -43,16 +42,21 @@ class KabidController extends Controller
         return view('kabid.monitoring', compact('infrastruktur', 'kecamatan', 'kelurahan'));
     }
 
-    public function verifikasi()
+    public function verifikasi(\Illuminate\Http\Request $request)
     {
-        $allUsulan = Infrastruktur::with(['kelurahan', 'user', 'analisis', 'cnn'])
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $query = Infrastruktur::with(['kelurahan', 'user', 'analisis', 'cnn'])
+            ->orderBy('created_at', 'desc');
+            
+        if ($request->get('show') == 'all') {
+            $allUsulan = $query->get();
+        } else {
+            $allUsulan = $query->paginate(10)->withQueryString();
+        }
             
         $counts = [
-            'pending' => $allUsulan->where('status_verifikasi', 'Pending')->count(),
-            'verified' => $allUsulan->where('status_verifikasi', 'Verified')->count(),
-            'rejected' => $allUsulan->where('status_verifikasi', 'Rejected')->count(),
+            'pending' => Infrastruktur::where('status_verifikasi', 'Pending')->count(),
+            'verified' => Infrastruktur::where('status_verifikasi', 'Verified')->count(),
+            'rejected' => Infrastruktur::where('status_verifikasi', 'Rejected')->count(),
         ];
 
         return view('kabid.verifikasi', compact('allUsulan', 'counts'));
@@ -78,6 +82,40 @@ class KabidController extends Controller
         $infra->save();
 
         $message = $request->status == 'Verified' ? 'Usulan berhasil diverifikasi!' : 'Usulan telah ditolak.';
+        return redirect()->back()->with('success', $message);
+    }
+
+    public function validasi(Request $request)
+    {
+        $query = Infrastruktur::with(['kelurahan.kecamatan', 'user', 'analisis', 'cnn'])
+            ->orderBy('created_at', 'desc');
+            
+        if ($request->get('show') == 'all') {
+            $allUsulan = $query->get();
+        } else {
+            $allUsulan = $query->paginate(10)->withQueryString();
+        }
+
+        $counts = [
+            'pending' => Infrastruktur::where('status_verifikasi', 'Pending')->count(),
+            'verified' => Infrastruktur::where('status_verifikasi', 'Verified')->count(),
+            'rejected' => Infrastruktur::where('status_verifikasi', 'Rejected')->count(),
+        ];
+
+        return view('kabid.validasi', compact('allUsulan', 'counts'));
+    }
+
+    public function prosesValidasi(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:Verified,Rejected',
+        ]);
+
+        $infra = Infrastruktur::findOrFail($id);
+        $infra->status_verifikasi = $request->status;
+        $infra->save();
+
+        $message = $request->status == 'Verified' ? 'Data berhasil di-ACC!' : 'Data telah ditolak.';
         return redirect()->back()->with('success', $message);
     }
 
@@ -167,9 +205,11 @@ class KabidController extends Controller
                 ->whereYear('infrastruktur.created_at', $year)
                 ->whereNull('infrastruktur.deleted_at')
                 ->select(
-                    DB::raw("COUNT(CASE WHEN kondisi = 'Baik' THEN 1 END) as baik"),
-                    DB::raw("COUNT(CASE WHEN kondisi = 'Rusak Ringan' THEN 1 END) as ringan"),
-                    DB::raw("COUNT(CASE WHEN kondisi = 'Rusak Berat' THEN 1 END) as berat")
+                    DB::raw("COUNT(CASE WHEN LOWER(kondisi) LIKE '%baik%' THEN 1 END) as baik"),
+                    DB::raw("COUNT(CASE WHEN LOWER(kondisi) LIKE '%ringan%' THEN 1 END) as ringan"),
+                    DB::raw("COUNT(CASE WHEN LOWER(kondisi) LIKE '%sedang%' THEN 1 END) as sedang"),
+                    DB::raw("COUNT(CASE WHEN LOWER(kondisi) LIKE '%berat%' THEN 1 END) as berat"),
+                    DB::raw("COUNT(*) as total_semua")
                 )
                 ->first();
             
@@ -177,8 +217,9 @@ class KabidController extends Controller
                 'nama' => $kec->nama_kecamatan,
                 'baik' => $infraKec->baik ?? 0,
                 'ringan' => $infraKec->ringan ?? 0,
+                'sedang' => $infraKec->sedang ?? 0,
                 'berat' => $infraKec->berat ?? 0,
-                'total' => ($infraKec->baik ?? 0) + ($infraKec->ringan ?? 0) + ($infraKec->berat ?? 0)
+                'total' => $infraKec->total_semua ?? 0
             ];
         }
 
@@ -199,13 +240,20 @@ class KabidController extends Controller
             $query->where('kondisi', $request->kondisi);
         }
         if ($request->jenis) {
-            $query->where('jenis_infrastruktur', $request->jenis);
+            $query->where('jenis', strtolower($request->jenis));
         }
         if ($request->start_date && $request->end_date) {
             $query->whereBetween('created_at', [$request->start_date, $request->end_date]);
         }
 
-        $reports = $query->orderBy('created_at', 'desc')->get();
+        $query = $query->orderBy('created_at', 'desc');
+        
+        if ($request->get('show') == 'all') {
+            $reports = $query->get();
+        } else {
+            $reports = $query->paginate(10)->withQueryString();
+        }
+        
         $kecamatan = \App\Models\Kecamatan::all();
 
         return view('kabid.laporan', compact('reports', 'kecamatan'));

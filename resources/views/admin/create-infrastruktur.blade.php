@@ -55,6 +55,18 @@
                     <p class="text-xs text-gray-400 font-medium uppercase">Tambah Data Infrastruktur Baru</p>
                 </div>
 
+                @if($errors->any())
+                <div class="mb-8 p-5 bg-red-50 border-l-4 border-red-500 rounded-2xl flex items-center gap-4 animate-pulse">
+                    <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-red-500 shadow-sm border border-red-100">
+                        <i class="fas fa-exclamation-triangle text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-black text-red-900 uppercase">Validasi Gagal!</h4>
+                        <p class="text-[11px] text-red-700 font-medium">Beberapa bidang wajib diisi belum lengkap, terutama Foto Dokumentasi.</p>
+                    </div>
+                </div>
+                @endif
+
                 <form action="{{ route('admin.infrastruktur.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
                     @csrf
                     
@@ -73,8 +85,23 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Dokumentasi Lapangan</label>
-                            <input type="file" name="foto" class="w-full px-5 py-2.5 bg-gray-50 border border-gray-100 rounded-2xl text-xs font-semibold file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-blue-50 file:text-blue-600 transition-all">
+                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Material Utama <span class="text-red-500">*</span></label>
+                            <input type="text" name="material_eksisting" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500" placeholder="Contoh: Kayu Ulin / Beton" required>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Dokumentasi Lapangan <span class="text-red-500">*</span></label>
+                            <input type="file" name="foto" class="w-full px-5 py-2.5 bg-gray-50 border border-gray-100 rounded-2xl text-xs font-semibold file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-blue-50 file:text-blue-600 transition-all" required>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Panjang (m) <span class="text-red-500">*</span></label>
+                            <input type="number" step="0.01" name="panjang" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:border-blue-500" placeholder="0.00" required>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-2">Lebar (m) <span class="text-red-500">*</span></label>
+                            <input type="number" step="0.01" name="lebar" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold focus:border-blue-500" placeholder="0.00" required>
                         </div>
                     </div>
 
@@ -107,12 +134,15 @@
                             <input type="text" name="longitude" placeholder="114.59..." class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold">
                         </div>
                         <div>
-                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Kondisi Awal</label>
-                            <select name="kondisi" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold">
-                                <option value="Baik">Baik</option>
-                                <option value="Rusak Ringan">Rusak Ringan</option>
-                                <option value="Rusak Berat">Rusak Berat</option>
-                            </select>
+                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Deskripsi Kerusakan (AI Parameter) <span class="text-red-500">*</span></label>
+                            <textarea name="kondisi" id="kondisi-textarea" rows="3" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500" placeholder="Contoh: titian putus, cor beton retak, amblas" required></textarea>
+                            <div class="mt-2 flex flex-wrap gap-2">
+                                @foreach(['Putus', 'Hancur', 'Amblas', 'Retak', 'Lubang', 'Goyang', 'Total', 'Parah'] as $keyword)
+                                    <button type="button" onclick="addKeyword('{{ $keyword }}')" class="px-2 py-0.5 bg-white border border-gray-100 rounded-lg text-[8px] font-bold text-gray-400 hover:bg-blue-600 hover:text-white transition-all shadow-sm">
+                                        + {{ $keyword }}
+                                    </button>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
 
@@ -125,6 +155,17 @@
         </div>
     </main>
     <script>
+        function addKeyword(word) {
+            const textarea = document.getElementById('kondisi-textarea');
+            const currentVal = textarea.value.trim();
+            if (currentVal === "") {
+                textarea.value = word;
+            } else {
+                textarea.value = currentVal + ", " + word;
+            }
+            textarea.focus();
+        }
+
         function updateClock() {
             const now = new Date();
             document.getElementById('mini-clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WITA`;

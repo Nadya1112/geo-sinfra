@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Laporan Infrastruktur - {{ $inf->nama_objek ?? $inf->nama_infrastruktur ?? 'Tanpa Nama' }}</title>
+    <title>Laporan Infrastruktur - <?php echo e($inf->nama_objek ?? $inf->nama_infrastruktur ?? 'Tanpa Nama'); ?></title>
     <style>
         body { font-family: Helvetica, Arial, sans-serif; color: #333; line-height: 1.6; }
         .header { text-align: center; border-bottom: 2px solid #1e1b4b; padding-bottom: 10px; margin-bottom: 20px; }
@@ -40,83 +40,84 @@
     <table>
         <tr>
             <th>Nama Infrastruktur</th>
-            <td>{{ $inf->nama_objek ?? $inf->nama_infrastruktur ?? 'Tanpa Nama' }}</td>
+            <td><?php echo e($inf->nama_objek ?? $inf->nama_infrastruktur ?? 'Tanpa Nama'); ?></td>
         </tr>
         <tr>
             <th>Jenis Infrastruktur</th>
-            <td>{{ $inf->jenis_infrastruktur }}</td>
+            <td><?php echo e($inf->jenis_infrastruktur); ?></td>
         </tr>
         <tr>
             <th>Kecamatan</th>
-            <td>{{ $inf->nama_kecamatan ?? '-' }}</td>
+            <td><?php echo e($inf->nama_kecamatan ?? '-'); ?></td>
         </tr>
         <tr>
             <th>Kelurahan</th>
-            <td>{{ $inf->nama_kelurahan ?? '-' }}</td>
+            <td><?php echo e($inf->nama_kelurahan ?? '-'); ?></td>
         </tr>
         <tr>
             <th>Koordinat (Lat, Lng)</th>
-            <td>{{ $inf->latitude }}, {{ $inf->longitude }}</td>
+            <td><?php echo e($inf->latitude); ?>, <?php echo e($inf->longitude); ?></td>
         </tr>
     </table>
 
     <div class="section-title purple">Hybrid AI Analytics (Visual & Logic)</div>
-    @php
+    <?php
         $badgeClass = match($inf->label_prioritas) {
             'Rusak Berat' => 'badge-berat',
             'Rusak Sedang' => 'badge-ringan',
             default => 'badge-baik'
         };
-    @endphp
+    ?>
     <table>
         <tr>
             <th>Visual Analysis (CNN)</th>
-            <td>{{ $inf->label_cnn ?? 'Belum Dianalisis' }} ({{ round(($inf->skor_cnn ?? 0) * 100) }}%)</td>
+            <td><?php echo e($inf->label_cnn ?? 'Belum Dianalisis'); ?> (<?php echo e(round(($inf->skor_cnn ?? 0) * 100)); ?>%)</td>
         </tr>
         <tr>
             <th>Structural Logic (DT)</th>
-            <td>Skor: {{ $inf->skor_dt ?? 0 }}/100</td>
+            <td>Skor: <?php echo e($inf->skor_dt ?? 0); ?>/100</td>
         </tr>
         <tr>
             <th>Status Akhir Sistem</th>
             <td>
-                <span class="badge {{ $badgeClass }}">{{ strtoupper($inf->label_prioritas ?? 'Pending') }}</span>
+                <span class="badge <?php echo e($badgeClass); ?>"><?php echo e(strtoupper($inf->label_prioritas ?? 'Pending')); ?></span>
             </td>
         </tr>
         <tr>
             <th>Rekomendasi AI</th>
-            <td style="font-style: italic; color: #4b5563;">"{{ $inf->rekomendasi ?? 'Melakukan kalibrasi data...' }}"</td>
+            <td style="font-style: italic; color: #4b5563;">"<?php echo e($inf->rekomendasi ?? 'Melakukan kalibrasi data...'); ?>"</td>
         </tr>
     </table>
 
     <div class="section-title emerald">Dokumentasi Visual</div>
     <div class="photo-container">
-        @if($inf->foto_terbaru && $inf->foto_terbaru != 'default.jpg')
-            @php
+        <?php if($inf->foto_terbaru && $inf->foto_terbaru != 'default.jpg'): ?>
+            <?php
                 $path = $inf->foto_terbaru;
                 $cleanPath = str_contains($path, 'infrastruktur/') ? $path : 'infrastruktur/' . $path;
                 $imagePath = storage_path('app/public/' . $cleanPath);
-            @endphp
-            @if(file_exists($imagePath))
-                @php
+            ?>
+            <?php if(file_exists($imagePath)): ?>
+                <?php
                     $type = pathinfo($imagePath, PATHINFO_EXTENSION);
                     $data = file_get_contents($imagePath);
                     $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-                @endphp
-                <img src="{{ $base64 }}" alt="Foto Infrastruktur">
-            @else
+                ?>
+                <img src="<?php echo e($base64); ?>" alt="Foto Infrastruktur">
+            <?php else: ?>
                 <div style="padding: 50px; background: #f9f9f9; border: 1px solid #ddd; color: #aaa;">[ FOTO FILE TIDAK DITEMUKAN DI SERVER ]</div>
-            @endif
-        @else
+            <?php endif; ?>
+        <?php else: ?>
             <div style="padding: 50px; background: #f9f9f9; border: 1px solid #ddd; color: #aaa;">[ TIDAK ADA FOTO TERSEDIA ]</div>
-        @endif
+        <?php endif; ?>
         
-        <p class="photo-caption">{{ $inf->foto_terbaru ?? 'tidak_ada_foto.jpg' }} - Diupload oleh {{ $inf->nama_user ?? 'Admin' }}</p>
+        <p class="photo-caption"><?php echo e($inf->foto_terbaru ?? 'tidak_ada_foto.jpg'); ?> - Diupload oleh <?php echo e($inf->nama_user ?? 'Admin'); ?></p>
     </div>
 
     <div class="footer">
-        Dicetak pada: {{ now()->translatedFormat('l, d F Y H:i:s') }} WITA | GEO-SINFRA System
+        Dicetak pada: <?php echo e(now()->translatedFormat('l, d F Y H:i:s')); ?> WITA | GEO-SINFRA System
     </div>
 
 </body>
 </html>
+<?php /**PATH C:\laragon1\laragon\www\geo-sinfra\resources\views/admin/pdf-infrastruktur.blade.php ENDPATH**/ ?>

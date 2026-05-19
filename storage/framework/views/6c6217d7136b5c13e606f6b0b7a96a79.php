@@ -26,6 +26,12 @@
                 Verifikasi Usulan
             </a>
 
+            <a href="<?php echo e(route('kabid.validasi')); ?>" 
+               class="flex items-center gap-3 px-4 py-3 <?php echo e(request()->routeIs('kabid.validasi') ? 'bg-indigo-600 text-white font-bold shadow-lg shadow-indigo-900/20' : 'text-gray-400 hover:text-white hover:bg-white/5'); ?> rounded-xl text-sm font-semibold transition group text-left">
+                <i class="fas fa-clipboard-check <?php echo e(request()->routeIs('kabid.validasi') ? '' : 'group-hover:text-indigo-400'); ?>"></i> 
+                Validasi Data
+            </a>
+
             <a href="<?php echo e(route('kabid.statistik.tahunan')); ?>" 
                class="flex items-center gap-3 px-4 py-3 <?php echo e(request()->routeIs('kabid.statistik.tahunan') ? 'bg-indigo-600 text-white font-bold shadow-lg shadow-indigo-900/20' : 'text-gray-400 hover:text-white hover:bg-white/5'); ?> rounded-xl text-sm font-semibold transition group text-left">
                 <i class="fas fa-chart-line <?php echo e(request()->routeIs('kabid.statistik.tahunan') ? '' : 'group-hover:text-indigo-400'); ?>"></i> 

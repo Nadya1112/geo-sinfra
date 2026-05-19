@@ -148,6 +148,21 @@
             from { opacity: 0; transform: translateY(10px) scale(0.95); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
+
+        /* Leaflet Customizations for Dark UI */
+        .leaflet-control-zoom a {
+            background-color: #3b3759 !important;
+            color: #ffffff !important;
+            border: 1px solid rgba(255,255,255,0.1) !important;
+            border-radius: 12px !important;
+            margin-bottom: 8px !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+            transition: all 0.3s !important;
+        }
+        .leaflet-control-zoom a:hover {
+            background-color: #483d8b !important;
+        }
+        .leaflet-control-zoom { border: none !important; margin: 24px !important; }
     </style>
 </head>
 <body class="antialiased">
@@ -349,96 +364,113 @@
                 <p class="text-gray-400 text-sm">Visualisasi interaktif sebaran infrastruktur permukiman di seluruh wilayah.</p>
             </div>
 
-            <div class="relative bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden" style="height: 650px;">
+            <div class="relative bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden" style="height: 700px;">
                 <!-- Map Container -->
-                <div id="map" class="absolute inset-0 z-10"></div>
+                <div id="map" class="absolute inset-0 z-0"></div>
 
-                <!-- Floating Stats Counter -->
-                <div class="absolute top-6 left-6 z-20 bg-navy/90 backdrop-blur-md text-white px-6 py-4 rounded-2xl shadow-xl border border-white/10">
-                    <p class="text-[10px] font-bold text-gold uppercase tracking-widest mb-1">Hasil Filter</p>
-                    <div class="flex items-baseline gap-2">
-                        <span id="visible-count" class="text-3xl font-black">0</span>
-                        <span class="text-[10px] font-bold text-gray-400 uppercase">Titik Ditemukan</span>
+                <!-- Floating UI Widgets -->
+                
+                <!-- Bottom Left: Stats Box -->
+                <div class="absolute bottom-6 left-6 z-[9999] bg-[#3b3759]/95 backdrop-blur-xl rounded-[1.5rem] p-6 text-white w-64 shadow-2xl border border-white/10 pointer-events-auto">
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-chart-pie text-blue-400"></i>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-gray-200">Statistik</span>
+                </div>
+                <i class="fas fa-chevron-up text-gray-400 text-[10px]"></i>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="flex justify-between items-center">
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-gray-300">Total</span>
+                    <span id="stat-total" class="bg-[#2d2a4e] text-blue-400 px-3 py-1.5 rounded-lg text-xs font-black min-w-[50px] text-center">0</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center gap-2">
+                        <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50"></div>
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-gray-300">Baik</span>
                     </div>
+                    <span id="stat-baik" class="bg-[#2d2a4e] text-emerald-400 px-3 py-1.5 rounded-lg text-xs font-black min-w-[50px] text-center">0</span>
                 </div>
-
-                <!-- Floating Basemap Toggle -->
-                <div class="absolute top-6 right-3 z-20 flex gap-2">
-                    <button onclick="setBasemap('google')" class="basemap-btn active bg-white/95 backdrop-blur-md px-4 py-2 rounded-xl text-[9px] font-bold uppercase tracking-widest shadow-xl hover:bg-navy hover:text-white transition-all border border-gray-100">Biasa</button>
-                    <button onclick="setBasemap('satelit')" class="basemap-btn bg-white/95 backdrop-blur-md px-4 py-2 rounded-xl text-[9px] font-bold uppercase tracking-widest shadow-xl hover:bg-navy hover:text-white transition-all border border-gray-100">Satelit</button>
-                    <button onclick="setBasemap('osm')" class="basemap-btn bg-white/95 backdrop-blur-md px-4 py-2 rounded-xl text-[9px] font-bold uppercase tracking-widest shadow-xl hover:bg-navy hover:text-white transition-all border border-gray-100">OSM</button>
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center gap-2">
+                        <div class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50"></div>
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-gray-300">Ringan</span>
+                    </div>
+                    <span id="stat-ringan" class="bg-[#2d2a4e] text-amber-400 px-3 py-1.5 rounded-lg text-xs font-black min-w-[50px] text-center">0</span>
                 </div>
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center gap-2">
+                        <div class="w-2.5 h-2.5 rounded-full bg-red-500 shadow-sm shadow-red-500/50"></div>
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-gray-300">Berat</span>
+                    </div>
+                    <span id="stat-berat" class="bg-[#2d2a4e] text-red-400 px-3 py-1.5 rounded-lg text-xs font-black min-w-[50px] text-center">0</span>
+                </div>
+            </div>
+        </div>
 
-                <!-- Side Filter Panel (Floating) -->
-                <div class="absolute top-20 right-3 z-20 w-[calc(100%-1.5rem)] md:w-60">
-                    <div class="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-100 overflow-hidden transition-all duration-300">
-                        <!-- Clickable Header Toggle -->
-                        <button onclick="toggleFilters()" class="w-full px-4 py-3 flex items-center justify-between bg-navy text-white hover:bg-navy/90 transition-all group">
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-filter text-gold text-[10px] group-hover:scale-110 transition-transform"></i>
-                                <span class="text-[9px] font-black uppercase tracking-widest">Filter</span>
-                            </div>
-                            <i id="filter-chevron" class="fas fa-chevron-down text-[9px] text-gold transition-transform duration-300"></i>
-                        </button>
+        <!-- Top Right: Dropdowns -->
+        <div class="absolute top-6 right-6 z-[9999] flex flex-col gap-3 w-64 pointer-events-auto">
+            <!-- Kategori Objek -->
+            <div class="relative w-full">
+                <button onclick="toggleMenu('kategori-menu')" class="w-full bg-[#483d8b] text-white px-5 py-3.5 rounded-[1.25rem] flex justify-between items-center shadow-lg border border-white/10 hover:bg-[#3b3370] transition-all group">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-layer-group text-[10px] text-white/70 group-hover:text-white transition-colors"></i>
+                        <span class="text-[10px] font-black uppercase tracking-[0.15em]">Kategori Objek</span>
+                    </div>
+                    <i class="fas fa-chevron-down text-[9px] opacity-70"></i>
+                </button>
+                <div id="kategori-menu" class="hidden absolute top-full mt-2 w-full bg-[#3b3759]/95 backdrop-blur-xl rounded-[1.25rem] p-3 shadow-2xl border border-white/10">
+                    <label class="flex items-center justify-between p-2.5 hover:bg-white/10 rounded-xl cursor-pointer transition-all">
+                        <span class="text-[9px] font-bold text-gray-200 uppercase tracking-widest">Jalan</span>
+                        <input type="checkbox" class="filter-category rounded border-gray-600 bg-transparent text-[#483d8b] focus:ring-0" value="jalan" checked>
+                    </label>
+                    <label class="flex items-center justify-between p-2.5 hover:bg-white/10 rounded-xl cursor-pointer transition-all">
+                        <span class="text-[9px] font-bold text-gray-200 uppercase tracking-widest">Titian</span>
+                        <input type="checkbox" class="filter-category rounded border-gray-600 bg-transparent text-[#483d8b] focus:ring-0" value="titian" checked>
+                    </label>
+                    <label class="flex items-center justify-between p-2.5 hover:bg-white/10 rounded-xl cursor-pointer transition-all">
+                        <span class="text-[9px] font-bold text-gray-200 uppercase tracking-widest">Sanitasi</span>
+                        <input type="checkbox" class="filter-category rounded border-gray-600 bg-transparent text-[#483d8b] focus:ring-0" value="sanitasi" checked>
+                    </label>
+                </div>
+            </div>
 
-                        <!-- Filter Content (Collapsible) -->
-                        <div id="filter-panel" class="hidden p-4 space-y-4 max-h-[400px] overflow-y-auto no-scrollbar">
-                            <!-- Filter Kategori & Legenda -->
-                            <div>
-                                <h5 class="text-[9px] font-black text-navy uppercase tracking-widest mb-3 flex items-center gap-2">
-                                    <i class="fas fa-layer-group text-gold"></i> Lapisan Data
-                                </h5>
-                                <div class="grid grid-cols-1 gap-1.5">
-                                    <label class="flex items-center justify-between p-1.5 bg-gray-50/50 rounded-lg cursor-pointer hover:bg-gold/10 transition-all group">
-                                        <div class="flex items-center gap-2">
-                                            <div class="w-7 h-7 rounded-lg bg-blue-500 flex items-center justify-center text-white shadow-sm"><i class="fas fa-road text-[10px]"></i></div>
-                                            <span class="text-[9px] font-bold text-navy uppercase">Jalan</span>
-                                        </div>
-                                        <input type="checkbox" class="filter-category w-3.5 h-3.5 rounded border-gray-300 text-navy focus:ring-navy" value="jalan" checked>
-                                    </label>
-                                    <label class="flex items-center justify-between p-1.5 bg-gray-50/50 rounded-lg cursor-pointer hover:bg-gold/10 transition-all group">
-                                        <div class="flex items-center gap-2">
-                                            <div class="w-7 h-7 rounded-lg bg-amber-500 flex items-center justify-center text-white shadow-sm"><i class="fas fa-bridge text-[10px]"></i></div>
-                                            <span class="text-[9px] font-bold text-navy uppercase">Titian</span>
-                                        </div>
-                                        <input type="checkbox" class="filter-category w-3.5 h-3.5 rounded border-gray-300 text-navy focus:ring-navy" value="titian" checked>
-                                    </label>
-                                    <label class="flex items-center justify-between p-1.5 bg-gray-50/50 rounded-lg cursor-pointer hover:bg-gold/10 transition-all group">
-                                        <div class="flex items-center gap-2">
-                                            <div class="w-7 h-7 rounded-lg bg-emerald-500 flex items-center justify-center text-white shadow-sm"><i class="fas fa-toilet text-[10px]"></i></div>
-                                            <span class="text-[9px] font-bold text-navy uppercase">Sanitasi</span>
-                                        </div>
-                                        <input type="checkbox" class="filter-category w-3.5 h-3.5 rounded border-gray-300 text-navy focus:ring-navy" value="sanitasi" checked>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="h-px bg-gray-100"></div>
-
-                            <!-- Wilayah Filter -->
-                            <div>
-                                <h5 class="text-[9px] font-black text-navy uppercase tracking-widest mb-3 flex items-center gap-2">
-                                    <i class="fas fa-map-location-dot text-gold"></i> Wilayah
-                                </h5>
-                                <div id="district-list" class="space-y-1 max-h-[120px] overflow-y-auto pr-2 custom-scrollbar">
-                                    <?php 
-                                        $kecColors = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#06b6d4']; 
-                                    ?>
-                                    <?php $__currentLoopData = $semuaWilayah; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $wil): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <?php $count = $dataInfrastruktur->where('id_kecamatan', $wil->id_kecamatan)->count(); ?>
-                                        <label class="district-item flex items-center justify-between p-1.5 hover:bg-gray-50 rounded-lg cursor-pointer transition-all border border-transparent">
-                                            <div class="flex items-center gap-2">
-                                                <input type="checkbox" class="filter-district w-3 h-3 rounded border-gray-300 text-navy focus:ring-navy" value="<?php echo e($wil->id_kecamatan); ?>" checked>
-                                                <span class="text-[8px] font-bold text-navy uppercase"><?php echo e($wil->nama_kecamatan); ?></span>
-                                            </div>
-                                            <div class="w-2 h-2 rounded-full shadow-sm" style="background: <?php echo e($kecColors[$index % count($kecColors)]); ?>"></div>
-                                        </label>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </div>
-                            </div>
+            <!-- Wilayah -->
+            <div class="relative w-full">
+                <button onclick="toggleMenu('wilayah-menu')" class="w-full bg-[#3b3759]/95 backdrop-blur-xl text-white px-5 py-3.5 rounded-[1.25rem] flex justify-between items-center shadow-lg border border-white/10 hover:bg-[#2d2a4e] transition-all group">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-map-location-dot text-[10px] text-white/50 group-hover:text-white/80 transition-colors"></i>
+                        <span class="text-[10px] font-black uppercase tracking-[0.15em]">Wilayah</span>
+                    </div>
+                    <i class="fas fa-chevron-down text-[9px] opacity-70"></i>
+                </button>
+                <div id="wilayah-menu" class="hidden absolute top-full mt-2 w-full bg-[#3b3759]/95 backdrop-blur-xl rounded-[1.25rem] p-3 shadow-2xl border border-white/10 max-h-[300px] overflow-y-auto custom-scrollbar">
+                    <?php $kecColors = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#06b6d4']; ?>
+                    <?php $__currentLoopData = $semuaWilayah; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $wil): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <label class="flex items-center justify-between p-2.5 hover:bg-white/10 rounded-xl cursor-pointer transition-all group">
+                        <div class="flex items-center gap-3">
+                            <input type="checkbox" class="filter-district rounded border-gray-600 bg-transparent text-[#483d8b] focus:ring-0" value="<?php echo e($wil->id_kecamatan); ?>" checked>
+                            <span class="text-[9px] font-bold text-gray-200 uppercase tracking-widest"><?php echo e($wil->nama_kecamatan); ?></span>
                         </div>
-                    </div>
+                        <div class="w-2 h-2 rounded-full" style="background: <?php echo e($kecColors[$index % count($kecColors)]); ?>"></div>
+                    </label>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
+            </div>
+        </div>
+
+        <!-- Bottom Right: Basemap Toggle -->
+        <div class="absolute bottom-6 right-6 z-[9999] pointer-events-auto">
+            <button onclick="toggleMenu('layer-options')" class="w-14 h-14 bg-[#3b3759]/95 backdrop-blur-xl rounded-full flex items-center justify-center text-white/80 hover:text-white shadow-2xl border border-white/10 hover:scale-110 hover:bg-[#483d8b] transition-all">
+                <i class="fas fa-layer-group text-lg"></i>
+            </button>
+            <div id="layer-options" class="hidden absolute bottom-[4.5rem] right-0 w-44 bg-[#3b3759]/95 backdrop-blur-xl rounded-[1.25rem] p-2 shadow-2xl border border-white/10 flex flex-col gap-1">
+                <button onclick="setBasemap('google')" class="basemap-btn bg-white/10 text-white w-full px-4 py-2.5 rounded-xl text-[9px] font-bold uppercase tracking-widest hover:bg-white/20 transition-all text-left">Biasa</button>
+                <button onclick="setBasemap('satelit')" class="basemap-btn text-gray-400 w-full px-4 py-2.5 rounded-xl text-[9px] font-bold uppercase tracking-widest hover:bg-white/10 hover:text-white transition-all text-left">Satelit</button>
+                <button onclick="setBasemap('dark')" class="basemap-btn text-gray-400 w-full px-4 py-2.5 rounded-xl text-[9px] font-bold uppercase tracking-widest hover:bg-white/10 hover:text-white transition-all text-left">Gelap</button>
+                <button onclick="setBasemap('greyscale')" class="basemap-btn text-gray-400 w-full px-4 py-2.5 rounded-xl text-[9px] font-bold uppercase tracking-widest hover:bg-white/10 hover:text-white transition-all text-left">Abu-abu</button>
+            </div>
             </div>
         </div>
     </section>
@@ -471,13 +503,13 @@
 
         const dataInfra = <?php echo json_encode($dataInfrastruktur, 15, 512) ?>;
         const dataWilayah = <?php echo json_encode($semuaWilayah, 15, 512) ?>;
-        const map = L.map('map', { zoomControl: false }).setView([-3.316694, 114.590111], 13);
+        const map = L.map('map', { zoomControl: true }).setView([-3.316694, 114.590111], 13);
+        map.zoomControl.setPosition('topleft');
         
-        const googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { subdomains:['mt0','mt1','mt2','mt3'] }).addTo(map);
-        const satelit = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}');
-        const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        });
+        const googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'] }).addTo(map);
+        const satelit = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', { maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'] });
+        const darkMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 20 });
+        const greyMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 20 });
         
         const markersLayer = L.layerGroup().addTo(map);
         const polygonsLayer = L.layerGroup().addTo(map);
@@ -485,24 +517,21 @@
         // Map Colors (Sync with Filter)
         const kecColors = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#06b6d4'];
 
-        // Custom Icon Creator
-        const createIcon = (type) => {
+        // Custom Icon Creator (Dot style like in the image)
+        const createIcon = (type, kondisi) => {
             let color = '#3b82f6';
-            let icon = 'fa-road';
-            
-            if (type === 'titian') { color = '#f59e0b'; icon = 'fa-bridge'; }
-            if (type === 'sanitasi') { color = '#10b981'; icon = 'fa-toilet'; }
+            if (kondisi === 'Baik') color = '#10b981'; // Emerald
+            else if (kondisi === 'Rusak Ringan' || kondisi === 'Rusak Sedang') color = '#f59e0b'; // Amber/Orange
+            else if (kondisi === 'Rusak Berat') color = '#ef4444'; // Red
             
             return L.divIcon({
-                className: 'custom-marker',
+                className: 'custom-dot-marker',
                 html: `
-                    <div class="flex items-center justify-center w-10 h-10 rounded-xl border-2 border-white shadow-lg transition-all hover:scale-110" style="background: ${color}">
-                        <i class="fas ${icon} text-white text-sm"></i>
-                    </div>
+                    <div class="w-4 h-4 rounded-full border-2 border-white shadow-md transition-all hover:scale-150" style="background-color: ${color}"></div>
                 `,
-                iconSize: [40, 40],
-                iconAnchor: [20, 40],
-                popupAnchor: [0, -40]
+                iconSize: [16, 16],
+                iconAnchor: [8, 8],
+                popupAnchor: [0, -8]
             });
         };
 
@@ -535,11 +564,19 @@
             });
 
             // 2. Render Markers (Infrastruktur)
-            let count = 0;
+            let countTotal = 0;
+            let countBaik = 0;
+            let countRingan = 0;
+            let countBerat = 0;
+
             dataInfra.forEach(item => {
-                if (checkedCategories.includes(item.jenis) && checkedDistricts.includes(item.id_kecamatan?.toString())) {
-                    count++;
-                    const marker = L.marker([item.latitude, item.longitude], { icon: createIcon(item.jenis) });
+                if (checkedCategories.includes(item.jenis.toLowerCase()) && checkedDistricts.includes(item.id_kecamatan?.toString())) {
+                    countTotal++;
+                    if (item.kondisi === 'Baik') countBaik++;
+                    else if (item.kondisi === 'Rusak Ringan' || item.kondisi === 'Rusak Sedang') countRingan++;
+                    else if (item.kondisi === 'Rusak Berat') countBerat++;
+
+                    const marker = L.marker([item.latitude, item.longitude], { icon: createIcon(item.jenis, item.kondisi) });
                     
                     // Enhanced Popup
                     const popupContent = `
@@ -569,47 +606,54 @@
                 }
             });
 
-            // Update Counter
-            document.getElementById('visible-count').innerText = count;
+            // Update Dynamic Stats in DOM
+            document.getElementById('stat-total').innerText = countTotal;
+            document.getElementById('stat-baik').innerText = countBaik;
+            document.getElementById('stat-ringan').innerText = countRingan;
+            document.getElementById('stat-berat').innerText = countBerat;
         }
 
         // Event Listeners
         document.querySelectorAll('.filter-category, .filter-district').forEach(el => el.addEventListener('change', applyFilters));
 
         function setBasemap(type) {
-            // Update UI
+            // Update UI Buttons inside Layer Switcher
             document.querySelectorAll('.basemap-btn').forEach(btn => {
-                btn.classList.remove('bg-navy', 'text-white', 'active');
-                btn.classList.add('bg-white/95', 'text-navy');
+                btn.classList.remove('bg-white/10', 'text-white');
+                btn.classList.add('text-gray-400');
             });
-            event.target.classList.add('bg-navy', 'text-white', 'active');
-            event.target.classList.remove('bg-white/95', 'text-navy');
+            event.target.classList.add('bg-white/10', 'text-white');
+            event.target.classList.remove('text-gray-400');
 
             // Remove all layers first
             map.removeLayer(googleStreets);
             map.removeLayer(satelit);
-            map.removeLayer(osm);
+            map.removeLayer(darkMap);
+            map.removeLayer(greyMap);
 
             // Add selected layer
             if (type === 'satelit') { 
                 map.addLayer(satelit); 
-            } else if (type === 'osm') {
-                map.addLayer(osm);
+            } else if (type === 'dark') {
+                map.addLayer(darkMap);
+            } else if (type === 'greyscale') {
+                map.addLayer(greyMap);
             } else { 
                 map.addLayer(googleStreets); 
             }
         }
 
-        function toggleFilters() {
-            const panel = document.getElementById('filter-panel');
-            const chevron = document.getElementById('filter-chevron');
+        function toggleMenu(id) {
+            // Close others
+            if (id !== 'layer-options') document.getElementById('layer-options').classList.add('hidden');
+            if (id !== 'kategori-menu') document.getElementById('kategori-menu').classList.add('hidden');
+            if (id !== 'wilayah-menu') document.getElementById('wilayah-menu').classList.add('hidden');
             
+            const panel = document.getElementById(id);
             if (panel.classList.contains('hidden')) {
                 panel.classList.remove('hidden');
-                chevron.style.transform = 'rotate(180deg)';
             } else {
                 panel.classList.add('hidden');
-                chevron.style.transform = 'rotate(0deg)';
             }
         }
 

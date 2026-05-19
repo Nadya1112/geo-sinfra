@@ -27,8 +27,6 @@ class Infrastruktur extends Model
     protected $fillable = [
         'id_user',
         'id_kelurahan',
-        'id_kecamatan',
-        'nama_infrastruktur',
         'jenis_infrastruktur',
         'nama_objek',
         'foto_terbaru',
@@ -61,6 +59,9 @@ class Infrastruktur extends Model
     /**
      * Hubungan: Infrastruktur berada di satu Kelurahan
      * Melalui kelurahan, kita bisa mendapatkan data Kecamatan (Infrastruktur -> Kelurahan -> Kecamatan)
+     */
+    /**
+     * Relasi ke Kelurahan
      */
     public function kelurahan(): BelongsTo
     {

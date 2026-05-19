@@ -149,12 +149,38 @@ Route::middleware(['auth'])->group(function () {
         // Proses Hapus Aset
         Route::delete('/infrastruktur/{id}', [AdminController::class, 'destroyInfrastruktur'])->name('admin.infrastruktur.destroy');
         
+        // Proses Verifikasi Aset
+        Route::post('/infrastruktur/{id}/verifikasi', [AdminController::class, 'verifikasiInfrastruktur'])->name('admin.infrastruktur.verifikasi');
+        
+        // Sinkronisasi Masal AI
+        Route::post('/infrastruktur/sinkronisasi-ai', [AdminController::class, 'sinkronisasiAi'])->name('admin.infrastruktur.sinkronisasi-ai');
+        
         // Proses Analisis AI
         Route::post('/infrastruktur/{id}/analisis-ai', [AnalisisAiController::class, 'prosesAnalisis'])->name('admin.infrastruktur.analisis-ai');
 
         // Manajemen Profil
         Route::get('/profile', [AdminController::class, 'profile'])->name('admin.profile');
         Route::put('/profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
+
+        // Test Koneksi AI
+        Route::get('/test-ai', function() {
+            try {
+                $url = env('CNN_API_URL', 'http://127.0.0.1:5000/predict');
+                // Kita gunakan GET sederhana atau HEAD untuk cek apakah port terbuka
+                $response = Http::timeout(3)->get(str_replace('/predict', '', $url));
+                return response()->json([
+                    'status' => 'CONNECTED',
+                    'message' => 'Server AI Berhasil Terhubung!',
+                    'url' => $url
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'status' => 'DISCONNECTED',
+                    'message' => 'Gagal terhubung ke Server AI. Pastikan server Python di port 5000 sudah menyala.',
+                    'error' => $e->getMessage()
+                ], 500);
+            }
+        })->name('admin.test-ai');
 
     });
 
@@ -178,9 +204,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [App\Http\Controllers\Kabid\KabidController::class, 'index'])->name('kabid.dashboard');
         Route::get('/monitoring', [App\Http\Controllers\Kabid\KabidController::class, 'monitoring'])->name('kabid.monitoring');
         Route::get('/verifikasi', [App\Http\Controllers\Kabid\KabidController::class, 'verifikasi'])->name('kabid.verifikasi');
+        Route::post('/verifikasi/{id}', [App\Http\Controllers\Kabid\KabidController::class, 'prosesVerifikasi'])->name('kabid.verifikasi.proses');
+        Route::get('/validasi', [App\Http\Controllers\Kabid\KabidController::class, 'validasi'])->name('kabid.validasi');
+        Route::post('/validasi/{id}', [App\Http\Controllers\Kabid\KabidController::class, 'prosesValidasi'])->name('kabid.validasi.proses');
         Route::get('/statistik/tahunan', [App\Http\Controllers\Kabid\KabidController::class, 'statistikTahunan'])->name('kabid.statistik.tahunan');
         Route::get('/laporan', [App\Http\Controllers\Kabid\KabidController::class, 'laporan'])->name('kabid.laporan');
-        Route::post('/verifikasi/{id}', [App\Http\Controllers\Kabid\KabidController::class, 'prosesVerifikasi'])->name('kabid.verifikasi.proses');
         Route::get('/infrastruktur/{id}', [App\Http\Controllers\Kabid\KabidController::class, 'show'])->name('kabid.infrastruktur.show');
         Route::get('/profile', [App\Http\Controllers\Kabid\KabidController::class, 'profile'])->name('kabid.profile');
         Route::post('/profile', [App\Http\Controllers\Kabid\KabidController::class, 'updateProfile'])->name('kabid.profile.update');

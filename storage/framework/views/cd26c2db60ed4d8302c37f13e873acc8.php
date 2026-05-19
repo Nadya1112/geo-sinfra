@@ -42,7 +42,7 @@
             </div>
         </header>
 
-            <?php if(auth()->user()->kecamatans->isEmpty()): ?>
+            <?php if($kecamatans->isEmpty()): ?>
             <!-- Warning: Kecamatan Belum Dipilih -->
             <div class="bg-amber-50 border-l-4 border-amber-500 p-6 rounded-[2.5rem] mb-8 flex flex-col md:flex-row items-center justify-between shadow-sm shadow-amber-900/5 border border-amber-100">
                 <div class="flex items-center gap-5 mb-4 md:mb-0 text-left">
@@ -142,7 +142,7 @@
                             </div>
                             
                             <div class="grid grid-cols-1 gap-3">
-                                <?php $__empty_1 = true; $__currentLoopData = auth()->user()->kecamatans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $assignedKec): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                <?php $__empty_1 = true; $__currentLoopData = $kecamatans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $assignedKec): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                 <div class="bg-white/5 border border-white/10 rounded-2xl p-4 backdrop-blur-md flex items-center gap-4">
                                     <div class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center text-lg shadow-lg shadow-emerald-500/20">
                                         <i class="fas fa-map-marker-alt"></i>
@@ -204,7 +204,7 @@
                 <form action="<?php echo e(route('surveyor.territory.update')); ?>" method="POST">
                     <?php echo csrf_field(); ?>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                        <?php $assignedIds = auth()->user()->kecamatans->pluck('id_kecamatan')->toArray(); ?>
+                        <?php $assignedIds = $kecamatans->pluck('id_kecamatan')->toArray(); ?>
                         <?php $__currentLoopData = $semuaKecamatan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kec): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <label class="relative flex items-center gap-3 p-4 bg-gray-50 rounded-2xl border border-transparent cursor-pointer hover:bg-emerald-50 hover:border-emerald-200 transition-all group">
                             <input type="checkbox" name="id_kecamatan[]" value="<?php echo e($kec->id_kecamatan); ?>" 

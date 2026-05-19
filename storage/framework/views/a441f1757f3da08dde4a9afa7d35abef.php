@@ -32,9 +32,21 @@
                     <p class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter"><?php echo e(now()->translatedFormat('l, d F Y')); ?></p>
                 </div>
                 
-                <div class="h-8 w-[1px] bg-gray-100"></div>
-                
                 <div class="flex items-center gap-3">
+                    <?php if(($inf->status_verifikasi ?? 'Pending') != 'Verified'): ?>
+                        <form action="<?php echo e(route('admin.infrastruktur.verifikasi', $inf->id_infrastruktur)); ?>" method="POST" class="inline">
+                            <?php echo csrf_field(); ?>
+                            <button type="submit" onclick="return confirm('Verifikasi aset ini?')" class="bg-emerald-500 text-white px-4 py-2 rounded-xl text-[10px] font-black hover:bg-emerald-600 transition shadow-sm flex items-center gap-1">
+                                <i class="fas fa-check"></i> Verifikasi
+                            </button>
+                        </form>
+                    <?php else: ?>
+                        <span class="bg-gray-100 text-gray-500 px-4 py-2 rounded-xl text-[10px] font-black flex items-center gap-1 border border-gray-200">
+                            <i class="fas fa-check-double"></i> Verified
+                        </span>
+                    <?php endif; ?>
+
+                    <div class="h-8 w-[1px] bg-gray-100"></div>
                     <div class="text-right">
                         <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase">Admin SINFRA</p>
                         <p class="text-[9px] font-bold text-green-500 uppercase mt-1">Online</p>
@@ -145,56 +157,102 @@
                         </div>
 
                         <?php
-                            // Ambil data hasil AI dari database berdasarkan ID Infrastruktur ini
+                            // Ambil data hasil DT
                             $hasilAi = \Illuminate\Support\Facades\DB::table('analisis_ai')
+                                        ->where('id_infrastruktur', $inf->id_infrastruktur)
+                                        ->first();
+                            
+                            // Ambil data hasil CNN
+                            $hasilCnn = \Illuminate\Support\Facades\DB::table('citra_cnn')
                                         ->where('id_infrastruktur', $inf->id_infrastruktur)
                                         ->first();
                         ?>
 
-                        <?php if($hasilAi): ?>
-                        <div class="bg-gradient-to-br from-indigo-900 to-blue-900 rounded-2xl p-6 shadow-xl shadow-indigo-200 relative overflow-hidden text-white">
-                            <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white opacity-5 rounded-full blur-2xl"></div>
+                        <?php if($hasilAi || $hasilCnn): ?>
+                        <div class="bg-gradient-to-br from-[#1e1b4b] to-[#312e81] rounded-[2.5rem] p-8 text-white shadow-2xl relative overflow-hidden">
+                            <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-white/5 rounded-full blur-3xl"></div>
                             
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
-                                        <i class="fas fa-brain text-yellow-400 text-lg"></i>
+                            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-xl border border-white/20">
+                                        <i class="fas fa-brain text-yellow-400 text-2xl"></i>
                                     </div>
                                     <div>
-                                        <h4 class="font-black tracking-wider text-sm uppercase text-indigo-100">Keputusan Algoritma Decision Tree</h4>
-                                        <p class="text-[10px] text-indigo-200 font-medium">Dianalisis pada: <?php echo e(\Carbon\Carbon::parse($hasilAi->created_at)->format('d M Y - H:i')); ?> WITA</p>
+                                        <h4 class="font-black tracking-widest text-lg uppercase text-white">Hybrid AI Analytics</h4>
+                                        <p class="text-xs text-indigo-200 font-medium opacity-80">Decision Tree + CNN Vision Integration</p>
                                     </div>
                                 </div>
-                                <div class="bg-white/10 px-3 py-1.5 rounded-lg border border-white/20">
-                                    <span class="text-[9px] font-black tracking-widest text-emerald-300 uppercase"><i class="fas fa-check-circle mr-1"></i> Terverifikasi Sistem</span>
+                                <div class="flex items-center gap-3">
+                                    <span class="px-4 py-2 bg-emerald-500/20 text-emerald-400 rounded-xl border border-emerald-500/30 text-[10px] font-black uppercase tracking-widest">
+                                        <i class="fas fa-shield-alt mr-2"></i>Sistem Terverifikasi
+                                    </span>
                                 </div>
                             </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 text-left">
-                                <div class="bg-black/20 p-4 rounded-xl border border-white/10 backdrop-blur-md">
-                                    <p class="text-[10px] text-indigo-200 uppercase font-bold tracking-wider mb-1">Skor Kerusakan</p>
-                                    <p class="text-2xl font-black text-white"><?php echo e($hasilAi->skor_dt); ?><span class="text-xs text-indigo-300 font-medium">/100</span></p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                <!-- Panel CNN -->
+                                <div class="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-sm">
+                                    <div class="flex justify-between items-center mb-4">
+                                        <p class="text-[10px] font-black text-indigo-300 uppercase tracking-widest">Visual Analysis (CNN)</p>
+                                        <i class="fas fa-eye text-indigo-300/50"></i>
+                                    </div>
+                                    <div class="flex items-end gap-3 mb-2">
+                                        <p class="text-4xl font-black text-white"><?php echo e($hasilCnn ? round($hasilCnn->skor_cnn * 100) : '0'); ?><span class="text-sm font-bold text-indigo-300 ml-1">%</span></p>
+                                        <p class="text-xs font-bold text-emerald-400 mb-2"><?php echo e($hasilCnn->label_kondisi ?? 'Scanning...'); ?></p>
+                                        <?php if(!$hasilCnn): ?>
+                                            <form action="<?php echo e(route('admin.infrastruktur.analisis-ai', $inf->id_infrastruktur)); ?>" method="POST" class="mb-2">
+                                                <?php echo csrf_field(); ?>
+                                                <button type="submit" class="text-[8px] bg-white/20 hover:bg-white/30 text-white px-2 py-1 rounded-md transition-all flex items-center gap-1">
+                                                    <i class="fas fa-sync-alt"></i> Re-Scan Visual
+                                                </button>
+                                            </form>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="w-full bg-white/10 h-2 rounded-full overflow-hidden">
+                                        <div class="bg-gradient-to-r from-indigo-500 to-emerald-400 h-full transition-all duration-1000" style="width: <?php echo e($hasilCnn ? ($hasilCnn->skor_cnn * 100) : '0'); ?>%"></div>
+                                    </div>
                                 </div>
-                                <div class="bg-black/20 p-4 rounded-xl border border-white/10 backdrop-blur-md">
-                                    <p class="text-[10px] text-indigo-200 uppercase font-bold tracking-wider mb-1">Status Prediksi AI</p>
-                                    <p class="text-lg font-black <?php echo e($hasilAi->label_prioritas == 'Rusak Berat' ? 'text-red-400' : ($hasilAi->label_prioritas == 'Rusak Sedang' ? 'text-yellow-400' : 'text-emerald-400')); ?>">
-                                        <?php echo e(strtoupper($hasilAi->label_prioritas)); ?>
 
-                                    </p>
+                                <!-- Panel DT -->
+                                <div class="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-sm">
+                                    <div class="flex justify-between items-center mb-4">
+                                        <p class="text-[10px] font-black text-indigo-300 uppercase tracking-widest">Structural Logic (DT)</p>
+                                        <i class="fas fa-project-diagram text-indigo-300/50"></i>
+                                    </div>
+                                    <div class="flex items-end gap-3 mb-2">
+                                        <p class="text-4xl font-black text-white"><?php echo e($hasilAi->skor_dt ?? '0'); ?><span class="text-sm font-bold text-indigo-300 ml-1">/100</span></p>
+                                        <p class="text-xs font-bold <?php echo e(($hasilAi->label_prioritas ?? '') == 'Rusak Berat' ? 'text-red-400' : 'text-yellow-400'); ?> mb-2">
+                                            <?php echo e($hasilAi->label_prioritas ?? 'Pending'); ?>
+
+                                        </p>
+                                    </div>
+                                    <div class="w-full bg-white/10 h-2 rounded-full overflow-hidden">
+                                        <div class="bg-gradient-to-r from-indigo-500 to-yellow-400 h-full transition-all duration-1000" style="width: <?php echo e($hasilAi->skor_dt ?? '0'); ?>%"></div>
+                                    </div>
                                 </div>
-                                <div class="bg-black/20 p-4 rounded-xl border border-white/10 backdrop-blur-md">
-                                    <p class="text-[10px] text-indigo-200 uppercase font-bold tracking-wider mb-1">Rekomendasi Tindakan</p>
-                                    <p class="text-[11px] font-medium leading-relaxed text-gray-100"><?php echo e($hasilAi->rekomendasi); ?></p>
+                            </div>
+
+                            <div class="bg-indigo-500/20 border border-indigo-400/30 rounded-2xl p-5">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-10 h-10 bg-indigo-500/30 rounded-xl flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-lightbulb text-yellow-300"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-[10px] font-black text-indigo-200 uppercase tracking-widest mb-1">AI Recommendation</p>
+                                        <p class="text-sm font-medium leading-relaxed text-indigo-50 italic">
+                                            "<?php echo e($hasilAi->rekomendasi ?? 'Melakukan kalkulasi aturan Decision Tree...'); ?>"
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <?php else: ?>
                         <div class="bg-gray-50 border border-dashed border-gray-300 rounded-2xl p-8 text-center">
-                            <div class="w-14 h-14 bg-gray-200 text-gray-400 rounded-full flex items-center justify-center mx-auto mb-3">
-                                <i class="fas fa-robot text-2xl"></i>
+                            <div class="w-14 h-14 bg-indigo-50 text-indigo-400 rounded-full flex items-center justify-center mx-auto mb-3 animate-pulse">
+                                <i class="fas fa-microchip text-2xl"></i>
                             </div>
-                            <h4 class="font-bold text-[#1e1b4b] text-sm">Belum Dianalisis oleh AI</h4>
-                            <p class="text-xs text-gray-500 mt-2 max-w-sm mx-auto leading-relaxed">Data lapangan ini belum diproses oleh algoritma Decision Tree. Silakan tekan tombol <b>"Analisis AI"</b> di bawah untuk mengkalkulasi tingkat kerusakan secara otomatis.</p>
+                            <h4 class="font-bold text-[#1e1b4b] text-sm">Sedang Sinkronisasi AI...</h4>
+                            <p class="text-xs text-gray-500 mt-2 max-w-sm mx-auto leading-relaxed">Sistem sedang melakukan sinkronisasi antara visual CNN dan logika Decision Tree. Silakan muat ulang halaman ini dalam beberapa saat.</p>
                         </div>
                         <?php endif; ?>
                     </div>
@@ -204,26 +262,53 @@
                             <h4 class="text-sm font-black text-[#1e1b4b] uppercase tracking-wider">4. Dokumentasi Visual</h4>
                         </div>
                         
-                        <div class="w-full max-w-2xl mx-auto relative rounded-2xl overflow-hidden border border-gray-100 shadow-sm bg-gray-50 aspect-video flex items-center justify-center group">
+                        <div class="w-full max-w-2xl mx-auto relative rounded-2xl overflow-hidden border border-gray-100 shadow-sm bg-[#0f172a] aspect-video flex items-center justify-center group">
                             <?php if($inf->foto_terbaru && $inf->foto_terbaru != 'default.jpg'): ?>
-                                <img src="<?php echo e(asset('storage/infrastruktur/' . $inf->foto_terbaru)); ?>" alt="Foto Infrastruktur" class="w-full h-full object-cover">
-                                <?php if(strtolower($inf->kondisi) != 'baik'): ?>
+                                <?php $cleanPath = str_replace('\\', '/', $inf->foto_terbaru); ?>
+                                <img src="<?php echo e(asset('storage/' . (str_contains($cleanPath, 'infrastruktur/') ? $cleanPath : 'infrastruktur/' . $cleanPath))); ?>" alt="Foto Infrastruktur" class="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105">
+                                
+                                
+                                <?php if(strtolower($inf->kondisi) != 'baik' && strtolower($inf->kondisi) != 'menunggu ai'): ?>
                                     <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                                        <div class="border-2 border-red-500 bg-red-500/20 w-1/3 h-1/2 relative flex items-start justify-center">
-                                            <span class="bg-red-500 text-white text-[8px] font-black px-2 py-1 mt-[-20px] whitespace-nowrap rounded-t-md tracking-wider shadow-sm">AREA TERDAMPAK</span>
+                                        
+                                        <div class="relative w-1/2 h-1/2 border-2 border-red-500/50 bg-red-500/5 shadow-[0_0_20px_rgba(239,68,68,0.3)] animate-pulse">
+                                            
+                                            <div class="absolute -top-1 -left-1 w-4 h-4 border-t-4 border-l-4 border-red-500"></div>
+                                            <div class="absolute -top-1 -right-1 w-4 h-4 border-t-4 border-r-4 border-red-500"></div>
+                                            <div class="absolute -bottom-1 -left-1 w-4 h-4 border-b-4 border-l-4 border-red-500"></div>
+                                            <div class="absolute -bottom-1 -right-1 w-4 h-4 border-b-4 border-r-4 border-red-500"></div>
+                                            
+                                            
+                                            <div class="absolute -top-8 left-0 bg-red-600 text-white text-[9px] font-black px-3 py-1 rounded-md shadow-lg flex items-center gap-2">
+                                                <i class="fas fa-exclamation-triangle animate-bounce"></i>
+                                                <span>AREA KERUSAKAN TERDETEKSI (<?php echo e(round(($hasilCnn->skor_cnn ?? 0) * 100)); ?>%)</span>
+                                            </div>
+
+                                            
+                                            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-red-500/20 to-transparent h-1/4 w-full animate-[scan_2s_linear_infinite]"></div>
                                         </div>
                                     </div>
                                 <?php endif; ?>
-                                <div class="absolute inset-0 bg-black/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <a href="<?php echo e(asset('storage/infrastruktur/' . $inf->foto_terbaru)); ?>" target="_blank" class="bg-white/90 text-[#1e1b4b] px-4 py-2 rounded-xl text-[10px] font-black shadow-lg uppercase tracking-widest hover:bg-white hover:scale-105 transition-all">Lihat Foto Asli</a>
+
+                                <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <a href="<?php echo e(asset('storage/' . (str_contains($cleanPath, 'infrastruktur/') ? $cleanPath : 'infrastruktur/' . $cleanPath))); ?>" target="_blank" class="bg-white text-[#1e1b4b] px-6 py-3 rounded-2xl text-xs font-black shadow-2xl uppercase tracking-widest hover:scale-110 transition-all flex items-center gap-2">
+                                        <i class="fas fa-expand"></i> Lihat Foto Resolusi Penuh
+                                    </a>
                                 </div>
                             <?php else: ?>
-                                <div class="text-center text-gray-300">
-                                    <i class="fas fa-image text-4xl mb-3"></i>
-                                    <p class="text-xs font-bold uppercase tracking-widest">[ TIDAK ADA FOTO ]</p>
+                                <div class="text-center text-gray-500">
+                                    <i class="fas fa-image text-5xl mb-3 opacity-20"></i>
+                                    <p class="text-xs font-bold uppercase tracking-widest">Tidak Ada Foto Dokumentasi</p>
                                 </div>
                             <?php endif; ?>
                         </div>
+
+                        <style>
+                            @keyframes scan {
+                                0% { transform: translateY(-100%); }
+                                100% { transform: translateY(400%); }
+                            }
+                        </style>
                         
                         <div class="mt-3 text-center">
                             <p class="text-[9px] font-bold text-gray-400 italic normal-case"><?php echo e($inf->foto_terbaru ?? 'tidak_ada_foto.jpg'); ?> - Diupload oleh <?php echo e($inf->nama_user ?? 'Surveyor'); ?></p>
@@ -233,12 +318,7 @@
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-3 pt-8 mt-10 border-t border-gray-100">
-                    <form action="<?php echo e(route('admin.infrastruktur.analisis-ai', $inf->id_infrastruktur)); ?>" method="POST" class="flex-1 flex">
-                        <?php echo csrf_field(); ?>
-                        <button type="submit" class="w-full bg-gradient-to-r from-indigo-600 to-blue-500 text-white py-3.5 rounded-2xl font-black text-[11px] tracking-widest hover:from-indigo-700 hover:to-blue-600 shadow-lg shadow-indigo-200 transition-all flex justify-center items-center gap-2 uppercase" onclick="return confirm('Jalankan algoritma Decision Tree untuk menganalisis data kerusakan ini secara otomatis?')">
-                            <i class="fas fa-brain text-sm"></i> Analisis AI
-                        </button>
-                    </form>
+
 
                     <a href="<?php echo e(route('admin.infrastruktur.pdf', $inf->id_infrastruktur)); ?>" class="flex-1 bg-yellow-400 text-white py-3.5 rounded-2xl font-black text-[11px] tracking-widest hover:bg-yellow-500 shadow-lg shadow-yellow-100 transition-all flex justify-center items-center gap-2 uppercase">
                         <i class="fas fa-file-pdf text-sm"></i> Export PDF

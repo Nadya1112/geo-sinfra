@@ -60,8 +60,9 @@
                     <table class="w-full text-left">
                         <thead>
                             <tr class="bg-gray-50/50 border-b border-gray-100">
-                                <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest w-16 text-center">NO</th>
-                                <th class="px-6 py-5 text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest">Nama Infrastruktur</th>
+                                <th class="px-8 py-5 text-[10px] font-black text-gray-400 tracking-widest text-center w-12">No.</th>
+                                <th class="px-6 py-5 text-[10px] font-black text-gray-400 tracking-widest text-center">Visual</th>
+                                <th class="px-6 py-5 text-[10px] font-black text-gray-400 tracking-widest">Objek Infrastruktur</th>
                                 <th class="px-6 py-5 text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest">Wilayah</th>
                                 <th class="px-6 py-5 text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest text-center">Kondisi</th>
                                 <th class="px-8 py-5 text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest text-center">Aksi</th>
@@ -72,6 +73,16 @@
                             <tr class="hover:bg-gray-50/50 transition-colors group">
                                 <td class="px-8 py-4 text-center">
                                     <span class="text-xs font-black text-gray-400"><?php echo e($index + 1); ?></span>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <div class="w-12 h-12 rounded-xl overflow-hidden border border-gray-100 shadow-sm mx-auto bg-gray-50 flex items-center justify-center">
+                                        <?php if($item->foto_terbaru): ?>
+                                            <?php $cleanPath = str_replace('\\', '/', $item->foto_terbaru); ?>
+                                            <img src="<?php echo e(asset('storage/' . (str_contains($cleanPath, 'infrastruktur/') ? $cleanPath : 'infrastruktur/' . $cleanPath))); ?>" class="w-full h-full object-cover">
+                                        <?php else: ?>
+                                            <i class="fas fa-image text-gray-200"></i>
+                                        <?php endif; ?>
+                                    </div>
                                 </td>
                                 <td class="px-6 py-4">
                                     <p class="text-xs font-black text-[#1e1b4b] uppercase mb-0.5"><?php echo e($item->nama_infrastruktur); ?></p>

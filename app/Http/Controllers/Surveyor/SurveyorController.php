@@ -9,9 +9,14 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Traits\AiProcessingTrait;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class SurveyorController extends Controller
 {
+    use AiProcessingTrait;
+
     public function index()
     {
         $userId = auth()->id();
@@ -19,13 +24,25 @@ class SurveyorController extends Controller
         $waitingValidation = Infrastruktur::where('id_user', $userId)->where('status_verifikasi', 'Pending')->count();
         $verifiedAI = Infrastruktur::where('id_user', $userId)->where('status_verifikasi', 'Verified')->count();
 
+        $user = auth()->user();
+        
+        // Cek wilayah tugas (Prioritas pivot table, fallback ke kolom id_kecamatan)
+        $kecamatans = $user->kecamatans;
+        if ($kecamatans->isEmpty() && $user->id_kecamatan) {
+            $userKec = \App\Models\Kecamatan::find($user->id_kecamatan);
+            if ($userKec) {
+                // Jangan push ke relation, cukup buat collection sementara
+                $kecamatans = collect([$userKec]);
+            }
+        }
+
+        $semuaKecamatan = \App\Models\Kecamatan::all();
         $recentUploads = Infrastruktur::where('id_user', $userId)
             ->orderBy('created_at', 'desc')
             ->limit(5)
             ->get();
 
-        $semuaKecamatan = DB::table('kecamatan')->get();
-        return view('surveyor.dashboard', compact('totalSurvey', 'waitingValidation', 'verifiedAI', 'recentUploads', 'semuaKecamatan'));
+        return view('surveyor.dashboard', compact('totalSurvey', 'waitingValidation', 'verifiedAI', 'recentUploads', 'semuaKecamatan', 'kecamatans'));
     }
 
     public function updateTerritories(Request $request)
@@ -52,7 +69,13 @@ class SurveyorController extends Controller
         $user = auth()->user();
         $semuaKecamatan = $user->kecamatans;
 
-        // Jika belum memilih di profil, tampilkan semua agar bisa pilih pertama kali
+        // Fallback ke legacy column jika pivot kosong
+        if ($semuaKecamatan->isEmpty() && $user->id_kecamatan) {
+            $userKec = \App\Models\Kecamatan::find($user->id_kecamatan);
+            if ($userKec) $semuaKecamatan = collect([$userKec]);
+        }
+
+        // Jika benar-benar belum ada wilayah tugas, tampilkan semua agar bisa pilih pertama kali
         if ($semuaKecamatan->isEmpty()) {
             $semuaKecamatan = \App\Models\Kecamatan::all();
             $semuaKelurahan = \App\Models\Kelurahan::all();
@@ -64,6 +87,9 @@ class SurveyorController extends Controller
         return view('surveyor.input', compact('semuaKecamatan', 'semuaKelurahan'));
     }
 
+    /**
+     * PROSES SIMPAN DATA LAPANGAN BARU (Eloquent Model Terintegrasi Observer AI)
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -74,18 +100,35 @@ class SurveyorController extends Controller
             'latitude' => 'required',
             'longitude' => 'required',
             'foto' => 'required|image|max:5120',
-            'material_eksisting' => 'nullable|string',
-            'panjang' => 'nullable|numeric',
-            'lebar' => 'nullable|numeric',
+            'kondisi' => 'required|string', // 🌟 Menangkap input deskripsi kerusakan teks untuk Decision Tree
+            'material_eksisting' => 'required|string',
+            'panjang' => 'required|numeric',
+            'lebar' => 'required|numeric',
             'has_drainase' => 'nullable|boolean',
             'has_gorong_gorong' => 'nullable|boolean',
             'rencana_perbaikan' => 'nullable|string',
             'tgl_survey' => 'nullable|date',
         ]);
 
-        $path = $request->file('foto')->store('infrastruktur', 'public');
+        $namaFoto = 'default.jpg';
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $namaFoto = time() . '_' . $file->getClientOriginalName();
+            
+            // Resize gambar ke 300x300
+            $manager = new ImageManager(new Driver());
+            $image = $manager->decodePath($file->getRealPath());
+            $image->resize(300, 300);
+            
+            // Pastikan folder ada
+            if (!Storage::disk('public')->exists('infrastruktur')) {
+                Storage::disk('public')->makeDirectory('infrastruktur');
+            }
+            
+            $image->save(storage_path('app/public/infrastruktur/' . $namaFoto));
+        }
 
-        // Logic sync with Admin for mapping 'jenis'
+        // Penyesuaian pemetaan jenis enum
         $jenisMapping = [
             'Jalan' => 'jalan',
             'Sanitasi' => 'sanitasi',
@@ -93,39 +136,47 @@ class SurveyorController extends Controller
         ];
         $jenisEnum = $jenisMapping[$request->jenis_infrastruktur] ?? 'jalan';
 
-        DB::table('infrastruktur')->insert([
+        // 🌟 DIUBAH KE ELOQUENT MODEL agar memicu fungsi saved() di InfrastrukturObserver otomatis
+        $infra = Infrastruktur::create([
             'id_user' => auth()->id(),
-            'nama_infrastruktur' => $request->nama_infrastruktur,
             'nama_objek' => $request->nama_infrastruktur,
             'jenis_infrastruktur' => $request->jenis_infrastruktur,
             'jenis' => $jenisEnum,
             'id_kelurahan' => $request->id_kelurahan,
             'latitude' => str_replace(',', '.', $request->latitude),
             'longitude' => str_replace(',', '.', $request->longitude),
-            'kondisi' => 'Menunggu AI',
-            'alamat' => $request->alamat ?? '-',
+            'kondisi' => $request->kondisi, // Menyimpan teks riil lapangan (misal: "titian ulin retak dan goyang")
             'material_eksisting' => $request->material_eksisting,
             'panjang' => $request->panjang,
             'lebar' => $request->lebar,
-            'has_drainase' => $request->has('has_drainase') ? 1 : 0,
-            'has_gorong_gorong' => $request->has('has_gorong_gorong') ? 1 : 0,
+            'has_drainase' => $request->has('has_drainase') ? 'ya' : 'tidak',
+            'has_gorong_gorong' => $request->has('has_gorong_gorong') ? 'ya' : 'tidak',
             'rencana_perbaikan' => $request->rencana_perbaikan,
             'tgl_survey' => $request->tgl_survey ?? now()->toDateString(),
-            'foto_terbaru' => $path,
+            'foto_terbaru' => 'infrastruktur/' . $namaFoto,
             'status_verifikasi' => 'Pending',
-            'created_at' => now(),
-            'updated_at' => now(),
         ]);
 
-        return redirect()->route('surveyor.history')->with('success', 'Data berhasil dikirim!');
+        // Memicu Analisis Visual CNN via API Python
+        if ($request->hasFile('foto')) {
+            $this->processCnnAnalysis($infra->id_infrastruktur, 'infrastruktur/' . $namaFoto);
+        }
+
+        return redirect()->route('surveyor.history')->with('success', 'Data lapangan berhasil disimpan & dianalisis otomatis oleh AI!');
     }
 
-    public function history()
+    public function history(\Illuminate\Http\Request $request)
     {
-        $riwayat = Infrastruktur::with(['kelurahan', 'analisis', 'cnn'])
+        $query = Infrastruktur::with(['kelurahan.kecamatan', 'analisis', 'cnn'])
             ->where('id_user', auth()->id())
-            ->orderBy('created_at', 'desc')
-            ->get();
+            ->orderBy('created_at', 'desc');
+            
+        if ($request->get('show') == 'all') {
+            $riwayat = $query->get();
+        } else {
+            $riwayat = $query->paginate(10)->withQueryString();
+        }
+
         return view('surveyor.history', compact('riwayat'));
     }
 
@@ -145,23 +196,47 @@ class SurveyorController extends Controller
             ->where('id_user', auth()->id())
             ->firstOrFail();
             
-        // Populate dynamic attribute for the view
-        $infrastruktur->id_kecamatan = $infrastruktur->kelurahan ? $infrastruktur->kelurahan->id_kecamatan : null;
+        // Pastikan id_kecamatan terisi untuk filter di view
+        if (!$infrastruktur->id_kecamatan && $infrastruktur->kelurahan) {
+            $infrastruktur->id_kecamatan = $infrastruktur->kelurahan->id_kecamatan;
+        }
             
         $user = auth()->user();
         $semuaKecamatan = $user->kecamatans;
 
+        // Fallback ke legacy column jika pivot kosong
+        if ($semuaKecamatan->isEmpty() && $user->id_kecamatan) {
+            $userKec = \App\Models\Kecamatan::find($user->id_kecamatan);
+            if ($userKec) $semuaKecamatan = collect([$userKec]);
+        }
+
+        // Jika surveyor tidak memiliki wilayah (baru daftar), tampilkan semua
         if ($semuaKecamatan->isEmpty()) {
             $semuaKecamatan = \App\Models\Kecamatan::all();
             $semuaKelurahan = \App\Models\Kelurahan::all();
         } else {
+            // Gabungkan dengan kecamatan milik data jika tidak ada di list surveyor (agar data lama bisa diedit)
+            if ($infrastruktur->id_kecamatan && !$semuaKecamatan->contains('id_kecamatan', $infrastruktur->id_kecamatan)) {
+                $kecData = \App\Models\Kecamatan::find($infrastruktur->id_kecamatan);
+                if ($kecData) $semuaKecamatan->push($kecData);
+            }
+
             $kecamatanIds = $semuaKecamatan->pluck('id_kecamatan');
             $semuaKelurahan = \App\Models\Kelurahan::whereIn('id_kecamatan', $kecamatanIds)->get();
+            
+            // Pastikan kelurahan milik data juga masuk di list
+            if ($infrastruktur->id_kelurahan && !$semuaKelurahan->contains('id_kelurahan', $infrastruktur->id_kelurahan)) {
+                $kelData = \App\Models\Kelurahan::find($infrastruktur->id_kelurahan);
+                if ($kelData) $semuaKelurahan->push($kelData);
+            }
         }
 
         return view('surveyor.edit', compact('infrastruktur', 'semuaKecamatan', 'semuaKelurahan'));
     }
 
+    /**
+     * PROSES UPDATE DATA LAPANGAN (Memicu Kalkulasi Ulang Otak Decision Tree)
+     */
     public function update(Request $request, $id)
     {
         $infrastruktur = Infrastruktur::where('id_infrastruktur', $id)->where('id_user', auth()->id())->firstOrFail();
@@ -173,10 +248,11 @@ class SurveyorController extends Controller
             'id_kelurahan' => 'required|exists:kelurahan,id_kelurahan',
             'latitude' => 'required|string',
             'longitude' => 'required|string',
+            'kondisi' => 'required|string', // 🌟 Kolom pembaruan teks kondisi kerusakan
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
-            'material_eksisting' => 'nullable|string',
-            'panjang' => 'nullable|numeric',
-            'lebar' => 'nullable|numeric',
+            'material_eksisting' => 'required|string',
+            'panjang' => 'required|numeric',
+            'lebar' => 'required|numeric',
             'has_drainase' => 'nullable|boolean',
             'has_gorong_gorong' => 'nullable|boolean',
             'rencana_perbaikan' => 'nullable|string',
@@ -184,36 +260,56 @@ class SurveyorController extends Controller
         ]);
 
         if ($request->hasFile('foto')) {
-            $path = $request->file('foto')->store('infrastruktur', 'public');
-            $infrastruktur->foto_terbaru = $path;
-            $infrastruktur->kondisi = 'Menunggu AI';
+            $file = $request->file('foto');
+            $namaFoto = time() . '_' . $file->getClientOriginalName();
+            
+            // Resize gambar ke 300x300
+            $manager = new ImageManager(new Driver());
+            $image = $manager->decodePath($file->getRealPath());
+            $image->resize(300, 300);
+            
+            // Pastikan folder ada
+            if (!Storage::disk('public')->exists('infrastruktur')) {
+                Storage::disk('public')->makeDirectory('infrastruktur');
+            }
+            
+            $image->save(storage_path('app/public/infrastruktur/' . $namaFoto));
+            $infrastruktur->foto_terbaru = $namaFoto;
             $infrastruktur->status_verifikasi = 'Pending';
         }
 
-        $jenisEnum = strtolower($request->jenis_infrastruktur);
-        $allowedEnum = ['jalan', 'drainase', 'jembatan', 'pju'];
-        if (!in_array($jenisEnum, $allowedEnum)) {
-            $jenisEnum = 'jalan';
-        }
+        // Sinkronisasi Enum jenis: jalan, sanitasi, titian (Disamakan dengan rules Admin & DB)
+        $jenisMapping = [
+            'Jalan' => 'jalan',
+            'Sanitasi' => 'sanitasi',
+            'Titian' => 'titian'
+        ];
+        $jenisEnum = $jenisMapping[$request->jenis_infrastruktur] ?? 'jalan';
 
-        $infrastruktur->nama_infrastruktur = $request->nama_infrastruktur;
         $infrastruktur->nama_objek = $request->nama_infrastruktur;
         $infrastruktur->jenis_infrastruktur = $request->jenis_infrastruktur;
         $infrastruktur->jenis = $jenisEnum;
         $infrastruktur->id_kelurahan = $request->id_kelurahan;
         $infrastruktur->latitude = str_replace(',', '.', $request->latitude);
         $infrastruktur->longitude = str_replace(',', '.', $request->longitude);
-        $infrastruktur->alamat = $request->alamat ?? '-';
+        $infrastruktur->kondisi = $request->kondisi; // Menyimpan teks kondisi kerusakan terupdate
         $infrastruktur->material_eksisting = $request->material_eksisting;
         $infrastruktur->panjang = $request->panjang;
         $infrastruktur->lebar = $request->lebar;
-        $infrastruktur->has_drainase = $request->has('has_drainase') ? 1 : 0;
-        $infrastruktur->has_gorong_gorong = $request->has('has_gorong_gorong') ? 1 : 0;
+        $infrastruktur->has_drainase = $request->has('has_drainase') ? 'ya' : 'tidak';
+        $infrastruktur->has_gorong_gorong = $request->has('has_gorong_gorong') ? 'ya' : 'tidak';
         $infrastruktur->rencana_perbaikan = $request->rencana_perbaikan;
         $infrastruktur->tgl_survey = $request->tgl_survey;
+        
+        // 🌟 Pemanggilan save() pada Eloquent model otomatis menyenggol Observer AI untuk hitung ulang skor
         $infrastruktur->save();
 
-        return redirect()->route('surveyor.history')->with('success', 'Data berhasil diperbarui!');
+        // Jika ada foto baru, kirim ulang ke model visual Python CNN
+        if ($request->hasFile('foto')) {
+            $this->processCnnAnalysis($infrastruktur->id_infrastruktur, 'infrastruktur/' . $infrastruktur->foto_terbaru);
+        }
+
+        return redirect()->route('surveyor.history')->with('success', 'Data & hasil Analisis AI berhasil diperbarui!');
     }
 
     public function map()
@@ -222,7 +318,6 @@ class SurveyorController extends Controller
         $myKecamatans = auth()->user()->kecamatans;
         $allKelurahans = \App\Models\Kelurahan::all();
 
-        // Fallback: Jika surveyor belum ditugaskan wilayah tertentu, tampilkan semua agar peta tidak kosong
         if ($myKecamatans->isEmpty()) {
             $myKecamatans = \App\Models\Kecamatan::all();
         }

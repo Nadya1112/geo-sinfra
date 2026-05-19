@@ -55,13 +55,23 @@
             </div>
             @endif
 
-            <div class="bg-white rounded-[2.5rem] border border-gray-100 shadow-sm overflow-hidden">
+            <div class="flex justify-end mb-4">
+                <form action="{{ route('surveyor.history') }}" method="GET" class="w-48">
+                    <select name="show" onchange="this.form.submit()" class="w-full bg-white border border-gray-100 rounded-xl px-4 py-2.5 text-[10px] font-bold text-[#1e1b4b] shadow-sm focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all">
+                        <option value="10" {{ request('show') != 'all' ? 'selected' : '' }}>Per 10 Data</option>
+                        <option value="all" {{ request('show') == 'all' ? 'selected' : '' }}>Semua Data</option>
+                    </select>
+                </form>
+            </div>
+
+            <div class="bg-white rounded-[2.5rem] border border-gray-100 shadow-sm overflow-hidden mb-10">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left">
                         <thead>
                             <tr class="bg-gray-50/50 border-b border-gray-100">
-                                <th class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest w-16 text-center">NO</th>
-                                <th class="px-6 py-5 text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest">Nama Infrastruktur</th>
+                                <th class="px-8 py-5 text-[10px] font-black text-gray-400 tracking-widest text-center w-12">No.</th>
+                                <th class="px-6 py-5 text-[10px] font-black text-gray-400 tracking-widest text-center">Visual</th>
+                                <th class="px-6 py-5 text-[10px] font-black text-gray-400 tracking-widest">Objek Infrastruktur</th>
                                 <th class="px-6 py-5 text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest">Wilayah</th>
                                 <th class="px-6 py-5 text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest text-center">Kondisi</th>
                                 <th class="px-8 py-5 text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest text-center">Aksi</th>
@@ -71,11 +81,21 @@
                             @forelse($riwayat as $index => $item)
                             <tr class="hover:bg-gray-50/50 transition-colors group">
                                 <td class="px-8 py-4 text-center">
-                                    <span class="text-xs font-black text-gray-400">{{ $index + 1 }}</span>
+                                    <span class="text-xs font-black text-gray-400">{{ request('show') == 'all' ? $index + 1 : ($riwayat->currentPage() - 1) * $riwayat->perPage() + $index + 1 }}</span>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <div class="w-12 h-12 rounded-xl overflow-hidden border border-gray-100 shadow-sm mx-auto bg-gray-50 flex items-center justify-center">
+                                        @if($item->foto_terbaru)
+                                            @php $cleanPath = str_replace('\\', '/', $item->foto_terbaru); @endphp
+                                            <img src="{{ asset('storage/' . (str_contains($cleanPath, 'infrastruktur/') ? $cleanPath : 'infrastruktur/' . $cleanPath)) }}" class="w-full h-full object-cover">
+                                        @else
+                                            <i class="fas fa-image text-gray-200"></i>
+                                        @endif
+                                    </div>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <p class="text-xs font-black text-[#1e1b4b] uppercase mb-0.5">{{ $item->nama_infrastruktur }}</p>
-                                    <span class="px-2 py-0.5 bg-blue-50 text-blue-600 rounded-md text-[9px] font-black uppercase tracking-tighter">{{ $item->jenis_infrastruktur }}</span>
+                                    <p class="text-xs font-black text-[#1e1b4b] uppercase mb-0.5">{{ $item->nama_infrastruktur ?? $item->nama_objek }}</p>
+                                    <span class="px-2 py-0.5 bg-blue-50 text-blue-600 rounded-md text-[9px] font-black uppercase tracking-tighter">{{ $item->jenis_infrastruktur ?? $item->jenis }}</span>
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-2">
@@ -118,7 +138,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="5" class="px-8 py-20 text-center">
+                                <td colspan="6" class="px-8 py-20 text-center">
                                     <div class="flex flex-col items-center gap-3">
                                         <i class="fas fa-folder-open text-4xl text-gray-100"></i>
                                         <p class="text-xs text-gray-400 font-bold italic">Anda belum memiliki riwayat survey.</p>
@@ -130,6 +150,11 @@
                         </tbody>
                     </table>
                 </div>
+                @if(request('show') != 'all' && isset($riwayat) && $riwayat instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                    <div class="px-8 py-4 border-t border-gray-50 bg-gray-50/10">
+                        {{ $riwayat->links() }}
+                    </div>
+                @endif
             </div>
         </div>
     </main>

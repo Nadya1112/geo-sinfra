@@ -176,8 +176,8 @@
                                             <img src="<?php echo e(asset('storage/' . $report->foto_terbaru)); ?>" class="w-full h-full object-cover">
                                         </div>
                                         <div>
-                                            <p class="font-black text-sm text-[#1e1b4b]"><?php echo e($report->nama_infrastruktur); ?></p>
-                                            <p class="text-[9px] font-bold text-gray-400 uppercase"><?php echo e($report->jenis_infrastruktur); ?></p>
+                                            <p class="font-black text-sm text-[#1e1b4b]"><?php echo e($report->nama_objek); ?></p>
+                                            <p class="text-[9px] font-bold text-gray-400 uppercase"><?php echo e($report->jenis); ?></p>
                                         </div>
                                     </div>
                                 </td>
@@ -198,9 +198,9 @@
                                     <p class="text-[9px] text-gray-400 italic"><?php echo e($report->created_at->diffForHumans()); ?></p>
                                 </td>
                                 <td class="px-6 py-4 bg-gray-50/50 group-hover:bg-white last:rounded-r-3xl transition-all border-y border-transparent group-hover:border-gray-100">
-                                    <button class="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition-all shadow-sm">
-                                        <i class="fas fa-arrow-right text-[10px]"></i>
-                                    </button>
+                                    <a href="<?php echo e(route('kabid.infrastruktur.show', $report->id_infrastruktur)); ?>" class="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition-all shadow-sm" title="Lihat Detail">
+                                        <i class="fas fa-eye text-[10px]"></i>
+                                    </a>
                                 </td>
                             </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>

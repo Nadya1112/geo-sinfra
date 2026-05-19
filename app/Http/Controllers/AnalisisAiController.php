@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Traits\AiProcessingTrait;
 
 class AnalisisAiController extends Controller
 {
+    use AiProcessingTrait;
     public function prosesAnalisis(Request $request, $id)
     {
         // 1. Ambil data infrastruktur mentah dari database
@@ -20,6 +22,18 @@ class AnalisisAiController extends Controller
         $kondisi = strtolower($infra->kondisi ?? '');
         $material = strtolower($infra->material_eksisting ?? '');
         $drainase = strtolower($infra->has_drainase ?? 'tidak');
+        
+        // 2b. Ambil skor dari analisis CNN (Opsi A)
+        $cnn = DB::table('citra_cnn')->where('id_infrastruktur', $id)->first();
+        
+        // JIKA CNN BELUM ADA TAPI FOTO ADA, PROSES SEKARANG
+        if (!$cnn && $infra->foto_terbaru && $infra->foto_terbaru != 'default.jpg') {
+            $this->processCnnAnalysis($id, $infra->foto_terbaru);
+            $cnn = DB::table('citra_cnn')->where('id_infrastruktur', $id)->first();
+        }
+
+        $skorCnn = $cnn ? $cnn->skor_cnn : 0;
+        $labelCnn = $cnn ? $cnn->label_kondisi : 'Tidak Ada Data Visual';
         
         $skor = 0;
         $label_kondisi = 'Baik';
@@ -49,19 +63,33 @@ class AnalisisAiController extends Controller
             $label_kondisi = 'Rusak Ringan';
         }
 
-        // --- Aturan Tambahan: Drainase ---
-        if ($drainase == 'tidak' && $label_kondisi != 'Baik') {
-            $skor += 10; // Ketiadaan drainase memperburuk keadaan
+        // --- Aturan Tambahan: Integrasi CNN ---
+        // Jika CNN mendeteksi kerusakan tinggi (> 0.7), tingkatkan skor DT
+        if ($skorCnn > 0.7) {
+            $skor += 15;
         }
 
         // Batasi skor maksimal 100
         $skor = min($skor, 100);
 
+        // Gabungkan label (SPK Hybrid)
+        if ($skor >= 80 || $skorCnn > 0.85) {
+            $label_kondisi = 'Rusak Berat';
+        } elseif ($skor >= 40 || $skorCnn > 0.5) {
+            $label_kondisi = 'Rusak Sedang';
+        } else {
+            $label_kondisi = 'Rusak Ringan';
+        }
+
         // Buat rekomendasi otomatis
-        $rekomendasi = "Kondisi aman.";
-        if ($label_kondisi == 'Rusak Berat') $rekomendasi = "Perbaikan struktur total secepatnya.";
-        if ($label_kondisi == 'Rusak Sedang') $rekomendasi = "Perlu pemeliharaan dan penambalan.";
-        if ($label_kondisi == 'Rusak Ringan') $rekomendasi = "Lakukan pengawasan berkala.";
+        $rekomendasi = "Kondisi terpantau aman.";
+        if ($label_kondisi == 'Rusak Berat') {
+            $rekomendasi = "PRIORITAS UTAMA: Struktur kritis terdeteksi secara visual (" . round($skorCnn * 100) . "%) dan teknis. Segera lakukan rehabilitasi.";
+        } elseif ($label_kondisi == 'Rusak Sedang') {
+            $rekomendasi = "Perlu pemeliharaan rutin dan perbaikan pada area terdampak visual.";
+        } elseif ($label_kondisi == 'Rusak Ringan') {
+            $rekomendasi = "Lakukan pemantauan berkala, kondisi masih dalam batas wajar.";
+        }
 
         // 4. Simpan hasil analisis ke tabel analisis_ai (Upsert: Update jika ada, Insert jika baru)
         DB::table('analisis_ai')->updateOrInsert(

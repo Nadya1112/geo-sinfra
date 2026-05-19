@@ -97,11 +97,21 @@
                             </div>
                             <i class="fas fa-chevron-right text-red-300 text-xs"></i>
                         </div>
+                        <div class="flex items-center justify-between p-4 bg-orange-50/50 rounded-2xl border border-orange-100/50">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-orange-500 text-white rounded-xl flex items-center justify-center shadow-lg shadow-orange-200"><i class="fas fa-hammer"></i></div>
+                                <div>
+                                    <p class="text-xs font-bold text-orange-900 leading-none">Prioritas Menengah (Rusak Sedang)</p>
+                                    <p class="text-[10px] text-orange-600 mt-1 text-left"><?php echo e($jumlahRusakSedang); ?> Titik butuh perbaikan dalam waktu dekat</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right text-orange-300 text-xs"></i>
+                        </div>
                         <div class="flex items-center justify-between p-4 bg-yellow-50/50 rounded-2xl border border-yellow-100/50">
                             <div class="flex items-center gap-4">
                                 <div class="w-10 h-10 bg-yellow-500 text-white rounded-xl flex items-center justify-center shadow-lg shadow-yellow-200"><i class="fas fa-tools"></i></div>
                                 <div>
-                                    <p class="text-xs font-bold text-yellow-900 leading-none">Prioritas Sedang (Rusak Ringan)</p>
+                                    <p class="text-xs font-bold text-yellow-900 leading-none">Prioritas Rendah (Rusak Ringan)</p>
                                     <p class="text-[10px] text-yellow-600 mt-1 text-left"><?php echo e($jumlahRusakRingan); ?> Titik butuh pemeliharaan berkala</p>
                                 </div>
                             </div>

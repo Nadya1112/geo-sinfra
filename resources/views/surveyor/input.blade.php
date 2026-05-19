@@ -23,7 +23,6 @@
     @include('surveyor.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-y-auto custom-scrollbar bg-[#f8fafc]">
-        <!-- Header -->
         <header class="bg-white/80 backdrop-blur-md border-b border-gray-100 px-8 py-5 flex justify-between items-center sticky top-0 z-[1000]">
             <div class="flex items-center gap-4">
                 <a href="{{ route('surveyor.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-white text-gray-400 rounded-xl hover:bg-emerald-50 hover:text-emerald-600 transition-all border border-gray-100 shadow-sm">
@@ -59,15 +58,25 @@
 
         <div class="p-8">
             <div class="max-w-7xl mx-auto">
+                @if($errors->any())
+                <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-2xl flex items-center gap-4 animate-bounce">
+                    <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-red-500 shadow-sm">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-black text-red-900 uppercase tracking-tighter">Gagal Memproses Laporan!</h4>
+                        <p class="text-[10px] text-red-700 font-medium">Harap periksa kembali semua isian yang wajib diisi (bertanda <span class="text-red-500">*</span>), termasuk foto dokumentasi.</p>
+                    </div>
+                </div>
+                @endif
+
                 <form id="survey-form" action="{{ route('surveyor.store') }}" method="POST" enctype="multipart/form-data" onsubmit="disableSubmitButton()">
                     @csrf
                     
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
                         
-                        <!-- KOLOM KIRI: FORM DATA (7/12) -->
                         <div class="lg:col-span-7 space-y-8">
                             
-                            <!-- Section 1: Identitas & Klasifikasi -->
                             <div class="bg-white rounded-[2.5rem] p-8 border border-gray-100 premium-shadow">
                                 <div class="flex items-center gap-4 mb-8">
                                     <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-600">
@@ -139,7 +148,6 @@
                                 </div>
                             </div>
 
-                            <!-- Section 2: Spesifikasi Teknis -->
                             <div class="bg-white rounded-[2.5rem] p-8 border border-gray-100 premium-shadow">
                                 <div class="flex items-center gap-4 mb-8">
                                     <div class="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-600">
@@ -156,43 +164,43 @@
                                         <div class="space-y-6">
                                             <div class="grid grid-cols-2 gap-4">
                                                 <div>
-                                                    <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-3 ml-1">Panjang (m)</label>
+                                                    <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-3 ml-1">Panjang (m) <span class="text-red-500">*</span></label>
                                                     <div class="relative group">
                                                         <i class="fas fa-arrows-left-right absolute left-5 top-1/2 -translate-y-1/2 text-gray-300 group-focus-within:text-blue-500 transition-colors"></i>
-                                                        <input type="number" step="0.01" name="panjang" placeholder="0.00" class="w-full pl-12 pr-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-semibold focus:border-blue-500 outline-none transition-all">
+                                                        <input type="number" step="0.01" name="panjang" placeholder="0.00" class="w-full pl-12 pr-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-semibold focus:border-blue-500 outline-none transition-all" required>
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-3 ml-1">Lebar (m)</label>
+                                                    <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-3 ml-1">Lebar (m) <span class="text-red-500">*</span></label>
                                                     <div class="relative group">
                                                         <i class="fas fa-arrows-up-down absolute left-5 top-1/2 -translate-y-1/2 text-gray-300 group-focus-within:text-blue-500 transition-colors"></i>
-                                                        <input type="number" step="0.01" name="lebar" placeholder="0.00" class="w-full pl-12 pr-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-semibold focus:border-blue-500 outline-none transition-all">
+                                                        <input type="number" step="0.01" name="lebar" placeholder="0.00" class="w-full pl-12 pr-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-semibold focus:border-blue-500 outline-none transition-all" required>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div>
-                                        <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-3 ml-1">Material Utama</label>
-                                        <div class="relative group">
-                                            <i class="fas fa-layer-group absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors z-10"></i>
-                                            <select name="material_eksisting" class="w-full pl-12 pr-10 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-semibold focus:border-blue-500 outline-none appearance-none cursor-pointer transition-all relative z-0">
-                                                <option value="">Pilih Material...</option>
-                                                <option value="Cor Beton">Cor Beton</option>
-                                                <option value="Aspal">Aspal</option>
-                                                <option value="Paving">Paving</option>
-                                                <option value="Tanah Asli">Tanah Asli</option>
-                                                <option value="Tanah Pemadatan">Tanah Pemadatan</option>
-                                                <option value="Tanah Lepas">Tanah Lepas</option>
-                                                <option value="Batapres">Batapres</option>
-                                                <option value="Makadam">Makadam</option>
-                                                <option value="Titian">Titian</option>
-                                                <option value="Titian Ulin">Titian Ulin</option>
-                                                <option value="Titian Rusak">Titian Rusak</option>
-                                                <option value="WC">WC</option>
-                                                <option value="Lainnya">Lainnya</option>
-                                            </select>
-                                            <i class="fas fa-chevron-down absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-[10px]"></i>
-                                        </div>
-                                    </div>
+                                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-3 ml-1">Material Utama <span class="text-red-500">*</span></label>
+                                                <div class="relative group">
+                                                    <i class="fas fa-layer-group absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors z-10"></i>
+                                                    <select name="material_eksisting" class="w-full pl-12 pr-10 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-semibold focus:border-blue-500 outline-none appearance-none cursor-pointer transition-all relative z-0" required>
+                                                        <option value="">Pilih Material...</option>
+                                                        <option value="Cor Beton">Cor Beton</option>
+                                                        <option value="Aspal">Aspal</option>
+                                                        <option value="Paving">Paving</option>
+                                                        <option value="Tanah Asli">Tanah Asli</option>
+                                                        <option value="Tanah Pemadatan">Tanah Pemadatan</option>
+                                                        <option value="Tanah Lepas">Tanah Lepas</option>
+                                                        <option value="Batapres">Batapres</option>
+                                                        <option value="Makadam">Makadam</option>
+                                                        <option value="Titian">Titian</option>
+                                                        <option value="Titian Ulin">Titian Ulin</option>
+                                                        <option value="Titian Rusak">Titian Rusak</option>
+                                                        <option value="WC">WC</option>
+                                                        <option value="Lainnya">Lainnya</option>
+                                                    </select>
+                                                    <i class="fas fa-chevron-down absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-[10px]"></i>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="space-y-4">
                                             <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-3 ml-1">Fasilitas Pendukung</label>
@@ -215,21 +223,28 @@
                                         </div>
                                     </div>
 
-                                    <div>
-                                        <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-3 ml-1">Alamat / Patokan Detail <span class="text-red-500">*</span></label>
+                                    <div class="pt-2">
+                                        <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-3 ml-1">Deskripsi Kondisi Fisik / Kerusakan <span class="text-red-500">*</span></label>
                                         <div class="relative group">
-                                            <i class="fas fa-map-pin absolute left-5 top-5 text-gray-300 group-focus-within:text-blue-500 transition-colors"></i>
-                                            <textarea name="alamat" rows="2" placeholder="Masukan alamat lengkap atau patokan lokasi..." class="w-full pl-12 pr-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-semibold focus:border-blue-500 outline-none transition-all resize-none" required></textarea>
+                                            <textarea name="kondisi" id="kondisi-textarea" rows="3" placeholder="Gunakan kata kunci untuk hasil AI yang akurat..." class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500 outline-none transition-all" required></textarea>
                                         </div>
+                                        <div class="mt-3 flex flex-wrap gap-2">
+                                            <span class="text-[8px] font-black text-gray-400 uppercase tracking-widest mr-2 py-1">Saran Kata Kunci AI:</span>
+                                            @foreach(['Putus', 'Hancur', 'Amblas', 'Retak', 'Lubang', 'Goyang', 'Total', 'Parah'] as $keyword)
+                                                <button type="button" onclick="addKeyword('{{ $keyword }}')" class="px-2.5 py-1 bg-white border border-gray-100 rounded-lg text-[9px] font-bold text-gray-500 hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition-all shadow-sm active:scale-95">
+                                                    + {{ $keyword }}
+                                                </button>
+                                            @endforeach
+                                        </div>
+                                        <p class="text-[9px] text-gray-400 mt-3 italic font-medium">* Teks deskripsi ini akan dianalisis langsung oleh sistem cerdas menggunakan metode Decision Tree untuk menentukan label prioritas kerusakan objek.</p>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
 
-                        <!-- KOLOM KANAN: PETA & FOTO (5/12) -->
                         <div class="lg:col-span-5 space-y-8">
                             
-                            <!-- Section 3: Geolocation -->
                             <div class="bg-white rounded-[2.5rem] p-8 border border-gray-100 premium-shadow">
                                 <div class="flex items-center justify-between mb-8">
                                     <div class="flex items-center gap-4">
@@ -268,14 +283,13 @@
                                 </div>
                             </div>
 
-                            <!-- Section 4: Dokumentasi -->
                             <div class="bg-white rounded-[2.5rem] p-8 border border-gray-100 premium-shadow">
                                 <div class="flex items-center gap-4 mb-8">
                                     <div class="w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-600">
                                         <i class="fas fa-camera text-xl"></i>
                                     </div>
                                     <div>
-                                        <h4 class="font-black text-[#1e1b4b] uppercase tracking-tight">Dokumentasi</h4>
+                                        <h4 class="font-black text-[#1e1b4b] uppercase tracking-tight">Dokumentasi <span class="text-red-500">*</span></h4>
                                         <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Foto Visual Lapangan</p>
                                     </div>
                                 </div>
@@ -294,24 +308,20 @@
                                         </div>
                                     </div>
 
-                                    <div>
-                                        <label class="block text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest mb-3 ml-1">Rencana Perbaikan / Catatan Khusus</label>
-                                        <textarea name="rencana_perbaikan" rows="2" placeholder="Sebutkan saran atau kondisi mendesak..." class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-semibold focus:border-purple-500 outline-none transition-all resize-none"></textarea>
-                                    </div>
-
                                     <div class="grid grid-cols-1 gap-4 pt-2">
                                         <div class="flex items-center justify-between px-2">
                                             <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Tgl Survey: {{ date('d/m/Y') }}</span>
                                             <input type="hidden" name="tgl_survey" value="{{ date('Y-m-d') }}">
                                         </div>
                                         <button type="submit" id="btn-submit" class="w-full py-5 bg-[#1e1b4b] hover:bg-black text-white rounded-[2rem] font-black text-[10px] uppercase tracking-[0.3em] transition-all shadow-2xl shadow-[#1e1b4b]/20 active:scale-95 flex items-center justify-center gap-4">
-                                            <span id="btn-text">Kirim Laporan Survey</span>
+                                            <span id="btn-text">Proses</span>
                                             <i class="fas fa-paper-plane text-[9px] group-hover:translate-x-1 transition-transform"></i>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </form>
             </div>
@@ -319,6 +329,17 @@
     </main>
 
     <script>
+        function addKeyword(word) {
+            const textarea = document.getElementById('kondisi-textarea');
+            const currentVal = textarea.value.trim();
+            if (currentVal === "") {
+                textarea.value = word;
+            } else {
+                textarea.value = currentVal + ", " + word;
+            }
+            textarea.focus();
+        }
+
         function updateClock() {
             const now = new Date();
             document.getElementById('mini-clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WITA`;
@@ -377,7 +398,7 @@
                     setTimeout(() => { btn.innerHTML = '<i class="fas fa-crosshairs"></i> Sync GPS'; }, 2000);
                 }, function() {
                     alert('Gagal mendapatkan lokasi. Pastikan GPS aktif.');
-                    btn.innerHTML = '<i class="fas fa-crosshairs"></i> Sync GPS';
+                    btn.innerHTML = '<i class="fas fa-crosshairs"></i> GPS';
                 });
             }
         }

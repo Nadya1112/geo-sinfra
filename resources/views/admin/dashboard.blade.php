@@ -79,6 +79,27 @@
                 </div>
             </div>
 
+            <div class="mb-8 bg-[#1e1b4b] p-8 rounded-[2.5rem] border border-white/10 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 text-white text-left">
+                <div class="flex items-center gap-6 text-left">
+                    <div class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center border border-white/10 backdrop-blur-md shrink-0">
+                        <i class="fas fa-sync text-xl text-yellow-400"></i>
+                    </div>
+                    <div class="text-left">
+                        <h4 class="font-black text-sm uppercase tracking-wider text-white">Sinkronisasi Basis Data AI Masal</h4>
+                        <p class="text-[11px] text-gray-300 font-medium mt-1 leading-relaxed">Gunakan fitur ini untuk memproses dan menganalisis seluruh data lama menggunakan algoritma Decision Tree & CNN.</p>
+                        <a href="{{ route('admin.test-ai') }}" target="_blank" class="text-[9px] text-blue-300 hover:text-white transition-colors flex items-center gap-1 mt-2">
+                            <i class="fas fa-plug"></i> Cek Status Koneksi Server AI
+                        </a>
+                    </div>
+                </div>
+                <form action="{{ route('admin.infrastruktur.sinkronisasi-ai') }}" method="POST" class="w-full sm:w-auto shrink-0">
+                    @csrf
+                    <button type="submit" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-6 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all shadow-md active:scale-95">
+                        Mulai Analisis Serentak
+                    </button>
+                </form>
+            </div>
+
             <div class="mb-8 text-left">
                 <h4 class="font-extrabold text-lg text-[#1e1b4b] mb-6">Akses Cepat</h4>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
@@ -105,6 +126,14 @@
                         </div>
                         <h5 class="font-black text-[#1e1b4b] mb-1">Statistik Data</h5>
                         <p class="text-[10px] text-gray-400 font-medium leading-relaxed text-left">Lihat rekapitulasi data dan prediksi prioritas harian.</p>
+                    </a>
+
+                    <a href="{{ route('admin.infrastruktur') }}" class="group bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-emerald-500/10 hover:border-emerald-200 transition-all text-left">
+                        <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-database text-lg"></i>
+                        </div>
+                        <h5 class="font-black text-[#1e1b4b] mb-1">Data Master</h5>
+                        <p class="text-[10px] text-gray-400 font-medium leading-relaxed text-left">Lihat dan kelola seluruh data infrastruktur lapangan.</p>
                     </a>
 
                 </div>
