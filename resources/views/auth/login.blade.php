@@ -6,49 +6,117 @@
     <title>Masuk | GEO-SINFRA</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        navy: {
+                            50: '#f4f4fa',
+                            100: '#e9e9f3',
+                            200: '#c7c8e3',
+                            500: '#6366f1',
+                            800: '#1e1b4b',
+                            900: '#0f0e2c',
+                            950: '#070617',
+                        },
+                        gold: {
+                            50: '#fdfbf7',
+                            100: '#fbf7ed',
+                            500: '#c5a059',
+                            600: '#b38f4a',
+                            700: '#9d7c3d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .bg-government-gradient {
-            background: radial-gradient(circle at center, #1e40af 0%, #1e1b4b 100%);
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+        }
+        .bg-premium-mesh {
+            background: radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.12) 0%, transparent 50%),
+                        radial-gradient(circle at 20% 80%, rgba(197, 160, 89, 0.1) 0%, transparent 50%),
+                        #070617;
+        }
+        /* Grid background pattern */
+        .grid-pattern {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(ellipse at center, black, transparent 80%);
+            pointer-events: none;
+        }
+        /* Shine effect for button */
+        .btn-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-shine::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -60%; width: 30%; height: 200%;
+            background: rgba(255, 255, 255, 0.25);
+            transform: rotate(30deg);
+            transition: none;
+        }
+        .btn-shine:hover::after {
+            left: 120%;
+            transition: all 0.6s ease-in-out;
         }
     </style>
 </head>
-<body class="antialiased bg-gray-50">
+<body class="antialiased bg-slate-50 font-sans">
 
     <div class="flex flex-col md:flex-row h-screen overflow-hidden">
         
-        <div class="w-full md:w-1/2 bg-government-gradient flex flex-col items-center justify-center p-12 text-center relative">
-            <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+        <!-- Left Banner (Premium Dark UI) -->
+        <div class="w-full md:w-1/2 bg-premium-mesh flex flex-col items-center justify-center p-12 text-center relative overflow-hidden">
+            <div class="grid-pattern"></div>
             
-            <div class="relative z-10">
-                <div class="w-20 h-20 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-2xl shadow-blue-900/50 border border-white/20">
-                    <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.553-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.553-.894L15 9"></path>
-                    </svg>
+            <!-- Floating Back Button -->
+            <a href="{{ url('/') }}" class="absolute top-6 left-6 z-50 w-12 h-12 bg-white/5 hover:bg-white/15 backdrop-blur-md rounded-2xl border border-white/10 flex items-center justify-center text-white hover:text-gold-500 hover:scale-105 transition-all shadow-xl">
+                <i class="fas fa-arrow-left text-sm"></i>
+            </a>
+            
+            <div class="relative z-10 max-w-md">
+                <div class="w-20 h-20 bg-navy-900 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-2xl shadow-navy-950/50 border border-white/10 text-gold-500">
+                    <i class="fas fa-globe-asia text-3xl"></i>
                 </div>
                 
-                <h1 class="text-5xl font-extrabold text-white tracking-tight mb-4 text-center">GEO-SINFRA</h1>
-                <p class="text-xl font-light text-blue-100 max-w-sm mx-auto leading-relaxed">
+                <h1 class="text-4xl md:text-5xl font-black text-white tracking-tight mb-4 text-center uppercase">
+                    GEO-SINFRA
+                </h1>
+                <p class="text-slate-300 font-medium text-base md:text-lg leading-relaxed max-w-sm mx-auto">
                     Sistem Pemetaan Infrastruktur Permukiman Kota Banjarmasin
                 </p>
-                <div class="mt-16 w-12 h-1.5 bg-blue-400 rounded-full mx-auto opacity-50"></div>
+                <div class="mt-16 w-16 h-1.5 bg-gold-500 rounded-full mx-auto opacity-75"></div>
             </div>
         </div>
 
-        <div class="w-full md:w-1/2 bg-white flex flex-col items-center justify-center p-8 md:p-20">
+        <!-- Right Login Form -->
+        <div class="w-full md:w-1/2 bg-white flex flex-col items-center justify-center p-8 md:p-20 overflow-y-auto">
             <div class="w-full max-w-md">
                 
                 <div class="mb-10 text-center">
-                    <h2 class="text-4xl font-extrabold text-[#1e1b4b] mb-2 tracking-tight">Masuk</h2>
-                    <p class="text-gray-500 font-medium">Silakan masukkan akun Anda</p>
+                    <h2 class="text-4xl font-black text-navy-900 mb-2 tracking-tight">Masuk</h2>
+                    <p class="text-slate-400 font-semibold text-xs uppercase tracking-widest">Silakan masukkan akun Anda</p>
                 </div>
 
                 @if($errors->any())
-                    <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 text-sm">
-                        {{ $errors->first() }}
+                    <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 text-sm font-semibold rounded-r-xl">
+                        <i class="fas fa-exclamation-circle mr-2"></i>{{ $errors->first() }}
                     </div>
                 @endif
 
@@ -56,54 +124,54 @@
                     @csrf
                     
                     <div>
-                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-2 ml-1">
-                            Email / NIP <span class="text-red-500">*</span>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
+                            Email / NIP <span class="text-gold-500">*</span>
                         </label>
                         <input type="email" name="email" placeholder="nama@disperkim.go.id" value="{{ old('email') }}" required
-                            class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none transition-all text-sm font-medium">
+                            class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 focus:bg-white outline-none transition-all text-sm font-semibold text-navy-900">
                     </div>
 
                     <div>
-                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-2 ml-1">
-                            Kata Sandi <span class="text-red-500">*</span>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
+                            Kata Sandi <span class="text-gold-500">*</span>
                         </label>
                         <div class="relative">
                             <input type="password" name="password" id="password" placeholder="••••••••" required
-                                class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none transition-all text-sm font-medium pr-12">
+                                class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 focus:bg-white outline-none transition-all text-sm font-semibold text-navy-900 pr-12">
                             
                             <button type="button" onclick="togglePassword()" 
-                                class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-blue-600 transition-colors">
+                                class="absolute inset-y-0 right-0 pr-5 flex items-center text-slate-400 hover:text-gold-500 transition-colors">
                                 <i id="eye-icon" class="fas fa-eye"></i>
                             </button>
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-2 ml-1">
-                            Verifikasi Keamanan: {{ $n1 }} + {{ $n2 }} <span class="text-red-500">*</span>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
+                            Verifikasi Keamanan: {{ $n1 }} + {{ $n2 }} <span class="text-gold-500">*</span>
                         </label>
                         <input type="number" name="captcha" placeholder="Jawaban Anda" required
-                            class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none transition-all text-sm font-medium">
+                            class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 focus:bg-white outline-none transition-all text-sm font-semibold text-navy-900">
                     </div>
 
                     <button type="submit" 
-                        class="w-full py-4 bg-[#5c56e1] text-white text-sm font-bold rounded-xl shadow-lg shadow-blue-200 hover:bg-blue-800 transition-all active:scale-[0.98] uppercase tracking-widest text-center">
-                        LOGIN SEKARANG
+                        class="btn-shine w-full py-4.5 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-white text-xs font-black rounded-2xl shadow-xl shadow-gold-500/10 hover:shadow-gold-500/20 hover:scale-[1.01] transition-all active:scale-[0.98] uppercase tracking-[0.2em] text-center block">
+                        MASUK SEKARANG
                     </button>
 
-                    <div class="flex items-center justify-between font-semibold text-xs">
-                        <label class="flex items-center gap-2 cursor-pointer text-gray-500 hover:text-gray-700 transition">
-                            <input type="checkbox" name="remember" class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-0">
-                            <span>Ingat Saya</span>
+                    <div class="flex items-center justify-between font-bold text-xs uppercase tracking-wider">
+                        <label class="flex items-center gap-2.5 cursor-pointer text-slate-400 hover:text-navy-900 transition">
+                            <input type="checkbox" name="remember" class="w-4.5 h-4.5 rounded border-slate-300 text-gold-500 focus:ring-0 cursor-pointer">
+                            <span class="text-[10px]">Ingat Saya</span>
                         </label>
-                        <a href="{{ route('password.request') }}" class="text-blue-600 hover:underline">Lupa Password?</a>
+                        <a href="{{ route('password.request') }}" class="text-gold-500 hover:text-gold-600 transition-colors text-[10px]">Lupa Password?</a>
                     </div>
                 </form>
 
-                <div class="mt-16 pt-8 border-t border-gray-100 text-center">
-                    <p class="text-gray-500 text-sm">
+                <div class="mt-16 pt-8 border-t border-slate-100 text-center font-bold text-xs uppercase tracking-wider">
+                    <p class="text-slate-400 text-[10px]">
                         Belum punya akun? 
-                        <a href="{{ route('register') }}" class="text-blue-600 font-bold hover:underline ml-1">Buat Akun Baru</a>
+                        <a href="{{ route('register') }}" class="text-gold-500 font-extrabold hover:text-gold-600 transition-colors ml-1">Buat Akun Baru</a>
                     </p>
                 </div>
             </div>

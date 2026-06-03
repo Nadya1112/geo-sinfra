@@ -6,129 +6,222 @@
     <title>Statistik Tahunan {{ $year }} | Admin SINFRA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+                    colors: {
+                        navy: { 50:'#f4f4fa', 100:'#e9e9f3', 500:'#6366f1', 800:'#1e1b4b', 900:'#0f0e2c', 950:'#070617' },
+                        gold: { 50:'#fdfbf7', 100:'#fbf7ed', 500:'#c5a059', 600:'#b38f4a', 700:'#9d7c3d' }
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
     </style>
 </head>
-<body class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 text-left">
+<body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800 font-sans">
 
     @include('admin.partials.sidebar')
 
-    <main class="flex-1 overflow-y-auto custom-scrollbar">
-        <header class="sticky top-0 bg-white/80 backdrop-blur-md border-b border-gray-100 px-8 py-5 flex justify-between items-center z-40">
-            <div class="flex items-center gap-4 text-left">
-                <a href="{{ route('admin.statistik') }}" 
-                   class="w-10 h-10 bg-white border border-gray-100 rounded-xl flex items-center justify-center text-gray-400 hover:text-blue-600 hover:border-blue-100 hover:shadow-lg hover:shadow-blue-500/5 transition-all group"
-                   title="Kembali">
+    <main class="flex-1 flex flex-col h-screen overflow-hidden">
+
+        {{-- ── Header ── --}}
+        <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 px-8 py-5 flex justify-between items-center z-40 shrink-0">
+            <div class="flex items-center gap-4">
+                <a href="{{ route('admin.statistik') }}"
+                   class="w-10 h-10 bg-white border border-slate-100 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/30 hover:shadow-md transition-all group">
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
-
-                <div class="text-left">
-                    <p class="text-[10px] font-extrabold text-blue-600 uppercase tracking-[0.2em] mb-1">Yearly Report {{ $year }}</p>
-                    <h2 class="text-xl font-black text-[#1e1b4b]">Analisis Tren Tahunan</h2>
+                <div>
+                    <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Yearly Report {{ $year }}</p>
+                    <h2 class="text-xl font-black text-navy-900 leading-none">Analisis Tren Tahunan</h2>
                 </div>
             </div>
 
-            <div class="flex items-center gap-6">
+            <div class="flex items-center gap-4">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-[#1e1b4b]" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-[11px] font-black text-navy-900" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
-                <button onclick="window.print()" class="px-4 py-2 bg-blue-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-blue-600/20 hover:bg-blue-700 transition-all flex items-center gap-2">
+                <div class="h-8 w-[1px] bg-slate-100"></div>
+
+                {{-- Tahun Dropdown --}}
+                <form action="{{ url()->current() }}" method="GET" class="relative group">
+                    <select name="year" onchange="this.form.submit()" 
+                            class="appearance-none bg-navy-900 text-gold-500 pl-8 pr-7 py-2 rounded-xl text-[10px] font-black tracking-widest uppercase outline-none cursor-pointer hover:shadow-lg hover:shadow-navy-900/20 transition-all">
+                        @foreach($availableYears ?? [$year] as $y)
+                            <option value="{{ $y }}" {{ $y == $year ? 'selected' : '' }}>{{ $y }}</option>
+                        @endforeach
+                    </select>
+                    <i class="fas fa-calendar-alt absolute left-3 top-1/2 -translate-y-1/2 text-gold-500 text-[10px] pointer-events-none group-hover:scale-110 transition-transform"></i>
+                    <i class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gold-500 text-[8px] pointer-events-none group-hover:translate-y-0.5 transition-transform"></i>
+                </form>
+
+                {{-- Cetak --}}
+                <button onclick="window.print()"
+                    class="flex items-center gap-2 bg-gold-500 hover:bg-gold-600 text-white px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-gold-500/20 transition-all">
                     <i class="fas fa-print"></i> Cetak Laporan
                 </button>
+
+                <div class="h-8 w-[1px] bg-slate-100"></div>
+                <div class="flex items-center gap-3">
+                    <a href="{{ route('admin.profile') }}" class="text-right group">
+                        <p class="text-[11px] font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
+                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">Online</p>
+                    </a>
+                    <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 overflow-hidden hover:shadow-lg transition-all shadow-md">
+                        @if(auth()->user()->profile_photo)
+                            <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
+                        @else
+                            <i class="fas fa-user-circle text-xl"></i>
+                        @endif
+                    </a>
+                </div>
             </div>
         </header>
 
-        <div class="p-8">
-            <div class="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm mb-8 overflow-hidden relative">
-                <div class="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full -mr-20 -mt-20 blur-3xl"></div>
-                <div class="relative z-10">
-                    <div class="flex justify-between items-start mb-8">
+        {{-- ── Content ── --}}
+        <div class="flex-1 overflow-y-auto custom-scrollbar p-8 pb-16 space-y-6">
+
+            {{-- ── Grafik Kurva-S ── --}}
+            <div class="bg-navy-900 rounded-3xl p-8 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-80 h-80 bg-gold-500/5 rounded-full -mr-24 -mt-24 blur-3xl pointer-events-none"></div>
+                <div class="absolute bottom-0 left-0 w-56 h-56 bg-navy-500/10 rounded-full -ml-16 -mb-16 blur-2xl pointer-events-none"></div>
+
+                <div class="flex items-start justify-between mb-6 relative">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gold-500/20 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-chart-line text-gold-500"></i>
+                        </div>
                         <div>
-                            <h4 class="font-extrabold text-lg text-[#1e1b4b]">Grafik Pertumbuhan Laporan</h4>
-                            <p class="text-xs text-gray-400 font-medium">Tren kuantitas data survey masuk per bulan</p>
-                        </div>
-                        <div class="px-4 py-2 bg-blue-50 rounded-xl">
-                            <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest">Tahun {{ $year }}</span>
+                            <h4 class="text-sm font-black text-white uppercase tracking-wider">Grafik Pertumbuhan Laporan</h4>
+                            <p class="text-[9px] text-slate-400 font-semibold mt-0.5">Kurva-S kumulatif data survey per bulan · Tahun {{ $year }}</p>
                         </div>
                     </div>
-                    
-                    <div class="h-[300px] w-full">
-                        <canvas id="yearlyChart"></canvas>
-                    </div>
+                    <span class="px-4 py-2 bg-emerald-500 text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-emerald-500/30">
+                        <i class="fas fa-shield-alt mr-1"></i> Data Terverifikasi
+                    </span>
+                </div>
+
+                <div class="h-72 w-full relative">
+                    <canvas id="yearlyChart"></canvas>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm">
-                    <h4 class="font-extrabold text-lg text-[#1e1b4b] mb-8">Distribusi Jenis Infrastruktur</h4>
-                    <div class="space-y-6">
-                        @foreach($statsJenis as $s)
+            {{-- ── Grid Bawah ── --}}
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                {{-- Distribusi Jenis Infrastruktur --}}
+                <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-8">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-8 h-8 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shrink-0">
+                            <i class="fas fa-layer-group text-xs"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-black text-navy-900 uppercase tracking-wider">Distribusi Jenis Infrastruktur</h4>
+                            <p class="text-[9px] text-slate-400 font-semibold mt-0.5">Tahun {{ $year }}</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
                         @php
-                            $colors = [
-                                'jalan' => ['bg' => 'bg-blue-50', 'bar' => 'bg-blue-500', 'text' => 'text-blue-600', 'icon' => 'fa-road'],
-                                'sanitasi' => ['bg' => 'bg-emerald-50', 'bar' => 'bg-emerald-500', 'text' => 'text-emerald-600', 'icon' => 'fa-faucet-drip'],
-                                'titian' => ['bg' => 'bg-amber-50', 'bar' => 'bg-amber-500', 'text' => 'text-amber-600', 'icon' => 'fa-bridge-water'],
+                            $jenisColors = [
+                                'jalan'    => ['bg'=>'bg-navy-900',   'bar'=>'bg-navy-900',    'text'=>'text-white',      'icon'=>'fa-road',         'label'=>'Jalan'],
+                                'sanitasi' => ['bg'=>'bg-emerald-500','bar'=>'bg-emerald-500', 'text'=>'text-white',      'icon'=>'fa-faucet-drip',  'label'=>'Sanitasi'],
+                                'titian'   => ['bg'=>'bg-gold-500',   'bar'=>'bg-gold-500',    'text'=>'text-white',      'icon'=>'fa-bridge-water', 'label'=>'Titian'],
+                                'jembatan' => ['bg'=>'bg-navy-500',   'bar'=>'bg-navy-500',    'text'=>'text-white',      'icon'=>'fa-archway',      'label'=>'Jembatan'],
                             ];
-                            $c = $colors[strtolower($s->jenis)] ?? ['bg' => 'bg-gray-50', 'bar' => 'bg-gray-500', 'text' => 'text-gray-600', 'icon' => 'fa-cube'];
+                            $totalJenis = max(1, $statsJenis->sum('total'));
                         @endphp
-                        <div class="group">
-                            <div class="flex justify-between items-center mb-2">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 {{ $c['bg'] }} {{ $c['text'] }} rounded-lg flex items-center justify-center text-[10px]">
-                                        <i class="fas {{ $c['icon'] }}"></i>
-                                    </div>
-                                    <span class="text-xs font-bold text-[#1e1b4b] uppercase">{{ $s->jenis }}</span>
+
+                        @forelse($statsJenis as $s)
+                        @php
+                            $c   = $jenisColors[strtolower($s->jenis)] ?? ['bg'=>'bg-slate-400','bar'=>'bg-slate-400','text'=>'text-white','icon'=>'fa-cube','label'=>$s->jenis];
+                            $pct = round(($s->total / $totalJenis) * 100);
+                        @endphp
+                        <div class="p-4 bg-slate-50 border border-slate-100 rounded-2xl">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-9 h-9 {{ $c['bg'] }} {{ $c['text'] }} rounded-xl flex items-center justify-center shrink-0 shadow-sm">
+                                    <i class="fas {{ $c['icon'] }} text-sm"></i>
                                 </div>
-                                <span class="text-xs font-black text-[#1e1b4b]">{{ $s->total }} <span class="text-[10px] text-gray-400 font-medium">Titik</span></span>
+                                <div class="flex-1 flex justify-between items-center">
+                                    <p class="text-xs font-black text-navy-900 uppercase">{{ $c['label'] }}</p>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-[9px] font-bold text-slate-400">{{ $pct }}%</span>
+                                        <span class="text-sm font-black text-navy-900">{{ $s->total }} <span class="text-[9px] text-slate-400 font-semibold">titik</span></span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-                                <div class="h-full {{ $c['bar'] }} rounded-full" style="width: {{ ($s->total / max(1, $statsJenis->sum('total'))) * 100 }}%"></div>
+                            <div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+                                <div class="{{ $c['bar'] }} h-full rounded-full transition-all duration-700" style="width: {{ $pct }}%"></div>
                             </div>
                         </div>
-                        @endforeach
+                        @empty
+                        <div class="text-center py-10">
+                            <i class="fas fa-inbox text-4xl text-slate-200 mb-3 block"></i>
+                            <p class="text-sm font-bold text-slate-400">Belum ada data jenis infrastruktur.</p>
+                        </div>
+                        @endforelse
                     </div>
                 </div>
 
-                <div class="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm">
-                    <h4 class="font-extrabold text-lg text-[#1e1b4b] mb-8 text-left">Ringkasan Kondisi per Wilayah</h4>
+                {{-- Tabel Kondisi per Wilayah --}}
+                <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-8">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-8 h-8 bg-gold-500 rounded-xl flex items-center justify-center text-white shrink-0">
+                            <i class="fas fa-map-marked-alt text-xs"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-black text-navy-900 uppercase tracking-wider">Kondisi per Kecamatan</h4>
+                            <p class="text-[9px] text-slate-400 font-semibold mt-0.5">Rekapitulasi wilayah · Tahun {{ $year }}</p>
+                        </div>
+                    </div>
+
                     <div class="overflow-x-auto custom-scrollbar">
-                        <table class="w-full text-left">
+                        <table class="w-full text-left border-collapse">
                             <thead>
-                                <tr class="text-[9px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-100">
-                                    <th class="pb-4 px-2">Kecamatan</th>
-                                    <th class="pb-4 px-2 text-center text-emerald-600">Baik</th>
-                                    <th class="pb-4 px-2 text-center text-yellow-600">Ringan</th>
-                                    <th class="pb-4 px-2 text-center text-amber-500">Sedang</th> <th class="pb-4 px-2 text-center text-red-500">Berat</th>
-                                    <th class="pb-4 px-2 text-right">Total</th>
+                                <tr class="bg-slate-50 border-b border-slate-100">
+                                    <th class="px-3 py-3 text-[9px] font-black text-slate-400 tracking-widest uppercase">Kecamatan</th>
+                                    <th class="px-3 py-3 text-[9px] font-black text-emerald-500 tracking-widest text-center">Baik</th>
+                                    <th class="px-3 py-3 text-[9px] font-black text-yellow-500 tracking-widest text-center">Ringan</th>
+                                    <th class="px-3 py-3 text-[9px] font-black text-orange-500 tracking-widest text-center">Sedang</th>
+                                    <th class="px-3 py-3 text-[9px] font-black text-red-500 tracking-widest text-center">Berat</th>
+                                    <th class="px-3 py-3 text-[9px] font-black text-slate-400 tracking-widest text-right">Total</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-50">
+                            <tbody class="divide-y divide-slate-50">
                                 @foreach($kondisiKecamatan as $item)
-                                <tr class="group hover:bg-gray-50 transition-colors">
-                                    <td class="py-4 px-2">
-                                        <p class="text-xs font-bold text-[#1e1b4b] uppercase">{{ $item['nama'] }}</p>
+                                <tr class="hover:bg-slate-50/60 transition-colors">
+                                    <td class="px-3 py-3">
+                                        <div class="flex items-center gap-2">
+                                            <i class="fas fa-map-marker-alt text-gold-500 text-[9px]"></i>
+                                            <p class="text-[10px] font-black text-navy-900 uppercase">{{ $item['nama'] }}</p>
+                                        </div>
                                     </td>
-                                    <td class="py-4 px-2 text-center">
-                                        <span class="text-[10px] font-black text-emerald-600">{{ $item['baik'] }}</span>
+                                    <td class="px-3 py-3 text-center">
+                                        <span class="text-[10px] font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg">{{ $item['baik'] }}</span>
                                     </td>
-                                    <td class="py-4 px-2 text-center">
-                                        <span class="text-[10px] font-black text-yellow-600">{{ $item['ringan'] }}</span>
+                                    <td class="px-3 py-3 text-center">
+                                        <span class="text-[10px] font-black text-yellow-600 bg-yellow-50 px-2 py-0.5 rounded-lg">{{ $item['ringan'] }}</span>
                                     </td>
-                                    <td class="py-4 px-2 text-center">
-                                        <span class="text-[10px] font-black text-amber-600">{{ $item['sedang'] }}</span>
+                                    <td class="px-3 py-3 text-center">
+                                        <span class="text-[10px] font-black text-orange-600 bg-orange-50 px-2 py-0.5 rounded-lg">{{ $item['sedang'] }}</span>
                                     </td>
-                                    <td class="py-4 px-2 text-center">
-                                        <span class="text-[10px] font-black text-red-600">{{ $item['berat'] }}</span>
+                                    <td class="px-3 py-3 text-center">
+                                        <span class="text-[10px] font-black text-red-600 bg-red-50 px-2 py-0.5 rounded-lg">{{ $item['berat'] }}</span>
                                     </td>
-                                    <td class="py-4 px-2 text-right">
-                                        <span class="text-[10px] font-black text-[#1e1b4b] bg-gray-100 px-2 py-1 rounded-lg">{{ $item['total'] }}</span>
+                                    <td class="px-3 py-3 text-right">
+                                        <span class="text-[10px] font-black text-navy-900 bg-navy-50 border border-navy-100 px-2 py-0.5 rounded-lg">{{ $item['total'] }}</span>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -141,50 +234,43 @@
     </main>
 
     <script>
-        // Clock Function
+        // Clock
         function updateClock() {
             const now = new Date();
-            document.getElementById('mini-clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WITA`;
+            document.getElementById('mini-clock').textContent =
+                `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')} WITA`;
         }
         setInterval(updateClock, 1000); updateClock();
 
-        // 🌟 KONFIGURASI KURVA-S (S-CURVE CHART)
+        // Kurva-S Chart
         const ctx = document.getElementById('yearlyChart').getContext('2d');
-        
-        // Sesuaikan hanya sampai bulan Mei (5 bulan pertama)
-        const monthLimit = 5; 
-        const allLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+        const monthLimit = 5;
+        const allLabels = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
         const chartLabels = allLabels.slice(0, monthLimit);
-
-        // Menghitung data kumulatif untuk Kurva-S (Hanya sampai Mei)
         const rawData = @json($chartData).slice(0, monthLimit);
-        let cumulativeData = [];
-        let total = 0;
-        rawData.forEach(val => {
-            total += val;
-            cumulativeData.push(total);
-        });
 
-        // Membuat gradasi warna biru mewah untuk area bawah kurva
-        const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-        gradient.addColorStop(0, 'rgba(37, 99, 235, 0.2)');
-        gradient.addColorStop(1, 'rgba(37, 99, 235, 0.0)');
+        let cumulative = [], total = 0;
+        rawData.forEach(v => { total += v; cumulative.push(total); });
+
+        const gradient = ctx.createLinearGradient(0, 0, 0, 280);
+        gradient.addColorStop(0, 'rgba(197,160,89,0.3)');
+        gradient.addColorStop(1, 'rgba(197,160,89,0.0)');
 
         new Chart(ctx, {
-            type: 'line', // Menggunakan tipe line
+            type: 'line',
             data: {
                 labels: chartLabels,
                 datasets: [{
                     label: 'Kumulatif Survey Masuk',
-                    data: cumulativeData,
-                    borderColor: '#2563eb',
-                    borderWidth: 4,
-                    pointBackgroundColor: '#ffffff',
-                    pointBorderColor: '#2563eb',
+                    data: cumulative,
+                    borderColor: '#c5a059',
+                    borderWidth: 3,
+                    pointBackgroundColor: '#0f0e2c',
+                    pointBorderColor: '#c5a059',
                     pointBorderWidth: 3,
-                    pointRadius: 5,
-                    pointHoverRadius: 7,
-                    tension: 0.4, // Memberikan efek kurva yang mulus (S-Curve)
+                    pointRadius: 6,
+                    pointHoverRadius: 9,
+                    tension: 0.4,
                     fill: true,
                     backgroundColor: gradient
                 }]
@@ -193,20 +279,23 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: { display: false }
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#070617',
+                        titleColor: '#c5a059',
+                        bodyColor: '#fff',
+                        padding: 12,
+                        cornerRadius: 12,
+                        callbacks: {
+                            label: (ctx) => ` ${ctx.raw} survey kumulatif`
+                        }
+                    }
                 },
                 scales: {
                     y: {
                         beginAtZero: true,
-                        grid: { 
-                            borderDash: [5, 5], 
-                            color: '#f1f5f9' 
-                        },
-                        ticks: { 
-                            font: { size: 10, weight: 'bold' }, 
-                            color: '#94a3b8',
-                            stepSize: 1 // Skala grafik berupa bilangan bulat
-                        }
+                        grid: { color: 'rgba(255,255,255,0.05)', borderDash: [4,4] },
+                        ticks: { font: { size: 10, weight: 'bold' }, color: '#64748b', stepSize: 1 }
                     },
                     x: {
                         grid: { display: false },

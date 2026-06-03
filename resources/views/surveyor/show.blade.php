@@ -6,66 +6,83 @@
     <title>Detail Infrastruktur | GEO-SINFRA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+                    colors: {
+                        navy: { 50:'#f4f4fa', 100:'#e9e9f3', 500:'#6366f1', 800:'#1e1b4b', 900:'#0f0e2c', 950:'#070617' },
+                        gold: { 50:'#fdfbf7', 100:'#fbf7ed', 500:'#c5a059', 600:'#b38f4a', 700:'#9d7c3d' }
+                    }
+                }
+            }
+        }
+    </script>
     <style> 
         body { font-family: 'Plus Jakarta Sans', sans-serif; } 
-        /* Kustomisasi tombol zoom peta agar melengkung dan lebih kecil */
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         .leaflet-bar { border: none !important; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1) !important; border-radius: 8px !important; overflow: hidden; }
-        .leaflet-bar a { width: 26px !important; height: 26px !important; line-height: 26px !important; font-size: 14px !important; }
-        .leaflet-bar a:first-child { border-top-left-radius: 8px !important; border-top-right-radius: 8px !important; }
-        .leaflet-bar a:last-child { border-bottom-left-radius: 8px !important; border-bottom-right-radius: 8px !important; border-bottom: none !important; }
+        .leaflet-bar a { width: 26px !important; height: 26px !important; line-height: 26px !important; font-size: 14px !important; color: #1e1b4b !important; }
     </style>
 </head>
-<body class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 text-left">
+<body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800 font-sans">
 
     @include('surveyor.partials.sidebar')
 
-    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
-        <header class="bg-white border-b border-gray-100 px-8 py-5 flex justify-between items-center z-10">
+    <main class="flex-1 flex flex-col h-screen overflow-hidden">
+        {{-- ── Header ── --}}
+        <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 px-8 py-5 flex justify-between items-center z-40 shrink-0 shadow-sm">
             <div class="flex items-center gap-4">
-                <a href="{{ route('surveyor.history') }}" class="w-10 h-10 flex items-center justify-center bg-gray-50 text-gray-400 rounded-xl hover:bg-emerald-50 hover:text-emerald-600 transition-all border border-gray-100">
+                <a href="{{ route('surveyor.history') }}" class="w-10 h-10 flex items-center justify-center bg-white text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 transition-all border border-slate-200 hover:border-gold-200">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
-                    <p class="text-[10px] font-extrabold text-emerald-600 uppercase tracking-[0.2em] mb-1">Laporan Detail</p>
-                    <h2 class="text-xl font-black text-[#1e1b4b]">Informasi Infrastruktur</h2>
+                    <p class="text-[9px] font-black text-gold-500 uppercase tracking-[0.2em] mb-0.5">Laporan Detail</p>
+                    <h2 class="text-xl font-black text-navy-900 tracking-tight">Informasi Infrastruktur</h2>
                 </div>
             </div>
             
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-[#1e1b4b]" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-[11px] font-black text-navy-900" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
-                <div class="h-8 w-[1px] bg-gray-100"></div>
+                <div class="h-8 w-[1px] bg-slate-100"></div>
                 <a href="{{ route('surveyor.profile') }}" class="flex items-center gap-3">
                     <div class="text-right">
-                        <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase">{{ auth()->user()->name }}</p>
-                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
+                        <p class="text-[10px] font-black text-navy-900 leading-none uppercase">{{ auth()->user()->name }}</p>
+                        <p class="text-[8px] font-bold text-emerald-500 uppercase mt-1">Online</p>
                     </div>
-                    <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 border border-emerald-100 overflow-hidden">
+                    <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-navy-800 overflow-hidden shadow-md">
                         @if(auth()->user()->profile_photo)
                             <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
                         @else
-                            <i class="fas fa-user-circle text-xl"></i>
+                            <i class="fas fa-user-circle text-xl text-gold-500"></i>
                         @endif
                     </div>
                 </a>
             </div>
         </header>
 
-        <div class="p-8">
-            <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="flex-1 overflow-y-auto custom-scrollbar p-8 pb-16">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
                 
+                {{-- KOLOM KIRI (Visual & AI) --}}
                 <div class="lg:col-span-1 space-y-6">
-                    <div class="bg-white rounded-[2.5rem] p-4 border border-gray-100 shadow-sm overflow-hidden">
-                        <div class="relative h-64 rounded-[2rem] overflow-hidden bg-[#0f172a] group flex items-center justify-center">
+                    
+                    {{-- Preview Gambar --}}
+                    <div class="bg-white rounded-[2.5rem] p-4 border border-slate-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                        <div class="relative h-64 rounded-[2rem] overflow-hidden bg-navy-950 group flex items-center justify-center">
                             @php $cleanPath = str_replace('\\', '/', $infrastruktur->foto_terbaru); @endphp
                             <img src="{{ asset('storage/' . (str_contains($cleanPath, 'infrastruktur/') ? $cleanPath : 'infrastruktur/' . $cleanPath)) }}" class="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105">
                             
-                            {{-- Simulasi Deteksi AI Surveyor --}}
+                            {{-- Overlay Deteksi AI --}}
                             @php 
                                 $hasilAi = $infrastruktur->analisis;
                                 $hasilCnn = $infrastruktur->cnn;
@@ -74,169 +91,184 @@
                             @if(strtolower($infrastruktur->kondisi) != 'baik' && strtolower($infrastruktur->kondisi) != 'menunggu ai')
                                 <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
                                     <div class="relative w-1/2 h-1/2 border-2 border-red-500/50 bg-red-500/5 animate-pulse">
-                                        <div class="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-red-500"></div>
-                                        <div class="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-red-500"></div>
-                                        <div class="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-red-500"></div>
-                                        <div class="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-red-500"></div>
+                                        <div class="absolute -top-1 -left-1 w-3 h-3 border-t-[3px] border-l-[3px] border-red-500"></div>
+                                        <div class="absolute -top-1 -right-1 w-3 h-3 border-t-[3px] border-r-[3px] border-red-500"></div>
+                                        <div class="absolute -bottom-1 -left-1 w-3 h-3 border-b-[3px] border-l-[3px] border-red-500"></div>
+                                        <div class="absolute -bottom-1 -right-1 w-3 h-3 border-b-[3px] border-r-[3px] border-red-500"></div>
                                         
-                                        <div class="absolute -top-6 left-0 bg-red-600 text-white text-[7px] font-black px-2 py-0.5 rounded shadow-lg">
-                                            DETEKSI VISUAL ({{ round(($hasilCnn->skor_cnn ?? 0) * 100) }}%)
+                                        <div class="absolute -top-6 left-0 bg-red-500 text-white text-[8px] font-black px-2 py-0.5 rounded-md shadow-lg tracking-widest">
+                                            AI VISUAL DETECTED ({{ round(($hasilCnn->skor_cnn ?? 0) * 100) }}%)
                                         </div>
                                     </div>
                                 </div>
                             @endif
 
-                            <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all">
-                                <a href="{{ asset('storage/' . (str_contains($cleanPath, 'infrastruktur/') ? $cleanPath : 'infrastruktur/' . $cleanPath)) }}" target="_blank" class="bg-white text-[#1e1b4b] px-4 py-2 rounded-xl text-[8px] font-black uppercase tracking-widest hover:scale-105 transition-all">Buka Foto Asli</a>
+                            <div class="absolute inset-0 bg-navy-900/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm">
+                                <a href="{{ asset('storage/' . (str_contains($cleanPath, 'infrastruktur/') ? $cleanPath : 'infrastruktur/' . $cleanPath)) }}" target="_blank" class="bg-gold-500 text-white px-5 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-gold-600 hover:scale-105 transition-all shadow-xl">
+                                    <i class="fas fa-external-link-alt mr-2"></i> Buka Resolusi Penuh
+                                </a>
                             </div>
                         </div>
                     </div>
 
-                    <div class="bg-gradient-to-br from-[#1e1b4b] to-[#25215e] rounded-[2.5rem] p-8 text-white shadow-xl relative overflow-hidden">
-                        <div class="absolute top-0 right-0 -mt-8 -mr-8 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
-                        <h4 class="text-[10px] font-black text-blue-300 uppercase tracking-[0.2em] mb-8 flex items-center gap-3">
-                            <i class="fas fa-microchip"></i> Hybrid AI Analysis
+                    {{-- Panel Hybrid AI --}}
+                    <div class="bg-navy-900 rounded-[2.5rem] p-8 text-white shadow-xl relative overflow-hidden border border-navy-800">
+                        <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-gold-500/10 rounded-full blur-3xl"></div>
+                        <h4 class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-8 flex items-center gap-3">
+                            <i class="fas fa-robot text-sm"></i> Analisis Cerdas (AI)
                         </h4>
                         
-                        <div class="space-y-8">
+                        <div class="space-y-8 relative z-10">
+                            {{-- CNN --}}
                             <div class="relative">
                                 <div class="flex justify-between items-end mb-2">
                                     <div class="flex items-center gap-2">
-                                        <p class="text-[9px] font-black text-blue-200/50 uppercase tracking-widest">Vision (CNN)</p>
-                                        @if(!$hasilCnn)
-                                            <form action="{{ route('admin.infrastruktur.analisis-ai', $infrastruktur->id_infrastruktur) }}" method="POST">
-                                                @csrf
-                                                <button type="submit" class="text-[7px] bg-blue-500/20 hover:bg-blue-500/40 text-blue-200 px-1.5 py-0.5 rounded transition-all">
-                                                    <i class="fas fa-sync-alt"></i> Scan
-                                                </button>
-                                            </form>
-                                        @endif
+                                        <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Visual Data (CNN)</p>
                                     </div>
-                                    <p class="text-xl font-black text-white">{{ $hasilCnn ? round($hasilCnn->skor_cnn * 100) : '0' }}%</p>
+                                    <p class="text-xl font-black text-gold-500">{{ $hasilCnn ? round($hasilCnn->skor_cnn * 100) : '0' }}%</p>
                                 </div>
-                                <div class="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
-                                    <div class="bg-gradient-to-r from-blue-500 to-indigo-400 h-full" style="width: {{ $hasilCnn ? ($hasilCnn->skor_cnn * 100) : '0' }}%"></div>
+                                <div class="w-full bg-white/5 h-2 rounded-full overflow-hidden border border-white/5">
+                                    <div class="bg-gold-500 h-full shadow-[0_0_10px_rgba(197,160,89,0.5)]" style="width: {{ $hasilCnn ? ($hasilCnn->skor_cnn * 100) : '0' }}%"></div>
                                 </div>
-                                <p class="text-[8px] font-bold text-blue-300/60 mt-2 italic text-right">{{ $hasilCnn->label_kondisi ?? 'Scanning visual...' }}</p>
+                                <p class="text-[8px] font-bold text-slate-400 mt-2 italic text-right">{{ $hasilCnn->label_kondisi ?? 'Memindai visual lapangan...' }}</p>
                             </div>
                             
+                            {{-- D-Tree --}}
                             <div class="relative">
                                 <div class="flex justify-between items-end mb-2">
-                                    <p class="text-[9px] font-black text-blue-200/50 uppercase tracking-widest">Logic (DT)</p>
-                                    <p class="text-xl font-black text-white">{{ $infrastruktur->analisis->skor_dt ?? '0' }}<span class="text-xs text-blue-300/50 ml-0.5">/100</span></p>
+                                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Prioritas Teknis (DT)</p>
+                                    <p class="text-xl font-black text-white">{{ $infrastruktur->analisis->skor_dt ?? '0' }}<span class="text-xs text-slate-500 ml-0.5">/100</span></p>
                                 </div>
-                                <div class="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
-                                    <div class="bg-gradient-to-r from-emerald-500 to-blue-400 h-full" style="width: {{ $infrastruktur->analisis->skor_dt ?? '0' }}%"></div>
+                                <div class="w-full bg-white/5 h-2 rounded-full overflow-hidden border border-white/5">
+                                    @php $dtColor = ($infrastruktur->analisis->label_prioritas ?? '') == 'Rusak Berat' ? 'bg-red-500' : (($infrastruktur->analisis->label_prioritas ?? '') == 'Rusak Sedang' ? 'bg-amber-500' : 'bg-emerald-500'); @endphp
+                                    <div class="{{ $dtColor }} h-full" style="width: {{ $infrastruktur->analisis->skor_dt ?? '0' }}%"></div>
                                 </div>
-                                <p class="text-[8px] font-bold {{ ($infrastruktur->analisis->label_prioritas ?? '') == 'Rusak Berat' ? 'text-red-400' : (($infrastruktur->analisis->label_prioritas ?? '') == 'Rusak Sedang' ? 'text-amber-400' : 'text-emerald-400') }} mt-2 italic text-right">
-                                    {{ $infrastruktur->analisis->label_prioritas ?? 'Calculating logic...' }}
+                                <p class="text-[8px] font-bold mt-2 italic text-right {{ ($infrastruktur->analisis->label_prioritas ?? '') == 'Rusak Berat' ? 'text-red-400' : (($infrastruktur->analisis->label_prioritas ?? '') == 'Rusak Sedang' ? 'text-amber-400' : 'text-emerald-400') }}">
+                                    Label: {{ $infrastruktur->analisis->label_prioritas ?? 'Mengkalkulasi...' }}
                                 </p>
                             </div>
 
-                            <div class="pt-4 border-t border-white/10 space-y-1.5">
-                                <p class="text-[9px] font-black text-blue-200/50 uppercase tracking-widest">Rekomendasi Tindakan (AI)</p>
-                                <p class="text-xs font-semibold text-gray-200 leading-relaxed bg-white/5 p-4 rounded-xl border border-white/5">
-                                    {{ $infrastruktur->analisis->rekomendasi ?? 'Menunggu kalkulasi model pohon keputusan.' }}
+                            <div class="pt-4 border-t border-white/10 space-y-2">
+                                <p class="text-[9px] font-black text-gold-500 uppercase tracking-widest">Rekomendasi AI</p>
+                                <p class="text-[11px] font-medium text-slate-300 leading-relaxed bg-white/5 p-4 rounded-2xl border border-white/5">
+                                    {{ $infrastruktur->analisis->rekomendasi ?? 'Tindakan rekomendasi belum tersedia.' }}
                                 </p>
                             </div>
 
                             <div class="pt-4 border-t border-white/5">
-                                <div class="flex items-center justify-between mb-2">
-                                    <p class="text-[9px] font-black text-blue-200/50 uppercase">Status Verifikasi Dinas</p>
-                                    <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[8px] font-black uppercase tracking-widest {{ $infrastruktur->status_verifikasi == 'Verified' ? 'text-emerald-400' : 'text-amber-400' }}">
-                                        {{ $infrastruktur->status_verifikasi ?? 'Pending' }}
-                                    </span>
+                                <div class="flex items-center justify-between mb-1">
+                                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Status Laporan</p>
+                                    @if($infrastruktur->status_validasi == 'Rejected')
+                                        <span class="px-3 py-1 bg-red-500/10 border border-red-500/20 rounded-lg text-[8px] font-black uppercase tracking-widest text-red-400">Ditolak</span>
+                                    @elseif($infrastruktur->status_validasi == 'Validated')
+                                        <span class="px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-[8px] font-black uppercase tracking-widest text-emerald-400">Di-ACC Kabid</span>
+                                    @elseif($infrastruktur->status_verifikasi == 'Verified')
+                                        <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-lg text-[8px] font-black uppercase tracking-widest text-blue-400">Terverifikasi Admin</span>
+                                    @else
+                                        <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[8px] font-black uppercase tracking-widest text-slate-400">Pending</span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                {{-- KOLOM KANAN (Detail Informasi) --}}
                 <div class="lg:col-span-2 space-y-6">
-                    <div class="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm space-y-6">
-                        <div class="flex justify-between items-start border-b border-gray-50 pb-5">
+                    <div class="bg-white rounded-[2.5rem] p-8 lg:p-10 border border-slate-100 shadow-sm hover:shadow-md transition-shadow space-y-8">
+                        
+                        {{-- Header Judul --}}
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 border-b border-slate-50 pb-6">
                             <div>
-                                <p class="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-1">{{ $infrastruktur->jenis_infrastruktur }}</p>
-                                <h3 class="text-2xl font-black text-[#1e1b4b]">{{ $infrastruktur->nama_objek ?? $infrastruktur->nama_infrastruktur }}</h3>
+                                <div class="inline-flex items-center gap-2 px-3 py-1 bg-navy-50 border border-navy-100 rounded-lg mb-3">
+                                    <i class="fas fa-layer-group text-[9px] text-gold-500"></i>
+                                    <p class="text-[9px] font-black text-navy-900 uppercase tracking-widest">{{ $infrastruktur->jenis_infrastruktur ?? $infrastruktur->jenis }}</p>
+                                </div>
+                                <h3 class="text-2xl lg:text-3xl font-black text-navy-900 leading-tight">{{ $infrastruktur->nama_objek ?? $infrastruktur->nama_infrastruktur }}</h3>
                             </div>
-                            <div class="text-right">
-                                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">Diinput Pada</p>
-                                <p class="text-xs font-black text-[#1e1b4b]">{{ $infrastruktur->created_at->translatedFormat('d F Y, H:i') }} WITA</p>
+                            <div class="sm:text-right shrink-0">
+                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Diinput Pada</p>
+                                <p class="text-xs font-black text-navy-900 mt-1">{{ $infrastruktur->created_at->translatedFormat('d M Y, H:i') }}</p>
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div class="space-y-4">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-10 h-10 rounded-2xl bg-gray-50 flex items-center justify-center text-[#1e1b4b] border border-gray-100">
-                                        <i class="fas fa-map-marked-alt text-sm"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Kecamatan</p>
-                                        <p class="text-sm font-bold text-[#1e1b4b]">{{ $infrastruktur->kelurahan->kecamatan->nama_kecamatan ?? '-' }}</p>
-                                    </div>
+                        {{-- Info Geospasial --}}
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div class="bg-slate-50 p-5 rounded-[1.5rem] border border-slate-200 flex items-center gap-4 hover:border-gold-300 transition-colors">
+                                <div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center text-gold-500 shadow-sm">
+                                    <i class="fas fa-map text-lg"></i>
                                 </div>
-                                <div class="flex items-center gap-4">
-                                    <div class="w-10 h-10 rounded-2xl bg-gray-50 flex items-center justify-center text-[#1e1b4b] border border-gray-100">
-                                        <i class="fas fa-building text-sm"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Kelurahan</p>
-                                        <p class="text-sm font-bold text-[#1e1b4b]">{{ $infrastruktur->kelurahan->nama_kelurahan ?? '-' }}</p>
-                                    </div>
+                                <div>
+                                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Kecamatan</p>
+                                    <p class="text-sm font-black text-navy-900 mt-0.5">{{ $infrastruktur->kelurahan->kecamatan->nama_kecamatan ?? '-' }}</p>
                                 </div>
                             </div>
-                            <div class="space-y-4">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-10 h-10 rounded-2xl bg-gray-50 flex items-center justify-center text-[#1e1b4b] border border-gray-100">
-                                        <i class="fas fa-location-arrow text-sm"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Koordinat Geospasial</p>
-                                        <p class="text-xs font-bold text-[#1e1b4b]">{{ $infrastruktur->latitude }}, {{ $infrastruktur->longitude }}</p>
-                                    </div>
+                            <div class="bg-slate-50 p-5 rounded-[1.5rem] border border-slate-200 flex items-center gap-4 hover:border-gold-300 transition-colors">
+                                <div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center text-gold-500 shadow-sm">
+                                    <i class="fas fa-city text-lg"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Kelurahan</p>
+                                    <p class="text-sm font-black text-navy-900 mt-0.5">{{ $infrastruktur->kelurahan->nama_kelurahan ?? '-' }}</p>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="pt-6 border-t border-gray-100">
-                            <h4 class="text-xs font-black text-[#1e1b4b] uppercase tracking-widest mb-4 italic flex items-center gap-2">
-                                <i class="fas fa-ruler"></i> Spesifikasi Dimensi & Eksisting Lapangan
+                        {{-- Spesifikasi Teknis DED --}}
+                        <div class="pt-2">
+                            <h4 class="text-[11px] font-black text-navy-900 uppercase tracking-widest mb-4 flex items-center gap-2">
+                                <i class="fas fa-ruler-combined text-gold-500"></i> Spesifikasi & Dimensi Lapangan
                             </h4>
                             <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                                <div class="bg-gray-50/50 p-4 rounded-2xl border border-gray-100">
-                                    <span class="block text-[8px] font-black text-gray-400 uppercase tracking-wider mb-1">Panjang</span>
-                                    <span class="text-xs font-black text-[#1e1b4b]">{{ $infrastruktur->panjang ?? '0' }} Meter</span>
+                                <div class="bg-white p-4 rounded-[1.5rem] border border-slate-200 shadow-sm text-center">
+                                    <span class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Panjang</span>
+                                    <span class="text-xs font-black text-navy-900">{{ $infrastruktur->panjang ?? '0' }} m</span>
                                 </div>
-                                <div class="bg-gray-50/50 p-4 rounded-2xl border border-gray-100">
-                                    <span class="block text-[8px] font-black text-gray-400 uppercase tracking-wider mb-1">Lebar</span>
-                                    <span class="text-xs font-black text-[#1e1b4b]">{{ $infrastruktur->lebar ?? '0' }} Meter</span>
+                                <div class="bg-white p-4 rounded-[1.5rem] border border-slate-200 shadow-sm text-center">
+                                    <span class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Lebar</span>
+                                    <span class="text-xs font-black text-navy-900">{{ $infrastruktur->lebar ?? '0' }} m</span>
                                 </div>
-                                <div class="bg-gray-50/50 p-4 rounded-2xl border border-gray-100">
-                                    <span class="block text-[8px] font-black text-gray-400 uppercase tracking-wider mb-1">Material Utama</span>
-                                    <span class="text-xs font-black text-[#1e1b4b]">{{ $infrastruktur->material_eksisting ?? '-' }}</span>
+                                <div class="bg-white p-4 rounded-[1.5rem] border border-slate-200 shadow-sm text-center">
+                                    <span class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Material</span>
+                                    <span class="text-[11px] font-black text-navy-900">{{ $infrastruktur->material_eksisting ?? '-' }}</span>
                                 </div>
-                                <div class="bg-gray-50/50 p-4 rounded-2xl border border-gray-100">
-                                    <span class="block text-[8px] font-black text-gray-400 uppercase tracking-wider mb-1">Infrastruktur Drainase</span>
-                                    <span class="text-xs font-black {{ $infrastruktur->has_drainase == 'ya' ? 'text-emerald-600' : 'text-red-500' }}">
-                                        {{ $infrastruktur->has_drainase == 'ya' ? 'Tersedia' : 'Tidak Ada' }}
-                                    </span>
+                                <div class="bg-white p-4 rounded-[1.5rem] border border-slate-200 shadow-sm text-center">
+                                    <span class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Drainase</span>
+                                    @if($infrastruktur->has_drainase == 'ya')
+                                        <span class="inline-flex px-2 py-0.5 bg-emerald-50 text-emerald-600 rounded text-[10px] font-black uppercase">Tersedia</span>
+                                    @else
+                                        <span class="inline-flex px-2 py-0.5 bg-slate-50 text-slate-500 rounded text-[10px] font-black uppercase">Tidak</span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
 
-                        <div class="pt-6 border-t border-gray-100 space-y-2">
-                            <h4 class="text-xs font-black text-[#1e1b4b] uppercase tracking-widest italic flex items-center gap-2">
-                                <i class="fas fa-comment-alt"></i> Catatan Deskripsi Kerusakan Lapangan
+                        {{-- Deskripsi Lapangan --}}
+                        <div class="pt-2">
+                            <h4 class="text-[11px] font-black text-navy-900 uppercase tracking-widest mb-4 flex items-center gap-2">
+                                <i class="fas fa-comment-dots text-gold-500"></i> Catatan Deskripsi Kerusakan
                             </h4>
-                            <p class="text-sm font-semibold text-gray-600 bg-gray-50 p-4 rounded-2xl border border-gray-100 leading-relaxed">
-                                "{{ $infrastruktur->kondisi }}"
+                            <div class="bg-slate-50 p-5 rounded-[1.5rem] border border-slate-200 relative">
+                                <i class="fas fa-quote-left absolute top-4 right-5 text-2xl text-slate-200"></i>
+                                <p class="text-sm font-medium text-slate-700 leading-relaxed pr-8">
+                                    "{{ $infrastruktur->kondisi }}"
+                                </p>
+                            </div>
+                        </div>
+
+                        {{-- Peta Lokasi --}}
+                        <div class="pt-2">
+                            <h4 class="text-[11px] font-black text-navy-900 uppercase tracking-widest mb-4 flex items-center gap-2">
+                                <i class="fas fa-satellite text-gold-500"></i> Titik Koordinat Geospasial
+                            </h4>
+                            <div class="relative rounded-[2rem] border-[6px] border-slate-50 shadow-inner overflow-hidden mb-2">
+                                <div id="map" class="h-[280px] w-full z-0 bg-slate-100"></div>
+                            </div>
+                            <p class="text-[10px] font-black text-slate-400 text-center tracking-widest mt-3">
+                                LAT: <span class="text-navy-900">{{ $infrastruktur->latitude }}</span> &nbsp;|&nbsp; LNG: <span class="text-navy-900">{{ $infrastruktur->longitude }}</span>
                             </p>
                         </div>
 
-                        <div class="relative rounded-[2rem] border border-gray-100 shadow-inner overflow-hidden pt-2">
-                            <div id="map" class="h-[250px] w-full z-0 rounded-[2rem]"></div>
-                        </div>
                     </div>
                 </div>
 
@@ -253,28 +285,30 @@
 
         const lat = {{ $infrastruktur->latitude }};
         const lng = {{ $infrastruktur->longitude }};
+        
+        // Disable scroll wheel agar halaman tidak tergulung tak sengaja
         const map = L.map('map', {
             zoomControl: true,
-            scrollWheelZoom: false
+            scrollWheelZoom: false 
         }).setView([lat, lng], 16);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors'
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            attribution: ''
         }).addTo(map);
 
-        // Menentukan warna Pin berdasarkan hasil AI yang akurat (Hybrid)
-        const labelAi = "{{ $infrastruktur->analisis->label_prioritas ?? $infrastruktur->kondisi }}";
-        const color = labelAi === 'Baik' ? '#10b981' : (labelAi === 'Rusak Sedang' ? '#f59e0b' : (labelAi === 'Rusak Berat' ? '#ef4444' : '#6b7280'));
-        
+        // Marker elegan (Gold) untuk titik lokasi Surveyor
         const markerHtml = `
-            <div style="background-color: ${color}; width: 18px; height: 18px; border-radius: 50%; border: 4px solid white; box-shadow: 0 0 15px rgba(0,0,0,0.2);"></div>
+            <div class="w-8 h-8 bg-gold-500 rounded-full border-[3px] border-white shadow-lg flex items-center justify-center text-white relative">
+                <div class="absolute inset-0 rounded-full border border-gold-200 animate-ping"></div>
+                <i class="fas fa-location-dot text-sm drop-shadow-md"></i>
+            </div>
         `;
 
         const icon = L.divIcon({
             html: markerHtml,
             className: '',
-            iconSize: [18, 18],
-            iconAnchor: [9, 9]
+            iconSize: [32, 32],
+            iconAnchor: [16, 32]
         });
 
         L.marker([lat, lng], {icon: icon}).addTo(map);

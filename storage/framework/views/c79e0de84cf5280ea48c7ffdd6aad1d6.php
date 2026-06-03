@@ -6,211 +6,457 @@
     <title>Edit Infrastruktur | Admin SINFRA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <style> body { font-family: 'Plus Jakarta Sans', sans-serif; } </style>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+                    colors: {
+                        navy: {
+                            50:  '#f4f4fa',
+                            100: '#e9e9f3',
+                            500: '#6366f1',
+                            800: '#1e1b4b',
+                            900: '#0f0e2c',
+                            950: '#070617',
+                        },
+                        gold: {
+                            50:  '#fdfbf7',
+                            100: '#fbf7ed',
+                            500: '#c5a059',
+                            600: '#b38f4a',
+                            700: '#9d7c3d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+        /* Input focus ring */
+        .field-input {
+            @apply w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 outline-none
+                   focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all placeholder-slate-400;
+        }
+        .field-select {
+            @apply w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 outline-none
+                   focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all;
+        }
+
+        /* Map border cleanup */
+        #edit-map { border: none !important; outline: none !important; box-shadow: none !important; }
+
+        /* Custom Leaflet Zoom Controls — sesuai tema navy/gold */
+        .leaflet-control-zoom {
+            border: none !important;
+            box-shadow: 0 4px 24px rgba(7,6,23,0.15) !important;
+            border-radius: 0.75rem !important;
+            overflow: hidden;
+        }
+        .leaflet-control-zoom a {
+            width: 36px !important;
+            height: 36px !important;
+            line-height: 36px !important;
+            background: #0f0e2c !important;
+            color: #c5a059 !important;
+            border: none !important;
+            border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+            font-size: 16px !important;
+            font-weight: 900 !important;
+            transition: background 0.2s, color 0.2s !important;
+        }
+        .leaflet-control-zoom a:hover {
+            background: #1e1b4b !important;
+            color: #ffffff !important;
+        }
+        .leaflet-control-zoom-out {
+            border-bottom: none !important;
+        }
+    </style>
 </head>
-<body class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 text-left">
+<body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800 font-sans">
 
     <?php echo $__env->make('admin.partials.sidebar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
-    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
-        <header class="bg-white border-b border-gray-100 px-8 py-5 flex justify-between items-center z-10">
+    <main class="flex-1 flex flex-col h-screen overflow-hidden">
+
+        
+        <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 px-8 py-5 flex justify-between items-center z-40 shrink-0">
             <div class="flex items-center gap-4">
-                <a href="<?php echo e(route('admin.infrastruktur')); ?>" class="w-10 h-10 bg-white border border-gray-100 rounded-xl flex items-center justify-center text-gray-400 hover:text-blue-600 transition-all">
-                    <i class="fas fa-arrow-left text-xs"></i>
+                <a href="<?php echo e(route('admin.infrastruktur')); ?>"
+                   class="w-10 h-10 bg-white border border-slate-100 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/30 hover:shadow-md transition-all group"
+                   title="Kembali ke Manajemen Infrastruktur">
+                    <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
                 <div>
-                    <p class="text-[10px] font-extrabold text-blue-600 tracking-[0.2em] mb-1">Administrator Portal</p>
-                    <h2 class="text-xl font-black text-[#1e1b4b]">Edit Data Infrastruktur</h2>
+                    <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
+                    <h2 class="text-xl font-black text-navy-900 leading-none">Edit Data Infrastruktur</h2>
                 </div>
             </div>
+
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-[#1e1b4b]" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter"><?php echo e(now()->translatedFormat('l, d F Y')); ?></p>
+                    <p class="text-[11px] font-black text-navy-900" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter"><?php echo e(now()->translatedFormat('l, d F Y')); ?></p>
                 </div>
-                <div class="h-8 w-[1px] bg-gray-100"></div>
+                <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
-                    <div class="text-right">
-                        <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase">Admin SINFRA</p>
-                        <p class="text-[9px] font-bold text-green-500 uppercase mt-1">Online</p>
-                    </div>
-                    <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100">
-                        <i class="fas fa-user-circle text-xl"></i>
-                    </div>
+                    <a href="<?php echo e(route('admin.profile')); ?>" class="text-right group">
+                        <p class="text-[11px] font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-all"><?php echo e(auth()->user()->name); ?></p>
+                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">Online</p>
+                    </a>
+                    <a href="<?php echo e(route('admin.profile')); ?>" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md">
+                        <?php if(auth()->user()->profile_photo): ?>
+                            <img src="<?php echo e(asset('storage/' . auth()->user()->profile_photo)); ?>" class="w-full h-full object-cover">
+                        <?php else: ?>
+                            <i class="fas fa-user-circle text-xl"></i>
+                        <?php endif; ?>
+                    </a>
                 </div>
             </div>
         </header>
 
-        <div class="p-8 pb-24">
-            <div class="max-w-4xl bg-white rounded-[2.5rem] p-10 border border-gray-100 shadow-sm mx-auto">
-                <form action="<?php echo e(route('admin.infrastruktur.update', $inf->id_infrastruktur)); ?>" method="POST" enctype="multipart/form-data" class="space-y-8">
-                    <?php echo csrf_field(); ?>
-                    <?php echo method_field('PUT'); ?>
+        
+        <div class="flex-1 overflow-y-auto custom-scrollbar p-8 pb-16">
+
+            
+            <div class="flex items-center gap-3 mb-6">
+                <span class="px-3 py-1.5 bg-navy-900 text-gold-500 rounded-xl text-[9px] font-black tracking-widest uppercase">
+                    <i class="fas fa-edit mr-1"></i> Mode Edit
+                </span>
+                <span class="px-3 py-1.5 bg-gold-500/10 text-gold-600 border border-gold-500/20 rounded-xl text-[9px] font-black tracking-widest uppercase">
+                    ID: INF-<?php echo e($inf->id_infrastruktur); ?>
+
+                </span>
+                <span class="text-[10px] text-slate-400 font-semibold"><?php echo e($inf->nama_objek ?? $inf->nama_infrastruktur); ?></span>
+            </div>
+
+            <form action="<?php echo e(route('admin.infrastruktur.update', $inf->id_infrastruktur)); ?>" method="POST" enctype="multipart/form-data">
+                <?php echo csrf_field(); ?>
+                <?php echo method_field('PUT'); ?>
+
+                <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+
+                    
+                    <div class="xl:col-span-2 space-y-6">
+
+                        
+                        <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-8">
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="w-8 h-8 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shrink-0">
+                                    <i class="fas fa-info-circle text-xs"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-black text-navy-900 uppercase tracking-wider">Identitas & Wilayah</h4>
+                                    <p class="text-[9px] text-slate-400 font-semibold mt-0.5">Nama, jenis, dan lokasi wilayah infrastruktur</p>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <div class="md:col-span-2">
+                                    <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">Nama Infrastruktur <span class="text-red-400">*</span></label>
+                                    <input type="text" name="nama_infrastruktur"
+                                           value="<?php echo e($inf->nama_objek ?? $inf->nama_infrastruktur); ?>"
+                                           placeholder="Nama infrastruktur..."
+                                           class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all placeholder-slate-400"
+                                           required>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">Jenis Infrastruktur</label>
+                                    
+                                    <div class="w-full px-4 py-3 bg-slate-100 border border-slate-200 rounded-xl flex items-center justify-between cursor-not-allowed">
+                                        <div class="flex items-center gap-2">
+                                            <span class="px-2 py-0.5 bg-navy-900 text-gold-500 rounded-md text-[7px] font-black tracking-wider uppercase">AI</span>
+                                            <span class="text-sm font-black text-navy-900 uppercase"><?php echo e($inf->jenis_infrastruktur ?? $inf->jenis ?? '—'); ?></span>
+                                        </div>
+                                        <i class="fas fa-lock text-slate-400 text-[10px]"></i>
+                                    </div>
+                                    <p class="text-[9px] text-slate-400 font-semibold mt-1.5">
+                                        <i class="fas fa-robot mr-1 text-gold-500"></i> Jenis ditentukan otomatis oleh sistem AI.
+                                    </p>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">Kecamatan</label>
+                                    <select name="id_kecamatan"
+                                            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                                        <?php $__currentLoopData = $semuaKecamatan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kec): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($kec->id_kecamatan); ?>" <?php echo e($inf->id_kecamatan == $kec->id_kecamatan ? 'selected' : ''); ?>>
+                                                <?php echo e($kec->nama_kecamatan); ?>
+
+                                            </option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">Kelurahan</label>
+                                    <select name="id_kelurahan"
+                                            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                                        <?php $__currentLoopData = $semuaKelurahan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($kel->id_kelurahan); ?>" <?php echo e($inf->id_kelurahan == $kel->id_kelurahan ? 'selected' : ''); ?>>
+                                                <?php echo e($kel->nama_kelurahan); ?>
+
+                                            </option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                        <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-8">
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="w-8 h-8 bg-gold-500 rounded-xl flex items-center justify-center text-white shrink-0">
+                                    <i class="fas fa-brain text-xs"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-black text-navy-900 uppercase tracking-wider">Detail Teknis & Parameter AI</h4>
+                                    <p class="text-[9px] text-slate-400 font-semibold mt-0.5">Data ini digunakan sebagai input model Decision Tree</p>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
+                                <div>
+                                    <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">Material Utama <span class="text-red-400">*</span></label>
+                                    <select name="material_eksisting"
+                                            class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all"
+                                            required>
+                                        <option value="" disabled>-- Pilih Material --</option>
+                                        <option value="Cor Beton" <?php echo e($inf->material_eksisting == 'Cor Beton' ? 'selected' : ''); ?>>Cor Beton</option>
+                                        <option value="Titian (Kayu Ulin)" <?php echo e($inf->material_eksisting == 'Titian (Kayu Ulin)' ? 'selected' : ''); ?>>Titian (Kayu Ulin)</option>
+                                        <option value="Tanah Asli" <?php echo e($inf->material_eksisting == 'Tanah Asli' ? 'selected' : ''); ?>>Tanah Asli</option>
+                                        <option value="Tanah Pemadatan" <?php echo e($inf->material_eksisting == 'Tanah Pemadatan' ? 'selected' : ''); ?>>Tanah Pemadatan</option>
+                                        <option value="Tanah Lepas" <?php echo e($inf->material_eksisting == 'Tanah Lepas' ? 'selected' : ''); ?>>Tanah Lepas</option>
+                                        <option value="Paving Block" <?php echo e($inf->material_eksisting == 'Paving Block' ? 'selected' : ''); ?>>Paving Block</option>
+                                        <option value="Aspal" <?php echo e($inf->material_eksisting == 'Aspal' ? 'selected' : ''); ?>>Aspal</option>
+                                        <option value="Bata Press" <?php echo e($inf->material_eksisting == 'Bata Press' ? 'selected' : ''); ?>>Bata Press</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">Panjang (m) <span class="text-red-400">*</span></label>
+                                    <input type="number" step="0.01" name="panjang"
+                                           value="<?php echo e($inf->panjang); ?>"
+                                           placeholder="0.00"
+                                           class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all"
+                                           required>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">Lebar (m) <span class="text-red-400">*</span></label>
+                                    <input type="number" step="0.01" name="lebar"
+                                           value="<?php echo e($inf->lebar); ?>"
+                                           placeholder="0.00"
+                                           class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all"
+                                           required>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                                <div>
+                                    <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">
+                                        <i class="fas fa-water text-navy-500 mr-1"></i> Ketersediaan Drainase
+                                    </label>
+                                    <select name="has_drainase"
+                                            class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                                        <option value="ya"    <?php echo e($inf->has_drainase == 'ya'    ? 'selected' : ''); ?>>Ada Drainase</option>
+                                        <option value="tidak" <?php echo e($inf->has_drainase == 'tidak' ? 'selected' : ''); ?>>Tidak Ada Drainase</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">
+                                        <i class="fas fa-circle-notch text-navy-500 mr-1"></i> Ketersediaan Gorong-gorong
+                                    </label>
+                                    <select name="has_gorong_gorong"
+                                            class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                                        <option value="ya"    <?php echo e($inf->has_gorong_gorong == 'ya'    ? 'selected' : ''); ?>>Ada Gorong-gorong</option>
+                                        <option value="tidak" <?php echo e($inf->has_gorong_gorong == 'tidak' ? 'selected' : ''); ?>>Tidak Ada Gorong-gorong</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">
+                                    Deskripsi Kerusakan <span class="text-[9px] text-slate-400 normal-case font-semibold">(Trigger Decision Tree)</span>
+                                    <span class="text-red-400">*</span>
+                                </label>
+                                <textarea name="kondisi" id="kondisi-textarea" rows="3"
+                                    class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all placeholder-slate-400"
+                                    placeholder="Contoh: titian putus, cor beton retak, amblas..."
+                                    required><?php echo e($inf->kondisi); ?></textarea>
+
+                                
+                                <div class="mt-3 flex flex-wrap gap-2">
+                                    <?php $__currentLoopData = ['Putus','Hancur','Amblas','Retak','Lubang','Goyang','Total','Parah']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $keyword): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <button type="button" onclick="addKeyword('<?php echo e($keyword); ?>')"
+                                            class="px-3 py-1 bg-white border border-slate-200 rounded-lg text-[8px] font-black text-slate-500 hover:bg-navy-900 hover:text-gold-500 hover:border-navy-900 transition-all shadow-sm">
+                                            + <?php echo e($keyword); ?>
+
+                                        </button>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </div>
+                                <p class="text-[9px] text-slate-400 mt-2 font-semibold">
+                                    <i class="fas fa-info-circle mr-1"></i> Perubahan teks ini akan otomatis mengupdate skor AI saat disimpan.
+                                </p>
+                            </div>
+                        </div>
+
+                        
+                        <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-8">
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="w-8 h-8 bg-navy-500 rounded-xl flex items-center justify-center text-white shrink-0">
+                                    <i class="fas fa-map-marker-alt text-xs"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-black text-navy-900 uppercase tracking-wider">Lokasi Geografis</h4>
+                                    <p class="text-[9px] text-slate-400 font-semibold mt-0.5">Geser marker di peta atau isi koordinat secara manual</p>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-5 mb-5">
+                                <div>
+                                    <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">Latitude</label>
+                                    <input type="text" name="latitude" id="lat-input"
+                                           value="<?php echo e($inf->latitude); ?>"
+                                           class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">Longitude</label>
+                                    <input type="text" name="longitude" id="lng-input"
+                                           value="<?php echo e($inf->longitude); ?>"
+                                           class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                                </div>
+                            </div>
+
+                            <div id="edit-map" class="w-full rounded-2xl overflow-hidden" style="height: 260px;"></div>
+                            <p class="text-[9px] text-slate-400 font-semibold mt-2">
+                                <i class="fas fa-hand-pointer mr-1 text-gold-500"></i> Klik dan geser marker untuk memperbarui koordinat.
+                            </p>
+                        </div>
+
+                    </div>
+
                     
                     <div class="space-y-6">
-                        <div class="border-l-4 border-blue-500 pl-4 mb-4">
-                            <h4 class="text-sm font-black text-[#1e1b4b] uppercase tracking-wider">1. Identitas & Wilayah</h4>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-[10px] font-black text-[#1e1b4b] tracking-widest mb-2">Nama Infrastruktur</label>
-                                <input type="text" name="nama_infrastruktur" value="<?php echo e($inf->nama_objek ?? $inf->nama_infrastruktur); ?>" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500 transition-all" required>
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Jenis</label>
-                                <select name="jenis_infrastruktur" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold outline-none">
-                                    <option value="Jalan" <?php echo e((strtolower($inf->jenis) == 'jalan') ? 'selected' : ''); ?>>Jalan</option>
-                                    <option value="Sanitasi" <?php echo e((strtolower($inf->jenis) == 'sanitasi') ? 'selected' : ''); ?>>Sanitasi</option>
-                                    <option value="Titian" <?php echo e((strtolower($inf->jenis) == 'titian') ? 'selected' : ''); ?>>Titian</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Kecamatan</label>
-                                <select name="id_kecamatan" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold">
-                                    <?php $__currentLoopData = $semuaKecamatan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kec): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($kec->id_kecamatan); ?>" <?php echo e($inf->id_kecamatan == $kec->id_kecamatan ? 'selected' : ''); ?>><?php echo e($kec->nama_kecamatan); ?></option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Kelurahan</label>
-                                <select name="id_kelurahan" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold">
-                                    <?php $__currentLoopData = $semuaKelurahan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($kel->id_kelurahan); ?>" <?php echo e($inf->id_kelurahan == $kel->id_kelurahan ? 'selected' : ''); ?>><?php echo e($kel->nama_kelurahan); ?></option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="space-y-6 pt-6 border-t border-gray-100">
-                        <div class="border-l-4 border-orange-500 pl-4 mb-4">
-                            <h4 class="text-sm font-black text-[#1e1b4b] uppercase tracking-wider">2. Detail Teknis & Kondisi (AI Parameter)</h4>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div>
-                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Material Utama <span class="text-red-500">*</span></label>
-                                <input type="text" name="material_eksisting" value="<?php echo e($inf->material_eksisting); ?>" placeholder="Contoh: Kayu Ulin, Beton, Paving" class="w-full px-5 py-3 bg-orange-50/30 border border-orange-100 rounded-2xl text-sm font-semibold outline-none focus:border-orange-500" required>
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Panjang (m) <span class="text-red-500">*</span></label>
-                                <input type="number" step="0.01" name="panjang" value="<?php echo e($inf->panjang); ?>" placeholder="0.00" class="w-full px-5 py-3 bg-orange-50/30 border border-orange-100 rounded-2xl text-sm font-semibold outline-none focus:border-orange-500" required>
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Lebar (m) <span class="text-red-500">*</span></label>
-                                <input type="number" step="0.01" name="lebar" value="<?php echo e($inf->lebar); ?>" placeholder="0.00" class="w-full px-5 py-3 bg-orange-50/30 border border-orange-100 rounded-2xl text-sm font-semibold outline-none focus:border-orange-500" required>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Ketersediaan Drainase</label>
-                            <select name="has_drainase" class="w-full px-5 py-3 bg-orange-50/30 border border-orange-100 rounded-2xl text-sm font-semibold outline-none focus:border-orange-500">
-                                <option value="ya" <?php echo e($inf->has_drainase == 'ya' ? 'selected' : ''); ?>>Ada Drainase</option>
-                                <option value="tidak" <?php echo e($inf->has_drainase == 'tidak' ? 'selected' : ''); ?>>Tidak Ada Drainase</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Deskripsi Kerusakan (Trigger Decision Tree) <span class="text-red-500">*</span></label>
-                            <textarea name="kondisi" id="kondisi-textarea" rows="3" class="w-full px-5 py-3 bg-orange-50/30 border border-orange-100 rounded-2xl text-sm font-semibold outline-none focus:border-orange-500" placeholder="Contoh: titian putus, cor beton retak, amblas" required><?php echo e($inf->kondisi); ?></textarea>
-                            <div class="mt-2 flex flex-wrap gap-2">
-                                <?php $__currentLoopData = ['Putus', 'Hancur', 'Amblas', 'Retak', 'Lubang', 'Goyang', 'Total', 'Parah']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $keyword): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <button type="button" onclick="addKeyword('<?php echo e($keyword); ?>')" class="px-2 py-0.5 bg-white border border-gray-100 rounded-lg text-[8px] font-bold text-gray-500 hover:bg-orange-500 hover:text-white transition-all shadow-sm">
-                                        + <?php echo e($keyword); ?>
-
-                                    </button>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            </div>
-                            <p class="text-[9px] text-gray-400 mt-2 italic font-medium">* Perubahan teks ini akan otomatis mengupdate skor AI saat disimpan.</p>
-                        </div>
-                    </div>
-
-                    <div class="space-y-6 pt-6 border-t border-gray-100">
-                        <div class="border-l-4 border-indigo-500 pl-4 mb-4">
-                            <h4 class="text-sm font-black text-[#1e1b4b] uppercase tracking-wider">3. Lokasi Geografis</h4>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Latitude</label>
-                                <input type="text" name="latitude" id="lat-input" value="<?php echo e($inf->latitude); ?>" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold">
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-black text-[#1e1b4b] uppercase mb-2">Longitude</label>
-                                <input type="text" name="longitude" id="lng-input" value="<?php echo e($inf->longitude); ?>" class="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-semibold">
-                            </div>
-                        </div>
-                        <div id="edit-map" class="w-full h-48 rounded-3xl border border-gray-100 shadow-inner z-0"></div>
-                    </div>
-
-                    <div class="space-y-6 pt-6 border-t border-gray-100">
-                        <div class="border-l-4 border-emerald-500 pl-4 mb-4">
-                            <h4 class="text-sm font-black text-[#1e1b4b] uppercase tracking-wider">4. Dokumentasi Visual (Read-Only)</h4>
-                        </div>
-                        <div class="relative rounded-3xl overflow-hidden border border-gray-100 bg-gray-50 h-56 flex items-center justify-center group">
-                            <?php if($inf->foto_terbaru && $inf->foto_terbaru != 'default.jpg'): ?>
-                                <?php $cleanPath = str_replace('\\', '/', $inf->foto_terbaru); ?>
-                                <img src="<?php echo e(asset('storage/' . (str_contains($cleanPath, 'infrastruktur/') ? $cleanPath : 'infrastruktur/' . $cleanPath))); ?>" class="absolute inset-0 w-full h-full object-cover">
-                            <?php else: ?>
-                                <div class="text-center">
-                                    <i class="fas fa-image text-4xl text-gray-200 mb-2"></i>
-                                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Tidak ada foto</p>
+                        
+                        <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-8 h-8 bg-emerald-500 rounded-xl flex items-center justify-center text-white shrink-0">
+                                    <i class="fas fa-camera text-xs"></i>
                                 </div>
-                            <?php endif; ?>
-                            <div class="absolute inset-0 bg-black/20 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                <span class="bg-white/90 px-4 py-2 rounded-xl text-[10px] font-black text-[#1e1b4b] uppercase tracking-widest shadow-xl">
-                                    <i class="fas fa-lock mr-2 text-red-500"></i> Foto Tidak Dapat Diedit
-                                </span>
+                                <div>
+                                    <h4 class="text-sm font-black text-navy-900 uppercase tracking-wider">Foto Terkini</h4>
+                                    <p class="text-[9px] text-slate-400 font-semibold mt-0.5">Read-only — ubah via surveyor</p>
+                                </div>
+                            </div>
+
+                            <div class="relative rounded-2xl overflow-hidden border border-slate-100 bg-slate-50 h-52 flex items-center justify-center group">
+                                <?php if($inf->foto_terbaru && $inf->foto_terbaru != 'default.jpg'): ?>
+                                    <?php $cleanPath = str_replace('\\', '/', $inf->foto_terbaru); ?>
+                                    <img src="<?php echo e(asset('storage/' . (str_contains($cleanPath, 'infrastruktur/') ? $cleanPath : 'infrastruktur/' . $cleanPath))); ?>"
+                                         class="absolute inset-0 w-full h-full object-cover">
+                                <?php else: ?>
+                                    <div class="text-center">
+                                        <i class="fas fa-image text-5xl text-slate-200 mb-2 block"></i>
+                                        <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Tidak Ada Foto</p>
+                                    </div>
+                                <?php endif; ?>
+                                <div class="absolute inset-0 bg-black/30 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <span class="bg-white/90 px-4 py-2 rounded-xl text-[9px] font-black text-navy-900 uppercase tracking-widest shadow-xl">
+                                        <i class="fas fa-lock mr-1 text-red-400"></i> Tidak Dapat Diedit
+                                    </span>
+                                </div>
                             </div>
                         </div>
+
+                        
+                        <div class="bg-navy-900 rounded-3xl p-6 text-white">
+                            <h5 class="text-[10px] font-black text-gold-500 uppercase tracking-widest mb-4">
+                                <i class="fas fa-robot mr-1"></i> Informasi AI
+                            </h5>
+                            <?php
+                                $dtData  = \Illuminate\Support\Facades\DB::table('analisis_ai')->where('id_infrastruktur', $inf->id_infrastruktur)->first();
+                                $cnnData = \Illuminate\Support\Facades\DB::table('citra_cnn')->where('id_infrastruktur', $inf->id_infrastruktur)->first();
+                            ?>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center py-2 border-b border-white/10">
+                                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">CNN Score</span>
+                                    <span class="text-xs font-black text-gold-500"><?php echo e($cnnData ? round($cnnData->skor_cnn * 100).'%' : '—'); ?></span>
+                                </div>
+                                <div class="flex justify-between items-center py-2 border-b border-white/10">
+                                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">CNN Label</span>
+                                    <span class="text-[10px] font-black text-white"><?php echo e($cnnData->label_kondisi ?? 'Belum Dianalisis'); ?></span>
+                                </div>
+                                <div class="flex justify-between items-center py-2 border-b border-white/10">
+                                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">DT Score</span>
+                                    <span class="text-xs font-black text-gold-500"><?php echo e($dtData->skor_dt ?? '0'); ?>/100</span>
+                                </div>
+                                <div class="flex justify-between items-center py-2">
+                                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Prioritas</span>
+                                    <span class="text-[10px] font-black text-white"><?php echo e($dtData->label_prioritas ?? $inf->kondisi); ?></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                        <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6 space-y-3">
+                            <button type="submit"
+                                class="w-full flex items-center justify-center gap-2 bg-navy-900 hover:bg-navy-950 text-white py-3.5 rounded-2xl font-black text-[11px] tracking-widest transition-all shadow-lg shadow-navy-900/20 uppercase">
+                                <i class="fas fa-save"></i> Update & Jalankan AI
+                            </button>
+                            <a href="<?php echo e(route('admin.infrastruktur')); ?>"
+                                class="w-full flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-500 py-3.5 rounded-2xl font-black text-[11px] tracking-widest transition-all uppercase">
+                                <i class="fas fa-times"></i> Batal
+                            </a>
+                        </div>
+
                     </div>
 
-                    <div class="flex gap-4 pt-8 mt-4 border-t border-gray-100">
-                        <button type="submit" class="flex-1 bg-[#1e1b4b] text-white py-4 rounded-2xl font-black text-[11px] tracking-widest hover:bg-black transition-all shadow-xl shadow-indigo-100 uppercase">
-                            <i class="fas fa-save mr-2"></i> Update & Jalankan AI
-                        </button>
-                        <a href="<?php echo e(route('admin.infrastruktur')); ?>" class="flex-1 bg-gray-100 text-gray-500 py-4 rounded-2xl font-black text-[11px] tracking-widest hover:bg-gray-200 transition text-center flex items-center justify-center uppercase">
-                            Batal
-                        </a>
-                    </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </main>
 
     <script>
-        function addKeyword(word) {
-            const textarea = document.getElementById('kondisi-textarea');
-            const currentVal = textarea.value.trim();
-            if (currentVal === "") {
-                textarea.value = word;
-            } else {
-                textarea.value = currentVal + ", " + word;
-            }
-            textarea.focus();
-        }
-
+        // Clock
         function updateClock() {
             const now = new Date();
-            document.getElementById('mini-clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WITA`;
+            document.getElementById('mini-clock').textContent =
+                `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')} WITA`;
         }
         setInterval(updateClock, 1000); updateClock();
 
+        // Keyword chips
+        function addKeyword(word) {
+            const ta = document.getElementById('kondisi-textarea');
+            ta.value = ta.value.trim() ? ta.value.trim() + ', ' + word : word;
+            ta.focus();
+        }
+
+        // Leaflet map
         const latInput = document.getElementById('lat-input');
         const lngInput = document.getElementById('lng-input');
         const lat = parseFloat(latInput.value) || -3.316694;
         const lng = parseFloat(lngInput.value) || 114.590111;
-        
-        const map = L.map('edit-map').setView([lat, lng], 15);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        const map = L.map('edit-map', { zoomControl: true }).setView([lat, lng], 15);
+        L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+            maxZoom: 20, subdomains: ['mt0','mt1','mt2','mt3']
+        }).addTo(map);
+
         const marker = L.marker([lat, lng], { draggable: true }).addTo(map);
 
         marker.on('dragend', function () {
-            const position = marker.getLatLng();
-            latInput.value = position.lat.toFixed(8);
-            lngInput.value = position.lng.toFixed(8);
+            const pos = marker.getLatLng();
+            latInput.value = pos.lat.toFixed(8);
+            lngInput.value = pos.lng.toFixed(8);
         });
 
         [latInput, lngInput].forEach(input => {

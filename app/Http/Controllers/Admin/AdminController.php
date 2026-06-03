@@ -41,7 +41,11 @@ class AdminController extends Controller
 
         $this->logActivity('verification', "Verifikasi Aset: {$infra->nama_objek}", $id);
 
-        return redirect()->back()->with('success', "Aset {$infra->nama_objek} berhasil diverifikasi.");
+        // Kirim Notifikasi WA ke Kabid bahwa ada data yang perlu di-ACC
+        $infra->load(['kelurahan.kecamatan', 'user']);
+        \App\Services\WhatsAppService::sendApprovalNotification($infra);
+
+        return redirect()->back()->with('success', "Aset {$infra->nama_objek} berhasil diverifikasi. Notifikasi dikirim ke Kabid.");
     }
 
     private function logActivity($type, $description, $referenceId = null)
@@ -89,14 +93,29 @@ class AdminController extends Controller
     /**
      * Menampilkan Statistik Tahunan Berbasis Batang (Bar Chart) & Rekapitulasi Wilayah AI
      */
-    public function statistikTahunan()
+    public function statistikTahunan(Request $request)
     {
-        $year = date('Y');
+        $year = $request->query('year', date('Y'));
+        
+        $availableYears = DB::table('infrastruktur')
+            ->select(DB::raw('YEAR(COALESCE(tgl_survey, created_at)) as year'))
+            ->whereNotNull(DB::raw('COALESCE(tgl_survey, created_at)'))
+            ->groupBy('year')
+            ->orderBy('year', 'desc')
+            ->pluck('year')
+            ->toArray();
+        if (empty($availableYears)) {
+            $availableYears = [date('Y')];
+        }
+        if (!in_array($year, $availableYears)) {
+            $availableYears[] = (int) $year;
+            rsort($availableYears);
+        }
         
         // Data Perbulan (Jan - Des)
         $monthlyData = DB::table('infrastruktur')
-            ->select(DB::raw('MONTH(created_at) as month'), DB::raw('count(*) as total'))
-            ->whereYear('created_at', $year)
+            ->select(DB::raw('MONTH(COALESCE(tgl_survey, created_at)) as month'), DB::raw('count(*) as total'))
+            ->where(DB::raw('YEAR(COALESCE(tgl_survey, created_at))'), $year)
             ->whereNull('deleted_at')
             ->groupBy('month')
             ->get()
@@ -112,7 +131,7 @@ class AdminController extends Controller
         // Statistik per Jenis (Tahunan)
         $statsJenis = DB::table('infrastruktur')
             ->select('jenis', DB::raw('count(*) as total'))
-            ->whereYear('created_at', $year)
+            ->where(DB::raw('YEAR(COALESCE(tgl_survey, created_at))'), $year)
             ->whereNull('deleted_at')
             ->groupBy('jenis')
             ->get();
@@ -125,7 +144,7 @@ class AdminController extends Controller
                 ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
                 ->leftJoin('analisis_ai', 'infrastruktur.id_infrastruktur', '=', 'analisis_ai.id_infrastruktur')
                 ->where('kelurahan.id_kecamatan', $kec->id_kecamatan)
-                ->whereYear('infrastruktur.created_at', $year)
+                ->where(DB::raw('YEAR(COALESCE(infrastruktur.tgl_survey, infrastruktur.created_at))'), $year)
                 ->whereNull('infrastruktur.deleted_at')
                 ->select(
                     DB::raw("COUNT(CASE WHEN LOWER(analisis_ai.label_prioritas) LIKE '%baik%' THEN 1 END) as baik"),
@@ -147,7 +166,7 @@ class AdminController extends Controller
             ];
         }
 
-        return view('admin.statistik-tahunan', compact('chartData', 'statsJenis', 'kondisiKecamatan', 'year'));
+        return view('admin.statistik-tahunan', compact('chartData', 'statsJenis', 'kondisiKecamatan', 'year', 'availableYears'));
     }
 
     // ==========================================================
@@ -559,20 +578,22 @@ class AdminController extends Controller
         }
 
         // UPDATE MENGGUNAKAN MODEL (Memicu AI Update otomatis)
+        // Catatan: jenis_infrastruktur & jenis TIDAK diupdate dari form karena
+        // sudah menjadi read-only — ditentukan otomatis oleh sistem AI (CNN).
         $infra->update([
-            'id_kelurahan' => $request->id_kelurahan,
-            'jenis_infrastruktur' => $request->jenis_infrastruktur,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude,
-            'kondisi' => $request->kondisi, 
+            'id_kelurahan'       => $request->id_kelurahan,
+            'latitude'           => $request->latitude,
+            'longitude'          => $request->longitude,
+            'kondisi'            => $request->kondisi,
             'material_eksisting' => $request->material_eksisting,
-            'panjang' => $request->panjang,
-            'lebar' => $request->lebar,
-            'has_drainase' => $request->has_drainase,
-            'foto_terbaru' => $namaFoto,
-            'nama_objek' => $request->nama_infrastruktur, 
-            'jenis' => strtolower($request->jenis_infrastruktur),
-            'status_verifikasi' => $request->status_verifikasi ?? $infra->status_verifikasi,
+            'panjang'            => $request->panjang,
+            'lebar'              => $request->lebar,
+            'has_drainase'       => $request->has_drainase,
+            'has_gorong_gorong'  => $request->has_gorong_gorong,
+            'foto_terbaru'       => $namaFoto,
+            'nama_objek'         => $request->nama_infrastruktur,
+            'status_verifikasi'  => $request->status_verifikasi ?? $infra->status_verifikasi,
+            // jenis & jenis_infrastruktur dipertahankan dari nilai database (tidak diubah)
         ]);
 
         if ($request->hasFile('foto')) {

@@ -1,7 +1,7 @@
-<aside class="w-64 bg-[#1e1b4b] text-white flex flex-col hidden md:flex shadow-2xl z-20 text-left">
+<aside class="w-64 bg-navy-900 text-white flex flex-col hidden md:flex shadow-2xl z-20 text-left">
     <div class="p-6 flex-1 text-left">
         <a href="{{ route('surveyor.dashboard') }}" class="flex items-center gap-3 mb-10 hover:opacity-80 transition-opacity group">
-            <div class="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:scale-110 transition-transform">
+            <div class="w-8 h-8 bg-gold-500 rounded-lg flex items-center justify-center shadow-lg shadow-gold-500/20 group-hover:scale-110 transition-transform">
                 <i class="fas fa-camera text-xs text-white"></i>
             </div>
             <span class="font-extrabold text-xl tracking-tighter uppercase text-white">GEO-SINFRA</span>
@@ -9,26 +9,26 @@
         
         <nav class="space-y-1">
             <a href="{{ route('surveyor.dashboard') }}" 
-               class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('surveyor.dashboard') ? 'bg-emerald-600 text-white font-bold shadow-lg shadow-emerald-900/20' : 'text-gray-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-th-large {{ request()->routeIs('surveyor.dashboard') ? '' : 'group-hover:text-emerald-400' }}"></i> 
+               class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('surveyor.dashboard') ? 'bg-gold-500 text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
+                <i class="fas fa-th-large {{ request()->routeIs('surveyor.dashboard') ? '' : 'group-hover:text-gold-400' }}"></i> 
                 Dashboard
             </a>
 
             <a href="{{ route('surveyor.input') }}" 
-               class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('surveyor.input') ? 'bg-emerald-600 text-white font-bold shadow-lg shadow-emerald-900/20' : 'text-gray-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-plus-circle {{ request()->routeIs('surveyor.input') ? '' : 'group-hover:text-emerald-400' }}"></i> 
+               class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('surveyor.input') ? 'bg-gold-500 text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
+                <i class="fas fa-plus-circle {{ request()->routeIs('surveyor.input') ? '' : 'group-hover:text-gold-400' }}"></i> 
                 Input Data Lapangan
             </a>
 
             <a href="{{ route('surveyor.history') }}" 
-               class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('surveyor.history') ? 'bg-emerald-600 text-white font-bold shadow-lg shadow-emerald-900/20' : 'text-gray-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-history {{ request()->routeIs('surveyor.history') ? '' : 'group-hover:text-emerald-400' }}"></i> 
+               class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('surveyor.history') ? 'bg-gold-500 text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
+                <i class="fas fa-history {{ request()->routeIs('surveyor.history') ? '' : 'group-hover:text-gold-400' }}"></i> 
                 Riwayat Data Saya
             </a>
 
             <a href="{{ route('surveyor.map') }}" 
-               class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('surveyor.map') ? 'bg-emerald-600 text-white font-bold shadow-lg shadow-emerald-900/20' : 'text-gray-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-map-marked-alt {{ request()->routeIs('surveyor.map') ? '' : 'group-hover:text-emerald-400' }}"></i> 
+               class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('surveyor.map') ? 'bg-gold-500 text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
+                <i class="fas fa-map-marked-alt {{ request()->routeIs('surveyor.map') ? '' : 'group-hover:text-gold-400' }}"></i> 
                 Peta Sebaran Saya
             </a>
         </nav>

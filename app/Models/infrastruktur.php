@@ -42,6 +42,7 @@ class Infrastruktur extends Model
         'has_gorong_gorong',
         'rencana_perbaikan',
         'status_verifikasi',
+        'status_validasi',
         'tgl_survey',
     ];
 

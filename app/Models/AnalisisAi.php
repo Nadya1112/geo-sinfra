@@ -70,30 +70,33 @@ class AnalisisAi extends Model
         $cnn = \Illuminate\Support\Facades\DB::table('citra_cnn')->where('id_infrastruktur', $id)->first();
         $skorCnn = $cnn ? $cnn->skor_cnn : 0;
 
-        // 3. Logika Decision Tree (DT)
-        $skor = 0;
-        if (str_contains($kondisi, 'berat') || str_contains($kondisi, 'putus') || str_contains($kondisi, 'total')) {
-            $skor = 85;
-        } elseif (str_contains($kondisi, 'sedang') || str_contains($kondisi, 'retak') || str_contains($kondisi, 'lubang')) {
-            $skor = 50;
-            if (str_contains($material, 'kayu') || str_contains($material, 'ulin')) $skor += 15;
-        } else {
-            $skor = 20;
+        // 3. Base Score dari Prediksi Visual (CNN)
+        // Agar skor akhir (skor_dt) selaras dengan rentang pengguna, kita jadikan skor CNN sebagai acuan utama
+        $skor = $skorCnn * 100;
+        
+        // 4. Analisis Teks (NLP Decision Tree) sebagai faktor penguat kecil (bukan pengubah drastis)
+        if (preg_match('/(hancur|putus|total|amblas|parah|longsor|roboh|hilang)/', $kondisi)) {
+            $skor += 15;
+        } elseif (preg_match('/(retak|lubang|goyang|rusak|tergenang|bolong|lapuk)/', $kondisi)) {
+            $skor += 5;
         }
 
-        // 4. Integrasi CNN (Meningkatkan Akurasi Visual)
-        if ($skorCnn > 0.7) $skor += 15;
-        $skor = min($skor, 100);
+        // 5. Analisis Parameter Lingkungan
+        if ($drainase == 'tidak') $skor += 2;
+        if (str_contains($material, 'tanah') || str_contains($material, 'kayu') || str_contains($material, 'ulin')) $skor += 3;
+        
+        // Pastikan skor berada dalam range 0 - 100
+        $skor = min(max(round($skor), 0), 100);
 
-        // 5. Penentuan Label Akhir
-        if ($skor >= 80 || $skorCnn > 0.85) {
+        // 5. Penentuan Label Akhir sesuai Range Pengguna (Berat: 65-100, Sedang: 35-64, Baik: 0-34)
+        if ($skor >= 65) {
             $label = 'Rusak Berat';
-            $rekom = "PRIORITAS UTAMA: Deteksi visual (" . round($skorCnn * 100) . "%) menunjukkan kerusakan kritis. Segera rehabilitasi.";
-        } elseif ($skor >= 40 || $skorCnn > 0.5) {
+            $rekom = "PRIORITAS UTAMA: Deteksi gabungan visual & laporan lapangan menunjukkan kerusakan kritis. Segera rehabilitasi.";
+        } elseif ($skor >= 35) {
             $label = 'Rusak Sedang';
             $rekom = "Perlu pemeliharaan rutin dan perbaikan pada area terdampak visual.";
         } else {
-            $label = 'Rusak Ringan';
+            $label = 'Baik';
             $rekom = "Kondisi terkendali, lakukan pemantauan berkala.";
         }
 

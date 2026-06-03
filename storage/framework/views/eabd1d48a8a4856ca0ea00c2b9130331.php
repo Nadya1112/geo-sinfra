@@ -1,54 +1,52 @@
-<aside class="w-64 bg-[#1e1b4b] text-white flex flex-col hidden md:flex shadow-2xl z-20 text-left">
+<aside class="w-64 bg-[#0f0e2c] text-white flex flex-col hidden md:flex shadow-2xl z-20 text-left border-r border-white/5">
     <div class="p-6 flex-1 text-left">
-        <a href="<?php echo e(route('admin.dashboard')); ?>" class="flex items-center gap-3 mb-10 hover:opacity-80 transition-opacity group">
-            <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
-                <i class="fas fa-city text-xs text-white"></i>
+        <a href="<?php echo e(route('admin.dashboard')); ?>" class="flex items-center gap-3 mb-10 hover:opacity-85 transition-opacity group">
+            <div class="w-9 h-9 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 shadow-lg shadow-navy-950/40 group-hover:scale-105 transition-all">
+                <i class="fas fa-globe-asia text-xs"></i>
             </div>
-            <span class="font-extrabold text-xl tracking-tighter uppercase text-white">GEO-SINFRA</span>
+            <span class="font-extrabold text-lg tracking-tighter uppercase text-white">GEO-SINFRA</span>
         </a>
         
-        <nav class="space-y-1">
+        <nav class="space-y-1.5">
             <a href="<?php echo e(route('admin.dashboard')); ?>" 
-               class="flex items-center gap-3 px-4 py-3 <?php echo e(request()->routeIs('admin.dashboard') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-900/20' : 'text-gray-400 hover:text-white hover:bg-white/5'); ?> rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-home <?php echo e(request()->routeIs('admin.dashboard') ? '' : 'group-hover:text-blue-400'); ?>"></i> 
+               class="flex items-center gap-3 px-4 py-3.5 <?php echo e(request()->routeIs('admin.dashboard') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5'); ?> rounded-xl text-sm font-semibold transition group text-left">
+                <i class="fas fa-home <?php echo e(request()->routeIs('admin.dashboard') ? '' : 'group-hover:text-gold-500'); ?>"></i> 
                 Dashboard
             </a>
 
             <a href="<?php echo e(route('admin.users')); ?>" 
-               class="flex items-center gap-3 px-4 py-3 <?php echo e(request()->routeIs('admin.users*') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-900/20' : 'text-gray-400 hover:text-white hover:bg-white/5'); ?> rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-users-cog <?php echo e(request()->routeIs('admin.users*') ? '' : 'group-hover:text-blue-400'); ?>"></i> 
+               class="flex items-center gap-3 px-4 py-3.5 <?php echo e(request()->routeIs('admin.users*') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5'); ?> rounded-xl text-sm font-semibold transition group text-left">
+                <i class="fas fa-users-cog <?php echo e(request()->routeIs('admin.users*') ? '' : 'group-hover:text-gold-500'); ?>"></i> 
                 Manajemen Pengguna
             </a>
 
             <a href="<?php echo e(route('admin.wilayah')); ?>" 
-               class="flex items-center gap-3 px-4 py-3 <?php echo e(request()->routeIs('admin.wilayah*') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-900/20' : 'text-gray-400 hover:text-white hover:bg-white/5'); ?> rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-sitemap <?php echo e(request()->routeIs('admin.wilayah*') ? '' : 'group-hover:text-blue-400'); ?>"></i> 
+               class="flex items-center gap-3 px-4 py-3.5 <?php echo e(request()->routeIs('admin.wilayah*') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5'); ?> rounded-xl text-sm font-semibold transition group text-left">
+                <i class="fas fa-sitemap <?php echo e(request()->routeIs('admin.wilayah*') ? '' : 'group-hover:text-gold-500'); ?>"></i> 
                 Manajemen Wilayah
             </a>
 
             <a href="<?php echo e(route('admin.infrastruktur')); ?>" 
-               class="flex items-center gap-3 px-4 py-3 <?php echo e(request()->routeIs('admin.infrastruktur*') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-900/20' : 'text-gray-400 hover:text-white hover:bg-white/5'); ?> rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-database <?php echo e(request()->routeIs('admin.infrastruktur*') ? '' : 'group-hover:text-blue-400'); ?>"></i> 
+               class="flex items-center gap-3 px-4 py-3.5 <?php echo e(request()->routeIs('admin.infrastruktur*') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5'); ?> rounded-xl text-sm font-semibold transition group text-left">
+                <i class="fas fa-database <?php echo e(request()->routeIs('admin.infrastruktur*') ? '' : 'group-hover:text-gold-500'); ?>"></i> 
                 Manajemen Infrastruktur
             </a>
 
-
-
             <a href="<?php echo e(route('admin.statistik')); ?>" 
-               class="flex items-center gap-3 px-4 py-3 <?php echo e(request()->routeIs('admin.statistik') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-900/20' : 'text-gray-400 hover:text-white hover:bg-white/5'); ?> rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-chart-bar <?php echo e(request()->routeIs('admin.statistik') ? '' : 'group-hover:text-blue-400'); ?>"></i> 
+               class="flex items-center gap-3 px-4 py-3.5 <?php echo e(request()->routeIs('admin.statistik') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5'); ?> rounded-xl text-sm font-semibold transition group text-left">
+                <i class="fas fa-chart-bar <?php echo e(request()->routeIs('admin.statistik') ? '' : 'group-hover:text-gold-500'); ?>"></i> 
                 Ringkasan Statistik
             </a>
 
             <a href="<?php echo e(route('admin.statistik.tahunan')); ?>" 
-               class="flex items-center gap-3 px-4 py-3 <?php echo e(request()->routeIs('admin.statistik.tahunan') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-900/20' : 'text-gray-400 hover:text-white hover:bg-white/5'); ?> rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-calendar-alt <?php echo e(request()->routeIs('admin.statistik.tahunan') ? '' : 'group-hover:text-blue-400'); ?>"></i> 
+               class="flex items-center gap-3 px-4 py-3.5 <?php echo e(request()->routeIs('admin.statistik.tahunan') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5'); ?> rounded-xl text-sm font-semibold transition group text-left">
+                <i class="fas fa-calendar-alt <?php echo e(request()->routeIs('admin.statistik.tahunan') ? '' : 'group-hover:text-gold-500'); ?>"></i> 
                 Statistik Tahunan
             </a>
         </nav>
     </div>
 
-    <div class="p-6 border-t border-white/5 text-left">
+    <div class="p-6 border-t border-white/5 text-left bg-navy-950/20">
         <form method="POST" action="<?php echo e(route('logout')); ?>">
             <?php echo csrf_field(); ?>
             <button type="submit" class="flex items-center gap-3 px-4 py-3 text-red-400 hover:text-red-300 w-full text-left text-sm font-bold transition group">

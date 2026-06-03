@@ -5,44 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitoring Peta | GEO-SINFRA</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: { 50: '#f0f4f8', 100: '#d9e2ec', 200: '#bcccdc', 300: '#9fb3c8', 400: '#829ab1', 500: '#627d98', 600: '#486581', 700: '#334e68', 800: '#243b53', 900: '#0f0e2c', 950: '#0a091d' },
+                        gold: { 50: '#fbf8f1', 100: '#f5ebd9', 200: '#eed9b9', 300: '#e5c292', 400: '#dba665', 500: '#c5a059', 600: '#b48135', 700: '#96652a', 800: '#7c5327', 900: '#644422', 950: '#382310' }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style> body { font-family: 'Plus Jakarta Sans', sans-serif; } </style>
 </head>
-<body class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 text-left">
+<body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800 text-left">
 
     <?php echo $__env->make('kabid.partials.sidebar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden">
-        <header class="bg-white border-b border-gray-100 px-8 py-5 flex justify-between items-center z-10">
+        <header class="bg-white border-b border-slate-100 px-8 py-5 flex justify-between items-center z-10 sticky top-0">
             <div class="flex items-center gap-4">
-                <a href="<?php echo e(route('kabid.dashboard')); ?>" class="w-10 h-10 flex items-center justify-center bg-gray-50 text-gray-400 rounded-xl hover:bg-indigo-50 hover:text-indigo-600 transition-all border border-gray-100">
+                <a href="<?php echo e(route('kabid.dashboard')); ?>" class="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
-                    <p class="text-[10px] font-extrabold text-indigo-600 uppercase tracking-[0.2em] mb-1">Visualisasi Geografis</p>
-                    <h2 class="text-xl font-black text-[#1e1b4b]">Monitoring Peta Sebaran</h2>
+                    <p class="text-[10px] font-extrabold text-rose-500 uppercase tracking-[0.2em] mb-1"><i class="fas fa-satellite-dish mr-1 animate-pulse"></i> Executive WebGIS</p>
+                    <h2 class="text-xl font-black text-navy-900">Peta Sebaran & Prioritas Penanganan</h2>
                 </div>
             </div>
             
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-[#1e1b4b]" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter"><?php echo e(now()->translatedFormat('l, d F Y')); ?></p>
+                    <p class="text-[11px] font-black text-navy-900" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter"><?php echo e(now()->translatedFormat('l, d F Y')); ?></p>
                 </div>
-                <div class="h-8 w-[1px] bg-gray-100"></div>
-                <a href="<?php echo e(route('kabid.profile')); ?>" class="flex items-center gap-3">
+                <div class="h-8 w-[1px] bg-slate-100"></div>
+                <a href="<?php echo e(route('kabid.profile')); ?>" class="flex items-center gap-3 group">
                     <div class="text-right">
-                        <p class="text-[11px] font-black text-[#1e1b4b] leading-none uppercase"><?php echo e(auth()->user()->name); ?></p>
-                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
+                        <p class="text-[11px] font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-colors"><?php echo e(auth()->user()->name); ?></p>
+                        <p class="text-[9px] font-bold text-[#059669] uppercase mt-1">ONLINE</p>
                     </div>
-                    <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 border border-indigo-100 overflow-hidden shadow-sm">
+                    <div class="w-10 h-10 bg-navy-50 rounded-xl flex items-center justify-center text-navy-900 border border-navy-100 overflow-hidden shadow-sm group-hover:border-gold-300 group-hover:shadow-md transition-all">
                         <?php if(auth()->user()->profile_photo): ?>
                             <img src="<?php echo e(asset('storage/' . auth()->user()->profile_photo)); ?>" class="w-full h-full object-cover">
                         <?php else: ?>
-                            <i class="fas fa-user-tie text-xl"></i>
+                            <i class="fas fa-user-tie text-xl group-hover:text-gold-500 transition-colors"></i>
                         <?php endif; ?>
                     </div>
                 </a>
@@ -54,20 +69,20 @@
 
             <!-- Custom Zoom Controls -->
             <div class="absolute top-6 left-6 z-10 flex flex-col gap-2">
-                <button onclick="map.zoomIn()" class="w-10 h-10 bg-[#1e1b4b]/80 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:bg-[#1e1b4b] transition-all group">
+                <button onclick="map.zoomIn()" class="w-10 h-10 bg-navy-900/80 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:bg-gold-500 transition-all group">
                     <i class="fas fa-plus text-[10px] group-hover:scale-110 transition-transform"></i>
                 </button>
-                <button onclick="map.zoomOut()" class="w-10 h-10 bg-[#1e1b4b]/80 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:bg-[#1e1b4b] transition-all group">
+                <button onclick="map.zoomOut()" class="w-10 h-10 bg-navy-900/80 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:bg-gold-500 transition-all group">
                     <i class="fas fa-minus text-[10px] group-hover:scale-110 transition-transform"></i>
                 </button>
             </div>
 
             <!-- Stats & Legend UI Bottom Left -->
             <div class="absolute bottom-10 left-6 z-10">
-                <div id="condition-card" class="bg-[#1e1b4b]/80 backdrop-blur-xl p-1.5 rounded-[2rem] border border-white/10 shadow-2xl min-w-[160px]">
-                    <button onclick="toggleMenu('condition-options')" class="w-full px-4 py-2.5 rounded-[1.5rem] text-[8px] font-black uppercase tracking-widest bg-white/10 text-white flex items-center justify-between shadow-sm hover:bg-white/20 transition-all group border border-white/5">
+                <div id="condition-card" class="bg-navy-900/80 backdrop-blur-xl p-1.5 rounded-[2rem] border border-white/10 shadow-2xl min-w-[160px]">
+                    <button onclick="toggleMenu('condition-options')" class="w-full px-4 py-2.5 rounded-[1.5rem] text-[8px] font-black uppercase tracking-widest bg-white/10 text-white flex items-center justify-between shadow-sm hover:bg-gold-500 hover:text-white transition-all group border border-white/5">
                         <div class="flex items-center gap-2.5">
-                            <div class="w-5 h-5 bg-indigo-500/20 text-indigo-400 rounded flex items-center justify-center">
+                            <div class="w-5 h-5 bg-gold-500/20 text-gold-400 group-hover:text-white rounded flex items-center justify-center transition-colors">
                                 <i class="fas fa-chart-pie text-[9px]"></i>
                             </div>
                             <span>Statistik</span>
@@ -76,30 +91,30 @@
                     </button>
                     
                     <div id="condition-options" class="mt-1.5 p-1 flex flex-col gap-0.5">
-                        <div class="w-full px-3.5 py-1.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-300 flex items-center justify-between group">
+                        <div class="w-full px-3.5 py-1.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-slate-300 flex items-center justify-between group">
                             <span>Total</span>
                             <span id="stat-total" class="text-[8px] font-black text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-md border border-blue-400/20">0</span>
                         </div>
-                        <div class="w-full px-3.5 py-1.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 flex items-center justify-between group">
+                        <div class="w-full px-3.5 py-1.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-slate-400 flex items-center justify-between group">
                             <div class="flex items-center gap-2.5">
-                                <div class="w-2 h-2 bg-emerald-500 rounded-full shadow-lg shadow-emerald-500/40"></div>
+                                <div class="w-2 h-2 bg-[#059669] rounded-full shadow-lg shadow-[#059669]/40"></div>
                                 <span>Baik</span>
                             </div>
-                            <span id="stat-baik" class="text-[8px] font-black text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-400/20">0</span>
+                            <span id="stat-baik" class="text-[8px] font-black text-[#059669] bg-[#059669]/10 px-2 py-0.5 rounded-md border border-[#059669]/20">0</span>
                         </div>
-                        <div class="w-full px-3.5 py-1.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 flex items-center justify-between group">
+                        <div class="w-full px-3.5 py-1.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-slate-400 flex items-center justify-between group">
                             <div class="flex items-center gap-2.5">
-                                <div class="w-2 h-2 bg-amber-500 rounded-full shadow-lg shadow-amber-500/40"></div>
-                                <span>Ringan</span>
+                                <div class="w-2 h-2 bg-[#d97706] rounded-full shadow-lg shadow-[#d97706]/40"></div>
+                                <span>Sedang</span>
                             </div>
-                            <span id="stat-ringan" class="text-[8px] font-black text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-400/20">0</span>
+                            <span id="stat-sedang" class="text-[8px] font-black text-[#d97706] bg-[#d97706]/10 px-2 py-0.5 rounded-md border border-[#d97706]/20">0</span>
                         </div>
-                        <div class="w-full px-3.5 py-1.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-gray-400 flex items-center justify-between group">
+                        <div class="w-full px-3.5 py-1.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-slate-400 flex items-center justify-between group">
                             <div class="flex items-center gap-2.5">
-                                <div class="w-2 h-2 bg-red-500 rounded-full shadow-lg shadow-red-500/40"></div>
+                                <div class="w-2 h-2 bg-[#be123c] rounded-full shadow-lg shadow-[#be123c]/40"></div>
                                 <span>Berat</span>
                             </div>
-                            <span id="stat-berat" class="text-[8px] font-black text-red-400 bg-red-500/10 px-2 py-0.5 rounded-md border border-red-400/20">0</span>
+                            <span id="stat-berat" class="text-[8px] font-black text-[#be123c] bg-[#be123c]/10 px-2 py-0.5 rounded-md border border-[#be123c]/20">0</span>
                         </div>
                     </div>
                 </div>
@@ -107,11 +122,11 @@
 
             <!-- Floating Filters Right (Combined) -->
             <div class="absolute top-6 right-6 z-10">
-                <div class="bg-[#1e1b4b]/80 backdrop-blur-xl p-1.5 rounded-[2.5rem] border border-white/10 shadow-2xl min-w-[170px]">
+                <div class="bg-navy-900/80 backdrop-blur-xl p-1.5 rounded-[2.5rem] border border-white/10 shadow-2xl min-w-[170px]">
                     
                     <!-- Kategori Section -->
                     <div class="p-0.5">
-                        <button onclick="toggleMenu('category-options')" class="w-full px-4 py-2.5 rounded-[1.5rem] text-[8px] font-black uppercase tracking-widest bg-indigo-600/90 text-white flex items-center justify-between shadow-lg hover:bg-indigo-600 transition-all group">
+                        <button onclick="toggleMenu('category-options')" class="w-full px-4 py-2.5 rounded-[1.5rem] text-[8px] font-black uppercase tracking-widest bg-gold-500/90 text-white flex items-center justify-between shadow-lg hover:bg-gold-500 transition-all group">
                             <div class="flex items-center gap-2.5">
                                 <i class="fas fa-layer-group text-[9px] opacity-70"></i>
                                 <span id="current-cat-label" class="truncate max-w-[90px]">Kategori Objek</span>
@@ -119,15 +134,15 @@
                             <i class="fas fa-chevron-down text-[7px]"></i>
                         </button>
                         <div id="category-options" class="hidden mt-1.5 p-1 flex flex-col gap-0.5">
-                            <button onclick="toggleType('Semua')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="Semua">
+                            <button onclick="toggleType('Semua')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="Semua">
                                 <div class="flex items-center gap-2.5">
-                                    <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-indigo-400 transition-colors">
-                                        <i class="fas fa-check text-[6px] text-indigo-400 check-icon" style="opacity:1"></i>
+                                    <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-gold-400 transition-colors">
+                                        <i class="fas fa-check text-[6px] text-gold-400 check-icon" style="opacity:1"></i>
                                     </div>
                                     <span class="group-hover:text-white transition-colors">Semua Objek</span>
                                 </div>
                             </button>
-                            <button onclick="toggleType('Jalan')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Jalan">
+                            <button onclick="toggleType('Jalan')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Jalan">
                                 <div class="flex items-center gap-2.5">
                                     <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors">
                                         <i class="fas fa-check text-[6px] text-blue-400 check-icon" style="opacity:1"></i>
@@ -136,7 +151,7 @@
                                 </div>
                                 <div class="w-2 h-2 rounded-full bg-blue-500 shadow-lg shadow-blue-500/40"></div>
                             </button>
-                            <button onclick="toggleType('Sanitasi')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Sanitasi">
+                            <button onclick="toggleType('Sanitasi')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Sanitasi">
                                 <div class="flex items-center gap-2.5">
                                     <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
                                         <i class="fas fa-check text-[6px] text-emerald-400 check-icon" style="opacity:1"></i>
@@ -145,7 +160,7 @@
                                 </div>
                                 <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/40"></div>
                             </button>
-                            <button onclick="toggleType('Titian')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Titian">
+                            <button onclick="toggleType('Titian')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Titian">
                                 <div class="flex items-center gap-2.5">
                                     <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-amber-400 transition-colors">
                                         <i class="fas fa-check text-[6px] text-amber-400 check-icon" style="opacity:1"></i>
@@ -155,7 +170,7 @@
                                 <div class="w-2 h-2 rounded-full bg-amber-500 shadow-lg shadow-amber-500/40"></div>
                             </button>
                             <div class="h-[1px] bg-white/5 my-1"></div>
-                            <button onclick="toggleKelurahanPoints()" class="w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" id="kel-toggle-btn">
+                            <button onclick="toggleKelurahanPoints()" class="w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" id="kel-toggle-btn">
                                 <div class="flex items-center gap-2.5">
                                     <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
                                         <i class="fas fa-check text-[6px] text-emerald-400" id="kel-check-icon" style="opacity:0"></i>
@@ -173,7 +188,7 @@
                     <div class="p-0.5">
                         <button onclick="toggleMenu('territory-options')" class="w-full px-4 py-2.5 rounded-[1.5rem] text-[8px] font-black uppercase tracking-widest bg-white/10 text-white flex items-center justify-between shadow-lg hover:bg-white/20 transition-all group border border-white/5">
                             <div class="flex items-center gap-2.5">
-                                <i class="fas fa-map-location-dot text-[9px] opacity-70 text-indigo-400"></i>
+                                <i class="fas fa-map-location-dot text-[9px] opacity-70 text-gold-400"></i>
                                 <span id="current-kec-label" class="truncate max-w-[90px]">Wilayah</span>
                             </div>
                             <i class="fas fa-chevron-down text-[7px]"></i>
@@ -189,19 +204,19 @@
                                 </div>
                             </button>
 
-                            <button onclick="toggleKecamatan('Semua')" class="kec-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group hidden" data-id="Semua">
+                            <button onclick="toggleKecamatan('Semua')" class="kec-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group hidden" data-id="Semua">
                                 <div class="flex items-center gap-2.5">
-                                    <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-indigo-400 transition-colors">
-                                        <i class="fas fa-check text-[6px] text-indigo-400 check-icon" style="opacity:1"></i>
+                                    <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-gold-400 transition-colors">
+                                        <i class="fas fa-check text-[6px] text-gold-400 check-icon" style="opacity:1"></i>
                                     </div>
                                     <span class="group-hover:text-white transition-colors">Semua Wilayah</span>
                                 </div>
                             </button>
                             <?php $__currentLoopData = $kecamatan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kec): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <button onclick="toggleKecamatan('<?php echo e($kec->id_kecamatan); ?>')" class="kec-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="<?php echo e($kec->id_kecamatan); ?>">
+                            <button onclick="toggleKecamatan('<?php echo e($kec->id_kecamatan); ?>')" class="kec-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="<?php echo e($kec->id_kecamatan); ?>">
                                 <div class="flex items-center gap-2.5">
-                                    <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-indigo-400 transition-colors">
-                                        <i class="fas fa-check text-[6px] text-indigo-400 check-icon" style="opacity:1"></i>
+                                    <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-gold-400 transition-colors">
+                                        <i class="fas fa-check text-[6px] text-gold-400 check-icon" style="opacity:1"></i>
                                     </div>
                                     <span class="truncate max-w-[80px] group-hover:text-white transition-colors text-left"><?php echo e($kec->nama_kecamatan); ?></span>
                                 </div>
@@ -214,30 +229,30 @@
             </div>
             <!-- Layer Switcher -->
             <div class="absolute bottom-10 right-6 z-10">
-                <div class="bg-[#1e1b4b]/80 backdrop-blur-xl p-2 rounded-[2.5rem] border border-white/10 shadow-2xl">
-                    <button onclick="toggleMenu('layer-options')" class="w-12 h-12 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-all group border border-white/5">
+                <div class="bg-navy-900/80 backdrop-blur-xl p-2 rounded-[2.5rem] border border-white/10 shadow-2xl">
+                    <button onclick="toggleMenu('layer-options')" class="w-12 h-12 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-gold-500 transition-all group border border-white/5">
                         <i class="fas fa-layer-group text-sm"></i>
                     </button>
-                    <div id="layer-options" class="hidden absolute bottom-full right-0 mb-3 p-2 bg-[#1e1b4b]/90 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl flex flex-col gap-2 min-w-[140px]">
+                    <div id="layer-options" class="hidden absolute bottom-full right-0 mb-3 p-2 bg-navy-900/90 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl flex flex-col gap-2 min-w-[140px]">
                         <button onclick="changeBaseLayer('google')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 transition-all group">
                             <i class="fab fa-google text-blue-400 text-[10px]"></i>
-                            <span class="text-[9px] font-black uppercase tracking-widest text-gray-300">Google Maps</span>
+                            <span class="text-[9px] font-black uppercase tracking-widest text-slate-300">Google Maps</span>
                         </button>
                         <button onclick="changeBaseLayer('satellite')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 transition-all group">
                             <i class="fas fa-satellite text-emerald-400 text-[10px]"></i>
-                            <span class="text-[9px] font-black uppercase tracking-widest text-gray-300">Satelit</span>
+                            <span class="text-[9px] font-black uppercase tracking-widest text-slate-300">Satelit</span>
                         </button>
                         <button onclick="changeBaseLayer('dark')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 transition-all group">
-                            <i class="fas fa-moon text-indigo-400 text-[10px]"></i>
-                            <span class="text-[9px] font-black uppercase tracking-widest text-gray-300">Dark Mode</span>
+                            <i class="fas fa-moon text-gold-400 text-[10px]"></i>
+                            <span class="text-[9px] font-black uppercase tracking-widest text-slate-300">Dark Mode</span>
                         </button>
                         <button onclick="changeBaseLayer('greyscale')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 transition-all group">
-                            <i class="fas fa-adjust text-gray-300 text-[10px]"></i>
-                            <span class="text-[9px] font-black uppercase tracking-widest text-gray-300">Greyscale</span>
+                            <i class="fas fa-adjust text-slate-300 text-[10px]"></i>
+                            <span class="text-[9px] font-black uppercase tracking-widest text-slate-300">Greyscale</span>
                         </button>
                         <button onclick="changeBaseLayer('osm')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 transition-all group">
                             <i class="fas fa-map-marked-alt text-amber-400 text-[10px]"></i>
-                            <span class="text-[9px] font-black uppercase tracking-widest text-gray-300">OSM Default</span>
+                            <span class="text-[9px] font-black uppercase tracking-widest text-slate-300">OSM Default</span>
                         </button>
                     </div>
                 </div>
@@ -297,7 +312,7 @@
                         this.setStyle({ fillOpacity: 0.35, weight: 2.5 });
                     }); // Do NOT add to map yet — applyFilters() controls visibility
 
-                    poly.bindPopup(`<p class="text-[10px] font-black text-[#1e1b4b] uppercase">${kec.nama_kecamatan}</p>`, { 
+                    poly.bindPopup(`<p class="text-[10px] font-black text-navy-900 uppercase">${kec.nama_kecamatan}</p>`, { 
                         className: 'custom-polygon-popup', 
                         closeButton: false 
                     });
@@ -316,36 +331,76 @@
 
             points.forEach(point => {
                 const kondisiAktual = point.analisis?.label_prioritas || point.kondisi;
-                const isBaik = kondisiAktual.toLowerCase().includes('baik');
-                const isRingan = kondisiAktual.toLowerCase().includes('ringan') || kondisiAktual.toLowerCase().includes('sedang');
+                let isBaik = kondisiAktual.toLowerCase().includes('baik');
+                let isRingan = kondisiAktual.toLowerCase().includes('ringan') || kondisiAktual.toLowerCase().includes('sedang');
+                let isBerat = !isBaik && !isRingan;
+                
+                // Override jika sudah selesai diperbaiki
+                const isSelesai = point.status_perbaikan === 'Selesai';
+                if (isSelesai) {
+                    isBaik = true;
+                    isRingan = false;
+                    isBerat = false;
+                }
+
                 const color = isBaik ? '#10b981' : (isRingan ? '#f59e0b' : '#ef4444');
+                const pulseHtml = isBerat ? `<div class="absolute inset-0 rounded-full animate-ping bg-rose-500 opacity-75"></div>` : '';
+                
                 const icon = L.divIcon({
-                    html: `<div style="background-color: ${color}; width: 14px; height: 14px; border-radius: 50%; border: 2.5px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);"></div>`,
-                    className: '', iconSize: [14, 14], iconAnchor: [7, 7]
+                    html: `<div class="relative w-[16px] h-[16px] group">
+                               ${pulseHtml}
+                               <div class="absolute inset-0 rounded-full border-[2.5px] border-white shadow-lg flex items-center justify-center" style="background-color: ${color}; z-index: 10;">
+                                    ${isSelesai ? '<i class="fas fa-check text-[7px] text-white"></i>' : ''}
+                               </div>
+                           </div>`,
+                    className: '', iconSize: [16, 16], iconAnchor: [8, 8]
                 });
+                let imagePath = point.foto_terbaru || '';
+                if(imagePath && !imagePath.includes('infrastruktur/')) {
+                    imagePath = 'infrastruktur/' + imagePath;
+                }
+                imagePath = imagePath.replace(/\\/g, '/');
+                
+                let finalUrl = '';
+                const rawJenis = point.jenis_infrastruktur || point.jenis || '-';
+                if (imagePath) {
+                    finalUrl = `/storage/${imagePath}`;
+                } else {
+                    const type = rawJenis.toLowerCase();
+                    let typeStr = 'jalan';
+                    if (type.includes('titian')) typeStr = 'titian';
+                    else if (type.includes('jembatan')) typeStr = 'jembatan';
+                    
+                    let condStr = 'baik';
+                    const pLower = kondisiAktual.toLowerCase();
+                    if (pLower.includes('berat')) condStr = 'rusak_berat';
+                    else if (pLower.includes('sedang') || pLower.includes('ringan')) condStr = 'rusak_sedang';
+
+                    finalUrl = `/dummy_${typeStr}_${condStr}.jpg`;
+                }
 
                 const popupContent = `
                     <div class="p-1" style="min-width: 240px;">
-                        <div class="relative h-32 rounded-2xl bg-gray-100 mb-3 overflow-hidden shadow-inner">
-                            <img src="/storage/${point.foto_terbaru}" class="w-full h-full object-cover">
-                            <div class="absolute top-2 left-2 px-2 py-1 bg-white/90 backdrop-blur-md rounded-lg text-[7px] font-black uppercase tracking-widest text-[#1e1b4b]">
-                                ${point.jenis_infrastruktur || point.jenis || '-'}
+                        <div class="relative h-32 rounded-2xl bg-slate-100 mb-3 overflow-hidden shadow-inner">
+                            <img src="${finalUrl}" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                            <div class="absolute top-2 left-2 px-2 py-1 bg-white/90 backdrop-blur-md rounded-lg text-[7px] font-black uppercase tracking-widest text-navy-900">
+                                ${rawJenis}
                             </div>
                         </div>
                         <div class="px-1">
-                            <h4 class="text-xs font-black text-[#1e1b4b] mb-1">${point.nama_objek || point.nama_infrastruktur || '-'}</h4>
-                            <p class="text-[8px] text-gray-400 font-bold uppercase mb-3">Wilayah: ${point.kelurahan?.nama_kelurahan ?? '-'}</p>
+                            <h4 class="text-xs font-black text-navy-900 mb-1">${point.nama_objek || point.nama_infrastruktur || '-'}</h4>
+                            <p class="text-[8px] text-slate-400 font-bold uppercase mb-3">Wilayah: ${point.kelurahan?.nama_kelurahan ?? '-'}</p>
                             
                             <div class="flex items-center gap-2 mb-3">
                                 <span class="px-2 py-1 rounded-full text-[7px] font-black uppercase tracking-widest" style="background-color: ${color}15; color: ${color}; border: 1px solid ${color}30;">
-                                    ${kondisiAktual}
+                                    ${isSelesai ? 'SUDAH DIPERBAIKI' : kondisiAktual}
                                 </span>
-                                <span class="px-2 py-1 bg-indigo-50 text-indigo-600 rounded-full text-[7px] font-black uppercase border border-indigo-100">
+                                <span class="px-2 py-1 bg-navy-50 text-navy-600 rounded-full text-[7px] font-black uppercase border border-navy-100">
                                     By: ${point.user?.name ?? 'Surveyor'}
                                 </span>
                             </div>
 
-                            <a href="#" class="block w-full py-2 bg-[#1e1b4b] text-white rounded-xl text-[8px] font-black uppercase tracking-widest text-center hover:bg-indigo-600 transition-all shadow-lg shadow-indigo-900/10">Detail Laporan</a>
+                            <a href="#" class="block w-full py-2 bg-navy-900 text-white rounded-xl text-[8px] font-black uppercase tracking-widest text-center hover:bg-gold-500 transition-all shadow-lg shadow-navy-900/10">Detail Laporan</a>
                         </div>
                     </div>
                 `;
@@ -378,20 +433,27 @@
                             },
                             style: {
                                 fillColor: 'transparent',
-                                weight: 1.5,
-                                opacity: 1,
-                                color: '#10b981',
-                                fillOpacity: 0
+                                weight: 2,
+                                opacity: 0.8,
+                                color: '#94a3b8',
+                                fillOpacity: 0,
+                                dashArray: '5, 5' // Tetap putus-putus
                             }
                         }).addTo(map);
 
-                        poly.bindPopup(`<p class="text-[10px] font-black text-[#1e1b4b] uppercase">${kel.nama_kelurahan}</p>`, { 
+                        poly.bindPopup(`
+                            <div class="px-2 py-0.5 text-center">
+                                <p class="text-[8px] font-black text-slate-500 uppercase tracking-[0.2em] mb-0.5">Kelurahan</p>
+                                <p class="text-[10px] font-black uppercase tracking-widest text-navy-900">${kel.nama_kelurahan}</p>
+                            </div>
+                        `, { 
                             className: 'custom-polygon-popup', 
-                            closeButton: false 
+                            closeButton: false,
+                            offset: [0, -5]
                         });
 
-                        poly.on('mouseover', function() { this.setStyle({ color: '#059669', weight: 2.5 }); });
-                        poly.on('mouseout', function() { this.setStyle({ color: '#10b981', weight: 1.5 }); });
+                        poly.on('mouseover', function() { this.setStyle({ color: '#f1f5f9', weight: 3, opacity: 1, dashArray: '' }); });
+                        poly.on('mouseout', function() { this.setStyle({ color: '#94a3b8', weight: 2, opacity: 0.8, dashArray: '5, 5' }); });
 
                         kelurahanPolygons.push(poly);
                     } catch (e) { console.error(e); }
@@ -444,13 +506,13 @@
             const stats = {
                 total: points.length,
                 baik: points.filter(p => { const k = (p.analisis?.label_prioritas || p.kondisi || '').toLowerCase(); return k.includes('baik'); }).length,
-                ringan: points.filter(p => { const k = (p.analisis?.label_prioritas || p.kondisi || '').toLowerCase(); return k.includes('ringan') || k.includes('sedang'); }).length,
+                sedang: points.filter(p => { const k = (p.analisis?.label_prioritas || p.kondisi || '').toLowerCase(); return k.includes('ringan') || k.includes('sedang'); }).length,
                 berat: points.filter(p => { const k = (p.analisis?.label_prioritas || p.kondisi || '').toLowerCase(); return k.includes('berat'); }).length
             };
 
             document.getElementById('stat-total').textContent = stats.total;
             document.getElementById('stat-baik').textContent = stats.baik;
-            document.getElementById('stat-ringan').textContent = stats.ringan;
+            document.getElementById('stat-sedang').textContent = stats.sedang;
             document.getElementById('stat-berat').textContent = stats.berat;
         }
 

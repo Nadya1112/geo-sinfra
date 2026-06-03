@@ -73,9 +73,9 @@ class AnalisisAiController extends Controller
         $skor = min($skor, 100);
 
         // Gabungkan label (SPK Hybrid)
-        if ($skor >= 80 || $skorCnn > 0.85) {
+        if ($skor >= 60 || $skorCnn >= 0.60) {
             $label_kondisi = 'Rusak Berat';
-        } elseif ($skor >= 40 || $skorCnn > 0.5) {
+        } elseif ($skor >= 30 || $skorCnn >= 0.30) {
             $label_kondisi = 'Rusak Sedang';
         } else {
             $label_kondisi = 'Rusak Ringan';

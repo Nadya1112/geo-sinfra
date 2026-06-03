@@ -23,10 +23,13 @@ Route::get('/', function () {
     $dataInfrastruktur = DB::table('infrastruktur')
         ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
         ->leftJoin('kecamatan', 'kelurahan.id_kecamatan', '=', 'kecamatan.id_kecamatan')
+        ->leftJoin('analisis_ai', 'infrastruktur.id_infrastruktur', '=', 'analisis_ai.id_infrastruktur')
         ->select(
             'infrastruktur.*', 
             'kelurahan.id_kecamatan as id_kecamatan_from_kel',
-            'kecamatan.nama_kecamatan'
+            'kecamatan.nama_kecamatan',
+            'analisis_ai.label_prioritas',
+            'analisis_ai.skor_dt'
         )
         ->whereNull('infrastruktur.deleted_at')
         ->get()
@@ -42,8 +45,8 @@ Route::get('/', function () {
     $stats = [
         'total' => $dataInfrastruktur->count(),
         'kecamatan' => $semuaWilayah->count(),
-        'rusak_berat' => $dataInfrastruktur->where('kondisi', 'Rusak Berat')->count(),
-        'akurasi_ai' => 98.2,
+        'rusak_berat' => $dataInfrastruktur->where('label_prioritas', 'Rusak Berat')->count(),
+        'akurasi_ai' => 74,
     ];
 
     // Sebaran Perkecamatan (Pastikan semua 5 kecamatan muncul walau data 0)
@@ -64,9 +67,9 @@ Route::get('/', function () {
         $infraKec = $dataInfrastruktur->where('id_kecamatan', $kec->id_kecamatan);
         return [
             'nama' => $kec->nama_kecamatan,
-            'baik' => $infraKec->where('kondisi', 'Baik')->count(),
-            'rusak_ringan' => $infraKec->where('kondisi', 'Rusak Ringan')->count(),
-            'rusak_berat' => $infraKec->where('kondisi', 'Rusak Berat')->count(),
+            'baik' => $infraKec->where('label_prioritas', 'Baik')->count(),
+            'rusak_sedang' => $infraKec->where('label_prioritas', 'Rusak Sedang')->count(),
+            'rusak_berat' => $infraKec->where('label_prioritas', 'Rusak Berat')->count(),
             'total' => $infraKec->count()
         ];
     })->sortByDesc('total');
@@ -203,13 +206,15 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['role:kabid'])->prefix('kabid')->group(function () {
         Route::get('/dashboard', [App\Http\Controllers\Kabid\KabidController::class, 'index'])->name('kabid.dashboard');
         Route::get('/monitoring', [App\Http\Controllers\Kabid\KabidController::class, 'monitoring'])->name('kabid.monitoring');
-        Route::get('/verifikasi', [App\Http\Controllers\Kabid\KabidController::class, 'verifikasi'])->name('kabid.verifikasi');
-        Route::post('/verifikasi/{id}', [App\Http\Controllers\Kabid\KabidController::class, 'prosesVerifikasi'])->name('kabid.verifikasi.proses');
+        Route::get('/prioritas', [App\Http\Controllers\Kabid\KabidController::class, 'prioritas'])->name('kabid.prioritas');
+
         Route::get('/validasi', [App\Http\Controllers\Kabid\KabidController::class, 'validasi'])->name('kabid.validasi');
+        Route::post('/validasi/bulk', [App\Http\Controllers\Kabid\KabidController::class, 'bulkValidasi'])->name('kabid.validasi.bulk');
         Route::post('/validasi/{id}', [App\Http\Controllers\Kabid\KabidController::class, 'prosesValidasi'])->name('kabid.validasi.proses');
         Route::get('/statistik/tahunan', [App\Http\Controllers\Kabid\KabidController::class, 'statistikTahunan'])->name('kabid.statistik.tahunan');
         Route::get('/laporan', [App\Http\Controllers\Kabid\KabidController::class, 'laporan'])->name('kabid.laporan');
         Route::get('/infrastruktur/{id}', [App\Http\Controllers\Kabid\KabidController::class, 'show'])->name('kabid.infrastruktur.show');
+        Route::post('/infrastruktur/{id}/status-perbaikan', [App\Http\Controllers\Kabid\KabidController::class, 'updateStatusPerbaikan'])->name('kabid.perbaikan.update');
         Route::get('/profile', [App\Http\Controllers\Kabid\KabidController::class, 'profile'])->name('kabid.profile');
         Route::post('/profile', [App\Http\Controllers\Kabid\KabidController::class, 'updateProfile'])->name('kabid.profile.update');
     });

@@ -13,20 +13,19 @@ class KabidController extends Controller
     {
         $totalInfrastruktur = Infrastruktur::count();
         $totalRusakBerat = Infrastruktur::where('kondisi', 'Rusak Berat')->count();
-        $totalPrioritas = Infrastruktur::where('status_verifikasi', 'Pending')
-            ->where('kondisi', 'Rusak Berat')
-            ->count();
-        
-        $recentReports = Infrastruktur::with('user')
-            ->where('status_verifikasi', 'Pending')
+        $totalPending = Infrastruktur::where('status_verifikasi', 'Verified')->where('status_validasi', 'Pending')->count();
+        $totalPerbaikan = Infrastruktur::where('status_perbaikan', 'Proses Perbaikan')->count();
+
+        $recentReports = Infrastruktur::with(['kelurahan.kecamatan', 'user', 'analisis'])
             ->orderBy('created_at', 'desc')
-            ->limit(5)
+            ->take(5)
             ->get();
 
         return view('kabid.dashboard', compact(
             'totalInfrastruktur', 
             'totalRusakBerat', 
-            'totalPrioritas', 
+            'totalPending', 
+            'totalPerbaikan',
             'recentReports'
         ));
     }
@@ -42,25 +41,22 @@ class KabidController extends Controller
         return view('kabid.monitoring', compact('infrastruktur', 'kecamatan', 'kelurahan'));
     }
 
-    public function verifikasi(\Illuminate\Http\Request $request)
+    public function prioritas()
     {
-        $query = Infrastruktur::with(['kelurahan', 'user', 'analisis', 'cnn'])
-            ->orderBy('created_at', 'desc');
+        $prioritas = Infrastruktur::with(['kelurahan.kecamatan', 'user', 'analisis', 'cnn'])
+            ->where(function ($q) {
+                $q->where('kondisi', 'LIKE', '%Berat%')
+                  ->orWhereHas('analisis', function ($sq) {
+                      $sq->where('label_prioritas', 'LIKE', '%Berat%');
+                  });
+            })
+            ->where('status_perbaikan', '!=', 'Selesai')
+            ->orderBy('created_at', 'desc')
+            ->get();
             
-        if ($request->get('show') == 'all') {
-            $allUsulan = $query->get();
-        } else {
-            $allUsulan = $query->paginate(10)->withQueryString();
-        }
-            
-        $counts = [
-            'pending' => Infrastruktur::where('status_verifikasi', 'Pending')->count(),
-            'verified' => Infrastruktur::where('status_verifikasi', 'Verified')->count(),
-            'rejected' => Infrastruktur::where('status_verifikasi', 'Rejected')->count(),
-        ];
-
-        return view('kabid.verifikasi', compact('allUsulan', 'counts'));
+        return view('kabid.prioritas', compact('prioritas'));
     }
+
 
     public function show($id)
     {
@@ -69,25 +65,11 @@ class KabidController extends Controller
         return view('kabid.show', compact('infrastruktur'));
     }
 
-    public function prosesVerifikasi(Request $request, $id)
-    {
-        $request->validate([
-            'status' => 'required|in:Verified,Rejected',
-            'catatan' => 'nullable|string|max:500'
-        ]);
-
-        $infra = Infrastruktur::findOrFail($id);
-        $infra->status_verifikasi = $request->status;
-        // Jika ada kolom catatan verifikasi di database bisa ditambahkan di sini
-        $infra->save();
-
-        $message = $request->status == 'Verified' ? 'Usulan berhasil diverifikasi!' : 'Usulan telah ditolak.';
-        return redirect()->back()->with('success', $message);
-    }
-
     public function validasi(Request $request)
     {
+        // Hanya ambil data yang sudah di-Verified oleh Admin
         $query = Infrastruktur::with(['kelurahan.kecamatan', 'user', 'analisis', 'cnn'])
+            ->where('status_verifikasi', 'Verified')
             ->orderBy('created_at', 'desc');
             
         if ($request->get('show') == 'all') {
@@ -97,9 +79,9 @@ class KabidController extends Controller
         }
 
         $counts = [
-            'pending' => Infrastruktur::where('status_verifikasi', 'Pending')->count(),
-            'verified' => Infrastruktur::where('status_verifikasi', 'Verified')->count(),
-            'rejected' => Infrastruktur::where('status_verifikasi', 'Rejected')->count(),
+            'pending' => Infrastruktur::where('status_verifikasi', 'Verified')->where('status_validasi', 'Pending')->count(),
+            'verified' => Infrastruktur::where('status_verifikasi', 'Verified')->where('status_validasi', 'Validated')->count(),
+            'rejected' => Infrastruktur::where('status_verifikasi', 'Verified')->where('status_validasi', 'Rejected')->count(),
         ];
 
         return view('kabid.validasi', compact('allUsulan', 'counts'));
@@ -108,15 +90,62 @@ class KabidController extends Controller
     public function prosesValidasi(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required|in:Verified,Rejected',
+            'status' => 'required|in:Validated,Rejected',
+            'alasan_penolakan' => 'nullable|string'
         ]);
 
         $infra = Infrastruktur::findOrFail($id);
-        $infra->status_verifikasi = $request->status;
+        $infra->status_validasi = $request->status;
+        if ($request->status == 'Rejected') {
+            $infra->alasan_penolakan = $request->alasan_penolakan;
+        }
         $infra->save();
 
-        $message = $request->status == 'Verified' ? 'Data berhasil di-ACC!' : 'Data telah ditolak.';
+        $message = $request->status == 'Validated' ? 'Data berhasil divalidasi!' : 'Data telah ditolak.';
         return redirect()->back()->with('success', $message);
+    }
+
+    public function bulkValidasi(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:infrastruktur,id_infrastruktur',
+            'status' => 'required|in:Validated,Rejected',
+            'alasan_penolakan' => 'nullable|string'
+        ]);
+
+        $updateData = ['status_validasi' => $request->status];
+        if ($request->status == 'Rejected') {
+            $updateData['alasan_penolakan'] = $request->alasan_penolakan;
+        }
+
+        Infrastruktur::whereIn('id_infrastruktur', $request->ids)
+            ->update($updateData);
+
+        $message = $request->status == 'Validated' 
+            ? count($request->ids) . ' Data berhasil divalidasi!' 
+            : count($request->ids) . ' Data telah ditolak.';
+            
+        return redirect()->back()->with('success', $message);
+    }
+
+    public function updateStatusPerbaikan(Request $request, $id)
+    {
+        $request->validate([
+            'status_perbaikan' => 'required|in:Menunggu,Proses Perbaikan,Selesai'
+        ]);
+
+        $infra = Infrastruktur::findOrFail($id);
+        
+        // Hanya bisa diubah jika status_validasi == Validated
+        if ($infra->status_validasi !== 'Validated') {
+            return redirect()->back()->with('error', 'Infrastruktur belum divalidasi (diterima). Tidak bisa mengubah status pengerjaan.');
+        }
+
+        $infra->status_perbaikan = $request->status_perbaikan;
+        $infra->save();
+
+        return redirect()->back()->with('success', 'Status pengerjaan fisik berhasil diperbarui menjadi: ' . $request->status_perbaikan);
     }
 
     public function profile()
@@ -171,6 +200,29 @@ class KabidController extends Controller
             $availableYears = collect([date('Y')]);
         }
         
+        // KPI Cards
+        $kpi = [
+            'total' => DB::table('infrastruktur')->whereYear('created_at', $year)->whereNull('deleted_at')->count(),
+            'validated' => DB::table('infrastruktur')->whereYear('created_at', $year)->where('status_validasi', 'Validated')->whereNull('deleted_at')->count(),
+            'rejected' => DB::table('infrastruktur')->whereYear('created_at', $year)->where('status_validasi', 'Rejected')->whereNull('deleted_at')->count(),
+            'berat' => DB::table('infrastruktur')->whereYear('created_at', $year)->where('kondisi', 'Rusak Berat')->whereNull('deleted_at')->count(),
+        ];
+
+        // Status Validasi (Donut Chart)
+        $statusValidasi = DB::table('infrastruktur')
+            ->select('status_validasi', DB::raw('count(*) as total'))
+            ->whereYear('created_at', $year)
+            ->whereNull('deleted_at')
+            ->groupBy('status_validasi')
+            ->pluck('total', 'status_validasi')
+            ->all();
+
+        $donutData = [
+            'Pending' => $statusValidasi['Pending'] ?? 0,
+            'Validated' => $statusValidasi['Validated'] ?? 0,
+            'Rejected' => $statusValidasi['Rejected'] ?? 0,
+        ];
+        
         // Data Perbulan (Jan - Des)
         $monthlyData = DB::table('infrastruktur')
             ->select(DB::raw('MONTH(created_at) as month'), DB::raw('count(*) as total'))
@@ -223,12 +275,12 @@ class KabidController extends Controller
             ];
         }
 
-        return view('kabid.statistik-tahunan', compact('chartData', 'statsJenis', 'kondisiKecamatan', 'year', 'availableYears'));
+        return view('kabid.statistik-tahunan', compact('kpi', 'donutData', 'chartData', 'statsJenis', 'kondisiKecamatan', 'year', 'availableYears'));
     }
 
     public function laporan(Request $request)
     {
-        $query = Infrastruktur::with(['kelurahan.kecamatan', 'user']);
+        $query = Infrastruktur::with(['kelurahan.kecamatan', 'user', 'analisis']);
 
         // Filter
         if ($request->kecamatan) {
@@ -237,7 +289,9 @@ class KabidController extends Controller
             });
         }
         if ($request->kondisi) {
-            $query->where('kondisi', $request->kondisi);
+            $query->whereHas('analisis', function($q) use ($request) {
+                $q->where('label_prioritas', 'LIKE', '%' . $request->kondisi . '%');
+            });
         }
         if ($request->jenis) {
             $query->where('jenis', strtolower($request->jenis));
@@ -248,6 +302,17 @@ class KabidController extends Controller
 
         $query = $query->orderBy('created_at', 'desc');
         
+        $totalLaporan = $query->count();
+        $totalBaik = (clone $query)->whereHas('analisis', function($q) {
+            $q->where('label_prioritas', 'LIKE', '%baik%');
+        })->count();
+        $totalSedang = (clone $query)->whereHas('analisis', function($q) {
+            $q->where('label_prioritas', 'LIKE', '%sedang%')->orWhere('label_prioritas', 'LIKE', '%ringan%');
+        })->count();
+        $totalBerat = (clone $query)->whereHas('analisis', function($q) {
+            $q->where('label_prioritas', 'LIKE', '%berat%');
+        })->count();
+        
         if ($request->get('show') == 'all') {
             $reports = $query->get();
         } else {
@@ -256,6 +321,6 @@ class KabidController extends Controller
         
         $kecamatan = \App\Models\Kecamatan::all();
 
-        return view('kabid.laporan', compact('reports', 'kecamatan'));
+        return view('kabid.laporan', compact('reports', 'kecamatan', 'totalLaporan', 'totalBaik', 'totalSedang', 'totalBerat'));
     }
 }

@@ -23,6 +23,7 @@ class SurveyorController extends Controller
         $totalSurvey = Infrastruktur::where('id_user', $userId)->count();
         $waitingValidation = Infrastruktur::where('id_user', $userId)->where('status_verifikasi', 'Pending')->count();
         $verifiedAI = Infrastruktur::where('id_user', $userId)->where('status_verifikasi', 'Verified')->count();
+        $totalRejected = Infrastruktur::where('id_user', $userId)->where('status_validasi', 'Rejected')->count();
 
         $user = auth()->user();
         
@@ -42,7 +43,7 @@ class SurveyorController extends Controller
             ->limit(5)
             ->get();
 
-        return view('surveyor.dashboard', compact('totalSurvey', 'waitingValidation', 'verifiedAI', 'recentUploads', 'semuaKecamatan', 'kecamatans'));
+        return view('surveyor.dashboard', compact('totalSurvey', 'waitingValidation', 'verifiedAI', 'totalRejected', 'recentUploads', 'semuaKecamatan', 'kecamatans'));
     }
 
     public function updateTerritories(Request $request)
@@ -94,14 +95,13 @@ class SurveyorController extends Controller
     {
         $request->validate([
             'nama_infrastruktur' => 'required|string|max:255',
-            'jenis_infrastruktur' => 'required',
             'id_kecamatan' => 'required|exists:kecamatan,id_kecamatan',
             'id_kelurahan' => 'required|exists:kelurahan,id_kelurahan',
             'latitude' => 'required',
             'longitude' => 'required',
-            'foto' => 'required|image|max:5120',
-            'kondisi' => 'required|string', // 🌟 Menangkap input deskripsi kerusakan teks untuk Decision Tree
-            'material_eksisting' => 'required|string',
+            'foto' => 'required|image|max:20480',
+            'kondisi' => 'nullable|string', // 🌟 Menangkap input deskripsi kerusakan teks untuk Decision Tree
+            'material_eksisting' => 'nullable|string',
             'panjang' => 'required|numeric',
             'lebar' => 'required|numeric',
             'has_drainase' => 'nullable|boolean',
@@ -128,25 +128,17 @@ class SurveyorController extends Controller
             $image->save(storage_path('app/public/infrastruktur/' . $namaFoto));
         }
 
-        // Penyesuaian pemetaan jenis enum
-        $jenisMapping = [
-            'Jalan' => 'jalan',
-            'Sanitasi' => 'sanitasi',
-            'Titian' => 'titian'
-        ];
-        $jenisEnum = $jenisMapping[$request->jenis_infrastruktur] ?? 'jalan';
-
         // 🌟 DIUBAH KE ELOQUENT MODEL agar memicu fungsi saved() di InfrastrukturObserver otomatis
         $infra = Infrastruktur::create([
             'id_user' => auth()->id(),
             'nama_objek' => $request->nama_infrastruktur,
-            'jenis_infrastruktur' => $request->jenis_infrastruktur,
-            'jenis' => $jenisEnum,
+            'jenis_infrastruktur' => 'Jalan', // Akan di-override oleh AI (Python / Simulator)
+            'jenis' => 'jalan',
             'id_kelurahan' => $request->id_kelurahan,
             'latitude' => str_replace(',', '.', $request->latitude),
             'longitude' => str_replace(',', '.', $request->longitude),
-            'kondisi' => $request->kondisi, // Menyimpan teks riil lapangan (misal: "titian ulin retak dan goyang")
-            'material_eksisting' => $request->material_eksisting,
+            'kondisi' => $request->kondisi ?? '-', // Menyimpan teks riil lapangan (misal: "titian ulin retak dan goyang")
+            'material_eksisting' => $request->material_eksisting ?? '-',
             'panjang' => $request->panjang,
             'lebar' => $request->lebar,
             'has_drainase' => $request->has('has_drainase') ? 'ya' : 'tidak',
@@ -243,14 +235,13 @@ class SurveyorController extends Controller
 
         $request->validate([
             'nama_infrastruktur' => 'required|string|max:255',
-            'jenis_infrastruktur' => 'required|string',
             'id_kecamatan' => 'required|exists:kecamatan,id_kecamatan',
             'id_kelurahan' => 'required|exists:kelurahan,id_kelurahan',
             'latitude' => 'required|string',
             'longitude' => 'required|string',
-            'kondisi' => 'required|string', // 🌟 Kolom pembaruan teks kondisi kerusakan
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
-            'material_eksisting' => 'required|string',
+            'kondisi' => 'nullable|string', // 🌟 Kolom pembaruan teks kondisi kerusakan
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:20480',
+            'material_eksisting' => 'nullable|string',
             'panjang' => 'required|numeric',
             'lebar' => 'required|numeric',
             'has_drainase' => 'nullable|boolean',
@@ -275,31 +266,25 @@ class SurveyorController extends Controller
             
             $image->save(storage_path('app/public/infrastruktur/' . $namaFoto));
             $infrastruktur->foto_terbaru = $namaFoto;
-            $infrastruktur->status_verifikasi = 'Pending';
         }
 
-        // Sinkronisasi Enum jenis: jalan, sanitasi, titian (Disamakan dengan rules Admin & DB)
-        $jenisMapping = [
-            'Jalan' => 'jalan',
-            'Sanitasi' => 'sanitasi',
-            'Titian' => 'titian'
-        ];
-        $jenisEnum = $jenisMapping[$request->jenis_infrastruktur] ?? 'jalan';
-
         $infrastruktur->nama_objek = $request->nama_infrastruktur;
-        $infrastruktur->jenis_infrastruktur = $request->jenis_infrastruktur;
-        $infrastruktur->jenis = $jenisEnum;
         $infrastruktur->id_kelurahan = $request->id_kelurahan;
         $infrastruktur->latitude = str_replace(',', '.', $request->latitude);
         $infrastruktur->longitude = str_replace(',', '.', $request->longitude);
-        $infrastruktur->kondisi = $request->kondisi; // Menyimpan teks kondisi kerusakan terupdate
-        $infrastruktur->material_eksisting = $request->material_eksisting;
+        $infrastruktur->kondisi = $request->kondisi ?? '-'; // Menyimpan teks kondisi kerusakan terupdate
+        $infrastruktur->material_eksisting = $request->material_eksisting ?? '-';
         $infrastruktur->panjang = $request->panjang;
         $infrastruktur->lebar = $request->lebar;
         $infrastruktur->has_drainase = $request->has('has_drainase') ? 'ya' : 'tidak';
         $infrastruktur->has_gorong_gorong = $request->has('has_gorong_gorong') ? 'ya' : 'tidak';
         $infrastruktur->rencana_perbaikan = $request->rencana_perbaikan;
         $infrastruktur->tgl_survey = $request->tgl_survey;
+        
+        // Kembalikan ke antrean Admin & Kabid setelah direvisi Surveyor
+        $infrastruktur->status_verifikasi = 'Pending';
+        $infrastruktur->status_validasi = 'Pending';
+        $infrastruktur->alasan_penolakan = null;
         
         // 🌟 Pemanggilan save() pada Eloquent model otomatis menyenggol Observer AI untuk hitung ulang skor
         $infrastruktur->save();
@@ -314,12 +299,13 @@ class SurveyorController extends Controller
 
     public function map()
     {
-        $dataMap = Infrastruktur::with(['cnn', 'analisis'])->where('id_user', auth()->id())->get();
+        $dataMap = Infrastruktur::with(['cnn', 'analisis', 'kelurahan.kecamatan'])->where('id_user', auth()->id())->get();
         $myKecamatans = auth()->user()->kecamatans;
-        $allKelurahans = \App\Models\Kelurahan::all();
-
         if ($myKecamatans->isEmpty()) {
             $myKecamatans = \App\Models\Kecamatan::all();
+            $allKelurahans = \App\Models\Kelurahan::all();
+        } else {
+            $allKelurahans = \App\Models\Kelurahan::whereIn('id_kecamatan', $myKecamatans->pluck('id_kecamatan'))->get();
         }
 
         return view('surveyor.map', compact('dataMap', 'myKecamatans', 'allKelurahans'));
