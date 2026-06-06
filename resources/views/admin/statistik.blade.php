@@ -48,6 +48,10 @@
                     <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
                     <h2 class="text-xl font-black text-navy-900 leading-none">Ringkasan Statistik</h2>
                 </div>
+                <div class="hidden md:block w-[1px] h-8 bg-slate-200 ml-4 mr-2"></div>
+                <a href="{{ route('admin.infrastruktur.export') }}" class="ml-2 px-4 py-2 bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white border border-emerald-100 hover:border-emerald-500 rounded-xl text-[10px] font-black tracking-widest uppercase transition-all shadow-sm hover:shadow-lg hover:shadow-emerald-500/20 flex items-center gap-2">
+                    <i class="fas fa-file-excel"></i> Export Excel
+                </a>
             </div>
 
             <div class="flex items-center gap-6">
@@ -150,11 +154,10 @@
                         </div>
 
                         @php
-                            $total = max(1, $jumlahRusakBerat + $jumlahRusakSedang + $jumlahRusakRingan + $jumlahBaik);
+                            $total = max(1, $jumlahRusakBerat + $jumlahRusakSedang + $jumlahBaik + $jumlahBelumDianalisis);
                             $priorities = [
                                 ['label'=>'Rusak Berat',  'count'=>$jumlahRusakBerat,  'icon'=>'fa-exclamation-triangle', 'bg'=>'bg-red-500',    'light'=>'bg-red-50 border-red-100',    'text'=>'text-red-600',    'bar'=>'bg-red-500',    'desc'=>'Butuh penanganan segera'],
                                 ['label'=>'Rusak Sedang', 'count'=>$jumlahRusakSedang, 'icon'=>'fa-hammer',              'bg'=>'bg-orange-500', 'light'=>'bg-orange-50 border-orange-100','text'=>'text-orange-600', 'bar'=>'bg-orange-500', 'desc'=>'Perbaikan dalam waktu dekat'],
-                                ['label'=>'Rusak Ringan', 'count'=>$jumlahRusakRingan, 'icon'=>'fa-tools',               'bg'=>'bg-yellow-500', 'light'=>'bg-yellow-50 border-yellow-100','text'=>'text-yellow-600', 'bar'=>'bg-yellow-400', 'desc'=>'Pemeliharaan berkala'],
                                 ['label'=>'Baik',         'count'=>$jumlahBaik,         'icon'=>'fa-check-circle',        'bg'=>'bg-emerald-500','light'=>'bg-emerald-50 border-emerald-100','text'=>'text-emerald-600','bar'=>'bg-emerald-500','desc'=>'Kondisi layak dan stabil'],
                             ];
                         @endphp
@@ -210,7 +213,6 @@
                             <div class="grid grid-cols-2 gap-3 w-full">
                                 @foreach([
                                     ['label'=>'Baik',         'count'=>$jumlahBaik,         'color'=>'bg-emerald-500', 'text'=>'text-emerald-400'],
-                                    ['label'=>'Rusak Ringan', 'count'=>$jumlahRusakRingan,   'color'=>'bg-yellow-400',  'text'=>'text-yellow-400'],
                                     ['label'=>'Rusak Sedang', 'count'=>$jumlahRusakSedang,   'color'=>'bg-orange-500',  'text'=>'text-orange-400'],
                                     ['label'=>'Rusak Berat',  'count'=>$jumlahRusakBerat,    'color'=>'bg-red-500',     'text'=>'text-red-400'],
                                 ] as $item)
@@ -300,10 +302,10 @@
         new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Baik', 'Rusak Ringan', 'Rusak Sedang', 'Rusak Berat'],
+                labels: ['Baik', 'Rusak Sedang', 'Rusak Berat'],
                 datasets: [{
-                    data: [{{ $jumlahBaik }}, {{ $jumlahRusakRingan }}, {{ $jumlahRusakSedang }}, {{ $jumlahRusakBerat }}],
-                    backgroundColor: ['#10b981', '#eab308', '#f97316', '#ef4444'],
+                    data: [{{ $jumlahBaik }}, {{ $jumlahRusakSedang }}, {{ $jumlahRusakBerat }}],
+                    backgroundColor: ['#10b981', '#f97316', '#ef4444'],
                     borderColor: '#0f0e2c',
                     borderWidth: 3,
                     hoverOffset: 8,

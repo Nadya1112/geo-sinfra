@@ -73,12 +73,12 @@ class AnalisisAiController extends Controller
         $skor = min($skor, 100);
 
         // Gabungkan label (SPK Hybrid)
-        if ($skor >= 60 || $skorCnn >= 0.60) {
+        if ($skor >= 65 || $skorCnn >= 0.65) {
             $label_kondisi = 'Rusak Berat';
-        } elseif ($skor >= 30 || $skorCnn >= 0.30) {
+        } elseif ($skor >= 35 || $skorCnn >= 0.35) {
             $label_kondisi = 'Rusak Sedang';
         } else {
-            $label_kondisi = 'Rusak Ringan';
+            $label_kondisi = 'Baik';
         }
 
         // Buat rekomendasi otomatis
@@ -87,8 +87,8 @@ class AnalisisAiController extends Controller
             $rekomendasi = "PRIORITAS UTAMA: Struktur kritis terdeteksi secara visual (" . round($skorCnn * 100) . "%) dan teknis. Segera lakukan rehabilitasi.";
         } elseif ($label_kondisi == 'Rusak Sedang') {
             $rekomendasi = "Perlu pemeliharaan rutin dan perbaikan pada area terdampak visual.";
-        } elseif ($label_kondisi == 'Rusak Ringan') {
-            $rekomendasi = "Lakukan pemantauan berkala, kondisi masih dalam batas wajar.";
+        } elseif ($label_kondisi == 'Baik') {
+            $rekomendasi = "Kondisi terkendali, lakukan pemantauan berkala.";
         }
 
         // 4. Simpan hasil analisis ke tabel analisis_ai (Upsert: Update jika ada, Insert jika baru)

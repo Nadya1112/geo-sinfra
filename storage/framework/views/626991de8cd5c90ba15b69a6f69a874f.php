@@ -92,14 +92,14 @@
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
                             <thead>
-                                <tr class="bg-slate-50/80 border-b border-slate-100">
-                                    <th class="px-4 py-2 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center w-12">NO</th>
-                                    <th class="px-4 py-2 text-[10px] font-black text-navy-900 uppercase tracking-widest w-20 text-center">FOTO</th>
-                                    <th class="px-4 py-2 text-[10px] font-black text-navy-900 uppercase tracking-widest">INFRASTRUKTUR</th>
-                                    <th class="px-4 py-2 text-[10px] font-black text-navy-900 uppercase tracking-widest">WILAYAH</th>
-                                    <th class="px-4 py-2 text-[10px] font-black text-navy-900 uppercase tracking-widest text-center">STATUS VALIDASI</th>
-                                    <th class="px-4 py-2 text-[10px] font-black text-navy-900 uppercase tracking-widest text-center">SKOR AI</th>
-                                    <th class="px-4 py-2 text-[10px] font-black text-navy-900 uppercase tracking-widest text-center">AKSI</th>
+                                <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
+                                    <th class="px-4 py-2 text-[10px] font-black text-gold-500 uppercase tracking-widest text-center w-12">NO</th>
+                                    <th class="px-4 py-2 text-[10px] font-black text-gold-500 uppercase tracking-widest w-20 text-center">FOTO</th>
+                                    <th class="px-4 py-2 text-[10px] font-black text-gold-500 uppercase tracking-widest">INFRASTRUKTUR</th>
+                                    <th class="px-4 py-2 text-[10px] font-black text-gold-500 uppercase tracking-widest">WILAYAH</th>
+                                    <th class="px-4 py-2 text-[10px] font-black text-gold-500 uppercase tracking-widest text-center">STATUS VALIDASI</th>
+                                    <th class="px-4 py-2 text-[10px] font-black text-gold-500 uppercase tracking-widest text-center">STATUS KONDISI</th>
+                                    <th class="px-4 py-2 text-[10px] font-black text-gold-500 uppercase tracking-widest text-center">AKSI</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-50">
@@ -131,7 +131,7 @@
                                     
                                     <td class="px-4 py-2">
                                         <p class="text-xs font-black text-navy-900 uppercase tracking-tight mb-0.5"><?php echo e($item->nama_infrastruktur ?? $item->nama_objek); ?></p>
-                                        <span class="inline-flex px-1.5 py-0.5 bg-navy-50 text-navy-600 rounded-md text-[8px] font-black uppercase tracking-widest"><?php echo e($item->jenis_infrastruktur ?? $item->jenis); ?></span>
+                                        <span class="inline-flex px-1.5 py-0.5 bg-navy-50 text-navy-600 rounded-md text-[8px] font-black uppercase tracking-widest"><?php echo e(ucfirst($item->jenis)); ?></span>
                                     </td>
                                     
                                     
@@ -171,16 +171,22 @@
                                         <?php if($item->cnn || $item->analisis): ?>
                                             <div class="flex justify-center">
                                                 <div class="inline-flex items-center bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
-                                                    <?php if($item->cnn || $item->analisis): ?>
-                                                        <div class="flex items-center gap-1 bg-slate-50 px-2 py-1 border-r border-slate-200">
-                                                            <i class="fas fa-eye text-slate-400 text-[8px]"></i>
-                                                            <span class="text-[9px] font-black text-navy-900"><?php echo e($item->analisis ? number_format($item->analisis->skor_dt, 1) : number_format($item->cnn->skor_cnn * 100, 1)); ?>%</span>
-                                                        </div>
-                                                    <?php endif; ?>
                                                     <?php if($item->analisis): ?>
-                                                        <div class="flex items-center gap-1 px-2 py-1 bg-gold-50/50">
-                                                            <i class="fas fa-brain text-gold-500 text-[8px]"></i>
-                                                            <span class="text-[9px] font-black text-gold-600"><?php echo e($item->analisis->label_prioritas); ?></span>
+                                                        <?php
+                                                            $labelMap = [
+                                                                'Baik' => ['bg' => 'bg-emerald-50', 'text' => 'text-emerald-600', 'icon' => 'fa-check-circle'],
+                                                                'Rusak Sedang' => ['bg' => 'bg-orange-50', 'text' => 'text-orange-600', 'icon' => 'fa-hammer'],
+                                                                'Rusak Berat' => ['bg' => 'bg-red-50', 'text' => 'text-red-600', 'icon' => 'fa-exclamation-triangle'],
+                                                            ];
+                                                            $style = $labelMap[$item->analisis->label_prioritas] ?? ['bg' => 'bg-slate-50', 'text' => 'text-slate-600', 'icon' => 'fa-info-circle'];
+                                                        ?>
+                                                        <div class="flex items-center gap-1.5 px-3 py-1.5 <?php echo e($style['bg']); ?>">
+                                                            <i class="fas <?php echo e($style['icon']); ?> <?php echo e($style['text']); ?> text-[10px]"></i>
+                                                            <span class="text-[10px] font-black <?php echo e($style['text']); ?> uppercase tracking-wider"><?php echo e($item->analisis->label_prioritas); ?></span>
+                                                        </div>
+                                                    <?php else: ?>
+                                                        <div class="flex items-center gap-1 px-3 py-1.5 bg-slate-50">
+                                                            <span class="text-[10px] font-black text-slate-500 uppercase tracking-wider">Menunggu Analisis</span>
                                                         </div>
                                                     <?php endif; ?>
                                                 </div>

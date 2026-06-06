@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\AnalisisAiController;
+use App\Http\Controllers\AIPredictController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 
@@ -24,10 +25,13 @@ Route::get('/', function () {
         ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
         ->leftJoin('kecamatan', 'kelurahan.id_kecamatan', '=', 'kecamatan.id_kecamatan')
         ->leftJoin('analisis_ai', 'infrastruktur.id_infrastruktur', '=', 'analisis_ai.id_infrastruktur')
+        ->leftJoin('users', 'infrastruktur.id_user', '=', 'users.id')
         ->select(
             'infrastruktur.*', 
             'kelurahan.id_kecamatan as id_kecamatan_from_kel',
+            'kelurahan.nama_kelurahan',
             'kecamatan.nama_kecamatan',
+            'users.name as nama_surveyor',
             'analisis_ai.label_prioritas',
             'analisis_ai.skor_dt'
         )
@@ -100,6 +104,9 @@ Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword
 Route::post('/reset-password', [AuthController::class, 'updatePassword'])->name('password.update');
 
 
+// API Endpoint untuk memanggil model Python AI secara publik
+Route::post('/api/predict-infrastructure', [AIPredictController::class, 'predict'])->name('api.predict');
+
 // ==========================================================
 // 2. JALUR PRIVAT (Wajib Login / Auth)
 // ==========================================================
@@ -137,6 +144,8 @@ Route::middleware(['auth'])->group(function () {
          */
         // Halaman Utama Tabel Infrastruktur
         Route::get('/infrastruktur', [AdminController::class, 'infrastruktur'])->name('admin.infrastruktur');
+        // Export Excel (CSV)
+        Route::get('/infrastruktur/export', [AdminController::class, 'exportExcel'])->name('admin.infrastruktur.export');
         // Form Tambah Aset
         Route::get('/infrastruktur/create', [AdminController::class, 'createInfrastruktur'])->name('admin.infrastruktur.create');
         // Proses Simpan Aset

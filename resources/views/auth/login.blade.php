@@ -156,7 +156,7 @@
 
                     <button type="submit" 
                         class="btn-shine w-full py-4.5 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-white text-xs font-black rounded-2xl shadow-xl shadow-gold-500/10 hover:shadow-gold-500/20 hover:scale-[1.01] transition-all active:scale-[0.98] uppercase tracking-[0.2em] text-center block">
-                        MASUK SEKARANG
+                        MASUK
                     </button>
 
                     <div class="flex items-center justify-between font-bold text-xs uppercase tracking-wider">

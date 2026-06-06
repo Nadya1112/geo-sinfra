@@ -159,11 +159,16 @@
 
                             <div class="pt-4 border-t border-white/5">
                                 <div class="flex items-center justify-between mb-1">
-                                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Verifikasi Dinas PUPR</p>
-                                    <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[8px] font-black uppercase tracking-widest <?php echo e($infrastruktur->status_verifikasi == 'Verified' ? 'text-emerald-400' : 'text-amber-400'); ?>">
-                                        <?php echo e($infrastruktur->status_verifikasi ?? 'Pending'); ?>
-
-                                    </span>
+                                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Status Laporan</p>
+                                    <?php if($infrastruktur->status_validasi == 'Rejected'): ?>
+                                        <span class="px-3 py-1 bg-red-500/10 border border-red-500/20 rounded-lg text-[8px] font-black uppercase tracking-widest text-red-400">Ditolak</span>
+                                    <?php elseif($infrastruktur->status_validasi == 'Validated'): ?>
+                                        <span class="px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-[8px] font-black uppercase tracking-widest text-emerald-400">Di-ACC Kabid</span>
+                                    <?php elseif($infrastruktur->status_verifikasi == 'Verified'): ?>
+                                        <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-lg text-[8px] font-black uppercase tracking-widest text-blue-400">Terverifikasi Admin</span>
+                                    <?php else: ?>
+                                        <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[8px] font-black uppercase tracking-widest text-slate-400">Pending</span>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
@@ -179,7 +184,7 @@
                             <div>
                                 <div class="inline-flex items-center gap-2 px-3 py-1 bg-navy-50 border border-navy-100 rounded-lg mb-3">
                                     <i class="fas fa-layer-group text-[9px] text-gold-500"></i>
-                                    <p class="text-[9px] font-black text-navy-900 uppercase tracking-widest"><?php echo e($infrastruktur->jenis_infrastruktur ?? $infrastruktur->jenis); ?></p>
+                                    <p class="text-[9px] font-black text-navy-900 uppercase tracking-widest"><?php echo e(ucfirst($infrastruktur->jenis)); ?></p>
                                 </div>
                                 <h3 class="text-2xl lg:text-3xl font-black text-navy-900 leading-tight"><?php echo e($infrastruktur->nama_objek ?? $infrastruktur->nama_infrastruktur); ?></h3>
                             </div>

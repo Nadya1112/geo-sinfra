@@ -19,7 +19,7 @@
 
         .badge { display: inline-block; padding: 5px 10px; font-size: 11px; font-weight: bold; text-transform: uppercase; border-radius: 4px; border: 1px solid; }
         .badge-baik { background-color: #ecfdf5; color: #059669; border-color: #a7f3d0; }
-        .badge-ringan { background-color: #fefce8; color: #d97706; border-color: #fde68a; }
+        .badge-sedang { background-color: #fff7ed; color: #ea580c; border-color: #fed7aa; }
         .badge-berat { background-color: #fef2f2; color: #dc2626; border-color: #fecaca; }
 
         .photo-container { text-align: center; margin-top: 20px; }
@@ -44,7 +44,7 @@
         </tr>
         <tr>
             <th>Jenis Infrastruktur</th>
-            <td>{{ $inf->jenis_infrastruktur }}</td>
+            <td>{{ ucfirst($inf->jenis) }}</td>
         </tr>
         <tr>
             <th>Kecamatan</th>
@@ -64,7 +64,7 @@
     @php
         $badgeClass = match($inf->label_prioritas) {
             'Rusak Berat' => 'badge-berat',
-            'Rusak Sedang' => 'badge-ringan',
+            'Rusak Sedang' => 'badge-sedang',
             default => 'badge-baik'
         };
     @endphp

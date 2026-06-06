@@ -408,7 +408,7 @@
                 imagePath = imagePath.replace(/\\/g, '/');
                 
                 let finalUrl = '';
-                const rawJenis = point.jenis_infrastruktur || point.jenis || '-';
+                const rawJenis = point.jenis || '-';
                 if (imagePath) {
                     finalUrl = `/storage/${imagePath}`;
                 } else {
@@ -537,7 +537,7 @@
 
             const normalisedActiveTypes = activeTypes.map(t => t.toLowerCase().trim());
             let filtered = dataPoints.filter(p => {
-                const pType = (p.jenis_infrastruktur || p.jenis || '').toLowerCase().trim();
+                const pType = (p.jenis || '').toLowerCase().trim();
                 const typeMatch = normalisedActiveTypes.some(type => pType.includes(type));
                 const kecId = p.kelurahan?.id_kecamatan?.toString() || p.id_kecamatan?.toString();
                 const kecMatch = !kecId || activeKecs.includes(kecId);

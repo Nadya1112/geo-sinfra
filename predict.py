@@ -37,9 +37,10 @@ MODEL_DIR = os.path.join(SCRIPT_DIR, "ai_models")
 CNN_MODEL_PATH = os.path.join(MODEL_DIR, "cnn_feature_extractor.pth")
 DT_JENIS_PATH = os.path.join(MODEL_DIR, "dt_jenis.pkl")
 DT_KONDISI_PATH = os.path.join(MODEL_DIR, "dt_kondisi.pkl")
+PCA_PATH = os.path.join(MODEL_DIR, "pca_transformer.pkl")
 CONFIG_PATH = os.path.join(MODEL_DIR, "model_config.json")
 
-IMG_SIZE = (448, 448)
+IMG_SIZE = (224, 224)
 
 
 def output_error(message):
@@ -62,7 +63,7 @@ def load_models():
         output_error(f"Library belum terinstall: {e}. Jalankan: pip install torch torchvision scikit-learn joblib opencv-python")
 
     # Cek file model
-    for path, nama in [(CNN_MODEL_PATH, "CNN"), (DT_JENIS_PATH, "DT Jenis"), (DT_KONDISI_PATH, "DT Kondisi")]:
+    for path, nama in [(CNN_MODEL_PATH, "CNN"), (PCA_PATH, "PCA"), (DT_JENIS_PATH, "DT Jenis"), (DT_KONDISI_PATH, "DT Kondisi")]:
         if not os.path.exists(path):
             output_error(f"Model {nama} tidak ditemukan: {path}. Jalankan train_model.py terlebih dahulu!")
 
@@ -72,17 +73,18 @@ def load_models():
         with open(CONFIG_PATH, 'r') as f:
             config = json.load(f)
 
-    # Muat CNN (MobileNetV2 sebagai feature extractor)
-    cnn = models.mobilenet_v2(weights=None)
-    cnn.classifier = torch.nn.Identity()
+    # Muat CNN (ResNet18 sebagai feature extractor)
+    cnn = models.resnet18(weights=None)
+    cnn.fc = torch.nn.Identity()
     cnn.load_state_dict(torch.load(CNN_MODEL_PATH, map_location='cpu', weights_only=True))
     cnn.eval()
 
-    # Muat Decision Trees
+    # Muat Decision Trees & PCA
     dt_jenis = joblib.load(DT_JENIS_PATH)
     dt_kondisi = joblib.load(DT_KONDISI_PATH)
+    pca = joblib.load(PCA_PATH)
 
-    return cnn, dt_jenis, dt_kondisi, config
+    return cnn, pca, dt_jenis, dt_kondisi, config
 
 
 def preprocess_image(image_path):
@@ -114,7 +116,7 @@ def predict(image_path):
     import torch
 
     # Muat model
-    cnn, dt_jenis, dt_kondisi, config = load_models()
+    cnn, pca, dt_jenis, dt_kondisi, config = load_models()
 
     # Ambil mapping label dari config
     infra_types = config.get("infra_types", ["jalan", "jembatan", "titian"])
@@ -141,9 +143,12 @@ def predict(image_path):
     with torch.no_grad():
         features = cnn(img_tensor).numpy()
 
+    # Reduksi dimensi dengan PCA
+    features_pca = pca.transform(features)
+
     # ===== Prediksi JENIS infrastruktur =====
-    pred_jenis_idx = dt_jenis.predict(features)[0]
-    prob_jenis = dt_jenis.predict_proba(features)[0]
+    pred_jenis_idx = dt_jenis.predict(features_pca)[0]
+    prob_jenis = dt_jenis.predict_proba(features_pca)[0]
     confidence_jenis = round(float(np.max(prob_jenis)) * 100, 2)
 
     raw_jenis = infra_types[pred_jenis_idx]
@@ -159,8 +164,8 @@ def predict(image_path):
             detail_jenis[display_name] = 0.0
 
     # ===== Prediksi KONDISI infrastruktur =====
-    pred_kondisi_idx = dt_kondisi.predict(features)[0]
-    prob_kondisi = dt_kondisi.predict_proba(features)[0]
+    pred_kondisi_idx = dt_kondisi.predict(features_pca)[0]
+    prob_kondisi = dt_kondisi.predict_proba(features_pca)[0]
     confidence_kondisi = round(float(np.max(prob_kondisi)) * 100, 2)
 
     raw_kondisi = kondisi_labels[pred_kondisi_idx]

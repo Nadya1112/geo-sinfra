@@ -66,29 +66,38 @@ class AnalisisAi extends Model
         $material = strtolower($infra->material_eksisting ?? '');
         $drainase = strtolower($infra->has_drainase ?? 'tidak');
         
-        // 2. Ambil Skor CNN (Visual)
+        // 2. Ambil Hasil Prediksi Visual (CNN)
         $cnn = \Illuminate\Support\Facades\DB::table('citra_cnn')->where('id_infrastruktur', $id)->first();
-        $skorCnn = $cnn ? $cnn->skor_cnn : 0;
+        $skorCnn = $cnn ? $cnn->skor_cnn : 0; // Ini adalah persentase keyakinan AI (Confidence)
+        $labelCnn = $cnn ? $cnn->label_kondisi : 'Baik'; // Ini adalah tebakan asli AI
 
-        // 3. Base Score dari Prediksi Visual (CNN)
-        // Agar skor akhir (skor_dt) selaras dengan rentang pengguna, kita jadikan skor CNN sebagai acuan utama
-        $skor = $skorCnn * 100;
+        // 3. Konversi label CNN menjadi Base Score Keparahan
+        $skor = 0;
+        if ($labelCnn == 'Rusak Berat' || $labelCnn == 'Berat') {
+            $skor = 80;
+        } elseif ($labelCnn == 'Rusak Sedang' || $labelCnn == 'Sedang') {
+            $skor = 45;
+        } else {
+            $skor = 10; // Baik
+        }
         
-        // 4. Analisis Teks (NLP Decision Tree) sebagai faktor penguat kecil (bukan pengubah drastis)
-        if (preg_match('/(hancur|putus|total|amblas|parah|longsor|roboh|hilang)/', $kondisi)) {
+        // 4. Analisis Teks (NLP Decision Tree) — Penyesuaian dari laporan lapangan
+        if (preg_match('/(hancur|putus|total|amblas|parah|longsor|roboh|hilang|berat)/', $kondisi)) {
+            $skor += 30;
+        } elseif (preg_match('/(retak|lubang|goyang|rusak|tergenang|bolong|lapuk|sedang|lepas)/', $kondisi)) {
             $skor += 15;
-        } elseif (preg_match('/(retak|lubang|goyang|rusak|tergenang|bolong|lapuk)/', $kondisi)) {
+        } elseif (preg_match('/(ringan|kusam|minor|sedikit)/', $kondisi)) {
             $skor += 5;
         }
 
         // 5. Analisis Parameter Lingkungan
-        if ($drainase == 'tidak') $skor += 2;
-        if (str_contains($material, 'tanah') || str_contains($material, 'kayu') || str_contains($material, 'ulin')) $skor += 3;
+        if ($drainase == 'tidak') $skor += 5;
+        if (str_contains($material, 'tanah') || str_contains($material, 'kayu') || str_contains($material, 'ulin')) $skor += 5;
         
         // Pastikan skor berada dalam range 0 - 100
         $skor = min(max(round($skor), 0), 100);
 
-        // 5. Penentuan Label Akhir sesuai Range Pengguna (Berat: 65-100, Sedang: 35-64, Baik: 0-34)
+        // 6. Penentuan Label Akhir berdasarkan Total Skor Gabungan (Hybrid)
         if ($skor >= 65) {
             $label = 'Rusak Berat';
             $rekom = "PRIORITAS UTAMA: Deteksi gabungan visual & laporan lapangan menunjukkan kerusakan kritis. Segera rehabilitasi.";

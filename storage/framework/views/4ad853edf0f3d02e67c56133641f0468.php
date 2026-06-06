@@ -95,6 +95,10 @@
                 </div>
 
                 <div class="flex flex-wrap items-center gap-3">
+                    <a href="<?php echo e(route('admin.infrastruktur.export')); ?>" class="px-4 py-2 bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white border border-emerald-100 hover:border-emerald-500 rounded-xl text-[10px] font-black tracking-widest uppercase transition-all shadow-sm hover:shadow-lg hover:shadow-emerald-500/20 flex items-center gap-2">
+                        <i class="fas fa-file-excel"></i> Export Excel
+                    </a>
+                    
                     <form action="<?php echo e(route('admin.infrastruktur')); ?>" method="GET" class="flex items-center gap-2">
                         
                         <select name="show" onchange="this.form.submit()"
@@ -124,32 +128,37 @@
                 <div class="overflow-x-auto custom-scrollbar">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="bg-slate-50 border-b border-slate-100">
-                                <th class="px-5 py-4 text-[9px] font-black text-slate-400 tracking-widest text-center w-12">NO</th>
-                                <th class="px-5 py-4 text-[9px] font-black text-slate-400 tracking-widest text-center w-20">FOTO</th>
-                                <th class="px-5 py-4 text-[9px] font-black text-slate-400 tracking-widest">INFRASTRUKTUR</th>
-                                <th class="px-5 py-4 text-[9px] font-black text-slate-400 tracking-widest">WILAYAH</th>
-                                <th class="px-5 py-4 text-[9px] font-black text-slate-400 tracking-widest text-center">ANALISIS AI</th>
-                                <th class="px-5 py-4 text-[9px] font-black text-slate-400 tracking-widest text-center">KONDISI</th>
-                                <th class="px-5 py-4 text-[9px] font-black text-slate-400 tracking-widest text-center">AKSI</th>
+                            <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
+                                <th class="px-5 py-4 text-[9px] font-black text-gold-500 tracking-widest text-center w-12">NO</th>
+                                <th class="px-5 py-4 text-[9px] font-black text-gold-500 tracking-widest text-center w-20">FOTO</th>
+                                <th class="px-5 py-4 text-[9px] font-black text-gold-500 tracking-widest">INFRASTRUKTUR</th>
+                                <th class="px-5 py-4 text-[9px] font-black text-gold-500 tracking-widest">WILAYAH</th>
+                                <th class="px-5 py-4 text-[9px] font-black text-gold-500 tracking-widest text-center">ANALISIS AI</th>
+                                <th class="px-5 py-4 text-[9px] font-black text-gold-500 tracking-widest text-center">KONDISI</th>
+                                <th class="px-5 py-4 text-[9px] font-black text-gold-500 tracking-widest text-center">AKSI</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-50">
                             <?php $__empty_1 = true; $__currentLoopData = $infrastruktur; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $inf): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <?php
-                                $dt  = \Illuminate\Support\Facades\DB::table('analisis_ai')->where('id_infrastruktur', $inf->id_infrastruktur)->first();
-                                $cnn = \Illuminate\Support\Facades\DB::table('citra_cnn')->where('id_infrastruktur', $inf->id_infrastruktur)->first();
+                                $dt = (object) [
+                                    'label_prioritas' => $inf->dt_label_prioritas,
+                                    'skor_dt' => $inf->dt_skor_dt,
+                                    'rekomendasi' => $inf->dt_rekomendasi
+                                ];
+                                $cnn = (object) [
+                                    'label_kondisi' => $inf->cnn_label_kondisi,
+                                    'skor_cnn' => $inf->cnn_skor_cnn
+                                ];
                                 $labelAkhir = $dt->label_prioritas ?? $inf->kondisi;
 
                                 $cnnLabel = strtolower($cnn->label_kondisi ?? '');
                                 $cnnColor = str_contains($cnnLabel, 'berat')  ? 'text-red-500'
                                           : (str_contains($cnnLabel, 'sedang') ? 'text-orange-500'
-                                          : (str_contains($cnnLabel, 'ringan') ? 'text-yellow-500'
-                                          : 'text-emerald-500'));
+                                          : 'text-emerald-500');
 
                                 $kondisiMap = [
                                     'baik'         => 'bg-emerald-50 text-emerald-600 border border-emerald-200',
-                                    'rusak ringan' => 'bg-yellow-50  text-yellow-600  border border-yellow-200',
                                     'rusak sedang' => 'bg-orange-50  text-orange-600  border border-orange-200',
                                     'rusak berat'  => 'bg-red-50     text-red-600     border border-red-200',
                                 ];
@@ -184,7 +193,7 @@
                                 <td class="px-5 py-4 max-w-[200px]">
                                     <p class="text-sm font-black text-navy-900 leading-snug truncate"><?php echo e($inf->nama_objek ?? $inf->nama_infrastruktur); ?></p>
                                     <span class="inline-block mt-1 px-2 py-0.5 bg-gold-500/10 text-gold-600 text-[8px] font-black rounded-md tracking-wider uppercase">
-                                        <?php echo e($inf->jenis_infrastruktur ?? $inf->jenis); ?>
+                                        <?php echo e(ucfirst($inf->jenis)); ?>
 
                                     </span>
                                     <p class="text-[8px] text-slate-400 mt-1 font-bold">ID: INF-<?php echo e($inf->id_infrastruktur); ?></p>

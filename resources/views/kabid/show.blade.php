@@ -213,7 +213,7 @@
                     <div class="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm">
                         <div class="flex justify-between items-start mb-8">
                             <div>
-                                <p class="text-[10px] font-black text-gold-500 uppercase tracking-widest mb-1">{{ $infrastruktur->jenis_infrastruktur }}</p>
+                                <p class="text-[10px] font-black text-gold-500 uppercase tracking-widest mb-1">{{ ucfirst($infrastruktur->jenis) }}</p>
                                 <h3 class="text-2xl font-black text-navy-900">{{ $infrastruktur->nama_infrastruktur }}</h3>
                             </div>
                             <div class="text-right">

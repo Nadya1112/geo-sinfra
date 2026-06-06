@@ -133,12 +133,12 @@
             <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden mb-10">
                 <table class="w-full text-left border-collapse">
                     <thead>
-                        <tr class="bg-slate-50/50 border-b border-slate-100">
-                            <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest w-12 text-center">No.</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Nama User</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Email Address</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Role / Jabatan</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Aksi</th>
+                        <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
+                            <th class="px-8 py-5 text-[10px] font-black text-gold-500 uppercase tracking-widest w-12 text-center">No.</th>
+                            <th class="px-8 py-5 text-[10px] font-black text-gold-500 uppercase tracking-widest">Nama User</th>
+                            <th class="px-8 py-5 text-[10px] font-black text-gold-500 uppercase tracking-widest">Email Address</th>
+                            <th class="px-8 py-5 text-[10px] font-black text-gold-500 uppercase tracking-widest">Role / Jabatan</th>
+                            <th class="px-8 py-5 text-[10px] font-black text-gold-500 uppercase tracking-widest text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-50">

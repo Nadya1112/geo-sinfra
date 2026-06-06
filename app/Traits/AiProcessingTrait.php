@@ -26,14 +26,17 @@ trait AiProcessingTrait
                 return false;
             }
 
-            // Kirim request ke API Python
-            // Catatan: Pastikan API Python Anda menerima file dengan field 'image'
-            $response = Http::attach(
-                'image', file_get_contents($filePath), basename($filePath)
-            )->post($apiUrl);
+            // Eksekusi via Python CLI langsung (menggantikan HTTP POST ke Flask)
+            $pythonPath = 'python'; 
+            $scriptPath = base_path('predict.py');
+            $argScript = escapeshellarg($scriptPath);
+            $argImage = escapeshellarg($filePath);
+            $command = "$pythonPath $argScript $argImage";
+            
+            $output = shell_exec($command . ' 2>&1');
+            $result = json_decode(trim($output), true);
 
-            if ($response->successful()) {
-                $result = $response->json();
+            if ($result && isset($result['success']) && $result['success'] == true) {
                 
                 $infra = DB::table('infrastruktur')->where('id_infrastruktur', $infrastrukturId)->first();
                 $idUser = $infra ? $infra->id_user : (auth()->id() ?? 1);
@@ -60,18 +63,21 @@ trait AiProcessingTrait
                 $predictedJenisDb = $jenisMapping[$predictedJenisDisplay] ?? 'jalan';
 
                 DB::table('infrastruktur')->where('id_infrastruktur', $infrastrukturId)->update([
-                    'jenis_infrastruktur' => $predictedJenisDisplay,
                     'jenis' => $predictedJenisDb
                 ]);
 
                 // Simpan hasil ke tabel citra_cnn
+                // Catatan: Model predict.py mengembalikan persentase 0-100, kita ubah ke 0-1 untuk database
+                $skorKondisi = isset($result['confidence_kondisi']) ? ($result['confidence_kondisi'] / 100) : 0;
+                $labelKondisi = $result['kondisi'] ?? 'Tidak Terdeteksi';
+
                 DB::table('citra_cnn')->updateOrInsert(
                     ['id_infrastruktur' => $infrastrukturId],
                     [
                         'id_user' => $idUser,
                         'file_foto' => $imagePath,
-                        'skor_cnn' => $result['probability'] ?? 0,
-                        'label_kondisi' => $result['label'] ?? 'Tidak Terdeteksi',
+                        'skor_cnn' => $skorKondisi,
+                        'label_kondisi' => $labelKondisi,
                         'created_at' => now(),
                         'updated_at' => now()
                     ]
@@ -82,7 +88,7 @@ trait AiProcessingTrait
 
                 return true;
             } else {
-                Log::error("API CNN Gagal: " . $response->body());
+                Log::error("Skrip Python Gagal: " . (is_array($result) ? ($result['error'] ?? 'Unknown Error') : $output));
                 return $this->simulateCnnAnalysis($infrastrukturId);
             }
         } catch (\Exception $e) {
@@ -140,7 +146,6 @@ trait AiProcessingTrait
         $simJenisDb = $jenisMapping[$simJenis] ?? 'jalan';
 
         DB::table('infrastruktur')->where('id_infrastruktur', $infrastrukturId)->update([
-            'jenis_infrastruktur' => $simJenis,
             'jenis' => $simJenisDb
         ]);
 

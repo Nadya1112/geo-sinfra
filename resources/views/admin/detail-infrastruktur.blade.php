@@ -56,7 +56,7 @@
                 </a>
                 <div>
                     <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
-                    <h2 class="text-xl font-black text-navy-900 leading-none">Detail Data Infrastruktur</h2>
+                    <h2 class="text-xl font-black text-navy-900 leading-none">Detail {{ ucfirst($inf->jenis) ?? 'Infrastruktur' }}</h2>
                 </div>
             </div>
 
@@ -117,12 +117,11 @@
                     <i class="fas fa-hashtag mr-1"></i> INF-{{ $inf->id_infrastruktur }}
                 </span>
                 <span class="px-3 py-1.5 bg-gold-500/10 text-gold-600 border border-gold-500/20 rounded-xl text-[9px] font-black tracking-widest uppercase">
-                    {{ strtoupper($inf->jenis ?? $inf->jenis_infrastruktur ?? 'Infrastruktur') }}
+                    {{ strtoupper(ucfirst($inf->jenis) ?? 'Infrastruktur') }}
                 </span>
                 @php
                     $statusMap = [
                         'baik'         => 'bg-emerald-50 text-emerald-600 border-emerald-200',
-                        'rusak ringan' => 'bg-yellow-50 text-yellow-600 border-yellow-200',
                         'rusak sedang' => 'bg-orange-50 text-orange-600 border-orange-200',
                         'rusak berat'  => 'bg-red-50 text-red-600 border-red-200',
                     ];
@@ -173,7 +172,7 @@
                                 <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Jenis Infrastruktur</p>
                                 <div class="px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl flex items-center gap-2">
                                     <span class="px-2 py-0.5 bg-navy-900 text-gold-500 rounded-md text-[7px] font-black tracking-wider uppercase">AI</span>
-                                    <span class="text-sm font-black text-navy-900 uppercase">{{ $inf->jenis ?? $inf->jenis_infrastruktur ?? '—' }}</span>
+                                    <span class="text-sm font-black text-navy-900 uppercase">{{ ucfirst($inf->jenis) ?? '—' }}</span>
                                 </div>
                             </div>
                             {{-- Material --}}
@@ -340,10 +339,8 @@
                                 </p>
                                 @php
                                     $labelPrio = $hasilAi->label_prioritas ?? 'Pending';
-                                    $prioColor = str_contains(strtolower($labelPrio),'berat') ? 'text-red-400'
-                                               : (str_contains(strtolower($labelPrio),'sedang') ? 'text-orange-400'
-                                               : (str_contains(strtolower($labelPrio),'ringan') ? 'text-yellow-400'
-                                               : 'text-emerald-400'));
+                                    $prioColor = str_contains(strtolower($labelPrio), 'berat') ? 'text-red-400' :
+                                         (str_contains(strtolower($labelPrio), 'sedang') ? 'text-orange-400' : 'text-emerald-400');
                                 @endphp
                                 <p class="text-[10px] font-black {{ $prioColor }} uppercase tracking-wider mb-3">{{ $labelPrio }}</p>
                                 <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
@@ -496,7 +493,7 @@
         const lat = {{ $inf->latitude ?? -3.316694 }};
         const lng = {{ $inf->longitude ?? 114.590111 }};
         const map = L.map('mini-map', { zoomControl: true, dragging: false, scrollWheelZoom: false }).setView([lat, lng], 16);
-        L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+        L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
             maxZoom: 20, subdomains: ['mt0','mt1','mt2','mt3']
         }).addTo(map);
 
@@ -505,7 +502,6 @@
         let markerColor = '#10b981';
         if (prioritas.includes('berat'))  markerColor = '#ef4444';
         else if (prioritas.includes('sedang')) markerColor = '#f97316';
-        else if (prioritas.includes('ringan')) markerColor = '#eab308';
 
         const icon = L.divIcon({
             html: `<div style="background:${markerColor};width:16px;height:16px;border-radius:50%;border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.3);"></div>`,

@@ -106,8 +106,8 @@
         </div>
 
         <!-- Right Register Form -->
-        <div class="w-full md:w-1/2 bg-white flex flex-col items-center justify-center p-8 md:p-12 overflow-y-auto">
-            <div class="w-full max-w-md">
+        <div class="w-full md:w-1/2 bg-white p-8 md:p-12 overflow-y-auto flex items-start justify-center">
+            <div class="w-full max-w-md my-auto py-8">
                 
                 <div class="mb-8 text-center">
                     <h2 class="text-4xl font-black text-navy-900 mb-2 tracking-tight">Buat Akun</h2>

@@ -1,6 +1,6 @@
 ============================================================
   LAPORAN TRAINING MODEL AI - GEO-SINFRA (IMPROVED)
-  Tanggal: 2026-05-29 16:23:08
+  Tanggal: 2026-06-05 12:08:42
 ============================================================
 
 DISTRIBUSI DATASET:
@@ -16,39 +16,45 @@ DISTRIBUSI DATASET:
     - baik: 17 gambar
     - sedang: 22 gambar
     - berat: 39 gambar
+  SANITASI:
+    - baik: 0 gambar
+    - sedang: 0 gambar
+    - berat: 0 gambar
 
 ==================================================
-AKURASI JENIS: 91.55%
-==================================================
-              precision    recall  f1-score   support
-
-       jalan       0.92      0.96      0.94       190
-    jembatan       0.91      0.85      0.88        68
-      titian       0.94      0.79      0.86        38
-
-    accuracy                           0.92       296
-   macro avg       0.92      0.87      0.89       296
-weighted avg       0.92      0.92      0.91       296
-
-Confusion Matrix:
-[[183   5   2]
- [ 10  58   0]
- [  7   1  30]]
-
-==================================================
-AKURASI KONDISI: 74.32%
+AKURASI JENIS: 93.33%
 ==================================================
               precision    recall  f1-score   support
 
-        Baik       0.83      0.74      0.78        58
-      Sedang       0.74      0.74      0.74       124
-       Berat       0.71      0.75      0.73       114
+       jalan       0.95      0.95      0.95        77
+    jembatan       0.86      0.86      0.86        28
+      titian       1.00      1.00      1.00        15
+    sanitasi       0.00      0.00      0.00         0
 
-    accuracy                           0.74       296
-   macro avg       0.76      0.74      0.75       296
-weighted avg       0.75      0.74      0.74       296
+    accuracy                           0.93       120
+   macro avg       0.70      0.70      0.70       120
+weighted avg       0.93      0.93      0.93       120
 
 Confusion Matrix:
-[[43  6  9]
- [ 6 92 26]
- [ 3 26 85]]
+[[73  4  0  0]
+ [ 4 24  0  0]
+ [ 0  0 15  0]
+ [ 0  0  0  0]]
+
+==================================================
+AKURASI KONDISI: 67.50%
+==================================================
+              precision    recall  f1-score   support
+
+        Baik       0.95      0.75      0.84        24
+      Sedang       0.63      0.67      0.65        49
+       Berat       0.61      0.64      0.62        47
+
+    accuracy                           0.68       120
+   macro avg       0.73      0.69      0.71       120
+weighted avg       0.69      0.68      0.68       120
+
+Confusion Matrix:
+[[18  3  3]
+ [ 0 33 16]
+ [ 1 16 30]]

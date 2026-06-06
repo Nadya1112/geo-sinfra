@@ -77,9 +77,9 @@ def load_ai_models():
         import torch
         import torchvision.models as models
         
-        print("Memuat model CNN (PyTorch MobileNetV2)...")
-        cnn_model = models.mobilenet_v2(weights=None)
-        cnn_model.classifier = torch.nn.Identity()
+        print("Memuat model CNN (PyTorch ResNet18)...")
+        cnn_model = models.resnet18(weights=None)
+        cnn_model.fc = torch.nn.Identity()
         cnn_model.load_state_dict(torch.load(CNN_MODEL_PATH, map_location='cpu'))
         cnn_model.eval()
         
@@ -179,7 +179,7 @@ def predict_with_ai(foto_path):
 
 def predict_simulasi():
     """Prediksi simulasi jika model belum tersedia."""
-    jenis_options = ['Jalan', 'Jembatan', 'Titian']
+    jenis_options = ['Jalan', 'Jembatan', 'Titian', 'Sanitasi']
     kondisi_options = ['Baik', 'Sedang', 'Berat']
     
     jenis = random.choice(jenis_options)

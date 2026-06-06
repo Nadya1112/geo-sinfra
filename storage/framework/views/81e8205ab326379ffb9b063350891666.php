@@ -193,7 +193,6 @@
                                 <tr class="bg-slate-50 border-b border-slate-100">
                                     <th class="px-3 py-3 text-[9px] font-black text-slate-400 tracking-widest uppercase">Kecamatan</th>
                                     <th class="px-3 py-3 text-[9px] font-black text-emerald-500 tracking-widest text-center">Baik</th>
-                                    <th class="px-3 py-3 text-[9px] font-black text-yellow-500 tracking-widest text-center">Ringan</th>
                                     <th class="px-3 py-3 text-[9px] font-black text-orange-500 tracking-widest text-center">Sedang</th>
                                     <th class="px-3 py-3 text-[9px] font-black text-red-500 tracking-widest text-center">Berat</th>
                                     <th class="px-3 py-3 text-[9px] font-black text-slate-400 tracking-widest text-right">Total</th>
@@ -210,9 +209,6 @@
                                     </td>
                                     <td class="px-3 py-3 text-center">
                                         <span class="text-[10px] font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg"><?php echo e($item['baik']); ?></span>
-                                    </td>
-                                    <td class="px-3 py-3 text-center">
-                                        <span class="text-[10px] font-black text-yellow-600 bg-yellow-50 px-2 py-0.5 rounded-lg"><?php echo e($item['ringan']); ?></span>
                                     </td>
                                     <td class="px-3 py-3 text-center">
                                         <span class="text-[10px] font-black text-orange-600 bg-orange-50 px-2 py-0.5 rounded-lg"><?php echo e($item['sedang']); ?></span>

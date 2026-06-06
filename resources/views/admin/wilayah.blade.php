@@ -122,11 +122,12 @@
             <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden mb-10">
                 <table class="w-full text-left border-collapse">
                     <thead>
-                        <tr class="bg-slate-50/50 border-b border-slate-100">
-                            <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest w-24 text-center">No.</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Nama Kecamatan</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Kelurahan</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center w-32">Aksi</th>
+                        <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
+                            <th class="px-8 py-5 text-[10px] font-black text-gold-500 uppercase tracking-widest w-24 text-center">No.</th>
+                            <th class="px-8 py-5 text-[10px] font-black text-gold-500 uppercase tracking-widest">Nama Kecamatan</th>
+                            <th class="px-8 py-5 text-[10px] font-black text-gold-500 uppercase tracking-widest">Kelurahan</th>
+                            <th class="px-8 py-5 text-[10px] font-black text-gold-500 uppercase tracking-widest text-center">Total Infrastruktur</th>
+                            <th class="px-8 py-5 text-[10px] font-black text-gold-500 uppercase tracking-widest text-center w-32">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-50">
@@ -144,6 +145,11 @@
                                 <p class="text-sm font-bold text-navy-900 leading-relaxed max-w-sm truncate" title="{{ $wly->nama_kelurahan }}">
                                     {{ $wly->nama_kelurahan ?? '-' }}
                                 </p>
+                            </td>
+                            <td class="px-8 py-5 text-center">
+                                <span class="px-3 py-1 bg-emerald-50 border border-emerald-100 text-emerald-600 rounded-xl text-xs font-black">
+                                    {{ $wly->total_aset ?? 0 }} Titik
+                                </span>
                             </td>
                             <td class="px-8 py-5">
                                 <div class="flex justify-center gap-2">

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test API Klasifikasi AI GEO-SINFRA</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; }
+        .card { border: 1px solid #ccc; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .result { margin-top: 20px; padding: 15px; background: #f9f9f9; border-left: 4px solid #4CAF50; display: none; }
+        .error { margin-top: 20px; padding: 15px; background: #ffebee; border-left: 4px solid #f44336; display: none; color: #b71c1c; }
+        button { background: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-top: 10px; }
+        button:hover { background: #45a049; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        #preview { max-width: 100%; margin-top: 15px; border-radius: 4px; display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Uji Coba API Prediksi AI</h2>
+        <p>Upload gambar infrastruktur (Jalan, Jembatan, Titian, Sanitasi) untuk melihat hasil prediksi dari model Python Anda.</p>
+        
+        <form id="uploadForm">
+            <input type="file" id="imageInput" accept="image/png, image/jpeg, image/jpg" required>
+            <br>
+            <img id="preview" src="#" alt="Preview Gambar">
+            <br>
+            <button type="submit" id="submitBtn">Prediksi Gambar</button>
+        </form>
+
+        <!-- Loading Indicator -->
+        <div id="loading" style="display:none; margin-top:15px; color:#666;">
+            ⏳ Sedang memproses gambar dengan AI... (Bisa memakan waktu beberapa detik)
+        </div>
+
+        <!-- Success Result -->
+        <div id="resultBox" class="result">
+            <h3 style="margin-top:0; color:#2e7d32;">Hasil Prediksi</h3>
+            <p><strong>Jenis:</strong> <span id="resJenis">-</span> (<span id="resConfJenis">-</span>%)</p>
+            <p><strong>Kondisi:</strong> <span id="resKondisi">-</span> (<span id="resConfKondisi">-</span>%)</p>
+            <p><strong>Prioritas:</strong> <span id="resPrioritas">-</span></p>
+            <hr>
+            <details>
+                <summary>Lihat Detail JSON (Teknis)</summary>
+                <pre id="resRaw" style="font-size:12px; overflow-x:auto;"></pre>
+            </details>
+        </div>
+
+        <!-- Error Result -->
+        <div id="errorBox" class="error">
+            <h3 style="margin-top:0;">Terjadi Kesalahan</h3>
+            <p id="errorMsg"></p>
+            <details id="errorRawDetail" style="display:none; margin-top:10px;">
+                <summary>Log Error</summary>
+                <pre id="errorRaw" style="font-size:12px; overflow-x:auto;"></pre>
+            </details>
+        </div>
+    </div>
+
+    <script>
+        const imageInput = document.getElementById('imageInput');
+        const preview = document.getElementById('preview');
+        const form = document.getElementById('uploadForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const loading = document.getElementById('loading');
+        
+        const resultBox = document.getElementById('resultBox');
+        const errorBox = document.getElementById('errorBox');
+
+        // Tampilkan preview gambar
+        imageInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Handle Submit
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const file = imageInput.files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append('image', file);
+
+            // Reset UI
+            resultBox.style.display = 'none';
+            errorBox.style.display = 'none';
+            loading.style.display = 'block';
+            submitBtn.disabled = true;
+
+            try {
+                // Panggil Endpoint Laravel dengan relative path
+                const response = await fetch('api/predict-infrastructure', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    // Berhasil
+                    document.getElementById('resJenis').textContent = data.jenis;
+                    document.getElementById('resConfJenis').textContent = data.confidence_jenis;
+                    document.getElementById('resKondisi').textContent = data.kondisi;
+                    document.getElementById('resConfKondisi').textContent = data.confidence_kondisi;
+                    document.getElementById('resPrioritas').textContent = data.prioritas;
+                    
+                    document.getElementById('resRaw').textContent = JSON.stringify(data, null, 2);
+                    resultBox.style.display = 'block';
+                } else {
+                    // Gagal dari sisi logic aplikasi
+                    throw new Error(data.error || 'Terjadi kesalahan tidak diketahui.', { cause: data });
+                }
+            } catch (error) {
+                // Gagal Network atau Error Handling
+                document.getElementById('errorMsg').textContent = error.message;
+                
+                if (error.cause && error.cause.raw_output) {
+                    document.getElementById('errorRaw').textContent = error.cause.raw_output;
+                    document.getElementById('errorRawDetail').style.display = 'block';
+                }
+                
+                errorBox.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

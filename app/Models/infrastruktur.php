@@ -27,7 +27,6 @@ class Infrastruktur extends Model
     protected $fillable = [
         'id_user',
         'id_kelurahan',
-        'jenis_infrastruktur',
         'nama_objek',
         'foto_terbaru',
         'jenis',

@@ -103,7 +103,7 @@
                             
                             <div class="absolute bottom-5 left-5 right-5">
                                 <span class="px-2.5 py-1 bg-white/20 backdrop-blur-md rounded border border-white/20 text-[9px] font-black uppercase tracking-widest text-white mb-2 inline-block">
-                                    {{ $item->jenis_infrastruktur ?? $item->jenis ?? 'Infrastruktur' }}
+                                    {{ ucfirst($item->jenis) ?? \'Infrastruktur\' }}
                                 </span>
                                 <h3 class="text-xl font-black text-white leading-tight line-clamp-2">{{ $item->nama_objek ?? $item->nama_infrastruktur ?? 'Tanpa Nama' }}</h3>
                             </div>

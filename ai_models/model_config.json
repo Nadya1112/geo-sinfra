@@ -11,18 +11,19 @@
   "infra_types": [
     "jalan",
     "jembatan",
-    "titian"
+    "titian",
+    "sanitasi"
   ],
   "cnn_backend": "pytorch",
   "cnn_model_file": "cnn_feature_extractor.pth",
   "use_pca": true,
-  "pca_components": 256,
+  "pca_components": 128,
   "pca_file": "pca_transformer.pkl",
-  "accuracy_jenis": 91.55,
-  "accuracy_kondisi": 74.32,
-  "training_date": "2026-05-29 16:23:08",
+  "accuracy_jenis": 93.33,
+  "accuracy_kondisi": 67.5,
+  "training_date": "2026-06-05 12:08:42",
   "fine_tuned": true,
-  "finetune_epochs": 15,
+  "finetune_epochs": 20,
   "kondisi_display_map": {
     "baik": "Baik",
     "sedang": "Sedang",
@@ -31,6 +32,7 @@
   "jenis_display_map": {
     "jalan": "Jalan",
     "jembatan": "Jembatan",
-    "titian": "Titian"
+    "titian": "Titian",
+    "sanitasi": "Sanitasi"
   }
 }

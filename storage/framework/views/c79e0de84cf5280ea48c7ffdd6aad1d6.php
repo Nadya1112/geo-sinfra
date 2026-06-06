@@ -172,16 +172,16 @@
                                 </div>
                                 <div>
                                     <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">Jenis Infrastruktur</label>
-                                    
+                                    <input type="hidden" name="jenis" value="<?php echo e($inf->jenis); ?>">
                                     <div class="w-full px-4 py-3 bg-slate-100 border border-slate-200 rounded-xl flex items-center justify-between cursor-not-allowed">
                                         <div class="flex items-center gap-2">
                                             <span class="px-2 py-0.5 bg-navy-900 text-gold-500 rounded-md text-[7px] font-black tracking-wider uppercase">AI</span>
-                                            <span class="text-sm font-black text-navy-900 uppercase"><?php echo e($inf->jenis_infrastruktur ?? $inf->jenis ?? '—'); ?></span>
+                                            <span class="text-sm font-black text-navy-900 uppercase"><?php echo e(ucfirst($inf->jenis) ?? '—'); ?></span>
                                         </div>
                                         <i class="fas fa-lock text-slate-400 text-[10px]"></i>
                                     </div>
                                     <p class="text-[9px] text-slate-400 font-semibold mt-1.5">
-                                        <i class="fas fa-robot mr-1 text-gold-500"></i> Jenis ditentukan otomatis oleh sistem AI.
+                                        <i class="fas fa-robot mr-1 text-gold-500"></i> Jenis tidak dapat diubah pada mode edit.
                                     </p>
                                 </div>
                                 <div>
@@ -447,7 +447,7 @@
         const lng = parseFloat(lngInput.value) || 114.590111;
 
         const map = L.map('edit-map', { zoomControl: true }).setView([lat, lng], 15);
-        L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+        L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
             maxZoom: 20, subdomains: ['mt0','mt1','mt2','mt3']
         }).addTo(map);
 

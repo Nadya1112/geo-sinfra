@@ -182,7 +182,7 @@
                             <div>
                                 <div class="inline-flex items-center gap-2 px-3 py-1 bg-navy-50 border border-navy-100 rounded-lg mb-3">
                                     <i class="fas fa-layer-group text-[9px] text-gold-500"></i>
-                                    <p class="text-[9px] font-black text-navy-900 uppercase tracking-widest">{{ $infrastruktur->jenis_infrastruktur ?? $infrastruktur->jenis }}</p>
+                                    <p class="text-[9px] font-black text-navy-900 uppercase tracking-widest">{{ ucfirst($infrastruktur->jenis) }}</p>
                                 </div>
                                 <h3 class="text-2xl lg:text-3xl font-black text-navy-900 leading-tight">{{ $infrastruktur->nama_objek ?? $infrastruktur->nama_infrastruktur }}</h3>
                             </div>

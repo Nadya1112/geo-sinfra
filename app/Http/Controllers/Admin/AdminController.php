@@ -24,7 +24,41 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        // 1. Data Total Infrastruktur
+        $totalInfrastruktur = Infrastruktur::whereNull('deleted_at')->count();
+
+        // 2. Data Kondisi Aset (Berdasarkan Label Prioritas AI)
+        $aiData = DB::table('analisis_ai')
+            ->join('infrastruktur', 'analisis_ai.id_infrastruktur', '=', 'infrastruktur.id_infrastruktur')
+            ->whereNull('infrastruktur.deleted_at')
+            ->select('analisis_ai.label_prioritas')
+            ->get();
+
+        $rusakBerat = $aiData->where('label_prioritas', 'Rusak Berat')->count();
+        $rusakSedang = $aiData->where('label_prioritas', 'Rusak Sedang')->count();
+        $kondisiBaik = $aiData->where('label_prioritas', 'Baik')->count();
+        $totalDianalisis = $aiData->count();
+        
+        $persenDianalisis = $totalInfrastruktur > 0 ? round(($totalDianalisis / $totalInfrastruktur) * 100) : 0;
+
+        // 3. Rekomendasi AI (Ambil 1 aset dengan skor DT tertinggi / Rusak Berat)
+        $rekomendasi = DB::table('infrastruktur')
+            ->join('analisis_ai', 'infrastruktur.id_infrastruktur', '=', 'analisis_ai.id_infrastruktur')
+            ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
+            ->whereNull('infrastruktur.deleted_at')
+            ->where('analisis_ai.label_prioritas', 'Rusak Berat')
+            ->orderBy('analisis_ai.skor_dt', 'desc')
+            ->select('infrastruktur.id_infrastruktur', 'infrastruktur.nama_objek', 'kelurahan.nama_kelurahan')
+            ->first();
+
+        // 4. Data Cepat Lainnya
+        $totalUser = User::whereIn('role', ['surveyor', 'admin'])->count();
+        $totalWilayah = DB::table('kelurahan')->count();
+
+        return view('admin.dashboard', compact(
+            'totalInfrastruktur', 'rusakBerat', 'rusakSedang', 'kondisiBaik', 
+            'persenDianalisis', 'rekomendasi', 'totalUser', 'totalWilayah'
+        ));
     }
 
     /**
@@ -75,8 +109,8 @@ class AdminController extends Controller
         $hasilAi = DB::table('analisis_ai')->get();
         $jumlahRusakBerat = $hasilAi->where('label_prioritas', 'Rusak Berat')->count();
         $jumlahRusakSedang = $hasilAi->where('label_prioritas', 'Rusak Sedang')->count(); 
-        $jumlahRusakRingan = $hasilAi->where('label_prioritas', 'Rusak Ringan')->count();
-        $jumlahBaik = $jumlahInfrastruktur - ($jumlahRusakBerat + $jumlahRusakSedang + $jumlahRusakRingan);
+        $jumlahBaik = $hasilAi->where('label_prioritas', 'Baik')->count();
+        $jumlahBelumDianalisis = $jumlahInfrastruktur - ($jumlahRusakBerat + $jumlahRusakSedang + $jumlahBaik);
 
         $recentActivities = ActivityLog::with('user')
             ->orderBy('created_at', 'desc')
@@ -85,7 +119,7 @@ class AdminController extends Controller
 
         return view('admin.statistik', compact(
             'jumlahSurveyor', 'jumlahKabid', 'jumlahWilayah', 'jumlahInfrastruktur', 
-            'jumlahAnalisis', 'jumlahRusakBerat', 'jumlahRusakSedang', 'jumlahRusakRingan', 'jumlahBaik',
+            'jumlahAnalisis', 'jumlahRusakBerat', 'jumlahRusakSedang', 'jumlahBaik', 'jumlahBelumDianalisis',
             'recentActivities'
         ));
     }
@@ -97,17 +131,16 @@ class AdminController extends Controller
     {
         $year = $request->query('year', date('Y'));
         
-        $availableYears = DB::table('infrastruktur')
-            ->select(DB::raw('YEAR(COALESCE(tgl_survey, created_at)) as year'))
-            ->whereNotNull(DB::raw('COALESCE(tgl_survey, created_at)'))
-            ->groupBy('year')
-            ->orderBy('year', 'desc')
-            ->pluck('year')
-            ->toArray();
-        if (empty($availableYears)) {
-            $availableYears = [date('Y')];
-        }
-        if (!in_array($year, $availableYears)) {
+        $minYear = DB::table('infrastruktur')
+            ->select(DB::raw('MIN(YEAR(COALESCE(tgl_survey, created_at))) as min_year'))
+            ->value('min_year');
+            
+        $currentYear = (int) date('Y');
+        $startYear = $minYear ? min((int) $minYear, $currentYear) : $currentYear;
+        
+        $availableYears = range($currentYear, $startYear);
+        
+        if (!in_array((int)$year, $availableYears)) {
             $availableYears[] = (int) $year;
             rsort($availableYears);
         }
@@ -148,7 +181,6 @@ class AdminController extends Controller
                 ->whereNull('infrastruktur.deleted_at')
                 ->select(
                     DB::raw("COUNT(CASE WHEN LOWER(analisis_ai.label_prioritas) LIKE '%baik%' THEN 1 END) as baik"),
-                    DB::raw("COUNT(CASE WHEN LOWER(analisis_ai.label_prioritas) LIKE '%ringan%' THEN 1 END) as ringan"),
                     DB::raw("COUNT(CASE WHEN LOWER(analisis_ai.label_prioritas) LIKE '%sedang%' THEN 1 END) as sedang"),
                     DB::raw("COUNT(CASE WHEN LOWER(analisis_ai.label_prioritas) LIKE '%berat%' THEN 1 END) as berat"),
                     DB::raw("COUNT(*) as total_semua")
@@ -159,7 +191,6 @@ class AdminController extends Controller
                 'name' => $kec->nama_kecamatan,
                 'nama' => $kec->nama_kecamatan,
                 'baik' => $infraKec->baik ?? 0,
-                'ringan' => $infraKec->ringan ?? 0,
                 'sedang' => $infraKec->sedang ?? 0,
                 'berat' => $infraKec->berat ?? 0,
                 'total' => $infraKec->total_semua ?? 0
@@ -205,6 +236,7 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
+            'no_hp' => 'nullable|string|max:20',
             'password' => 'required|string|min:8',
             'role' => 'required|in:admin,surveyor',
             'id_kecamatan' => 'nullable|exists:kecamatan,id_kecamatan',
@@ -215,6 +247,7 @@ class AdminController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
+            'no_hp' => $request->no_hp ?? null,
             'id_kecamatan' => ($request->role === 'admin') ? null : $request->id_kecamatan,
         ]);
 
@@ -242,6 +275,7 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
+            'no_hp' => 'nullable|string|max:20',
             'role' => 'required|in:admin,surveyor',
             'id_kecamatan' => 'nullable|exists:kecamatan,id_kecamatan',
         ]);
@@ -250,6 +284,7 @@ class AdminController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'role' => $request->role,
+            'no_hp' => $request->no_hp ?? $user->no_hp,
             'id_kecamatan' => ($request->role === 'admin') ? null : $request->id_kecamatan,
         ];
 
@@ -294,7 +329,9 @@ class AdminController extends Controller
         $search = $request->query('search');
         $query = DB::table('kelurahan')
             ->join('kecamatan', 'kelurahan.id_kecamatan', '=', 'kecamatan.id_kecamatan')
-            ->select('kelurahan.*', 'kecamatan.nama_kecamatan');
+            ->leftJoin('infrastruktur', 'kelurahan.id_kelurahan', '=', 'infrastruktur.id_kelurahan')
+            ->select('kelurahan.*', 'kecamatan.nama_kecamatan', DB::raw('COUNT(infrastruktur.id_infrastruktur) as total_aset'))
+            ->groupBy('kelurahan.id_kelurahan', 'kecamatan.nama_kecamatan', 'kelurahan.id_kecamatan', 'kelurahan.nama_kelurahan', 'kelurahan.geometri', 'kelurahan.created_at', 'kelurahan.updated_at');
 
         if ($search) {
             $query->where('kelurahan.nama_kelurahan', 'LIKE', "%{$search}%")
@@ -390,6 +427,8 @@ class AdminController extends Controller
         $query = DB::table('infrastruktur')
             ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
             ->leftJoin('kecamatan', 'kelurahan.id_kecamatan', '=', 'kecamatan.id_kecamatan')
+            ->leftJoin('analisis_ai', 'infrastruktur.id_infrastruktur', '=', 'analisis_ai.id_infrastruktur')
+            ->leftJoin('citra_cnn', 'infrastruktur.id_infrastruktur', '=', 'citra_cnn.id_infrastruktur')
             ->whereNull('infrastruktur.deleted_at');
 
         if ($search) {
@@ -403,7 +442,17 @@ class AdminController extends Controller
         }
 
         $query = $query->orderBy('infrastruktur.id_infrastruktur', 'asc')
-                               ->select('infrastruktur.*', 'kelurahan.nama_kelurahan', 'kecamatan.nama_kecamatan', 'kelurahan.id_kecamatan');
+                               ->select(
+                                   'infrastruktur.*', 
+                                   'kelurahan.nama_kelurahan', 
+                                   'kecamatan.nama_kecamatan', 
+                                   'kelurahan.id_kecamatan',
+                                   'analisis_ai.label_prioritas as dt_label_prioritas',
+                                   'analisis_ai.skor_dt as dt_skor_dt',
+                                   'analisis_ai.rekomendasi as dt_rekomendasi',
+                                   'citra_cnn.label_kondisi as cnn_label_kondisi',
+                                   'citra_cnn.skor_cnn as cnn_skor_cnn'
+                               );
 
         if ($request->get('show') == 'all') {
             $infrastruktur = $query->get();
@@ -429,7 +478,7 @@ class AdminController extends Controller
     {
         $request->validate([
             'nama_infrastruktur' => 'required|string|max:255',
-            'jenis_infrastruktur' => 'required|string',
+            'jenis' => 'required|string|in:jalan,titian,sanitasi,jembatan',
             'id_kecamatan' => 'required|exists:kecamatan,id_kecamatan',
             'id_kelurahan' => 'required|exists:kelurahan,id_kelurahan',
             'latitude' => 'required|string',
@@ -462,7 +511,7 @@ class AdminController extends Controller
         $infra = Infrastruktur::create([
             'id_user' => auth()->id(), 
             'id_kelurahan' => $request->id_kelurahan,
-            'jenis_infrastruktur' => $request->jenis_infrastruktur,
+            'jenis' => strtolower($request->jenis),
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
             'kondisi' => $request->kondisi, 
@@ -470,9 +519,9 @@ class AdminController extends Controller
             'panjang' => $request->panjang,
             'lebar' => $request->lebar,
             'has_drainase' => $request->has_drainase ?? 'tidak',
+            'has_gorong_gorong' => $request->has_gorong_gorong ?? 'tidak',
             'foto_terbaru' => 'infrastruktur/' . $namaFoto,
             'nama_objek' => $request->nama_infrastruktur, 
-            'jenis' => strtolower($request->jenis_infrastruktur),
         ]);
 
         if ($request->hasFile('foto')) {
@@ -536,12 +585,77 @@ class AdminController extends Controller
         return $pdf->download($fileName);
     }
 
+    public function exportExcel()
+    {
+        $infrastrukturs = DB::table('infrastruktur')
+            ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
+            ->leftJoin('kecamatan', 'kelurahan.id_kecamatan', '=', 'kecamatan.id_kecamatan')
+            ->leftJoin('analisis_ai', 'infrastruktur.id_infrastruktur', '=', 'analisis_ai.id_infrastruktur')
+            ->select(
+                'infrastruktur.id_infrastruktur',
+                'infrastruktur.nama_objek',
+                'infrastruktur.jenis',
+                'infrastruktur.material_eksisting',
+                'kecamatan.nama_kecamatan',
+                'kelurahan.nama_kelurahan',
+                'infrastruktur.panjang',
+                'infrastruktur.lebar',
+                'infrastruktur.kondisi',
+                'analisis_ai.label_prioritas',
+                'analisis_ai.skor_dt',
+                'infrastruktur.tgl_survey'
+            )
+            ->whereNull('infrastruktur.deleted_at')
+            ->orderBy('infrastruktur.created_at', 'desc')
+            ->get();
+
+        $headers = [
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=Rekap_Data_Infrastruktur_" . date('Y-m-d') . ".csv",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        ];
+
+        $columns = [
+            'ID', 'Nama Infrastruktur', 'Jenis', 'Material', 'Kecamatan', 'Kelurahan', 
+            'Panjang (m)', 'Lebar (m)', 'Kondisi Lapangan', 'Prioritas AI', 'Skor AI', 'Tanggal Survey'
+        ];
+
+        $callback = function() use($infrastrukturs, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($infrastrukturs as $inf) {
+                $row = [
+                    $inf->id_infrastruktur,
+                    $inf->nama_objek,
+                    ucfirst($inf->jenis),
+                    $inf->material_eksisting,
+                    $inf->nama_kecamatan,
+                    $inf->nama_kelurahan,
+                    $inf->panjang,
+                    $inf->lebar,
+                    $inf->kondisi,
+                    $inf->label_prioritas ?? 'Belum Dianalisis',
+                    $inf->skor_dt ?? '-',
+                    $inf->tgl_survey
+                ];
+                fputcsv($file, $row);
+            }
+            fclose($file);
+        };
+
+        return \Illuminate\Support\Facades\Response::stream($callback, 200, $headers);
+    }
+
     public function updateInfrastruktur(Request $request, $id)
     {
         $infra = Infrastruktur::findOrFail($id);
         
         $request->validate([
             'nama_infrastruktur' => 'required|string|max:255',
+            'jenis' => 'required|string|in:jalan,titian,sanitasi,jembatan',
             'latitude' => 'required|string',
             'longitude' => 'required|string',
             'material_eksisting' => 'required|string',
@@ -578,8 +692,6 @@ class AdminController extends Controller
         }
 
         // UPDATE MENGGUNAKAN MODEL (Memicu AI Update otomatis)
-        // Catatan: jenis_infrastruktur & jenis TIDAK diupdate dari form karena
-        // sudah menjadi read-only — ditentukan otomatis oleh sistem AI (CNN).
         $infra->update([
             'id_kelurahan'       => $request->id_kelurahan,
             'latitude'           => $request->latitude,
@@ -593,7 +705,6 @@ class AdminController extends Controller
             'foto_terbaru'       => $namaFoto,
             'nama_objek'         => $request->nama_infrastruktur,
             'status_verifikasi'  => $request->status_verifikasi ?? $infra->status_verifikasi,
-            // jenis & jenis_infrastruktur dipertahankan dari nilai database (tidak diubah)
         ]);
 
         if ($request->hasFile('foto')) {

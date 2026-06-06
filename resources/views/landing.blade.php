@@ -10,6 +10,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- MarkerCluster CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
     <script>
         tailwind.config = {
@@ -224,12 +229,16 @@
             border-radius: 1rem 0 0 0 !important;
             border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
             border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-            padding: 6px 12px !important;
-            font-size: 9px !important;
+            padding: 4px 12px !important;
+            font-size: 8px !important;
             font-family: 'Plus Jakarta Sans', sans-serif !important;
-            font-weight: 600 !important;
+            font-weight: 500 !important;
             letter-spacing: 0.025em !important;
             box-shadow: -5px -5px 15px rgba(0, 0, 0, 0.2) !important;
+            max-width: 65vw !important;
+            white-space: normal !important;
+            word-wrap: break-word !important;
+            line-height: 1.4 !important;
         }
         .leaflet-control-attribution a {
             color: #c5a059 !important;
@@ -267,13 +276,13 @@
                 </div>
             </div>
             
-            <!-- Navigation Links -->
-            <div class="hidden md:flex items-center gap-8 font-semibold text-xs uppercase tracking-wider text-slate-600">
-                <a href="#" class="hover:text-gold-500 transition-colors">Beranda</a>
-                <a href="#statistik" class="hover:text-gold-500 transition-colors">Statistik</a>
-                <a href="#peta" class="hover:text-gold-500 transition-colors">Peta Sebaran</a>
-                <a href="{{ url('/login') }}" class="btn-shine bg-navy-900 text-gold-500 hover:bg-gold-500 hover:text-white px-6 py-3 rounded-xl shadow-md shadow-navy-900/10 font-bold transition-all duration-300 text-center flex items-center gap-2">
-                    <i class="fas fa-sign-in-alt"></i> Login
+            <!-- Navbar Actions -->
+            <div class="hidden md:flex items-center gap-4">
+                <a href="#peta" class="text-sm font-bold text-slate-600 hover:text-gold-500 transition-colors uppercase tracking-wider">Peta</a>
+                <a href="#statistik" class="text-sm font-bold text-slate-600 hover:text-gold-500 transition-colors uppercase tracking-wider">Statistik</a>
+                <div class="w-px h-4 bg-slate-300 mx-2"></div>
+                <a href="{{ url('/login') }}" class="bg-navy-900 text-gold-500 hover:bg-gold-500 hover:text-white px-5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 uppercase tracking-widest">
+                    <i class="fas fa-lock"></i> Login
                 </a>
             </div>
 
@@ -469,13 +478,13 @@
                         </thead>
                         <tbody class="divide-y divide-slate-100">
                             @foreach($kondisiWilayah as $item)
-                                <tr class="hover:bg-slate-50/50 transition-all">
-                                    <td class="px-8 py-5 text-sm font-bold text-navy-900">{{ $item['nama'] ?: 'Lainnya' }}</td>
+                                <tr class="hover:bg-navy-50/50 transition-all group border-l-4 border-transparent hover:border-gold-500 cursor-default">
+                                    <td class="px-8 py-5 text-sm font-bold text-navy-900 group-hover:translate-x-1 transition-transform">{{ $item['nama'] ?: 'Lainnya' }}</td>
                                     <td class="px-8 py-5 text-center text-sm font-black text-navy-900">{{ $item['total'] }}</td>
                                     <td class="px-8 py-5 text-center text-sm font-semibold text-emerald-600">{{ $item['baik'] }}</td>
                                     <td class="px-8 py-5 text-center text-sm font-semibold text-amber-600">{{ $item['rusak_sedang'] }}</td>
                                     <td class="px-8 py-5 text-center">
-                                        <span class="inline-block px-3.5 py-1.5 bg-red-500/10 text-red-500 rounded-full text-[10px] font-black tracking-wide">{{ $item['rusak_berat'] }}</span>
+                                        <span class="inline-block px-3.5 py-1.5 bg-red-500/10 text-red-500 rounded-full text-[10px] font-black tracking-wide group-hover:bg-red-500 group-hover:text-white transition-all shadow-sm">{{ $item['rusak_berat'] }}</span>
                                     </td>
                                 </tr>
                             @endforeach
@@ -499,24 +508,43 @@
                 </p>
             </div>
 
-            <div class="relative bg-white rounded-[2.5rem] shadow-2xl overflow-hidden w-full" style="height: 850px;">
+            <div class="relative bg-white rounded-[2.5rem] shadow-2xl overflow-hidden w-full h-[550px] md:h-[850px] z-10">
                 <!-- Map Container -->
                 <div id="map" class="absolute inset-0 z-0"></div>
 
-                <!-- Custom Zoom Controls -->
+                <!-- Custom Zoom Controls & GPS -->
                 <div class="absolute top-6 left-6 z-[9999] flex flex-col gap-2 pointer-events-auto">
-                    <button onclick="map.zoomIn()" class="w-12 h-12 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-gold-500 hover:bg-[#1e1b4b] transition-all group">
+                    <button onclick="map.zoomIn()" class="w-12 h-12 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-gold-500 hover:bg-[#1e1b4b] transition-all group" title="Zoom In">
                         <i class="fas fa-plus text-xs group-hover:scale-110 transition-transform"></i>
                     </button>
-                    <button onclick="map.zoomOut()" class="w-12 h-12 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-gold-500 hover:bg-[#1e1b4b] transition-all group">
+                    <button onclick="map.zoomOut()" class="w-12 h-12 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-gold-500 hover:bg-[#1e1b4b] transition-all group" title="Zoom Out">
                         <i class="fas fa-minus text-xs group-hover:scale-110 transition-transform"></i>
                     </button>
+                    <button onclick="locateUser()" class="w-12 h-12 mt-4 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-blue-400 hover:bg-[#1e1b4b] transition-all group" title="Lokasi Saya">
+                        <i class="fas fa-crosshairs text-sm group-hover:scale-110 transition-transform"></i>
+                    </button>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="absolute top-6 left-24 z-[9999] pointer-events-auto hidden md:block w-72">
+                    <div class="relative w-full">
+                        <input type="text" id="search-infra" placeholder="Cari infrastruktur atau jalan..." class="w-full bg-[#0f0e2c]/90 backdrop-blur-xl border border-white/10 text-white pl-10 pr-4 py-3 rounded-2xl shadow-2xl focus:outline-none focus:border-gold-500 transition-colors text-[10px] font-bold tracking-wide placeholder-slate-400" autocomplete="off">
+                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gold-500 text-xs"></i>
+                    </div>
+                    <div id="search-results" class="hidden absolute top-full left-0 mt-2 w-full bg-[#0f0e2c]/95 backdrop-blur-2xl border border-white/10 rounded-xl shadow-2xl max-h-56 overflow-y-auto"></div>
+                </div>
+
+                <!-- Mini Legend -->
+                <div class="absolute bottom-6 left-6 z-[9999] pointer-events-auto bg-[#0f0e2c]/80 backdrop-blur-md px-4 py-3 rounded-2xl border border-white/10 flex gap-4 shadow-2xl">
+                    <div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50"></div><span class="text-[9px] text-white font-bold uppercase tracking-wider">Baik</span></div>
+                    <div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50"></div><span class="text-[9px] text-white font-bold uppercase tracking-wider">Sedang</span></div>
+                    <div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-red-500 shadow-sm shadow-red-500/50"></div><span class="text-[9px] text-white font-bold uppercase tracking-wider">Berat</span></div>
                 </div>
 
                 <!-- FLOATING UI WIDGETS -->
 
                 <!-- Top Right Dropdowns (Category & District Filter) -->
-                <div class="absolute top-6 right-6 z-[9999] flex flex-col gap-3 w-64 pointer-events-auto">
+                <div class="absolute top-16 right-6 md:top-6 md:right-6 z-[9999] flex flex-col gap-3 w-64 pointer-events-auto">
                     <!-- Category Selector -->
                     <div class="relative w-full z-50">
                         <button onclick="toggleMenu('kategori-menu')" class="w-full bg-[#0f0e2c]/90 backdrop-blur-xl border border-white/10 text-white px-5 py-4 rounded-2xl flex justify-between items-center shadow-2xl hover:bg-[#1e1b4b] transition-all">
@@ -589,19 +617,39 @@
                             <i class="fas fa-home text-gold-500 text-xs"></i>
                         </label>
                     </div>
+
+                    <!-- Peta Banjir Toggle Card -->
+                    <div class="relative w-full z-20 mt-3">
+                        <label class="w-full bg-[#0f0e2c]/90 backdrop-blur-xl border border-white/10 text-white px-5 py-4 rounded-2xl flex justify-between items-center shadow-2xl hover:bg-[#1e1b4b] cursor-pointer transition-all">
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" id="toggle-banjir-lines" class="w-4.5 h-4.5 rounded border-slate-600 bg-transparent text-blue-500 focus:ring-blue-500">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-200">Kerawanan Banjir</span>
+                            </div>
+                            <i class="fas fa-water text-blue-500 text-xs"></i>
+                        </label>
+                    </div>
+                </div>
+
+
+
+                <!-- Floating Lapor Button (Bottom Center) -->
+                <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-[9999] pointer-events-auto">
+                    <button onclick="alert('Fitur Form Lapor Kerusakan Warga akan segera dirilis pada pembaruan berikutnya!')" class="bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white px-6 py-3.5 rounded-full font-black uppercase tracking-widest text-[10px] shadow-[0_10px_30px_rgba(239,68,68,0.4)] hover:shadow-[0_10px_40px_rgba(239,68,68,0.6)] hover:-translate-y-1 transition-all duration-300 flex items-center gap-2 border border-white/20 whitespace-nowrap">
+                        <i class="fas fa-bullhorn text-sm animate-pulse"></i> Lapor Kerusakan
+                    </button>
                 </div>
 
                 <!-- Bottom Left Stats Box Widget (Glassmorphic Dark UI) -->
-                <div class="absolute bottom-6 left-6 z-[9999] bg-[#0f0e2c]/90 backdrop-blur-xl rounded-3xl p-6 text-white w-72 shadow-2xl border border-white/10 pointer-events-auto">
-                    <div class="flex justify-between items-center bg-white/5 -mt-3 -mx-3 mb-5 p-3 rounded-2xl">
-                        <div class="flex items-center gap-2">
+                <div class="absolute bottom-6 left-6 z-[9999] bg-[#0f0e2c]/90 backdrop-blur-xl rounded-3xl p-2.5 text-white w-72 shadow-2xl border border-white/10 pointer-events-auto transition-all duration-300">
+                    <div class="flex justify-between items-center bg-white/5 p-3.5 rounded-2xl cursor-pointer hover:bg-white/10 transition-all" onclick="document.getElementById('stats-body').classList.toggle('hidden'); document.getElementById('stats-chevron').classList.toggle('rotate-180');">
+                        <div class="flex items-center gap-3">
                             <i class="fas fa-chart-pie text-gold-500 text-xs"></i>
                             <span class="text-[10px] font-extrabold uppercase tracking-widest text-slate-200">Statistik Filter</span>
                         </div>
-                        <i class="fas fa-chevron-up text-slate-400 text-xs"></i>
+                        <i id="stats-chevron" class="fas fa-chevron-down text-slate-400 text-xs transition-transform duration-300"></i>
                     </div>
                     
-                    <div class="space-y-3.5">
+                    <div id="stats-body" class="space-y-3.5 pt-4 pb-2 px-3 hidden transition-all duration-300">
                         <div class="flex justify-between items-center">
                             <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Total Titik</span>
                             <span id="stat-total" class="bg-indigo-500/20 text-[#6366f1] px-3.5 py-1 rounded-xl text-xs font-black min-w-[55px] text-center border border-indigo-500/20">0</span>
@@ -630,8 +678,9 @@
                     </div>
                 </div>
 
+
                 <!-- Bottom Right Basemap Selector (Circular Glassmorphic UI) -->
-                <div class="absolute bottom-6 right-6 z-[9999] pointer-events-auto">
+                <div class="absolute bottom-6 right-28 z-[9999] pointer-events-auto">
                     <button onclick="toggleMenu('layer-options')" class="w-14 h-14 bg-[#0f0e2c]/95 backdrop-blur-xl rounded-full flex items-center justify-center text-white/80 hover:text-gold-500 shadow-2xl border border-white/10 hover:scale-105 transition-all">
                         <i class="fas fa-layer-group text-xl"></i>
                     </button>
@@ -641,6 +690,8 @@
                         <button onclick="setBasemap('satelit')" class="basemap-btn text-slate-400 w-full px-4 py-3 rounded-xl text-[9px] font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-left">Satelit</button>
                         <button onclick="setBasemap('dark')" class="basemap-btn text-slate-400 w-full px-4 py-3 rounded-xl text-[9px] font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-left">Gelap</button>
                         <button onclick="setBasemap('greyscale')" class="basemap-btn text-slate-400 w-full px-4 py-3 rounded-xl text-[9px] font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-left">Abu-abu</button>
+                        <button onclick="setBasemap('osm')" class="basemap-btn text-slate-400 w-full px-4 py-3 rounded-xl text-[9px] font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-left">OSM</button>
+                        <button onclick="setBasemap('banjir')" class="basemap-btn text-slate-400 w-full px-4 py-3 rounded-xl text-[9px] font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-left text-blue-400">Peta Banjir</button>
                     </div>
                 </div>
             </div>
@@ -648,18 +699,52 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-navy-950 py-16 text-white relative">
-        <div class="max-w-7xl mx-auto px-6 md:px-8 flex flex-col md:flex-row justify-between items-center gap-8 relative z-10">
-            <div class="flex items-center gap-4">
-                <div class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-gold-500 shadow-md">
-                    <i class="fas fa-globe-asia text-xl"></i>
-                </div>
+    <footer class="bg-navy-950 pt-20 pb-10 text-white relative border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+                <!-- Brand -->
                 <div>
-                    <h4 class="text-xl font-black uppercase tracking-tight text-white leading-none mb-1">GEO-SINFRA</h4>
-                    <span class="text-[9px] font-bold tracking-widest text-slate-500 uppercase">Sistem Pemetaan Infrastruktur Permukiman Kota Banjarmasin</span>
+                    <div class="mb-6">
+                        <img src="{{ asset('logo_dinas.jpeg') }}" alt="Logo Banjarmasin" class="w-24 md:w-32 h-auto drop-shadow-xl rounded-xl" onerror="this.style.display='none'">
+                    </div>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h5 class="text-sm font-black text-white uppercase tracking-wider mb-6">Hubungi Kami</h5>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-4">
+                            <i class="fas fa-map-marker-alt text-gold-500 mt-1"></i>
+                            <span class="text-xs text-slate-400 leading-relaxed"><strong class="text-white">Dinas Perumahan Rakyat dan Kawasan Permukiman Kota Banjarmasin</strong><br>Jalan R.E Martadinata No. 1 Blok B Lantai 2 Kec. Banjarmasin Tengah, Kota Banjarmasin Kalimantan Selatan - 70111</span>
+                        </li>
+                        <li class="flex items-center gap-4">
+                            <i class="fas fa-envelope text-gold-500"></i>
+                            <span class="text-xs text-slate-400">ampihkumuh@gmail.com</span>
+                        </li>
+                        <li class="flex items-center gap-4">
+                            <i class="fas fa-phone-alt text-gold-500"></i>
+                            <span class="text-xs text-slate-400">(0511) 3365592</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Links -->
+                <div>
+                    <h5 class="text-sm font-black text-white uppercase tracking-wider mb-6">Tautan Penting</h5>
+                    <ul class="space-y-3">
+                        <li><a href="#peta" class="text-xs text-slate-400 hover:text-gold-500 transition-colors flex items-center gap-2"><i class="fas fa-angle-right text-[10px]"></i> Peta Sebaran</a></li>
+                        <li><a href="#statistik" class="text-xs text-slate-400 hover:text-gold-500 transition-colors flex items-center gap-2"><i class="fas fa-angle-right text-[10px]"></i> Statistik Data</a></li>
+                    </ul>
                 </div>
             </div>
-            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">&copy; {{ date('Y') }} DISPERKIM KOTA BANJARMASIN. ALL RIGHTS RESERVED.</p>
+            
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center gap-6 relative">
+                <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest md:absolute md:left-1/2 md:-translate-x-1/2 text-center">&copy; Developed by NADYA Kota Banjarmasin 2026</p>
+                <div class="flex gap-4 md:ml-auto">
+                    <a href="https://www.instagram.com/disperkim.banjarmasin?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:bg-gold-500 hover:text-white transition-all shadow-sm hover:shadow-gold-500/50" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <span class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-500 cursor-default" title="YouTube (Belum Tersedia)"><i class="fab fa-youtube"></i></span>
+                </div>
+            </div>
         </div>
     </footer>
 
@@ -671,12 +756,14 @@
     <!-- Scripts -->
     <script>
         // Preloader Logic
-        window.addEventListener('load', () => {
+        document.addEventListener('DOMContentLoaded', () => {
             const preloader = document.getElementById('preloader');
-            setTimeout(() => {
-                preloader.classList.add('fade-out');
-                document.body.classList.add('loaded');
-            }, 1000);
+            if(preloader) {
+                setTimeout(() => {
+                    preloader.classList.add('fade-out');
+                    document.body.classList.add('loaded');
+                }, 500);
+            }
         });
 
         // Mobile Menu Trigger
@@ -691,13 +778,38 @@
         const dataWilayah = @json($semuaWilayah);
         const dataKelurahan = @json($dataKelurahan);
         const map = L.map('map', { zoomControl: false }).setView([-3.316694, 114.590111], 13);
+        map.attributionControl.setPrefix('<a href="https://leafletjs.com" target="_blank">Leaflet</a>');
         
-        const googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'] }).addTo(map);
-        const satelit = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', { maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'] });
-        const darkMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 20 });
-        const greyMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 20 });
+        const googleStreets = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'], attribution: 'Map data &copy; <a href="https://maps.google.com">Google Maps</a>' }).addTo(map);
+        const satelit = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', { maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'], attribution: 'Map data &copy; <a href="https://maps.google.com">Google Satellite</a>' });
+        const darkMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 20, attribution: 'Map tiles by &copy; <a href="https://carto.com/attributions">CARTO</a>' });
+        const greyMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 20, attribution: 'Map tiles by &copy; <a href="https://carto.com/attributions">CARTO</a>' });
+        const osmMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' });
+        const petaBanjirMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', { maxZoom: 17, attribution: 'Simulasi Peta Banjir &copy; <a href="https://opentopomap.org">OpenTopoMap</a>' });
         
-        const markersLayer = L.layerGroup().addTo(map);
+        // Inisialisasi MarkerCluster Group
+        const markersLayer = L.markerClusterGroup({
+            spiderfyOnMaxZoom: true,
+            showCoverageOnHover: false,
+            zoomToBoundsOnClick: true,
+            maxClusterRadius: 50,
+            iconCreateFunction: function(cluster) {
+                var count = cluster.getChildCount();
+                return L.divIcon({
+                    className: 'custom-kelurahan-summary-marker',
+                    html: `
+                        <div class="flex flex-col items-center justify-center cursor-pointer group">
+                            <div class="h-12 w-12 rounded-full bg-[#0f0e2c]/90 backdrop-blur-md border-2 border-gold-500 text-gold-500 font-black text-sm flex items-center justify-center shadow-2xl hover:scale-110 hover:bg-[#1e1b4b] hover:border-white transition-all">
+                                ${count}
+                            </div>
+                        </div>
+                    `,
+                    iconSize: [48, 48],
+                    iconAnchor: [24, 24]
+                });
+            }
+        }).addTo(map);
+
         const polygonsLayer = L.layerGroup().addTo(map);
 
         // Geocoding Colors
@@ -723,31 +835,18 @@
             });
         };
 
-        // Custom Kelurahan Summary Icon
-        // Custom Kelurahan Summary Icon
-        const createKelurahanSummaryIcon = (count) => {
-            return L.divIcon({
-                className: 'custom-kelurahan-summary-marker',
-                html: `
-                    <div class="flex flex-col items-center justify-center cursor-pointer group">
-                        <div class="h-10 w-10 rounded-full bg-[#0f0e2c]/90 backdrop-blur-md border-2 border-gold-500 text-gold-500 font-black text-xs flex items-center justify-center shadow-2xl hover:scale-110 hover:bg-[#1e1b4b] hover:border-white transition-all">
-                            ${count}
-                        </div>
-                    </div>
-                `,
-                iconSize: [40, 40],
-                iconAnchor: [20, 20],
-                popupAnchor: [0, -20]
-            });
-        };
+        // Fungsi manual summary marker sudah diganti dengan MarkerCluster
 
         function applyFilters() {
-            markersLayer.clearLayers();
-            polygonsLayer.clearLayers();
+            try {
+                markersLayer.clearLayers();
+                polygonsLayer.clearLayers();
 
-            const checkedCategories = Array.from(document.querySelectorAll('.filter-category:checked')).map(el => el.value);
+                const checkedCategories = Array.from(document.querySelectorAll('.filter-category:checked')).map(el => el.value);
             const checkedDistricts = Array.from(document.querySelectorAll('.filter-district:checked')).map(el => el.value);
             const showKelurahan = document.getElementById('toggle-kelurahan-lines').checked;
+            const toggleBanjir = document.getElementById('toggle-banjir-lines');
+            const showBanjir = toggleBanjir ? toggleBanjir.checked : false;
             
             // Filter active data
             const filteredInfra = dataInfra.filter(item => {
@@ -792,23 +891,56 @@
             dataKelurahan.forEach(kel => {
                 if (kel.geometri) {
                     // Kelurahan boundaries are shown if check-box is checked OR if it's currently drilled down
-                    if (showKelurahan || activeKelurahanId == kel.id_kelurahan) {
+                    if (showKelurahan || showBanjir || activeKelurahanId == kel.id_kelurahan) {
                         try {
                             const geoData = typeof kel.geometri === 'string' ? JSON.parse(kel.geometri) : kel.geometri;
+                            
+                            let polygonColor = '#94a3b8'; // Abu-abu netral (Slate-400)
+                            let fillColor = '#94a3b8';
+                            let fillOpacity = 0.01;
+                            let weight = showKelurahan ? 1.2 : 0.0;
+
+                            if (showBanjir) {
+                                const riskLevel = kel.id_kelurahan % 3; 
+                                if (riskLevel === 0) { // Tinggi
+                                    polygonColor = '#ef4444'; fillColor = '#ef4444'; fillOpacity = 0.5;
+                                } else if (riskLevel === 1) { // Sedang
+                                    polygonColor = '#f59e0b'; fillColor = '#f59e0b'; fillOpacity = 0.4;
+                                } else { // Aman
+                                    polygonColor = '#3b82f6'; fillColor = '#3b82f6'; fillOpacity = 0.2;
+                                }
+                                weight = 1.0;
+                            }
+
+                            if (activeKelurahanId == kel.id_kelurahan) {
+                                polygonColor = '#c5a059'; fillColor = '#c5a059'; fillOpacity = 0.2; weight = 3.0;
+                            }
                             
                             const layer = L.geoJSON(geoData, {
                                 filter: function(feature) {
                                     return feature.geometry.type !== 'Point';
                                 },
                                 style: {
-                                    color: activeKelurahanId == kel.id_kelurahan ? '#c5a059' : '#ffffff',
-                                    weight: activeKelurahanId == kel.id_kelurahan ? 2.5 : 1.5,
-                                    opacity: activeKelurahanId == kel.id_kelurahan ? 0.95 : 0.55,
-                                    fillOpacity: activeKelurahanId == kel.id_kelurahan ? 0.12 : 0.04,
-                                    fillColor: activeKelurahanId == kel.id_kelurahan ? '#c5a059' : '#ffffff',
-                                    dashArray: activeKelurahanId == kel.id_kelurahan ? '0' : '3, 6'
+                                    color: polygonColor,
+                                    weight: weight,
+                                    opacity: 0.95,
+                                    fillOpacity: fillOpacity,
+                                    fillColor: fillColor,
+                                    dashArray: (activeKelurahanId == kel.id_kelurahan || showBanjir) ? '0' : '4, 4'
                                 }
-                            }).bindTooltip(`<div class="text-[9px] font-bold text-navy-900 leading-none">Kel. ${kel.nama_kelurahan}</div>`, { sticky: true }).addTo(polygonsLayer);
+                            }).bindTooltip(`<div class="text-[9px] font-bold text-navy-900 leading-none">Kel. ${kel.nama_kelurahan}${showBanjir ? ' (Simulasi Banjir)' : ''}</div>`, { sticky: true }).addTo(polygonsLayer);
+
+                            // Event saat poligon kelurahan diklik
+                            layer.on('click', function(e) {
+                                // Jika sudah aktif, nonaktifkan (toggle)
+                                if (activeKelurahanId == kel.id_kelurahan) {
+                                    activeKelurahanId = null;
+                                } else {
+                                    activeKelurahanId = kel.id_kelurahan;
+                                }
+                                applyFilters();
+                                L.DomEvent.stopPropagation(e);
+                            });
 
                             if (activeKelurahanId == kel.id_kelurahan) {
                                 map.fitBounds(layer.getBounds(), { padding: [50, 50], maxZoom: 16 });
@@ -820,107 +952,96 @@
                 }
             });
 
-            // 2. Draw Aset Markers (Grouping or Individual)
-            let countTotal = 0;
-            let countBaik = 0;
-            let countSedang = 0;
-            let countBerat = 0;
+            // 2. Draw Aset Markers (Semua marker akan di-cluster otomatis)
+            let countTotal = filteredInfra.length;
+            let countBaik = filteredInfra.filter(i => i.label_prioritas === 'Baik').length;
+            let countSedang = filteredInfra.filter(i => i.label_prioritas === 'Rusak Sedang').length;
+            let countBerat = filteredInfra.filter(i => i.label_prioritas === 'Rusak Berat').length;
 
-            if (activeKelurahanId) {
-                const activeAssets = filteredInfra.filter(i => i.id_kelurahan == activeKelurahanId);
-                countTotal = activeAssets.length;
-                countBaik = activeAssets.filter(i => i.label_prioritas === 'Baik').length;
-                countSedang = activeAssets.filter(i => i.label_prioritas === 'Rusak Sedang').length;
-                countBerat = activeAssets.filter(i => i.label_prioritas === 'Rusak Berat').length;
-            } else {
-                countTotal = filteredInfra.length;
-                countBaik = filteredInfra.filter(i => i.label_prioritas === 'Baik').length;
-                countSedang = filteredInfra.filter(i => i.label_prioritas === 'Rusak Sedang').length;
-                countBerat = filteredInfra.filter(i => i.label_prioritas === 'Rusak Berat').length;
-            }
+            filteredInfra.forEach(item => {
+                const lat = parseFloat(item.latitude);
+                const lng = parseFloat(item.longitude);
+                if (isNaN(lat) || isNaN(lng)) return; // Skip invalid coords
 
-            dataKelurahan.forEach(kel => {
-                if (checkedDistricts.includes(kel.id_kecamatan?.toString()) && kel.geometri) {
-                    const kelAssets = filteredInfra.filter(i => i.id_kelurahan == kel.id_kelurahan);
-                    if (kelAssets.length > 0) {
-                        if (activeKelurahanId == kel.id_kelurahan) {
-                            // RENDER DETAILED INDIVIDUAL MARKERS FOR THIS ACTIVE KELURAHAN
-                            kelAssets.forEach(item => {
-                                const marker = L.marker([parseFloat(item.latitude), parseFloat(item.longitude)], { 
-                                    icon: createIcon(item.jenis || 'Infrastruktur', item.label_prioritas) 
-                                });
-                                
-                                let imagePath = item.foto_terbaru || '';
-                                if(imagePath && !imagePath.includes('infrastruktur/')) {
-                                    imagePath = 'infrastruktur/' + imagePath;
-                                }
-                                imagePath = imagePath.replace(/\\/g, '/');
-                                
-                                let finalUrl = '';
-                                if (imagePath) {
-                                    finalUrl = `{{ asset('storage') }}/${imagePath}`;
-                                } else {
-                                    const type = item.jenis ? item.jenis.toLowerCase() : 'jalan';
-                                    let typeStr = 'jalan';
-                                    if (type.includes('titian')) typeStr = 'titian';
-                                    else if (type.includes('jembatan')) typeStr = 'jembatan';
-                                    
-                                    let condStr = 'baik';
-                                    const prioritas = item.label_prioritas ? item.label_prioritas.toLowerCase() : 'baik';
-                                    if (prioritas.includes('berat')) condStr = 'rusak_berat';
-                                    else if (prioritas.includes('sedang')) condStr = 'rusak_sedang';
-
-                                    finalUrl = `{{ asset('') }}dummy_${typeStr}_${condStr}.jpg`;
-                                }
-
-                                const imgTag = `<img src="${finalUrl}" class="w-full h-24 object-cover rounded-xl shadow-sm mb-2" onerror="this.style.display='none'">`;
-                                
-                                const popupContent = `
-                                    <div class="p-1 min-w-[180px] font-sans">
-                                        ${imgTag}
-                                        <div class="flex items-center gap-1.5 mb-1.5">
-                                            <div class="px-2 py-0.5 bg-gold-500 text-white text-[8px] font-bold uppercase rounded-md">${item.jenis || 'Infrastruktur'}</div>
-                                            <div class="px-2 py-0.5 bg-white/10 text-slate-300 text-[8px] font-medium uppercase rounded-md">${item.label_prioritas || 'N/A'}</div>
-                                        </div>
-                                        <h6 class="text-white font-extrabold text-xs uppercase mb-1 leading-tight truncate max-w-[170px]">${item.nama_objek || 'Aset Tanpa Nama'}</h6>
-                                        <p class="text-slate-400 text-[9px] mb-2 truncate max-w-[170px]"><i class="fas fa-map-marker-alt mr-1 text-gold-500"></i> ${item.nama_kecamatan || '-'}</p>
-                                        <div class="grid grid-cols-2 gap-2 border-t pt-2 border-white/10">
-                                            <div>
-                                                <p class="text-[7px] font-bold text-slate-500 uppercase leading-none mb-0.5">Skor AI</p>
-                                                <p class="text-xs font-black text-[#6366f1] leading-none">${item.skor_dt ? item.skor_dt + '%' : '-'}</p>
-                                            </div>
-                                            <div>
-                                                <p class="text-[7px] font-bold text-slate-500 uppercase leading-none mb-0.5">Metode</p>
-                                                <p class="text-[9px] font-black text-emerald-500 uppercase leading-none">Hybrid SPK</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                `;
-                                
-                                marker.bindPopup(popupContent, {
-                                    className: 'custom-leaflet-popup'
-                                }).addTo(markersLayer);
-                            });
-                        } else {
-                            // RENDER SUMMARY BADGES FOR ALL OTHER KELURAHANS
-                            try {
-                                const geoData = typeof kel.geometri === 'string' ? JSON.parse(kel.geometri) : kel.geometri;
-                                const center = L.geoJSON(geoData).getBounds().getCenter();
-
-                                const summaryMarker = L.marker(center, {
-                                    icon: createKelurahanSummaryIcon(kelAssets.length)
-                                });
-
-                                summaryMarker.on('click', () => {
-                                    activeKelurahanId = kel.id_kelurahan;
-                                    applyFilters();
-                                }).addTo(markersLayer);
-                            } catch(e) {
-                                console.error("Error drawing summary marker for " + kel.nama_kelurahan, e);
-                            }
-                        }
-                    }
+                const marker = L.marker([lat, lng], { 
+                    icon: createIcon(item.jenis || 'Infrastruktur', item.label_prioritas) 
+                });
+                
+                let imagePath = item.foto_terbaru || '';
+                if(imagePath && !imagePath.includes('infrastruktur/')) {
+                    imagePath = 'infrastruktur/' + imagePath;
                 }
+                imagePath = imagePath.replace(/\\/g, '/');
+                
+                let finalUrl = '';
+                if (imagePath) {
+                    finalUrl = `{{ asset('storage') }}/${imagePath}`;
+                } else {
+                    const type = item.jenis ? item.jenis.toLowerCase() : 'jalan';
+                    let typeStr = 'jalan';
+                    if (type.includes('titian')) typeStr = 'titian';
+                    else if (type.includes('jembatan')) typeStr = 'jembatan';
+                    
+                    let condStr = 'baik';
+                    const prioritas = item.label_prioritas ? item.label_prioritas.toLowerCase() : 'baik';
+                    if (prioritas.includes('berat')) condStr = 'rusak_berat';
+                    else if (prioritas.includes('sedang')) condStr = 'rusak_sedang';
+
+                    finalUrl = `{{ asset('') }}dummy_${typeStr}_${condStr}.jpg`;
+                }
+
+                const imgTag = `<img src="${finalUrl}" class="w-full h-36 object-cover rounded-xl shadow-md mb-3.5" onerror="this.style.display='none'">`;
+                
+                // Format the update date
+                let lastUpdateStr = '-';
+                if (item.updated_at || item.created_at) {
+                    const dateObj = new Date(item.updated_at || item.created_at);
+                    lastUpdateStr = dateObj.toLocaleDateString('id-ID', {day: '2-digit', month: 'long', year: 'numeric'});
+                }
+
+                // Determine condition color
+                let conditionColor = 'bg-emerald-500 text-white shadow-emerald-500/20';
+                if (item.label_prioritas === 'Rusak Sedang') conditionColor = 'bg-amber-500 text-white shadow-amber-500/20';
+                if (item.label_prioritas === 'Rusak Berat') conditionColor = 'bg-red-500 text-white shadow-red-500/20';
+
+                const popupContent = `
+                    <div class="p-1.5 min-w-[260px] font-sans">
+                        ${imgTag}
+                        
+                        <div class="mb-3">
+                            <h6 class="text-white font-extrabold text-base uppercase leading-tight truncate max-w-[250px] mb-1" title="${item.nama_objek || 'Aset Tanpa Nama'}">${item.nama_objek || 'Aset Tanpa Nama'}</h6>
+                            <p class="text-gold-500 text-[11px] font-bold uppercase tracking-widest">${item.jenis || 'Infrastruktur'}</p>
+                        </div>
+                        
+                        <div class="space-y-2 mb-3.5">
+                            <div class="flex items-start gap-2.5">
+                                <i class="fas fa-map-marker-alt text-slate-400 text-xs mt-0.5 w-4 text-center"></i>
+                                <span class="text-slate-300 text-[11px] leading-relaxed flex-1">${item.nama_kecamatan || 'Lokasi tidak diketahui'}</span>
+                            </div>
+                            <div class="flex items-start gap-2.5">
+                                <i class="fas fa-clock text-slate-400 text-xs mt-0.5 w-4 text-center"></i>
+                                <span class="text-slate-300 text-[11px] leading-relaxed flex-1">Update: ${lastUpdateStr}</span>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-white/10 pt-3.5 flex items-center justify-between gap-3 mt-3 mb-2.5">
+                            <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Kondisi:</span>
+                            <div class="px-3.5 py-1.5 ${conditionColor} text-[10px] font-black uppercase tracking-wider rounded-lg shadow-md">
+                                ${item.label_prioritas || 'N/A'}
+                            </div>
+                        </div>
+                        
+                        <button onclick="openDetailModal(${item.id_infrastruktur})" class="w-full bg-white/10 hover:bg-gold-500 text-white font-bold text-[10px] py-2.5 rounded-lg transition-all shadow-sm uppercase tracking-widest flex justify-center items-center gap-2">
+                            <i class="fas fa-expand-arrows-alt"></i> Lihat Detail
+                        </button>
+                    </div>
+                `;
+                
+                marker.bindPopup(popupContent, {
+                    className: 'custom-leaflet-popup'
+                });
+                
+                markersLayer.addLayer(marker);
             });
 
             // Dom updates
@@ -928,6 +1049,9 @@
             document.getElementById('stat-baik').innerText = countBaik;
             document.getElementById('stat-sedang').innerText = countSedang;
             document.getElementById('stat-berat').innerText = countBerat;
+            } catch (err) {
+                console.error("Critical error in applyFilters:", err);
+            }
 
             // Update Select All Checkbox state
             const checkAllCategories = document.getElementById('check-all-categories');
@@ -978,6 +1102,12 @@
         if (toggleKelurahanLines) {
             toggleKelurahanLines.addEventListener('change', applyFilters);
         }
+        const toggleBanjirLines = document.getElementById('toggle-banjir-lines');
+        if (toggleBanjirLines) {
+            toggleBanjirLines.addEventListener('change', applyFilters);
+        }
+
+        const filterCategories = document.querySelectorAll('.filter-category');
 
         function setBasemap(type) {
             document.querySelectorAll('.basemap-btn').forEach(btn => {
@@ -991,6 +1121,8 @@
             map.removeLayer(satelit);
             map.removeLayer(darkMap);
             map.removeLayer(greyMap);
+            map.removeLayer(osmMap);
+            map.removeLayer(petaBanjirMap);
 
             if (type === 'satelit') { 
                 map.addLayer(satelit); 
@@ -998,19 +1130,221 @@
                 map.addLayer(darkMap);
             } else if (type === 'greyscale') {
                 map.addLayer(greyMap);
+            } else if (type === 'osm') {
+                map.addLayer(osmMap);
+            } else if (type === 'banjir') {
+                map.addLayer(petaBanjirMap);
             } else { 
                 map.addLayer(googleStreets); 
             }
         }
 
         function toggleMenu(id) {
-            if (id !== 'layer-options') document.getElementById('layer-options').classList.add('hidden');
-            if (id !== 'kategori-menu') document.getElementById('kategori-menu').classList.add('hidden');
-            if (id !== 'wilayah-menu') document.getElementById('wilayah-menu').classList.add('hidden');
+            const menus = ['layer-options', 'kategori-menu', 'wilayah-menu'];
+            
+            menus.forEach(menuId => {
+                const el = document.getElementById(menuId);
+                if (el && menuId !== id) {
+                    el.classList.add('hidden');
+                }
+            });
             
             const panel = document.getElementById(id);
-            panel.classList.toggle('hidden');
+            if (panel) {
+                panel.classList.toggle('hidden');
+            }
         }
+
+        // --- Detail Modal Functions ---
+        function openDetailModal(id) {
+            const item = dataInfra.find(i => i.id_infrastruktur == id);
+            if(!item) return;
+
+            // Isi Data Modal
+            document.getElementById('modal-title').innerText = item.nama_objek || 'Aset Tanpa Nama';
+            document.getElementById('modal-kecamatan').innerText = item.nama_kecamatan || '-';
+            document.getElementById('modal-kelurahan').innerText = item.nama_kelurahan || '-';
+            document.getElementById('modal-jenis').innerText = item.jenis || 'Infrastruktur';
+            document.getElementById('modal-surveyor').innerText = item.nama_surveyor || 'Petugas Tidak Diketahui';
+            
+            // Parameter Kerusakan (Dimensi: Panjang, Lebar, Luas)
+            const panjang = item.panjang ? parseFloat(item.panjang) : 0;
+            const lebar = item.lebar ? parseFloat(item.lebar) : 0;
+            const luas = (panjang * lebar);
+            
+            document.getElementById('modal-parameter').innerHTML = `
+                <div class="bg-white/60 rounded-xl p-3 border border-amber-100">
+                    <span class="block text-[9px] font-bold text-amber-600 uppercase tracking-widest mb-1">Panjang</span>
+                    <p class="font-black text-navy-900 text-sm">${panjang > 0 ? panjang + ' m' : '-'}</p>
+                </div>
+                <div class="bg-white/60 rounded-xl p-3 border border-amber-100">
+                    <span class="block text-[9px] font-bold text-amber-600 uppercase tracking-widest mb-1">Lebar</span>
+                    <p class="font-black text-navy-900 text-sm">${lebar > 0 ? lebar + ' m' : '-'}</p>
+                </div>
+                <div class="col-span-2 bg-amber-100/50 rounded-xl p-3 border border-amber-200">
+                    <span class="block text-[9px] font-bold text-amber-700 uppercase tracking-widest mb-1">Luas Kerusakan</span>
+                    <p class="font-black text-navy-900 text-lg">${luas > 0 ? luas.toFixed(2) + ' m²' : '-'}</p>
+                </div>
+                <a href="https://www.google.com/maps/dir/?api=1&destination=${item.latitude},${item.longitude}" target="_blank" class="col-span-2 mt-1 bg-navy-900 border border-gold-500/50 text-gold-500 text-[10px] font-bold py-3 px-3 rounded-xl hover:bg-gold-500 hover:text-navy-900 shadow-lg hover:shadow-gold-500/30 transition-all text-center flex items-center justify-center gap-2">
+                    <i class="fas fa-directions text-xs"></i> Rute Navigasi ke Lokasi
+                </a>
+            `;
+            
+            // Tentukan status badge
+            let conditionColor = 'bg-emerald-500 text-white';
+            if (item.label_prioritas === 'Rusak Sedang') conditionColor = 'bg-amber-500 text-white';
+            if (item.label_prioritas === 'Rusak Berat') conditionColor = 'bg-red-500 text-white';
+            
+            const badge = document.getElementById('modal-badge');
+            badge.className = `px-4 py-1.5 rounded-lg text-xs font-black uppercase tracking-wider shadow-md ${conditionColor}`;
+            badge.innerText = item.label_prioritas || 'N/A';
+
+            // Set Gambar Modal
+            let imagePath = item.foto_terbaru || '';
+            if(imagePath && !imagePath.includes('infrastruktur/')) imagePath = 'infrastruktur/' + imagePath;
+            imagePath = imagePath.replace(/\\/g, '/');
+            
+            let finalUrl = '';
+            if (imagePath) {
+                finalUrl = `{{ asset('storage') }}/${imagePath}`;
+            } else {
+                const type = item.jenis ? item.jenis.toLowerCase() : 'jalan';
+                let typeStr = 'jalan';
+                if (type.includes('titian')) typeStr = 'titian';
+                else if (type.includes('jembatan')) typeStr = 'jembatan';
+                let condStr = 'baik';
+                const prioritas = item.label_prioritas ? item.label_prioritas.toLowerCase() : 'baik';
+                if (prioritas.includes('berat')) condStr = 'rusak_berat';
+                else if (prioritas.includes('sedang')) condStr = 'rusak_sedang';
+                finalUrl = `{{ asset('') }}dummy_${typeStr}_${condStr}.jpg`;
+            }
+            document.getElementById('modal-img').src = finalUrl;
+
+            // Tampilkan Modal dengan Animasi Fade-In
+            const overlay = document.getElementById('detail-modal-overlay');
+            const content = document.getElementById('detail-modal-content');
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+            
+            setTimeout(() => {
+                overlay.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeDetailModal() {
+            const overlay = document.getElementById('detail-modal-overlay');
+            const content = document.getElementById('detail-modal-content');
+            
+            // Animasi Fade-Out
+            overlay.classList.add('opacity-0');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            
+            setTimeout(() => {
+                overlay.classList.remove('flex');
+                overlay.classList.add('hidden');
+            }, 300);
+        }
+
+        // Tutup semua modal jika klik di luar
+        window.onclick = function(event) {
+            const mod1 = document.getElementById('detail-modal-overlay');
+            if (event.target == mod1) {
+                closeDetailModal();
+            }
+            
+            // Close search results if clicked outside
+            if (!event.target.closest('#search-infra') && !event.target.closest('#search-results')) {
+                const results = document.getElementById('search-results');
+                if(results) results.classList.add('hidden');
+            }
+        }
+
+        // --- Fitur Pencarian (Search) ---
+        const searchInput = document.getElementById('search-infra');
+        const searchResults = document.getElementById('search-results');
+        
+        if(searchInput) {
+            searchInput.addEventListener('input', function() {
+                const query = this.value.toLowerCase();
+                searchResults.innerHTML = '';
+                
+                if (query.length < 2) {
+                    searchResults.classList.add('hidden');
+                    return;
+                }
+                
+                const results = dataInfra.filter(i => 
+                    (i.nama_objek && i.nama_objek.toLowerCase().includes(query)) ||
+                    (i.nama_kelurahan && i.nama_kelurahan.toLowerCase().includes(query))
+                ).slice(0, 5); // Batasi 5 hasil
+                
+                if (results.length > 0) {
+                    searchResults.classList.remove('hidden');
+                    results.forEach(i => {
+                        const div = document.createElement('div');
+                        div.className = 'p-3 border-b border-white/5 hover:bg-white/10 cursor-pointer transition-colors';
+                        div.innerHTML = `
+                            <p class="text-[10px] font-bold text-white mb-0.5">${i.nama_objek || 'Tanpa Nama'}</p>
+                            <p class="text-[8px] text-slate-400"><i class="fas fa-map-marker-alt text-gold-500 mr-1"></i>Kel. ${i.nama_kelurahan}</p>
+                        `;
+                        div.onclick = () => {
+                            map.setView([parseFloat(i.latitude), parseFloat(i.longitude)], 18);
+                            openDetailModal(i.id_infrastruktur);
+                            searchResults.classList.add('hidden');
+                            searchInput.value = i.nama_objek;
+                        };
+                        searchResults.appendChild(div);
+                    });
+                } else {
+                    searchResults.classList.remove('hidden');
+                    searchResults.innerHTML = '<div class="p-4 text-[10px] text-slate-400 text-center">Tidak ada hasil ditemukan</div>';
+                }
+            });
+        }
+
+        // --- Fitur GPS Lokasi Saya ---
+        let userMarker = null;
+        function locateUser() {
+            if (!navigator.geolocation) {
+                alert("Browser Anda tidak mendukung geolokasi.");
+                return;
+            }
+            // Ubah ikon tombol sementara
+            const btnIcon = document.querySelector('button[title="Lokasi Saya"] i');
+            if(btnIcon) {
+                btnIcon.className = 'fas fa-spinner fa-spin text-sm';
+            }
+            
+            map.locate({setView: true, maxZoom: 16});
+        }
+
+        map.on('locationfound', function(e) {
+            const btnIcon = document.querySelector('button[title="Lokasi Saya"] i');
+            if(btnIcon) btnIcon.className = 'fas fa-crosshairs text-sm';
+            
+            if (userMarker) {
+                userMarker.setLatLng(e.latlng);
+            } else {
+                userMarker = L.marker(e.latlng, {
+                    icon: L.divIcon({
+                        className: 'custom-user-marker',
+                        html: '<div class="w-4 h-4 bg-blue-500 border-2 border-white rounded-full shadow-[0_0_15px_rgba(59,130,246,0.8)] animate-pulse"></div>',
+                        iconSize: [16, 16],
+                        iconAnchor: [8, 8]
+                    })
+                }).addTo(map);
+            }
+            userMarker.bindPopup('<div class="text-[10px] font-bold text-center">Lokasi Anda Saat Ini</div>').openPopup();
+        });
+
+        map.on('locationerror', function(e) {
+            const btnIcon = document.querySelector('button[title="Lokasi Saya"] i');
+            if(btnIcon) btnIcon.className = 'fas fa-crosshairs text-sm text-red-500';
+            alert("Gagal menemukan lokasi Anda. Pastikan GPS aktif dan izin diberikan.");
+        });
 
         // Scroll reveal animation triggers
         function reveal() {
@@ -1038,8 +1372,77 @@
             }
         });
 
-        applyFilters();
-        reveal();
+        // Pastikan filter dan map dirender setelah DOM stabil
+        setTimeout(() => {
+            applyFilters();
+            reveal();
+            // Paksa Leaflet untuk me-render ulang ukuran container jika ada perubahan DOM
+            map.invalidateSize();
+        }, 100);
     </script>
+    <!-- Detail Modal Overlay (Hidden by Default) -->
+    <div id="detail-modal-overlay" class="fixed inset-0 z-[100000] bg-[#0f0e2c]/80 backdrop-blur-md hidden items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div id="detail-modal-content" class="bg-white rounded-[2rem] w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl transform scale-95 transition-transform duration-300">
+            <!-- Header -->
+            <div class="sticky top-0 bg-white/95 backdrop-blur-xl z-20 px-8 py-5 border-b border-slate-100 flex justify-between items-center">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-full bg-navy-50 flex items-center justify-center text-gold-500">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-black text-navy-900 text-lg uppercase tracking-tight leading-none mb-1" id="modal-title">Detail Aset</h3>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest" id="modal-jenis">Infrastruktur</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span id="modal-badge" class="px-4 py-1.5 rounded-lg text-xs font-black uppercase tracking-wider bg-emerald-500 text-white shadow-md">Baik</span>
+                    <button onclick="closeDetailModal()" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-red-50 hover:text-red-500 transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Body -->
+            <div class="p-8">
+                <img id="modal-img" src="" class="w-full h-80 object-cover rounded-3xl shadow-md mb-8 bg-slate-100">
+                
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+                    <!-- Left Col: Lokasi & Info (Colspan 2) -->
+                    <div class="md:col-span-2 space-y-6">
+                        <div class="bg-navy-50 p-5 rounded-2xl border border-slate-100 flex items-center gap-4">
+                            <i class="fas fa-user-circle text-2xl text-gold-500"></i>
+                            <div>
+                                <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Disurvei Oleh</span>
+                                <p id="modal-surveyor" class="font-black text-navy-900 text-sm">Nama Surveyor</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1"><i class="fas fa-map mr-1"></i> Kecamatan</span>
+                            <p id="modal-kecamatan" class="font-bold text-navy-900 text-base">Banjarmasin Tengah</p>
+                        </div>
+                        
+                        <div>
+                            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1"><i class="fas fa-map-pin mr-1"></i> Kelurahan</span>
+                            <p id="modal-kelurahan" class="font-bold text-navy-900 text-base">Kertak Baru</p>
+                        </div>
+                    </div>
+
+                    <!-- Right Col: Parameter Kerusakan (Colspan 3) -->
+                    <div class="md:col-span-3">
+                        <div class="bg-amber-50/50 rounded-3xl p-6 border border-amber-100 h-full">
+                            <span class="text-[11px] font-black text-amber-700 uppercase tracking-widest flex items-center gap-2 mb-4 pb-3 border-b border-amber-200/50">
+                                <i class="fas fa-ruler-combined text-gold-500 text-lg"></i>
+                                Parameter Kerusakan
+                            </span>
+                            <div id="modal-parameter" class="grid grid-cols-2 gap-3">
+                                <!-- Isi parameter dimensi akan di-inject lewat JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

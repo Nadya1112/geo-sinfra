@@ -82,10 +82,10 @@ def load_models():
         else:
             model_config = {}
 
-        # Muat CNN (MobileNetV2 feature extractor)
-        print("  Memuat model CNN (MobileNetV2)...")
-        cnn_model = models.mobilenet_v2(weights=None)
-        cnn_model.classifier = torch.nn.Identity()
+        # Muat CNN (ResNet18 feature extractor)
+        print("  Memuat model CNN (ResNet18)...")
+        cnn_model = models.resnet18(weights=None)
+        cnn_model.fc = torch.nn.Identity()
         cnn_model.load_state_dict(torch.load(CNN_MODEL_PATH, map_location='cpu', weights_only=True))
         cnn_model.eval()
         print(f"  [OK] CNN dimuat!")
@@ -218,10 +218,10 @@ def index():
     <h2>🛰️ GEO-SINFRA AI Bridge</h2>
     <p><strong>Status:</strong> {status}</p>
     <p><strong>Endpoint:</strong> POST /predict</p>
-    <p><strong>Model:</strong> CNN (MobileNetV2 fine-tuned) + PCA + Decision Tree</p>
+    <p><strong>Model:</strong> CNN (ResNet18 fine-tuned) + PCA + Decision Tree</p>
     <p><strong>Klasifikasi:</strong></p>
     <ul>
-        <li>Jenis: Jalan / Jembatan / Titian</li>
+        <li>Jenis: Jalan / Jembatan / Titian / Sanitasi</li>
         <li>Kondisi: Baik / Sedang / Berat</li>
     </ul>
     <p><strong>Akurasi Jenis:</strong> {model_config.get('accuracy_jenis', '?')}%</p>

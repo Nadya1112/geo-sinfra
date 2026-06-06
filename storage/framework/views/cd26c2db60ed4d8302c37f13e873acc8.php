@@ -106,8 +106,8 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
                 <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:-translate-y-1 transition-transform">
                     <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 bg-navy-900 rounded-2xl flex items-center justify-center shadow-md shadow-navy-900/20">
-                            <i class="fas fa-file-alt text-gold-500"></i>
+                        <div class="w-11 h-11 bg-blue-50 rounded-2xl flex items-center justify-center">
+                            <i class="fas fa-file-alt text-blue-500"></i>
                         </div>
                     </div>
                     <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Survey Saya</p>
@@ -134,7 +134,7 @@
                     <h3 class="text-3xl font-black text-navy-900"><?php echo e($verifiedAI); ?> <span class="text-[10px] font-bold text-slate-400">Selesai</span></h3>
                 </div>
                 
-                <div class="bg-white p-6 rounded-3xl border border-red-100 shadow-sm hover:-translate-y-1 transition-transform">
+                <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:-translate-y-1 transition-transform">
                     <div class="flex items-start justify-between mb-4">
                         <div class="w-11 h-11 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center">
                             <i class="fas fa-rotate-left"></i>

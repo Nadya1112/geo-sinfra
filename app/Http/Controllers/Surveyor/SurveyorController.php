@@ -115,24 +115,19 @@ class SurveyorController extends Controller
             $file = $request->file('foto');
             $namaFoto = time() . '_' . $file->getClientOriginalName();
             
-            // Resize gambar ke 300x300
-            $manager = new ImageManager(new Driver());
-            $image = $manager->decodePath($file->getRealPath());
-            $image->resize(300, 300);
-            
+            // Simpan gambar asli tanpa di-squish (distorsi) agar AI bisa mendeteksinya dengan akurat
             // Pastikan folder ada
             if (!Storage::disk('public')->exists('infrastruktur')) {
                 Storage::disk('public')->makeDirectory('infrastruktur');
             }
             
-            $image->save(storage_path('app/public/infrastruktur/' . $namaFoto));
+            $file->storeAs('infrastruktur', $namaFoto, 'public');
         }
 
         // 🌟 DIUBAH KE ELOQUENT MODEL agar memicu fungsi saved() di InfrastrukturObserver otomatis
         $infra = Infrastruktur::create([
             'id_user' => auth()->id(),
             'nama_objek' => $request->nama_infrastruktur,
-            'jenis_infrastruktur' => 'Jalan', // Akan di-override oleh AI (Python / Simulator)
             'jenis' => 'jalan',
             'id_kelurahan' => $request->id_kelurahan,
             'latitude' => str_replace(',', '.', $request->latitude),
@@ -254,17 +249,13 @@ class SurveyorController extends Controller
             $file = $request->file('foto');
             $namaFoto = time() . '_' . $file->getClientOriginalName();
             
-            // Resize gambar ke 300x300
-            $manager = new ImageManager(new Driver());
-            $image = $manager->decodePath($file->getRealPath());
-            $image->resize(300, 300);
-            
+            // Simpan gambar asli tanpa di-squish (distorsi) agar AI bisa mendeteksinya dengan akurat
             // Pastikan folder ada
             if (!Storage::disk('public')->exists('infrastruktur')) {
                 Storage::disk('public')->makeDirectory('infrastruktur');
             }
             
-            $image->save(storage_path('app/public/infrastruktur/' . $namaFoto));
+            $file->storeAs('infrastruktur', $namaFoto, 'public');
             $infrastruktur->foto_terbaru = $namaFoto;
         }
 

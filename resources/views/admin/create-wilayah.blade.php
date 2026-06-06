@@ -64,14 +64,18 @@
                     <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
-                <div class="flex items-center gap-3 text-left">
-                    <div class="text-right">
-                        <p class="text-[11px] font-black text-navy-900 leading-none uppercase">Admin SINFRA</p>
+                <div class="flex items-center gap-3">
+                    <a href="{{ route('admin.profile') }}" class="text-right group">
+                        <p class="text-[11px] font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
                         <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">Online</p>
-                    </div>
-                    <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md">
-                        <i class="fas fa-user-circle text-xl"></i>
-                    </div>
+                    </a>
+                    <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md">
+                        @if(auth()->user()->profile_photo)
+                            <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
+                        @else
+                            <i class="fas fa-user-circle text-xl"></i>
+                        @endif
+                    </a>
                 </div>
             </div>
         </header>
