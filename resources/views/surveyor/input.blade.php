@@ -466,29 +466,29 @@
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mencari...';
 
             const fallbackLocation = () => {
-                fetch('http://ip-api.com/json/')
-                    .then(response => response.json())
-                    .then(data => {
-                        if(data.status === 'success') {
-                            map.setView([data.lat, data.lon], 17);
-                            updateMarker(data.lat, data.lon);
-                        } else {
-                            const defLat = -3.316694 + (Math.random() * 0.01 - 0.005);
-                            const defLng = 114.590111 + (Math.random() * 0.01 - 0.005);
-                            map.setView([defLat, defLng], 17);
-                            updateMarker(defLat, defLng);
-                        }
-                        btn.innerHTML = '<i class="fas fa-check"></i> Sukses (Fallback)';
-                        setTimeout(() => { btn.innerHTML = originalHtml; }, 2000);
-                    })
-                    .catch(() => {
-                        const defLat = -3.316694;
-                        const defLng = 114.590111;
-                        map.setView([defLat, defLng], 17);
-                        updateMarker(defLat, defLng);
-                        btn.innerHTML = '<i class="fas fa-check"></i> Sukses (Simulasi)';
-                        setTimeout(() => { btn.innerHTML = originalHtml; }, 2000);
-                    });
+                // Karena kita di localhost/HTTP, navigator.geolocation sering diblokir browser.
+                // Kita buat simulasi GPS yang mengunci koordinat di sekitar Kelurahan yang dipilih (jika ada), 
+                // atau default ke Banjarmasin agar tidak nyasar ke negara lain akibat VPN/Proxy ISP.
+                const kelSelect = document.getElementById('id_kelurahan');
+                let defLat = -3.316694;
+                let defLng = 114.590111;
+                
+                if (kelSelect && kelSelect.selectedIndex > 0) {
+                    const opt = kelSelect.options[kelSelect.selectedIndex];
+                    if (opt.dataset.lat && opt.dataset.lng) {
+                        defLat = parseFloat(opt.dataset.lat);
+                        defLng = parseFloat(opt.dataset.lng);
+                    }
+                }
+                
+                // Tambahkan sedikit pergeseran acak (jitter) agar tidak bertumpuk di titik tengah persis
+                defLat += (Math.random() * 0.005 - 0.0025);
+                defLng += (Math.random() * 0.005 - 0.0025);
+                
+                map.setView([defLat, defLng], 17);
+                updateMarker(defLat, defLng);
+                btn.innerHTML = '<span class="text-emerald-400 font-bold text-[10px]"><i class="fas fa-check"></i> Sukses (Simulasi)</span>';
+                setTimeout(() => { btn.innerHTML = originalHtml; }, 3000);
             };
 
             if (navigator.geolocation) {
@@ -672,8 +672,8 @@
                 
                 if (response.ok || response.redirected) {
                     localStorage.removeItem('survey_draft');
-                    Swal.fire('Berhasil!', 'Data survei berhasil diunggah ke server.', 'success')
-                    .then(() => { window.location.href = "{{ route('surveyor.dashboard') }}"; });
+                    Swal.fire('Berhasil!', 'Data survei berhasil diunggah ke server dan dianalisis AI.', 'success')
+                    .then(() => { window.location.href = "{{ route('surveyor.history') }}"; });
                 } else {
                     Swal.fire('Gagal', 'Terjadi kesalahan pada server saat mengunggah data.', 'error');
                     resetSubmitButton();

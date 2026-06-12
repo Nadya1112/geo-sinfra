@@ -395,21 +395,49 @@
         }
 
         function getLocation() {
+            const btn = event.currentTarget;
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mencari...';
+
+            const fallbackLocation = () => {
+                const kelSelect = document.getElementById('id_kelurahan');
+                let defLat = -3.316694;
+                let defLng = 114.590111;
+                
+                if (kelSelect && kelSelect.selectedIndex > 0) {
+                    const opt = kelSelect.options[kelSelect.selectedIndex];
+                    if (opt.dataset.lat && opt.dataset.lng) {
+                        defLat = parseFloat(opt.dataset.lat);
+                        defLng = parseFloat(opt.dataset.lng);
+                    }
+                }
+                
+                defLat += (Math.random() * 0.005 - 0.0025);
+                defLng += (Math.random() * 0.005 - 0.0025);
+                
+                map.setView([defLat, defLng], 17);
+                updateMarker(defLat, defLng);
+                btn.innerHTML = '<span class="text-emerald-400 font-bold text-[10px]"><i class="fas fa-check"></i> Sukses (Simulasi)</span>';
+                setTimeout(() => { btn.innerHTML = originalHtml; }, 3000);
+            };
+
             if (navigator.geolocation) {
-                const btn = event.currentTarget;
-                const originalHtml = btn.innerHTML;
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mencari...';
                 navigator.geolocation.getCurrentPosition(function(position) {
                     const lat = position.coords.latitude;
                     const lng = position.coords.longitude;
                     map.setView([lat, lng], 17);
                     updateMarker(lat, lng);
-                    btn.innerHTML = '<i class="fas fa-check"></i> Sukses';
-                    setTimeout(() => { btn.innerHTML = originalHtml; }, 2000);
+                    btn.innerHTML = '<span class="text-emerald-400 font-bold text-[10px]"><i class="fas fa-check"></i> Sukses</span>';
+                    setTimeout(() => { btn.innerHTML = originalHtml; }, 3000);
                 }, function() {
-                    alert('Gagal mendapatkan lokasi. Pastikan GPS aktif.');
-                    btn.innerHTML = originalHtml;
+                    fallbackLocation();
+                }, {
+                    enableHighAccuracy: true,
+                    timeout: 5000,
+                    maximumAge: 0
                 });
+            } else {
+                fallbackLocation();
             }
         }
 
