@@ -2,13 +2,22 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Input Data Lapangan | GEO-SINFRA</title>
+    <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/compressorjs/1.2.1/compressor.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/localforage/1.10.0/localforage.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <script>
         tailwind.config = {
@@ -84,7 +93,22 @@
                 </div>
                 @endif
 
-                <form id="survey-form" action="{{ route('surveyor.store') }}" method="POST" enctype="multipart/form-data" onsubmit="disableSubmitButton()">
+                <div id="offline-sync-container" class="hidden mb-6 p-5 bg-orange-50 border border-orange-200 rounded-2xl flex items-center justify-between shadow-sm">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center text-orange-600 shadow-sm border border-orange-200">
+                            <i class="fas fa-wifi text-lg"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-black text-orange-900 uppercase tracking-tighter">Data Offline Tersimpan</h4>
+                            <p class="text-[10px] text-orange-700 font-medium mt-1" id="offline-sync-count">Ada 0 laporan yang belum dikirim ke server.</p>
+                        </div>
+                    </div>
+                    <button type="button" onclick="syncOfflineData()" class="px-5 py-2.5 bg-orange-600 hover:bg-orange-700 text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md transition-all flex items-center gap-2">
+                        <i class="fas fa-cloud-upload-alt"></i> Upload Sekarang
+                    </button>
+                </div>
+
+                <form id="survey-form" action="{{ route('surveyor.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -259,6 +283,14 @@
 
                                 <div class="relative rounded-[2rem] border-[6px] border-slate-50 shadow-inner overflow-hidden mb-6 h-[260px]">
                                     <div id="map" class="absolute inset-0 z-0 bg-slate-100"></div>
+                                    
+                                    <!-- Offline Map Warning -->
+                                    <div id="offline-map-warning" class="hidden absolute inset-0 z-[5] bg-slate-100/90 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center border-2 border-orange-200">
+                                        <i class="fas fa-wifi-slash text-3xl text-orange-400 mb-3"></i>
+                                        <h5 class="text-xs font-black text-navy-900 uppercase tracking-widest mb-1">Peta Offline</h5>
+                                        <p class="text-[10px] text-slate-500 font-bold leading-relaxed max-w-xs">Gambar peta tidak dapat dimuat tanpa internet, namun pencatatan koordinat GPS tetap berfungsi akurat.</p>
+                                    </div>
+
                                     <div class="absolute top-4 right-4 z-10">
                                         <button type="button" onclick="toggleFloodLayer()" id="btn-flood-layer" class="w-10 h-10 bg-white/90 backdrop-blur-md rounded-xl shadow-lg border border-slate-100 text-slate-400 hover:text-blue-500 hover:border-blue-200 transition-all flex items-center justify-center group" title="Tampilkan Area Rawan Banjir">
                                             <i class="fas fa-water text-sm group-hover:scale-110 transition-transform"></i>
@@ -273,13 +305,15 @@
                                 </div>
 
                                 <div class="grid grid-cols-2 gap-4">
-                                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 relative group">
+                                        <div class="absolute top-2 right-2 text-red-500 text-[10px]"><i class="fas fa-asterisk"></i></div>
                                         <label class="block text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Latitude</label>
-                                        <input type="text" id="lat-input" name="latitude" readonly class="w-full bg-transparent border-none p-0 text-xs font-black text-navy-900 outline-none cursor-default">
+                                        <input type="text" id="lat-input" name="latitude" readonly class="w-full bg-transparent border-none p-0 text-xs font-black text-navy-900 outline-none cursor-default" required placeholder="Kosong">
                                     </div>
-                                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 relative group">
+                                        <div class="absolute top-2 right-2 text-red-500 text-[10px]"><i class="fas fa-asterisk"></i></div>
                                         <label class="block text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Longitude</label>
-                                        <input type="text" id="lng-input" name="longitude" readonly class="w-full bg-transparent border-none p-0 text-xs font-black text-navy-900 outline-none cursor-default">
+                                        <input type="text" id="lng-input" name="longitude" readonly class="w-full bg-transparent border-none p-0 text-xs font-black text-navy-900 outline-none cursor-default" required placeholder="Kosong">
                                     </div>
                                 </div>
                             </div>
@@ -314,8 +348,8 @@
                                     <div class="bg-navy-900 p-4 rounded-2xl flex gap-4 items-start shadow-inner border border-navy-800">
                                         <i class="fas fa-robot text-gold-500 mt-1 text-lg"></i>
                                         <p class="text-[9px] text-slate-300 font-medium leading-relaxed">
-                                            <strong class="font-black uppercase tracking-widest text-[10px] text-white">ANALISIS AI:</strong><br>
-                                            Ambil foto secara jelas. Foto ini akan otomatis dianalisis oleh AI *Convolutional Neural Network* untuk mengklasifikasi kondisi infrastruktur.
+                                            <strong class="font-black uppercase tracking-widest text-[10px] text-white">STATUS KONDISI:</strong><br>
+                                            Ambil foto secara jelas. Foto ini akan digunakan untuk mendata status kondisi infrastruktur.
                                         </p>
                                     </div>
 
@@ -342,20 +376,38 @@
     <script>
         function updateClock() {
             const now = new Date();
-            document.getElementById('mini-clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WITA`;
+            const options = { timeZone: 'Asia/Makassar', hour: '2-digit', minute: '2-digit', hour12: false };
+            const timeString = new Intl.DateTimeFormat('id-ID', options).format(now);
+            const el = document.getElementById('mini-clock');
+            if (el) el.textContent = timeString.replace('.', ':') + ' WITA';
         }
         setInterval(updateClock, 1000); updateClock();
 
+        let compressedImageBlob = null;
+
         function previewImage(event) {
-            const reader = new FileReader();
-            reader.onload = function(){
-                const output = document.getElementById('image-preview');
-                const placeholder = document.getElementById('placeholder-elements');
-                output.src = reader.result;
-                output.classList.remove('hidden');
-                placeholder.classList.add('hidden');
-            };
-            reader.readAsDataURL(event.target.files[0]);
+            const file = event.target.files[0];
+            if (!file) return;
+
+            new Compressor(file, {
+                quality: 0.6,
+                maxWidth: 1920,
+                success(result) {
+                    compressedImageBlob = result;
+                    const reader = new FileReader();
+                    reader.onload = function(){
+                        const output = document.getElementById('image-preview');
+                        const placeholder = document.getElementById('placeholder-elements');
+                        output.src = reader.result;
+                        output.classList.remove('hidden');
+                        placeholder.classList.add('hidden');
+                    };
+                    reader.readAsDataURL(result);
+                },
+                error(err) {
+                    console.error('Compression error:', err.message);
+                },
+            });
         }
 
         const map = L.map('map', {
@@ -413,10 +465,7 @@
             const originalHtml = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mencari...';
 
-            // Fungsi fallback (Simulasi GPS / IP API) jika akses ditolak karena HTTP
             const fallbackLocation = () => {
-                console.log("Menggunakan Fallback Lokasi (HTTP/Izin Ditolak)");
-                // Mengambil lokasi dari IP (atau menggunakan lokasi default Banjarmasin)
                 fetch('http://ip-api.com/json/')
                     .then(response => response.json())
                     .then(data => {
@@ -424,7 +473,6 @@
                             map.setView([data.lat, data.lon], 17);
                             updateMarker(data.lat, data.lon);
                         } else {
-                            // Default Banjarmasin jika API gagal
                             const defLat = -3.316694 + (Math.random() * 0.01 - 0.005);
                             const defLng = 114.590111 + (Math.random() * 0.01 - 0.005);
                             map.setView([defLat, defLng], 17);
@@ -434,7 +482,6 @@
                         setTimeout(() => { btn.innerHTML = originalHtml; }, 2000);
                     })
                     .catch(() => {
-                        // Default Banjarmasin
                         const defLat = -3.316694;
                         const defLng = 114.590111;
                         map.setView([defLat, defLng], 17);
@@ -445,20 +492,23 @@
             };
 
             if (navigator.geolocation) {
-                // Coba panggil GPS Asli
                 navigator.geolocation.getCurrentPosition(function(position) {
                     const lat = position.coords.latitude;
                     const lng = position.coords.longitude;
+                    const accuracy = position.coords.accuracy;
+                    
                     map.setView([lat, lng], 17);
                     updateMarker(lat, lng);
-                    btn.innerHTML = '<i class="fas fa-check"></i> Sukses';
-                    setTimeout(() => { btn.innerHTML = originalHtml; }, 2000);
+                    
+                    let accColor = accuracy <= 20 ? 'text-emerald-400' : 'text-orange-400';
+                    btn.innerHTML = `<span class="${accColor} font-bold text-[10px]"><i class="fas fa-check"></i> ±${Math.round(accuracy)}m</span>`;
+                    
+                    setTimeout(() => { btn.innerHTML = originalHtml; }, 3000);
                 }, function(error) {
-                    // Jika gagal (karena HTTP atau izin ditolak), gunakan fallback
                     fallbackLocation();
                 }, {
                     enableHighAccuracy: true,
-                    timeout: 5000, // Timeout dipercepat 5 detik agar cepat pindah ke fallback
+                    timeout: 5000,
                     maximumAge: 0
                 });
             } else {
@@ -512,8 +562,206 @@
             }
         }
 
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW registration failed', err));
+            });
+        }
+
+        localforage.config({ name: 'GeoSinfraOffline' });
+
+        async function checkOfflineData() {
+            const keys = await localforage.keys();
+            const draftKeys = keys.filter(k => k.startsWith('draft_'));
+            const syncContainer = document.getElementById('offline-sync-container');
+            const syncCount = document.getElementById('offline-sync-count');
+            
+            if (draftKeys.length > 0) {
+                syncContainer.classList.remove('hidden');
+                syncCount.innerText = `Ada ${draftKeys.length} laporan survei yang belum dikirim ke server.`;
+            } else {
+                syncContainer.classList.add('hidden');
+            }
+        }
+
+        async function syncOfflineData() {
+            if (!navigator.onLine) {
+                Swal.fire('Koneksi Terputus', 'Anda masih dalam mode offline. Cari sinyal internet terlebih dahulu.', 'warning');
+                return;
+            }
+
+            const keys = await localforage.keys();
+            const draftKeys = keys.filter(k => k.startsWith('draft_'));
+            if (draftKeys.length === 0) return;
+
+            Swal.fire({
+                title: 'Mengunggah Data...',
+                text: `Sinkronisasi ${draftKeys.length} data ke server. Mohon tunggu.`,
+                allowOutsideClick: false,
+                didOpen: () => { Swal.showLoading(); }
+            });
+
+            let successCount = 0;
+            for (let key of draftKeys) {
+                try {
+                    const formData = await localforage.getItem(key);
+                    const response = await fetch('{{ route("surveyor.store") }}', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        }
+                    });
+                    
+                    if (response.ok || response.redirected) {
+                        await localforage.removeItem(key);
+                        successCount++;
+                    }
+                } catch (e) {
+                    console.error('Gagal sync', key, e);
+                }
+            }
+
+            checkOfflineData();
+            Swal.fire('Sinkronisasi Selesai', `${successCount} dari ${draftKeys.length} data berhasil diunggah.`, 'success');
+        }
+
+        const form = document.getElementById('survey-form');
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            disableSubmitButton();
+
+            // Validasi GPS Kosong
+            if (!document.getElementById('lat-input').value || !document.getElementById('lng-input').value) {
+                Swal.fire('Lokasi Kosong', 'Harap tekan tombol "Sync GPS" terlebih dahulu untuk mendapatkan koordinat.', 'warning');
+                resetSubmitButton();
+                return;
+            }
+
+            const formData = new FormData(form);
+            if (compressedImageBlob) {
+                formData.set('foto', compressedImageBlob, 'survey_photo.jpg');
+            }
+
+            if (!navigator.onLine) {
+                const draftId = 'draft_' + new Date().getTime();
+                await localforage.setItem(draftId, formData);
+                
+                Swal.fire('Tersimpan Offline', 'Tidak ada sinyal internet. Data berhasil disimpan di perangkat dan siap diunggah nanti.', 'info')
+                .then(() => {
+                    localStorage.removeItem('survey_draft');
+                    form.reset();
+                    document.getElementById('image-preview').classList.add('hidden');
+                    document.getElementById('placeholder-elements').classList.remove('hidden');
+                    compressedImageBlob = null;
+                    document.getElementById('btn-submit').disabled = false;
+                    document.getElementById('btn-submit').classList.remove('opacity-75', 'cursor-not-allowed');
+                    document.getElementById('btn-text').innerHTML = 'Proses';
+                    checkOfflineData();
+                });
+                return;
+            }
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                });
+                
+                if (response.ok || response.redirected) {
+                    localStorage.removeItem('survey_draft');
+                    Swal.fire('Berhasil!', 'Data survei berhasil diunggah ke server.', 'success')
+                    .then(() => { window.location.href = "{{ route('surveyor.dashboard') }}"; });
+                } else {
+                    Swal.fire('Gagal', 'Terjadi kesalahan pada server saat mengunggah data.', 'error');
+                    resetSubmitButton();
+                }
+            } catch (error) {
+                Swal.fire('Koneksi Gagal', 'Gagal mengirim data. Coba cek sinyal atau simpan offline jika masih berlanjut.', 'error');
+                resetSubmitButton();
+            }
+        });
+        
+        function resetSubmitButton() {
+            document.getElementById('btn-submit').disabled = false;
+            document.getElementById('btn-submit').classList.remove('opacity-75', 'cursor-not-allowed');
+            document.getElementById('btn-text').innerHTML = 'Proses';
+        }
+
         window.addEventListener('DOMContentLoaded', () => {
             filterKelurahan();
+            checkOfflineData();
+            
+            window.addEventListener('online', checkOfflineData);
+            window.addEventListener('offline', () => {
+                const btn = document.getElementById('btn-submit');
+                if(btn) {
+                    document.getElementById('btn-text').innerHTML = 'Simpan Offline';
+                    btn.classList.replace('bg-gold-500', 'bg-orange-500');
+                }
+                document.getElementById('offline-map-warning').classList.remove('hidden');
+            });
+
+            window.addEventListener('online', () => {
+                document.getElementById('offline-map-warning').classList.add('hidden');
+            });
+            
+            // Check initial network state for map
+            if (!navigator.onLine) {
+                document.getElementById('offline-map-warning').classList.remove('hidden');
+            }
+
+            // Auto-save drafts logic
+            const formInputs = document.querySelectorAll('#survey-form input:not([type="file"]), #survey-form select, #survey-form textarea');
+            function saveDraft() {
+                let draft = {};
+                formInputs.forEach(input => {
+                    if(input.type === 'checkbox' || input.type === 'radio') {
+                        draft[input.name] = input.checked;
+                    } else {
+                        draft[input.name] = input.value;
+                    }
+                });
+                localStorage.setItem('survey_draft', JSON.stringify(draft));
+            }
+            
+            function loadDraft() {
+                const draftStr = localStorage.getItem('survey_draft');
+                if(draftStr) {
+                    try {
+                        const draft = JSON.parse(draftStr);
+                        formInputs.forEach(input => {
+                            if(draft[input.name] !== undefined) {
+                                if(input.type === 'checkbox' || input.type === 'radio') {
+                                    input.checked = draft[input.name];
+                                } else {
+                                    input.value = draft[input.name];
+                                }
+                            }
+                        });
+                        // Filter dropdown dependent
+                        filterKelurahan();
+                        // Recover marker if lat lng exists
+                        if(document.getElementById('lat-input').value && document.getElementById('lng-input').value) {
+                            const lat = parseFloat(document.getElementById('lat-input').value);
+                            const lng = parseFloat(document.getElementById('lng-input').value);
+                            if (!isNaN(lat) && !isNaN(lng)) {
+                                map.setView([lat, lng], 17);
+                                updateMarker(lat, lng);
+                            }
+                        }
+                    } catch(e) {}
+                }
+            }
+
+            formInputs.forEach(input => {
+                input.addEventListener('input', saveDraft);
+                input.addEventListener('change', saveDraft);
+            });
+
+            loadDraft();
         });
     </script>
 </body>

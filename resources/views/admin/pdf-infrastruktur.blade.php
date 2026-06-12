@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Laporan Infrastruktur - {{ $inf->nama_objek ?? $inf->nama_infrastruktur ?? 'Tanpa Nama' }}</title>
+    <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <style>
         body { font-family: Helvetica, Arial, sans-serif; color: #333; line-height: 1.6; }
         .header { text-align: center; border-bottom: 2px solid #1e1b4b; padding-bottom: 10px; margin-bottom: 20px; }

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Statistik Tahunan {{ $year }} | Admin SINFRA</title>
+    <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -137,7 +138,7 @@
                         @php
                             $jenisColors = [
                                 'jalan'    => ['bg'=>'bg-navy-900',   'bar'=>'bg-navy-900',    'text'=>'text-white',      'icon'=>'fa-road',         'label'=>'Jalan'],
-                                'sanitasi' => ['bg'=>'bg-emerald-500','bar'=>'bg-emerald-500', 'text'=>'text-white',      'icon'=>'fa-faucet-drip',  'label'=>'Sanitasi'],
+
                                 'titian'   => ['bg'=>'bg-gold-500',   'bar'=>'bg-gold-500',    'text'=>'text-white',      'icon'=>'fa-bridge-water', 'label'=>'Titian'],
                                 'jembatan' => ['bg'=>'bg-navy-500',   'bar'=>'bg-navy-500',    'text'=>'text-white',      'icon'=>'fa-archway',      'label'=>'Jembatan'],
                             ];
@@ -233,8 +234,10 @@
         // Clock
         function updateClock() {
             const now = new Date();
-            document.getElementById('mini-clock').textContent =
-                `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')} WITA`;
+            const options = { timeZone: 'Asia/Makassar', hour: '2-digit', minute: '2-digit', hour12: false };
+            const timeString = new Intl.DateTimeFormat('id-ID', options).format(now);
+            const el = document.getElementById('mini-clock');
+            if (el) el.textContent = timeString.replace('.', ':') + ' WITA';
         }
         setInterval(updateClock, 1000); updateClock();
 

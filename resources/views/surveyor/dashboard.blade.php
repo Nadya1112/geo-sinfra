@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Surveyor Dashboard | GEO-SINFRA</title>
+    <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -93,7 +94,7 @@
                     <div>
                         <h3 class="text-3xl font-black text-white mb-3 leading-tight">Selamat Datang, <span class="text-gold-500">{{ auth()->user()->name }}</span>!</h3>
                         <p class="text-slate-300 text-[11px] font-medium max-w-xl leading-relaxed">
-                            Siap untuk mendata infrastruktur hari ini? Pastikan GPS aktif dan foto yang diambil jelas untuk hasil analisis AI yang akurat di lapangan.
+                            Siap untuk mendata infrastruktur hari ini? Pastikan GPS aktif dan foto yang diambil jelas untuk hasil pemantauan status kondisi yang akurat di lapangan.
                         </p>
                     </div>
                     <a href="{{ route('surveyor.input') }}" class="shrink-0 px-8 py-4 bg-gold-500 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-gold-600 transition-all shadow-lg shadow-gold-500/20 flex items-center gap-3 group">
@@ -313,7 +314,10 @@
     <script>
         function updateClock() {
             const now = new Date();
-            document.getElementById('mini-clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WITA`;
+            const options = { timeZone: 'Asia/Makassar', hour: '2-digit', minute: '2-digit', hour12: false };
+            const timeString = new Intl.DateTimeFormat('id-ID', options).format(now);
+            const el = document.getElementById('mini-clock');
+            if (el) el.textContent = timeString.replace('.', ':') + ' WITA';
         }
         setInterval(updateClock, 1000); updateClock();
 

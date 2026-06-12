@@ -72,6 +72,11 @@ class KabidController extends Controller
             ->where('status_verifikasi', 'Verified')
             ->orderBy('created_at', 'desc');
             
+        // Filter by Status Validasi
+        if ($request->has('status') && in_array($request->status, ['Pending', 'Validated', 'Rejected'])) {
+            $query->where('status_validasi', $request->status);
+        }
+
         if ($request->get('show') == 'all') {
             $allUsulan = $query->get();
         } else {
@@ -96,9 +101,7 @@ class KabidController extends Controller
 
         $infra = Infrastruktur::findOrFail($id);
         $infra->status_validasi = $request->status;
-        if ($request->status == 'Rejected') {
-            $infra->alasan_penolakan = $request->alasan_penolakan;
-        }
+        $infra->alasan_penolakan = $request->alasan_penolakan; // Disimpan sebagai catatan (baik diterima/ditolak)
         $infra->save();
 
         $message = $request->status == 'Validated' ? 'Data berhasil divalidasi!' : 'Data telah ditolak.';
@@ -114,10 +117,10 @@ class KabidController extends Controller
             'alasan_penolakan' => 'nullable|string'
         ]);
 
-        $updateData = ['status_validasi' => $request->status];
-        if ($request->status == 'Rejected') {
-            $updateData['alasan_penolakan'] = $request->alasan_penolakan;
-        }
+        $updateData = [
+            'status_validasi' => $request->status,
+            'alasan_penolakan' => $request->alasan_penolakan
+        ];
 
         Infrastruktur::whereIn('id_infrastruktur', $request->ids)
             ->update($updateData);
@@ -281,6 +284,11 @@ class KabidController extends Controller
     public function laporan(Request $request)
     {
         $query = Infrastruktur::with(['kelurahan.kecamatan', 'user', 'analisis']);
+
+        // Search by Nama Infrastruktur
+        if ($request->search) {
+            $query->where('nama_objek', 'LIKE', '%' . $request->search . '%');
+        }
 
         // Filter
         if ($request->kecamatan) {

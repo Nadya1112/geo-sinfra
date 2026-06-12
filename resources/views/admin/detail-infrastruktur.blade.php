@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Infrastruktur | Admin SINFRA</title>
+    <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -374,6 +375,19 @@
                         @endif
                     </div>
 
+                    {{-- Catatan Eksekutif --}}
+                    @if($inf->alasan_penolakan)
+                    <div class="bg-amber-50 rounded-[2.5rem] p-8 border border-amber-100 shadow-sm relative overflow-hidden mt-6">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-bl-full"></div>
+                        <h4 class="text-sm font-black text-amber-900 uppercase tracking-widest mb-3 flex items-center gap-2">
+                            <i class="fas fa-comment-dots text-amber-500"></i> Catatan Eksekutif (Kabid)
+                        </h4>
+                        <div class="p-5 bg-white/60 rounded-2xl border border-amber-200/50">
+                            <p class="text-sm font-bold text-slate-600 leading-relaxed">{{ $inf->alasan_penolakan }}</p>
+                        </div>
+                    </div>
+                    @endif
+
                 </div>{{-- /kolom kiri --}}
 
                 {{-- ── Kolom Kanan (1/3) ── --}}
@@ -484,8 +498,10 @@
         // Clock
         function updateClock() {
             const now = new Date();
-            document.getElementById('mini-clock').textContent =
-                `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')} WITA`;
+            const options = { timeZone: 'Asia/Makassar', hour: '2-digit', minute: '2-digit', hour12: false };
+            const timeString = new Intl.DateTimeFormat('id-ID', options).format(now);
+            const el = document.getElementById('mini-clock');
+            if (el) el.textContent = timeString.replace('.', ':') + ' WITA';
         }
         setInterval(updateClock, 1000); updateClock();
 

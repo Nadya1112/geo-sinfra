@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Statistik Laporan | Kabid SINFRA</title>
+    <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -183,7 +184,7 @@
                         @php
                             $colors = [
                                 'jalan' => ['bg' => 'bg-navy-50', 'bar' => 'bg-navy-500', 'text' => 'text-navy-600', 'icon' => 'fa-road'],
-                                'sanitasi' => ['bg' => 'bg-emerald-50', 'bar' => 'bg-emerald-500', 'text' => 'text-emerald-600', 'icon' => 'fa-faucet-drip'],
+
                                 'titian' => ['bg' => 'bg-gold-50', 'bar' => 'bg-gold-500', 'text' => 'text-gold-600', 'icon' => 'fa-bridge-water'],
                             ];
                             $c = $colors[strtolower($s->jenis)] ?? ['bg' => 'bg-slate-50', 'bar' => 'bg-slate-500', 'text' => 'text-slate-600', 'icon' => 'fa-cube'];
@@ -240,12 +241,12 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-left">
                         <thead>
-                            <tr class="text-[9px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100">
-                                <th class="pb-4 px-4 w-[25%]">Wilayah Kecamatan</th>
-                                <th class="pb-4 px-4 text-center w-[20%]">Kondisi Baik</th>
-                                <th class="pb-4 px-4 text-center w-[20%]">Kondisi Sedang</th>
-                                <th class="pb-4 px-4 text-center w-[20%]">Rusak Berat</th>
-                                <th class="pb-4 px-4 text-right w-[15%]">Total</th>
+                            <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md text-[10px] font-black text-gold-500 uppercase tracking-widest">
+                                <th class="py-4 px-4 w-[25%]">Wilayah Kecamatan</th>
+                                <th class="py-4 px-4 text-center w-[20%]">Kondisi Baik</th>
+                                <th class="py-4 px-4 text-center w-[20%]">Kondisi Sedang</th>
+                                <th class="py-4 px-4 text-center w-[20%]">Rusak Berat</th>
+                                <th class="py-4 px-4 text-right w-[15%]">Total</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-50">
@@ -300,7 +301,10 @@
         // Clock
         function updateClock() {
             const now = new Date();
-            document.getElementById('mini-clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WITA`;
+            const options = { timeZone: 'Asia/Makassar', hour: '2-digit', minute: '2-digit', hour12: false };
+            const timeString = new Intl.DateTimeFormat('id-ID', options).format(now);
+            const el = document.getElementById('mini-clock');
+            if (el) el.textContent = timeString.replace('.', ':') + ' WITA';
         }
         setInterval(updateClock, 1000); updateClock();
 

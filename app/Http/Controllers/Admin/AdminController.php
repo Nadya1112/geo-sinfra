@@ -478,7 +478,7 @@ class AdminController extends Controller
     {
         $request->validate([
             'nama_infrastruktur' => 'required|string|max:255',
-            'jenis' => 'required|string|in:jalan,titian,sanitasi,jembatan',
+            'jenis' => 'required|string|in:jalan,titian,jembatan',
             'id_kecamatan' => 'required|exists:kecamatan,id_kecamatan',
             'id_kelurahan' => 'required|exists:kelurahan,id_kelurahan',
             'latitude' => 'required|string',
@@ -610,40 +610,50 @@ class AdminController extends Controller
             ->get();
 
         $headers = [
-            "Content-type"        => "text/csv",
-            "Content-Disposition" => "attachment; filename=Rekap_Data_Infrastruktur_" . date('Y-m-d') . ".csv",
+            "Content-type"        => "application/vnd.ms-excel; charset=UTF-8",
+            "Content-Disposition" => "attachment; filename=Rekap_Data_Infrastruktur_" . date('Y-m-d') . ".xls",
             "Pragma"              => "no-cache",
             "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
             "Expires"             => "0"
         ];
 
-        $columns = [
-            'ID', 'Nama Infrastruktur', 'Jenis', 'Material', 'Kecamatan', 'Kelurahan', 
-            'Panjang (m)', 'Lebar (m)', 'Kondisi Lapangan', 'Prioritas AI', 'Skor AI', 'Tanggal Survey'
-        ];
-
-        $callback = function() use($infrastrukturs, $columns) {
-            $file = fopen('php://output', 'w');
-            fputcsv($file, $columns);
-
-            foreach ($infrastrukturs as $inf) {
-                $row = [
-                    $inf->id_infrastruktur,
-                    $inf->nama_objek,
-                    ucfirst($inf->jenis),
-                    $inf->material_eksisting,
-                    $inf->nama_kecamatan,
-                    $inf->nama_kelurahan,
-                    $inf->panjang,
-                    $inf->lebar,
-                    $inf->kondisi,
-                    $inf->label_prioritas ?? 'Belum Dianalisis',
-                    $inf->skor_dt ?? '-',
-                    $inf->tgl_survey
-                ];
-                fputcsv($file, $row);
+        $callback = function() use($infrastrukturs) {
+            // HTML styling agar saat dibuka di Excel, border dan fontnya sesuai standar Excel
+            $html = '<html><head><meta charset="UTF-8"></head><body>';
+            $html .= '<table style="border-collapse: collapse; font-family: Calibri, sans-serif; font-size: 11pt;">';
+            $html .= '<thead><tr>';
+            $columns = [
+                'ID', 'Nama Infrastruktur', 'Jenis', 'Material', 'Kecamatan', 'Kelurahan', 
+                'Panjang (m)', 'Lebar (m)', 'Kondisi Lapangan', 'Status Kondisi', 'Skor Prioritas', 'Tanggal Survey'
+            ];
+            
+            // Header dengan border tebal dan warna background
+            foreach ($columns as $col) {
+                $html .= '<th style="background-color: #1e1b4b; color: #ffffff; font-weight: bold; text-align: center; border: 1pt solid #000000; padding: 5px;">' . $col . '</th>';
             }
-            fclose($file);
+            $html .= '</tr></thead><tbody>';
+
+            // Data rows dengan border tipis (0.5pt) seperti default border Excel
+            foreach ($infrastrukturs as $inf) {
+                $html .= '<tr>';
+                $tdStyle = 'border: 0.5pt solid #000000; padding: 5px;';
+                $html .= '<td style="' . $tdStyle . '">' . $inf->id_infrastruktur . '</td>';
+                $html .= '<td style="' . $tdStyle . '">' . $inf->nama_objek . '</td>';
+                $html .= '<td style="' . $tdStyle . '">' . ucfirst($inf->jenis) . '</td>';
+                $html .= '<td style="' . $tdStyle . '">' . $inf->material_eksisting . '</td>';
+                $html .= '<td style="' . $tdStyle . '">' . $inf->nama_kecamatan . '</td>';
+                $html .= '<td style="' . $tdStyle . '">' . $inf->nama_kelurahan . '</td>';
+                $html .= '<td style="' . $tdStyle . ' text-align: right;">' . $inf->panjang . '</td>';
+                $html .= '<td style="' . $tdStyle . ' text-align: right;">' . $inf->lebar . '</td>';
+                $html .= '<td style="' . $tdStyle . '">' . $inf->kondisi . '</td>';
+                $html .= '<td style="' . $tdStyle . '">' . ($inf->label_prioritas ?? 'Belum Dianalisis') . '</td>';
+                $html .= '<td style="' . $tdStyle . ' text-align: right;">' . ($inf->skor_dt ?? '-') . '</td>';
+                $html .= '<td style="' . $tdStyle . '">' . $inf->tgl_survey . '</td>';
+                $html .= '</tr>';
+            }
+            $html .= '</tbody></table></body></html>';
+
+            echo $html;
         };
 
         return \Illuminate\Support\Facades\Response::stream($callback, 200, $headers);
@@ -655,7 +665,7 @@ class AdminController extends Controller
         
         $request->validate([
             'nama_infrastruktur' => 'required|string|max:255',
-            'jenis' => 'required|string|in:jalan,titian,sanitasi,jembatan',
+            'jenis' => 'required|string|in:jalan,titian,jembatan',
             'latitude' => 'required|string',
             'longitude' => 'required|string',
             'material_eksisting' => 'required|string',
@@ -792,9 +802,97 @@ class AdminController extends Controller
         }
 
         $user->save();
+        
+        $this->logActivity('user', "Memperbarui profil akun");
 
-        $this->logActivity('profil', 'Memperbarui informasi profil pribadi');
+        return redirect()->route('admin.profile')->with('success', 'PROFIL BERHASIL DIPERBARUI!');
+    }
 
-        return redirect()->route('admin.dashboard')->with('success', 'Profil Anda berhasil diperbarui!');
+    // ==========================================================
+    // MODUL LOG AKTIVITAS & BACKUP
+    // ==========================================================
+
+    public function activity(Request $request)
+    {
+        $activities = ActivityLog::with('user')
+            ->orderBy('created_at', 'desc')
+            ->paginate(15)
+            ->withQueryString();
+
+        return view('admin.activity', compact('activities'));
+    }
+
+    public function backupDatabase()
+    {
+        // Fitur ekspor sederhana yang mengambil semua data dari tabel-tabel utama
+        // Ini adalah fallback aman agar bisa berjalan di OS Windows (Laragon) tanpa ketergantungan utility CLI
+        
+        $tables = [
+            'users',
+            'kecamatan',
+            'kelurahan',
+            'infrastruktur',
+            'analisis_ai',
+            'citra_cnn',
+            'activity_logs'
+        ];
+
+        $sqlDump = "-- GEO-SINFRA DATABASE BACKUP\n";
+        $sqlDump .= "-- Generated at: " . now()->format('Y-m-d H:i:s') . "\n\n";
+
+        // Nonaktifkan foreign key checks saat import
+        $sqlDump .= "SET FOREIGN_KEY_CHECKS=0;\n\n";
+
+        foreach ($tables as $table) {
+            $data = DB::table($table)->get();
+            if ($data->isEmpty()) continue;
+
+            $sqlDump .= "-- Table structure and data for `$table`\n";
+            $sqlDump .= "TRUNCATE TABLE `$table`;\n"; // Hapus data lama jika direstore
+
+            foreach ($data as $row) {
+                // Konversi objek row ke array
+                $rowArray = (array) $row;
+                $keys = array_keys($rowArray);
+                
+                // Amankan nilai
+                $values = array_map(function($value) {
+                    if (is_null($value)) {
+                        return 'NULL';
+                    }
+                    $value = addslashes($value);
+                    $value = str_replace("\n", "\\n", $value);
+                    $value = str_replace("\r", "\\r", $value);
+                    return "'" . $value . "'";
+                }, array_values($rowArray));
+
+                $keysString = implode("`, `", $keys);
+                $valuesString = implode(", ", $values);
+
+                $sqlDump .= "INSERT INTO `$table` (`$keysString`) VALUES ($valuesString);\n";
+            }
+            $sqlDump .= "\n";
+        }
+
+        // Aktifkan kembali foreign key checks
+        $sqlDump .= "SET FOREIGN_KEY_CHECKS=1;\n";
+
+        $filename = "geo-sinfra_backup_" . date('Y-m-d_H-i-s') . ".sql";
+        $headers = [
+            'Content-Type' => 'text/plain',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ];
+
+        $this->logActivity('system', "Melakukan backup database");
+
+        return response($sqlDump, 200, $headers);
+    }
+
+    /**
+     * Menampilkan Halaman Simulasi AI
+     */
+    public function simulasiAi()
+    {
+        return view('admin.simulasi-ai');
     }
 }

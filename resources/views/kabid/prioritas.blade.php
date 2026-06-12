@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prioritas Penanganan | GEO-SINFRA</title>
+    <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -103,7 +104,7 @@
                             
                             <div class="absolute bottom-5 left-5 right-5">
                                 <span class="px-2.5 py-1 bg-white/20 backdrop-blur-md rounded border border-white/20 text-[9px] font-black uppercase tracking-widest text-white mb-2 inline-block">
-                                    {{ ucfirst($item->jenis) ?? \'Infrastruktur\' }}
+                                    {{ ucfirst($item->jenis) ?? 'Infrastruktur' }}
                                 </span>
                                 <h3 class="text-xl font-black text-white leading-tight line-clamp-2">{{ $item->nama_objek ?? $item->nama_infrastruktur ?? 'Tanpa Nama' }}</h3>
                             </div>
@@ -125,7 +126,7 @@
                             
                             <div class="grid grid-cols-2 gap-4 mb-6">
                                 <div>
-                                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Hasil Analisis AI</p>
+                                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Status Kondisi</p>
                                     <div class="flex items-center gap-2 px-3 py-2 bg-rose-50 border border-rose-100 rounded-xl">
                                         <div class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></div>
                                         <span class="text-[10px] font-black text-rose-600 uppercase tracking-widest truncate w-full">
@@ -165,7 +166,10 @@
     <script>
         function updateClock() {
             const now = new Date();
-            document.getElementById('mini-clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WITA`;
+            const options = { timeZone: 'Asia/Makassar', hour: '2-digit', minute: '2-digit', hour12: false };
+            const timeString = new Intl.DateTimeFormat('id-ID', options).format(now);
+            const el = document.getElementById('mini-clock');
+            if (el) el.textContent = timeString.replace('.', ':') + ' WITA';
         }
         setInterval(updateClock, 1000); updateClock();
     </script>

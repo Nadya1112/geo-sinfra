@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Infrastruktur | GEO-SINFRA</title>
+    <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -97,7 +98,7 @@
                                         <div class="absolute -bottom-1 -right-1 w-3 h-3 border-b-[3px] border-r-[3px] border-red-500"></div>
                                         
                                         <div class="absolute -top-6 left-0 bg-red-500 text-white text-[8px] font-black px-2 py-0.5 rounded-md shadow-lg tracking-widest">
-                                            AI VISUAL DETECTED ({{ round(($hasilCnn->skor_cnn ?? 0) * 100) }}%)
+                                            KERUSAKAN TERDETEKSI ({{ round(($hasilCnn->skor_cnn ?? 0) * 100) }}%)
                                         </div>
                                     </div>
                                 </div>
@@ -115,7 +116,7 @@
                     <div class="bg-navy-900 rounded-[2.5rem] p-8 text-white shadow-xl relative overflow-hidden border border-navy-800">
                         <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-gold-500/10 rounded-full blur-3xl"></div>
                         <h4 class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-8 flex items-center gap-3">
-                            <i class="fas fa-robot text-sm"></i> Analisis Cerdas (AI)
+                            <i class="fas fa-clipboard-check text-sm"></i> Status Kondisi
                         </h4>
                         
                         <div class="space-y-8 relative z-10">
@@ -123,20 +124,20 @@
                             <div class="relative">
                                 <div class="flex justify-between items-end mb-2">
                                     <div class="flex items-center gap-2">
-                                        <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Visual Data (CNN)</p>
+                                        <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Analisis Visual Foto</p>
                                     </div>
                                     <p class="text-xl font-black text-gold-500">{{ $hasilCnn ? round($hasilCnn->skor_cnn * 100) : '0' }}%</p>
                                 </div>
                                 <div class="w-full bg-white/5 h-2 rounded-full overflow-hidden border border-white/5">
                                     <div class="bg-gold-500 h-full shadow-[0_0_10px_rgba(197,160,89,0.5)]" style="width: {{ $hasilCnn ? ($hasilCnn->skor_cnn * 100) : '0' }}%"></div>
                                 </div>
-                                <p class="text-[8px] font-bold text-slate-400 mt-2 italic text-right">{{ $hasilCnn->label_kondisi ?? 'Memindai visual lapangan...' }}</p>
+                                <p class="text-[8px] font-bold text-slate-400 mt-2 italic text-right">{{ $hasilCnn->label_kondisi ?? 'Memeriksa visual lapangan...' }}</p>
                             </div>
                             
                             {{-- D-Tree --}}
                             <div class="relative">
                                 <div class="flex justify-between items-end mb-2">
-                                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Prioritas Teknis (DT)</p>
+                                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Skor Prioritas Teknis</p>
                                     <p class="text-xl font-black text-white">{{ $infrastruktur->analisis->skor_dt ?? '0' }}<span class="text-xs text-slate-500 ml-0.5">/100</span></p>
                                 </div>
                                 <div class="w-full bg-white/5 h-2 rounded-full overflow-hidden border border-white/5">
@@ -144,12 +145,12 @@
                                     <div class="{{ $dtColor }} h-full" style="width: {{ $infrastruktur->analisis->skor_dt ?? '0' }}%"></div>
                                 </div>
                                 <p class="text-[8px] font-bold mt-2 italic text-right {{ ($infrastruktur->analisis->label_prioritas ?? '') == 'Rusak Berat' ? 'text-red-400' : (($infrastruktur->analisis->label_prioritas ?? '') == 'Rusak Sedang' ? 'text-amber-400' : 'text-emerald-400') }}">
-                                    Label: {{ $infrastruktur->analisis->label_prioritas ?? 'Mengkalkulasi...' }}
+                                    Label: {{ $infrastruktur->analisis->label_prioritas ?? 'Menunggu Status...' }}
                                 </p>
                             </div>
 
                             <div class="pt-4 border-t border-white/10 space-y-2">
-                                <p class="text-[9px] font-black text-gold-500 uppercase tracking-widest">Rekomendasi AI</p>
+                                <p class="text-[9px] font-black text-gold-500 uppercase tracking-widest">Rekomendasi Penanganan</p>
                                 <p class="text-[11px] font-medium text-slate-300 leading-relaxed bg-white/5 p-4 rounded-2xl border border-white/5">
                                     {{ $infrastruktur->analisis->rekomendasi ?? 'Tindakan rekomendasi belum tersedia.' }}
                                 </p>
@@ -172,6 +173,19 @@
                         </div>
                     </div>
                 </div>
+
+                {{-- Catatan Eksekutif --}}
+                @if($infrastruktur->alasan_penolakan)
+                <div class="bg-amber-50 rounded-[2.5rem] p-6 border border-amber-100 shadow-sm relative overflow-hidden lg:col-span-1">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-bl-full"></div>
+                    <h4 class="text-[10px] font-black text-amber-900 uppercase tracking-widest mb-3 flex items-center gap-2">
+                        <i class="fas fa-comment-dots text-amber-500"></i> Catatan Eksekutif (Kabid)
+                    </h4>
+                    <div class="p-4 bg-white/60 rounded-2xl border border-amber-200/50">
+                        <p class="text-xs font-bold text-slate-600 leading-relaxed">{{ $infrastruktur->alasan_penolakan }}</p>
+                    </div>
+                </div>
+                @endif
 
                 {{-- KOLOM KANAN (Detail Informasi) --}}
                 <div class="lg:col-span-2 space-y-6">
@@ -279,7 +293,10 @@
     <script>
         function updateClock() {
             const now = new Date();
-            document.getElementById('mini-clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WITA`;
+            const options = { timeZone: 'Asia/Makassar', hour: '2-digit', minute: '2-digit', hour12: false };
+            const timeString = new Intl.DateTimeFormat('id-ID', options).format(now);
+            const el = document.getElementById('mini-clock');
+            if (el) el.textContent = timeString.replace('.', ':') + ' WITA';
         }
         setInterval(updateClock, 1000); updateClock();
 

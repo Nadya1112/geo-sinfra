@@ -160,15 +160,7 @@
                                 </div>
                                 <div class="w-2.5 h-2.5 rounded bg-emerald-500"></div>
                             </button>
-                            <button onclick="handleCategorySelect('Sanitasi')" data-type="Sanitasi" class="cat-opt-btn w-full px-3 py-1.5 rounded-lg text-[7px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
-                                <div class="flex items-center gap-1.5">
-                                    <div class="w-2.5 h-2.5 rounded border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors">
-                                        <i class="fas fa-check text-[5px] text-blue-400 opacity-0 transition-opacity"></i>
-                                    </div>
-                                    <span class="group-hover:text-white transition-colors">Sanitasi</span>
-                                </div>
-                                <div class="w-2.5 h-2.5 rounded bg-blue-500"></div>
-                            </button>
+
                             <button onclick="handleCategorySelect('Titian')" data-type="Titian" class="cat-opt-btn w-full px-3 py-1.5 rounded-lg text-[7px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
                                 <div class="flex items-center gap-1.5">
                                     <div class="w-2.5 h-2.5 rounded border border-white/20 flex items-center justify-center group-hover:border-purple-400 transition-colors">
@@ -567,7 +559,7 @@
             renderKelurahanData();
         }
 
-        let activeTypes = ['Jalan', 'Jembatan', 'Sanitasi', 'Titian'];
+        let activeTypes = ['Jalan', 'Jembatan', 'Titian'];
         let activeTerritories = myKecamatans.map(k => k.id_kecamatan.toString());
 
         function applyFilters() {
@@ -602,7 +594,7 @@
                 const type = btn.getAttribute('data-type');
                 const check = btn.querySelector('.fa-check');
                 if (type === 'Semua') {
-                    const isAll = activeTypes.length === 4;
+                    const isAll = activeTypes.length === 3;
                     check.style.opacity = isAll ? '1' : '0';
                 } else {
                     check.style.opacity = activeTypes.includes(type) ? '1' : '0';
@@ -631,8 +623,8 @@
 
         function handleCategorySelect(type) {
             if (type === 'Semua') {
-                if (activeTypes.length === 4) activeTypes = [];
-                else activeTypes = ['Jalan', 'Jembatan', 'Sanitasi', 'Titian'];
+                if (activeTypes.length === 3) activeTypes = [];
+                else activeTypes = ['Jalan', 'Jembatan', 'Titian'];
             } else {
                 if (activeTypes.includes(type)) {
                     activeTypes = activeTypes.filter(t => t !== type);

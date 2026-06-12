@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | Admin SINFRA</title>
+    <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -218,6 +219,44 @@
                 </div>
             </div>
 
+            <!-- Security & Maintenance Section -->
+            <div class="mb-8 text-left">
+                <h4 class="font-extrabold text-lg text-navy-900 mb-6">Pemeliharaan & Keamanan</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                    
+                    <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm flex items-center justify-between group hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-6">
+                            <div class="w-16 h-16 bg-blue-50 text-blue-500 rounded-2xl flex items-center justify-center border border-blue-100 shadow-sm group-hover:scale-105 transition-transform">
+                                <i class="fas fa-database text-3xl"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-black text-navy-900 text-lg mb-1">Backup Database</h5>
+                                <p class="text-[10px] text-slate-400 font-semibold leading-relaxed max-w-xs">Unduh salinan keamanan (dump) dari seluruh basis data koordinat dan infrastruktur saat ini.</p>
+                            </div>
+                        </div>
+                        <button onclick="startBackup()" class="px-6 py-3 bg-navy-900 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-gold-500 hover:shadow-lg transition-all flex items-center gap-2">
+                            <i class="fas fa-download"></i> Backup Sekarang
+                        </button>
+                    </div>
+
+                    <a href="{{ route('admin.activity') }}" class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm flex items-center justify-between group hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-6">
+                            <div class="w-16 h-16 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center border border-emerald-100 shadow-sm group-hover:scale-105 transition-transform">
+                                <i class="fas fa-shield-alt text-3xl"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-black text-navy-900 text-lg mb-1">Audit Trail & Log</h5>
+                                <p class="text-[10px] text-slate-400 font-semibold leading-relaxed max-w-xs">Pantau riwayat aktivitas pengguna, penambahan data, dan perubahan konfigurasi sistem.</p>
+                            </div>
+                        </div>
+                        <div class="w-12 h-12 bg-slate-50 text-slate-400 rounded-xl flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white transition-colors">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+
             <!-- Status Notice -->
             <div class="bg-navy-50 border border-navy-100/50 rounded-2xl p-6 flex items-center gap-4 text-left">
                 <div class="w-10 h-10 bg-gold-500/10 text-gold-500 rounded-full flex items-center justify-center shrink-0 border border-gold-500/20">
@@ -247,6 +286,44 @@
                         </div>
                         <div>
                             <h3 id="qm-title" class="text-lg font-black text-navy-900">Title</h3>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function startBackup() {
+            Swal.fire({
+                title: 'Mempersiapkan Backup',
+                html: 'Mengekspor struktur database dan data infrastruktur...',
+                timer: 2500,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading()
+                }
+            }).then((result) => {
+                // Buat form tersembunyi untuk trigger download file
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '{{ route("admin.backup") }}';
+                
+                const csrfToken = document.createElement('input');
+                csrfToken.type = 'hidden';
+                csrfToken.name = '_token';
+                csrfToken.value = '{{ csrf_token() }}';
+                
+                form.appendChild(csrfToken);
+                document.body.appendChild(form);
+                form.submit();
+                document.body.removeChild(form);
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Backup Dimulai!',
+                    text: 'Proses pengunduhan file SQL sedang berjalan di browser Anda.',
+                    confirmButtonColor: '#6366f1'
+                });
+            })
+        }
+    </script>
                             <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">Akses Cepat</p>
                         </div>
                     </div>
@@ -272,7 +349,10 @@
     <script>
         function updateClock() {
             const now = new Date();
-            document.getElementById('mini-clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WITA`;
+            const options = { timeZone: 'Asia/Makassar', hour: '2-digit', minute: '2-digit', hour12: false };
+            const timeString = new Intl.DateTimeFormat('id-ID', options).format(now);
+            const el = document.getElementById('mini-clock');
+            if (el) el.textContent = timeString.replace('.', ':') + ' WITA';
         }
         setInterval(updateClock, 1000); updateClock();
 

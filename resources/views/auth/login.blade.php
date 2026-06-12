@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Masuk | GEO-SINFRA</title>
+    <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -91,8 +92,8 @@
             </a>
             
             <div class="relative z-10 max-w-md">
-                <div class="w-20 h-20 bg-navy-900 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-2xl shadow-navy-950/50 border border-white/10 text-gold-500">
-                    <i class="fas fa-globe-asia text-3xl"></i>
+                <div class="w-24 h-24 mx-auto mb-8 shadow-2xl shadow-navy-950/50 rounded-full overflow-hidden border-2 border-white/10 bg-white">
+                    <img src="{{ asset('logo_geo-sinfra.png') }}" class="w-full h-full object-contain" alt="Logo">
                 </div>
                 
                 <h1 class="text-4xl md:text-5xl font-black text-white tracking-tight mb-4 text-center uppercase">

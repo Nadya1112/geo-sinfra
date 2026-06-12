@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Pemberitahuan Darurat Infrastruktur</title>
+    <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <style>
         body { font-family: Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 20px; color: #334e68; }
         .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }

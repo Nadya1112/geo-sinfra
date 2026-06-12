@@ -151,14 +151,14 @@
                                 </div>
                                 <div class="w-2 h-2 rounded-full bg-blue-500 shadow-lg shadow-blue-500/40"></div>
                             </button>
-                            <button onclick="toggleType('Sanitasi')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Sanitasi">
+                            <button onclick="toggleType('Jembatan')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Jembatan">
                                 <div class="flex items-center gap-2.5">
-                                    <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
-                                        <i class="fas fa-check text-[6px] text-emerald-400 check-icon" style="opacity:1"></i>
+                                    <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-indigo-400 transition-colors">
+                                        <i class="fas fa-check text-[6px] text-indigo-400 check-icon" style="opacity:1"></i>
                                     </div>
-                                    <span class="group-hover:text-white transition-colors text-left">Sanitasi / WC</span>
+                                    <span class="group-hover:text-white transition-colors text-left">Jembatan</span>
                                 </div>
-                                <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/40"></div>
+                                <div class="w-2 h-2 rounded-full bg-indigo-500 shadow-lg shadow-indigo-500/40"></div>
                             </button>
                             <button onclick="toggleType('Titian')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Titian">
                                 <div class="flex items-center gap-2.5">
@@ -515,7 +515,7 @@
         }
 
         // 1. Inisialisasi: Semua Objek & Wilayah Aktif by Default
-        const allAvailableTypes = ['Jalan', 'Sanitasi', 'Titian'];
+        const allAvailableTypes = ['Jalan', 'Jembatan', 'Titian'];
         let activeTypes = [...allAvailableTypes];
         let activeKecs = kecamatans.map(k => k.id_kecamatan.toString());
         const totalKec = kecamatans.length;

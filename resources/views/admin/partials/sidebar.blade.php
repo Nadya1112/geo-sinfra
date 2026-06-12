@@ -10,8 +10,8 @@
 <aside class="w-64 bg-[#0f0e2c] text-white flex-col hidden md:flex shadow-2xl z-20 text-left border-r border-white/5 shrink-0">
     <div class="p-6 flex-1 text-left">
         <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 mb-10 hover:opacity-85 transition-opacity group">
-            <div class="w-9 h-9 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 shadow-lg shadow-navy-950/40 group-hover:scale-105 transition-all">
-                <i class="fas fa-globe-asia text-xs"></i>
+            <div class="w-9 h-9 bg-white rounded-xl overflow-hidden shadow-lg shadow-navy-950/40 group-hover:scale-105 transition-all">
+                <img src="{{ asset('logo_geo-sinfra.png') }}" class="w-full h-full object-contain" alt="Logo">
             </div>
             <span class="font-extrabold text-lg tracking-tighter uppercase text-white">GEO-SINFRA</span>
         </a>
@@ -52,6 +52,22 @@
                 <i class="fas fa-calendar-alt {{ request()->routeIs('admin.statistik.tahunan') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 Statistik Tahunan
             </a>
+
+            <div class="pt-4 mt-2 border-t border-white/5">
+                <p class="text-[8px] font-black text-slate-500 uppercase tracking-[0.2em] mb-3 px-2">Sistem & Keamanan</p>
+                <a href="{{ route('admin.activity') }}" 
+                   class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.activity') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
+                    <i class="fas fa-shield-alt {{ request()->routeIs('admin.activity') ? '' : 'group-hover:text-gold-500' }}"></i> 
+                    Log Aktivitas
+                </a>
+                
+                <!-- Simulasi AI -->
+                <a href="{{ route('admin.simulasi-ai') }}" 
+                   class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.simulasi-ai') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left mt-1">
+                    <i class="fas fa-robot {{ request()->routeIs('admin.simulasi-ai') ? '' : 'group-hover:text-gold-500' }}"></i> 
+                    Simulasi Model AI
+                </a>
+            </div>
         </nav>
     </div>
 
@@ -71,8 +87,8 @@
     <div class="p-6 flex-1 text-left overflow-y-auto">
         <div class="flex items-center justify-between mb-8">
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 hover:opacity-85 transition-opacity group">
-                <div class="w-9 h-9 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 shadow-lg shadow-navy-950/40">
-                    <i class="fas fa-globe-asia text-xs"></i>
+                <div class="w-9 h-9 bg-white rounded-xl overflow-hidden shadow-lg shadow-navy-950/40">
+                    <img src="{{ asset('logo_geo-sinfra.png') }}" class="w-full h-full object-contain" alt="Logo">
                 </div>
                 <span class="font-extrabold text-lg tracking-tighter uppercase text-white">GEO-SINFRA</span>
             </a>
@@ -134,6 +150,22 @@
                 <i class="fas fa-calendar-alt {{ request()->routeIs('admin.statistik.tahunan') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 Statistik Tahunan
             </a>
+
+            <div class="pt-4 mt-2 border-t border-white/5">
+                <p class="text-[8px] font-black text-slate-500 uppercase tracking-[0.2em] mb-3 px-2">Sistem & Keamanan</p>
+                <a href="{{ route('admin.activity') }}" 
+                   class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.activity') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
+                    <i class="fas fa-shield-alt {{ request()->routeIs('admin.activity') ? '' : 'group-hover:text-gold-500' }}"></i> 
+                    Log Aktivitas
+                </a>
+                
+                <!-- Simulasi AI -->
+                <a href="{{ route('admin.simulasi-ai') }}" 
+                   class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.simulasi-ai') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left mt-1">
+                    <i class="fas fa-robot {{ request()->routeIs('admin.simulasi-ai') ? '' : 'group-hover:text-gold-500' }}"></i> 
+                    Simulasi Model AI
+                </a>
+            </div>
         </nav>
     </div>
 

@@ -174,6 +174,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/profile', [AdminController::class, 'profile'])->name('admin.profile');
         Route::put('/profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
 
+        // Security & Audit
+        Route::get('/activity', [AdminController::class, 'activity'])->name('admin.activity');
+        
+        // Simulasi AI Playground
+        Route::get('/simulasi-ai', [AdminController::class, 'simulasiAi'])->name('admin.simulasi-ai');
+        
+        // Backup
+        Route::post('/backup', [AdminController::class, 'backupDatabase'])->name('admin.backup');
+
         // Test Koneksi AI
         Route::get('/test-ai', function() {
             try {

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Infrastruktur | GEO-SINFRA</title>
+    <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -202,8 +203,19 @@
                                     </div>
                                     <input type="radio" name="status_perbaikan" value="Selesai" class="w-4 h-4 text-emerald-500 border-slate-300 focus:ring-emerald-500" {{ $infrastruktur->status_perbaikan == 'Selesai' ? 'checked' : '' }} onchange="this.form.submit()">
                                 </label>
-                            </div>
                         </form>
+                    </div>
+                    @endif
+
+                    @if($infrastruktur->status_validasi != 'Pending' && $infrastruktur->alasan_penolakan)
+                    <div class="bg-amber-50 rounded-[2.5rem] p-6 border border-amber-100 shadow-sm relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-bl-full"></div>
+                        <h4 class="text-[10px] font-black text-amber-900 uppercase tracking-widest mb-3 flex items-center gap-2">
+                            <i class="fas fa-comment-dots text-amber-500"></i> Catatan Eksekutif (Kabid)
+                        </h4>
+                        <div class="p-4 bg-white/60 rounded-2xl border border-amber-200/50">
+                            <p class="text-xs font-bold text-slate-600 leading-relaxed">{{ $infrastruktur->alasan_penolakan }}</p>
+                        </div>
                     </div>
                     @endif
                 </div>
@@ -279,8 +291,10 @@
     <script>
         function updateClock() {
             const now = new Date();
-            document.getElementById('mini-clock').textContent =
-                `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')} WITA`;
+            const options = { timeZone: 'Asia/Makassar', hour: '2-digit', minute: '2-digit', hour12: false };
+            const timeString = new Intl.DateTimeFormat('id-ID', options).format(now);
+            const el = document.getElementById('mini-clock');
+            if (el) el.textContent = timeString.replace('.', ':') + ' WITA';
         }
         setInterval(updateClock, 1000); updateClock();
 

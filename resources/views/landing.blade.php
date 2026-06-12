@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GEO-SINFRA - Sistem Pemetaan Infrastruktur Permukiman Kota Banjarmasin</title>
+    <meta name="description" content="GEO-SINFRA adalah Sistem Pemetaan Infrastruktur Permukiman Kota Banjarmasin berbasis Web GIS dan Kecerdasan Buatan (AI) untuk monitoring, pelaporan, dan klasifikasi kerusakan infrastruktur.">
+    <meta name="keywords" content="GIS, Pemetaan, Infrastruktur, Banjarmasin, Artificial Intelligence, SINFRA, Dinas PUPR, Jalan, Jembatan">
+    <meta name="author" content="Pemerintah Kota Banjarmasin">
+    <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -15,6 +19,9 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
     <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+    <!-- Leaflet Heatmap -->
+    <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
 
     <script>
         tailwind.config = {
@@ -101,17 +108,33 @@
         /* Hero Section Premium Mesh */
         .hero-premium {
             position: relative;
-            background: radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 20% 80%, rgba(197, 160, 89, 0.12) 0%, transparent 50%),
-                        #070617;
+            background-image: url('{{ asset('gambar_landing_page.jpeg') }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             overflow: hidden;
+        }
+        .hero-premium::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.6) 0%, transparent 50%),
+                        radial-gradient(circle at 20% 80%, rgba(197, 160, 89, 0.6) 0%, transparent 50%),
+                        rgba(7, 6, 23, 0.75);
+            pointer-events: none;
+            z-index: 0;
         }
         .hero-premium::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, transparent 50%, rgba(7, 6, 23, 0.9) 100%);
+            background: linear-gradient(180deg, transparent 50%, rgba(7, 6, 23, 0.95) 100%);
             pointer-events: none;
+            z-index: 1;
+        }
+        .hero-premium > * {
+            position: relative;
+            z-index: 2;
         }
         
         /* Grid background pattern */
@@ -267,17 +290,15 @@
     <nav class="bg-white/80 backdrop-blur-xl border-b border-slate-100 h-24 flex items-center sticky top-0 z-[5000] transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 md:px-8 w-full flex justify-between items-center">
             <!-- Brand -->
-            <div class="flex items-center gap-4">
-                <div class="w-12 h-12 bg-navy-900 rounded-2xl flex items-center justify-center text-gold-500 shadow-lg shadow-navy-950/20">
-                    <i class="fas fa-globe-asia text-xl"></i>
-                </div>
-                <div>
+            <div class="flex items-center">
+                <a href="#" class="h-16 flex items-center gap-3">
+                    <img src="{{ asset('logo_geo-sinfra.png') }}" class="h-full w-auto object-contain drop-shadow-md" alt="Logo Geo-Sinfra">
                     <h2 class="text-xl font-extrabold text-navy-900 tracking-tighter uppercase leading-none">GEO-SINFRA</h2>
-                </div>
+                </a>
             </div>
             
             <!-- Navbar Actions -->
-            <div class="hidden md:flex items-center gap-4">
+            <div class="flex items-center gap-4">
                 <a href="#peta" class="text-sm font-bold text-slate-600 hover:text-gold-500 transition-colors uppercase tracking-wider">Peta</a>
                 <a href="#statistik" class="text-sm font-bold text-slate-600 hover:text-gold-500 transition-colors uppercase tracking-wider">Statistik</a>
                 <div class="w-px h-4 bg-slate-300 mx-2"></div>
@@ -285,48 +306,36 @@
                     <i class="fas fa-lock"></i> Login
                 </a>
             </div>
-
-            <!-- Mobile Hamburger Menu Button -->
-            <button class="md:hidden text-navy-900 focus:outline-none" onclick="toggleMobileMenu()">
-                <i class="fas fa-bars text-2xl"></i>
-            </button>
         </div>
     </nav>
 
-    <!-- Mobile Navigation Overlay -->
-    <div id="mobile-menu" class="hidden fixed inset-0 z-[4999] bg-navy-950/95 backdrop-blur-xl flex flex-col justify-center items-center gap-8 text-white text-lg font-bold uppercase tracking-widest transition-all">
-        <button class="absolute top-8 right-8 text-3xl" onclick="toggleMobileMenu()">
-            <i class="fas fa-times"></i>
-        </button>
-        <a href="#" class="hover:text-gold-500" onclick="toggleMobileMenu()">Beranda</a>
-        <a href="#statistik" class="hover:text-gold-500" onclick="toggleMobileMenu()">Statistik</a>
-        <a href="#peta" class="hover:text-gold-500" onclick="toggleMobileMenu()">Peta Sebaran</a>
-        <a href="{{ url('/login') }}" class="bg-gold-500 text-white px-8 py-3 rounded-full shadow-lg" onclick="toggleMobileMenu()">Login</a>
-    </div>
 
     <!-- Hero Section -->
     <section class="hero-premium py-24 md:py-32 flex items-center min-h-[580px]">
         <div class="grid-pattern"></div>
         <div class="max-w-7xl mx-auto px-6 md:px-8 w-full relative z-10">
-            <div class="max-w-3xl">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-gold-500 text-xs font-bold tracking-wider mb-6 animate-pulse">
-                    <i class="fas fa-brain text-[10px]"></i>
-                    <span>POWERED BY DEEP LEARNING & GIS</span>
+            <div class="flex flex-col md:flex-row items-center justify-between gap-12">
+                <div class="max-w-3xl">
+                    <h3 class="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.08] mb-4">
+                        Selamat Datang di
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-500 via-yellow-400 to-[#6366f1]"> GEO-SINFRA</span>
+                    </h3>
+                    <p class="text-slate-300 font-semibold text-lg md:text-2xl leading-relaxed mb-10 max-w-2xl">
+                        Sistem Informasi Pemetaan Infrastruktur Permukiman Kota Banjarmasin
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#peta" class="btn-shine bg-gradient-to-r from-gold-500 to-gold-600 text-white px-8 py-4.5 rounded-2xl font-bold text-xs uppercase tracking-widest hover:scale-105 transition-all shadow-xl shadow-gold-500/20">
+                            <i class="fas fa-map mr-2"></i> Eksplorasi Peta GIS
+                        </a>
+                        <a href="#statistik" class="bg-white/10 backdrop-blur-md text-white border border-white/20 px-8 py-4.5 rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-white hover:text-navy-950 transition-all">
+                            Analisis Statistik
+                        </a>
+                    </div>
                 </div>
-                <h3 class="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.08] mb-4">
-                    Selamat Datang di
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-500 via-yellow-400 to-[#6366f1]"> GEO-SINFRA</span>
-                </h3>
-                <p class="text-slate-300 font-semibold text-lg md:text-2xl leading-relaxed mb-10 max-w-2xl">
-                    Sistem Informasi Pemetaan Infrastruktur Permukiman Kota Banjarmasin
-                </p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="#peta" class="btn-shine bg-gradient-to-r from-gold-500 to-gold-600 text-white px-8 py-4.5 rounded-2xl font-bold text-xs uppercase tracking-widest hover:scale-105 transition-all shadow-xl shadow-gold-500/20">
-                        <i class="fas fa-map mr-2"></i> Eksplorasi Peta GIS
-                    </a>
-                    <a href="#statistik" class="bg-white/10 backdrop-blur-md text-white border border-white/20 px-8 py-4.5 rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-white hover:text-navy-950 transition-all">
-                        Analisis Statistik
-                    </a>
+                
+                <!-- Bouncing Logo -->
+                <div class="hidden md:flex justify-center items-center w-64 h-64 lg:w-80 lg:h-80 animate-bounce">
+                    <img src="{{ asset('logo_geo-sinfra.png') }}" alt="Logo Geo-Sinfra" class="w-full h-full object-contain drop-shadow-[0_10px_20px_rgba(255,255,255,0.2)]">
                 </div>
             </div>
         </div>
@@ -514,22 +523,27 @@
 
                 <!-- Custom Zoom Controls & GPS -->
                 <div class="absolute top-6 left-6 z-[9999] flex flex-col gap-2 pointer-events-auto">
-                    <button onclick="map.zoomIn()" class="w-12 h-12 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-gold-500 hover:bg-[#1e1b4b] transition-all group" title="Zoom In">
-                        <i class="fas fa-plus text-xs group-hover:scale-110 transition-transform"></i>
+                    <button onclick="map.zoomIn()" class="w-12 h-12 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-gold-500 hover:bg-[#1e1b4b] transition-all group" title="Zoom In" aria-label="Zoom In Peta">
+                        <i class="fas fa-plus text-xs group-hover:scale-110 transition-transform" aria-hidden="true"></i>
                     </button>
-                    <button onclick="map.zoomOut()" class="w-12 h-12 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-gold-500 hover:bg-[#1e1b4b] transition-all group" title="Zoom Out">
-                        <i class="fas fa-minus text-xs group-hover:scale-110 transition-transform"></i>
+                    <button onclick="map.zoomOut()" class="w-12 h-12 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-gold-500 hover:bg-[#1e1b4b] transition-all group" title="Zoom Out" aria-label="Zoom Out Peta">
+                        <i class="fas fa-minus text-xs group-hover:scale-110 transition-transform" aria-hidden="true"></i>
                     </button>
-                    <button onclick="locateUser()" class="w-12 h-12 mt-4 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-blue-400 hover:bg-[#1e1b4b] transition-all group" title="Lokasi Saya">
-                        <i class="fas fa-crosshairs text-sm group-hover:scale-110 transition-transform"></i>
+                    <button onclick="locateUser()" class="w-12 h-12 mt-4 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-blue-400 hover:bg-[#1e1b4b] transition-all group" title="Lokasi Saya" aria-label="Gunakan Lokasi Saat Ini">
+                        <i class="fas fa-crosshairs text-sm group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+                    </button>
+                    <!-- Heatmap Toggle Button -->
+                    <button id="toggle-heatmap" onclick="toggleHeatmap()" class="w-12 h-12 mt-4 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-[#1e1b4b] transition-all group relative" title="Aktifkan Heatmap Kerusakan" aria-label="Toggle Heatmap Kerusakan">
+                        <i class="fas fa-fire text-sm group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+                        <span id="heatmap-indicator" class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-[#0f0e2c] hidden"></span>
                     </button>
                 </div>
 
                 <!-- Search Bar -->
                 <div class="absolute top-6 left-24 z-[9999] pointer-events-auto hidden md:block w-72">
                     <div class="relative w-full">
-                        <input type="text" id="search-infra" placeholder="Cari infrastruktur atau jalan..." class="w-full bg-[#0f0e2c]/90 backdrop-blur-xl border border-white/10 text-white pl-10 pr-4 py-3 rounded-2xl shadow-2xl focus:outline-none focus:border-gold-500 transition-colors text-[10px] font-bold tracking-wide placeholder-slate-400" autocomplete="off">
-                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gold-500 text-xs"></i>
+                        <input type="text" id="search-infra" placeholder="Cari infrastruktur atau jalan..." aria-label="Cari infrastruktur atau jalan" class="w-full bg-[#0f0e2c]/90 backdrop-blur-xl border border-white/10 text-white pl-10 pr-4 py-3 rounded-2xl shadow-2xl focus:outline-none focus:border-gold-500 transition-colors text-[10px] font-bold tracking-wide placeholder-slate-400" autocomplete="off">
+                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gold-500 text-xs" aria-hidden="true"></i>
                     </div>
                     <div id="search-results" class="hidden absolute top-full left-0 mt-2 w-full bg-[#0f0e2c]/95 backdrop-blur-2xl border border-white/10 rounded-xl shadow-2xl max-h-56 overflow-y-auto"></div>
                 </div>
@@ -1259,6 +1273,64 @@
             if (!event.target.closest('#search-infra') && !event.target.closest('#search-results')) {
                 const results = document.getElementById('search-results');
                 if(results) results.classList.add('hidden');
+            }
+        }
+
+        // --- Fitur Peta Panas (Heatmap) ---
+        let heatmapLayer = null;
+        let isHeatmapActive = false;
+
+        function toggleHeatmap() {
+            isHeatmapActive = !isHeatmapActive;
+            const btn = document.getElementById('toggle-heatmap');
+            const indicator = document.getElementById('heatmap-indicator');
+            
+            if(isHeatmapActive) {
+                btn.classList.add('text-red-500');
+                btn.classList.remove('text-slate-400');
+                indicator.classList.remove('hidden');
+                
+                // Kumpulkan titik kerusakan
+                const heatPoints = [];
+                dataInfra.forEach(item => {
+                    const lat = parseFloat(item.latitude);
+                    const lng = parseFloat(item.longitude);
+                    if(isNaN(lat) || isNaN(lng)) return;
+                    
+                    let intensity = 0;
+                    if(item.label_prioritas === 'Rusak Berat') intensity = 1.0;
+                    else if(item.label_prioritas === 'Rusak Sedang') intensity = 0.5;
+                    
+                    if(intensity > 0) {
+                        heatPoints.push([lat, lng, intensity]);
+                    }
+                });
+                
+                if(heatmapLayer) {
+                    map.removeLayer(heatmapLayer);
+                }
+                
+                heatmapLayer = L.heatLayer(heatPoints, {
+                    radius: 25,
+                    blur: 15,
+                    maxZoom: 16,
+                    gradient: {0.4: 'blue', 0.6: 'cyan', 0.7: 'lime', 0.8: 'yellow', 1.0: 'red'}
+                }).addTo(map);
+                
+                // Sembunyikan marker biasa agar heatmap terlihat jelas
+                map.removeLayer(markersLayer);
+                
+            } else {
+                btn.classList.remove('text-red-500');
+                btn.classList.add('text-slate-400');
+                indicator.classList.add('hidden');
+                
+                if(heatmapLayer) {
+                    map.removeLayer(heatmapLayer);
+                }
+                
+                // Tampilkan marker kembali
+                map.addLayer(markersLayer);
             }
         }
 

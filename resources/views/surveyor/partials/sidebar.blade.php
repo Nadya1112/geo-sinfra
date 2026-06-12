@@ -10,8 +10,8 @@
 <aside class="w-64 bg-navy-900 text-white flex-col hidden md:flex shadow-2xl z-20 text-left shrink-0">
     <div class="p-6 flex-1 text-left">
         <a href="{{ route('surveyor.dashboard') }}" class="flex items-center gap-3 mb-10 hover:opacity-80 transition-opacity group">
-            <div class="w-8 h-8 bg-gold-500 rounded-lg flex items-center justify-center shadow-lg shadow-gold-500/20 group-hover:scale-110 transition-transform">
-                <i class="fas fa-camera text-xs text-white"></i>
+            <div class="w-8 h-8 bg-white rounded-lg overflow-hidden shadow-lg shadow-gold-500/20 group-hover:scale-110 transition-transform">
+                <img src="{{ asset('logo_geo-sinfra.png') }}" class="w-full h-full object-contain" alt="Logo">
             </div>
             <span class="font-extrabold text-xl tracking-tighter uppercase text-white">GEO-SINFRA</span>
         </a>
@@ -60,8 +60,8 @@
         {{-- Header dengan tombol close --}}
         <div class="flex items-center justify-between mb-8">
             <a href="{{ route('surveyor.dashboard') }}" class="flex items-center gap-3 hover:opacity-80 transition-opacity group">
-                <div class="w-8 h-8 bg-gold-500 rounded-lg flex items-center justify-center shadow-lg shadow-gold-500/20">
-                    <i class="fas fa-camera text-xs text-white"></i>
+                <div class="w-8 h-8 bg-white rounded-lg overflow-hidden shadow-lg shadow-gold-500/20">
+                    <img src="{{ asset('logo_geo-sinfra.png') }}" class="w-full h-full object-contain" alt="Logo">
                 </div>
                 <span class="font-extrabold text-xl tracking-tighter uppercase text-white">GEO-SINFRA</span>
             </a>

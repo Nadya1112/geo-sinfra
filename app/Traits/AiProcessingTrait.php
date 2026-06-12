@@ -50,15 +50,12 @@ trait AiProcessingTrait
                     $predictedJenisDisplay = 'Titian';
                 } elseif (str_contains($namaRaw, 'jembatan')) {
                     $predictedJenisDisplay = 'Jembatan';
-                } elseif (str_contains($namaRaw, 'sanitasi') || str_contains($namaRaw, 'drainase')) {
-                    $predictedJenisDisplay = 'Sanitasi';
                 }
 
                 $jenisMapping = [
                     'Jalan' => 'jalan',
                     'Jembatan' => 'jembatan',
-                    'Titian' => 'titian',
-                    'Sanitasi' => 'sanitasi'
+                    'Titian' => 'titian'
                 ];
                 $predictedJenisDb = $jenisMapping[$predictedJenisDisplay] ?? 'jalan';
 
@@ -132,16 +129,12 @@ trait AiProcessingTrait
         // Deteksi fallback jika ada kata kunci kuat di nama (hindari kata jalan jika ada jembatan)
         elseif (str_contains($namaRaw, 'jembatan')) {
             $simJenis = 'Jembatan';
-        } 
-        elseif (str_contains($namaRaw, 'sanitasi') || str_contains($namaRaw, 'drainase')) {
-            $simJenis = 'Sanitasi';
         }
 
         $jenisMapping = [
             'Jalan' => 'jalan',
             'Jembatan' => 'jembatan',
-            'Titian' => 'titian',
-            'Sanitasi' => 'sanitasi'
+            'Titian' => 'titian'
         ];
         $simJenisDb = $jenisMapping[$simJenis] ?? 'jalan';
 

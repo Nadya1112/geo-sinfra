@@ -1,7 +1,7 @@
 ============================================================
   LAPORAN EVALUASI MODEL AI - GEO-SINFRA (IMPROVED)
-  Tanggal: 2026-06-04 16:36:07
-  Total Data Uji: 120 gambar
+  Tanggal: 2026-06-10 12:50:30
+  Total Data Uji: 144 gambar
 ============================================================
 
 ============================================================
@@ -10,41 +10,38 @@
 
   METRIK KESELURUHAN (Weighted Average):
   ┌────────────────────┬──────────────┐
-  │ Akurasi            │      93.33%  │
-  │ Presisi            │      93.57%  │
-  │ Recall             │      93.33%  │
-  │ F1-Score           │      93.16%  │
+  │ Akurasi            │      92.36%  │
+  │ Presisi            │      92.81%  │
+  │ Recall             │      92.36%  │
+  │ F1-Score           │      92.49%  │
   └────────────────────┴──────────────┘
 
   METRIK PER KELAS:
   ┌──────────────┬──────────┬──────────┬──────────┬──────────┐
   │    Kelas     │ Presisi  │  Recall  │ F1-Score │ Support  │
   ├──────────────┼──────────┼──────────┼──────────┼──────────┤
-  │    jalan     │   91.57% │   98.70% │   95.00% │       77 │
-  │   jembatan   │   95.65% │   78.57% │   86.27% │       28 │
-  │    titian    │  100.00% │   93.33% │   96.55% │       15 │
-  │   sanitasi   │    0.00% │    0.00% │    0.00% │        0 │
+  │    jalan     │   95.56% │   92.47% │   93.99% │       93 │
+  │   jembatan   │   80.56% │   90.62% │   85.29% │       32 │
+  │    titian    │  100.00% │   94.74% │   97.30% │       19 │
   └──────────────┴──────────┴──────────┴──────────┴──────────┘
 
   CONFUSION MATRIX:
-                 jalan  jembatan    titian  sanitasi
-  ──────────────────────────────────────────────────
-      jalan │        76         1         0         0
-   jembatan │         6        22         0         0
-     titian │         1         0        14         0
-   sanitasi │         0         0         0         0
+                 jalan  jembatan    titian
+  ────────────────────────────────────────
+      jalan │        86         7         0
+   jembatan │         3        29         0
+     titian │         1         0        18
 
   Classification Report (sklearn):
               precision    recall  f1-score   support
 
-       jalan       0.92      0.99      0.95        77
-    jembatan       0.96      0.79      0.86        28
-      titian       1.00      0.93      0.97        15
-    sanitasi       0.00      0.00      0.00         0
+       jalan       0.96      0.92      0.94        93
+    jembatan       0.81      0.91      0.85        32
+      titian       1.00      0.95      0.97        19
 
-    accuracy                           0.93       120
-   macro avg       0.72      0.68      0.69       120
-weighted avg       0.94      0.93      0.93       120
+    accuracy                           0.92       144
+   macro avg       0.92      0.93      0.92       144
+weighted avg       0.93      0.92      0.92       144
 
 
 ============================================================
@@ -53,36 +50,36 @@ weighted avg       0.94      0.93      0.93       120
 
   METRIK KESELURUHAN (Weighted Average):
   ┌────────────────────┬──────────────┐
-  │ Akurasi            │      70.83%  │
-  │ Presisi            │      70.79%  │
-  │ Recall             │      70.83%  │
-  │ F1-Score           │      70.78%  │
+  │ Akurasi            │      83.33%  │
+  │ Presisi            │      83.59%  │
+  │ Recall             │      83.33%  │
+  │ F1-Score           │      83.41%  │
   └────────────────────┴──────────────┘
 
   METRIK PER KELAS:
   ┌──────────────┬──────────┬──────────┬──────────┬──────────┐
   │    Kelas     │ Presisi  │  Recall  │ F1-Score │ Support  │
   ├──────────────┼──────────┼──────────┼──────────┼──────────┤
-  │     Baik     │   73.08% │   79.17% │   76.00% │       24 │
-  │    Sedang    │   68.75% │   67.35% │   68.04% │       49 │
-  │    Berat     │   71.74% │   70.21% │   70.97% │       47 │
+  │     Baik     │   91.11% │   85.42% │   88.17% │       48 │
+  │    Sedang    │   78.85% │   83.67% │   81.19% │       49 │
+  │    Berat     │   80.85% │   80.85% │   80.85% │       47 │
   └──────────────┴──────────┴──────────┴──────────┴──────────┘
 
   CONFUSION MATRIX:
               Baik  Sedang   Berat
   ────────────────────────────────
-     Baik │      19       4       1
-   Sedang │       4      33      12
-    Berat │       3      11      33
+     Baik │      41       3       4
+   Sedang │       3      41       5
+    Berat │       1       8      38
 
   Classification Report (sklearn):
               precision    recall  f1-score   support
 
-        Baik       0.73      0.79      0.76        24
-      Sedang       0.69      0.67      0.68        49
-       Berat       0.72      0.70      0.71        47
+        Baik       0.91      0.85      0.88        48
+      Sedang       0.79      0.84      0.81        49
+       Berat       0.81      0.81      0.81        47
 
-    accuracy                           0.71       120
-   macro avg       0.71      0.72      0.72       120
-weighted avg       0.71      0.71      0.71       120
+    accuracy                           0.83       144
+   macro avg       0.84      0.83      0.83       144
+weighted avg       0.84      0.83      0.83       144
 

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kabid Dashboard | GEO-SINFRA</title>
+    <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -58,6 +59,31 @@
         </header>
 
         <div class="p-8 space-y-10">
+
+            @if(isset($totalRusakBerat) && $totalRusakBerat > 0)
+            <!-- Critical Alert Banner -->
+            <div class="relative bg-rose-500 rounded-[2.5rem] p-6 border border-rose-600 shadow-xl shadow-rose-500/30 flex items-center justify-between overflow-hidden group hover:scale-[1.01] transition-transform">
+                <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/20 rounded-full blur-2xl animate-pulse"></div>
+                <div class="relative z-10 flex items-center gap-6">
+                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-rose-500 shadow-inner">
+                        <i class="fas fa-exclamation-triangle text-3xl animate-bounce"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-3 mb-1">
+                            <h3 class="text-xl font-black text-white tracking-tight">PERINGATAN DARURAT</h3>
+                            <span class="px-3 py-1 bg-rose-900/50 text-white text-[10px] font-black uppercase tracking-widest rounded-full border border-white/20 animate-pulse">Action Required</span>
+                        </div>
+                        <p class="text-rose-100 text-sm font-medium">Sistem AI mendeteksi <strong class="text-white text-lg">{{ $totalRusakBerat }} infrastruktur</strong> dalam kondisi kritis (Rusak Berat). Segera lakukan peninjauan dan alokasi anggaran perbaikan.</p>
+                    </div>
+                </div>
+                <div class="relative z-10 hidden md:block">
+                    <a href="{{ route('kabid.laporan') }}?kondisi=Berat" class="px-6 py-4 bg-white text-rose-600 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-rose-50 transition-colors shadow-lg flex items-center gap-3">
+                        Tinjau Sekarang <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            @endif
+
             <!-- Welcome Section -->
             <div class="relative bg-navy-900 rounded-[3rem] p-10 overflow-hidden shadow-2xl shadow-navy-900/20">
                 <div class="absolute -right-20 -top-20 w-80 h-80 bg-gold-500/20 rounded-full blur-[100px]"></div>
@@ -70,47 +96,47 @@
 
                 <!-- Stats Bar -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-10">
-                    <div class="bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 group hover:bg-white/10 transition-all border-l-gold-500/50 border-l-4">
+                    <div class="bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 group hover:bg-white/10 transition-all border-l-gold-400/50 border-l-4">
                         <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-gold-500/20 rounded-2xl flex items-center justify-center text-gold-400">
+                            <div class="w-12 h-12 bg-gold-400/20 rounded-2xl flex items-center justify-center text-gold-400">
                                 <i class="fas fa-database text-lg"></i>
                             </div>
                             <div>
-                                <p class="text-[10px] font-black text-gold-300 uppercase tracking-widest">Total Terdata</p>
-                                <h3 class="text-2xl font-black text-white">{{ $totalInfrastruktur }} <span class="text-[10px] font-bold text-gold-300/50 italic ml-1">Objek</span></h3>
+                                <p class="text-[10px] font-black text-gold-400 uppercase tracking-widest">Total Terdata</p>
+                                <h3 class="text-2xl font-black text-white">{{ $totalInfrastruktur ?? 0 }} <span class="text-[10px] font-bold text-gold-400/50 italic ml-1">Objek</span></h3>
                             </div>
                         </div>
                     </div>
-                    <div class="bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 group hover:bg-white/10 transition-all border-l-[#be123c]/50 border-l-4">
+                    <div class="bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 group hover:bg-white/10 transition-all border-l-rose-400/50 border-l-4">
                         <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-[#be123c]/20 rounded-2xl flex items-center justify-center text-[#be123c]">
+                            <div class="w-12 h-12 bg-rose-400/20 rounded-2xl flex items-center justify-center text-rose-400">
                                 <i class="fas fa-triangle-exclamation text-lg"></i>
                             </div>
                             <div>
-                                <p class="text-[10px] font-black text-[#be123c] uppercase tracking-widest">Rusak Berat</p>
-                                <h3 class="text-2xl font-black text-white">{{ $totalRusakBerat }} <span class="text-[10px] font-bold text-[#be123c]/50 italic ml-1">Lokasi</span></h3>
+                                <p class="text-[10px] font-black text-rose-400 uppercase tracking-widest">Rusak Berat</p>
+                                <h3 class="text-2xl font-black text-white">{{ $totalRusakBerat ?? 0 }} <span class="text-[10px] font-bold text-rose-400/50 italic ml-1">Lokasi</span></h3>
                             </div>
                         </div>
                     </div>
-                    <div class="bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 group hover:bg-white/10 transition-all border-l-[#d97706]/50 border-l-4">
+                    <div class="bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 group hover:bg-white/10 transition-all border-l-amber-400/50 border-l-4">
                         <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-[#d97706]/20 rounded-2xl flex items-center justify-center text-[#d97706]">
+                            <div class="w-12 h-12 bg-amber-400/20 rounded-2xl flex items-center justify-center text-amber-400">
                                 <i class="fas fa-clipboard-check text-lg"></i>
                             </div>
                             <div>
-                                <p class="text-[10px] font-black text-[#d97706] uppercase tracking-widest">Antrean Validasi</p>
-                                <h3 class="text-2xl font-black text-white">{{ $totalPending }} <span class="text-[10px] font-bold text-[#d97706]/50 italic ml-1">Laporan</span></h3>
+                                <p class="text-[10px] font-black text-amber-400 uppercase tracking-widest">Antrean Validasi</p>
+                                <h3 class="text-2xl font-black text-white">{{ $totalPending ?? 0 }} <span class="text-[10px] font-bold text-amber-400/50 italic ml-1">Laporan</span></h3>
                             </div>
                         </div>
                     </div>
-                    <div class="bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 group hover:bg-white/10 transition-all border-l-blue-500/50 border-l-4">
+                    <div class="bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 group hover:bg-white/10 transition-all border-l-blue-300/50 border-l-4">
                         <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-blue-500/20 rounded-2xl flex items-center justify-center text-blue-400">
+                            <div class="w-12 h-12 bg-blue-400/20 rounded-2xl flex items-center justify-center text-blue-300">
                                 <i class="fas fa-tools text-lg"></i>
                             </div>
                             <div>
-                                <p class="text-[10px] font-black text-blue-400 uppercase tracking-widest">Dalam Perbaikan</p>
-                                <h3 class="text-2xl font-black text-white">{{ $totalPerbaikan }} <span class="text-[10px] font-bold text-blue-400/50 italic ml-1">Proyek</span></h3>
+                                <p class="text-[10px] font-black text-blue-300 uppercase tracking-widest">Dalam Perbaikan</p>
+                                <h3 class="text-2xl font-black text-white">{{ $totalPerbaikan ?? 0 }} <span class="text-[10px] font-bold text-blue-300/50 italic ml-1">Proyek</span></h3>
                             </div>
                         </div>
                     </div>
@@ -127,7 +153,7 @@
                         </div>
                         <div>
                             <h4 class="font-black text-navy-900 text-sm uppercase tracking-tight mb-2">Monitoring Peta Sebaran</h4>
-                            <p class="text-[10px] text-slate-400 font-medium leading-relaxed">Pantau persebaran infrastruktur di seluruh wilayah Banjarmasin secara real-time.</p>
+                            <p class="text-[10px] text-slate-500 font-bold leading-relaxed">Pantau persebaran infrastruktur di seluruh wilayah Banjarmasin secara real-time.</p>
                         </div>
                     </div>
                 </a>
@@ -136,11 +162,11 @@
                     <div class="absolute -right-6 -top-6 w-24 h-24 bg-gold-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
                     <div class="relative z-10 flex flex-col h-full justify-between gap-6">
                         <div class="w-14 h-14 bg-gold-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-gold-200">
-                            <i class="fas fa-file-circle-check text-xl"></i>
+                            <i class="fas fa-clipboard-check text-xl"></i>
                         </div>
                         <div>
                             <h4 class="font-black text-navy-900 text-sm uppercase tracking-tight mb-2">Validasi Usulan Perbaikan</h4>
-                            <p class="text-[10px] text-slate-400 font-medium leading-relaxed">Tinjau dan beri persetujuan pada laporan kerusakan dari surveyor lapangan.</p>
+                            <p class="text-[10px] text-slate-500 font-bold leading-relaxed">Tinjau dan beri persetujuan pada laporan kerusakan dari surveyor lapangan.</p>
                         </div>
                     </div>
                 </a>
@@ -153,7 +179,7 @@
                         </div>
                         <div>
                             <h4 class="font-black text-navy-900 text-sm uppercase tracking-tight mb-2">Statistik Laporan</h4>
-                            <p class="text-[10px] text-slate-400 font-medium leading-relaxed">Lihat tren kondisi infrastruktur dan capaian perbaikan dalam satu tahun terakhir.</p>
+                            <p class="text-[10px] text-slate-500 font-bold leading-relaxed">Lihat tren kondisi infrastruktur dan capaian perbaikan dalam satu tahun terakhir.</p>
                         </div>
                     </div>
                 </a>
@@ -166,7 +192,7 @@
                         </div>
                         <div>
                             <h4 class="font-black text-navy-900 text-sm uppercase tracking-tight mb-2">Cetak Laporan Resmi PDF</h4>
-                            <p class="text-[10px] text-slate-400 font-medium leading-relaxed">Ekspor ringkasan data pengawasan menjadi dokumen resmi siap cetak.</p>
+                            <p class="text-[10px] text-slate-500 font-bold leading-relaxed">Ekspor ringkasan data pengawasan menjadi dokumen resmi siap cetak.</p>
                         </div>
                     </div>
                 </a>
@@ -178,7 +204,10 @@
     <script>
         function updateClock() {
             const now = new Date();
-            document.getElementById('mini-clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WITA`;
+            const options = { timeZone: 'Asia/Makassar', hour: '2-digit', minute: '2-digit', hour12: false };
+            const timeString = new Intl.DateTimeFormat('id-ID', options).format(now);
+            const el = document.getElementById('mini-clock');
+            if (el) el.textContent = timeString.replace('.', ':') + ' WITA';
         }
         setInterval(updateClock, 1000); updateClock();
     </script>

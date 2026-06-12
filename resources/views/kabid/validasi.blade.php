@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Validasi Usulan | GEO-SINFRA</title>
+    <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -82,47 +83,62 @@
             <!-- STATS SUMMARY CARDS -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Menunggu -->
-                <div class="bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm relative overflow-hidden group">
-                    <div class="absolute -right-4 -top-4 w-20 h-20 bg-amber-500/5 rounded-full blur-2xl group-hover:bg-amber-500/10 transition-all"></div>
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-10 h-10 bg-amber-50 text-amber-500 rounded-xl flex items-center justify-center border border-amber-100">
-                            <i class="fas fa-clock text-xs"></i>
-                        </div>
-                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Menunggu</p>
+                <div class="bg-gradient-to-br from-amber-500 to-orange-600 p-6 rounded-[2.5rem] shadow-lg shadow-amber-500/30 relative overflow-hidden group border border-amber-400/50">
+                    <div class="absolute -right-4 -top-4 w-32 h-32 bg-white/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
+                    <div class="absolute right-4 bottom-4 text-white/10 group-hover:scale-110 transition-transform duration-500">
+                        <i class="fas fa-clock text-6xl"></i>
                     </div>
-                    <div class="flex items-end gap-2">
-                        <h3 class="text-3xl font-black text-navy-900">{{ $counts['pending'] }}</h3>
-                        <span class="text-[9px] font-bold text-amber-500 mb-1.5 uppercase">Usulan</span>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-10 h-10 bg-white/20 backdrop-blur-sm text-white rounded-xl flex items-center justify-center border border-white/30 shadow-inner">
+                                <i class="fas fa-clock text-sm"></i>
+                            </div>
+                            <p class="text-[10px] font-black text-white/90 uppercase tracking-widest drop-shadow-sm">Menunggu Validasi</p>
+                        </div>
+                        <div class="flex items-end gap-2">
+                            <h3 class="text-4xl font-black text-white leading-none drop-shadow-md">{{ $counts['pending'] }}</h3>
+                            <span class="text-[10px] font-bold text-amber-100 mb-1 uppercase tracking-wider">Usulan</span>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Diterima -->
-                <div class="bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm relative overflow-hidden group">
-                    <div class="absolute -right-4 -top-4 w-20 h-20 bg-[#059669]/5 rounded-full blur-2xl group-hover:bg-[#059669]/10 transition-all"></div>
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-10 h-10 bg-emerald-50 text-[#059669] rounded-xl flex items-center justify-center border border-emerald-100">
-                            <i class="fas fa-check-double text-xs"></i>
-                        </div>
-                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Diterima</p>
+                <div class="bg-gradient-to-br from-[#059669] to-emerald-700 p-6 rounded-[2.5rem] shadow-lg shadow-[#059669]/30 relative overflow-hidden group border border-[#059669]/50">
+                    <div class="absolute -right-4 -top-4 w-32 h-32 bg-white/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
+                    <div class="absolute right-4 bottom-4 text-white/10 group-hover:scale-110 transition-transform duration-500">
+                        <i class="fas fa-check-double text-6xl"></i>
                     </div>
-                    <div class="flex items-end gap-2">
-                        <h3 class="text-3xl font-black text-navy-900">{{ $counts['verified'] }}</h3>
-                        <span class="text-[9px] font-bold text-[#059669] mb-1.5 uppercase">Verified</span>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-10 h-10 bg-white/20 backdrop-blur-sm text-white rounded-xl flex items-center justify-center border border-white/30 shadow-inner">
+                                <i class="fas fa-check-double text-sm"></i>
+                            </div>
+                            <p class="text-[10px] font-black text-white/90 uppercase tracking-widest drop-shadow-sm">Telah Diterima</p>
+                        </div>
+                        <div class="flex items-end gap-2">
+                            <h3 class="text-4xl font-black text-white leading-none drop-shadow-md">{{ $counts['verified'] }}</h3>
+                            <span class="text-[10px] font-bold text-emerald-100 mb-1 uppercase tracking-wider">Verified</span>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Ditolak -->
-                <div class="bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm relative overflow-hidden group">
-                    <div class="absolute -right-4 -top-4 w-20 h-20 bg-rose-500/5 rounded-full blur-2xl group-hover:bg-rose-500/10 transition-all"></div>
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-10 h-10 bg-rose-50 text-rose-500 rounded-xl flex items-center justify-center border border-rose-100">
-                            <i class="fas fa-times-circle text-xs"></i>
-                        </div>
-                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Ditolak</p>
+                <div class="bg-gradient-to-br from-rose-500 to-red-600 p-6 rounded-[2.5rem] shadow-lg shadow-rose-500/30 relative overflow-hidden group border border-rose-400/50">
+                    <div class="absolute -right-4 -top-4 w-32 h-32 bg-white/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
+                    <div class="absolute right-4 bottom-4 text-white/10 group-hover:scale-110 transition-transform duration-500">
+                        <i class="fas fa-times-circle text-6xl"></i>
                     </div>
-                    <div class="flex items-end gap-2">
-                        <h3 class="text-3xl font-black text-navy-900">{{ $counts['rejected'] }}</h3>
-                        <span class="text-[9px] font-bold text-rose-500 mb-1.5 uppercase">Rejected</span>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-10 h-10 bg-white/20 backdrop-blur-sm text-white rounded-xl flex items-center justify-center border border-white/30 shadow-inner">
+                                <i class="fas fa-times-circle text-sm"></i>
+                            </div>
+                            <p class="text-[10px] font-black text-white/90 uppercase tracking-widest drop-shadow-sm">Ditolak / Perbaikan</p>
+                        </div>
+                        <div class="flex items-end gap-2">
+                            <h3 class="text-4xl font-black text-white leading-none drop-shadow-md">{{ $counts['rejected'] }}</h3>
+                            <span class="text-[10px] font-bold text-rose-100 mb-1 uppercase tracking-wider">Rejected</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -149,6 +165,15 @@
                         </form>
                     </div>
                 </div>
+                
+                <!-- FILTER TABS -->
+                <div class="px-8 py-3 bg-slate-50/50 border-b border-slate-100 flex flex-wrap gap-2">
+                    <a href="{{ route('kabid.validasi') }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ !request('status') ? 'bg-navy-900 text-white shadow-md' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200' }}">Semua Antrean</a>
+                    <a href="{{ route('kabid.validasi', ['status' => 'Pending']) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ request('status') == 'Pending' ? 'bg-amber-500 text-white shadow-md shadow-amber-500/20' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200' }}">Menunggu (Pending)</a>
+                    <a href="{{ route('kabid.validasi', ['status' => 'Validated']) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ request('status') == 'Validated' ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200' }}">Disetujui (Validated)</a>
+                    <a href="{{ route('kabid.validasi', ['status' => 'Rejected']) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ request('status') == 'Rejected' ? 'bg-rose-500 text-white shadow-md shadow-rose-500/20' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200' }}">Ditolak / Perbaikan</a>
+                </div>
+
 
                 <form id="bulkForm" action="{{ route('kabid.validasi.bulk') }}" method="POST">
                     @csrf
@@ -171,17 +196,17 @@
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
                             <thead>
-                                <tr class="text-[10px] font-black text-slate-400 uppercase tracking-widest bg-slate-50/50">
-                                    <th class="px-6 py-4 w-10 border-b border-slate-100 text-center">
+                                <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md text-[10px] font-black text-gold-500 uppercase tracking-widest">
+                                    <th class="px-6 py-4 w-10 border-b border-navy-800 text-center">
                                         <input type="checkbox" id="selectAll" class="rounded border-slate-300 text-gold-500 focus:ring-gold-500 cursor-pointer w-4 h-4">
                                     </th>
-                                    <th class="px-2 py-4 w-12 border-b border-slate-100">No</th>
-                                <th class="px-6 py-4 border-b border-slate-100">Infrastruktur</th>
-                                <th class="px-6 py-4 border-b border-slate-100">Wilayah</th>
-                                <th class="px-6 py-4 border-b border-slate-100">Surveyor</th>
-                                <th class="px-6 py-4 border-b border-slate-100">Analisis AI</th>
-                                <th class="px-6 py-4 border-b border-slate-100">Status Validasi</th>
-                                <th class="px-6 py-4 text-center border-b border-slate-100">Aksi</th>
+                                    <th class="px-2 py-4 w-12 border-b border-navy-800">No</th>
+                                <th class="px-6 py-4 border-b border-navy-800">Infrastruktur</th>
+                                <th class="px-6 py-4 border-b border-navy-800">Wilayah</th>
+                                <th class="px-6 py-4 border-b border-navy-800">Surveyor</th>
+                                <th class="px-6 py-4 border-b border-navy-800">Status Kondisi</th>
+                                <th class="px-6 py-4 border-b border-navy-800">Status Validasi</th>
+                                <th class="px-6 py-4 text-center border-b border-navy-800">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-50">
@@ -245,7 +270,7 @@
                                         </span>
                                         @if($aiScore !== null)
                                             <span class="text-[8px] font-bold text-slate-400 uppercase flex items-center gap-1.5 tracking-widest mt-1">
-                                                <i class="fas fa-robot text-gold-500"></i> AI Score: {{ number_format($aiScore, 1) }}%
+                                                <i class="fas fa-chart-bar text-gold-500"></i> Skor Prioritas: {{ number_format($aiScore, 1) }}%
                                             </span>
                                         @endif
                                     </div>
@@ -280,7 +305,7 @@
 
                                         {{-- ACC --}}
                                         @if($item->status_validasi == 'Pending')
-                                            <form action="{{ route('kabid.validasi.proses', $item->id_infrastruktur) }}" method="POST" class="flex-1">
+                                            <form action="{{ route('kabid.validasi.proses', $item->id_infrastruktur) }}" method="POST" class="flex-1" onsubmit="return promptCatatan(event, this, 'Validated')">
                                                 @csrf
                                                 <input type="hidden" name="status" value="Validated">
                                                 <button type="submit" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-[#059669] text-white rounded-xl hover:bg-[#047857] transition-all shadow-lg shadow-[#059669]/20 group border border-[#059669]" title="Setujui Validasi">
@@ -290,7 +315,7 @@
                                             </form>
                                             
                                             {{-- Tolak --}}
-                                            <form action="{{ route('kabid.validasi.proses', $item->id_infrastruktur) }}" method="POST" class="flex-1" onsubmit="return promptPenolakan(event, this)">
+                                            <form action="{{ route('kabid.validasi.proses', $item->id_infrastruktur) }}" method="POST" class="flex-1" onsubmit="return promptCatatan(event, this, 'Rejected')">
                                                 @csrf
                                                 <input type="hidden" name="status" value="Rejected">
                                                 <button type="submit" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-500 hover:text-white transition-all border border-rose-200 shadow-sm group" title="Tolak Validasi">
@@ -340,7 +365,10 @@
     <script>
         function updateClock() {
             const now = new Date();
-            document.getElementById('mini-clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WITA`;
+            const options = { timeZone: 'Asia/Makassar', hour: '2-digit', minute: '2-digit', hour12: false };
+            const timeString = new Intl.DateTimeFormat('id-ID', options).format(now);
+            const el = document.getElementById('mini-clock');
+            if (el) el.textContent = timeString.replace('.', ':') + ' WITA';
         }
         setInterval(updateClock, 1000); updateClock();
 
@@ -377,27 +405,41 @@
         });
 
         function submitBulk(status) {
+            let alasan = '';
             if (status === 'Rejected') {
-                const alasan = prompt('Masukkan alasan penolakan untuk data yang dipilih:');
-                if (alasan === null) return; // User cancelled
-                
-                const inputAlasan = document.createElement('input');
-                inputAlasan.type = 'hidden';
-                inputAlasan.name = 'alasan_penolakan';
-                inputAlasan.value = alasan;
-                document.getElementById('bulkForm').appendChild(inputAlasan);
+                alasan = prompt('Masukkan alasan penolakan untuk data yang dipilih (Wajib):');
+                if (alasan === null || alasan.trim() === '') {
+                    alert('Alasan penolakan wajib diisi!');
+                    return;
+                }
             } else {
-                if (!confirm('Anda yakin ingin MENYETUJUI data yang dipilih?')) return;
+                alasan = prompt('Masukkan catatan persetujuan (Opsional, kosongkan jika tidak ada):');
+                if (alasan === null) return; // User cancelled
             }
+            
+            const inputAlasan = document.createElement('input');
+            inputAlasan.type = 'hidden';
+            inputAlasan.name = 'alasan_penolakan';
+            inputAlasan.value = alasan;
+            document.getElementById('bulkForm').appendChild(inputAlasan);
             
             document.getElementById('bulkStatus').value = status;
             document.getElementById('bulkForm').submit();
         }
 
-        function promptPenolakan(e, form) {
+        function promptCatatan(e, form, status) {
             e.preventDefault();
-            const alasan = prompt('Masukkan alasan penolakan:');
-            if (alasan === null) return false;
+            let alasan = '';
+            if (status === 'Rejected') {
+                alasan = prompt('Masukkan alasan penolakan (Wajib):');
+                if (alasan === null || alasan.trim() === '') {
+                    alert('Alasan penolakan wajib diisi!');
+                    return false;
+                }
+            } else {
+                alasan = prompt('Masukkan catatan persetujuan (Opsional, kosongkan jika tidak ada):');
+                if (alasan === null) return false;
+            }
             
             const inputAlasan = document.createElement('input');
             inputAlasan.type = 'hidden';
