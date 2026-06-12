@@ -72,9 +72,11 @@ class KabidController extends Controller
             ->where('status_verifikasi', 'Verified')
             ->orderBy('created_at', 'desc');
             
-        // Filter by Status Validasi
-        if ($request->has('status') && in_array($request->status, ['Pending', 'Validated', 'Rejected'])) {
-            $query->where('status_validasi', $request->status);
+        // Default to Pending if no status filter is explicitly selected
+        $statusFilter = $request->get('status', 'Pending');
+        
+        if ($statusFilter !== 'All') {
+            $query->where('status_validasi', $statusFilter);
         }
 
         if ($request->get('show') == 'all') {
@@ -104,8 +106,8 @@ class KabidController extends Controller
         $infra->alasan_penolakan = $request->alasan_penolakan; // Disimpan sebagai catatan (baik diterima/ditolak)
         $infra->save();
 
-        $message = $request->status == 'Validated' ? 'Data berhasil divalidasi!' : 'Data telah ditolak.';
-        return redirect()->back()->with('success', $message);
+        $message = $request->status == 'Validated' ? 'Data berhasil divalidasi dan dipindahkan ke tab Disetujui!' : 'Data telah ditolak dan dipindahkan ke tab Ditolak!';
+        return redirect()->route('kabid.validasi', ['status' => $request->status])->with('success', $message);
     }
 
     public function bulkValidasi(Request $request)
@@ -126,10 +128,10 @@ class KabidController extends Controller
             ->update($updateData);
 
         $message = $request->status == 'Validated' 
-            ? count($request->ids) . ' Data berhasil divalidasi!' 
-            : count($request->ids) . ' Data telah ditolak.';
+            ? count($request->ids) . ' Data berhasil divalidasi dan dipindahkan ke tab Disetujui!' 
+            : count($request->ids) . ' Data telah ditolak dan dipindahkan ke tab Ditolak!';
             
-        return redirect()->back()->with('success', $message);
+        return redirect()->route('kabid.validasi', ['status' => $request->status])->with('success', $message);
     }
 
     public function updateStatusPerbaikan(Request $request, $id)

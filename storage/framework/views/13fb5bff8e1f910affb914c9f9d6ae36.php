@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Validasi Usulan | GEO-SINFRA</title>
-    <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
+    <link rel="icon" href="<?php echo e(asset('logo_geo-sinfra.png')); ?>" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -33,13 +33,13 @@
 </head>
 <body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800 text-left">
 
-    @include('kabid.partials.sidebar')
+    <?php echo $__env->make('kabid.partials.sidebar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
     <main class="flex-1 flex flex-col h-screen overflow-y-auto custom-scrollbar">
         <!-- HEADER -->
         <header class="bg-white border-b border-slate-100 px-8 py-5 flex justify-between items-center z-10 sticky top-0">
             <div class="flex items-center gap-4">
-                <a href="{{ route('kabid.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100">
+                <a href="<?php echo e(route('kabid.dashboard')); ?>" class="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
@@ -51,20 +51,20 @@
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
                     <p class="text-[11px] font-black text-navy-900" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter"><?php echo e(now()->translatedFormat('l, d F Y')); ?></p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
                     <div class="text-right">
-                        <p class="text-[11px] font-black text-navy-900 leading-none uppercase">{{ auth()->user()->name }}</p>
+                        <p class="text-[11px] font-black text-navy-900 leading-none uppercase"><?php echo e(auth()->user()->name); ?></p>
                         <p class="text-[9px] font-bold text-[#059669] uppercase mt-1 leading-none">ONLINE</p>
                     </div>
                     <div class="w-10 h-10 bg-navy-50 rounded-xl flex items-center justify-center text-navy-900 border border-navy-100 overflow-hidden shadow-sm">
-                        @if(auth()->user()->profile_photo)
-                            <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
-                        @else
+                        <?php if(auth()->user()->profile_photo): ?>
+                            <img src="<?php echo e(asset('storage/' . auth()->user()->profile_photo)); ?>" class="w-full h-full object-cover">
+                        <?php else: ?>
                             <i class="fas fa-user-tie text-xl"></i>
-                        @endif
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -73,12 +73,12 @@
         <!-- MAIN CONTENT -->
         <div class="p-8 space-y-8">
             
-            @if(session('success'))
+            <?php if(session('success')): ?>
                 <div class="p-4 bg-emerald-50 border border-emerald-100 rounded-2xl flex items-center gap-3 text-emerald-600 shadow-sm animate-pulse">
                     <i class="fas fa-check-circle"></i>
-                    <p class="text-sm font-bold">{{ session('success') }}</p>
+                    <p class="text-sm font-bold"><?php echo e(session('success')); ?></p>
                 </div>
-            @endif
+            <?php endif; ?>
 
             <!-- STATS SUMMARY CARDS -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -96,7 +96,7 @@
                             <p class="text-[10px] font-black text-white/90 uppercase tracking-widest drop-shadow-sm">Menunggu Validasi</p>
                         </div>
                         <div class="flex items-end gap-2">
-                            <h3 class="text-4xl font-black text-white leading-none drop-shadow-md">{{ $counts['pending'] }}</h3>
+                            <h3 class="text-4xl font-black text-white leading-none drop-shadow-md"><?php echo e($counts['pending']); ?></h3>
                             <span class="text-[10px] font-bold text-amber-100 mb-1 uppercase tracking-wider">Usulan</span>
                         </div>
                     </div>
@@ -116,7 +116,7 @@
                             <p class="text-[10px] font-black text-white/90 uppercase tracking-widest drop-shadow-sm">Telah Diterima</p>
                         </div>
                         <div class="flex items-end gap-2">
-                            <h3 class="text-4xl font-black text-white leading-none drop-shadow-md">{{ $counts['verified'] }}</h3>
+                            <h3 class="text-4xl font-black text-white leading-none drop-shadow-md"><?php echo e($counts['verified']); ?></h3>
                             <span class="text-[10px] font-bold text-emerald-100 mb-1 uppercase tracking-wider">Verified</span>
                         </div>
                     </div>
@@ -136,7 +136,7 @@
                             <p class="text-[10px] font-black text-white/90 uppercase tracking-widest drop-shadow-sm">Ditolak / Perbaikan</p>
                         </div>
                         <div class="flex items-end gap-2">
-                            <h3 class="text-4xl font-black text-white leading-none drop-shadow-md">{{ $counts['rejected'] }}</h3>
+                            <h3 class="text-4xl font-black text-white leading-none drop-shadow-md"><?php echo e($counts['rejected']); ?></h3>
                             <span class="text-[10px] font-bold text-rose-100 mb-1 uppercase tracking-wider">Rejected</span>
                         </div>
                     </div>
@@ -156,11 +156,11 @@
                         </div>
                     </div>
                     <div>
-                        <form action="{{ route('kabid.validasi') }}" method="GET" class="flex items-center gap-2">
+                        <form action="<?php echo e(route('kabid.validasi')); ?>" method="GET" class="flex items-center gap-2">
                             <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Tampilan:</label>
                             <select name="show" onchange="this.form.submit()" class="text-xs font-bold text-navy-900 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all shadow-sm">
-                                <option value="10" {{ request('show') != 'all' ? 'selected' : '' }}>10 Baris</option>
-                                <option value="all" {{ request('show') == 'all' ? 'selected' : '' }}>Semua Data</option>
+                                <option value="10" <?php echo e(request('show') != 'all' ? 'selected' : ''); ?>>10 Baris</option>
+                                <option value="all" <?php echo e(request('show') == 'all' ? 'selected' : ''); ?>>Semua Data</option>
                             </select>
                         </form>
                     </div>
@@ -168,16 +168,16 @@
                 
                 <!-- FILTER TABS -->
                 <div class="px-8 py-3 bg-slate-50/50 border-b border-slate-100 flex flex-wrap gap-2">
-                    @php $currentStatus = request('status', 'Pending'); @endphp
-                    <a href="{{ route('kabid.validasi', ['status' => 'All']) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $currentStatus == 'All' ? 'bg-navy-900 text-white shadow-md' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200' }}">Semua Antrean</a>
-                    <a href="{{ route('kabid.validasi', ['status' => 'Pending']) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $currentStatus == 'Pending' ? 'bg-amber-500 text-white shadow-md shadow-amber-500/20' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200' }}">Menunggu (Pending)</a>
-                    <a href="{{ route('kabid.validasi', ['status' => 'Validated']) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $currentStatus == 'Validated' ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200' }}">Disetujui (Validated)</a>
-                    <a href="{{ route('kabid.validasi', ['status' => 'Rejected']) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $currentStatus == 'Rejected' ? 'bg-rose-500 text-white shadow-md shadow-rose-500/20' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200' }}">Ditolak / Perbaikan</a>
+                    <?php $currentStatus = request('status', 'Pending'); ?>
+                    <a href="<?php echo e(route('kabid.validasi', ['status' => 'All'])); ?>" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all <?php echo e($currentStatus == 'All' ? 'bg-navy-900 text-white shadow-md' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200'); ?>">Semua Antrean</a>
+                    <a href="<?php echo e(route('kabid.validasi', ['status' => 'Pending'])); ?>" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all <?php echo e($currentStatus == 'Pending' ? 'bg-amber-500 text-white shadow-md shadow-amber-500/20' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200'); ?>">Menunggu (Pending)</a>
+                    <a href="<?php echo e(route('kabid.validasi', ['status' => 'Validated'])); ?>" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all <?php echo e($currentStatus == 'Validated' ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200'); ?>">Disetujui (Validated)</a>
+                    <a href="<?php echo e(route('kabid.validasi', ['status' => 'Rejected'])); ?>" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all <?php echo e($currentStatus == 'Rejected' ? 'bg-rose-500 text-white shadow-md shadow-rose-500/20' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200'); ?>">Ditolak / Perbaikan</a>
                 </div>
 
 
-                <form id="bulkForm" action="{{ route('kabid.validasi.bulk') }}" method="POST">
-                    @csrf
+                <form id="bulkForm" action="<?php echo e(route('kabid.validasi.bulk')); ?>" method="POST">
+                    <?php echo csrf_field(); ?>
                     <input type="hidden" name="status" id="bulkStatus" value="">
                     
                     <div id="bulkActionBar" class="px-8 py-3 bg-indigo-50 border-b border-indigo-100 flex items-center gap-4 transition-all duration-300 hidden">
@@ -211,48 +211,50 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-50">
-                            @forelse($allUsulan as $index => $item)
+                            <?php $__empty_1 = true; $__currentLoopData = $allUsulan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tr class="hover:bg-slate-50/50 transition-colors group">
                                 <td class="px-6 py-5 text-center">
-                                    @if($item->status_validasi == 'Pending')
-                                        <input type="checkbox" name="ids[]" value="{{ $item->id_infrastruktur }}" class="row-checkbox rounded border-slate-300 text-gold-500 focus:ring-gold-500 cursor-pointer w-4 h-4">
-                                    @else
+                                    <?php if($item->status_validasi == 'Pending'): ?>
+                                        <input type="checkbox" name="ids[]" value="<?php echo e($item->id_infrastruktur); ?>" class="row-checkbox rounded border-slate-300 text-gold-500 focus:ring-gold-500 cursor-pointer w-4 h-4">
+                                    <?php else: ?>
                                         <input type="checkbox" disabled class="rounded border-slate-200 bg-slate-50 cursor-not-allowed opacity-50 w-4 h-4">
-                                    @endif
+                                    <?php endif; ?>
                                 </td>
                                 <td class="px-2 py-5 whitespace-nowrap text-xs font-black text-slate-300">
-                                    {{ request('show') == 'all' ? sprintf('%02d', $index + 1) : sprintf('%02d', ($allUsulan->currentPage() - 1) * $allUsulan->perPage() + $index + 1) }}
+                                    <?php echo e(request('show') == 'all' ? sprintf('%02d', $index + 1) : sprintf('%02d', ($allUsulan->currentPage() - 1) * $allUsulan->perPage() + $index + 1)); ?>
+
                                 </td>
                                 <td class="px-6 py-5 min-w-[280px]">
                                     <div class="flex items-center gap-4">
                                         <div class="w-12 h-12 rounded-2xl bg-slate-100 overflow-hidden shadow-inner border border-white flex-shrink-0 flex items-center justify-center relative">
-                                            @if($item->foto_terbaru)
-                                                <img src="{{ asset('storage/' . $item->foto_terbaru) }}" class="w-full h-full object-cover">
-                                            @else
+                                            <?php if($item->foto_terbaru): ?>
+                                                <img src="<?php echo e(asset('storage/' . $item->foto_terbaru)); ?>" class="w-full h-full object-cover">
+                                            <?php else: ?>
                                                 <i class="fas fa-image text-slate-300"></i>
-                                            @endif
+                                            <?php endif; ?>
                                         </div>
                                         <div>
-                                            <h4 class="text-[13px] font-black text-navy-900 leading-tight mb-0.5">{{ $item->nama_objek }}</h4>
-                                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">{{ $item->jenis }}</p>
+                                            <h4 class="text-[13px] font-black text-navy-900 leading-tight mb-0.5"><?php echo e($item->nama_objek); ?></h4>
+                                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest"><?php echo e($item->jenis); ?></p>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-6 py-5 min-w-[150px]">
-                                    <p class="text-xs font-bold text-navy-900 mb-0.5">{{ $item->kelurahan->nama_kelurahan ?? '-' }}</p>
-                                    <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest">{{ $item->kelurahan->kecamatan->nama_kecamatan ?? '-' }}</p>
+                                    <p class="text-xs font-bold text-navy-900 mb-0.5"><?php echo e($item->kelurahan->nama_kelurahan ?? '-'); ?></p>
+                                    <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest"><?php echo e($item->kelurahan->kecamatan->nama_kecamatan ?? '-'); ?></p>
                                 </td>
                                 <td class="px-6 py-5 min-w-[150px]">
                                     <div class="flex items-center gap-3">
                                         <div class="w-8 h-8 rounded-full bg-gold-50 border border-gold-100 flex items-center justify-center text-gold-500 font-bold text-xs uppercase shadow-sm">
-                                            {{ substr($item->user->name ?? 'A', 0, 1) }}
+                                            <?php echo e(substr($item->user->name ?? 'A', 0, 1)); ?>
+
                                         </div>
-                                        <p class="text-xs font-black text-navy-900">{{ $item->user->name ?? 'Anonim' }}</p>
+                                        <p class="text-xs font-black text-navy-900"><?php echo e($item->user->name ?? 'Anonim'); ?></p>
                                     </div>
                                 </td>
                                 <td class="px-6 py-5 min-w-[150px]">
                                     <div class="flex flex-col gap-2 items-start">
-                                        @php
+                                        <?php
                                             $aiLabel = $item->analisis->label_prioritas ?? '';
                                             $aiLabelLower = strtolower($aiLabel);
                                             $aiScore = $item->analisis->skor_dt ?? null;
@@ -265,20 +267,21 @@
                                             } elseif (str_contains($aiLabelLower, 'baik')) {
                                                 $aiClass = 'bg-[#059669]/10 text-[#059669] border-[#059669]/30';
                                             }
-                                        @endphp
-                                        <span class="px-2.5 py-1 rounded-md border text-[9px] font-black uppercase tracking-widest {{ $aiClass }}">
-                                            {{ $aiLabel ?: 'Belum Dianalisis' }}
+                                        ?>
+                                        <span class="px-2.5 py-1 rounded-md border text-[9px] font-black uppercase tracking-widest <?php echo e($aiClass); ?>">
+                                            <?php echo e($aiLabel ?: 'Belum Dianalisis'); ?>
+
                                         </span>
-                                        @if($aiScore !== null)
+                                        <?php if($aiScore !== null): ?>
                                             <span class="text-[8px] font-bold text-slate-400 uppercase flex items-center gap-1.5 tracking-widest mt-1">
-                                                <i class="fas fa-chart-bar text-gold-500"></i> Skor Prioritas: {{ number_format($aiScore, 1) }}%
+                                                <i class="fas fa-chart-bar text-gold-500"></i> Skor Prioritas: <?php echo e(number_format($aiScore, 1)); ?>%
                                             </span>
-                                        @endif
+                                        <?php endif; ?>
                                     </div>
                                 </td>
                                 <td class="px-6 py-5 min-w-[140px]">
                                     <div class="flex flex-col gap-2">
-                                        @php
+                                        <?php
                                             $statusClass = match($item->status_validasi) {
                                                 'Validated' => 'bg-emerald-50 text-emerald-600 border-emerald-100',
                                                 'Rejected' => 'bg-rose-50 text-rose-600 border-rose-100',
@@ -289,25 +292,26 @@
                                                 'Rejected' => 'fa-times-circle',
                                                 default => 'fa-clock'
                                             };
-                                        @endphp
-                                        <span class="px-3 py-1.5 rounded-xl text-[9px] font-black uppercase tracking-widest border flex items-center gap-2 w-fit {{ $statusClass }}">
-                                            <i class="fas {{ $statusIcon }} text-[10px]"></i>
-                                            {{ $item->status_validasi == 'Validated' ? 'Diterima' : ($item->status_validasi == 'Rejected' ? 'Ditolak' : 'Menunggu') }}
+                                        ?>
+                                        <span class="px-3 py-1.5 rounded-xl text-[9px] font-black uppercase tracking-widest border flex items-center gap-2 w-fit <?php echo e($statusClass); ?>">
+                                            <i class="fas <?php echo e($statusIcon); ?> text-[10px]"></i>
+                                            <?php echo e($item->status_validasi == 'Validated' ? 'Diterima' : ($item->status_validasi == 'Rejected' ? 'Ditolak' : 'Menunggu')); ?>
+
                                         </span>
                                     </div>
                                 </td>
                                 <td class="px-6 py-5 min-w-[260px]">
                                     <div class="flex items-center justify-center gap-2">
-                                        {{-- Detail --}}
-                                        <a href="{{ route('kabid.infrastruktur.show', $item->id_infrastruktur) }}" class="flex items-center justify-center gap-2 px-3 py-2.5 bg-navy-50 text-navy-900 rounded-xl hover:bg-gold-500 hover:text-white transition-all border border-navy-100 shadow-sm group" title="Lihat Detail">
+                                        
+                                        <a href="<?php echo e(route('kabid.infrastruktur.show', $item->id_infrastruktur)); ?>" class="flex items-center justify-center gap-2 px-3 py-2.5 bg-navy-50 text-navy-900 rounded-xl hover:bg-gold-500 hover:text-white transition-all border border-navy-100 shadow-sm group" title="Lihat Detail">
                                             <i class="fas fa-eye text-[10px] group-hover:scale-110 transition-transform"></i>
                                             <span class="text-[9px] font-black uppercase tracking-widest hidden 2xl:block">Detail</span>
                                         </a>
 
-                                        {{-- ACC --}}
-                                        @if($item->status_validasi == 'Pending')
-                                            <form action="{{ route('kabid.validasi.proses', $item->id_infrastruktur) }}" method="POST" class="flex-1" onsubmit="return promptCatatan(event, this, 'Validated')">
-                                                @csrf
+                                        
+                                        <?php if($item->status_validasi == 'Pending'): ?>
+                                            <form action="<?php echo e(route('kabid.validasi.proses', $item->id_infrastruktur)); ?>" method="POST" class="flex-1" onsubmit="return promptCatatan(event, this, 'Validated')">
+                                                <?php echo csrf_field(); ?>
                                                 <input type="hidden" name="status" value="Validated">
                                                 <button type="submit" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-[#059669] text-white rounded-xl hover:bg-[#047857] transition-all shadow-lg shadow-[#059669]/20 group border border-[#059669]" title="Setujui Validasi">
                                                     <i class="fas fa-check text-[10px] group-hover:scale-110 transition-transform"></i>
@@ -315,16 +319,16 @@
                                                 </button>
                                             </form>
                                             
-                                            {{-- Tolak --}}
-                                            <form action="{{ route('kabid.validasi.proses', $item->id_infrastruktur) }}" method="POST" class="flex-1" onsubmit="return promptCatatan(event, this, 'Rejected')">
-                                                @csrf
+                                            
+                                            <form action="<?php echo e(route('kabid.validasi.proses', $item->id_infrastruktur)); ?>" method="POST" class="flex-1" onsubmit="return promptCatatan(event, this, 'Rejected')">
+                                                <?php echo csrf_field(); ?>
                                                 <input type="hidden" name="status" value="Rejected">
                                                 <button type="submit" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-500 hover:text-white transition-all border border-rose-200 shadow-sm group" title="Tolak Validasi">
                                                     <i class="fas fa-times text-[10px] group-hover:scale-110 transition-transform"></i>
                                                     <span class="text-[9px] font-black uppercase tracking-widest">Tolak</span>
                                                 </button>
                                             </form>
-                                        @else
+                                        <?php else: ?>
                                             <button disabled class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 bg-slate-50 text-slate-300 rounded-xl border border-slate-100 cursor-not-allowed">
                                                 <i class="fas fa-check text-[10px]"></i>
                                                 <span class="text-[9px] font-black uppercase tracking-widest">ACC</span>
@@ -333,11 +337,11 @@
                                                 <i class="fas fa-times text-[10px]"></i>
                                                 <span class="text-[9px] font-black uppercase tracking-widest">Tolak</span>
                                             </button>
-                                        @endif
+                                        <?php endif; ?>
                                     </div>
                                 </td>
                             </tr>
-                            @empty
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <tr>
                                 <td colspan="7" class="px-8 py-20 text-center">
                                     <div class="flex flex-col items-center gap-3">
@@ -348,17 +352,18 @@
                                     </div>
                                 </td>
                             </tr>
-                            @endforelse
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
                 </form>
 
-                @if(request('show') != 'all')
+                <?php if(request('show') != 'all'): ?>
                     <div class="px-8 py-4 border-t border-slate-50 bg-slate-50/10">
-                        {{ $allUsulan->links() }}
+                        <?php echo e($allUsulan->links()); ?>
+
                     </div>
-                @endif
+                <?php endif; ?>
             </div>
 
          </main>
@@ -453,3 +458,4 @@
     </script>
 </body>
 </html>
+<?php /**PATH C:\laragon1\laragon\www\geo-sinfra\resources\views/kabid/validasi.blade.php ENDPATH**/ ?>
