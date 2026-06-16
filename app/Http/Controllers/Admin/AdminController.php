@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Infrastruktur;
+use App\Models\LaporanWarga;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -88,7 +89,8 @@ class AdminController extends Controller
             'user_id' => auth()->id(),
             'type' => $type,
             'description' => $description,
-            'reference_id' => $referenceId
+            'reference_id' => $referenceId,
+            'ip_address' => request()->ip()
         ]);
     }
 
@@ -312,7 +314,7 @@ class AdminController extends Controller
         if (auth()->id() == $user->id) return redirect()->route('admin.users')->with('error', 'TIDAK BISA MENGHAPUS AKUN SENDIRI.');
 
         $name = $user->name;
-        $user->delete();
+        $user->forceDelete();
 
         $this->logActivity('user', "Menghapus user: {$name}");
 
@@ -578,9 +580,15 @@ class AdminController extends Controller
             
         if (!$inf) return redirect()->route('admin.infrastruktur')->with('error', 'ASET TIDAK DITEMUKAN.');
         
-        $pdf = Pdf::loadView('admin.pdf-infrastruktur', compact('inf'));
+        $pdf = Pdf::loadView('admin.pdf-infrastruktur', compact('inf'))
+            ->setOptions([
+                'isPhpEnabled'    => true,   // izinkan @php Blade
+                'dpi'             => 150,    // kualitas gambar lebih baik
+                'defaultFont'     => 'Helvetica',
+                'defaultPaperSize' => 'a4',
+            ]);
         $pdf->setPaper('A4', 'portrait');
-        
+
         $fileName = 'Laporan_Infrastruktur_' . str_replace(' ', '_', ($inf->nama_objek ?? 'Export')) . '.pdf';
         return $pdf->download($fileName);
     }
@@ -726,6 +734,8 @@ class AdminController extends Controller
         return redirect()->route('admin.infrastruktur')->with('success', 'DATA DIPERBARUI & SKOR AI DIKALKULASI ULANG!');
     }
 
+
+
     /**
      * PROSES HAPUS DATA INFRASTRUKTUR (SINKRON DENGAN SOFTDELETES ELOQUENT)
      */
@@ -735,7 +745,7 @@ class AdminController extends Controller
         $infra = Infrastruktur::findOrFail($id);
         $nama = $infra->nama_objek ?? $infra->nama_infrastruktur;
         
-        $infra->delete(); // Otomatis mengisi deleted_at melalui Laravel system
+        $infra->forceDelete(); // Menghapus secara permanen dari database
 
         $this->logActivity('survey', "Menghapus data infrastruktur: {$nama}");
 
@@ -762,6 +772,157 @@ class AdminController extends Controller
         $this->logActivity('ai', "Sinkronisasi Masal AI: Memproses {$count} data infrastruktur.");
 
         return redirect()->route('admin.dashboard')->with('success', "BERHASIL! {$count} data infrastruktur telah dianalisis ulang oleh sistem cerdas.");
+    }
+
+    // ==========================================================
+    // MODUL MANAJEMEN LAPORAN WARGA
+    // ==========================================================
+
+    public function laporanWarga(Request $request)
+    {
+        $search = $request->query('search');
+        $status = $request->query('status');
+
+        $query = LaporanWarga::query();
+
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('nama_pelapor', 'LIKE', "%{$search}%")
+                  ->orWhere('deskripsi', 'LIKE', "%{$search}%")
+                  ->orWhere('no_hp', 'LIKE', "%{$search}%");
+            });
+        }
+
+        if ($status && $status !== 'all') {
+            $query->where('status', $status);
+        }
+
+        $laporanWarga = $query->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
+
+        return view('admin.laporan-warga', compact('laporanWarga', 'status', 'search'));
+    }
+
+    public function updateStatusLaporanWarga(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:Menunggu,Ditinjau,Selesai,Ditolak',
+        ]);
+
+        $laporan = LaporanWarga::findOrFail($id);
+        $laporan->update([
+            'status' => $request->status,
+        ]);
+
+        $this->logActivity('laporan', "Update status laporan warga dari {$laporan->nama_pelapor} menjadi {$request->status}", $id);
+
+        return redirect()->route('admin.laporan-warga')->with('success', 'STATUS LAPORAN BERHASIL DIPERBARUI!');
+    }
+
+    public function destroyLaporanWarga($id)
+    {
+        $laporan = LaporanWarga::findOrFail($id);
+        
+        // Hapus foto jika ada
+        if ($laporan->foto && Storage::disk('public')->exists($laporan->foto)) {
+            Storage::disk('public')->delete($laporan->foto);
+        }
+
+        $nama = $laporan->nama_pelapor;
+        $laporan->delete();
+
+        $this->logActivity('laporan', "Menghapus laporan warga dari: {$nama}");
+
+        return redirect()->route('admin.laporan-warga')->with('success', 'LAPORAN WARGA BERHASIL DIHAPUS.');
+    }
+
+    public function createFromLaporan($id)
+    {
+        $laporan = LaporanWarga::findOrFail($id);
+        
+        if ($laporan->id_infrastruktur) {
+            return redirect()->route('admin.laporan-warga')->with('error', 'Laporan ini sudah dikonversi menjadi aset infrastruktur.');
+        }
+
+        $semuaKecamatan = DB::table('kecamatan')->get();
+        $semuaKelurahan = DB::table('kelurahan')->get();
+        
+        return view('admin.create-from-laporan', compact('laporan', 'semuaKecamatan', 'semuaKelurahan'));
+    }
+
+    public function storeFromLaporan(Request $request, $id)
+    {
+        $laporan = LaporanWarga::findOrFail($id);
+        
+        if ($laporan->id_infrastruktur) {
+            return redirect()->route('admin.laporan-warga')->with('error', 'Laporan ini sudah dikonversi menjadi aset infrastruktur.');
+        }
+
+        $request->validate([
+            'nama_infrastruktur' => 'required|string|max:255',
+            'jenis' => 'required|string|in:jalan,titian,jembatan',
+            'id_kecamatan' => 'required|exists:kecamatan,id_kecamatan',
+            'id_kelurahan' => 'required|exists:kelurahan,id_kelurahan',
+            'latitude' => 'required|string',
+            'longitude' => 'required|string',
+            'material_eksisting' => 'required|string',
+            'panjang' => 'required|numeric',
+            'lebar' => 'required|numeric',
+            'kondisi' => 'required|string',
+        ]);
+
+        $namaFoto = 'default.jpg';
+        
+        // Salin foto dari laporan warga ke folder infrastruktur
+        if ($laporan->foto && Storage::disk('public')->exists($laporan->foto)) {
+            $fileExtension = pathinfo($laporan->foto, PATHINFO_EXTENSION);
+            $newFilename = time() . '_laporan_' . $laporan->id . '.' . $fileExtension;
+            
+            if (!Storage::disk('public')->exists('infrastruktur')) {
+                Storage::disk('public')->makeDirectory('infrastruktur');
+            }
+            
+            Storage::disk('public')->copy($laporan->foto, 'infrastruktur/' . $newFilename);
+            $namaFoto = 'infrastruktur/' . $newFilename;
+        }
+
+        $infra = Infrastruktur::create([
+            'id_user' => auth()->id(), 
+            'id_kelurahan' => $request->id_kelurahan,
+            'jenis' => strtolower($request->jenis),
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'kondisi' => $request->kondisi, 
+            'material_eksisting' => $request->material_eksisting,
+            'panjang' => $request->panjang,
+            'lebar' => $request->lebar,
+            'has_drainase' => $request->has_drainase ?? 'tidak',
+            'has_gorong_gorong' => $request->has_gorong_gorong ?? 'tidak',
+            'foto_terbaru' => $namaFoto,
+            'nama_objek' => $request->nama_infrastruktur, 
+        ]);
+
+        if ($namaFoto != 'default.jpg') {
+            $this->processCnnAnalysis($infra->id_infrastruktur, $namaFoto);
+        }
+
+        // Update laporan warga
+        $laporan->update([
+            'id_infrastruktur' => $infra->id_infrastruktur,
+            'status' => 'Diproses'
+        ]);
+
+        $this->logActivity('survey', "Konversi Laporan Warga ({$laporan->nama_pelapor}) ke Aset Baru: {$infra->nama_objek}", $infra->id_infrastruktur);
+
+        return redirect()->route('admin.infrastruktur')->with('success', 'LAPORAN WARGA BERHASIL DIKONVERSI MENJADI ASET INFRASTRUKTUR!');
+    }
+
+    public function exportPdfLaporan()
+    {
+        $laporanWarga = LaporanWarga::orderBy('created_at', 'desc')->get();
+        $this->logActivity('laporan', "Ekspor data Laporan Warga ke format PDF");
+        
+        $pdf = Pdf::loadView('admin.pdf-laporan-warga', compact('laporanWarga'))->setPaper('a4', 'landscape');
+        return $pdf->download('Laporan_Warga_SINFRA_' . date('Ymd') . '.pdf');
     }
 
     // ==========================================================

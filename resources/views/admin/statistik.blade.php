@@ -137,13 +137,10 @@
             </div>
 
             {{-- ── Grid Utama ── --}}
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-                {{-- Prediksi Prioritas (2/3) --}}
-                <div class="lg:col-span-2 space-y-6">
-
-                    {{-- Prioritas Perbaikan --}}
-                    <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-8">
+                {{-- Prioritas Perbaikan --}}
+                <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-8 flex flex-col justify-between">
                         <div class="flex items-center gap-3 mb-6">
                             <div class="w-8 h-8 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shrink-0">
                                 <i class="fas fa-chart-bar text-xs"></i>
@@ -231,59 +228,7 @@
                     </div>
                 </div>
 
-                {{-- Log Aktivitas (1/3) --}}
-                <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6 flex flex-col">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-8 h-8 bg-gold-500 rounded-xl flex items-center justify-center text-white shrink-0">
-                            <i class="fas fa-history text-xs"></i>
-                        </div>
-                        <div>
-                            <h4 class="text-sm font-black text-navy-900 uppercase tracking-wider">Log Aktivitas</h4>
-                            <p class="text-[9px] text-slate-400 font-semibold mt-0.5">10 aktivitas terbaru</p>
-                        </div>
-                    </div>
 
-                    <div class="flex-1 overflow-y-auto custom-scrollbar space-y-1 pr-1">
-                        @forelse($recentActivities as $activity)
-                        @php
-                            $typeMap = [
-                                'survey'       => ['icon'=>'fa-road',          'bg'=>'bg-emerald-100', 'text'=>'text-emerald-600', 'label'=>'Infrastruktur'],
-                                'user'         => ['icon'=>'fa-user-cog',       'bg'=>'bg-orange-100',  'text'=>'text-orange-600',  'label'=>'User'],
-                                'wilayah'      => ['icon'=>'fa-map-marked-alt', 'bg'=>'bg-navy-100',    'text'=>'text-navy-800',    'label'=>'Wilayah'],
-                                'profil'       => ['icon'=>'fa-id-card',        'bg'=>'bg-gold-100',    'text'=>'text-gold-600',    'label'=>'Profil'],
-                                'verification' => ['icon'=>'fa-check-double',   'bg'=>'bg-emerald-100', 'text'=>'text-emerald-600', 'label'=>'Verifikasi'],
-                                'ai'           => ['icon'=>'fa-brain',          'bg'=>'bg-navy-100',    'text'=>'text-navy-800',    'label'=>'AI Sync'],
-                            ];
-                            $t = $typeMap[$activity->type] ?? ['icon'=>'fa-bolt','bg'=>'bg-slate-100','text'=>'text-slate-600','label'=>'Sistem'];
-                        @endphp
-                        <div class="flex items-start gap-3 p-3 rounded-2xl hover:bg-slate-50 transition-colors group">
-                            <div class="w-8 h-8 {{ $t['bg'] }} rounded-xl flex items-center justify-center shrink-0 mt-0.5">
-                                <i class="fas {{ $t['icon'] }} text-[10px] {{ $t['text'] }}"></i>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <div class="flex items-center justify-between gap-1 mb-0.5">
-                                    <span class="text-[9px] font-black {{ $t['text'] }} uppercase tracking-wider">{{ $t['label'] }}</span>
-                                    <span class="text-[8px] text-slate-400 italic shrink-0">{{ $activity->created_at->diffForHumans() }}</span>
-                                </div>
-                                <p class="text-[10px] font-semibold text-slate-700 leading-snug truncate">{{ $activity->description }}</p>
-                                <p class="text-[9px] text-slate-400 font-bold mt-0.5 uppercase">{{ $activity->user->name ?? 'System' }}</p>
-
-                                @if($activity->type == 'survey' && $activity->reference_id)
-                                <a href="{{ route('admin.infrastruktur.show', $activity->reference_id) }}"
-                                   class="inline-flex items-center gap-1 text-[8px] font-black text-gold-500 uppercase tracking-wider mt-1 hover:text-gold-600 transition-colors">
-                                    Buka Detail <i class="fas fa-arrow-right"></i>
-                                </a>
-                                @endif
-                            </div>
-                        </div>
-                        @empty
-                        <div class="flex flex-col items-center justify-center py-16 text-center">
-                            <i class="fas fa-history text-4xl text-slate-200 mb-3"></i>
-                            <p class="text-sm font-bold text-slate-400">Belum ada aktivitas.</p>
-                        </div>
-                        @endforelse
-                    </div>
-                </div>
 
             </div>
         </div>

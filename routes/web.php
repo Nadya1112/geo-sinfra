@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\AnalisisAiController;
 use App\Http\Controllers\AIPredictController;
+use App\Http\Controllers\PublicReportController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 
@@ -16,6 +17,9 @@ use Illuminate\Support\Facades\DB;
 // ==========================================================
 // 1. HALAMAN PUBLIK (Akses Tanpa Login)
 // ==========================================================
+
+Route::view('/offline', 'offline')->name('offline');
+Route::post('/lapor-warga', [PublicReportController::class, 'store'])->name('lapor.warga')->middleware('throttle:3,1');
 
 Route::get('/', function () {
     $semuaWilayah = DB::table('kecamatan')->whereNull('deleted_at')->get();
@@ -46,11 +50,16 @@ Route::get('/', function () {
     $dataKelurahan = DB::table('kelurahan')->whereNull('deleted_at')->get();
     
     // Hitung statistik untuk Landing Page
+    $totalAktif = $dataInfrastruktur->count();
+    $totalDianalisis = $dataInfrastruktur->filter(fn($i) => !is_null($i->label_prioritas))->count();
+    // Akurasi = cakupan analisis AI (% data yang sudah teranalisis)
+    $akurasiAi = $totalAktif > 0 ? round(($totalDianalisis / $totalAktif) * 100) : 0;
+
     $stats = [
-        'total' => $dataInfrastruktur->count(),
-        'kecamatan' => $semuaWilayah->count(),
+        'total'       => $totalAktif,
+        'kecamatan'   => $semuaWilayah->count(),
         'rusak_berat' => $dataInfrastruktur->where('label_prioritas', 'Rusak Berat')->count(),
-        'akurasi_ai' => 74,
+        'akurasi_ai'  => $akurasiAi,  // dinamis — % data teranalisis AI
     ];
 
     // Sebaran Perkecamatan (Pastikan semua 5 kecamatan muncul walau data 0)
@@ -93,19 +102,27 @@ Route::get('/', function () {
 /** * Grup Autentikasi 
  */
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
+// Throttle: maks 5 percobaan login per menit per IP (anti brute force)
+Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-Route::post('/register', [AuthController::class, 'register']);
+// Throttle: maks 10 percobaan register per menit per IP
+Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:10,1');
+Route::get('/register/otp', [AuthController::class, 'showOtp'])->name('register.otp');
+Route::post('/register/otp', [AuthController::class, 'verifyRegistrationOtp'])->name('register.verifyOtp')->middleware('throttle:5,1');
+Route::post('/register/otp/resend', [AuthController::class, 'resendRegistrationOtp'])->name('register.resendOtp')->middleware('throttle:3,1');
+
 Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.request');
 Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
 Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])->name('password.reset');
 Route::post('/reset-password', [AuthController::class, 'updatePassword'])->name('password.update');
 
 
-// API Endpoint untuk memanggil model Python AI secara publik
-Route::post('/api/predict-infrastructure', [AIPredictController::class, 'predict'])->name('api.predict');
+// API Endpoint untuk memanggil model Python AI
+// Throttle: maks 30 request per menit per IP — mencegah eksploitasi server AI
+// Hanya bisa diakses oleh user yang sudah login (admin)
+Route::middleware(['auth', 'throttle:30,1'])->post('/api/predict-infrastructure', [AIPredictController::class, 'predict'])->name('api.predict');
 
 // ==========================================================
 // 2. JALUR PRIVAT (Wajib Login / Auth)
@@ -170,6 +187,19 @@ Route::middleware(['auth'])->group(function () {
         // Proses Analisis AI
         Route::post('/infrastruktur/{id}/analisis-ai', [AnalisisAiController::class, 'prosesAnalisis'])->name('admin.infrastruktur.analisis-ai');
 
+        /** * 5. MANAJEMEN LAPORAN WARGA
+         */
+        Route::get('/laporan-warga', [AdminController::class, 'laporanWarga'])->name('admin.laporan-warga');
+        Route::put('/laporan-warga/{id}/status', [AdminController::class, 'updateStatusLaporanWarga'])->name('admin.laporan-warga.status');
+        Route::delete('/laporan-warga/{id}', [AdminController::class, 'destroyLaporanWarga'])->name('admin.laporan-warga.destroy');
+        
+        // Konversi Laporan Warga ke Infrastruktur
+        Route::get('/laporan-warga/{id}/convert', [AdminController::class, 'createFromLaporan'])->name('admin.laporan-warga.convert');
+        Route::post('/laporan-warga/{id}/convert', [AdminController::class, 'storeFromLaporan'])->name('admin.laporan-warga.convert.store');
+
+        // Ekspor Laporan
+        Route::get('/laporan-warga/export/pdf', [AdminController::class, 'exportPdfLaporan'])->name('admin.laporan-warga.pdf');
+
         // Manajemen Profil
         Route::get('/profile', [AdminController::class, 'profile'])->name('admin.profile');
         Route::put('/profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
@@ -214,6 +244,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/infrastruktur/{id}', [App\Http\Controllers\Surveyor\SurveyorController::class, 'show'])->name('surveyor.infrastruktur.show');
         Route::get('/infrastruktur/{id}/edit', [App\Http\Controllers\Surveyor\SurveyorController::class, 'edit'])->name('surveyor.infrastruktur.edit');
         Route::put('/infrastruktur/{id}', [App\Http\Controllers\Surveyor\SurveyorController::class, 'update'])->name('surveyor.infrastruktur.update');
+        // Hapus data sendiri — hanya jika masih status Pending
+        Route::delete('/infrastruktur/{id}', [App\Http\Controllers\Surveyor\SurveyorController::class, 'destroy'])->name('surveyor.infrastruktur.destroy');
         Route::get('/map', [App\Http\Controllers\Surveyor\SurveyorController::class, 'map'])->name('surveyor.map');
         Route::get('/profile', [App\Http\Controllers\Surveyor\SurveyorController::class, 'profile'])->name('surveyor.profile');
         Route::post('/profile', [App\Http\Controllers\Surveyor\SurveyorController::class, 'updateProfile'])->name('surveyor.profile.update');
@@ -233,8 +265,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/laporan', [App\Http\Controllers\Kabid\KabidController::class, 'laporan'])->name('kabid.laporan');
         Route::get('/infrastruktur/{id}', [App\Http\Controllers\Kabid\KabidController::class, 'show'])->name('kabid.infrastruktur.show');
         Route::post('/infrastruktur/{id}/status-perbaikan', [App\Http\Controllers\Kabid\KabidController::class, 'updateStatusPerbaikan'])->name('kabid.perbaikan.update');
+        Route::get('/infrastruktur/{id}/pdf', [App\Http\Controllers\Kabid\KabidController::class, 'exportPdf'])->name('kabid.infrastruktur.pdf');
         Route::get('/profile', [App\Http\Controllers\Kabid\KabidController::class, 'profile'])->name('kabid.profile');
-        Route::post('/profile', [App\Http\Controllers\Kabid\KabidController::class, 'updateProfile'])->name('kabid.profile.update');
+        Route::put('/profile', [App\Http\Controllers\Kabid\KabidController::class, 'updateProfile'])->name('kabid.profile.update');
     });
     
 });

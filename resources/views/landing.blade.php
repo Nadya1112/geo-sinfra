@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GEO-SINFRA - Sistem Pemetaan Infrastruktur Permukiman Kota Banjarmasin</title>
+    <title>GEO-SINFRA</title>
     <meta name="description" content="GEO-SINFRA adalah Sistem Pemetaan Infrastruktur Permukiman Kota Banjarmasin berbasis Web GIS dan Kecerdasan Buatan (AI) untuk monitoring, pelaporan, dan klasifikasi kerusakan infrastruktur.">
     <meta name="keywords" content="GIS, Pemetaan, Infrastruktur, Banjarmasin, Artificial Intelligence, SINFRA, Dinas PUPR, Jalan, Jembatan">
     <meta name="author" content="Pemerintah Kota Banjarmasin">
@@ -205,9 +205,28 @@
             background: #0f0e2c !important;
             border: 1px solid rgba(255,255,255,0.1) !important;
         }
+        .custom-leaflet-popup .leaflet-popup-content {
+            margin: 0 !important;
+            width: auto !important;
+        }
         .custom-leaflet-popup .leaflet-popup-close-button {
-            color: #c5a059 !important;
-            padding: 8px !important;
+            color: #ffffff !important;
+            background: #ef4444 !important;
+            border-radius: 50% !important;
+            width: 24px !important;
+            height: 24px !important;
+            line-height: 24px !important;
+            text-align: center !important;
+            padding: 0 !important;
+            top: -8px !important;
+            right: -8px !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5) !important;
+            z-index: 100 !important;
+            font-weight: bold !important;
+        }
+        .custom-leaflet-popup .leaflet-popup-close-button:hover {
+            background: #dc2626 !important;
+            color: white !important;
         }
         /* Remove Leaflet's default divIcon black box border and background */
         .leaflet-div-icon {
@@ -282,7 +301,7 @@
         <div class="loader-glow mb-4">
             <i class="fas fa-globe-asia text-[#c5a059] text-4xl animate-pulse"></i>
         </div>
-        <h2 class="text-white font-extrabold tracking-[0.6em] uppercase text-xs">GEO-SINFRA AI</h2>
+        <h2 class="text-white font-extrabold tracking-[0.6em] uppercase text-xs">GEO-SINFRA</h2>
         <p class="text-slate-400 text-[9px] tracking-widest mt-2 uppercase">Sistem Pemetaan Infrastruktur Permukiman Kota Banjarmasin</p>
     </div>
  
@@ -298,12 +317,18 @@
             </div>
             
             <!-- Navbar Actions -->
-            <div class="flex items-center gap-4">
-                <a href="#peta" class="text-sm font-bold text-slate-600 hover:text-gold-500 transition-colors uppercase tracking-wider">Peta</a>
-                <a href="#statistik" class="text-sm font-bold text-slate-600 hover:text-gold-500 transition-colors uppercase tracking-wider">Statistik</a>
-                <div class="w-px h-4 bg-slate-300 mx-2"></div>
-                <a href="{{ url('/login') }}" class="bg-navy-900 text-gold-500 hover:bg-gold-500 hover:text-white px-5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 uppercase tracking-widest">
-                    <i class="fas fa-lock"></i> Login
+            <div class="flex items-center gap-2 md:gap-4">
+                <a href="#peta" class="text-sm font-bold text-slate-600 hover:text-gold-500 transition-colors uppercase tracking-wider hidden md:block">Peta</a>
+                <a href="#statistik" class="text-sm font-bold text-slate-600 hover:text-gold-500 transition-colors uppercase tracking-wider hidden md:block">Statistik</a>
+                
+                <button onclick="document.getElementById('modal-lapor').classList.remove('hidden')" class="bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white px-4 md:px-5 py-2 rounded-xl text-[10px] md:text-xs font-bold transition-all shadow-md shadow-red-500/20 hover:shadow-red-500/40 hover:-translate-y-0.5 flex items-center gap-2 uppercase tracking-widest">
+                    <i class="fas fa-bullhorn animate-pulse"></i> <span class="hidden sm:inline">Lapor Kerusakan</span><span class="sm:hidden">Lapor</span>
+                </button>
+
+                <div class="w-px h-4 bg-slate-300 mx-1 hidden md:block"></div>
+                
+                <a href="{{ url('/login') }}" class="bg-navy-900 text-gold-500 hover:bg-gold-500 hover:text-white px-4 md:px-5 py-2 rounded-xl text-[10px] md:text-xs font-bold transition-all shadow-sm flex items-center gap-2 uppercase tracking-widest">
+                    <i class="fas fa-lock"></i> <span class="hidden sm:inline">Login</span>
                 </a>
             </div>
         </div>
@@ -317,11 +342,15 @@
             <div class="flex flex-col md:flex-row items-center justify-between gap-12">
                 <div class="max-w-3xl">
                     <h3 class="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.08] mb-4">
-                        Selamat Datang di
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-500 via-yellow-400 to-[#6366f1]"> GEO-SINFRA</span>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-500 via-yellow-400 to-[#6366f1] whitespace-nowrap">GEO-SINFRA</span>
                     </h3>
-                    <p class="text-slate-300 font-semibold text-lg md:text-2xl leading-relaxed mb-10 max-w-2xl">
-                        Sistem Informasi Pemetaan Infrastruktur Permukiman Kota Banjarmasin
+                    <p class="text-slate-300 font-semibold text-lg md:text-2xl leading-relaxed mb-4 max-w-2xl">
+                        Sistem Informasi Pemetaan Infrastruktur Permukiman 
+                        <br class="hidden md:block" />
+                        Kota Banjarmasin
+                    </p>
+                    <p class="text-slate-400 font-medium text-sm md:text-base leading-relaxed mb-10 max-w-2xl">
+                        Sebuah platform cerdas berbasis WebGIS dan Kecerdasan Buatan (AI) yang dirancang untuk memantau, melaporkan, dan menganalisis kondisi infrastruktur di seluruh wilayah Kota Banjarmasin secara real-time.
                     </p>
                     <div class="flex flex-wrap gap-4">
                         <a href="#peta" class="btn-shine bg-gradient-to-r from-gold-500 to-gold-600 text-white px-8 py-4.5 rounded-2xl font-bold text-xs uppercase tracking-widest hover:scale-105 transition-all shadow-xl shadow-gold-500/20">
@@ -540,10 +569,10 @@
                 </div>
 
                 <!-- Search Bar -->
-                <div class="absolute top-6 left-24 z-[9999] pointer-events-auto hidden md:block w-72">
+                <div class="absolute top-6 left-1/2 -translate-x-1/2 z-[9999] pointer-events-auto hidden md:block w-80">
                     <div class="relative w-full">
-                        <input type="text" id="search-infra" placeholder="Cari infrastruktur atau jalan..." aria-label="Cari infrastruktur atau jalan" class="w-full bg-[#0f0e2c]/90 backdrop-blur-xl border border-white/10 text-white pl-10 pr-4 py-3 rounded-2xl shadow-2xl focus:outline-none focus:border-gold-500 transition-colors text-[10px] font-bold tracking-wide placeholder-slate-400" autocomplete="off">
-                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gold-500 text-xs" aria-hidden="true"></i>
+                        <input type="text" id="search-infra" placeholder="Cari infrastruktur atau jalan..." aria-label="Cari infrastruktur atau jalan" class="w-full bg-[#0f0e2c]/90 backdrop-blur-xl border border-white/10 text-white pl-10 pr-4 py-3 rounded-2xl shadow-2xl focus:outline-none focus:border-gold-500 transition-colors text-xs font-bold tracking-wide placeholder-slate-400" autocomplete="off">
+                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gold-500 text-sm" aria-hidden="true"></i>
                     </div>
                     <div id="search-results" class="hidden absolute top-full left-0 mt-2 w-full bg-[#0f0e2c]/95 backdrop-blur-2xl border border-white/10 rounded-xl shadow-2xl max-h-56 overflow-y-auto"></div>
                 </div>
@@ -585,10 +614,6 @@
                             <label class="flex items-center justify-between p-3 hover:bg-white/5 rounded-xl cursor-pointer transition-all">
                                 <span class="text-[10px] font-bold text-slate-200 uppercase tracking-wider">Jembatan</span>
                                 <input type="checkbox" class="filter-category w-4.5 h-4.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="jembatan" checked>
-                            </label>
-                            <label class="flex items-center justify-between p-3 hover:bg-white/5 rounded-xl cursor-pointer transition-all">
-                                <span class="text-[10px] font-bold text-slate-200 uppercase tracking-wider">Sanitasi</span>
-                                <input type="checkbox" class="filter-category w-4.5 h-4.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="sanitasi" checked>
                             </label>
                         </div>
                     </div>
@@ -646,12 +671,7 @@
 
 
 
-                <!-- Floating Lapor Button (Bottom Center) -->
-                <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-[9999] pointer-events-auto">
-                    <button onclick="alert('Fitur Form Lapor Kerusakan Warga akan segera dirilis pada pembaruan berikutnya!')" class="bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white px-6 py-3.5 rounded-full font-black uppercase tracking-widest text-[10px] shadow-[0_10px_30px_rgba(239,68,68,0.4)] hover:shadow-[0_10px_40px_rgba(239,68,68,0.6)] hover:-translate-y-1 transition-all duration-300 flex items-center gap-2 border border-white/20 whitespace-nowrap">
-                        <i class="fas fa-bullhorn text-sm animate-pulse"></i> Lapor Kerusakan
-                    </button>
-                </div>
+                <!-- Floating Lapor Button has been moved to header -->
 
                 <!-- Bottom Left Stats Box Widget (Glassmorphic Dark UI) -->
                 <div class="absolute bottom-6 left-6 z-[9999] bg-[#0f0e2c]/90 backdrop-blur-xl rounded-3xl p-2.5 text-white w-72 shadow-2xl border border-white/10 pointer-events-auto transition-all duration-300">
@@ -719,7 +739,7 @@
                 <!-- Brand -->
                 <div>
                     <div class="mb-6">
-                        <img src="{{ asset('logo_dinas.jpeg') }}" alt="Logo Banjarmasin" class="w-24 md:w-32 h-auto drop-shadow-xl rounded-xl" onerror="this.style.display='none'">
+                        <img src="{{ asset('logo_dinas.jpeg') }}" alt="Logo Banjarmasin" class="w-40 md:w-56 h-auto drop-shadow-xl rounded-xl" onerror="this.style.display='none'">
                     </div>
                 </div>
                 
@@ -1019,7 +1039,7 @@
                 if (item.label_prioritas === 'Rusak Berat') conditionColor = 'bg-red-500 text-white shadow-red-500/20';
 
                 const popupContent = `
-                    <div class="p-1.5 min-w-[260px] font-sans">
+                    <div class="p-3 min-w-[260px] font-sans">
                         ${imgTag}
                         
                         <div class="mb-3">
@@ -1179,28 +1199,10 @@
             document.getElementById('modal-kecamatan').innerText = item.nama_kecamatan || '-';
             document.getElementById('modal-kelurahan').innerText = item.nama_kelurahan || '-';
             document.getElementById('modal-jenis').innerText = item.jenis || 'Infrastruktur';
-            document.getElementById('modal-surveyor').innerText = item.nama_surveyor || 'Petugas Tidak Diketahui';
-            
-            // Parameter Kerusakan (Dimensi: Panjang, Lebar, Luas)
-            const panjang = item.panjang ? parseFloat(item.panjang) : 0;
-            const lebar = item.lebar ? parseFloat(item.lebar) : 0;
-            const luas = (panjang * lebar);
-            
-            document.getElementById('modal-parameter').innerHTML = `
-                <div class="bg-white/60 rounded-xl p-3 border border-amber-100">
-                    <span class="block text-[9px] font-bold text-amber-600 uppercase tracking-widest mb-1">Panjang</span>
-                    <p class="font-black text-navy-900 text-sm">${panjang > 0 ? panjang + ' m' : '-'}</p>
-                </div>
-                <div class="bg-white/60 rounded-xl p-3 border border-amber-100">
-                    <span class="block text-[9px] font-bold text-amber-600 uppercase tracking-widest mb-1">Lebar</span>
-                    <p class="font-black text-navy-900 text-sm">${lebar > 0 ? lebar + ' m' : '-'}</p>
-                </div>
-                <div class="col-span-2 bg-amber-100/50 rounded-xl p-3 border border-amber-200">
-                    <span class="block text-[9px] font-bold text-amber-700 uppercase tracking-widest mb-1">Luas Kerusakan</span>
-                    <p class="font-black text-navy-900 text-lg">${luas > 0 ? luas.toFixed(2) + ' m²' : '-'}</p>
-                </div>
-                <a href="https://www.google.com/maps/dir/?api=1&destination=${item.latitude},${item.longitude}" target="_blank" class="col-span-2 mt-1 bg-navy-900 border border-gold-500/50 text-gold-500 text-[10px] font-bold py-3 px-3 rounded-xl hover:bg-gold-500 hover:text-navy-900 shadow-lg hover:shadow-gold-500/30 transition-all text-center flex items-center justify-center gap-2">
-                    <i class="fas fa-directions text-xs"></i> Rute Navigasi ke Lokasi
+            // Hanya tampilkan Rute Navigasi
+            document.getElementById('modal-action-btn').innerHTML = `
+                <a href="https://www.google.com/maps/dir/?api=1&destination=${item.latitude},${item.longitude}" target="_blank" class="w-full bg-navy-900 border border-gold-500/50 text-gold-500 text-sm font-bold py-4 px-6 rounded-2xl hover:bg-gold-500 hover:text-navy-900 shadow-xl hover:shadow-gold-500/30 transition-all text-center flex items-center justify-center gap-3">
+                    <i class="fas fa-directions text-lg"></i> Rute Navigasi ke Lokasi
                 </a>
             `;
             
@@ -1311,8 +1313,8 @@
                 }
                 
                 heatmapLayer = L.heatLayer(heatPoints, {
-                    radius: 25,
-                    blur: 15,
+                    radius: 35,
+                    blur: 35,
                     maxZoom: 16,
                     gradient: {0.4: 'blue', 0.6: 'cyan', 0.7: 'lime', 0.8: 'yellow', 1.0: 'red'}
                 }).addTo(map);
@@ -1478,43 +1480,168 @@
             <div class="p-8">
                 <img id="modal-img" src="" class="w-full h-80 object-cover rounded-3xl shadow-md mb-8 bg-slate-100">
                 
-                <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
-                    <!-- Left Col: Lokasi & Info (Colspan 2) -->
-                    <div class="md:col-span-2 space-y-6">
-                        <div class="bg-navy-50 p-5 rounded-2xl border border-slate-100 flex items-center gap-4">
-                            <i class="fas fa-user-circle text-2xl text-gold-500"></i>
-                            <div>
-                                <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Disurvei Oleh</span>
-                                <p id="modal-surveyor" class="font-black text-navy-900 text-sm">Nama Surveyor</p>
-                            </div>
-                        </div>
-
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-slate-50 p-6 rounded-3xl border border-slate-100">
+                    <!-- Left Col: Lokasi -->
+                    <div class="space-y-6">
                         <div>
                             <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1"><i class="fas fa-map mr-1"></i> Kecamatan</span>
-                            <p id="modal-kecamatan" class="font-bold text-navy-900 text-base">Banjarmasin Tengah</p>
+                            <p id="modal-kecamatan" class="font-black text-navy-900 text-xl">Banjarmasin Tengah</p>
                         </div>
                         
                         <div>
                             <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1"><i class="fas fa-map-pin mr-1"></i> Kelurahan</span>
-                            <p id="modal-kelurahan" class="font-bold text-navy-900 text-base">Kertak Baru</p>
+                            <p id="modal-kelurahan" class="font-black text-navy-900 text-xl">Kertak Baru</p>
                         </div>
                     </div>
 
-                    <!-- Right Col: Parameter Kerusakan (Colspan 3) -->
-                    <div class="md:col-span-3">
-                        <div class="bg-amber-50/50 rounded-3xl p-6 border border-amber-100 h-full">
-                            <span class="text-[11px] font-black text-amber-700 uppercase tracking-widest flex items-center gap-2 mb-4 pb-3 border-b border-amber-200/50">
-                                <i class="fas fa-ruler-combined text-gold-500 text-lg"></i>
-                                Parameter Kerusakan
-                            </span>
-                            <div id="modal-parameter" class="grid grid-cols-2 gap-3">
-                                <!-- Isi parameter dimensi akan di-inject lewat JS -->
-                            </div>
-                        </div>
+                    <!-- Right Col: Aksi -->
+                    <div id="modal-action-btn" class="flex justify-end">
+                        <!-- Tombol Rute Navigasi akan di-inject lewat JS -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- Modal Lapor Warga -->
+    <div id="modal-lapor" class="hidden fixed inset-0 z-[10000] flex items-center justify-center p-4 sm:p-6 backdrop-blur-md bg-navy-900/50 transition-all duration-300">
+        <div class="bg-white w-full max-w-2xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-navy-900 to-navy-800 p-6 flex justify-between items-center text-white shrink-0">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center border border-white/20">
+                        <i class="fas fa-bullhorn text-xl text-gold-500"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-black text-xl tracking-tight leading-none mb-1">Lapor Kerusakan</h3>
+                        <p class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">Partisipasi Warga Banjarmasin</p>
+                    </div>
+                </div>
+                <button onclick="document.getElementById('modal-lapor').classList.add('hidden')" class="w-10 h-10 bg-white/10 hover:bg-red-500 text-white rounded-xl flex items-center justify-center transition-all">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Body -->
+            <div class="p-8 overflow-y-auto custom-scrollbar flex-1">
+                <form action="{{ route('lapor.warga') }}" method="POST" enctype="multipart/form-data" id="form-lapor-warga">
+                    @csrf
+                    
+                    <div class="space-y-6">
+                        <!-- Nama & HP -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2 ml-1">Nama Pelapor <span class="text-red-500">*</span></label>
+                                <input type="text" name="nama_pelapor" required placeholder="Nama Anda" class="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2 ml-1">No. WhatsApp</label>
+                                <input type="text" name="no_hp" placeholder="Opsional (Untuk dihubungi)" class="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
+                            </div>
+                        </div>
+
+                        <!-- Deskripsi -->
+                        <div>
+                            <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2 ml-1">Deskripsi Kerusakan <span class="text-red-500">*</span></label>
+                            <textarea name="deskripsi" required rows="3" placeholder="Contoh: Jalan berlubang cukup dalam dan sering digenangi air saat hujan..." class="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all resize-none"></textarea>
+                        </div>
+
+                        <!-- Lokasi GPS -->
+                        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <h4 class="font-black text-navy-900 text-sm">Titik Lokasi <span class="text-red-500">*</span></h4>
+                                    <p class="text-[10px] text-slate-500 font-medium">Bantu kami mengetahui posisi pasti kerusakan.</p>
+                                </div>
+                                <button type="button" onclick="getWargaLocation(this)" class="px-4 py-2 bg-navy-900 hover:bg-gold-500 text-white hover:text-navy-900 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all flex items-center gap-2">
+                                    <i class="fas fa-crosshairs"></i> Ambil GPS
+                                </button>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <input type="text" id="warga-lat" name="latitude" required placeholder="Latitude (Bisa diisi manual)" class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 outline-none focus:ring-2 focus:ring-navy-500 transition-all">
+                                <input type="text" id="warga-lng" name="longitude" required placeholder="Longitude (Bisa diisi manual)" class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 outline-none focus:ring-2 focus:ring-navy-500 transition-all">
+                            </div>
+                        </div>
+
+                        <!-- Foto Bukti -->
+                        <div>
+                            <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2 ml-1">Foto Bukti Lapangan <span class="text-red-500">*</span></label>
+                            <div class="relative w-full h-40 border-2 border-dashed border-slate-300 rounded-2xl bg-slate-50 hover:bg-gold-50 hover:border-gold-300 transition-all cursor-pointer flex flex-col items-center justify-center overflow-hidden group">
+                                <input type="file" name="foto" required accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="previewWargaFoto(this)">
+                                <div id="warga-foto-placeholder" class="text-center px-4">
+                                    <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-2 shadow-sm text-slate-400 group-hover:text-gold-500 transition-colors">
+                                        <i class="fas fa-camera text-xl"></i>
+                                    </div>
+                                    <p class="text-xs font-bold text-slate-500">Ketuk untuk mengambil foto</p>
+                                </div>
+                                <img id="warga-foto-preview" class="hidden absolute inset-0 w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Footer -->
+            <div class="p-6 bg-slate-50 border-t border-slate-100 flex justify-end gap-3 shrink-0">
+                <button type="button" onclick="document.getElementById('modal-lapor').classList.add('hidden')" class="px-6 py-3.5 bg-white border border-slate-200 hover:bg-slate-100 text-slate-600 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all">
+                    Batal
+                </button>
+                <button type="submit" form="form-lapor-warga" class="px-8 py-3.5 bg-gold-500 hover:bg-gold-600 text-white rounded-xl font-black text-[10px] uppercase tracking-widest transition-all shadow-lg shadow-gold-500/30 flex items-center gap-2">
+                    Kirim Laporan <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script for Warga Report -->
+    <script>
+        function getWargaLocation(btn) {
+            const oriText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mencari...';
+            
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(pos) {
+                    document.getElementById('warga-lat').value = pos.coords.latitude.toFixed(6);
+                    document.getElementById('warga-lng').value = pos.coords.longitude.toFixed(6);
+                    btn.innerHTML = '<i class="fas fa-check"></i> Sukses';
+                    btn.classList.add('bg-emerald-500', 'text-white');
+                    setTimeout(() => { btn.innerHTML = oriText; btn.classList.remove('bg-emerald-500'); }, 3000);
+                }, function(err) {
+                    alert('Gagal mengambil lokasi. Pastikan GPS aktif dan browser diizinkan mengakses lokasi.');
+                    btn.innerHTML = oriText;
+                }, { enableHighAccuracy: true, timeout: 10000 });
+            } else {
+                alert('Browser tidak mendukung GPS.');
+                btn.innerHTML = oriText;
+            }
+        }
+
+        function previewWargaFoto(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('warga-foto-placeholder').classList.add('hidden');
+                    const preview = document.getElementById('warga-foto-preview');
+                    preview.src = e.target.result;
+                    preview.classList.remove('hidden');
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+    
+    @if(session('success_laporan'))
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'Laporan Berhasil!',
+                text: "{{ session('success_laporan') }}",
+                icon: 'success',
+                confirmButtonColor: '#1e1b4b',
+                confirmButtonText: 'Terima Kasih'
+            });
+        });
+    </script>
+    @endif
 </body>
 </html>

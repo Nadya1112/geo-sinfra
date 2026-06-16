@@ -57,13 +57,13 @@
                 <div class="flex items-center gap-3">
                     <div class="text-right">
                         <p class="text-[11px] font-black text-navy-900 leading-none uppercase">{{ auth()->user()->name }}</p>
-                        <p class="text-[9px] font-bold text-[#059669] uppercase mt-1 leading-none">ONLINE</p>
+                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1 leading-none">ONLINE</p>
                     </div>
-                    <div class="w-10 h-10 bg-navy-50 rounded-xl flex items-center justify-center text-navy-900 border border-navy-100 overflow-hidden shadow-sm">
+                    <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shadow-md group-hover:shadow-lg transition-all overflow-hidden">
                         @if(auth()->user()->profile_photo)
                             <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
                         @else
-                            <i class="fas fa-user-tie text-xl"></i>
+                            <i class="fas fa-user-circle text-xl"></i>
                         @endif
                     </div>
                 </div>
@@ -166,13 +166,52 @@
                     </div>
                 </div>
                 
-                <!-- FILTER TABS -->
-                <div class="px-8 py-3 bg-slate-50/50 border-b border-slate-100 flex flex-wrap gap-2">
-                    @php $currentStatus = request('status', 'Pending'); @endphp
-                    <a href="{{ route('kabid.validasi', ['status' => 'All']) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $currentStatus == 'All' ? 'bg-navy-900 text-white shadow-md' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200' }}">Semua Antrean</a>
-                    <a href="{{ route('kabid.validasi', ['status' => 'Pending']) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $currentStatus == 'Pending' ? 'bg-amber-500 text-white shadow-md shadow-amber-500/20' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200' }}">Menunggu (Pending)</a>
-                    <a href="{{ route('kabid.validasi', ['status' => 'Validated']) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $currentStatus == 'Validated' ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200' }}">Disetujui (Validated)</a>
-                    <a href="{{ route('kabid.validasi', ['status' => 'Rejected']) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $currentStatus == 'Rejected' ? 'bg-rose-500 text-white shadow-md shadow-rose-500/20' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200' }}">Ditolak / Perbaikan</a>
+                <!-- FILTER TABS & ADVANCED FILTER -->
+                <div class="px-8 py-4 bg-white border-b border-slate-100">
+                    <form action="{{ route('kabid.validasi') }}" method="GET" class="flex flex-col gap-4">
+                        <input type="hidden" name="show" value="{{ request('show') }}">
+                        @php $currentStatus = request('status', 'Pending'); @endphp
+                        <input type="hidden" name="status" value="{{ $currentStatus }}">
+
+                        <!-- Filter Status -->
+                        <div class="flex flex-wrap gap-2 mb-2">
+                            <a href="{{ route('kabid.validasi', array_merge(request()->query(), ['status' => 'All'])) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $currentStatus == 'All' ? 'bg-navy-900 text-white shadow-md' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200' }}">Semua Antrean</a>
+                            <a href="{{ route('kabid.validasi', array_merge(request()->query(), ['status' => 'Pending'])) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $currentStatus == 'Pending' ? 'bg-amber-500 text-white shadow-md shadow-amber-500/20' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200' }}">Menunggu (Pending)</a>
+                            <a href="{{ route('kabid.validasi', array_merge(request()->query(), ['status' => 'Validated'])) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $currentStatus == 'Validated' ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200' }}">Disetujui (Validated)</a>
+                            <a href="{{ route('kabid.validasi', array_merge(request()->query(), ['status' => 'Rejected'])) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $currentStatus == 'Rejected' ? 'bg-rose-500 text-white shadow-md shadow-rose-500/20' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200' }}">Ditolak / Perbaikan</a>
+                        </div>
+
+                        <!-- Advanced Filter -->
+                        <div class="flex flex-wrap md:flex-nowrap gap-4 items-end bg-slate-50/50 p-4 rounded-2xl border border-slate-100">
+                            <div class="w-full md:flex-1">
+                                <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Wilayah Kecamatan</label>
+                                <select name="kecamatan" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 focus:outline-none focus:border-gold-500 transition-all shadow-sm">
+                                    <option value="">Semua Kecamatan</option>
+                                    @foreach($kecamatan as $kec)
+                                        <option value="{{ $kec->id_kecamatan }}" {{ request('kecamatan') == $kec->id_kecamatan ? 'selected' : '' }}>
+                                            {{ $kec->nama_kecamatan }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="w-full md:flex-1">
+                                <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Mulai Tanggal</label>
+                                <input type="date" name="start_date" value="{{ request('start_date') }}" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 focus:outline-none focus:border-gold-500 transition-all shadow-sm">
+                            </div>
+                            <div class="w-full md:flex-1">
+                                <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Sampai Tanggal</label>
+                                <input type="date" name="end_date" value="{{ request('end_date') }}" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 focus:outline-none focus:border-gold-500 transition-all shadow-sm">
+                            </div>
+                            <div class="w-full md:flex-[0.5] flex gap-2 justify-end">
+                                <button type="submit" class="px-6 py-2.5 bg-navy-900 text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-gold-500 transition-all shadow-md w-full md:w-auto">
+                                    Filter
+                                </button>
+                                <a href="{{ route('kabid.validasi', ['status' => $currentStatus]) }}" class="px-4 py-2.5 bg-white text-slate-400 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-100 hover:text-slate-600 transition-all border border-slate-200 shadow-sm flex items-center justify-center">
+                                    <i class="fas fa-sync-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
                 </div>
 
 
@@ -266,7 +305,7 @@
                                                 $aiClass = 'bg-[#059669]/10 text-[#059669] border-[#059669]/30';
                                             }
                                         @endphp
-                                        <span class="px-2.5 py-1 rounded-md border text-[9px] font-black uppercase tracking-widest {{ $aiClass }}">
+                                        <span class="px-2.5 py-1 rounded-md border text-[9px] font-black uppercase tracking-widest whitespace-nowrap {{ $aiClass }}">
                                             {{ $aiLabel ?: 'Belum Dianalisis' }}
                                         </span>
                                         @if($aiScore !== null)
@@ -360,8 +399,35 @@
                     </div>
                 @endif
             </div>
+        </div>
 
-         </main>
+        <!-- Validation Modal -->
+        <div id="validasiModal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-slate-900/50 backdrop-blur-sm transition-all duration-300">
+            <div class="bg-white rounded-[2rem] shadow-2xl w-full max-w-md p-8 transform scale-95 opacity-0 transition-all duration-300" id="validasiModalContent">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-black text-navy-900" id="validasiModalTitle">Validasi Data</h3>
+                    <button type="button" onclick="closeValidasiModal()" class="w-8 h-8 flex items-center justify-center bg-slate-50 text-slate-400 rounded-xl hover:bg-rose-50 hover:text-rose-500 transition-colors border border-slate-100">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <p class="text-sm text-slate-500 mb-6 font-medium" id="validasiModalDesc">Silakan masukkan catatan.</p>
+                
+                <div class="mb-8">
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Catatan / Alasan</label>
+                    <textarea id="validasiCatatanInput" rows="4" class="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm font-medium text-navy-900 focus:outline-none focus:border-gold-500 focus:ring-4 focus:ring-gold-500/20 transition-all placeholder:text-slate-300" placeholder="Ketik catatan di sini..."></textarea>
+                    <p id="validasiError" class="text-xs text-rose-500 mt-2 font-bold hidden flex items-center gap-1.5">
+                        <i class="fas fa-exclamation-circle"></i> Catatan/Alasan wajib diisi untuk penolakan!
+                    </p>
+                </div>
+                
+                <div class="flex items-center justify-end gap-3">
+                    <button type="button" onclick="closeValidasiModal()" class="px-5 py-2.5 bg-white border border-slate-200 text-slate-500 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-50 transition-colors">Batal</button>
+                    <button type="button" onclick="confirmValidasiModal()" class="px-5 py-2.5 bg-navy-900 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-gold-500 transition-colors shadow-lg shadow-navy-900/20" id="validasiSubmitBtn">Konfirmasi</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
 
     <script>
         function updateClock() {
@@ -405,50 +471,99 @@
             cb.addEventListener('change', updateBulkState);
         });
 
-        function submitBulk(status) {
-            let alasan = '';
-            if (status === 'Rejected') {
-                alasan = prompt('Masukkan alasan penolakan untuk data yang dipilih (Wajib):');
-                if (alasan === null || alasan.trim() === '') {
-                    alert('Alasan penolakan wajib diisi!');
-                    return;
-                }
+        // --- Modal Logic ---
+        let pendingForm = null;
+        let pendingStatus = '';
+        let isBulk = false;
+
+        function openValidasiModal(formOrStatus, statusParam, bulk = false) {
+            isBulk = bulk;
+            if (bulk) {
+                pendingStatus = statusParam;
             } else {
-                alasan = prompt('Masukkan catatan persetujuan (Opsional, kosongkan jika tidak ada):');
-                if (alasan === null) return; // User cancelled
+                pendingForm = formOrStatus;
+                pendingStatus = statusParam;
             }
-            
-            const inputAlasan = document.createElement('input');
-            inputAlasan.type = 'hidden';
-            inputAlasan.name = 'alasan_penolakan';
-            inputAlasan.value = alasan;
-            document.getElementById('bulkForm').appendChild(inputAlasan);
-            
-            document.getElementById('bulkStatus').value = status;
-            document.getElementById('bulkForm').submit();
+
+            const modal = document.getElementById('validasiModal');
+            const content = document.getElementById('validasiModalContent');
+            const title = document.getElementById('validasiModalTitle');
+            const desc = document.getElementById('validasiModalDesc');
+            const input = document.getElementById('validasiCatatanInput');
+            const btn = document.getElementById('validasiSubmitBtn');
+            const error = document.getElementById('validasiError');
+
+            input.value = '';
+            error.classList.add('hidden');
+
+            if (pendingStatus === 'Rejected') {
+                title.textContent = 'Tolak Validasi';
+                title.className = 'text-xl font-black text-rose-600';
+                desc.innerHTML = 'Silakan masukkan <strong>alasan penolakan</strong> (Wajib diisi).';
+                btn.className = 'px-5 py-2.5 bg-rose-500 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-rose-600 transition-colors shadow-lg shadow-rose-500/20';
+                btn.innerHTML = '<i class="fas fa-times mr-2"></i> Tolak Data';
+            } else {
+                title.textContent = 'Setujui Validasi';
+                title.className = 'text-xl font-black text-emerald-600';
+                desc.innerHTML = 'Silakan masukkan <strong>catatan persetujuan</strong> (Opsional).';
+                btn.className = 'px-5 py-2.5 bg-emerald-500 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-emerald-600 transition-colors shadow-lg shadow-emerald-500/20';
+                btn.innerHTML = '<i class="fas fa-check mr-2"></i> Setujui Data';
+            }
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+                input.focus();
+            }, 10);
+        }
+
+        function closeValidasiModal() {
+            const modal = document.getElementById('validasiModal');
+            const content = document.getElementById('validasiModalContent');
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function confirmValidasiModal() {
+            const input = document.getElementById('validasiCatatanInput').value.trim();
+            const error = document.getElementById('validasiError');
+
+            if (pendingStatus === 'Rejected' && input === '') {
+                error.classList.remove('hidden');
+                document.getElementById('validasiCatatanInput').focus();
+                return;
+            }
+
+            if (isBulk) {
+                const inputAlasan = document.createElement('input');
+                inputAlasan.type = 'hidden';
+                inputAlasan.name = 'alasan_penolakan';
+                inputAlasan.value = input;
+                document.getElementById('bulkForm').appendChild(inputAlasan);
+                document.getElementById('bulkStatus').value = pendingStatus;
+                document.getElementById('bulkForm').submit();
+            } else {
+                const inputAlasan = document.createElement('input');
+                inputAlasan.type = 'hidden';
+                inputAlasan.name = 'alasan_penolakan';
+                inputAlasan.value = input;
+                pendingForm.appendChild(inputAlasan);
+                pendingForm.submit();
+            }
+        }
+
+        function submitBulk(status) {
+            openValidasiModal(null, status, true);
         }
 
         function promptCatatan(e, form, status) {
             e.preventDefault();
-            let alasan = '';
-            if (status === 'Rejected') {
-                alasan = prompt('Masukkan alasan penolakan (Wajib):');
-                if (alasan === null || alasan.trim() === '') {
-                    alert('Alasan penolakan wajib diisi!');
-                    return false;
-                }
-            } else {
-                alasan = prompt('Masukkan catatan persetujuan (Opsional, kosongkan jika tidak ada):');
-                if (alasan === null) return false;
-            }
-            
-            const inputAlasan = document.createElement('input');
-            inputAlasan.type = 'hidden';
-            inputAlasan.name = 'alasan_penolakan';
-            inputAlasan.value = alasan;
-            form.appendChild(inputAlasan);
-            form.submit();
-            return true;
+            openValidasiModal(form, status, false);
+            return false;
         }
     </script>
 </body>

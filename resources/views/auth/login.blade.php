@@ -126,9 +126,9 @@
                     
                     <div>
                         <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
-                            Email / NIP <span class="text-gold-500">*</span>
+                            Email / Nomor WhatsApp <span class="text-gold-500">*</span>
                         </label>
-                        <input type="email" name="email" placeholder="nama@disperkim.go.id" value="{{ old('email') }}" required
+                        <input type="text" name="login" placeholder="Email atau 0812xxxx" value="{{ old('login') }}" required autocomplete="username"
                             class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 focus:bg-white outline-none transition-all text-sm font-semibold text-navy-900">
                     </div>
 
@@ -137,7 +137,7 @@
                             Kata Sandi <span class="text-gold-500">*</span>
                         </label>
                         <div class="relative">
-                            <input type="password" name="password" id="password" placeholder="••••••••" required
+                            <input type="password" name="password" id="password" placeholder="••••••••" required autocomplete="current-password"
                                 class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 focus:bg-white outline-none transition-all text-sm font-semibold text-navy-900 pr-12">
                             
                             <button type="button" onclick="togglePassword()" 
@@ -149,7 +149,7 @@
 
                     <div>
                         <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
-                            Verifikasi Keamanan: {{ $n1 }} + {{ $n2 }} <span class="text-gold-500">*</span>
+                            Verifikasi Keamanan: {{ $n1 ?? 3 }} + {{ $n2 ?? 5 }} <span class="text-gold-500">*</span>
                         </label>
                         <input type="number" name="captcha" placeholder="Jawaban Anda" required
                             class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 focus:bg-white outline-none transition-all text-sm font-semibold text-navy-900">

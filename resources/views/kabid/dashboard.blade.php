@@ -45,13 +45,13 @@
                 <a href="{{ route('kabid.profile') }}" class="flex items-center gap-3 group">
                     <div class="text-right">
                         <p class="text-[11px] font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-colors">{{ auth()->user()->name }}</p>
-                        <p class="text-[9px] font-bold text-[#059669] uppercase mt-1 italic">ONLINE</p>
+                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
                     </div>
-                    <div class="w-10 h-10 bg-navy-50 rounded-xl flex items-center justify-center text-navy-900 border border-navy-100 overflow-hidden shadow-sm group-hover:border-gold-300 group-hover:shadow-md transition-all">
+                    <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shadow-md group-hover:shadow-lg transition-all overflow-hidden">
                         @if(auth()->user()->profile_photo)
                             <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
                         @else
-                            <i class="fas fa-user-tie text-xl group-hover:text-gold-500 transition-colors"></i>
+                            <i class="fas fa-user-circle text-xl"></i>
                         @endif
                     </div>
                 </a>
@@ -73,7 +73,7 @@
                             <h3 class="text-xl font-black text-white tracking-tight">PERINGATAN DARURAT</h3>
                             <span class="px-3 py-1 bg-rose-900/50 text-white text-[10px] font-black uppercase tracking-widest rounded-full border border-white/20 animate-pulse">Action Required</span>
                         </div>
-                        <p class="text-rose-100 text-sm font-medium">Sistem AI mendeteksi <strong class="text-white text-lg">{{ $totalRusakBerat }} infrastruktur</strong> dalam kondisi kritis (Rusak Berat). Segera lakukan peninjauan dan alokasi anggaran perbaikan.</p>
+                        <p class="text-rose-100 text-sm font-medium">Analisis AI mendeteksi <strong class="text-white text-lg">{{ $totalRusakBerat }} infrastruktur</strong> dalam kondisi kritis (Rusak Berat). Segera lakukan peninjauan dan alokasi anggaran perbaikan.</p>
                     </div>
                 </div>
                 <div class="relative z-10 hidden md:block">
@@ -90,12 +90,14 @@
                 <div class="absolute -left-10 -bottom-10 w-60 h-60 bg-white/5 rounded-full blur-[80px]"></div>
                 
                 <div class="relative z-10">
-                    <h1 class="text-3xl font-black text-white mb-2">Selamat Datang, Bapak {{ auth()->user()->name }}</h1>
+                    <h1 class="text-3xl font-black text-white mb-2">Selamat Datang, HIZBULWATHONI, S.T.</h1>
                     <p class="text-slate-300 text-sm font-medium tracking-wide">Berikut ringkasan kondisi infrastruktur Banjarmasin saat ini.</p>
                 </div>
 
-                <!-- Stats Bar -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-10">
+                <!-- Stats Bar — sumber data: Analisis AI (bukan input manual) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mt-10">
+
+                    {{-- Total Terdata --}}
                     <div class="bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 group hover:bg-white/10 transition-all border-l-gold-400/50 border-l-4">
                         <div class="flex items-center gap-4">
                             <div class="w-12 h-12 bg-gold-400/20 rounded-2xl flex items-center justify-center text-gold-400">
@@ -107,39 +109,59 @@
                             </div>
                         </div>
                     </div>
+
+                    {{-- Kondisi Baik (AI) --}}
+                    <div class="bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 group hover:bg-white/10 transition-all border-l-emerald-400/50 border-l-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-emerald-400/20 rounded-2xl flex items-center justify-center text-emerald-400">
+                                <i class="fas fa-check-circle text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] font-black text-emerald-400 uppercase tracking-widest">Baik <span class="text-[8px] text-white/40 normal-case font-medium">(AI)</span></p>
+                                <h3 class="text-2xl font-black text-white">{{ $totalBaik ?? 0 }} <span class="text-[10px] font-bold text-emerald-400/50 italic ml-1">Lokasi</span></h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Rusak Sedang (AI) --}}
+                    <div class="bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 group hover:bg-white/10 transition-all border-l-amber-400/50 border-l-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-amber-400/20 rounded-2xl flex items-center justify-center text-amber-400">
+                                <i class="fas fa-exclamation-circle text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] font-black text-amber-400 uppercase tracking-widest">Rusak Sedang <span class="text-[8px] text-white/40 normal-case font-medium">(AI)</span></p>
+                                <h3 class="text-2xl font-black text-white">{{ $totalRusakSedang ?? 0 }} <span class="text-[10px] font-bold text-amber-400/50 italic ml-1">Lokasi</span></h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Rusak Berat (AI) --}}
                     <div class="bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 group hover:bg-white/10 transition-all border-l-rose-400/50 border-l-4">
                         <div class="flex items-center gap-4">
                             <div class="w-12 h-12 bg-rose-400/20 rounded-2xl flex items-center justify-center text-rose-400">
                                 <i class="fas fa-triangle-exclamation text-lg"></i>
                             </div>
                             <div>
-                                <p class="text-[10px] font-black text-rose-400 uppercase tracking-widest">Rusak Berat</p>
+                                <p class="text-[10px] font-black text-rose-400 uppercase tracking-widest">Rusak Berat <span class="text-[8px] text-white/40 normal-case font-medium">(AI)</span></p>
                                 <h3 class="text-2xl font-black text-white">{{ $totalRusakBerat ?? 0 }} <span class="text-[10px] font-bold text-rose-400/50 italic ml-1">Lokasi</span></h3>
                             </div>
                         </div>
                     </div>
-                    <div class="bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 group hover:bg-white/10 transition-all border-l-amber-400/50 border-l-4">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-amber-400/20 rounded-2xl flex items-center justify-center text-amber-400">
-                                <i class="fas fa-clipboard-check text-lg"></i>
-                            </div>
-                            <div>
-                                <p class="text-[10px] font-black text-amber-400 uppercase tracking-widest">Antrean Validasi</p>
-                                <h3 class="text-2xl font-black text-white">{{ $totalPending ?? 0 }} <span class="text-[10px] font-bold text-amber-400/50 italic ml-1">Laporan</span></h3>
-                            </div>
-                        </div>
-                    </div>
+
+                    {{-- Antrean Validasi --}}
                     <div class="bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 group hover:bg-white/10 transition-all border-l-blue-300/50 border-l-4">
                         <div class="flex items-center gap-4">
                             <div class="w-12 h-12 bg-blue-400/20 rounded-2xl flex items-center justify-center text-blue-300">
-                                <i class="fas fa-tools text-lg"></i>
+                                <i class="fas fa-clipboard-check text-lg"></i>
                             </div>
                             <div>
-                                <p class="text-[10px] font-black text-blue-300 uppercase tracking-widest">Dalam Perbaikan</p>
-                                <h3 class="text-2xl font-black text-white">{{ $totalPerbaikan ?? 0 }} <span class="text-[10px] font-bold text-blue-300/50 italic ml-1">Proyek</span></h3>
+                                <p class="text-[10px] font-black text-blue-300 uppercase tracking-widest">Antrean Validasi</p>
+                                <h3 class="text-2xl font-black text-white">{{ $totalPending ?? 0 }} <span class="text-[10px] font-bold text-blue-300/50 italic ml-1">Laporan</span></h3>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
 

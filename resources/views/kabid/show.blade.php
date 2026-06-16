@@ -46,7 +46,12 @@
                 </a>
                 <div>
                     <p class="text-[10px] font-extrabold text-gold-500 uppercase tracking-[0.2em] mb-1">Verifikasi Usulan</p>
-                    <h2 class="text-xl font-black text-navy-900">Detail Infrastruktur</h2>
+                    <div class="flex items-center gap-4">
+                        <h2 class="text-xl font-black text-navy-900">Detail Infrastruktur</h2>
+                        <a href="{{ route('kabid.infrastruktur.pdf', $infrastruktur->id_infrastruktur) }}" target="_blank" class="px-3 py-1.5 bg-rose-50 text-rose-600 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-rose-500 hover:text-white transition-colors border border-rose-100 flex items-center gap-2 shadow-sm">
+                            <i class="fas fa-file-pdf"></i> Cetak PDF
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -59,13 +64,13 @@
                 <div class="flex items-center gap-3">
                     <div class="text-right">
                         <p class="text-[11px] font-black text-navy-900 leading-none uppercase">{{ auth()->user()->name }}</p>
-                        <p class="text-[9px] font-bold text-[#059669] uppercase mt-1 leading-none">ONLINE</p>
+                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1 leading-none">ONLINE</p>
                     </div>
-                    <div class="w-10 h-10 bg-navy-50 rounded-xl flex items-center justify-center text-navy-900 border border-navy-100 overflow-hidden shadow-sm">
+                    <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shadow-md group-hover:shadow-lg transition-all overflow-hidden">
                         @if(auth()->user()->profile_photo)
                             <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
                         @else
-                            <i class="fas fa-user-tie text-xl"></i>
+                            <i class="fas fa-user-circle text-xl"></i>
                         @endif
                     </div>
                 </div>
@@ -79,12 +84,28 @@
                 <!-- Kolom Kiri: Foto & AI Panel -->
                 <div class="lg:col-span-1 space-y-6">
                     <!-- Foto -->
+                    @php
+                        $cleanPath = $infrastruktur->foto_terbaru ? str_replace('\\', '/', $infrastruktur->foto_terbaru) : null;
+                        $fotoUrl   = $cleanPath ? asset('storage/' . (str_contains($cleanPath, 'infrastruktur/') ? $cleanPath : 'infrastruktur/' . $cleanPath)) : null;
+                    @endphp
                     <div class="bg-white rounded-[2.5rem] p-4 border border-slate-100 shadow-sm overflow-hidden">
-                        <div class="relative h-64 rounded-[2rem] overflow-hidden group">
-                            <img src="{{ asset('storage/infrastruktur/' . $infrastruktur->foto_terbaru) }}" class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all flex items-end p-6">
-                                <p class="text-white text-[10px] font-bold uppercase tracking-widest">Foto Dokumentasi</p>
-                            </div>
+                        <div class="relative h-64 rounded-[2rem] overflow-hidden group bg-navy-950 flex items-center justify-center">
+                            @if($fotoUrl)
+                                <img src="{{ $fotoUrl }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all flex items-end p-6">
+                                    <p class="text-white text-[10px] font-bold uppercase tracking-widest">Foto Dokumentasi</p>
+                                </div>
+                                <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <a href="{{ $fotoUrl }}" target="_blank" class="bg-white text-navy-900 px-4 py-2 rounded-xl text-[9px] font-black shadow-xl uppercase tracking-widest hover:scale-105 transition-all flex items-center gap-2">
+                                        <i class="fas fa-expand"></i> Lihat Full
+                                    </a>
+                                </div>
+                            @else
+                                <div class="text-center">
+                                    <i class="fas fa-image text-4xl text-slate-700 mb-2 block"></i>
+                                    <p class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Tidak Ada Foto</p>
+                                </div>
+                            @endif
                         </div>
                     </div>
 
@@ -203,11 +224,12 @@
                                     </div>
                                     <input type="radio" name="status_perbaikan" value="Selesai" class="w-4 h-4 text-emerald-500 border-slate-300 focus:ring-emerald-500" {{ $infrastruktur->status_perbaikan == 'Selesai' ? 'checked' : '' }} onchange="this.form.submit()">
                                 </label>
+                            </div>
                         </form>
                     </div>
                     @endif
 
-                    @if($infrastruktur->status_validasi != 'Pending' && $infrastruktur->alasan_penolakan)
+                    @if($infrastruktur->status_validasi == 'Rejected' && $infrastruktur->alasan_penolakan)
                     <div class="bg-amber-50 rounded-[2.5rem] p-6 border border-amber-100 shadow-sm relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-bl-full"></div>
                         <h4 class="text-[10px] font-black text-amber-900 uppercase tracking-widest mb-3 flex items-center gap-2">

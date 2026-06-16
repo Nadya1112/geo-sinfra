@@ -5,41 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manajemen Infrastruktur | Admin SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                    },
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
                     colors: {
-                        navy: {
-                            50: '#f4f4fa',
-                            100: '#e9e9f3',
-                            200: '#c7c8e3',
-                            500: '#6366f1',
-                            800: '#1e1b4b',
-                            900: '#0f0e2c',
-                            950: '#070617',
-                        },
-                        gold: {
-                            50: '#fdfbf7',
-                            100: '#fbf7ed',
-                            500: '#c5a059',
-                            600: '#b38f4a',
-                            700: '#9d7c3d',
-                        }
+                        navy: { 50:'#f4f4fa', 100:'#e9e9f3', 200:'#c7c8e3', 500:'#6366f1', 800:'#1e1b4b', 900:'#0f0e2c', 950:'#070617' },
+                        gold: { 50:'#fdfbf7', 100:'#fbf7ed', 500:'#c5a059', 600:'#b38f4a', 700:'#9d7c3d' }
                     }
                 }
             }
         }
     </script>
-    
+
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
@@ -53,7 +37,7 @@
     <main class="flex-1 flex flex-col h-screen overflow-hidden text-left font-sans">
         <header class="bg-white/85 backdrop-blur-xl border-b border-slate-100 px-8 py-5 flex justify-between items-center z-40 text-left">
             <div class="flex items-center gap-4 text-left">
-                <a href="{{ route('admin.dashboard') }}" 
+                <a href="{{ route('admin.dashboard') }}"
                    class="w-10 h-10 bg-white border border-slate-100 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/20 hover:shadow-lg hover:shadow-gold-500/5 transition-all group"
                    title="Kembali ke Dashboard Utama">
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
@@ -63,7 +47,7 @@
                     <h2 class="text-xl font-black text-navy-900 leading-none">Manajemen Infrastruktur</h2>
                 </div>
             </div>
-            
+
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
                     <p class="text-[11px] font-black text-navy-900" id="mini-clock">00:00 WITA</p>
@@ -96,19 +80,19 @@
                 </div>
 
                 <div class="flex flex-wrap items-center gap-3">
-                    <a href="{{ route('admin.infrastruktur.export') }}" class="px-4 py-2 bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white border border-emerald-100 hover:border-emerald-500 rounded-xl text-[10px] font-black tracking-widest uppercase transition-all shadow-sm hover:shadow-lg hover:shadow-emerald-500/20 flex items-center gap-2">
+                    {{-- Export Excel --}}
+                    <a href="{{ route('admin.infrastruktur.export') }}"
+                        class="px-4 py-2 bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white border border-emerald-100 hover:border-emerald-500 rounded-xl text-[10px] font-black tracking-widest uppercase transition-all shadow-sm flex items-center gap-2">
                         <i class="fas fa-file-excel"></i> Export Excel
                     </a>
-                    
+
+                    {{-- Filter & Search --}}
                     <form action="{{ route('admin.infrastruktur') }}" method="GET" class="flex items-center gap-2">
-                        {{-- Tampilan per halaman --}}
                         <select name="show" onchange="this.form.submit()"
                             class="text-[10px] font-bold text-navy-900 bg-white border border-slate-200 rounded-xl px-3 py-2.5 focus:outline-none focus:border-gold-500 transition shadow-sm">
                             <option value="10" {{ request('show') != 'all' ? 'selected' : '' }}>10 Data</option>
                             <option value="all" {{ request('show') == 'all' ? 'selected' : '' }}>Semua Data</option>
                         </select>
-
-                        {{-- Search --}}
                         <div class="relative">
                             <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[10px]"></i>
                             <input type="text" name="search" value="{{ request('search') }}"
@@ -117,12 +101,25 @@
                         </div>
                     </form>
 
+                    {{-- Tambah --}}
                     <a href="{{ route('admin.infrastruktur.create') }}"
                         class="bg-gold-500 hover:bg-gold-600 text-white text-[10px] px-5 py-2.5 rounded-xl font-black shadow-md shadow-gold-500/20 hover:shadow-gold-500/30 transition flex items-center gap-2 whitespace-nowrap tracking-wider">
                         <i class="fas fa-plus"></i> Tambah Data
                     </a>
                 </div>
             </div>
+
+            {{-- Alert --}}
+            @if(session('success'))
+            <div class="mb-6 px-5 py-3 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-2xl flex items-center gap-3 text-sm font-bold">
+                <i class="fas fa-check-circle"></i> {{ session('success') }}
+            </div>
+            @endif
+            @if(session('error'))
+            <div class="mb-6 px-5 py-3 bg-red-50 border border-red-100 text-red-700 rounded-2xl flex items-center gap-3 text-sm font-bold">
+                <i class="fas fa-exclamation-circle"></i> {{ session('error') }}
+            </div>
+            @endif
 
             {{-- ── Tabel ── --}}
             <div class="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden mb-10">
@@ -144,12 +141,12 @@
                             @php
                                 $dt = (object) [
                                     'label_prioritas' => $inf->dt_label_prioritas,
-                                    'skor_dt' => $inf->dt_skor_dt,
-                                    'rekomendasi' => $inf->dt_rekomendasi
+                                    'skor_dt'         => $inf->dt_skor_dt,
+                                    'rekomendasi'     => $inf->dt_rekomendasi
                                 ];
                                 $cnn = (object) [
                                     'label_kondisi' => $inf->cnn_label_kondisi,
-                                    'skor_cnn' => $inf->cnn_skor_cnn
+                                    'skor_cnn'      => $inf->cnn_skor_cnn
                                 ];
                                 $labelAkhir = $dt->label_prioritas ?? $inf->kondisi;
 
@@ -163,7 +160,7 @@
                                     'rusak sedang' => 'bg-orange-50  text-orange-600  border border-orange-200',
                                     'rusak berat'  => 'bg-red-50     text-red-600     border border-red-200',
                                 ];
-                                $labelColor = $kondisiMap[strtolower($labelAkhir)] ?? 'bg-slate-50 text-slate-500 border border-slate-200';
+                                $labelColor = $kondisiMap[strtolower($labelAkhir ?? '')] ?? 'bg-slate-50 text-slate-500 border border-slate-200';
 
                                 $nomor = request('show') == 'all'
                                     ? $index + 1
@@ -213,7 +210,6 @@
                                 {{-- Analisis AI --}}
                                 <td class="px-5 py-4">
                                     <div class="flex flex-col gap-1.5 items-center min-w-[130px]">
-                                        {{-- CNN --}}
                                         <div class="flex items-center gap-2 w-full">
                                             <span class="shrink-0 px-1.5 py-0.5 bg-navy-900 text-white rounded text-[7px] font-black tracking-wider">CNN</span>
                                             <span class="text-[9px] font-bold {{ $cnnLabel ? $cnnColor : 'text-slate-400' }} leading-none">
@@ -221,7 +217,6 @@
                                                 <span class="text-slate-400">({{ $cnn->label_kondisi ?? 'Scanning' }})</span>
                                             </span>
                                         </div>
-                                        {{-- Decision Tree --}}
                                         <div class="flex items-center gap-2 w-full">
                                             <span class="shrink-0 px-1.5 py-0.5 bg-gold-500 text-white rounded text-[7px] font-black tracking-wider">DT</span>
                                             <span class="text-[9px] font-bold text-slate-500 leading-none">
@@ -240,42 +235,48 @@
 
                                 {{-- Aksi --}}
                                 <td class="px-5 py-4">
-                                    <div class="flex flex-col gap-1.5 items-center min-w-[90px]">
+                                    <div class="flex items-center justify-center gap-1.5 w-max mx-auto">
 
                                         {{-- Verifikasi --}}
                                         @if(($inf->status_verifikasi ?? 'Pending') == 'Verified')
-                                            <span class="w-full flex items-center justify-center gap-1 bg-slate-100 text-slate-400 px-3 py-1.5 rounded-lg text-[8px] font-black border border-slate-200">
-                                                <i class="fas fa-check-double"></i> Terverifikasi
+                                            <span title="Terverifikasi" class="w-8 h-8 flex items-center justify-center bg-slate-100 text-slate-400 rounded-lg text-xs font-black border border-slate-200 cursor-not-allowed">
+                                                <i class="fas fa-check-double"></i>
                                             </span>
                                         @else
-                                            <form action="{{ route('admin.infrastruktur.verifikasi', $inf->id_infrastruktur) }}" method="POST" class="w-full">
+                                            <form action="{{ route('admin.infrastruktur.verifikasi', $inf->id_infrastruktur) }}" method="POST" class="inline-block">
                                                 @csrf
-                                                <button type="submit" onclick="return confirm('Verifikasi aset ini?')"
-                                                    class="w-full flex items-center justify-center gap-1 bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-1.5 rounded-lg text-[8px] font-black transition shadow-sm">
-                                                    <i class="fas fa-check"></i> Verifikasi
+                                                <button type="submit" onclick="return confirm('Verifikasi aset ini?')" title="Verifikasi"
+                                                    class="w-8 h-8 flex items-center justify-center bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg text-xs font-black transition shadow-sm hover:scale-105">
+                                                    <i class="fas fa-check"></i>
                                                 </button>
                                             </form>
                                         @endif
 
-                                        {{-- Edit --}}
-                                        <a href="{{ route('admin.infrastruktur.edit', $inf->id_infrastruktur) }}"
-                                            class="w-full flex items-center justify-center gap-1 bg-gold-500 hover:bg-gold-600 text-white px-3 py-1.5 rounded-lg text-[8px] font-black transition shadow-sm">
-                                            <i class="fas fa-edit"></i> Edit
+                                        {{-- Detail --}}
+                                        <a href="{{ route('admin.infrastruktur.show', $inf->id_infrastruktur) }}" title="Lihat Detail"
+                                            class="w-8 h-8 flex items-center justify-center bg-navy-900 hover:bg-navy-950 text-white rounded-lg text-xs font-black transition shadow-sm hover:scale-105">
+                                            <i class="fas fa-eye"></i>
                                         </a>
 
-                                        {{-- Detail --}}
-                                        <a href="{{ route('admin.infrastruktur.show', $inf->id_infrastruktur) }}"
-                                            class="w-full flex items-center justify-center gap-1 bg-navy-900 hover:bg-navy-950 text-white px-3 py-1.5 rounded-lg text-[8px] font-black transition shadow-sm">
-                                            <i class="fas fa-eye"></i> Detail
+                                        {{-- Edit --}}
+                                        <a href="{{ route('admin.infrastruktur.edit', $inf->id_infrastruktur) }}" title="Edit Data"
+                                            class="w-8 h-8 flex items-center justify-center bg-gold-500 hover:bg-gold-600 text-white rounded-lg text-xs font-black transition shadow-sm hover:scale-105">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+
+                                        {{-- Export PDF --}}
+                                        <a href="{{ route('admin.infrastruktur.pdf', $inf->id_infrastruktur) }}" target="_blank" title="Cetak PDF"
+                                            class="w-8 h-8 flex items-center justify-center bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-black transition shadow-sm hover:scale-105">
+                                            <i class="fas fa-file-pdf"></i>
                                         </a>
 
                                         {{-- Hapus --}}
-                                        <form action="{{ route('admin.infrastruktur.destroy', $inf->id_infrastruktur) }}" method="POST" class="w-full">
+                                        <form action="{{ route('admin.infrastruktur.destroy', $inf->id_infrastruktur) }}" method="POST" class="inline-block">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus infrastruktur ini secara permanen? Seluruh data riwayat, foto, dan hasil AI terkait akan ikut terhapus.')"
-                                                class="w-full flex items-center justify-center gap-1 bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-lg text-[8px] font-black transition shadow-sm">
-                                                <i class="fas fa-trash"></i> Hapus
+                                            <button type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus infrastruktur ini secara permanen? Seluruh data riwayat, foto, dan hasil AI terkait akan ikut terhapus.')" title="Hapus Data"
+                                                class="w-8 h-8 flex items-center justify-center bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-xs font-black transition shadow-sm hover:scale-105">
+                                                <i class="fas fa-trash"></i>
                                             </button>
                                         </form>
 

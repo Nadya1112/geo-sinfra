@@ -51,13 +51,13 @@
                 <a href="{{ route('kabid.profile') }}" class="flex items-center gap-3 group">
                     <div class="text-right">
                         <p class="text-[11px] font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-colors">{{ auth()->user()->name }}</p>
-                        <p class="text-[9px] font-bold text-[#059669] uppercase mt-1">ONLINE</p>
+                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
                     </div>
-                    <div class="w-10 h-10 bg-navy-50 rounded-xl flex items-center justify-center text-navy-900 border border-navy-100 overflow-hidden shadow-sm group-hover:border-gold-300 group-hover:shadow-md transition-all">
+                    <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shadow-md group-hover:shadow-lg transition-all overflow-hidden">
                         @if(auth()->user()->profile_photo)
                             <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
                         @else
-                            <i class="fas fa-user-tie text-xl group-hover:text-gold-500 transition-colors"></i>
+                            <i class="fas fa-user-circle text-xl"></i>
                         @endif
                     </div>
                 </a>

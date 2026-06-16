@@ -34,18 +34,21 @@
 
     @include('admin.partials.sidebar')
 
-    <main class="flex-1 overflow-y-auto custom-scrollbar text-left">
-        <header class="sticky top-0 bg-white/80 backdrop-blur-xl border-b border-slate-100 px-8 py-5 flex justify-between items-center z-40 text-left shadow-sm">
-            <div class="flex items-center gap-4">
-                <a href="{{ route('admin.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-white text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 transition-all border border-slate-200 hover:border-gold-200">
-                    <i class="fas fa-arrow-left text-sm"></i>
+    <main class="flex-1 flex flex-col h-screen overflow-hidden text-left">
+        <header class="bg-white/85 backdrop-blur-xl border-b border-slate-100 px-8 py-5 flex justify-between items-center z-40 text-left">
+            <div class="flex items-center gap-4 text-left">
+                <a href="{{ route('admin.dashboard') }}" 
+                   class="w-10 h-10 bg-white border border-slate-100 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/20 hover:shadow-lg hover:shadow-gold-500/5 transition-all group"
+                   title="Kembali ke Dashboard">
+                    <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
+
                 <div class="text-left">
-                    <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Security & Audit</p>
+                    <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
                     <h2 class="text-xl font-black text-navy-900 leading-none">Log Aktivitas Sistem</h2>
                 </div>
             </div>
-
+            
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
                     <p class="text-[11px] font-black text-navy-900" id="mini-clock">00:00 WITA</p>
@@ -57,7 +60,7 @@
                         <p class="text-[11px] font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
                         <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">Online</p>
                     </a>
-                    <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden shadow-md">
+                    <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md">
                         @if(auth()->user()->profile_photo)
                             <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
                         @else
@@ -68,18 +71,23 @@
             </div>
         </header>
 
-        <div class="p-8 text-left">
-            <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm mb-6 flex flex-wrap gap-4 items-center justify-between">
+        <div class="flex-1 p-8 overflow-y-auto custom-scrollbar">
+            
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
                 <div>
-                    <h3 class="text-sm font-black text-navy-900 uppercase tracking-widest">Audit Trail</h3>
-                    <p class="text-[10px] text-slate-400 font-bold uppercase mt-1">Memantau seluruh aktivitas pengguna di sistem (Contoh Simulasi UI)</p>
+                    <h4 class="font-extrabold text-lg text-navy-900">AUDIT TRAIL</h4>
+                    <p class="text-xs text-slate-400 font-medium text-left">Memantau seluruh aktivitas pengguna di sistem</p>
                 </div>
-                <div class="flex gap-2">
-                    <button class="px-4 py-2 bg-slate-50 text-slate-500 border border-slate-200 rounded-xl text-[10px] font-bold flex items-center gap-2 hover:bg-slate-100 transition-all">
-                        <i class="fas fa-filter"></i> Filter
-                    </button>
-                    <button class="px-4 py-2 bg-slate-50 text-slate-500 border border-slate-200 rounded-xl text-[10px] font-bold flex items-center gap-2 hover:bg-slate-100 transition-all">
-                        <i class="fas fa-download"></i> Ekspor CSV
+                <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
+                    <form action="{{ route('admin.activity') }}" method="GET" class="flex items-center flex-1 md:w-[400px]">
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari log aktivitas..." class="flex-1 pl-4 pr-4 py-2.5 bg-white border border-slate-100 rounded-l-2xl text-xs font-semibold focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm">
+                        <button type="submit" class="bg-white border-y border-r border-slate-100 px-5 py-2.5 rounded-r-2xl hover:bg-slate-50 transition-all shadow-sm group">
+                            <i class="fas fa-search text-slate-400 group-hover:text-gold-500 transition-colors text-xs"></i>
+                        </button>
+                    </form>
+
+                    <button class="bg-navy-900 text-gold-500 text-xs px-6 py-2.5 rounded-2xl font-bold shadow-lg shadow-navy-900/10 hover:bg-navy-800 hover:text-white transition flex items-center gap-2 whitespace-nowrap">
+                        <i class="fas fa-download text-[10px]"></i> Ekspor CSV
                     </button>
                 </div>
             </div>
@@ -87,125 +95,93 @@
             <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
                 <table class="w-full text-left border-collapse">
                     <thead>
-                        <tr class="bg-slate-50/50 border-b border-slate-100">
-                            <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Waktu</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Pengguna</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Aktivitas</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Modul</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">IP Address</th>
+                        <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
+                            <th class="px-8 py-5 text-[10px] font-black text-gold-500 uppercase tracking-widest">Waktu</th>
+                            <th class="px-8 py-5 text-[10px] font-black text-gold-500 uppercase tracking-widest">Pengguna</th>
+                            <th class="px-8 py-5 text-[10px] font-black text-gold-500 uppercase tracking-widest">Aktivitas</th>
+                            <th class="px-8 py-5 text-[10px] font-black text-gold-500 uppercase tracking-widest">Modul</th>
+                            <th class="px-8 py-5 text-[10px] font-black text-gold-500 uppercase tracking-widest text-right">IP Address</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-50 text-sm font-medium">
-                        <!-- Simulated Data Rows -->
-                        <tr class="hover:bg-slate-50/50 transition-colors group">
-                            <td class="px-8 py-5 text-xs text-slate-500 whitespace-nowrap">
-                                <i class="fas fa-clock mr-2 text-slate-300"></i> {{ now()->subMinutes(10)->format('Y-m-d H:i:s') }}
-                            </td>
-                            <td class="px-8 py-5">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-bold">SY</div>
-                                    <div>
-                                        <p class="font-bold text-navy-900">Budi Surveyor</p>
-                                        <p class="text-[9px] text-slate-400 uppercase tracking-wider">Surveyor</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-8 py-5">
-                                <span class="px-3 py-1 bg-emerald-50 text-emerald-600 text-[10px] font-black uppercase tracking-widest rounded-lg border border-emerald-100 inline-flex items-center gap-2">
-                                    <i class="fas fa-plus"></i> Menambahkan Data
-                                </span>
-                            </td>
-                            <td class="px-8 py-5 font-bold text-navy-800">Infrastruktur (ID: 1042)</td>
-                            <td class="px-8 py-5 text-right font-mono text-[11px] text-slate-400 group-hover:text-slate-600">114.120.30.5</td>
-                        </tr>
-                        
-                        <tr class="hover:bg-slate-50/50 transition-colors group">
-                            <td class="px-8 py-5 text-xs text-slate-500 whitespace-nowrap">
-                                <i class="fas fa-clock mr-2 text-slate-300"></i> {{ now()->subHours(1)->format('Y-m-d H:i:s') }}
-                            </td>
-                            <td class="px-8 py-5">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-full bg-gold-100 text-gold-600 flex items-center justify-center text-xs font-bold">KB</div>
-                                    <div>
-                                        <p class="font-bold text-navy-900">Hendra Kabid</p>
-                                        <p class="text-[9px] text-slate-400 uppercase tracking-wider">Kepala Bidang</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-8 py-5">
-                                <span class="px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-black uppercase tracking-widest rounded-lg border border-blue-100 inline-flex items-center gap-2">
-                                    <i class="fas fa-check-circle"></i> Memvalidasi Data
-                                </span>
-                            </td>
-                            <td class="px-8 py-5 font-bold text-navy-800">Infrastruktur (ID: 1021)</td>
-                            <td class="px-8 py-5 text-right font-mono text-[11px] text-slate-400 group-hover:text-slate-600">192.168.1.10</td>
-                        </tr>
+                        <!-- Dynamic Data Rows -->
+                        @forelse($activities as $activity)
+                            @php
+                                $badgeColor = 'slate';
+                                $icon = 'fa-info-circle';
+                                $actionName = $activity->description;
+                                
+                                if (str_contains(strtolower($actionName), 'login')) {
+                                    $badgeColor = 'emerald';
+                                    $icon = 'fa-sign-in-alt';
+                                } elseif (str_contains(strtolower($actionName), 'tambah')) {
+                                    $badgeColor = 'blue';
+                                    $icon = 'fa-plus';
+                                } elseif (str_contains(strtolower($actionName), 'hapus') || str_contains(strtolower($actionName), 'delete')) {
+                                    $badgeColor = 'rose';
+                                    $icon = 'fa-trash';
+                                } elseif (str_contains(strtolower($actionName), 'ubah') || str_contains(strtolower($actionName), 'edit') || str_contains(strtolower($actionName), 'perbarui')) {
+                                    $badgeColor = 'amber';
+                                    $icon = 'fa-pen';
+                                } elseif (str_contains(strtolower($actionName), 'validasi')) {
+                                    $badgeColor = 'emerald';
+                                    $icon = 'fa-check-circle';
+                                }
 
-                        <tr class="hover:bg-slate-50/50 transition-colors group">
-                            <td class="px-8 py-5 text-xs text-slate-500 whitespace-nowrap">
-                                <i class="fas fa-clock mr-2 text-slate-300"></i> {{ now()->subHours(2)->format('Y-m-d H:i:s') }}
-                            </td>
-                            <td class="px-8 py-5">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-full bg-navy-100 text-navy-600 flex items-center justify-center text-xs font-bold">AD</div>
-                                    <div>
-                                        <p class="font-bold text-navy-900">Admin Utama</p>
-                                        <p class="text-[9px] text-slate-400 uppercase tracking-wider">Admin</p>
+                                $roleColor = 'slate';
+                                if($activity->user) {
+                                    if ($activity->user->role == 'admin') $roleColor = 'navy';
+                                    elseif ($activity->user->role == 'kabid') $roleColor = 'gold';
+                                    elseif ($activity->user->role == 'surveyor') $roleColor = 'blue';
+                                }
+                            @endphp
+                            <tr class="hover:bg-slate-50/50 transition-colors group">
+                                <td class="px-8 py-5 text-xs text-slate-500 whitespace-nowrap">
+                                    <i class="fas fa-clock mr-2 text-slate-300"></i> {{ $activity->created_at->format('Y-m-d H:i:s') }}
+                                </td>
+                                <td class="px-8 py-5">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-full bg-{{$roleColor}}-100 text-{{$roleColor}}-600 flex items-center justify-center text-xs font-bold border border-{{$roleColor}}-200">
+                                            {{ $activity->user ? strtoupper(substr($activity->user->name, 0, 2)) : 'SYS' }}
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-navy-900">{{ $activity->user ? $activity->user->name : 'Sistem Otomatis' }}</p>
+                                            <p class="text-[9px] text-slate-400 uppercase tracking-wider">{{ $activity->user ? $activity->user->role : 'System' }}</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td class="px-8 py-5">
-                                <span class="px-3 py-1 bg-amber-50 text-amber-600 text-[10px] font-black uppercase tracking-widest rounded-lg border border-amber-100 inline-flex items-center gap-2">
-                                    <i class="fas fa-pen"></i> Mengubah Konfigurasi
-                                </span>
-                            </td>
-                            <td class="px-8 py-5 font-bold text-navy-800">Manajemen Pengguna</td>
-                            <td class="px-8 py-5 text-right font-mono text-[11px] text-slate-400 group-hover:text-slate-600">10.0.0.2</td>
-                        </tr>
-                        
-                        <tr class="hover:bg-slate-50/50 transition-colors group">
-                            <td class="px-8 py-5 text-xs text-slate-500 whitespace-nowrap">
-                                <i class="fas fa-clock mr-2 text-slate-300"></i> {{ now()->subHours(3)->format('Y-m-d H:i:s') }}
-                            </td>
-                            <td class="px-8 py-5">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center text-xs font-bold">SYS</div>
-                                    <div>
-                                        <p class="font-bold text-navy-900">SYSTEM</p>
-                                        <p class="text-[9px] text-slate-400 uppercase tracking-wider">Automated</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-8 py-5">
-                                <span class="px-3 py-1 bg-rose-50 text-rose-600 text-[10px] font-black uppercase tracking-widest rounded-lg border border-rose-100 inline-flex items-center gap-2">
-                                    <i class="fas fa-trash"></i> Auto-Delete Cache
-                                </span>
-                            </td>
-                            <td class="px-8 py-5 font-bold text-navy-800">System Core</td>
-                            <td class="px-8 py-5 text-right font-mono text-[11px] text-slate-400 group-hover:text-slate-600">127.0.0.1</td>
-                        </tr>
+                                </td>
+                                <td class="px-8 py-5">
+                                    <span class="px-3 py-1 bg-{{$badgeColor}}-50 text-{{$badgeColor}}-600 text-[10px] font-black uppercase tracking-widest rounded-lg border border-{{$badgeColor}}-100 inline-flex items-center gap-2 shadow-sm">
+                                        <i class="fas {{ $icon }}"></i> {{ $actionName }}
+                                    </span>
+                                </td>
+                                <td class="px-8 py-5 font-bold text-navy-800 uppercase text-xs">{{ $activity->type }} {!! $activity->reference_id ? "<span class='text-slate-400 text-[10px]'>(ID: {$activity->reference_id})</span>" : "" !!}</td>
+                                <td class="px-8 py-5 text-right font-mono text-[11px] text-slate-400 group-hover:text-slate-600">{{ $activity->ip_address ?? '127.0.0.1' }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="px-8 py-10 text-center text-sm font-semibold text-gray-400">
+                                    <i class="fas fa-history text-2xl mb-2 block text-gray-300"></i>
+                                    Belum ada aktivitas yang direkam oleh sistem.
+                                </td>
+                            </tr>
+                        @endforelse
 
                     </tbody>
                 </table>
                 
-                <div class="px-8 py-4 border-t border-slate-50 bg-slate-50/30 flex justify-between items-center text-xs text-slate-500 font-bold">
-                    <span>Menampilkan 4 dari 4,092 aktivitas</span>
-                    <div class="flex gap-2">
-                        <button class="px-3 py-1 border border-slate-200 rounded-lg hover:bg-white transition-all text-slate-400 cursor-not-allowed">Sebelummya</button>
-                        <button class="px-3 py-1 bg-navy-900 text-white rounded-lg hover:bg-navy-800 transition-all">Selanjutnya</button>
+                @if($activities instanceof \Illuminate\Pagination\LengthAwarePaginator && $activities->hasPages())
+                    <div class="px-8 py-4 border-t border-slate-50 bg-slate-50/30">
+                        {{ $activities->links() }}
                     </div>
-                </div>
+                @else
+                    <div class="px-8 py-4 border-t border-slate-50 bg-slate-50/30 flex justify-between items-center text-xs text-slate-500 font-bold">
+                        <span>Menampilkan total {{ $activities->count() }} aktivitas</span>
+                    </div>
+                @endif
             </div>
             
-            <div class="mt-8 bg-blue-50 border border-blue-100 p-6 rounded-3xl flex gap-4 items-start shadow-sm">
-                <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-blue-500 shadow-sm shrink-0">
-                    <i class="fas fa-info-circle text-xl"></i>
-                </div>
-                <div>
-                    <h4 class="text-xs font-black text-blue-900 uppercase tracking-widest mb-1">Informasi Backend</h4>
-                    <p class="text-[11px] text-blue-700 font-medium leading-relaxed max-w-3xl">Fitur <strong>Activity Log / Audit Trail</strong> memerlukan pembuatan tabel baru di database (misal: <code>activity_logs</code>) dan pemanggilan <code>Model::created()</code>, <code>Model::updated()</code> event listeners di Laravel Backend untuk menyimpan seluruh aktivitas secara real-time. Tampilan di atas adalah desain antarmuka yang siap disambungkan dengan logika tersebut.</p>
-                </div>
-            </div>
+
 
         </div>
     </main>

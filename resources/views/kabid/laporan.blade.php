@@ -38,14 +38,27 @@
             /* Table Formatting for Formal Document */
             .bg-white { background: transparent !important; box-shadow: none !important; border: none !important; }
             .rounded-\[2rem\] { border-radius: 0 !important; }
-            table { border-collapse: collapse !important; width: 100% !important; border: 1px solid black !important; }
-            th, td { border: 1px solid black !important; padding: 8px !important; color: black !important; font-size: 11pt !important; }
+            table { border-collapse: collapse !important; width: 100% !important; border: 1px solid black !important; table-layout: fixed !important; }
+            th, td { border: 1px solid black !important; padding: 8px !important; color: black !important; font-size: 11pt !important; word-wrap: break-word !important; }
             th { font-weight: bold !important; text-align: center !important; background-color: #f3f4f6 !important; }
             .badge-print { border: none !important; background: transparent !important; padding: 0 !important; }
             
             .custom-scrollbar, .overflow-y-auto, .overflow-hidden { overflow: visible !important; height: auto !important; max-height: none !important; }
             .p-8 { padding: 0 !important; }
             .mt-6 { margin-top: 15px !important; }
+            .ttd-box {
+                display: block !important;
+                margin-top: 40px;
+                text-align: right;
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 11pt;
+                page-break-inside: avoid;
+            }
+            .ttd-inner {
+                display: inline-block;
+                text-align: center;
+                width: 260px;
+            }
         }
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
@@ -77,13 +90,13 @@
                 <a href="{{ route('kabid.profile') }}" class="flex items-center gap-3 group">
                     <div class="text-right">
                         <p class="text-[11px] font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-colors">{{ auth()->user()->name }}</p>
-                        <p class="text-[9px] font-bold text-[#059669] uppercase mt-1 italic">ONLINE</p>
+                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
                     </div>
-                    <div class="w-10 h-10 bg-navy-50 rounded-xl flex items-center justify-center text-navy-900 border border-navy-100 overflow-hidden shadow-sm group-hover:border-gold-300 group-hover:shadow-md transition-all">
+                    <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shadow-md group-hover:shadow-lg transition-all overflow-hidden">
                         @if(auth()->user()->profile_photo)
                             <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
                         @else
-                            <i class="fas fa-user-tie text-xl group-hover:text-gold-500 transition-colors"></i>
+                            <i class="fas fa-user-circle text-xl"></i>
                         @endif
                     </div>
                 </a>
@@ -164,48 +177,62 @@
 
             <!-- Filter Section (No Print) -->
             <div class="bg-white rounded-[2rem] p-8 border border-slate-100 shadow-sm mb-8 no-print">
-                <form action="{{ route('kabid.laporan') }}" method="GET" class="flex flex-wrap md:flex-nowrap gap-6 items-end">
+                <form action="{{ route('kabid.laporan') }}" method="GET" class="flex flex-col gap-6">
                     <input type="hidden" name="show" value="{{ request('show') }}">
-                    <div class="w-full md:flex-1">
-                        <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Cari Nama</label>
-                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Ketik infrastruktur..." class="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                    
+                    <div class="flex flex-wrap md:flex-nowrap gap-6 items-end">
+                        <div class="w-full md:flex-1">
+                            <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Cari Nama</label>
+                            <input type="text" name="search" value="{{ request('search') }}" placeholder="Ketik infrastruktur..." class="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                        </div>
+                        <div class="w-full md:flex-1">
+                            <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Wilayah</label>
+                            <select name="kecamatan" class="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                                <option value="">Semua Kecamatan</option>
+                                @foreach($kecamatan as $kec)
+                                    <option value="{{ $kec->id_kecamatan }}" {{ request('kecamatan') == $kec->id_kecamatan ? 'selected' : '' }}>
+                                        {{ $kec->nama_kecamatan }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="w-full md:flex-1">
+                            <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Kondisi</label>
+                            <select name="kondisi" class="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                                <option value="">Semua Kondisi</option>
+                                <option value="Baik" {{ request('kondisi') == 'Baik' ? 'selected' : '' }}>Baik</option>
+                                <option value="Rusak Sedang" {{ request('kondisi') == 'Rusak Sedang' ? 'selected' : '' }}>Rusak Sedang</option>
+                                <option value="Rusak Berat" {{ request('kondisi') == 'Rusak Berat' ? 'selected' : '' }}>Rusak Berat</option>
+                            </select>
+                        </div>
+                        <div class="w-full md:flex-1">
+                            <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Infrastruktur</label>
+                            <select name="jenis" class="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                                <option value="">Semua Infrastruktur</option>
+                                <option value="Jalan" {{ request('jenis') == 'Jalan' ? 'selected' : '' }}>Jalan</option>
+                                <option value="Titian" {{ request('jenis') == 'Titian' ? 'selected' : '' }}>Titian</option>
+                                <option value="Jembatan" {{ request('jenis') == 'Jembatan' ? 'selected' : '' }}>Jembatan</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="w-full md:flex-1">
-                        <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Wilayah</label>
-                        <select name="kecamatan" class="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
-                            <option value="">Semua Kecamatan</option>
-                            @foreach($kecamatan as $kec)
-                                <option value="{{ $kec->id_kecamatan }}" {{ request('kecamatan') == $kec->id_kecamatan ? 'selected' : '' }}>
-                                    {{ $kec->nama_kecamatan }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="w-full md:flex-1">
-                        <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Kondisi</label>
-                        <select name="kondisi" class="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
-                            <option value="">Semua Analisis</option>
-                            <option value="Baik" {{ request('kondisi') == 'Baik' ? 'selected' : '' }}>Baik</option>
-                            <option value="Sedang" {{ request('kondisi') == 'Sedang' ? 'selected' : '' }}>Sedang</option>
-                            <option value="Berat" {{ request('kondisi') == 'Berat' ? 'selected' : '' }}>Berat</option>
-                        </select>
-                    </div>
-                    <div class="w-full md:flex-1">
-                        <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Infrastruktur</label>
-                        <select name="jenis" class="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
-                            <option value="">Semua Infrastruktur</option>
-                            <option value="Jalan" {{ request('jenis') == 'Jalan' ? 'selected' : '' }}>Jalan</option>
-                            <option value="Titian" {{ request('jenis') == 'Titian' ? 'selected' : '' }}>Titian</option>
-                            <option value="Jembatan" {{ request('jenis') == 'Jembatan' ? 'selected' : '' }}>Jembatan</option>
-                        </select>
-                    </div>
-                    <div class="w-full md:flex-[0.8] flex gap-2 justify-end">
-                        <button type="submit" class="px-6 py-2.5 bg-navy-900 text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-gold-500 transition-all shadow-lg shadow-navy-900/10">
-                            Filter Data
-                        </button>
-                        <a href="{{ route('kabid.laporan') }}" class="px-4 py-2.5 bg-slate-50 text-slate-400 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-100 hover:text-slate-600 transition-all flex items-center border border-slate-100 shadow-sm">
-                            <i class="fas fa-sync-alt"></i>
-                        </a>
+
+                    <div class="flex flex-wrap md:flex-nowrap gap-6 items-end">
+                        <div class="w-full md:flex-1">
+                            <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Mulai Tanggal</label>
+                            <input type="date" name="start_date" value="{{ request('start_date') }}" class="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                        </div>
+                        <div class="w-full md:flex-1">
+                            <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Sampai Tanggal</label>
+                            <input type="date" name="end_date" value="{{ request('end_date') }}" class="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                        </div>
+                        <div class="w-full md:flex-1 flex gap-2 justify-end">
+                            <button type="submit" class="px-6 py-2.5 bg-navy-900 text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-gold-500 transition-all shadow-lg shadow-navy-900/10">
+                                Filter Data
+                            </button>
+                            <a href="{{ route('kabid.laporan') }}" class="px-4 py-2.5 bg-slate-50 text-slate-400 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-100 hover:text-slate-600 transition-all flex items-center border border-slate-100 shadow-sm" title="Reset Filter">
+                                <i class="fas fa-sync-alt"></i>
+                            </a>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -215,27 +242,23 @@
                 <div class="flex items-center gap-6" style="display: flex; align-items: center; justify-content: center;">
                     <img src="{{ asset('logo_dinas.jpeg') }}" style="width: 80px; height: auto;" alt="Logo Instansi">
                     <div style="text-align: center;">
-                        <h2 style="font-size: 16pt; font-weight: bold; text-transform: uppercase; margin: 0; line-height: 1.2;">Pemerintah Kota Banjarmasin</h2>
-                        <h1 style="font-size: 18pt; font-weight: 900; text-transform: uppercase; margin: 5px 0; line-height: 1.2;">Dinas Perumahan Rakyat dan Kawasan Permukiman</h1>
-                        <p style="font-size: 10pt; margin: 0; line-height: 1.5;">Jalan Brigjen H. Hasan Basri No. 45, Kota Banjarmasin, Kalimantan Selatan 70123</p>
-                        <p style="font-size: 10pt; margin: 0; line-height: 1.5;">Telepon: (0511) 330XXXX | Email: disperkim@banjarmasinkota.go.id</p>
+                        <h2 style="font-size: 14pt; font-weight: bold; text-transform: uppercase; margin: 0; line-height: 1.3;">Dinas Perumahan Rakyat dan Kawasan Permukiman Kota Banjarmasin</h2>
+                        <p style="font-size: 10pt; margin: 0; line-height: 1.5;">Jalan R.E Martadinata No. 1 Blok B Lantai 2 Kec. Banjarmasin Tengah, Kota Banjarmasin Kalimantan Selatan - 70111</p>
+                        <p style="font-size: 10pt; margin: 0; line-height: 1.5;">Telepon: (0511) 3365592| Email:  ampihkumuh@gmail.com</p>
                     </div>
                 </div>
             </div>
 
             <!-- Print Document Title -->
             <div class="hidden print-only mb-8" style="text-align: center;">
-                <h3 style="font-size: 14pt; font-weight: bold; text-transform: uppercase; text-decoration: underline; margin-bottom: 15px;">Laporan Rekapitulasi Kondisi Infrastruktur</h3>
-                <div style="font-size: 11pt; display: flex; justify-content: center; gap: 40px;">
-                    <span><strong>Wilayah:</strong> {{ request('kecamatan') ? $kecamatan->find(request('kecamatan'))->nama_kecamatan : 'Semua Kecamatan' }}</span>
-                    <span><strong>Infrastruktur:</strong> {{ request('jenis') ?: 'Semua Jenis' }}</span>
-                    <span><strong>Kondisi:</strong> {{ request('kondisi') ?: 'Semua Kondisi' }}</span>
+                <h3 style="font-size: 14pt; font-weight: bold; text-transform: uppercase; text-decoration: underline; margin-bottom: 12px;">Laporan Rekapitulasi Kondisi Infrastruktur</h3>
+                <div style="font-size: 10pt; display: flex; justify-content: flex-start; gap: 60px; padding-top: 8px; margin-top: 8px;">
+                    @if(request('start_date') && request('end_date'))
+                    <span><strong>Periode:</strong> {{ \Carbon\Carbon::parse(request('start_date'))->translatedFormat('d M Y') }} &ndash; {{ \Carbon\Carbon::parse(request('end_date'))->translatedFormat('d M Y') }}</span>
+                    @endif
                 </div>
             </div>
 
-            <!-- Area khusus filter dan tabel di bawah ini -->
-
-            <!-- Data Table -->
             <div class="bg-white rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden mt-6">
                 <!-- Header with Tampilan Dropdown -->
                 <div class="px-8 py-6 border-b border-slate-50 flex justify-between items-center bg-slate-50/30 no-print">
@@ -301,17 +324,17 @@
                 <table id="laporanTable" class="w-full text-left">
                     <thead>
                         <tr class="bg-slate-50/50 text-[9px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100">
-                            <th class="px-6 py-4 border-b border-slate-100">No</th>
-                            <th class="px-6 py-4 border-b border-slate-100">Infrastruktur</th>
-                            <th class="px-6 py-4 border-b border-slate-100">Wilayah</th>
-                            <th class="px-6 py-4 text-center border-b border-slate-100">Analisis AI</th>
-                            <th class="px-6 py-4 border-b border-slate-100 text-right">Tanggal Data</th>
+                            <th class="px-6 py-4 text-center border-b border-slate-100" style="width: 10%;">No</th>
+                            <th class="px-6 py-4 text-center border-b border-slate-100" style="width: 30%;">Infrastruktur</th>
+                            <th class="px-6 py-4 text-center border-b border-slate-100" style="width: 20%;">Wilayah</th>
+                            <th class="px-6 py-4 text-center border-b border-slate-100" style="width: 20%;">Kondisi</th>
+                            <th class="px-6 py-4 text-center border-b border-slate-100" style="width: 20%;">Tanggal Data</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-50">
                         @forelse($reports as $index => $item)
                         <tr class="group hover:bg-slate-50/50 transition-all">
-                            <td class="px-6 py-3 text-xs font-bold text-slate-400">{{ request('show') == 'all' ? $index + 1 : ($reports->currentPage() - 1) * $reports->perPage() + $index + 1 }}</td>
+                            <td class="px-6 py-3 text-xs font-bold text-slate-400 text-center">{{ request('show') == 'all' ? $index + 1 : ($reports->currentPage() - 1) * $reports->perPage() + $index + 1 }}</td>
                             <td class="px-6 py-3">
                                 <span class="text-xs font-black text-navy-900 uppercase">{{ $item->nama_objek }}</span><br style="mso-data-placement:same-cell;">
                                 <span class="text-[9px] text-slate-400 font-bold uppercase">{{ $item->jenis }}</span>
@@ -340,7 +363,7 @@
                                     </span>
                                 </div>
                             </td>
-                            <td class="px-6 py-3 text-right text-xs font-bold text-slate-400">
+                            <td class="px-6 py-3 text-center text-xs font-bold text-slate-400">
                                 {{ $item->created_at->format('d/m/Y') }}
                             </td>
                         </tr>
@@ -356,23 +379,22 @@
                         @endforelse
                     </tbody>
                 </table>
+
+                <!-- Tanda Tangan (Print Only) -->
+                <div class="hidden print-only ttd-box">
+                    <div class="ttd-inner">
+                        <p style="margin-bottom: 4px;">Banjarmasin, {{ now()->translatedFormat('d F Y') }}</p>
+                        <p style="margin-bottom: 80px;">Mengetahui,<br><strong>Kepala Bidang Kawasan Permukiman</strong></p>
+                        <p style="margin: 0; font-weight: bold; text-decoration: underline;">HIZBULWATHONI, S.T.</p>
+                        <p style="margin: 0;">NIP. 19760814 200604 1 008</p>
+                    </div>
+                </div>
                 
                 @if(request('show') != 'all' && isset($reports) && $reports instanceof \Illuminate\Pagination\LengthAwarePaginator)
                     <div class="px-8 py-4 border-t border-slate-50 bg-slate-50/10 no-print">
                         {{ $reports->links() }}
                     </div>
                 @endif
-            </div>
-
-            <!-- Print Footer (Signature Section) -->
-            <div class="hidden print-only" style="margin-top: 10px; font-family: 'Times New Roman', Times, serif;">
-                <div style="float: right; width: 280px; text-align: center; font-size: 11pt;">
-                    <p style="margin-bottom: 2px;">Banjarmasin, {{ now()->translatedFormat('d F Y') }}</p>
-                    <p style="margin-bottom: 50px;">Mengetahui,<br><strong>Kepala Bidang Permukiman</strong></p>
-                    <p style="margin: 0; font-weight: bold; text-decoration: underline;">{{ auth()->user()->name ?? 'HENDRA SURYANA, ST., MT.' }}</p>
-                    <p style="margin: 0;">NIP. 19850320 201001 1 005</p>
-                </div>
-                <div style="clear: both;"></div>
             </div>
         </div>
     </main>

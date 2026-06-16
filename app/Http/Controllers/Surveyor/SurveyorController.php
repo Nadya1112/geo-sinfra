@@ -288,6 +288,34 @@ class SurveyorController extends Controller
         return redirect()->route('surveyor.history')->with('success', 'Data & hasil Analisis AI berhasil diperbarui!');
     }
 
+    /**
+     * HAPUS DATA INFRASTRUKTUR MILIK SURVEYOR SENDIRI
+     * Hanya bisa dihapus jika status_verifikasi masih 'Pending' (belum diproses admin)
+     */
+    public function destroy($id)
+    {
+        $infrastruktur = Infrastruktur::where('id_infrastruktur', $id)
+            ->where('id_user', auth()->id())
+            ->firstOrFail();
+
+        // Proteksi: tidak boleh hapus jika sudah diverifikasi atau divalidasi admin/kabid
+        if ($infrastruktur->status_verifikasi !== 'Pending') {
+            return redirect()->route('surveyor.history')
+                ->with('error', 'Data tidak dapat dihapus karena sudah diproses oleh Admin. Hubungi Admin untuk penghapusan.');
+        }
+
+        // Hapus foto dari storage jika bukan default
+        if ($infrastruktur->foto_terbaru && $infrastruktur->foto_terbaru !== 'infrastruktur/default.jpg') {
+            Storage::disk('public')->delete($infrastruktur->foto_terbaru);
+        }
+
+        $namaObjek = $infrastruktur->nama_objek;
+        $infrastruktur->forceDelete(); // HardDelete via Eloquent
+
+        return redirect()->route('surveyor.history')
+            ->with('success', "Data \"$namaObjek\" berhasil dihapus.");
+    }
+
     public function map()
     {
         $dataMap = Infrastruktur::with(['cnn', 'analisis', 'kelurahan.kecamatan'])->where('id_user', auth()->id())->get();

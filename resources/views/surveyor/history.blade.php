@@ -21,8 +21,8 @@
             }
         }
     </script>
-    <style> 
-        body { font-family: 'Plus Jakarta Sans', sans-serif; } 
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
@@ -44,7 +44,7 @@
                     <h2 class="text-xl font-black text-navy-900 tracking-tight">Riwayat Survey Anda</h2>
                 </div>
             </div>
-            
+
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
                     <p class="text-[11px] font-black text-navy-900" id="mini-clock">00:00 WITA</p>
@@ -69,10 +69,20 @@
 
         <div class="flex-1 overflow-y-auto custom-scrollbar p-8 pb-16">
             <div class="max-w-7xl mx-auto">
+
+                {{-- Alert Sukses --}}
                 @if(session('success'))
                 <div class="mb-6 px-6 py-4 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-2xl flex items-center gap-3 shadow-sm">
                     <i class="fas fa-check-circle"></i>
                     <p class="text-sm font-bold">{{ session('success') }}</p>
+                </div>
+                @endif
+
+                {{-- Alert Error --}}
+                @if(session('error'))
+                <div class="mb-6 px-6 py-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl flex items-center gap-3 shadow-sm">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <p class="text-sm font-bold">{{ session('error') }}</p>
                 </div>
                 @endif
 
@@ -109,7 +119,7 @@
                                     <td class="px-4 py-2 text-center">
                                         <span class="text-xs font-black text-slate-400">{{ request('show') == 'all' ? $index + 1 : ($riwayat->currentPage() - 1) * $riwayat->perPage() + $index + 1 }}</span>
                                     </td>
-                                    
+
                                     {{-- FOTO --}}
                                     <td class="px-4 py-2 text-center">
                                         <div class="w-10 h-10 rounded-xl overflow-hidden shadow-sm mx-auto bg-slate-100 flex items-center justify-center relative">
@@ -119,7 +129,7 @@
                                             @else
                                                 <i class="fas fa-image text-slate-300 text-sm"></i>
                                             @endif
-                                            
+
                                             {{-- Indikator Verified (Ceklis Hijau) --}}
                                             @if($item->status_verifikasi == 'Verified')
                                             <div class="absolute -top-1 -right-1 w-5 h-5 bg-emerald-500 rounded-full border-[2px] border-white flex items-center justify-center shadow-sm">
@@ -128,13 +138,13 @@
                                             @endif
                                         </div>
                                     </td>
-                                    
+
                                     {{-- NAMA INFRASTRUKTUR --}}
                                     <td class="px-4 py-2">
                                         <p class="text-xs font-black text-navy-900 uppercase tracking-tight mb-0.5">{{ $item->nama_infrastruktur ?? $item->nama_objek }}</p>
                                         <span class="inline-flex px-1.5 py-0.5 bg-navy-50 text-navy-600 rounded-md text-[8px] font-black uppercase tracking-widest">{{ ucfirst($item->jenis) }}</span>
                                     </td>
-                                    
+
                                     {{-- LOKASI --}}
                                     <td class="px-4 py-2">
                                         <div class="flex items-center gap-2">
@@ -149,7 +159,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    
+
                                     {{-- STATUS VALIDASI --}}
                                     <td class="px-4 py-2 text-center">
                                         @if($item->status_validasi == 'Rejected')
@@ -165,7 +175,7 @@
                                             <span class="inline-flex px-2 py-1 bg-slate-100 text-slate-500 border border-slate-200 rounded-lg text-[9px] font-black uppercase tracking-widest shadow-sm">Pending</span>
                                         @endif
                                     </td>
-                                    
+
                                     {{-- SKOR AI --}}
                                     <td class="px-4 py-2">
                                         @if($item->cnn || $item->analisis)
@@ -174,9 +184,9 @@
                                                     @if($item->analisis)
                                                         @php
                                                             $labelMap = [
-                                                                'Baik' => ['bg' => 'bg-emerald-50', 'text' => 'text-emerald-600', 'icon' => 'fa-check-circle'],
-                                                                'Rusak Sedang' => ['bg' => 'bg-orange-50', 'text' => 'text-orange-600', 'icon' => 'fa-hammer'],
-                                                                'Rusak Berat' => ['bg' => 'bg-red-50', 'text' => 'text-red-600', 'icon' => 'fa-exclamation-triangle'],
+                                                                'Baik'        => ['bg' => 'bg-emerald-50', 'text' => 'text-emerald-600', 'icon' => 'fa-check-circle'],
+                                                                'Rusak Sedang'=> ['bg' => 'bg-orange-50',  'text' => 'text-orange-600',  'icon' => 'fa-hammer'],
+                                                                'Rusak Berat' => ['bg' => 'bg-red-50',     'text' => 'text-red-600',     'icon' => 'fa-exclamation-triangle'],
                                                             ];
                                                             $style = $labelMap[$item->analisis->label_prioritas] ?? ['bg' => 'bg-slate-50', 'text' => 'text-slate-600', 'icon' => 'fa-info-circle'];
                                                         @endphp
@@ -195,7 +205,7 @@
                                             <p class="text-[9px] text-slate-400 font-bold uppercase text-center">-</p>
                                         @endif
                                     </td>
-                                    
+
                                     {{-- AKSI --}}
                                     <td class="px-4 py-2 text-center">
                                         <div class="flex items-center justify-center gap-1.5">
@@ -205,6 +215,22 @@
                                             <a href="{{ route('surveyor.infrastruktur.show', $item->id_infrastruktur) }}" class="w-7 h-7 flex items-center justify-center bg-navy-900 text-gold-500 rounded-md hover:bg-navy-950 hover:text-white transition-all shadow-sm cursor-pointer" title="Lihat Detail">
                                                 <i class="fas fa-eye text-[10px]"></i>
                                             </a>
+
+                                            {{-- Tombol Hapus: hanya muncul jika data masih Pending --}}
+                                            @if($item->status_verifikasi === 'Pending')
+                                            <button
+                                                onclick="konfirmasiHapus({{ $item->id_infrastruktur }}, '{{ addslashes($item->nama_objek ?? $item->nama_infrastruktur) }}')"
+                                                class="w-7 h-7 flex items-center justify-center bg-white border border-red-200 text-red-400 rounded-md hover:bg-red-500 hover:text-white hover:border-red-500 hover:shadow-sm transition-all cursor-pointer"
+                                                title="Hapus Data (hanya Pending)">
+                                                <i class="fas fa-trash text-[10px]"></i>
+                                            </button>
+                                            <form id="form-hapus-{{ $item->id_infrastruktur }}"
+                                                action="{{ route('surveyor.infrastruktur.destroy', $item->id_infrastruktur) }}"
+                                                method="POST" class="hidden">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>
@@ -248,6 +274,12 @@
             if (el) el.textContent = timeString.replace('.', ':') + ' WITA';
         }
         setInterval(updateClock, 1000); updateClock();
+
+        function konfirmasiHapus(id, nama) {
+            if (confirm(`Yakin ingin menghapus data "${nama}"?\n\nData yang dihapus tidak dapat dikembalikan.`)) {
+                document.getElementById('form-hapus-' + id).submit();
+            }
+        }
     </script>
 </body>
 </html>

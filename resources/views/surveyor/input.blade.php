@@ -487,8 +487,8 @@
                 
                 map.setView([defLat, defLng], 17);
                 updateMarker(defLat, defLng);
-                btn.innerHTML = '<span class="text-emerald-400 font-bold text-[10px]"><i class="fas fa-check"></i> Sukses (Simulasi)</span>';
-                setTimeout(() => { btn.innerHTML = originalHtml; }, 3000);
+                btn.innerHTML = '<span class="text-amber-400 font-bold text-[10px]"><i class="fas fa-exclamation-triangle"></i> Simulasi (Akurasi Rendah)</span>';
+                setTimeout(() => { btn.innerHTML = originalHtml; }, 4000);
             };
 
             if (navigator.geolocation) {
@@ -501,14 +501,22 @@
                     updateMarker(lat, lng);
                     
                     let accColor = accuracy <= 20 ? 'text-emerald-400' : 'text-orange-400';
-                    btn.innerHTML = `<span class="${accColor} font-bold text-[10px]"><i class="fas fa-check"></i> ±${Math.round(accuracy)}m</span>`;
+                    btn.innerHTML = `<span class="${accColor} font-bold text-[10px]"><i class="fas fa-satellite-dish"></i> ±${Math.round(accuracy)}m (Satelit)</span>`;
                     
-                    setTimeout(() => { btn.innerHTML = originalHtml; }, 3000);
+                    setTimeout(() => { btn.innerHTML = originalHtml; }, 4000);
                 }, function(error) {
+                    if (error.code === 1) { // PERMISSION_DENIED
+                        Swal.fire({
+                            title: 'Izin Lokasi Ditolak!',
+                            text: 'Sistem tidak dapat menggunakan satelit karena izin diblokir browser. Silakan izinkan akses lokasi.',
+                            icon: 'warning',
+                            confirmButtonColor: '#1e1b4b'
+                        });
+                    }
                     fallbackLocation();
                 }, {
                     enableHighAccuracy: true,
-                    timeout: 5000,
+                    timeout: 15000,
                     maximumAge: 0
                 });
             } else {

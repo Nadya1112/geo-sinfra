@@ -44,8 +44,8 @@
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
                 <div>
-                    <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Yearly Report {{ $year }}</p>
-                    <h2 class="text-xl font-black text-navy-900 leading-none">Analisis Tren Tahunan</h2>
+                    <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
+                    <h2 class="text-xl font-black text-navy-900 leading-none">Statistik Tahunan</h2>
                 </div>
             </div>
 
@@ -70,7 +70,7 @@
 
                 {{-- Cetak --}}
                 <button onclick="window.print()"
-                    class="flex items-center gap-2 bg-gold-500 hover:bg-gold-600 text-white px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-gold-500/20 transition-all">
+                    class="flex items-center gap-2 bg-gold-500 hover:bg-gold-600 text-navy-950 px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-gold-500/20 transition-all">
                     <i class="fas fa-print"></i> Cetak Laporan
                 </button>
 

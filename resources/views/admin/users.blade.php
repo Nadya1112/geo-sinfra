@@ -170,15 +170,15 @@
                                 <div class="flex justify-center gap-2">
                                     @if($user->role !== 'kabid')
                                     
-                                    <a href="{{ route('admin.users.edit', $user->id) }}" title="Edit User" class="w-8 h-8 bg-slate-50 text-slate-400 hover:text-gold-500 hover:bg-gold-500/10 rounded-lg transition flex items-center justify-center">
-                                        <i class="fas fa-edit text-[10px]"></i>
+                                    <a href="{{ route('admin.users.edit', $user->id) }}" title="Edit User" class="w-8 h-8 flex items-center justify-center bg-gold-500 hover:bg-gold-600 text-white rounded-lg text-xs font-black transition shadow-sm hover:scale-105">
+                                        <i class="fas fa-edit"></i>
                                     </a>
                                     
                                     <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="inline-block m-0 p-0" onsubmit="return confirm('PERINGATAN!\n\nApakah Anda yakin ingin menghapus akun milik {{ $user->name }}?\nTindakan ini tidak dapat dibatalkan.');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" title="Hapus User" class="w-8 h-8 bg-slate-50 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition flex items-center justify-center">
-                                            <i class="fas fa-trash text-[10px]"></i>
+                                        <button type="submit" title="Hapus User" class="w-8 h-8 flex items-center justify-center bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-xs font-black transition shadow-sm hover:scale-105">
+                                            <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
 

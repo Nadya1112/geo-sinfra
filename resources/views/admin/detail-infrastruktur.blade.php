@@ -62,14 +62,7 @@
             </div>
 
             <div class="flex items-center gap-4">
-                {{-- Jam --}}
-                <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
-                </div>
-                <div class="h-8 w-[1px] bg-slate-100"></div>
-
-                {{-- Tombol Verifikasi di header --}}
+                {{-- SLOT 1: Tombol Verifikasi / Badge Terverifikasi --}}
                 @if(($inf->status_verifikasi ?? 'Pending') != 'Verified')
                     <form action="{{ route('admin.infrastruktur.verifikasi', $inf->id_infrastruktur) }}" method="POST">
                         @csrf
@@ -79,10 +72,24 @@
                         </button>
                     </form>
                 @else
-                    <span class="flex items-center gap-2 bg-emerald-50 text-emerald-600 border border-emerald-200 px-4 py-2.5 rounded-xl text-[10px] font-black">
-                        <i class="fas fa-check-double"></i> Terverifikasi
+                    <span class="flex items-center gap-2 bg-emerald-500 text-white px-4 py-2.5 rounded-xl text-[10px] font-black shadow-sm shadow-emerald-500/20">
+                        <i class="fas fa-check-double text-white"></i> Terverifikasi
                     </span>
                 @endif
+
+                <div class="h-8 w-[1px] bg-slate-100"></div>
+
+                {{-- SLOT 2: Jam (Realtime jika belum verifikasi, Waktu Verifikasi jika sudah) --}}
+                <div class="text-right hidden sm:block">
+                    @if(($inf->status_verifikasi ?? 'Pending') != 'Verified')
+                        <p class="text-[11px] font-black text-navy-900" id="mini-clock">00:00 WITA</p>
+                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    @else
+                        <p class="text-[11px] font-black text-navy-900">{{ \Carbon\Carbon::parse($inf->updated_at)->translatedFormat('H:i') }} WITA</p>
+                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ \Carbon\Carbon::parse($inf->updated_at)->translatedFormat('l, d F Y') }}</p>
+                    @endif
+                </div>
+
 
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
@@ -457,7 +464,9 @@
                             @php
                                 $rows = [
                                     ['label' => 'ID Aset',      'value' => 'INF-'.$inf->id_infrastruktur],
-                                    ['label' => 'Status',       'value' => $inf->status_verifikasi ?? 'Pending'],
+                                    ['label' => 'Status',       'value' => ($inf->status_verifikasi ?? 'Pending') == 'Verified' ? 'Terverifikasi' : 'Pending'],
+                                    ['label' => 'Diverifikasi', 'value' => ($inf->status_verifikasi ?? 'Pending') == 'Verified' ? \Carbon\Carbon::parse($inf->updated_at)->translatedFormat('d M Y, H:i') . ' WITA' : '—'],
+                                    ['label' => 'Admin',        'value' => ($inf->status_verifikasi ?? 'Pending') == 'Verified' ? 'Admin Online' : '—'],
                                     ['label' => 'Tgl Survey',   'value' => $inf->tgl_survey ? \Carbon\Carbon::parse($inf->tgl_survey)->translatedFormat('d M Y') : '-'],
                                     ['label' => 'Dibuat',       'value' => $inf->created_at ? \Carbon\Carbon::parse($inf->created_at)->translatedFormat('d M Y') : '-'],
                                     ['label' => 'CNN Label',    'value' => $hasilCnn->label_kondisi ?? '—'],

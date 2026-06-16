@@ -6,14 +6,27 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Infrastruktur;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class KabidController extends Controller
 {
     public function index()
     {
-        $totalInfrastruktur = Infrastruktur::count();
-        $totalRusakBerat = Infrastruktur::where('kondisi', 'Rusak Berat')->count();
-        $totalPending = Infrastruktur::where('status_verifikasi', 'Verified')->where('status_validasi', 'Pending')->count();
+        $totalInfrastruktur = Infrastruktur::whereNull('deleted_at')->count();
+
+        // ✅ FIX: Gunakan data dari tabel analisis_ai (hasil prediksi AI),
+        //         bukan kolom 'kondisi' (input manual surveyor) agar konsisten dengan Admin Dashboard
+        $aiData = DB::table('analisis_ai')
+            ->join('infrastruktur', 'analisis_ai.id_infrastruktur', '=', 'infrastruktur.id_infrastruktur')
+            ->whereNull('infrastruktur.deleted_at')
+            ->select('analisis_ai.label_prioritas')
+            ->get();
+
+        $totalRusakBerat  = $aiData->where('label_prioritas', 'Rusak Berat')->count();
+        $totalRusakSedang = $aiData->where('label_prioritas', 'Rusak Sedang')->count();
+        $totalBaik        = $aiData->where('label_prioritas', 'Baik')->count();
+
+        $totalPending   = Infrastruktur::where('status_verifikasi', 'Verified')->where('status_validasi', 'Pending')->count();
         $totalPerbaikan = Infrastruktur::where('status_perbaikan', 'Proses Perbaikan')->count();
 
         $recentReports = Infrastruktur::with(['kelurahan.kecamatan', 'user', 'analisis'])
@@ -22,9 +35,11 @@ class KabidController extends Controller
             ->get();
 
         return view('kabid.dashboard', compact(
-            'totalInfrastruktur', 
-            'totalRusakBerat', 
-            'totalPending', 
+            'totalInfrastruktur',
+            'totalRusakBerat',
+            'totalRusakSedang',
+            'totalBaik',
+            'totalPending',
             'totalPerbaikan',
             'recentReports'
         ));
@@ -79,6 +94,19 @@ class KabidController extends Controller
             $query->where('status_validasi', $statusFilter);
         }
 
+        if ($request->kecamatan) {
+            $query->whereHas('kelurahan', function($q) use ($request) {
+                $q->where('id_kecamatan', $request->kecamatan);
+            });
+        }
+
+        if ($request->start_date && $request->end_date) {
+            $query->whereBetween('infrastruktur.created_at', [
+                $request->start_date . ' 00:00:00',
+                $request->end_date . ' 23:59:59'
+            ]);
+        }
+
         if ($request->get('show') == 'all') {
             $allUsulan = $query->get();
         } else {
@@ -91,7 +119,9 @@ class KabidController extends Controller
             'rejected' => Infrastruktur::where('status_verifikasi', 'Verified')->where('status_validasi', 'Rejected')->count(),
         ];
 
-        return view('kabid.validasi', compact('allUsulan', 'counts'));
+        $kecamatan = \App\Models\Kecamatan::all();
+
+        return view('kabid.validasi', compact('allUsulan', 'counts', 'kecamatan'));
     }
 
     public function prosesValidasi(Request $request, $id)
@@ -252,31 +282,30 @@ class KabidController extends Controller
             ->groupBy('jenis')
             ->get();
 
-        // Sebaran Kondisi per Kecamatan (Tahunan)
+        // Sebaran Kondisi per Kecamatan (Tahunan) — menggunakan hasil AI (analisis_ai.label_prioritas)
         $semuaKecamatan = DB::table('kecamatan')->get();
         $kondisiKecamatan = [];
         foreach($semuaKecamatan as $kec) {
             $infraKec = DB::table('infrastruktur')
                 ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
+                ->leftJoin('analisis_ai', 'infrastruktur.id_infrastruktur', '=', 'analisis_ai.id_infrastruktur')
                 ->where('kelurahan.id_kecamatan', $kec->id_kecamatan)
                 ->whereYear('infrastruktur.created_at', $year)
                 ->whereNull('infrastruktur.deleted_at')
                 ->select(
-                    DB::raw("COUNT(CASE WHEN LOWER(kondisi) LIKE '%baik%' THEN 1 END) as baik"),
-                    DB::raw("COUNT(CASE WHEN LOWER(kondisi) LIKE '%ringan%' THEN 1 END) as ringan"),
-                    DB::raw("COUNT(CASE WHEN LOWER(kondisi) LIKE '%sedang%' THEN 1 END) as sedang"),
-                    DB::raw("COUNT(CASE WHEN LOWER(kondisi) LIKE '%berat%' THEN 1 END) as berat"),
+                    DB::raw("COUNT(CASE WHEN LOWER(analisis_ai.label_prioritas) LIKE '%baik%' THEN 1 END) as baik"),
+                    DB::raw("COUNT(CASE WHEN LOWER(analisis_ai.label_prioritas) LIKE '%sedang%' THEN 1 END) as sedang"),
+                    DB::raw("COUNT(CASE WHEN LOWER(analisis_ai.label_prioritas) LIKE '%berat%' THEN 1 END) as berat"),
                     DB::raw("COUNT(*) as total_semua")
                 )
                 ->first();
             
             $kondisiKecamatan[] = [
                 'nama' => $kec->nama_kecamatan,
-                'baik' => $infraKec->baik ?? 0,
-                'ringan' => $infraKec->ringan ?? 0,
+                'baik'   => $infraKec->baik ?? 0,
                 'sedang' => $infraKec->sedang ?? 0,
-                'berat' => $infraKec->berat ?? 0,
-                'total' => $infraKec->total_semua ?? 0
+                'berat'  => $infraKec->berat ?? 0,
+                'total'  => $infraKec->total_semua ?? 0
             ];
         }
 
@@ -298,29 +327,34 @@ class KabidController extends Controller
                 $q->where('id_kecamatan', $request->kecamatan);
             });
         }
+        // Filter Kondisi — gunakan exact match karena nilai sudah sesuai label AI
+        // ('Baik', 'Rusak Sedang', 'Rusak Berat')
         if ($request->kondisi) {
             $query->whereHas('analisis', function($q) use ($request) {
-                $q->where('label_prioritas', 'LIKE', '%' . $request->kondisi . '%');
+                $q->where('label_prioritas', $request->kondisi);
             });
         }
         if ($request->jenis) {
             $query->where('jenis', strtolower($request->jenis));
         }
         if ($request->start_date && $request->end_date) {
-            $query->whereBetween('created_at', [$request->start_date, $request->end_date]);
+            $query->whereBetween('infrastruktur.created_at', [
+                $request->start_date . ' 00:00:00',
+                $request->end_date . ' 23:59:59'
+            ]);
         }
 
         $query = $query->orderBy('created_at', 'desc');
         
         $totalLaporan = $query->count();
         $totalBaik = (clone $query)->whereHas('analisis', function($q) {
-            $q->where('label_prioritas', 'LIKE', '%baik%');
+            $q->where('label_prioritas', 'Baik');
         })->count();
         $totalSedang = (clone $query)->whereHas('analisis', function($q) {
-            $q->where('label_prioritas', 'LIKE', '%sedang%')->orWhere('label_prioritas', 'LIKE', '%ringan%');
+            $q->where('label_prioritas', 'Rusak Sedang');
         })->count();
         $totalBerat = (clone $query)->whereHas('analisis', function($q) {
-            $q->where('label_prioritas', 'LIKE', '%berat%');
+            $q->where('label_prioritas', 'Rusak Berat');
         })->count();
         
         if ($request->get('show') == 'all') {
@@ -332,5 +366,30 @@ class KabidController extends Controller
         $kecamatan = \App\Models\Kecamatan::all();
 
         return view('kabid.laporan', compact('reports', 'kecamatan', 'totalLaporan', 'totalBaik', 'totalSedang', 'totalBerat'));
+    }
+
+    public function exportPdf($id)
+    {
+        $inf = DB::table('infrastruktur')
+            ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
+            ->leftJoin('kecamatan', 'kelurahan.id_kecamatan', '=', 'kecamatan.id_kecamatan')
+            ->leftJoin('users', 'infrastruktur.id_user', '=', 'users.id')
+            ->leftJoin('citra_cnn', 'infrastruktur.id_infrastruktur', '=', 'citra_cnn.id_infrastruktur')
+            ->leftJoin('analisis_ai', 'infrastruktur.id_infrastruktur', '=', 'analisis_ai.id_infrastruktur')
+            ->where('infrastruktur.id_infrastruktur', $id)
+            ->select('infrastruktur.*', 'kecamatan.nama_kecamatan', 'kelurahan.nama_kelurahan', 'users.name as nama_user', 'citra_cnn.skor_cnn', 'citra_cnn.label_kondisi as label_cnn', 'analisis_ai.skor_dt', 'analisis_ai.label_prioritas', 'analisis_ai.rekomendasi')
+            ->first();
+            
+        if (!$inf) return redirect()->route('kabid.monitoring')->with('error', 'ASET TIDAK DITEMUKAN.');
+        
+        $pdf = Pdf::loadView('admin.pdf-infrastruktur', compact('inf'))
+            ->setOptions([
+                'isPhpEnabled'    => true,
+                'dpi'             => 150,
+                'defaultFont'     => 'Helvetica',
+            ])
+            ->setPaper('A4', 'portrait');
+
+        return $pdf->stream('Laporan_Infrastruktur_' . str_replace(' ', '_', $inf->nama_objek ?? 'Aset') . '.pdf');
     }
 }

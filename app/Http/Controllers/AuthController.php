@@ -24,13 +24,10 @@ class AuthController extends Controller
         return view('auth.login', compact('n1', 'n2'));
     }
 
-    /**
-     * Proses Login
-     */
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required',
+            'login' => 'required',
             'password' => 'required',
             'captcha' => 'required|numeric'
         ]);
@@ -40,30 +37,100 @@ class AuthController extends Controller
             return back()->withErrors(['captcha' => 'Jawaban keamanan salah.'])->withInput();
         }
 
-        // Proses Autentikasi
-        $credentials = $request->only('email', 'password');
+        // Cari user berdasarkan email atau nomor WA
+        $loginType = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'no_hp';
         
-        if (Auth::attempt($credentials, $request->has('remember'))) {
-            $request->session()->regenerate();
-            
-            $user = Auth::user();
+        $user = User::where($loginType, $request->login)->first();
 
-            // Redirection Berdasarkan Role (Disesuaikan dengan folder dashboard kamu)
-            if ($user->role == 'admin') {
-                return redirect()->intended('/admin/dashboard');
-            } elseif ($user->role == 'surveyor') {
-                return redirect()->intended('/surveyor/dashboard');
-            } elseif ($user->role == 'kabid') {
-                return redirect()->intended('/kabid/dashboard');
-            }
+        if ($user && Hash::check($request->password, $user->password)) {
+            // Langsung login tanpa OTP
+            Auth::login($user, $request->has('remember'));
+            $request->session()->regenerate();
+
+            if ($user->role == 'admin') return redirect()->intended('/admin/dashboard');
+            if ($user->role == 'surveyor') return redirect()->intended('/surveyor/dashboard');
+            if ($user->role == 'kabid') return redirect()->intended('/kabid/dashboard');
 
             return redirect()->intended('/');
         }
 
-        // Jika Gagal, beri pesan yang jelas
+        // Jika Gagal
         return back()->withErrors([
-            'email' => 'Email atau password tidak sesuai dengan data kami.',
+            'login' => 'Email/No.WA atau password tidak sesuai.',
         ])->withInput();
+    }
+
+    /**
+     * Menampilkan Halaman OTP Pendaftaran
+     */
+    public function showOtp()
+    {
+        if (!session('register_otp_user_id')) {
+            return redirect()->route('login');
+        }
+        return view('auth.otp');
+    }
+
+    /**
+     * Memverifikasi Kode OTP Pendaftaran
+     */
+    public function verifyRegistrationOtp(Request $request)
+    {
+        $request->validate(['otp_code' => 'required|numeric']);
+
+        $userId = session('register_otp_user_id');
+        if (!$userId) return redirect()->route('login');
+
+        $user = User::find($userId);
+
+        if (!$user || $user->otp_code !== $request->otp_code || now()->greaterThan($user->otp_expires_at)) {
+            return back()->withErrors(['otp_code' => 'Kode OTP salah atau sudah kedaluwarsa.']);
+        }
+
+        // OTP Valid, Bersihkan dan Login
+        $user->otp_code = null;
+        $user->otp_expires_at = null;
+        $user->save();
+
+        Auth::login($user);
+        session()->forget(['register_otp_user_id', 'demo_otp']);
+        $request->session()->regenerate();
+
+        if ($user->role == 'admin') return redirect()->intended('/admin/dashboard');
+        if ($user->role == 'surveyor') return redirect()->intended('/surveyor/dashboard');
+        if ($user->role == 'kabid') return redirect()->intended('/kabid/dashboard');
+
+        return redirect()->intended('/');
+    }
+
+    /**
+     * Mengirim Ulang Kode OTP Pendaftaran
+     */
+    public function resendRegistrationOtp(Request $request)
+    {
+        $userId = session('register_otp_user_id');
+        if (!$userId) return redirect()->route('login');
+
+        $user = User::find($userId);
+        if ($user) {
+            $otp = rand(100000, 999999);
+            $user->otp_code = $otp;
+            $user->otp_expires_at = now()->addMinutes(5);
+            $user->save();
+
+            if ($request->input('method') === 'call') {
+                // SIMULASI PANGGILAN TELEPON (VOICE OTP)
+                \Illuminate\Support\Facades\Log::info("SIMULASI: Panggilan Suara OTP ke {$user->no_hp} berisi kode {$otp}.");
+                return back()->with('success', 'Kami sedang memanggil nomor Anda. Silakan angkat telepon untuk mendengar kode OTP.');
+            } else {
+                // PENGIRIMAN VIA WHATSAPP (FONNTE)
+                $this->sendWhatsAppOtp($user->no_hp, $otp);
+                \Illuminate\Support\Facades\Log::info("OTP Pendaftaran Ulang dikirim ke {$user->no_hp} via Fonnte.");
+                return back()->with('success', 'Kode OTP pendaftaran baru telah dikirim via WhatsApp!');
+            }
+        }
+
+        return redirect()->route('login');
     }
 
     /**
@@ -87,7 +154,7 @@ class AuthController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'no_hp' => $request->no_hp,
@@ -95,7 +162,19 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect('/login')->with('success', 'Akun berhasil dibuat! Silakan masuk.');
+        $otp = rand(100000, 999999);
+        $user->otp_code = $otp;
+        $user->otp_expires_at = now()->addMinutes(5);
+        $user->save();
+
+        session([
+            'register_otp_user_id' => $user->id,
+        ]);
+
+        $this->sendWhatsAppOtp($user->no_hp, $otp);
+        \Illuminate\Support\Facades\Log::info("OTP Pendaftaran dikirim ke {$user->no_hp} via Fonnte.");
+
+        return redirect()->route('register.otp')->with('success', 'Kode OTP pendaftaran telah dikirim ke WhatsApp Anda.');
     }
 
     /**
@@ -201,5 +280,30 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
         
         return redirect('/login');
+    }
+    /**
+     * Helper untuk Mengirim Pesan via Fonnte API
+     */
+    private function sendWhatsAppOtp($target, $otp)
+    {
+        $message = "🔒 *GEO-SINFRA - Keamanan Ganda*\n\nKode OTP Anda adalah: *{$otp}*\n\nKode ini berlaku selama 5 menit. _JANGAN BERIKAN KODE INI KEPADA SIAPAPUN_.";
+
+        try {
+            $response = \Illuminate\Support\Facades\Http::withHeaders([
+                'Authorization' => 'HBxoEKb5taLkAscTeh6b'
+            ])->post('https://api.fonnte.com/send', [
+                'target' => $target,
+                'message' => $message,
+                'countryCode' => '62', // Opsional, sesuaikan dengan target API
+            ]);
+
+            $body = $response->body();
+            \Illuminate\Support\Facades\Log::info('Response dari Fonnte: ' . $body);
+
+            return $body;
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Fonnte API Error: ' . $e->getMessage());
+            return false;
+        }
     }
 }

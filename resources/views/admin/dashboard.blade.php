@@ -286,10 +286,41 @@
                         </div>
                         <div>
                             <h3 id="qm-title" class="text-lg font-black text-navy-900">Title</h3>
+                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">Akses Cepat</p>
+                        </div>
+                    </div>
+                    <button onclick="closeQuickModal()" class="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-400 rounded-xl hover:bg-red-50 hover:text-red-500 transition-all shrink-0">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <p id="qm-desc" class="text-xs text-slate-500 font-medium leading-relaxed mb-8">Description here</p>
+                
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeQuickModal()" class="flex-1 py-4 bg-slate-100 text-slate-500 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-200 transition-all">
+                        Batal
+                    </button>
+                    <a id="qm-btn" href="#" class="flex-[2] py-4 flex items-center justify-center gap-2 bg-navy-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-gold-500 transition-all shadow-xl shadow-navy-900/10 group">
+                        Lanjutkan <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- SweetAlert2 -->
+    <!-- SweetAlert2 — dipindahkan ke sini, SETELAH semua HTML modal selesai -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
+        function updateClock() {
+            const now = new Date();
+            const options = { timeZone: 'Asia/Makassar', hour: '2-digit', minute: '2-digit', hour12: false };
+            const timeString = new Intl.DateTimeFormat('id-ID', options).format(now);
+            const el = document.getElementById('mini-clock');
+            if (el) el.textContent = timeString.replace('.', ':') + ' WITA';
+        }
+        setInterval(updateClock, 1000); updateClock();
+
         function startBackup() {
             Swal.fire({
                 title: 'Mempersiapkan Backup',
@@ -323,38 +354,6 @@
                 });
             })
         }
-    </script>
-                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">Akses Cepat</p>
-                        </div>
-                    </div>
-                    <button onclick="closeQuickModal()" class="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-400 rounded-xl hover:bg-red-50 hover:text-red-500 transition-all shrink-0">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                
-                <p id="qm-desc" class="text-xs text-slate-500 font-medium leading-relaxed mb-8">Description here</p>
-                
-                <div class="flex gap-3">
-                    <button type="button" onclick="closeQuickModal()" class="flex-1 py-4 bg-slate-100 text-slate-500 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-200 transition-all">
-                        Batal
-                    </button>
-                    <a id="qm-btn" href="#" class="flex-[2] py-4 flex items-center justify-center gap-2 bg-navy-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-gold-500 transition-all shadow-xl shadow-navy-900/10 group">
-                        Lanjutkan <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function updateClock() {
-            const now = new Date();
-            const options = { timeZone: 'Asia/Makassar', hour: '2-digit', minute: '2-digit', hour12: false };
-            const timeString = new Intl.DateTimeFormat('id-ID', options).format(now);
-            const el = document.getElementById('mini-clock');
-            if (el) el.textContent = timeString.replace('.', ':') + ' WITA';
-        }
-        setInterval(updateClock, 1000); updateClock();
 
         function openQuickModal(title, desc, url, icon, colorClass) {
             document.getElementById('qm-title').innerText = title;

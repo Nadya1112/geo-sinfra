@@ -7,8 +7,8 @@
 <div id="mobile-overlay" onclick="toggleMobileMenu()" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9998] hidden md:hidden transition-opacity duration-300 opacity-0"></div>
 
 {{-- Sidebar Desktop --}}
-<aside class="w-64 bg-[#0f0e2c] text-white flex-col hidden md:flex shadow-2xl z-20 text-left border-r border-white/5 shrink-0">
-    <div class="p-6 flex-1 text-left">
+<aside class="w-64 bg-[#0f0e2c] text-white flex-col hidden md:flex shadow-2xl z-20 text-left border-r border-white/5 shrink-0 h-screen">
+    <div class="p-6 flex-1 text-left overflow-y-auto custom-scrollbar">
         <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 mb-10 hover:opacity-85 transition-opacity group">
             <div class="w-9 h-9 bg-white rounded-xl overflow-hidden shadow-lg shadow-navy-950/40 group-hover:scale-105 transition-all">
                 <img src="{{ asset('logo_geo-sinfra.png') }}" class="w-full h-full object-contain" alt="Logo">
@@ -39,6 +39,17 @@
                class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.infrastruktur*') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
                 <i class="fas fa-database {{ request()->routeIs('admin.infrastruktur*') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 Manajemen Infrastruktur
+            </a>
+
+            <a href="{{ route('admin.laporan-warga') }}" 
+               class="flex items-center justify-between px-4 py-3.5 {{ request()->routeIs('admin.laporan-warga*') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left relative w-full">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-bullhorn {{ request()->routeIs('admin.laporan-warga*') ? '' : 'group-hover:text-gold-500' }}"></i> 
+                    <span>Laporan Warga</span>
+                </div>
+                @if(isset($laporanMenungguCount) && $laporanMenungguCount > 0)
+                <span class="bg-red-500 text-white text-[10px] font-black px-1.5 py-0.5 rounded-md min-w-[20px] text-center shadow-lg">{{ $laporanMenungguCount }}</span>
+                @endif
             </a>
 
             <a href="{{ route('admin.statistik') }}" 
@@ -76,7 +87,7 @@
             @csrf
             <button type="submit" class="flex items-center gap-3 px-4 py-3 text-red-400 hover:text-red-300 w-full text-left text-sm font-bold transition group">
                 <i class="fas fa-sign-out-alt group-hover:-translate-x-1 transition-transform"></i> 
-                Keluar Sistem
+                Log Out
             </button>
         </form>
     </div>
@@ -137,6 +148,17 @@
                class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.infrastruktur*') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
                 <i class="fas fa-database {{ request()->routeIs('admin.infrastruktur*') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 Manajemen Infrastruktur
+            </a>
+
+            <a href="{{ route('admin.laporan-warga') }}" 
+               class="flex items-center justify-between px-4 py-3.5 {{ request()->routeIs('admin.laporan-warga*') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left relative w-full">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-bullhorn {{ request()->routeIs('admin.laporan-warga*') ? '' : 'group-hover:text-gold-500' }}"></i> 
+                    <span>Laporan Warga</span>
+                </div>
+                @if(isset($laporanMenungguCount) && $laporanMenungguCount > 0)
+                <span class="bg-red-500 text-white text-[10px] font-black px-1.5 py-0.5 rounded-md min-w-[20px] text-center shadow-lg">{{ $laporanMenungguCount }}</span>
+                @endif
             </a>
 
             <a href="{{ route('admin.statistik') }}" 

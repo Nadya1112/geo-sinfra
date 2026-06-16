@@ -3,41 +3,252 @@
 <head>
     <meta charset="UTF-8">
     <title>Laporan Infrastruktur - {{ $inf->nama_objek ?? $inf->nama_infrastruktur ?? 'Tanpa Nama' }}</title>
-    <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <style>
-        body { font-family: Helvetica, Arial, sans-serif; color: #333; line-height: 1.6; }
-        .header { text-align: center; border-bottom: 2px solid #1e1b4b; padding-bottom: 10px; margin-bottom: 20px; }
-        .header h1 { margin: 0; color: #1e1b4b; font-size: 24px; text-transform: uppercase; }
-        .header p { margin: 5px 0 0; color: #666; font-size: 12px; }
-        
-        .section-title { font-size: 14px; font-weight: bold; color: #1e1b4b; text-transform: uppercase; background-color: #f3f4f6; padding: 8px; margin-top: 20px; margin-bottom: 10px; border-left: 4px solid #3b82f6; }
-        .section-title.purple { border-left-color: #a855f7; }
-        .section-title.emerald { border-left-color: #10b981; }
+        @page {
+            size: A4 portrait;
+            margin: 20mm 20mm 20mm 25mm;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Times New Roman, serif; color: #111; font-size: 14px; line-height: 1.5; }
 
-        table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
-        table th { text-align: left; width: 30%; font-size: 12px; color: #666; padding: 8px; border-bottom: 1px solid #eee; }
-        table td { font-size: 12px; font-weight: bold; color: #1e1b4b; padding: 8px; border-bottom: 1px solid #eee; }
+        /* ── KOP DINAS ── */
+        .kop-wrapper {
+            border-bottom: 4px solid #1a1a1a;
+            padding-bottom: 8px;
+            margin-bottom: 4px;
+        }
+        .kop-inner {
+            display: table;
+            width: 100%;
+        }
+        .kop-logo-kiri {
+            display: table-cell;
+            width: 80px;
+            vertical-align: middle;
+            text-align: center;
+        }
+        .kop-logo-kanan {
+            display: table-cell;
+            width: 80px;
+            vertical-align: middle;
+            text-align: center;
+        }
+        .kop-teks {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            padding: 0 8px;
+        }
+        .kop-logo-kiri img,
+        .kop-logo-kanan img {
+            max-width: 70px;
+            max-height: 70px;
+        }
+        .kop-teks .pemerintah {
+            font-size: 11px;
+            font-weight: normal;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .kop-teks .nama-dinas {
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #1a1a1a;
+        }
+        .kop-teks .alamat {
+            font-size: 10px;
+            color: #444;
+            margin-top: 2px;
+        }
+        .kop-teks .kontak {
+            font-size: 10px;
+            color: #444;
+        }
+        .garis-bawah-kop {
+            border-top: 1px solid #1a1a1a;
+            margin-top: 6px;
+        }
 
-        .badge { display: inline-block; padding: 5px 10px; font-size: 11px; font-weight: bold; text-transform: uppercase; border-radius: 4px; border: 1px solid; }
-        .badge-baik { background-color: #ecfdf5; color: #059669; border-color: #a7f3d0; }
-        .badge-sedang { background-color: #fff7ed; color: #ea580c; border-color: #fed7aa; }
-        .badge-berat { background-color: #fef2f2; color: #dc2626; border-color: #fecaca; }
+        /* ── JUDUL LAPORAN ── */
+        .judul-laporan {
+            text-align: center;
+            margin: 16px 0 12px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+        .judul-laporan h2 {
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: underline;
+        }
+        .judul-laporan p {
+            font-size: 11px;
+            color: #555;
+            margin-top: 3px;
+        }
 
-        .photo-container { text-align: center; margin-top: 20px; }
-        .photo-container img { max-width: 100%; max-height: 350px; border: 1px solid #ccc; padding: 5px; }
-        .photo-caption { font-size: 10px; color: #999; margin-top: 5px; font-style: italic; }
+        /* ── SECTION ── */
+        .section-title {
+            font-size: 11px;
+            font-weight: bold;
+            color: #1e1b4b;
+            text-transform: uppercase;
+            background-color: #f3f4f6;
+            padding: 6px 8px;
+            margin-top: 14px;
+            margin-bottom: 8px;
+            border-left: 4px solid #3b82f6;
+        }
+        .section-title.purple { border-left-color: #7c3aed; }
+        .section-title.emerald { border-left-color: #059669; }
 
-        .footer { position: fixed; bottom: -30px; left: 0; right: 0; text-align: center; font-size: 10px; color: #999; border-top: 1px solid #eee; padding-top: 10px; }
+        /* ── TABEL DATA ── */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+        table th {
+            text-align: left;
+            width: 32%;
+            font-size: 11px;
+            font-weight: normal;
+            color: #555;
+            padding: 6px 8px;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: top;
+        }
+        table td {
+            font-size: 11px;
+            font-weight: bold;
+            color: #1a1a1a;
+            padding: 6px 8px;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: top;
+        }
+
+        /* ── BADGE ── */
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 3px;
+            border: 1px solid;
+        }
+        .badge-baik   { background-color: #ecfdf5; color: #047857; border-color: #6ee7b7; }
+        .badge-sedang { background-color: #fff7ed; color: #c2410c; border-color: #fdba74; }
+        .badge-berat  { background-color: #fef2f2; color: #b91c1c; border-color: #fca5a5; }
+
+        /* ── FOTO ── */
+        .photo-container { text-align: center; margin-top: 12px; }
+        .photo-container img {
+            max-width: 100%;
+            max-height: 280px;
+            border: 1px solid #d1d5db;
+            padding: 4px;
+        }
+        .photo-caption { font-size: 9px; color: #9ca3af; margin-top: 4px; font-style: italic; }
+
+        /* ── TANDA TANGAN ── */
+        .ttd-wrapper {
+            page-break-inside: avoid;
+            margin-top: 28px;
+            width: 100%;
+        }
+        .ttd-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .ttd-table td {
+            border: none !important;
+            background: none !important;
+            padding: 0 !important;
+            vertical-align: top;
+            font-size: 11px;
+            font-weight: normal;
+            color: #111;
+        }
+        .ttd-kota-tgl { margin-bottom: 6px; }
+        .ttd-jabatan  { font-weight: bold; margin-bottom: 4px; }
+        .ttd-ruang    { height: 60px; }
+        .ttd-nama     { font-weight: bold; text-decoration: underline; }
+        .ttd-nip      { font-size: 10px; color: #444; margin-top: 2px; }
+
+        /* ── FOOTER ── */
+        .footer {
+            position: fixed;
+            bottom: -20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 9px;
+            color: #9ca3af;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 6px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>Laporan Detail Infrastruktur</h1>
-        <p>Sistem Informasi Geografis (GEO-SINFRA) - Dokumen Resmi</p>
+    {{-- ═══════════════════════════════════════════ --}}
+    {{-- KOP DINAS                                   --}}
+    {{-- ═══════════════════════════════════════════ --}}
+    @php
+        // Logo Dinas (kiri)
+        $logoKiriPath = public_path('logo_dinas.jpeg');
+        $logoKiriB64  = '';
+        if (file_exists($logoKiriPath)) {
+            $logoKiriB64 = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($logoKiriPath));
+        }
+
+        // Logo GEO-SINFRA (kanan)
+        $logoKananPath = public_path('logo_geo-sinfra.png');
+        $logoKananB64  = '';
+        if (file_exists($logoKananPath)) {
+            $logoKananB64 = 'data:image/png;base64,' . base64_encode(file_get_contents($logoKananPath));
+        }
+    @endphp
+
+    <div class="kop-wrapper">
+        <div class="kop-inner">
+            {{-- Logo Dinas (kiri) --}}
+            <div class="kop-logo-kiri">
+                @if($logoKiriB64)
+                    <img src="{{ $logoKiriB64 }}" alt="Logo Dinas">
+                @endif
+            </div>
+
+            {{-- Teks Kop --}}
+            <div class="kop-teks">
+                <div class="nama-dinas">Dinas Perumahan Rakyat dan Kawasan Permukiman</div>
+                <div class="nama-dinas">Kota Banjarmasin</div>
+                <div class="alamat">Jl. R.E. Martadinata No. 1 Blok B Lt. 2, Kec. Banjarmasin Tengah, Kota Banjarmasin, Kalimantan Selatan 70111</div>
+                <div class="kontak">Telp: (0511) 3365592 &nbsp;|&nbsp; Email: ampihkumuh@gmail.com</div>
+            </div>
+
+            {{-- Logo GEO-SINFRA (kanan) --}}
+            <div class="kop-logo-kanan">
+                @if($logoKananB64)
+                    <img src="{{ $logoKananB64 }}" alt="GEO-SINFRA">
+                @endif
+            </div>
+        </div>
+        <div class="garis-bawah-kop"></div>
     </div>
 
-    <div class="section-title">Identitas & Lokasi</div>
+    {{-- ═══════════════════════════════════════════ --}}
+    {{-- JUDUL LAPORAN                               --}}
+    {{-- ═══════════════════════════════════════════ --}}
+    <div class="judul-laporan">
+        <h2>Laporan Data Infrastruktur Permukiman</h2>
+    </div>
+
+    {{-- ═══════════════════════════════════════════ --}}
+    {{-- 1. IDENTITAS & LOKASI                       --}}
+    {{-- ═══════════════════════════════════════════ --}}
+    <div class="section-title">1. Identitas &amp; Lokasi</div>
     <table>
         <tr>
             <th>Nama Infrastruktur</th>
@@ -59,64 +270,130 @@
             <th>Koordinat (Lat, Lng)</th>
             <td>{{ $inf->latitude }}, {{ $inf->longitude }}</td>
         </tr>
+        <tr>
+            <th>Tanggal Survey</th>
+            <td>{{ $inf->tgl_survey ? \Carbon\Carbon::parse($inf->tgl_survey)->translatedFormat('d F Y') : '-' }}</td>
+        </tr>
+        <tr>
+            <th>Surveyor</th>
+            <td>{{ $inf->nama_user ?? '-' }}</td>
+        </tr>
+        <tr>
+            <th>Dimensi</th>
+            <td>{{ $inf->panjang ?? '-' }} m &times; {{ $inf->lebar ?? '-' }} m</td>
+        </tr>
+        <tr>
+            <th>Material Eksisting</th>
+            <td>{{ $inf->material_eksisting ?? '-' }}</td>
+        </tr>
     </table>
 
-    <div class="section-title purple">Hybrid AI Analytics (Visual & Logic)</div>
+    {{-- ═══════════════════════════════════════════ --}}
+    {{-- 2. HASIL ANALISIS AI                        --}}
+    {{-- ═══════════════════════════════════════════ --}}
+    <div class="section-title purple">2. Hasil Analisis Hybrid AI (Visual CNN &amp; Decision Tree)</div>
     @php
         $badgeClass = match($inf->label_prioritas) {
-            'Rusak Berat' => 'badge-berat',
+            'Rusak Berat'  => 'badge-berat',
             'Rusak Sedang' => 'badge-sedang',
-            default => 'badge-baik'
+            default        => 'badge-baik'
         };
     @endphp
     <table>
         <tr>
-            <th>Visual Analysis (CNN)</th>
-            <td>{{ $inf->label_cnn ?? 'Belum Dianalisis' }} ({{ round(($inf->skor_cnn ?? 0) * 100) }}%)</td>
-        </tr>
-        <tr>
-            <th>Structural Logic (DT)</th>
-            <td>Skor: {{ $inf->skor_dt ?? 0 }}/100</td>
-        </tr>
-        <tr>
-            <th>Status Akhir Sistem</th>
-            <td>
-                <span class="badge {{ $badgeClass }}">{{ strtoupper($inf->label_prioritas ?? 'Pending') }}</span>
+            <th>Analisis Visual (CNN)</th>
+            <td>{{ $inf->label_cnn ?? 'Belum Dianalisis' }}
+                @if($inf->skor_cnn) ({{ round($inf->skor_cnn * 100) }}% keyakinan) @endif
             </td>
         </tr>
         <tr>
-            <th>Rekomendasi AI</th>
-            <td style="font-style: italic; color: #4b5563;">"{{ $inf->rekomendasi ?? 'Melakukan kalibrasi data...' }}"</td>
+            <th>Structural Logic (Decision Tree)</th>
+            <td>Skor: {{ $inf->skor_dt ?? 0 }} / 100</td>
+        </tr>
+        <tr>
+            <th>Status Prioritas Akhir</th>
+            <td><span class="badge {{ $badgeClass }}">{{ strtoupper($inf->label_prioritas ?? 'Belum Dianalisis') }}</span></td>
+        </tr>
+        <tr>
+            <th>Rekomendasi Sistem</th>
+            <td style="font-style:italic; color:#374151;">"{{ $inf->rekomendasi ?? 'Menunggu hasil analisis...' }}"</td>
+        </tr>
+        <tr>
+            <th>Status Verifikasi</th>
+            <td>{{ $inf->status_verifikasi ?? 'Pending' }}</td>
         </tr>
     </table>
 
-    <div class="section-title emerald">Dokumentasi Visual</div>
+    {{-- ═══════════════════════════════════════════ --}}
+    {{-- 3. DOKUMENTASI VISUAL                       --}}
+    {{-- ═══════════════════════════════════════════ --}}
+    <div class="section-title emerald">3. Dokumentasi Visual</div>
     <div class="photo-container">
         @if($inf->foto_terbaru && $inf->foto_terbaru != 'default.jpg')
             @php
-                $path = $inf->foto_terbaru;
-                $cleanPath = str_contains($path, 'infrastruktur/') ? $path : 'infrastruktur/' . $path;
+                // Normalisasi path: bersihkan backslash Windows & pastikan prefix folder benar
+                $rawPath   = str_replace('\\', '/', $inf->foto_terbaru);
+                $cleanPath = str_contains($rawPath, 'infrastruktur/') ? $rawPath : 'infrastruktur/' . $rawPath;
+
+                // Absolute path ke file di storage
                 $imagePath = storage_path('app/public/' . $cleanPath);
+
+                // Normalisasi extension ke lowercase agar MIME type valid
+                $ext     = strtolower(pathinfo($imagePath, PATHINFO_EXTENSION));
+                // 'jpg' HARUS dikonversi ke 'jpeg' untuk data URI yang benar di DomPDF
+                $mimeExt = ($ext === 'jpg') ? 'jpeg' : $ext;
             @endphp
+
             @if(file_exists($imagePath))
                 @php
-                    $type = pathinfo($imagePath, PATHINFO_EXTENSION);
-                    $data = file_get_contents($imagePath);
-                    $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+                    $data   = file_get_contents($imagePath);
+                    $base64 = 'data:image/' . $mimeExt . ';base64,' . base64_encode($data);
                 @endphp
                 <img src="{{ $base64 }}" alt="Foto Infrastruktur">
             @else
-                <div style="padding: 50px; background: #f9f9f9; border: 1px solid #ddd; color: #aaa;">[ FOTO FILE TIDAK DITEMUKAN DI SERVER ]</div>
+                <div style="padding:30px; background:#fef9ec; border:1px dashed #f59e0b; color:#92400e; font-size:10px; text-align:center;">
+                    <strong>[ FOTO TIDAK DITEMUKAN ]</strong><br>
+                    <span style="color:#aaa; font-size:9px;">{{ $imagePath }}</span>
+                </div>
             @endif
         @else
-            <div style="padding: 50px; background: #f9f9f9; border: 1px solid #ddd; color: #aaa;">[ TIDAK ADA FOTO TERSEDIA ]</div>
+            <div style="padding:40px; background:#f9fafb; border:1px dashed #d1d5db; color:#9ca3af; text-align:center; font-size:11px;">
+                [ TIDAK ADA FOTO TERSEDIA ]
+            </div>
         @endif
-        
-        <p class="photo-caption">{{ $inf->foto_terbaru ?? 'tidak_ada_foto.jpg' }} - Diupload oleh {{ $inf->nama_user ?? 'Admin' }}</p>
+        <p class="photo-caption">
+            Foto: {{ basename($inf->foto_terbaru ?? 'tidak_ada_foto.jpg') }}
+            &nbsp;&mdash;&nbsp; Diupload oleh: {{ $inf->nama_user ?? 'Admin' }}
+        </p>
     </div>
 
+    {{-- ═══════════════════════════════════════════ --}}
+    {{-- TANDA TANGAN                                --}}
+    {{-- ═══════════════════════════════════════════ --}}
+    <div class="ttd-wrapper">
+        <table class="ttd-table">
+            <tr>
+                {{-- Kolom kiri: kosong --}}
+                <td style="width:50%;"></td>
+
+                {{-- Kolom kanan: TTD --}}
+                <td style="width:50%; text-align:center;">
+                    <div class="ttd-kota-tgl">Banjarmasin, {{ now()->translatedFormat('d F Y') }}</div>
+                    <div class="ttd-jabatan">Kepala Bidang Kawasan Permukiman</div>
+                    <div class="ttd-ruang"></div>
+                    <div class="ttd-nama">HIZBULWATHONI, S.T.</div>
+                    <div class="ttd-nip">NIP. 19760814 200604 1 008</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    {{-- ═══════════════════════════════════════════ --}}
+    {{-- FOOTER                                      --}}
+    {{-- ═══════════════════════════════════════════ --}}
     <div class="footer">
-        Dicetak pada: {{ now()->translatedFormat('l, d F Y H:i:s') }} WITA | GEO-SINFRA System
+        Dicetak melalui GEO-SINFRA &nbsp;|&nbsp; {{ now()->translatedFormat('d F Y, H:i') }} WITA
+        &nbsp;|&nbsp; Dinas Perumahan Rakyat dan Kawasan Permukiman Kota Banjarmasin
     </div>
 
 </body>
