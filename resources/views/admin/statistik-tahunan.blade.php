@@ -50,12 +50,6 @@
             </div>
 
             <div class="flex items-center gap-4">
-                <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
-                </div>
-                <div class="h-8 w-[1px] bg-slate-100"></div>
-
                 {{-- Tahun Dropdown --}}
                 <form action="{{ url()->current() }}" method="GET" class="relative group">
                     <select name="year" onchange="this.form.submit()" 
@@ -74,6 +68,11 @@
                     <i class="fas fa-print"></i> Cetak Laporan
                 </button>
 
+                <div class="h-8 w-[1px] bg-slate-100"></div>
+                <div class="text-right hidden sm:block">
+                    <p class="text-[11px] font-black text-navy-900" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin.profile') }}" class="text-right group">
@@ -243,7 +242,7 @@
 
         // Kurva-S Chart
         const ctx = document.getElementById('yearlyChart').getContext('2d');
-        const monthLimit = 5;
+        const monthLimit = 12;
         const allLabels = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
         const chartLabels = allLabels.slice(0, monthLimit);
         const rawData = @json($chartData).slice(0, monthLimit);

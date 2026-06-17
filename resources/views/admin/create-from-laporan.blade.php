@@ -117,7 +117,7 @@
                                 <div class="md:col-span-2">
                                     <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">Nama Infrastruktur <span class="text-red-400">*</span></label>
                                     <input type="text" name="nama_infrastruktur"
-                                           value="{{ old('nama_infrastruktur') ?? Str::limit('Laporan: ' . $laporan->deskripsi, 50) }}"
+                                           value="{{ old('nama_infrastruktur') }}" placeholder="Contoh: Titian Jl. Kelayan A, Gang Mutiara..."
                                            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all"
                                            required>
                                 </div>

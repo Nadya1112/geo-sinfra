@@ -55,10 +55,11 @@ class AdminController extends Controller
         // 4. Data Cepat Lainnya
         $totalUser = User::whereIn('role', ['surveyor', 'admin'])->count();
         $totalWilayah = DB::table('kelurahan')->count();
+        $totalLaporanWarga = \App\Models\LaporanWarga::count();
 
         return view('admin.dashboard', compact(
             'totalInfrastruktur', 'rusakBerat', 'rusakSedang', 'kondisiBaik', 
-            'persenDianalisis', 'rekomendasi', 'totalUser', 'totalWilayah'
+            'persenDianalisis', 'rekomendasi', 'totalUser', 'totalWilayah', 'totalLaporanWarga'
         ));
     }
 
@@ -798,8 +799,10 @@ class AdminController extends Controller
         }
 
         $laporanWarga = $query->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
+        
+        $surveyors = User::where('role', 'Surveyor')->get();
 
-        return view('admin.laporan-warga', compact('laporanWarga', 'status', 'search'));
+        return view('admin.laporan-warga', compact('laporanWarga', 'status', 'search', 'surveyors'));
     }
 
     public function updateStatusLaporanWarga(Request $request, $id)
@@ -816,6 +819,25 @@ class AdminController extends Controller
         $this->logActivity('laporan', "Update status laporan warga dari {$laporan->nama_pelapor} menjadi {$request->status}", $id);
 
         return redirect()->route('admin.laporan-warga')->with('success', 'STATUS LAPORAN BERHASIL DIPERBARUI!');
+    }
+
+    public function assignSurveyor(Request $request, $id)
+    {
+        $request->validate([
+            'id_surveyor' => 'required|exists:users,id',
+        ]);
+
+        $laporan = LaporanWarga::findOrFail($id);
+        $surveyor = User::findOrFail($request->id_surveyor);
+
+        $laporan->update([
+            'id_surveyor' => $request->id_surveyor,
+            'status' => 'Diproses', // Automatically set to processing
+        ]);
+
+        $this->logActivity('laporan', "Menugaskan laporan warga {$laporan->nama_pelapor} ke Surveyor {$surveyor->name}", $id);
+
+        return redirect()->route('admin.laporan-warga')->with('success', 'LAPORAN BERHASIL DITUGASKAN KE SURVEYOR!');
     }
 
     public function destroyLaporanWarga($id)
@@ -899,6 +921,7 @@ class AdminController extends Controller
             'has_gorong_gorong' => $request->has_gorong_gorong ?? 'tidak',
             'foto_terbaru' => $namaFoto,
             'nama_objek' => $request->nama_infrastruktur, 
+            'tgl_survey' => now(),
         ]);
 
         if ($namaFoto != 'default.jpg') {

@@ -228,7 +228,7 @@
                             </div>
                         </div>
 
-                        {{-- Spesifikasi Teknis DED --}}
+                        {{-- Spesifikasi Teknis Infrastruktur --}}
                         <div class="pt-2">
                             <h4 class="text-[11px] font-black text-navy-900 uppercase tracking-widest mb-4 flex items-center gap-2">
                                 <i class="fas fa-ruler-combined text-gold-500"></i> Spesifikasi & Dimensi Lapangan

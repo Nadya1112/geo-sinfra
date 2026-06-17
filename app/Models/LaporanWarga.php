@@ -21,10 +21,16 @@ class LaporanWarga extends Model
         'skor_ai',
         'label_ai',
         'jenis_ai',
+        'id_surveyor',
     ];
 
     public function infrastruktur(): BelongsTo
     {
         return $this->belongsTo(Infrastruktur::class, 'id_infrastruktur', 'id_infrastruktur');
+    }
+
+    public function surveyor(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'id_surveyor', 'id');
     }
 }

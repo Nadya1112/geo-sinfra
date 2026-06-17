@@ -103,7 +103,7 @@
                             <div class="absolute inset-0 bg-gradient-to-t from-navy-900 via-navy-900/40 to-transparent"></div>
                             
                             <div class="absolute bottom-5 left-5 right-5">
-                                <span class="px-2.5 py-1 bg-white/20 backdrop-blur-md rounded border border-white/20 text-[9px] font-black uppercase tracking-widest text-white mb-2 inline-block">
+                                <span class="px-2.5 py-1 bg-white/20 backdrop-blur-md roun border border-white/20 text-[9px] font-black uppercase tracking-widest text-white mb-2 inline-block">
                                     {{ ucfirst($item->jenis) ?? 'Infrastruktur' }}
                                 </span>
                                 <h3 class="text-xl font-black text-white leading-tight line-clamp-2">{{ $item->nama_objek ?? $item->nama_infrastruktur ?? 'Tanpa Nama' }}</h3>

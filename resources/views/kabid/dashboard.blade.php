@@ -193,18 +193,7 @@
                     </div>
                 </a>
 
-                <a href="{{ route('kabid.statistik.tahunan') }}" class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group relative overflow-hidden">
-                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-navy-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
-                    <div class="relative z-10 flex flex-col h-full justify-between gap-6">
-                        <div class="w-14 h-14 bg-navy-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-navy-200">
-                            <i class="fas fa-chart-line text-xl"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-black text-navy-900 text-sm uppercase tracking-tight mb-2">Statistik Laporan</h4>
-                            <p class="text-[10px] text-slate-500 font-bold leading-relaxed">Lihat tren kondisi infrastruktur dan capaian perbaikan dalam satu tahun terakhir.</p>
-                        </div>
-                    </div>
-                </a>
+
 
                 <a href="{{ route('kabid.laporan') }}" class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group relative overflow-hidden">
                     <div class="absolute -right-6 -top-6 w-24 h-24 bg-gold-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>

@@ -82,7 +82,7 @@
                 <div id="condition-card" class="bg-navy-900/80 backdrop-blur-xl p-1.5 rounded-[2rem] border border-white/10 shadow-2xl min-w-[160px]">
                     <button onclick="toggleMenu('condition-options')" class="w-full px-4 py-2.5 rounded-[1.5rem] text-[8px] font-black uppercase tracking-widest bg-white/10 text-white flex items-center justify-between shadow-sm hover:bg-gold-500 hover:text-white transition-all group border border-white/5">
                         <div class="flex items-center gap-2.5">
-                            <div class="w-5 h-5 bg-gold-500/20 text-gold-400 group-hover:text-white rounded flex items-center justify-center transition-colors">
+                            <div class="w-5 h-5 bg-gold-500/20 text-gold-400 group-hover:text-white roun flex items-center justify-center transition-colors">
                                 <i class="fas fa-chart-pie text-[9px]"></i>
                             </div>
                             <span>Statistik</span>
@@ -136,7 +136,7 @@
                         <div id="category-options" class="hidden mt-1.5 p-1 flex flex-col gap-0.5">
                             <button onclick="toggleType('Semua')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="Semua">
                                 <div class="flex items-center gap-2.5">
-                                    <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-gold-400 transition-colors">
+                                    <div class="w-3 h-3 roun border border-white/20 flex items-center justify-center group-hover:border-gold-400 transition-colors">
                                         <i class="fas fa-check text-[6px] text-gold-400 check-icon" style="opacity:1"></i>
                                     </div>
                                     <span class="group-hover:text-white transition-colors">Semua Objek</span>
@@ -144,7 +144,7 @@
                             </button>
                             <button onclick="toggleType('Jalan')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Jalan">
                                 <div class="flex items-center gap-2.5">
-                                    <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors">
+                                    <div class="w-3 h-3 roun border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors">
                                         <i class="fas fa-check text-[6px] text-blue-400 check-icon" style="opacity:1"></i>
                                     </div>
                                     <span class="group-hover:text-white transition-colors text-left">Infrastruktur Jalan</span>
@@ -153,7 +153,7 @@
                             </button>
                             <button onclick="toggleType('Jembatan')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Jembatan">
                                 <div class="flex items-center gap-2.5">
-                                    <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-indigo-400 transition-colors">
+                                    <div class="w-3 h-3 roun border border-white/20 flex items-center justify-center group-hover:border-indigo-400 transition-colors">
                                         <i class="fas fa-check text-[6px] text-indigo-400 check-icon" style="opacity:1"></i>
                                     </div>
                                     <span class="group-hover:text-white transition-colors text-left">Jembatan</span>
@@ -162,7 +162,7 @@
                             </button>
                             <button onclick="toggleType('Titian')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Titian">
                                 <div class="flex items-center gap-2.5">
-                                    <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-amber-400 transition-colors">
+                                    <div class="w-3 h-3 roun border border-white/20 flex items-center justify-center group-hover:border-amber-400 transition-colors">
                                         <i class="fas fa-check text-[6px] text-amber-400 check-icon" style="opacity:1"></i>
                                     </div>
                                     <span class="group-hover:text-white transition-colors text-left">Titian</span>
@@ -172,7 +172,7 @@
                             <div class="h-[1px] bg-white/5 my-1"></div>
                             <button onclick="toggleKelurahanPoints()" class="w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" id="kel-toggle-btn">
                                 <div class="flex items-center gap-2.5">
-                                    <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
+                                    <div class="w-3 h-3 roun border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
                                         <i class="fas fa-check text-[6px] text-emerald-400" id="kel-check-icon" style="opacity:0"></i>
                                     </div>
                                     <span class="group-hover:text-white transition-colors text-left">Wilayah Kelurahan</span>
@@ -197,7 +197,7 @@
                             <!-- Select All Territories -->
                             <button onclick="toggleKecamatan('Semua')" class="w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-emerald-400 hover:bg-white/10 transition-all flex items-center justify-between group border-b border-white/5 mb-1" id="btn-select-all-kec">
                                 <div class="flex items-center gap-2.5">
-                                    <div class="w-3 h-3 rounded border border-emerald-400/50 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
+                                    <div class="w-3 h-3 roun border border-emerald-400/50 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
                                         <i class="fas fa-check text-[6px] text-emerald-400 check-icon" id="icon-select-all-kec" style="opacity:1"></i>
                                     </div>
                                     <span class="group-hover:text-white transition-colors">Pilih Semua Wilayah</span>
@@ -206,7 +206,7 @@
 
                             <button onclick="toggleKecamatan('Semua')" class="kec-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group hidden" data-id="Semua">
                                 <div class="flex items-center gap-2.5">
-                                    <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-gold-400 transition-colors">
+                                    <div class="w-3 h-3 roun border border-white/20 flex items-center justify-center group-hover:border-gold-400 transition-colors">
                                         <i class="fas fa-check text-[6px] text-gold-400 check-icon" style="opacity:1"></i>
                                     </div>
                                     <span class="group-hover:text-white transition-colors">Semua Wilayah</span>
@@ -215,12 +215,12 @@
                             @foreach($kecamatan as $kec)
                             <button onclick="toggleKecamatan('{{ $kec->id_kecamatan }}')" class="kec-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="{{ $kec->id_kecamatan }}">
                                 <div class="flex items-center gap-2.5">
-                                    <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-gold-400 transition-colors">
+                                    <div class="w-3 h-3 roun border border-white/20 flex items-center justify-center group-hover:border-gold-400 transition-colors">
                                         <i class="fas fa-check text-[6px] text-gold-400 check-icon" style="opacity:1"></i>
                                     </div>
                                     <span class="truncate max-w-[80px] group-hover:text-white transition-colors text-left">{{ $kec->nama_kecamatan }}</span>
                                 </div>
-                                <div class="w-2.5 h-2.5 rounded shadow-sm" style="background-color: {{ $kec->warna ?? '#6366f1' }};"></div>
+                                <div class="w-2.5 h-2.5 roun shadow-sm" style="background-color: {{ $kec->warna ?? '#6366f1' }};"></div>
                             </button>
                             @endforeach
                         </div>
@@ -304,6 +304,7 @@
         let activeMarkers = [];
         let kelurahanMarkers = [];
         let kelurahanPolygons = [];
+        let showKelurahan = false;
         const geoLayers = {};
         
         // --- Layer Rawan Banjir (Mock) ---

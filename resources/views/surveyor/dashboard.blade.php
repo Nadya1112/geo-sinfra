@@ -146,6 +146,46 @@
                 </div>
             </div>
 
+            {{-- Stats Grid Laporan Warga --}}
+            <h4 class="font-black text-lg text-navy-900 mb-4 flex items-center gap-2"><i class="fas fa-clipboard-list text-gold-500"></i> Penugasan Laporan Warga</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+                <a href="{{ route('surveyor.laporan') }}" class="block bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:border-gold-500/30 transition-all group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-navy-50 rounded-2xl flex items-center justify-center text-navy-500 group-hover:bg-navy-900 group-hover:text-gold-500 transition-colors">
+                            <i class="fas fa-tasks text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Tugas</p>
+                            <h3 class="text-2xl font-black text-navy-900">{{ $totalTugas }}</h3>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="{{ route('surveyor.laporan', ['status' => 'Menunggu']) }}" class="block bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:border-orange-500/30 transition-all group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-orange-50 rounded-2xl flex items-center justify-center text-orange-500 group-hover:bg-orange-500 group-hover:text-white transition-colors">
+                            <i class="fas fa-clock text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Tugas Menunggu</p>
+                            <h3 class="text-2xl font-black text-orange-600">{{ $tugasMenunggu }}</h3>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="{{ route('surveyor.laporan', ['status' => 'Selesai']) }}" class="block bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:border-emerald-500/30 transition-all group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-500 group-hover:bg-emerald-500 group-hover:text-white transition-colors">
+                            <i class="fas fa-check-circle text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Tugas Selesai</p>
+                            <h3 class="text-2xl font-black text-emerald-600">{{ $tugasSelesai }}</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {{-- Panduan Survey --}}
                 <div class="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm">

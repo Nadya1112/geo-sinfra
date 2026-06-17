@@ -247,7 +247,7 @@
                                                 @csrf
                                                 <button type="submit" onclick="return confirm('Verifikasi aset ini?')" title="Verifikasi"
                                                     class="w-8 h-8 flex items-center justify-center bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg text-xs font-black transition shadow-sm hover:scale-105">
-                                                    <i class="fas fa-check"></i>
+                                                    <i class="fas fa-check-double"></i>
                                                 </button>
                                             </form>
                                         @endif

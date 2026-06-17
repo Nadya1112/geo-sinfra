@@ -67,8 +67,8 @@
                     <form action="{{ route('admin.infrastruktur.verifikasi', $inf->id_infrastruktur) }}" method="POST">
                         @csrf
                         <button type="submit" onclick="return confirm('Verifikasi aset ini?')"
-                            class="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2.5 rounded-xl text-[10px] font-black transition shadow-sm shadow-emerald-500/20">
-                            <i class="fas fa-check"></i> Verifikasi
+                            class="bg-emerald-500 hover:bg-emerald-600 text-white text-[11px] px-5 py-2.5 rounded-xl font-black shadow-md shadow-emerald-500/20 hover:shadow-emerald-500/30 transition flex items-center gap-2">
+                            <i class="fas fa-check-double"></i> Verifikasi
                         </button>
                     </form>
                 @else

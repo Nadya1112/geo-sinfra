@@ -191,6 +191,7 @@ Route::middleware(['auth'])->group(function () {
          */
         Route::get('/laporan-warga', [AdminController::class, 'laporanWarga'])->name('admin.laporan-warga');
         Route::put('/laporan-warga/{id}/status', [AdminController::class, 'updateStatusLaporanWarga'])->name('admin.laporan-warga.status');
+        Route::put('/laporan-warga/{id}/assign', [AdminController::class, 'assignSurveyor'])->name('admin.laporan-warga.assign');
         Route::delete('/laporan-warga/{id}', [AdminController::class, 'destroyLaporanWarga'])->name('admin.laporan-warga.destroy');
         
         // Konversi Laporan Warga ke Infrastruktur
@@ -238,6 +239,11 @@ Route::middleware(['auth'])->group(function () {
     // --- AREA SURVEYOR ---
     Route::middleware(['role:surveyor'])->prefix('surveyor')->group(function () {
         Route::get('/dashboard', [App\Http\Controllers\Surveyor\SurveyorController::class, 'index'])->name('surveyor.dashboard');
+        
+        // Penugasan Laporan Warga
+        Route::get('/laporan', [App\Http\Controllers\Surveyor\SurveyorController::class, 'laporan'])->name('surveyor.laporan');
+        Route::put('/laporan/{id}/status', [App\Http\Controllers\Surveyor\SurveyorController::class, 'updateStatus'])->name('surveyor.laporan.status');
+        
         Route::get('/input', [App\Http\Controllers\Surveyor\SurveyorController::class, 'create'])->name('surveyor.input');
         Route::post('/input', [App\Http\Controllers\Surveyor\SurveyorController::class, 'store'])->name('surveyor.store');
         Route::get('/history', [App\Http\Controllers\Surveyor\SurveyorController::class, 'history'])->name('surveyor.history');
@@ -261,7 +267,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/validasi', [App\Http\Controllers\Kabid\KabidController::class, 'validasi'])->name('kabid.validasi');
         Route::post('/validasi/bulk', [App\Http\Controllers\Kabid\KabidController::class, 'bulkValidasi'])->name('kabid.validasi.bulk');
         Route::post('/validasi/{id}', [App\Http\Controllers\Kabid\KabidController::class, 'prosesValidasi'])->name('kabid.validasi.proses');
-        Route::get('/statistik/tahunan', [App\Http\Controllers\Kabid\KabidController::class, 'statistikTahunan'])->name('kabid.statistik.tahunan');
+
         Route::get('/laporan', [App\Http\Controllers\Kabid\KabidController::class, 'laporan'])->name('kabid.laporan');
         Route::get('/infrastruktur/{id}', [App\Http\Controllers\Kabid\KabidController::class, 'show'])->name('kabid.infrastruktur.show');
         Route::post('/infrastruktur/{id}/status-perbaikan', [App\Http\Controllers\Kabid\KabidController::class, 'updateStatusPerbaikan'])->name('kabid.perbaikan.update');

@@ -178,7 +178,7 @@
             <!-- Quick Access Cards -->
             <div class="mb-8 text-left">
                 <h4 class="font-extrabold text-lg text-navy-900 mb-6">Akses Cepat</h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 text-left">
                     
                     <button onclick="openQuickModal('Tambah User', 'Daftarkan Surveyor atau Admin baru ke dalam sistem untuk memperluas tim operasional.', '{{ route('admin.users.create') }}', 'fa-user-plus', 'bg-blue-50 text-blue-500 border border-blue-100')" class="group bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-navy-950/5 hover:border-gold-500/50 transition-all text-left w-full relative">
                         <div class="absolute top-4 right-4 bg-blue-50 text-blue-500 border border-blue-100 text-[9px] font-black px-2 py-1 rounded-lg">{{ number_format($totalUser) }} User</div>
@@ -214,6 +214,15 @@
                         </div>
                         <h5 class="font-black text-navy-900 mb-1">Data Master</h5>
                         <p class="text-[10px] text-slate-400 font-semibold leading-relaxed text-left">Lihat dan kelola seluruh data infrastruktur lapangan.</p>
+                    </button>
+
+                    <button onclick="openQuickModal('Laporan Warga', 'Tindak lanjuti pengaduan warga terkait infrastruktur rusak dan tugaskan surveyor.', '{{ route('admin.laporan-warga') }}', 'fa-bullhorn', 'bg-red-50 text-red-500 border border-red-100')" class="group bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-navy-950/5 hover:border-gold-500/50 transition-all text-left w-full relative">
+                        <div class="absolute top-4 right-4 bg-red-50 text-red-500 border border-red-100 text-[9px] font-black px-2 py-1 rounded-lg">{{ number_format($totalLaporanWarga ?? 0) }} Laporan</div>
+                        <div class="w-12 h-12 bg-navy-50 text-gold-500 border border-navy-100 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-all">
+                            <i class="fas fa-bullhorn text-lg"></i>
+                        </div>
+                        <h5 class="font-black text-navy-900 mb-1">Laporan Warga</h5>
+                        <p class="text-[10px] text-slate-400 font-semibold leading-relaxed text-left">Kelola dan tindak lanjuti laporan kerusakan dari masyarakat.</p>
                     </button>
 
                 </div>

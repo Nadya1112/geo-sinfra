@@ -238,7 +238,7 @@
                             <thead>
                                 <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md text-[10px] font-black text-gold-500 uppercase tracking-widest">
                                     <th class="px-6 py-4 w-10 border-b border-navy-800 text-center">
-                                        <input type="checkbox" id="selectAll" class="rounded border-slate-300 text-gold-500 focus:ring-gold-500 cursor-pointer w-4 h-4">
+                                        <input type="checkbox" id="selectAll" class="roun border-slate-300 text-gold-500 focus:ring-gold-500 cursor-pointer w-4 h-4">
                                     </th>
                                     <th class="px-2 py-4 w-12 border-b border-navy-800">No</th>
                                 <th class="px-6 py-4 border-b border-navy-800">Infrastruktur</th>
@@ -254,9 +254,9 @@
                             <tr class="hover:bg-slate-50/50 transition-colors group">
                                 <td class="px-6 py-5 text-center">
                                     @if($item->status_validasi == 'Pending')
-                                        <input type="checkbox" name="ids[]" value="{{ $item->id_infrastruktur }}" class="row-checkbox rounded border-slate-300 text-gold-500 focus:ring-gold-500 cursor-pointer w-4 h-4">
+                                        <input type="checkbox" name="ids[]" value="{{ $item->id_infrastruktur }}" class="row-checkbox roun border-slate-300 text-gold-500 focus:ring-gold-500 cursor-pointer w-4 h-4">
                                     @else
-                                        <input type="checkbox" disabled class="rounded border-slate-200 bg-slate-50 cursor-not-allowed opacity-50 w-4 h-4">
+                                        <input type="checkbox" disabled class="roun border-slate-200 bg-slate-50 cursor-not-allowed opacity-50 w-4 h-4">
                                     @endif
                                 </td>
                                 <td class="px-2 py-5 whitespace-nowrap text-xs font-black text-slate-300">

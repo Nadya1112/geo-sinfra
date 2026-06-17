@@ -23,6 +23,12 @@
                 Dashboard
             </a>
 
+            <a href="{{ route('surveyor.laporan') }}" 
+               class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('surveyor.laporan') ? 'bg-gold-500 text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
+                <i class="fas fa-tasks {{ request()->routeIs('surveyor.laporan') ? '' : 'group-hover:text-gold-400' }}"></i> 
+                Penugasan Laporan Warga
+            </a>
+
             <a href="{{ route('surveyor.input') }}" 
                class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('surveyor.input') ? 'bg-gold-500 text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
                 <i class="fas fa-plus-circle {{ request()->routeIs('surveyor.input') ? '' : 'group-hover:text-gold-400' }}"></i> 
@@ -93,6 +99,12 @@
                class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('surveyor.dashboard') ? 'bg-gold-500 text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
                 <i class="fas fa-th-large text-sm {{ request()->routeIs('surveyor.dashboard') ? '' : 'group-hover:text-gold-400' }}"></i> 
                 Dashboard
+            </a>
+
+            <a href="{{ route('surveyor.laporan') }}" 
+               class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('surveyor.laporan') ? 'bg-gold-500 text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
+                <i class="fas fa-tasks text-sm {{ request()->routeIs('surveyor.laporan') ? '' : 'group-hover:text-gold-400' }}"></i> 
+                Penugasan Laporan Warga
             </a>
 
             <a href="{{ route('surveyor.input') }}" 

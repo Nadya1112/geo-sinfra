@@ -300,6 +300,53 @@
                             </div>
                         </div>
 
+                        <!-- Detail Teknis -->
+                        <div class="border-t border-slate-100 pt-6 mb-8 mt-2">
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Informasi Fisik Lapangan</p>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-5">
+                                <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-center">
+                                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-wider mb-1">Panjang</p>
+                                    <p class="text-xl font-black text-navy-900">{{ number_format($infrastruktur->panjang ?? 0, 1) }}</p>
+                                    <p class="text-[8px] text-slate-400 font-bold">meter</p>
+                                </div>
+                                <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-center">
+                                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-wider mb-1">Lebar</p>
+                                    <p class="text-xl font-black text-navy-900">{{ number_format($infrastruktur->lebar ?? 0, 1) }}</p>
+                                    <p class="text-[8px] text-slate-400 font-bold">meter</p>
+                                </div>
+                                <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-center">
+                                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-wider mb-1">Drainase</p>
+                                    @if(($infrastruktur->has_drainase ?? 'tidak') == 'ya')
+                                        <i class="fas fa-check-circle text-2xl text-emerald-500 my-1 block"></i>
+                                        <p class="text-[8px] text-emerald-600 font-black uppercase">Ada</p>
+                                    @else
+                                        <i class="fas fa-times-circle text-2xl text-red-400 my-1 block"></i>
+                                        <p class="text-[8px] text-red-500 font-black uppercase">Tidak Ada</p>
+                                    @endif
+                                </div>
+                                <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-center">
+                                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-wider mb-1">Gorong-gorong</p>
+                                    @if(($infrastruktur->has_gorong_gorong ?? 'tidak') == 'ya')
+                                        <i class="fas fa-check-circle text-2xl text-emerald-500 my-1 block"></i>
+                                        <p class="text-[8px] text-emerald-600 font-black uppercase">Ada</p>
+                                    @else
+                                        <i class="fas fa-times-circle text-2xl text-red-400 my-1 block"></i>
+                                        <p class="text-[8px] text-red-500 font-black uppercase">Tidak Ada</p>
+                                    @endif
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Keterangan Tambahan Surveyor</p>
+                                <div class="px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 italic leading-relaxed">
+                                    @if(strtolower($infrastruktur->kondisi ?? '') == 'menunggu ai')
+                                        <span class="text-slate-400 font-medium">Kondisi akan ditentukan oleh sistem AI...</span>
+                                    @else
+                                        "{{ $infrastruktur->kondisi ?? 'Tidak ada keterangan tambahan.' }}"
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Mini Map -->
                         <div class="relative rounded-[2rem] border border-slate-100 shadow-inner overflow-hidden">
                             <div id="map" class="h-[280px] w-full z-0"></div>

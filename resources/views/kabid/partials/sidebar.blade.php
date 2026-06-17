@@ -44,7 +44,7 @@
 
 
 
-            <a href="{{ route('kabid.laporan') }}" 
+            <a href="{{ route('kabid.laporan')  }}" 
                class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('kabid.laporan') ? 'bg-gold-500 text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
                 <i class="fas fa-print {{ request()->routeIs('kabid.laporan') ? '' : 'group-hover:text-gold-400' }}"></i> 
                 Cetak Laporan

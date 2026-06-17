@@ -131,10 +131,10 @@
                                 <div class="space-y-6">
                                 <div class="grid grid-cols-1 gap-5">
                                     <div>
-                                        <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3 ml-1">Nama Infrastruktur / Ruas Jalan <span class="text-red-500">*</span></label>
+                                        <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3 ml-1">Alamat / Lokasi Jalan <span class="text-red-500">*</span></label>
                                         <div class="relative group">
-                                            <i class="fas fa-tag absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors"></i>
-                                            <input type="text" name="nama_infrastruktur" placeholder="Contoh: Jalan Hasan Basry" class="w-full pl-12 pr-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900" required>
+                                            <i class="fas fa-map-pin absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors"></i>
+                                            <input type="text" name="nama_infrastruktur" placeholder="Contoh: Gg. Manggis RT 02 / Jalan Hasan Basry" class="w-full pl-12 pr-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900" required>
                                         </div>
                                     </div>
                                 </div>
@@ -183,7 +183,7 @@
                                     </div>
                                     <div>
                                         <h4 class="font-black text-navy-900 uppercase tracking-tight text-lg">Spesifikasi Teknis</h4>
-                                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Dimensi & Material Data DED</p>
+                                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Dimensi & Material Infrastruktur</p>
                                     </div>
                                 </div>
 
@@ -207,9 +207,9 @@
                                                 </div>
                                             </div>
                                             
-                                            {{-- DED Material Utama --}}
+                                            {{-- Material Utama --}}
                                             <div>
-                                                <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3 ml-1">Material Utama (Sesuai DED) <span class="text-red-500">*</span></label>
+                                                <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3 ml-1">Material Utama  <span class="text-red-500">*</span></label>
                                                 <div class="relative group">
                                                     <i class="fas fa-layer-group absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors z-10"></i>
                                                     <select name="material_eksisting" class="w-full pl-12 pr-10 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none appearance-none cursor-pointer transition-all relative z-0 text-navy-900" required>
@@ -229,7 +229,7 @@
                                         </div>
                                         
                                         <div class="space-y-4">
-                                            <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3 ml-1">Ketersediaan (Sesuai DED)</label>
+                                            <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3 ml-1">Ketersediaan </label>
                                             <div class="space-y-3">
                                                 <label class="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-200 cursor-pointer hover:bg-gold-50 hover:border-gold-200 transition-all group">
                                                     <input type="checkbox" name="has_drainase" value="1" class="peer hidden">

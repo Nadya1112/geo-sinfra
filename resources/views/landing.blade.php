@@ -1534,8 +1534,8 @@
                                 <input type="text" name="nama_pelapor" required placeholder="Nama Anda" class="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
                             </div>
                             <div>
-                                <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2 ml-1">No. WhatsApp</label>
-                                <input type="text" name="no_hp" placeholder="Opsional (Untuk dihubungi)" class="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
+                                <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2 ml-1">No. WhatsApp <span class="text-red-500">*</span></label>
+                                <input type="text" name="no_hp" required placeholder="Nomor WhatsApp (Agar tim bisa menghubungi)" class="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
                             </div>
                         </div>
 
@@ -1545,20 +1545,24 @@
                             <textarea name="deskripsi" required rows="3" placeholder="Contoh: Jalan berlubang cukup dalam dan sering digenangi air saat hujan..." class="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all resize-none"></textarea>
                         </div>
 
-                        <!-- Lokasi GPS -->
+                        <!-- Lokasi GPS & Map Picker -->
                         <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200">
                             <div class="flex items-center justify-between mb-4">
                                 <div>
                                     <h4 class="font-black text-navy-900 text-sm">Titik Lokasi <span class="text-red-500">*</span></h4>
-                                    <p class="text-[10px] text-slate-500 font-medium">Bantu kami mengetahui posisi pasti kerusakan.</p>
+                                    <p class="text-[10px] text-slate-500 font-medium">Geser pin pada peta atau klik tombol GPS.</p>
                                 </div>
                                 <button type="button" onclick="getWargaLocation(this)" class="px-4 py-2 bg-navy-900 hover:bg-gold-500 text-white hover:text-navy-900 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all flex items-center gap-2">
                                     <i class="fas fa-crosshairs"></i> Ambil GPS
                                 </button>
                             </div>
+                            
+                            <!-- Mini Map for Picking Location -->
+                            <div id="warga-map" class="w-full h-48 rounded-xl z-10 mb-3 border border-slate-300"></div>
+
                             <div class="grid grid-cols-2 gap-3">
-                                <input type="text" id="warga-lat" name="latitude" required placeholder="Latitude (Bisa diisi manual)" class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 outline-none focus:ring-2 focus:ring-navy-500 transition-all">
-                                <input type="text" id="warga-lng" name="longitude" required placeholder="Longitude (Bisa diisi manual)" class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 outline-none focus:ring-2 focus:ring-navy-500 transition-all">
+                                <input type="text" id="warga-lat" name="latitude" required readonly placeholder="Latitude" class="w-full px-4 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 outline-none focus:ring-2 focus:ring-navy-500 transition-all cursor-not-allowed">
+                                <input type="text" id="warga-lng" name="longitude" required readonly placeholder="Longitude" class="w-full px-4 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 outline-none focus:ring-2 focus:ring-navy-500 transition-all cursor-not-allowed">
                             </div>
                         </div>
 
@@ -1594,23 +1598,69 @@
 
     <!-- Script for Warga Report -->
     <script>
+        let mapWarga;
+        let markerWarga;
+
+        // Initialize map when modal is opened
+        document.querySelector('button[onclick*="modal-lapor\').classList.remove(\'hidden\')"]').addEventListener('click', function() {
+            setTimeout(() => {
+                if (!mapWarga) {
+                    // Default coordinate Banjarmasin
+                    let defaultLat = -3.316694;
+                    let defaultLng = 114.590111;
+
+                    mapWarga = L.map('warga-map').setView([defaultLat, defaultLng], 13);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '© OpenStreetMap'
+                    }).addTo(mapWarga);
+
+                    markerWarga = L.marker([defaultLat, defaultLng], { draggable: true }).addTo(mapWarga);
+                    
+                    // Update input when marker dragged
+                    markerWarga.on('dragend', function (e) {
+                        const latlng = markerWarga.getLatLng();
+                        document.getElementById('warga-lat').value = latlng.lat.toFixed(6);
+                        document.getElementById('warga-lng').value = latlng.lng.toFixed(6);
+                    });
+
+                    // Update marker and input when map clicked
+                    mapWarga.on('click', function(e) {
+                        markerWarga.setLatLng(e.latlng);
+                        document.getElementById('warga-lat').value = e.latlng.lat.toFixed(6);
+                        document.getElementById('warga-lng').value = e.latlng.lng.toFixed(6);
+                    });
+                } else {
+                    mapWarga.invalidateSize(); // Ensure map renders correctly if already initialized
+                }
+            }, 300); // give time for modal to transition
+        });
+
         function getWargaLocation(btn) {
             const oriText = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mencari...';
             
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(pos) {
-                    document.getElementById('warga-lat').value = pos.coords.latitude.toFixed(6);
-                    document.getElementById('warga-lng').value = pos.coords.longitude.toFixed(6);
+                    const lat = pos.coords.latitude;
+                    const lng = pos.coords.longitude;
+                    
+                    document.getElementById('warga-lat').value = lat.toFixed(6);
+                    document.getElementById('warga-lng').value = lng.toFixed(6);
+                    
+                    if (mapWarga && markerWarga) {
+                        mapWarga.setView([lat, lng], 16);
+                        markerWarga.setLatLng([lat, lng]);
+                    }
+
                     btn.innerHTML = '<i class="fas fa-check"></i> Sukses';
                     btn.classList.add('bg-emerald-500', 'text-white');
                     setTimeout(() => { btn.innerHTML = oriText; btn.classList.remove('bg-emerald-500'); }, 3000);
                 }, function(err) {
-                    alert('Gagal mengambil lokasi. Pastikan GPS aktif dan browser diizinkan mengakses lokasi.');
+                    alert('Gagal mengambil lokasi. Pastikan GPS diizinkan di browser Anda. Anda juga bisa menggeser pin pada peta.');
                     btn.innerHTML = oriText;
                 }, { enableHighAccuracy: true, timeout: 10000 });
             } else {
-                alert('Browser tidak mendukung GPS.');
+                alert('Browser tidak mendukung GPS. Silakan klik/geser pin pada peta.');
                 btn.innerHTML = oriText;
             }
         }

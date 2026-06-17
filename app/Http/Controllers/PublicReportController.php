@@ -13,7 +13,7 @@ class PublicReportController extends Controller
     {
         $request->validate([
             'nama_pelapor' => 'required|string|max:255',
-            'no_hp' => 'nullable|string|max:20',
+            'no_hp' => 'required|string|max:20',
             'deskripsi' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',

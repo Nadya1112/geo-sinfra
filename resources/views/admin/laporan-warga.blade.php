@@ -135,13 +135,14 @@
                 <div class="bg-white rounded-[2rem] shadow-xl shadow-slate-200/40 border border-slate-100 overflow-hidden">
                     <div class="overflow-x-auto custom-scrollbar">
                         <table class="w-full text-left text-sm whitespace-nowrap md:whitespace-normal">
-                            <thead class="bg-slate-50 border-b border-slate-100 text-slate-500">
+                            <thead class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
                                 <tr>
-                                    <th class="px-6 py-4 font-extrabold uppercase tracking-widest text-[10px]">Waktu Lapor</th>
-                                    <th class="px-6 py-4 font-extrabold uppercase tracking-widest text-[10px]">Pelapor</th>
-                                    <th class="px-6 py-4 font-extrabold uppercase tracking-widest text-[10px]">Laporan Kerusakan</th>
-                                    <th class="px-6 py-4 font-extrabold uppercase tracking-widest text-[10px]">Status</th>
-                                    <th class="px-6 py-4 font-extrabold uppercase tracking-widest text-[10px] text-right">Aksi</th>
+                                    <th class="px-6 py-4 font-extrabold uppercase tracking-widest text-[10px] text-gold-500">Waktu Lapor</th>
+                                    <th class="px-6 py-4 font-extrabold uppercase tracking-widest text-[10px] text-gold-500">Pelapor</th>
+                                    <th class="px-6 py-4 font-extrabold uppercase tracking-widest text-[10px] text-gold-500">Laporan Kerusakan</th>
+                                    <th class="px-5 py-4 font-extrabold uppercase tracking-widest text-[10px] text-gold-500 text-center">Status</th>
+                                    <th class="px-5 py-4 font-extrabold uppercase tracking-widest text-[10px] text-gold-500 text-center">Penugasan</th>
+                                    <th class="px-5 py-4 font-extrabold uppercase tracking-widest text-[10px] text-gold-500 text-center">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100">
@@ -197,8 +198,8 @@
                                             </a>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
-                                        <form action="{{ route('admin.laporan-warga.status', $laporan->id) }}" method="POST" class="inline-block relative w-36">
+                                    <td class="px-5 py-4 text-center">
+                                        <form action="{{ route('admin.laporan-warga.status', $laporan->id) }}" method="POST" class="inline-block relative w-36 text-left">
                                             @csrf
                                             @method('PUT')
                                             
@@ -221,23 +222,43 @@
                                             <i class="fas fa-chevron-down absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] opacity-60 pointer-events-none"></i>
                                         </form>
                                     </td>
-                                    <td class="px-6 py-4 text-right">
-                                        <div class="flex items-center justify-end gap-2">
+                                    <td class="px-5 py-4 text-center">
+                                        <form action="{{ route('admin.laporan-warga.assign', $laporan->id) }}" method="POST" class="inline-block relative w-36 text-left">
+                                            @csrf
+                                            @method('PUT')
+                                            
+                                            @php
+                                                $assignColor = $laporan->id_surveyor ? 'bg-indigo-50 text-indigo-700 border-indigo-200' : 'bg-slate-100 text-slate-500 border-slate-200';
+                                            @endphp
+                                            
+                                            <select name="id_surveyor" onchange="this.form.submit()" class="w-full appearance-none pl-3 pr-8 py-1.5 rounded-lg text-xs font-bold border {{ $assignColor }} focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer shadow-sm">
+                                                <option value="" disabled {{ !$laporan->id_surveyor ? 'selected' : '' }}>Pilih Surveyor</option>
+                                                @foreach($surveyors as $surveyor)
+                                                    <option value="{{ $surveyor->id }}" {{ $laporan->id_surveyor == $surveyor->id ? 'selected' : '' }}>
+                                                        👷‍♂️ {{ $surveyor->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            <i class="fas fa-chevron-down absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] opacity-60 pointer-events-none"></i>
+                                        </form>
+                                    </td>
+                                    <td class="px-5 py-4 text-center">
+                                        <div class="flex items-center justify-center gap-2 mx-auto">
                                             @if(!$laporan->id_infrastruktur)
-                                            <a href="{{ route('admin.laporan-warga.convert', $laporan->id) }}" title="Tinjau & Tindak Lanjuti" class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white flex items-center justify-center transition-all opacity-50 group-hover:opacity-100">
-                                                <i class="fas fa-eye text-xs"></i>
+                                            <a href="{{ route('admin.laporan-warga.convert', $laporan->id) }}" title="Verifikasi & Tindak Lanjuti" class="w-8 h-8 flex items-center justify-center bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg text-xs font-black transition shadow-sm hover:scale-105">
+                                                <i class="fas fa-check-double"></i>
                                             </a>
                                             @else
-                                            <a href="{{ route('admin.infrastruktur.show', $laporan->id_infrastruktur) }}" title="Lihat Infrastruktur" class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-500 hover:text-white flex items-center justify-center transition-all opacity-50 group-hover:opacity-100">
-                                                <i class="fas fa-eye text-xs"></i>
+                                            <a href="{{ route('admin.infrastruktur.show', $laporan->id_infrastruktur) }}" title="Lihat Infrastruktur" class="w-8 h-8 flex items-center justify-center bg-navy-900 hover:bg-navy-950 text-white rounded-lg text-xs font-black transition shadow-sm hover:scale-105">
+                                                <i class="fas fa-eye"></i>
                                             </a>
                                             @endif
                                             
                                             <form action="{{ route('admin.laporan-warga.destroy', $laporan->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus laporan ini secara permanen?');" class="inline-block">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="w-8 h-8 rounded-lg bg-red-50 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center transition-all opacity-50 group-hover:opacity-100">
-                                                    <i class="fas fa-trash-alt text-xs"></i>
+                                                <button type="submit" class="w-8 h-8 flex items-center justify-center bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-xs font-black transition shadow-sm hover:scale-105" title="Hapus Laporan">
+                                                    <i class="fas fa-trash"></i>
                                                 </button>
                                             </form>
                                         </div>
@@ -245,7 +266,7 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="5" class="px-8 py-20 text-center">
+                                    <td colspan="6" class="px-8 py-20 text-center">
                                         <i class="fas fa-file-alt text-4xl text-slate-200 mb-4 block"></i>
                                         <p class="text-slate-400 font-bold text-sm">Belum Ada Laporan Warga.</p>
                                     </td>
@@ -313,6 +334,16 @@
         document.getElementById('photoModal').addEventListener('click', function(e) {
             if (e.target === this) closePhotoModal();
         });
+
+        // Real-time Clock function
+        function updateClock() {
+            const now = new Date();
+            const options = { timeZone: 'Asia/Makassar', hour: '2-digit', minute: '2-digit', hour12: false };
+            const timeString = new Intl.DateTimeFormat('id-ID', options).format(now);
+            const el = document.getElementById('mini-clock');
+            if (el) el.textContent = timeString.replace('.', ':') + ' WITA';
+        }
+        setInterval(updateClock, 1000); updateClock();
     </script>
 
 </body>
