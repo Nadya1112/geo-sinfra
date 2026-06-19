@@ -12,6 +12,7 @@
     
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
@@ -40,6 +41,15 @@
         }
     </script>
     
+    <!-- Theme Switcher Init Script (To Prevent Flicker) -->
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
+
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
@@ -55,28 +65,30 @@
                         radial-gradient(circle at 20% 80%, rgba(197, 160, 89, 0.12) 0%, transparent 50%),
                         #070617;
         }
+        /* Global Transitions */
+        html { transition: background-color 0.3s ease, color 0.3s ease; }
     </style>
 </head>
-<body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800 text-left font-sans">
+<body class="bg-navy-50 dark:bg-navy-950 text-slate-800 dark:text-slate-200 antialiased selection:bg-gold-500 selection:text-white flex overflow-hidden h-screen transition-colors duration-300">
 
     <?php echo $__env->make('admin.partials.sidebar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
     <main class="flex-1 overflow-y-auto custom-scrollbar text-left">
-        <header class="sticky top-0 bg-white/80 backdrop-blur-xl border-b border-slate-100 px-8 py-5 flex justify-between items-center z-40 text-left">
+        <header class="sticky top-0 bg-white/80 dark:bg-navy-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/5 px-8 py-5 flex justify-between items-center z-40 text-left transition-colors duration-300">
             <div class="text-left">
                 <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
-                <h2 class="text-xl font-black text-navy-900 leading-none">Beranda Utama</h2>
+                <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Beranda Utama</h2>
             </div>
 
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter"><?php echo e(now()->translatedFormat('l, d F Y')); ?></p>
+                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter"><?php echo e(now()->translatedFormat('l, d F Y')); ?></p>
                 </div>
-                <div class="h-8 w-[1px] bg-slate-100"></div>
+                <div class="h-8 w-[1px] bg-slate-100 dark:bg-white/10"></div>
                 <div class="flex items-center gap-3">
                     <a href="<?php echo e(route('admin.profile')); ?>" class="text-right group">
-                        <p class="text-[11px] font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-all"><?php echo e(auth()->user()->name); ?></p>
+                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all"><?php echo e(auth()->user()->name); ?></p>
                         <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">Online</p>
                     </a>
                     <a href="<?php echo e(route('admin.profile')); ?>" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md">
@@ -150,27 +162,25 @@
                     </div>
                 </div>
 
-                <!-- Action Suggestion -->
-                <div class="lg:col-span-1 bg-[#0f0e2c] rounded-[2.5rem] p-8 border border-white/10 shadow-xl flex flex-col justify-center relative overflow-hidden text-left hover:border-gold-500/50 transition-all">
-                    <div class="absolute -right-5 -bottom-5 w-32 h-32 bg-gold-500/20 rounded-full blur-3xl pointer-events-none"></div>
+                <!-- Rekomendasi Prioritas AI -->
+                <div class="lg:col-span-1 flex flex-col justify-center bg-white dark:bg-[#1e1b4b] rounded-[2.5rem] p-7 border border-slate-100 dark:border-white/5 shadow-xl shadow-slate-200/50 dark:shadow-black/50 relative overflow-hidden group transition-colors duration-300 text-left">
+                    <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-red-500/10 dark:bg-red-500/20 rounded-full blur-3xl group-hover:bg-red-500/20 transition-all duration-500"></div>
                     <div class="w-12 h-12 bg-gold-500/10 text-gold-500 rounded-2xl flex items-center justify-center mb-4 border border-gold-500/20 shadow-sm">
                         <i class="fas fa-robot text-xl animate-pulse"></i>
                     </div>
-                    <h5 class="font-black text-white mb-2">Rekomendasi Prioritas AI</h5>
+                    <h5 class="font-black text-navy-900 dark:text-white mb-2">Rekomendasi Prioritas AI</h5>
                     <?php if($rekomendasi): ?>
-                        <p class="text-[10px] text-slate-300 font-medium leading-relaxed mb-4">
-                            Sistem AI mendeteksi <strong class="text-red-400 uppercase"><?php echo e($rekomendasi->nama_objek ?? $rekomendasi->nama_infrastruktur); ?></strong> di wilayah <strong class="text-white"><?php echo e($rekomendasi->nama_kelurahan); ?></strong> mengalami kerusakan berat. Segera jadwalkan perbaikan!
-                        </p>
-                        <a href="<?php echo e(route('admin.infrastruktur.show', $rekomendasi->id_infrastruktur)); ?>" class="inline-flex items-center gap-2 text-[9px] font-black text-gold-500 uppercase tracking-widest hover:text-gold-400 hover:gap-3 transition-all w-max">
-                            Tinjau Aset Ini <i class="fas fa-arrow-right"></i>
+                        <h5 class="text-sm font-black text-navy-900 dark:text-white mt-4 mb-2 line-clamp-1 leading-snug"><?php echo e($rekomendasi->nama_objek ?? $rekomendasi->nama_infrastruktur); ?></h5>
+                        <p class="text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-6 flex items-center gap-1.5"><i class="fas fa-map-marker-alt text-slate-400"></i> Kelurahan <?php echo e($rekomendasi->nama_kelurahan); ?></p>
+                        <a href="<?php echo e(route('admin.infrastruktur.show', $rekomendasi->id_infrastruktur)); ?>" class="inline-flex items-center justify-center gap-2 w-full bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 py-3 rounded-xl text-xs font-black hover:bg-red-100 dark:hover:bg-red-500/20 transition-colors uppercase tracking-wider">
+                            Lihat Detail <i class="fas fa-arrow-right"></i>
                         </a>
                     <?php else: ?>
-                        <p class="text-[10px] text-slate-400 font-medium leading-relaxed mb-4">
-                            Saat ini belum ada infrastruktur dengan kondisi rusak berat yang mendesak untuk ditindaklanjuti.
-                        </p>
-                        <a href="<?php echo e(route('admin.infrastruktur')); ?>" class="inline-flex items-center gap-2 text-[9px] font-black text-slate-400 uppercase tracking-widest hover:text-gold-500 hover:gap-3 transition-all w-max">
-                            Lihat Semua Data <i class="fas fa-arrow-right"></i>
-                        </a>
+                        <div class="w-12 h-12 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-500 rounded-xl flex items-center justify-center mb-4 border border-emerald-100 dark:border-emerald-500/20 shadow-sm">
+                            <i class="fas fa-check-circle text-lg"></i>
+                        </div>
+                        <h5 class="text-sm font-black text-navy-900 dark:text-white mt-4 mb-2 leading-snug">Semua Aman</h5>
+                        <p class="text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-6">Tidak ada infrastruktur dengan prioritas rusak berat saat ini.</p>
                     <?php endif; ?>
                 </div>
             </div>

@@ -248,6 +248,12 @@
     </div>
 </aside>
 
+<!-- Real-time Notification Toast Container -->
+<div id="notification-container" class="fixed bottom-6 right-6 z-[9999] flex flex-col gap-3"></div>
+
+<!-- Notification Audio Element -->
+<audio id="notification-sound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" preload="auto"></audio>
+
 <script>
     function toggleMobileMenu() {
         const sidebar = document.getElementById('mobile-sidebar');
@@ -301,5 +307,76 @@
         document.getElementById('theme-menu-desktop').classList.add('hidden');
         document.getElementById('theme-menu-mobile').classList.add('hidden');
     }
+
+    // --- REAL-TIME NOTIFICATION SYSTEM ---
+    let lastCheckedTime = Math.floor(Date.now() / 1000); // Waktu saat halaman dimuat (Unix Timestamp)
+
+    function checkNewLaporan() {
+        fetch(`/api/check-laporan?last_checked=${lastCheckedTime}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.count > 0) {
+                    // Update lastCheckedTime agar tidak memunculkan notifikasi yang sama dua kali
+                    lastCheckedTime = data.timestamp;
+                    
+                    // Mainkan Suara
+                    const audio = document.getElementById('notification-sound');
+                    if (audio) {
+                        audio.volume = 0.5;
+                        audio.play().catch(e => console.log('Audio autoplay blocked by browser'));
+                    }
+
+                    // Tampilkan Toast untuk setiap laporan baru
+                    data.reports.forEach(report => {
+                        showToastNotification(
+                            'Laporan Warga Baru Masuk!',
+                            `${report.nama_pelapor} melaporkan masalah infrastruktur. Segera tinjau!`,
+                            `/admin/laporan-warga/${report.id_laporan}`
+                        );
+                    });
+                }
+            })
+            .catch(error => console.error('Error checking new laporan:', error));
+    }
+
+    function showToastNotification(title, message, link) {
+        const container = document.getElementById('notification-container');
+        const toastId = 'toast-' + Math.random().toString(36).substr(2, 9);
+        
+        const toastHTML = `
+            <div id="${toastId}" class="bg-white dark:bg-navy-900 border border-slate-100 dark:border-white/10 rounded-2xl p-4 shadow-2xl flex items-start gap-4 transform translate-x-full transition-transform duration-500 ease-out max-w-sm">
+                <div class="w-10 h-10 bg-gold-500/10 text-gold-500 rounded-xl flex items-center justify-center shrink-0">
+                    <i class="fas fa-bell animate-pulse text-lg"></i>
+                </div>
+                <div class="flex-1">
+                    <h5 class="text-xs font-black text-navy-900 dark:text-white mb-1 leading-tight">${title}</h5>
+                    <p class="text-[10px] font-medium text-slate-500 dark:text-slate-400 mb-2">${message}</p>
+                    <a href="${link}" class="inline-block bg-gold-500 text-white text-[9px] font-bold px-3 py-1.5 rounded-lg hover:bg-gold-600 transition-colors">Lihat Detail</a>
+                </div>
+                <button onclick="document.getElementById('${toastId}').remove()" class="text-slate-400 hover:text-red-500 transition-colors">
+                    <i class="fas fa-times text-xs"></i>
+                </button>
+            </div>
+        `;
+        
+        container.insertAdjacentHTML('beforeend', toastHTML);
+        
+        // Animasi masuk
+        setTimeout(() => {
+            document.getElementById(toastId).classList.remove('translate-x-full');
+        }, 100);
+
+        // Hapus otomatis setelah 10 detik
+        setTimeout(() => {
+            const el = document.getElementById(toastId);
+            if(el) {
+                el.classList.add('translate-x-full');
+                setTimeout(() => el.remove(), 500);
+            }
+        }, 10000);
+    }
+
+    // Jalankan pengecekan setiap 15 detik
+    setInterval(checkNewLaporan, 15000);
 </script>
 <?php /**PATH C:\laragon1\laragon\www\geo-sinfra\resources\views/admin/partials/sidebar.blade.php ENDPATH**/ ?>

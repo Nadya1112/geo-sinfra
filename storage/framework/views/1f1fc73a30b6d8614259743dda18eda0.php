@@ -687,6 +687,29 @@
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </div>
 
+                            <!-- SECTION: Filter Tahun (Waktu) -->
+                            <div class="border-t border-white/10 pt-2 flex flex-col gap-1.5 mb-2">
+                                <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest px-1 mb-1 block">Periode Waktu</span>
+                                <div class="relative">
+                                    <select id="filter-tahun" onchange="fetchMapData()" class="w-full bg-[#0f0e2c] border border-white/10 text-slate-200 text-[10px] font-bold rounded-lg px-3 py-2.5 appearance-none cursor-pointer focus:outline-none focus:border-gold-500/50 transition-all">
+                                        <option value="all">Semua Tahun</option>
+                                        <?php
+                                            // Get distinct years from database to populate dropdown
+                                            $years = \Illuminate\Support\Facades\DB::table('infrastruktur')
+                                                ->select(\Illuminate\Support\Facades\DB::raw('YEAR(created_at) as year'))
+                                                ->whereNull('deleted_at')
+                                                ->distinct()
+                                                ->orderBy('year', 'desc')
+                                                ->pluck('year');
+                                        ?>
+                                        <?php $__currentLoopData = $years; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $year): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($year); ?>"><?php echo e($year); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                    <i class="fas fa-calendar-alt absolute right-3 top-1/2 -translate-y-1/2 text-gold-500 text-[10px] pointer-events-none"></i>
+                                </div>
+                            </div>
+
                             <!-- SECTION: Layer Tambahan -->
                             <div class="border-t border-white/10 pt-2 flex flex-col gap-1.5">
                                 <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest px-1 mb-1 block">Layer Tambahan</span>
@@ -1776,9 +1799,28 @@
             // Initial render
             applyFilters();
 
-            // Phase 4: Real-time Updates (AJAX Polling every 30s)
-            function fetchRealTimeData() {
-                fetch('/api/map-data')
+            // Custom Icon untuk heatmap & cluster
+            const customClusterIcon = function (cluster) {
+                const childCount = cluster.getChildCount();
+                let c = ' bg-navy-900/90 text-gold-500 border border-gold-500/50';
+                return new L.DivIcon({ 
+                    html: `<div class="flex items-center justify-center w-full h-full rounded-full ${c} shadow-[0_0_15px_rgba(197,160,89,0.3)]"><span class="font-black text-xs">${childCount}</span></div>`, 
+                    className: 'custom-cluster-icon', 
+                    iconSize: new L.Point(40, 40) 
+                });
+            };
+
+            function getSelectedTahun() {
+                const select = document.getElementById('filter-tahun');
+                return select ? select.value : 'all';
+            }
+
+            function fetchMapData() {
+                // Show loading state if needed
+                document.querySelectorAll('.stat-val').forEach(el => el.innerHTML = '<i class="fas fa-spinner fa-spin text-[8px]"></i>');
+                
+                const tahun = getSelectedTahun();
+                fetch('/api/map-data?tahun=' + tahun)
                     .then(res => res.json())
                     .then(data => {
                         if (data && data.infrastruktur) {
@@ -1805,7 +1847,7 @@
             }
 
             // Jalankan polling setiap 30 detik
-            setInterval(fetchRealTimeData, 30000);
+            setInterval(fetchMapData, 30000);
         });
     </script>
 </body>
