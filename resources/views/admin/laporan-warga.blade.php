@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -12,6 +12,7 @@
 
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
@@ -30,12 +31,12 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     </style>
 </head>
-<body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800 text-left font-sans">
+<body class="bg-navy-50 dark:bg-navy-950 text-slate-800 dark:text-slate-200 antialiased flex overflow-hidden h-screen transition-colors duration-300">
 
     @include('admin.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden text-left font-sans relative">
-        <header class="bg-white/85 backdrop-blur-xl border-b border-slate-100 px-8 py-5 flex justify-between items-center z-40 text-left">
+        <header class="bg-white/85 dark:bg-navy-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/5 px-8 py-5 flex justify-between items-center z-40 text-left transition-colors duration-300">
             <div class="flex items-center gap-4 text-left ml-10 md:ml-0">
                 <a href="{{ route('admin.dashboard') }}"
                    class="w-10 h-10 bg-white border border-slate-100 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/20 hover:shadow-lg hover:shadow-gold-500/5 transition-all group"
@@ -44,19 +45,19 @@
                 </a>
                 <div class="text-left">
                     <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
-                    <h2 class="text-xl font-black text-navy-900 leading-none">Laporan Warga</h2>
+                    <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Laporan Warga</h2>
                 </div>
             </div>
 
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
                     <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin.profile') }}" class="text-right group">
-                        <p class="text-[11px] font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
+                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
                         <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">Online</p>
                     </a>
                     <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md">
@@ -166,22 +167,23 @@
                                         
                                         @if($laporan->label_ai)
                                             @php
-                                                $aiColor = 'bg-slate-100 text-slate-600 border-slate-200';
-                                                $aiIcon = 'fa-robot';
+                                                $aiColor = 'bg-[#0f0e2c] text-white border-gold-500/50 shadow-gold-500/20';
+                                                $aiIcon = 'fa-robot text-gold-500';
+                                                $statusText = '';
                                                 if(str_contains(strtolower($laporan->label_ai), 'berat')) {
-                                                    $aiColor = 'bg-red-50 text-red-600 border-red-200';
-                                                    $aiIcon = 'fa-exclamation-triangle';
+                                                    $statusText = '<span class="text-red-400 font-black">RUSAK BERAT</span>';
                                                 } elseif(str_contains(strtolower($laporan->label_ai), 'sedang')) {
-                                                    $aiColor = 'bg-yellow-50 text-yellow-600 border-yellow-200';
-                                                    $aiIcon = 'fa-exclamation-circle';
+                                                    $statusText = '<span class="text-orange-400 font-black">RUSAK SEDANG</span>';
                                                 } elseif(str_contains(strtolower($laporan->label_ai), 'baik')) {
-                                                    $aiColor = 'bg-emerald-50 text-emerald-600 border-emerald-200';
-                                                    $aiIcon = 'fa-check-circle';
+                                                    $statusText = '<span class="text-emerald-400 font-black">BAIK</span>';
+                                                } else {
+                                                    $statusText = '<span class="text-slate-300 font-black">' . strtoupper($laporan->label_ai) . '</span>';
                                                 }
                                                 $skorPercent = $laporan->skor_ai ? round($laporan->skor_ai * 100) . '%' : '';
                                             @endphp
-                                            <div class="inline-flex items-center gap-1.5 px-2 py-1 mb-3 rounded border {{ $aiColor }} text-[10px] font-bold tracking-wider">
-                                                <i class="fas {{ $aiIcon }}"></i> AI: {{ $laporan->label_ai }} {{ $skorPercent ? "($skorPercent)" : '' }}
+                                            <div class="inline-flex items-center gap-2 px-3 py-1.5 mb-3 rounded-lg border {{ $aiColor }} text-[10px] uppercase tracking-wider shadow-sm">
+                                                <i class="fas {{ $aiIcon }} animate-pulse"></i> 
+                                                <span>Dianalisis AI: {!! $statusText !!} {{ $skorPercent ? "<span class='text-gold-500 font-black ml-1'>($skorPercent Yakin)</span>" : '' }}</span>
                                             </div>
                                         @endif
                                         
@@ -348,3 +350,4 @@
 
 </body>
 </html>
+

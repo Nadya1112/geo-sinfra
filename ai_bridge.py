@@ -18,6 +18,19 @@ import json
 import tempfile
 import numpy as np
 from datetime import datetime
+import logging
+import traceback
+
+# Konfigurasi logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    handlers=[
+        logging.FileHandler("ai_bridge.log"),
+        logging.StreamHandler(sys.stdout)
+    ]
+)
+logger = logging.getLogger("GEO-SINFRA-AI")
 
 # Mengatasi error [WinError 1114] / DLL PyTorch conflict di Windows
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
@@ -62,15 +75,15 @@ def load_models():
         import torchvision.models as models
         import joblib
     except ImportError as e:
-        print(f"[ERROR] Library belum terinstall: {e}")
-        print("        Jalankan: pip install torch torchvision scikit-learn joblib opencv-python flask")
+        logger.error(f"Library belum terinstall: {e}")
+        logger.info("Jalankan: pip install torch torchvision scikit-learn joblib opencv-python flask")
         return False
 
     # Cek file model
     for path, nama in [(CNN_MODEL_PATH, "CNN"), (DT_JENIS_PATH, "DT Jenis"), (DT_KONDISI_PATH, "DT Kondisi")]:
         if not os.path.exists(path):
-            print(f"[ERROR] Model {nama} tidak ditemukan: {path}")
-            print("        Jalankan train_model.py terlebih dahulu!")
+            logger.error(f"Model {nama} tidak ditemukan: {path}")
+            logger.info("Jalankan train_model.py terlebih dahulu!")
             return False
 
     try:
@@ -78,40 +91,40 @@ def load_models():
         if os.path.exists(CONFIG_PATH):
             with open(CONFIG_PATH, 'r') as f:
                 model_config = json.load(f)
-            print(f"  Konfigurasi dimuat dari: {CONFIG_PATH}")
+            logger.info(f"Konfigurasi dimuat dari: {CONFIG_PATH}")
         else:
             model_config = {}
 
         # Muat CNN (ResNet18 feature extractor)
-        print("  Memuat model CNN (ResNet18)...")
+        logger.info("Memuat model CNN (ResNet18)...")
         cnn_model = models.resnet18(weights=None)
         cnn_model.fc = torch.nn.Identity()
         cnn_model.load_state_dict(torch.load(CNN_MODEL_PATH, map_location='cpu', weights_only=True))
         cnn_model.eval()
-        print(f"  [OK] CNN dimuat!")
+        logger.info("[OK] CNN dimuat!")
 
         # Muat Decision Trees
-        print("  Memuat Decision Tree (Jenis)...")
+        logger.info("Memuat Decision Tree (Jenis)...")
         dt_jenis_model = joblib.load(DT_JENIS_PATH)
-        print(f"  [OK] DT Jenis dimuat!")
+        logger.info("[OK] DT Jenis dimuat!")
 
-        print("  Memuat Decision Tree (Kondisi)...")
+        logger.info("Memuat Decision Tree (Kondisi)...")
         dt_kondisi_model = joblib.load(DT_KONDISI_PATH)
-        print(f"  [OK] DT Kondisi dimuat!")
+        logger.info("[OK] DT Kondisi dimuat!")
 
         # Muat PCA transformer (jika ada)
         if os.path.exists(PCA_PATH):
             pca_model = joblib.load(PCA_PATH)
-            print(f"  [OK] PCA dimuat ({pca_model.n_components} komponen)")
+            logger.info(f"[OK] PCA dimuat ({pca_model.n_components} komponen)")
 
         models_loaded = True
-        print(f"\n  Akurasi Training Jenis  : {model_config.get('accuracy_jenis', '?')}%")
-        print(f"  Akurasi Training Kondisi: {model_config.get('accuracy_kondisi', '?')}%")
-        print(f"  Tanggal Training: {model_config.get('training_date', '?')}")
+        logger.info(f"Akurasi Training Jenis  : {model_config.get('accuracy_jenis', '?')}%")
+        logger.info(f"Akurasi Training Kondisi: {model_config.get('accuracy_kondisi', '?')}%")
         return True
 
     except Exception as e:
-        print(f"[ERROR] Gagal memuat model: {e}")
+        logger.error(f"Gagal memuat model: {e}")
+        logger.error(traceback.format_exc())
         return False
 
 
@@ -275,7 +288,7 @@ def predict():
         os.close(temp_fd)
         file.save(temp_path)
 
-        print(f"[{datetime.now().strftime('%H:%M:%S')}] Menganalisis: {file.filename}...")
+        logger.info(f"Menganalisis: {file.filename}...")
 
         # Jalankan prediksi
         result = predict_image(temp_path)
@@ -287,13 +300,13 @@ def predict():
             f"Confidence kondisi: {result['confidence_kondisi']}%."
         )
 
-        print(f"  -> Hasil: {result['jenis']} - {result['kondisi']} "
-              f"(Jenis: {result['confidence_jenis']}%, Kondisi: {result['confidence_kondisi']}%)")
+        logger.info(f"-> Hasil: {result['jenis']} - {result['kondisi']} (Jenis: {result['confidence_jenis']}%, Kondisi: {result['confidence_kondisi']}%)")
 
         return jsonify(result)
 
     except Exception as e:
-        print(f"  [ERROR] {str(e)}")
+        logger.error(f"Error menganalisis gambar: {str(e)}")
+        logger.error(traceback.format_exc())
         return jsonify({
             "success": False,
             "error": f"Gagal menganalisis gambar: {str(e)}"
@@ -323,28 +336,96 @@ def health():
     })
 
 
+@app.route('/predict-spk', methods=['POST'])
+def predict_spk():
+    """Endpoint untuk perhitungan SPK (Decision Tree) berbasis teks."""
+    try:
+        data = request.json
+        if not data:
+            return jsonify({"success": False, "error": "Data JSON tidak ditemukan"}), 400
+
+        kondisi = str(data.get('kondisi', '')).lower()
+        material = str(data.get('material', '')).lower()
+        drainase = str(data.get('drainase', 'tidak')).lower()
+        skor_cnn = float(data.get('skor_cnn', 0.0))
+
+        skor = 0
+        label_kondisi = 'Baik'
+
+        # Aturan Pakar / Decision Tree Manual
+        if any(word in kondisi for word in ['berat', 'putus', 'hancur', 'amblas']):
+            skor = 85
+            label_kondisi = 'Rusak Berat'
+        elif any(word in kondisi for word in ['goyang', 'retak', 'aus', 'banjir']):
+            skor = 50
+            label_kondisi = 'Rusak Sedang'
+            
+            # Sub-cabang material kayu
+            if 'kayu' in material or 'ulin' in material:
+                skor += 20
+                if skor >= 70:
+                    label_kondisi = 'Rusak Berat'
+        elif any(word in kondisi for word in ['ringan', 'kusam', 'perlu peningkatan']):
+            skor = 25
+            label_kondisi = 'Rusak Ringan'
+
+        # Integrasi Visual CNN
+        if skor_cnn > 0.7:
+            skor += 15
+
+        # Cap skor di 100
+        skor = min(skor, 100)
+
+        # SPK Hybrid Labeling
+        if skor >= 65 or skor_cnn >= 0.65:
+            label_kondisi = 'Rusak Berat'
+        elif skor >= 35 or skor_cnn >= 0.35:
+            label_kondisi = 'Rusak Sedang'
+        else:
+            label_kondisi = 'Baik'
+
+        # Rekomendasi
+        rekomendasi = "Kondisi terkendali, lakukan pemantauan berkala."
+        if label_kondisi == 'Rusak Berat':
+            rekomendasi = f"PRIORITAS UTAMA: Struktur kritis terdeteksi secara visual ({round(skor_cnn * 100)}%) dan teknis. Segera lakukan rehabilitasi."
+        elif label_kondisi == 'Rusak Sedang':
+            rekomendasi = "Perlu pemeliharaan rutin dan perbaikan pada area terdampak visual."
+
+        return jsonify({
+            "success": True,
+            "skor": skor,
+            "label": label_kondisi,
+            "rekomendasi": rekomendasi
+        })
+
+    except Exception as e:
+        print(f"  [ERROR SPK] {str(e)}")
+        return jsonify({
+            "success": False,
+            "error": f"Gagal menghitung SPK: {str(e)}"
+        }), 500
+
+
 # ========================
 # MAIN
 # ========================
 if __name__ == '__main__':
-    print("=" * 60)
-    print("  GEO-SINFRA AI BRIDGE")
-    print("  Flask API - CNN + Decision Tree Classifier")
-    print("=" * 60)
-    print()
+    logger.info("=" * 60)
+    logger.info("  GEO-SINFRA AI BRIDGE")
+    logger.info("  Flask API - CNN + Decision Tree Classifier")
+    logger.info("=" * 60)
 
-    print("[1/2] Memuat model AI...")
+    logger.info("[1/2] Memuat model AI...")
     success = load_models()
 
     if success:
-        print(f"\n[OK] Semua model berhasil dimuat!")
+        logger.info("[OK] Semua model berhasil dimuat!")
     else:
-        print(f"\n[WARNING] Model gagal dimuat. Server tetap berjalan tapi prediksi tidak tersedia.")
+        logger.warning("Model gagal dimuat. Server tetap berjalan tapi prediksi tidak tersedia.")
 
-    print(f"\n[2/2] Menjalankan Flask server...")
-    print(f"  URL: http://127.0.0.1:5000")
-    print(f"  Endpoint prediksi: POST http://127.0.0.1:5000/predict")
-    print(f"  Health check: GET http://127.0.0.1:5000/health")
-    print()
+    logger.info("[2/2] Menjalankan Flask server...")
+    logger.info("  URL: http://127.0.0.1:5000")
+    logger.info("  Endpoint prediksi: POST http://127.0.0.1:5000/predict")
+    logger.info("  Health check: GET http://127.0.0.1:5000/health")
 
     app.run(host='127.0.0.1', port=5000, debug=False)

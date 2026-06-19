@@ -379,7 +379,7 @@
                 {{-- Kolom kanan: TTD --}}
                 <td style="width:50%; text-align:center;">
                     <div class="ttd-kota-tgl">Banjarmasin, {{ now()->translatedFormat('d F Y') }}</div>
-                    <div class="ttd-jabatan">Kepala Bidang Kawasan Permukiman</div>
+                    <div class="ttd-jabatan">Koordinator Tim Teknis</div>
                     <div class="ttd-ruang"></div>
                     <div class="ttd-nama">HIZBULWATHONI, S.T.</div>
                     <div class="ttd-nip">NIP. 19760814 200604 1 008</div>

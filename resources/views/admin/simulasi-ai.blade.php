@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -12,6 +12,7 @@
     
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
@@ -34,7 +35,7 @@
         }
     </style>
 </head>
-<body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800 text-left font-sans">
+<body class="bg-navy-50 dark:bg-navy-950 text-slate-800 dark:text-slate-200 antialiased flex overflow-hidden h-screen transition-colors duration-300">
 
     @include('admin.partials.sidebar')
 
@@ -46,19 +47,19 @@
                 </a>
                 <div class="text-left">
                     <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Playground</p>
-                    <h2 class="text-xl font-black text-navy-900 leading-none">Simulasi Model AI</h2>
+                    <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Simulasi Model AI</h2>
                 </div>
             </div>
 
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
                     <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin.profile') }}" class="text-right group">
-                        <p class="text-[11px] font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
+                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
                         <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">Online</p>
                     </a>
                     <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden shadow-md">
@@ -164,7 +165,7 @@
                                 <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
                                     <div class="flex justify-between items-end mb-2">
                                         <span class="text-[10px] font-black text-navy-900 uppercase tracking-widest">Tingkat Keyakinan (Confidence)</span>
-                                        <span id="pred-conf-text" class="text-xl font-black text-navy-900 leading-none">0%</span>
+                                        <span id="pred-conf-text" class="text-xl font-black text-navy-900 dark:text-white leading-none">0%</span>
                                     </div>
                                     <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
                                         <div id="pred-conf-bar" class="h-full rounded-full bg-gradient-to-r from-navy-800 to-gold-500 transition-all duration-1000 w-0"></div>
@@ -338,3 +339,4 @@
     </script>
 </body>
 </html>
+

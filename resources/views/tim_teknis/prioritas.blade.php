@@ -32,12 +32,12 @@
 </head>
 <body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800 text-left">
 
-    @include('kabid.partials.sidebar')
+    @include('tim_teknis.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden">
         <header class="bg-white border-b border-slate-100 px-8 py-5 flex justify-between items-center z-10 sticky top-0">
             <div class="flex items-center gap-4">
-                <a href="{{ route('kabid.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100">
+                <a href="{{ route('tim_teknis.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
@@ -52,7 +52,7 @@
                     <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
-                <a href="{{ route('kabid.profile') }}" class="flex items-center gap-3 group">
+                <a href="{{ route('tim_teknis.profile') }}" class="flex items-center gap-3 group">
                     <div class="text-right">
                         <p class="text-[11px] font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-colors">{{ auth()->user()->name }}</p>
                         <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
@@ -145,7 +145,7 @@
                                 </div>
                             </div>
 
-                            <a href="{{ route('kabid.infrastruktur.show', $item->id ?? $item->id_infrastruktur) }}" class="flex items-center justify-center gap-2 w-full py-3.5 bg-navy-900 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-gold-500 hover:text-white transition-all shadow-lg shadow-navy-900/20 group-hover:shadow-gold-500/30">
+                            <a href="{{ route('tim_teknis.infrastruktur.show', $item->id ?? $item->id_infrastruktur) }}" class="flex items-center justify-center gap-2 w-full py-3.5 bg-navy-900 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-gold-500 hover:text-white transition-all shadow-lg shadow-navy-900/20 group-hover:shadow-gold-500/30">
                                 Lihat Detail Data <i class="fas fa-arrow-right text-[10px]"></i>
                             </a>
                         </div>

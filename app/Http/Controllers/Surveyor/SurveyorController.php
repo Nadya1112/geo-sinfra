@@ -276,7 +276,7 @@ class SurveyorController extends Controller
         $infrastruktur->rencana_perbaikan = $request->rencana_perbaikan;
         $infrastruktur->tgl_survey = $request->tgl_survey;
         
-        // Kembalikan ke antrean Admin & Kabid setelah direvisi Surveyor
+        // Kembalikan ke antrean Admin & Tim Teknis setelah direvisi Surveyor
         $infrastruktur->status_verifikasi = 'Pending';
         $infrastruktur->status_validasi = 'Pending';
         $infrastruktur->alasan_penolakan = null;
@@ -302,7 +302,7 @@ class SurveyorController extends Controller
             ->where('id_user', auth()->id())
             ->firstOrFail();
 
-        // Proteksi: tidak boleh hapus jika sudah diverifikasi atau divalidasi admin/kabid
+        // Proteksi: tidak boleh hapus jika sudah diverifikasi atau divalidasi admin/tim_teknis
         if ($infrastruktur->status_verifikasi !== 'Pending') {
             return redirect()->route('surveyor.history')
                 ->with('error', 'Data tidak dapat dihapus karena sudah diproses oleh Admin. Hubungi Admin untuk penghapusan.');

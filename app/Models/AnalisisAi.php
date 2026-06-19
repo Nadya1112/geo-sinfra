@@ -22,7 +22,7 @@ class AnalisisAi extends Model
     // 4. Daftar kolom yang boleh diisi
     protected $fillable = [
         'id_infrastruktur',
-        'id_kabid',
+        'id_tim_teknis',
         'param_kondisi',
         'param_kepadatan',
         'skor_dt',

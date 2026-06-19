@@ -49,7 +49,7 @@ class AuthController extends Controller
 
             if ($user->role == 'admin') return redirect()->intended('/admin/dashboard');
             if ($user->role == 'surveyor') return redirect()->intended('/surveyor/dashboard');
-            if ($user->role == 'kabid') return redirect()->intended('/kabid/dashboard');
+            if ($user->role == 'tim_teknis') return redirect()->intended('/tim-teknis/dashboard');
 
             return redirect()->intended('/');
         }
@@ -98,7 +98,7 @@ class AuthController extends Controller
 
         if ($user->role == 'admin') return redirect()->intended('/admin/dashboard');
         if ($user->role == 'surveyor') return redirect()->intended('/surveyor/dashboard');
-        if ($user->role == 'kabid') return redirect()->intended('/kabid/dashboard');
+        if ($user->role == 'tim_teknis') return redirect()->intended('/tim-teknis/dashboard');
 
         return redirect()->intended('/');
     }
@@ -150,7 +150,7 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'no_hp' => 'required|string|max:20|unique:users',
-            'role' => 'required|in:surveyor,kabid',
+            'role' => 'required|in:surveyor,tim_teknis',
             'password' => 'required|string|min:8|confirmed',
         ]);
 

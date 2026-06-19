@@ -32,7 +32,7 @@ class InfrastrukturObserver
             
             // A. Kirim Email
             try {
-                $emailTujuan = env('KABID_EMAIL', 'nadiabjm412@gmail.com');
+                $emailTujuan = env('TIM_TEKNIS_EMAIL', 'nadiabjm412@gmail.com');
                 \Illuminate\Support\Facades\Mail::to($emailTujuan)->send(new \App\Mail\DaruratNotificationMail($infra));
             } catch (\Exception $e) {
                 \Illuminate\Support\Facades\Log::error('Gagal kirim Email Darurat: ' . $e->getMessage());

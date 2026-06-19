@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -11,6 +11,7 @@
     
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
@@ -28,7 +29,7 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     </style>
 </head>
-<body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800 font-sans">
+<body class="bg-navy-50 dark:bg-navy-950 text-slate-800 dark:text-slate-200 antialiased flex overflow-hidden h-screen transition-colors duration-300">
 
     @include('admin.partials.sidebar')
 
@@ -41,13 +42,13 @@
                 </a>
                 <div>
                     <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
-                    <h2 class="text-xl font-black text-navy-900 leading-none">Profil Saya</h2>
+                    <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Profil Saya</h2>
                 </div>
             </div>
             
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
                     <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
             </div>
@@ -192,3 +193,4 @@
     </script>
 </body>
 </html>
+

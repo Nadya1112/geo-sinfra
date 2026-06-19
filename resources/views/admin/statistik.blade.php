@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -12,6 +12,7 @@
 
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
@@ -32,7 +33,7 @@
         .stat-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(15,14,44,0.10); }
     </style>
 </head>
-<body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800 font-sans">
+<body class="bg-navy-50 dark:bg-navy-950 text-slate-800 dark:text-slate-200 antialiased flex overflow-hidden h-screen transition-colors duration-300">
 
     @include('admin.partials.sidebar')
 
@@ -47,7 +48,7 @@
                 </a>
                 <div>
                     <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
-                    <h2 class="text-xl font-black text-navy-900 leading-none">Ringkasan Statistik</h2>
+                    <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Ringkasan Statistik</h2>
                 </div>
                 <div class="hidden md:block w-[1px] h-8 bg-slate-200 ml-4 mr-2"></div>
                 <a href="{{ route('admin.infrastruktur.export') }}" class="ml-2 px-4 py-2 bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white border border-emerald-100 hover:border-emerald-500 rounded-xl text-[10px] font-black tracking-widest uppercase transition-all shadow-sm hover:shadow-lg hover:shadow-emerald-500/20 flex items-center gap-2">
@@ -57,13 +58,13 @@
 
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
                     <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin.profile') }}" class="text-right group">
-                        <p class="text-[11px] font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
+                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
                         <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">Online</p>
                     </a>
                     <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 overflow-hidden hover:shadow-lg transition-all shadow-md">
@@ -109,7 +110,7 @@
                     <p class="text-[9px] text-slate-400 font-semibold mt-1">Data diproses</p>
                 </div>
 
-                {{-- Surveyor & Kabid --}}
+                {{-- Surveyor & Tim Teknis --}}
                 <div class="stat-card bg-white rounded-3xl border border-slate-100 shadow-sm p-6">
                     <div class="flex items-start justify-between mb-4">
                         <div class="w-11 h-11 bg-navy-500 rounded-2xl flex items-center justify-center shadow-md shadow-navy-500/20">
@@ -117,9 +118,9 @@
                         </div>
                         <span class="text-[8px] font-black text-navy-800 bg-navy-50 border border-navy-100 px-2 py-1 rounded-lg uppercase tracking-wider">User</span>
                     </div>
-                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Surveyor & Kabid</p>
-                    <h3 class="text-3xl font-black text-navy-900">{{ $jumlahSurveyor + $jumlahKabid }}</h3>
-                    <p class="text-[9px] text-slate-400 font-semibold mt-1">{{ $jumlahSurveyor }} surveyor · {{ $jumlahKabid }} kabid</p>
+                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Surveyor & Tim Teknis</p>
+                    <h3 class="text-3xl font-black text-navy-900">{{ $jumlahSurveyor + $jumlahTim Teknis }}</h3>
+                    <p class="text-[9px] text-slate-400 font-semibold mt-1">{{ $jumlahSurveyor }} surveyor · {{ $jumlahTim Teknis }} tim_teknis</p>
                 </div>
 
                 {{-- Wilayah --}}
@@ -280,3 +281,4 @@
     </script>
 </body>
 </html>
+

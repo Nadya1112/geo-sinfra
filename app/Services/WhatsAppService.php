@@ -14,10 +14,10 @@ class WhatsAppService
     public static function sendDaruratNotification(Infrastruktur $infra)
     {
         $token = env('FONNTE_TOKEN');
-        $targetNumber = env('KABID_WA_NUMBER'); // The Kabid's WhatsApp Number
+        $targetNumber = env('TIM_TEKNIS_WA_NUMBER'); // The Tim Teknis's WhatsApp Number
 
         if (empty($token) || empty($targetNumber)) {
-            Log::warning('Fonnte Token atau Nomor WA Kabid belum diset di .env');
+            Log::warning('Fonnte Token atau Nomor WA Tim Teknis belum diset di .env');
             return false;
         }
 
@@ -26,7 +26,7 @@ class WhatsAppService
         $lokasi = ($infra->kelurahan->nama_kelurahan ?? '-') . ', Kec. ' . ($infra->kelurahan->kecamatan->nama_kecamatan ?? '-');
         $pelapor = $infra->user->name ?? 'Sistem';
         $statusAI = $infra->analisis->label_prioritas ?? 'Rusak Berat';
-        $link = route('kabid.prioritas');
+        $link = route('tim_teknis.prioritas');
 
         $message = "🚨 *URGENT: PERINGATAN DARURAT INFRASTRUKTUR* 🚨\n\n";
         $message .= "Yth. Bapak/Ibu Kepala Bidang,\n";
@@ -63,22 +63,22 @@ class WhatsAppService
     }
 
     /**
-     * Send a notification to Kabid when a report needs to be validated (ACC)
+     * Send a notification to Tim Teknis when a report needs to be validated (ACC)
      */
     public static function sendApprovalNotification(Infrastruktur $infra)
     {
         $token = env('FONNTE_TOKEN');
-        $targetNumber = env('KABID_WA_NUMBER');
+        $targetNumber = env('TIM_TEKNIS_WA_NUMBER');
 
         if (empty($token) || empty($targetNumber)) {
-            Log::warning('Fonnte Token atau Nomor WA Kabid belum diset di .env');
+            Log::warning('Fonnte Token atau Nomor WA Tim Teknis belum diset di .env');
             return false;
         }
 
         $namaObjek = $infra->nama_objek ?? '-';
         $lokasi = ($infra->kelurahan->nama_kelurahan ?? '-') . ', Kec. ' . ($infra->kelurahan->kecamatan->nama_kecamatan ?? '-');
         $pelapor = $infra->user->name ?? 'Surveyor';
-        $link = route('kabid.validasi');
+        $link = route('tim_teknis.validasi');
 
         $message = "🔔 *PEMBERITAHUAN VALIDASI (ACC) SINFRA* 🔔\n\n";
         $message .= "Yth. Bapak/Ibu Kepala Bidang,\n";

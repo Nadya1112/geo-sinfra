@@ -77,11 +77,11 @@ class AdminController extends Controller
 
         $this->logActivity('verification', "Verifikasi Aset: {$infra->nama_objek}", $id);
 
-        // Kirim Notifikasi WA ke Kabid bahwa ada data yang perlu di-ACC
+        // Kirim Notifikasi WA ke Tim Teknis bahwa ada data yang perlu di-ACC
         $infra->load(['kelurahan.kecamatan', 'user']);
         \App\Services\WhatsAppService::sendApprovalNotification($infra);
 
-        return redirect()->back()->with('success', "Aset {$infra->nama_objek} berhasil diverifikasi. Notifikasi dikirim ke Kabid.");
+        return redirect()->back()->with('success', "Aset {$infra->nama_objek} berhasil diverifikasi. Notifikasi dikirim ke Tim Teknis.");
     }
 
     private function logActivity($type, $description, $referenceId = null)
@@ -101,7 +101,7 @@ class AdminController extends Controller
     public function statistik()
     {
         $jumlahSurveyor = User::where('role', 'surveyor')->count();
-        $jumlahKabid = User::where('role', 'kabid')->count();
+        $jumlahTimTeknis = User::where('role', 'tim_teknis')->count();
         $jumlahWilayah = DB::table('kecamatan')->count();
         $jumlahInfrastruktur = Infrastruktur::whereNull('deleted_at')->count();
         
@@ -121,7 +121,7 @@ class AdminController extends Controller
             ->get();
 
         return view('admin.statistik', compact(
-            'jumlahSurveyor', 'jumlahKabid', 'jumlahWilayah', 'jumlahInfrastruktur', 
+            'jumlahSurveyor', 'jumlahTimTeknis', 'jumlahWilayah', 'jumlahInfrastruktur', 
             'jumlahAnalisis', 'jumlahRusakBerat', 'jumlahRusakSedang', 'jumlahBaik', 'jumlahBelumDianalisis',
             'recentActivities'
         ));
@@ -266,7 +266,7 @@ class AdminController extends Controller
     public function editUser($id)
     {
         $user = User::findOrFail($id);
-        if ($user->role === 'kabid') return redirect()->route('admin.users')->with('error', 'AKUN KABID TERKUNCI.');
+        if ($user->role === 'tim_teknis') return redirect()->route('admin.users')->with('error', 'AKUN TIM TEKNIS TERKUNCI.');
         
         $semuaWilayah = DB::table('kecamatan')->get();
         return view('admin.edit-user', compact('user', 'semuaWilayah'));
@@ -311,7 +311,7 @@ class AdminController extends Controller
     public function destroyUser($id)
     {
         $user = User::findOrFail($id);
-        if ($user->role === 'kabid') return redirect()->route('admin.users')->with('error', 'AKUN KABID DILINDUNGI.');
+        if ($user->role === 'tim_teknis') return redirect()->route('admin.users')->with('error', 'AKUN TIM TEKNIS DILINDUNGI.');
         if (auth()->id() == $user->id) return redirect()->route('admin.users')->with('error', 'TIDAK BISA MENGHAPUS AKUN SENDIRI.');
 
         $name = $user->name;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Kabid;
+namespace App\Http\Controllers\TimTeknis;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -8,7 +8,7 @@ use App\Models\Infrastruktur;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class KabidController extends Controller
+class TimTeknisController extends Controller
 {
     public function index()
     {
@@ -34,7 +34,7 @@ class KabidController extends Controller
             ->take(5)
             ->get();
 
-        return view('kabid.dashboard', compact(
+        return view('tim_teknis.dashboard', compact(
             'totalInfrastruktur',
             'totalRusakBerat',
             'totalRusakSedang',
@@ -53,7 +53,7 @@ class KabidController extends Controller
         $kecamatan = \App\Models\Kecamatan::all();
         $kelurahan = \App\Models\Kelurahan::with('kecamatan')->get();
         
-        return view('kabid.monitoring', compact('infrastruktur', 'kecamatan', 'kelurahan'));
+        return view('tim_teknis.monitoring', compact('infrastruktur', 'kecamatan', 'kelurahan'));
     }
 
     public function prioritas()
@@ -69,7 +69,7 @@ class KabidController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
             
-        return view('kabid.prioritas', compact('prioritas'));
+        return view('tim_teknis.prioritas', compact('prioritas'));
     }
 
 
@@ -77,7 +77,7 @@ class KabidController extends Controller
     {
         $infrastruktur = Infrastruktur::with(['kelurahan.kecamatan', 'user', 'analisis', 'cnn'])
             ->findOrFail($id);
-        return view('kabid.show', compact('infrastruktur'));
+        return view('tim_teknis.show', compact('infrastruktur'));
     }
 
     public function validasi(Request $request)
@@ -121,7 +121,7 @@ class KabidController extends Controller
 
         $kecamatan = \App\Models\Kecamatan::all();
 
-        return view('kabid.validasi', compact('allUsulan', 'counts', 'kecamatan'));
+        return view('tim_teknis.validasi', compact('allUsulan', 'counts', 'kecamatan'));
     }
 
     public function prosesValidasi(Request $request, $id)
@@ -137,7 +137,7 @@ class KabidController extends Controller
         $infra->save();
 
         $message = $request->status == 'Validated' ? 'Data berhasil divalidasi dan dipindahkan ke tab Disetujui!' : 'Data telah ditolak dan dipindahkan ke tab Ditolak!';
-        return redirect()->route('kabid.validasi', ['status' => $request->status])->with('success', $message);
+        return redirect()->route('tim_teknis.validasi', ['status' => $request->status])->with('success', $message);
     }
 
     public function bulkValidasi(Request $request)
@@ -161,7 +161,7 @@ class KabidController extends Controller
             ? count($request->ids) . ' Data berhasil divalidasi dan dipindahkan ke tab Disetujui!' 
             : count($request->ids) . ' Data telah ditolak dan dipindahkan ke tab Ditolak!';
             
-        return redirect()->route('kabid.validasi', ['status' => $request->status])->with('success', $message);
+        return redirect()->route('tim_teknis.validasi', ['status' => $request->status])->with('success', $message);
     }
 
     public function updateStatusPerbaikan(Request $request, $id)
@@ -186,7 +186,7 @@ class KabidController extends Controller
     public function profile()
     {
         $user = auth()->user();
-        return view('kabid.profile', compact('user'));
+        return view('tim_teknis.profile', compact('user'));
     }
 
     public function updateProfile(Request $request)
@@ -216,7 +216,7 @@ class KabidController extends Controller
 
         $user->save();
 
-        return redirect()->route('kabid.dashboard')->with('success', 'Profil Anda berhasil diperbarui!');
+        return redirect()->route('tim_teknis.dashboard')->with('success', 'Profil Anda berhasil diperbarui!');
     }
 
     public function laporan(Request $request)
@@ -272,7 +272,7 @@ class KabidController extends Controller
         
         $kecamatan = \App\Models\Kecamatan::all();
 
-        return view('kabid.laporan', compact('reports', 'kecamatan', 'totalLaporan', 'totalBaik', 'totalSedang', 'totalBerat'));
+        return view('tim_teknis.laporan', compact('reports', 'kecamatan', 'totalLaporan', 'totalBaik', 'totalSedang', 'totalBerat'));
     }
 
     public function exportPdf($id)
@@ -287,7 +287,7 @@ class KabidController extends Controller
             ->select('infrastruktur.*', 'kecamatan.nama_kecamatan', 'kelurahan.nama_kelurahan', 'users.name as nama_user', 'citra_cnn.skor_cnn', 'citra_cnn.label_kondisi as label_cnn', 'analisis_ai.skor_dt', 'analisis_ai.label_prioritas', 'analisis_ai.rekomendasi')
             ->first();
             
-        if (!$inf) return redirect()->route('kabid.monitoring')->with('error', 'ASET TIDAK DITEMUKAN.');
+        if (!$inf) return redirect()->route('tim_teknis.monitoring')->with('error', 'ASET TIDAK DITEMUKAN.');
         
         $pdf = Pdf::loadView('admin.pdf-infrastruktur', compact('inf'))
             ->setOptions([

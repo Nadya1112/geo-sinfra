@@ -35,60 +35,33 @@ class AnalisisAiController extends Controller
         $skorCnn = $cnn ? $cnn->skor_cnn : 0;
         $labelCnn = $cnn ? $cnn->label_kondisi : 'Tidak Ada Data Visual';
         
-        $skor = 0;
-        $label_kondisi = 'Baik';
+        // 3. LOGIKA DECISION TREE (Pohon Keputusan) -> DIALIHKAN KE PYTHON AI BRIDGE
+        $spkApiUrl = env('SPK_API_URL', 'http://127.0.0.1:5000/predict-spk');
+        
+        $spkResponse = \Illuminate\Support\Facades\Http::timeout(10)->post($spkApiUrl, [
+            'kondisi' => $kondisi,
+            'material' => $material,
+            'drainase' => $drainase,
+            'skor_cnn' => floatval($skorCnn)
+        ]);
 
-        // 3. LOGIKA DECISION TREE (Pohon Keputusan)
-        // --- Cabang 1: Rusak Berat ---
-        if (str_contains($kondisi, 'berat') || str_contains($kondisi, 'putus') || str_contains($kondisi, 'hancur') || str_contains($kondisi, 'amblas')) {
-            $skor = 85; 
-            $label_kondisi = 'Rusak Berat';
-        } 
-        // --- Cabang 2: Rusak Sedang ---
-        elseif (str_contains($kondisi, 'goyang') || str_contains($kondisi, 'retak') || str_contains($kondisi, 'aus') || str_contains($kondisi, 'banjir')) {
-            $skor = 50;
-            $label_kondisi = 'Rusak Sedang';
-            
-            // Sub-cabang: Jika material dari kayu dan sudah goyang/retak, skor bahaya naik
-            if (str_contains($material, 'kayu') || str_contains($material, 'ulin')) {
-                $skor += 20; 
-                if ($skor >= 70) {
-                    $label_kondisi = 'Rusak Berat'; // Berubah status jika skor tinggi
-                }
-            }
-        } 
-        // --- Cabang 3: Rusak Ringan ---
-        elseif (str_contains($kondisi, 'ringan') || str_contains($kondisi, 'kusam') || str_contains($kondisi, 'perlu peningkatan')) {
-            $skor = 25;
-            $label_kondisi = 'Rusak Ringan';
-        }
-
-        // --- Aturan Tambahan: Integrasi CNN ---
-        // Jika CNN mendeteksi kerusakan tinggi (> 0.7), tingkatkan skor DT
-        if ($skorCnn > 0.7) {
-            $skor += 15;
-        }
-
-        // Batasi skor maksimal 100
-        $skor = min($skor, 100);
-
-        // Gabungkan label (SPK Hybrid)
-        if ($skor >= 65 || $skorCnn >= 0.65) {
-            $label_kondisi = 'Rusak Berat';
-        } elseif ($skor >= 35 || $skorCnn >= 0.35) {
-            $label_kondisi = 'Rusak Sedang';
+        if ($spkResponse->successful() && $spkResponse->json('success')) {
+            $data = $spkResponse->json();
+            $skor = $data['skor'] ?? 0;
+            $label_kondisi = $data['label'] ?? 'Baik';
+            $rekomendasi = $data['rekomendasi'] ?? "Kondisi terpantau aman.";
         } else {
+            // Fallback ringan jika API Python mati untuk SPK
+            \Illuminate\Support\Facades\Log::error("API SPK Error: " . $spkResponse->body());
+            $skor = 0;
             $label_kondisi = 'Baik';
-        }
-
-        // Buat rekomendasi otomatis
-        $rekomendasi = "Kondisi terpantau aman.";
-        if ($label_kondisi == 'Rusak Berat') {
-            $rekomendasi = "PRIORITAS UTAMA: Struktur kritis terdeteksi secara visual (" . round($skorCnn * 100) . "%) dan teknis. Segera lakukan rehabilitasi.";
-        } elseif ($label_kondisi == 'Rusak Sedang') {
-            $rekomendasi = "Perlu pemeliharaan rutin dan perbaikan pada area terdampak visual.";
-        } elseif ($label_kondisi == 'Baik') {
-            $rekomendasi = "Kondisi terkendali, lakukan pemantauan berkala.";
+            $rekomendasi = "Menunggu analisis lebih lanjut.";
+            
+            // Fallback manual sederhana jika sangat terdesak
+            if (str_contains($kondisi, 'berat') || $skorCnn >= 0.65) {
+                $skor = 80;
+                $label_kondisi = 'Rusak Berat';
+            }
         }
 
         // 4. Simpan hasil analisis ke tabel analisis_ai (Upsert: Update jika ada, Insert jika baru)

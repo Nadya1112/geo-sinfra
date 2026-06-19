@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cetak Laporan & Rekapitulasi | Kabid SINFRA</title>
+    <title>Cetak Laporan & Rekapitulasi | Tim Teknis SINFRA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -67,12 +67,12 @@
 </head>
 <body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800 text-left">
 
-    @include('kabid.partials.sidebar')
+    @include('tim_teknis.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden">
         <header class="bg-white border-b border-slate-100 px-8 py-5 flex justify-between items-center z-10 no-print sticky top-0">
             <div class="flex items-center gap-4">
-                <a href="{{ route('kabid.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100">
+                <a href="{{ route('tim_teknis.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
@@ -87,7 +87,7 @@
                     <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
-                <a href="{{ route('kabid.profile') }}" class="flex items-center gap-3 group">
+                <a href="{{ route('tim_teknis.profile') }}" class="flex items-center gap-3 group">
                     <div class="text-right">
                         <p class="text-[11px] font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-colors">{{ auth()->user()->name }}</p>
                         <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
@@ -177,7 +177,7 @@
 
             <!-- Filter Section (No Print) -->
             <div class="bg-white rounded-[2rem] p-8 border border-slate-100 shadow-sm mb-8 no-print">
-                <form action="{{ route('kabid.laporan') }}" method="GET" class="flex flex-col gap-6">
+                <form action="{{ route('tim_teknis.laporan') }}" method="GET" class="flex flex-col gap-6">
                     <input type="hidden" name="show" value="{{ request('show') }}">
                     
                     <div class="flex flex-wrap md:flex-nowrap gap-6 items-end">
@@ -229,7 +229,7 @@
                             <button type="submit" class="px-6 py-2.5 bg-navy-900 text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-gold-500 transition-all shadow-lg shadow-navy-900/10">
                                 Filter Data
                             </button>
-                            <a href="{{ route('kabid.laporan') }}" class="px-4 py-2.5 bg-slate-50 text-slate-400 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-100 hover:text-slate-600 transition-all flex items-center border border-slate-100 shadow-sm" title="Reset Filter">
+                            <a href="{{ route('tim_teknis.laporan') }}" class="px-4 py-2.5 bg-slate-50 text-slate-400 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-100 hover:text-slate-600 transition-all flex items-center border border-slate-100 shadow-sm" title="Reset Filter">
                                 <i class="fas fa-sync-alt"></i>
                             </a>
                         </div>
@@ -275,7 +275,7 @@
                                 <i class="fas fa-file-excel"></i> Export Excel
                             </button>
                         </div>
-                        <form action="{{ route('kabid.laporan') }}" method="GET" class="flex items-center gap-2">
+                        <form action="{{ route('tim_teknis.laporan') }}" method="GET" class="flex items-center gap-2">
                             @foreach(request()->except('show') as $key => $value)
                                 @if(is_array($value))
                                     @foreach($value as $v)
@@ -316,7 +316,7 @@
                             <i class="fas fa-layer-group mr-1"></i> {{ request('jenis') }}
                         </span>
                     @endif
-                    <a href="{{ route('kabid.laporan') }}" class="ml-auto text-[10px] font-bold text-red-400 hover:text-red-600 transition-all">
+                    <a href="{{ route('tim_teknis.laporan') }}" class="ml-auto text-[10px] font-bold text-red-400 hover:text-red-600 transition-all">
                         <i class="fas fa-times mr-1"></i> Hapus Filter
                     </a>
                 </div>
@@ -384,7 +384,7 @@
                 <div class="hidden print-only ttd-box">
                     <div class="ttd-inner">
                         <p style="margin-bottom: 4px;">Banjarmasin, {{ now()->translatedFormat('d F Y') }}</p>
-                        <p style="margin-bottom: 80px;">Mengetahui,<br><strong>Kepala Bidang Kawasan Permukiman</strong></p>
+                        <p style="margin-bottom: 80px;">Mengetahui,<br><strong>Koordinator Tim Teknis</strong></p>
                         <p style="margin: 0; font-weight: bold; text-decoration: underline;">HIZBULWATHONI, S.T.</p>
                         <p style="margin: 0;">NIP. 19760814 200604 1 008</p>
                     </div>

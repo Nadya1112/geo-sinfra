@@ -292,6 +292,47 @@
             color: #ffffff !important;
             text-decoration: underline !important;
         }
+        /* Dynamic Navbar Styles */
+        #navbar {
+            transition: all 0.4s ease-in-out;
+        }
+        
+        #navbar.nav-transparent {
+            background: rgba(15, 14, 44, 0.2);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            height: 100px;
+        }
+        #navbar.nav-transparent .nav-brand, 
+        #navbar.nav-transparent .nav-link {
+            color: #ffffff;
+        }
+        #navbar.nav-transparent .nav-link:hover {
+            color: #c5a059;
+        }
+        #navbar.nav-transparent .nav-divider {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        #navbar.nav-scrolled {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(226, 232, 240, 1);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            height: 80px;
+        }
+        #navbar.nav-scrolled .nav-brand {
+            color: #0f0e2c;
+        }
+        #navbar.nav-scrolled .nav-link {
+            color: #475569;
+        }
+        #navbar.nav-scrolled .nav-link:hover {
+            color: #c5a059;
+        }
+        #navbar.nav-scrolled .nav-divider {
+            background: #cbd5e1;
+        }
     </style>
 </head>
 <body class="antialiased font-sans bg-slate-50 text-slate-800">
@@ -306,26 +347,26 @@
     </div>
  
     <!-- Header / Navbar -->
-    <nav class="bg-white/80 backdrop-blur-xl border-b border-slate-100 h-24 flex items-center sticky top-0 z-[5000] transition-all duration-300">
+    <nav id="navbar" class="fixed top-0 left-0 w-full flex items-center z-[5000] nav-transparent">
         <div class="max-w-7xl mx-auto px-6 md:px-8 w-full flex justify-between items-center">
             <!-- Brand -->
             <div class="flex items-center">
                 <a href="#" class="h-16 flex items-center gap-3">
-                    <img src="<?php echo e(asset('logo_geo-sinfra.png')); ?>" class="h-full w-auto object-contain drop-shadow-md" alt="Logo Geo-Sinfra">
-                    <h2 class="text-xl font-extrabold text-navy-900 tracking-tighter uppercase leading-none">GEO-SINFRA</h2>
+                    <img src="<?php echo e(asset('logo_geo-sinfra.png')); ?>" class="h-12 w-auto object-contain drop-shadow-md transition-all duration-300" alt="Logo Geo-Sinfra">
+                    <h2 class="nav-brand text-xl font-extrabold tracking-tighter uppercase leading-none transition-colors duration-300">GEO-SINFRA</h2>
                 </a>
             </div>
             
             <!-- Navbar Actions -->
             <div class="flex items-center gap-2 md:gap-4">
-                <a href="#peta" class="text-sm font-bold text-slate-600 hover:text-gold-500 transition-colors uppercase tracking-wider hidden md:block">Peta</a>
-                <a href="#statistik" class="text-sm font-bold text-slate-600 hover:text-gold-500 transition-colors uppercase tracking-wider hidden md:block">Statistik</a>
+                <a href="#peta" class="nav-link text-sm font-bold transition-colors uppercase tracking-wider hidden md:block">Peta</a>
+                <a href="#statistik" class="nav-link text-sm font-bold transition-colors uppercase tracking-wider hidden md:block">Statistik</a>
                 
-                <button onclick="document.getElementById('modal-lapor').classList.remove('hidden')" class="bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white px-4 md:px-5 py-2 rounded-xl text-[10px] md:text-xs font-bold transition-all shadow-md shadow-red-500/20 hover:shadow-red-500/40 hover:-translate-y-0.5 flex items-center gap-2 uppercase tracking-widest">
+                <button onclick="document.getElementById('modal-lapor').classList.remove('hidden')" class="bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white px-4 md:px-5 py-2 rounded-xl text-[10px] md:text-xs font-black transition-all shadow-lg shadow-red-500/30 hover:shadow-red-500/50 hover:-translate-y-0.5 flex items-center gap-2 uppercase tracking-widest border border-red-500/50">
                     <i class="fas fa-bullhorn animate-pulse"></i> <span class="hidden sm:inline">Lapor Kerusakan</span><span class="sm:hidden">Lapor</span>
                 </button>
 
-                <div class="w-px h-4 bg-slate-300 mx-1 hidden md:block"></div>
+                <div class="nav-divider w-px h-4 mx-1 hidden md:block transition-colors duration-300"></div>
                 
                 <a href="<?php echo e(url('/login')); ?>" class="bg-navy-900 text-gold-500 hover:bg-gold-500 hover:text-white px-4 md:px-5 py-2 rounded-xl text-[10px] md:text-xs font-bold transition-all shadow-sm flex items-center gap-2 uppercase tracking-widest">
                     <i class="fas fa-lock"></i> <span class="hidden sm:inline">Login</span>
@@ -372,7 +413,7 @@
 
     <!-- Key Metrics / Feature Highlight Cards -->
     <section class="py-12 bg-transparent relative -mt-16 z-20 max-w-7xl mx-auto px-6 md:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal-up">
             <div class="bg-white p-8 rounded-3xl shadow-xl shadow-slate-900/5 border border-slate-100 flex gap-5 items-start hover:-translate-y-2 transition-all duration-300">
                 <div class="w-14 h-14 bg-[#6366f1]/10 rounded-2xl flex items-center justify-center text-navy-500 shrink-0">
                     <i class="fas fa-map-location-dot text-2xl"></i>
@@ -406,51 +447,62 @@
     </section>
 
     <!-- Statistik Section -->
-    <section id="statistik" class="py-24 bg-white relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6 md:px-8">
+    <section id="statistik" class="py-24 bg-[#0a091d] relative overflow-hidden">
+        <!-- Background Accents -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+            <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-gold-500/5 blur-[120px]"></div>
+            <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-blue-500/5 blur-[120px]"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
             <div class="text-center mb-20 reveal-up">
                 <span class="text-gold-500 font-extrabold text-xs uppercase tracking-[0.3em] mb-3 block">RINGKASAN INFRASTRUKTUR</span>
-                <h4 class="text-navy-900 font-black text-4xl md:text-5xl tracking-tight mb-4">Statistik GEO-SINFRA</h4>
+                <h4 class="text-white font-black text-4xl md:text-5xl tracking-tight mb-4">Statistik GEO-SINFRA</h4>
                 <div class="w-16 h-1.5 bg-gold-500 mx-auto rounded-full"></div>
             </div>
             
-            <!-- Cards Grid -->
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 reveal-up">
                 <!-- Card 1 -->
-                <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md hover:bg-white transition-all duration-300 text-center relative group">
-                    <div class="w-14 h-14 bg-navy-900/5 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-navy-900 group-hover:text-gold-500 transition-all">
-                        <i class="fas fa-database text-navy-800 text-xl group-hover:text-gold-500"></i>
+                <div class="bg-[#0f0e2c] text-white p-8 rounded-3xl border border-blue-500/50 shadow-2xl hover:border-blue-500 transition-all duration-300 text-center relative overflow-hidden group hover:scale-[1.02]">
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-500 group-hover:text-white transition-all">
+                            <i class="fas fa-database text-blue-500 text-xl group-hover:text-white"></i>
+                        </div>
+                        <p class="text-4xl md:text-5xl font-black text-blue-500 leading-none mb-2"><?php echo e(number_format($stats['total'] ?? 0)); ?></p>
+                        <p class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">Total Titik Terdata</p>
                     </div>
-                    <p class="text-4xl md:text-5xl font-black text-navy-900 leading-none mb-2"><?php echo e(number_format($stats['total'] ?? 0)); ?></p>
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Titik Terdata</p>
                 </div>
 
                 <!-- Card 2 -->
-                <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md hover:bg-white transition-all duration-300 text-center relative group">
-                    <div class="w-14 h-14 bg-gold-500/5 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-gold-500 group-hover:text-white transition-all">
-                        <i class="fas fa-map-marked-alt text-gold-500 text-xl group-hover:text-white"></i>
+                <div class="bg-[#0f0e2c] text-white p-8 rounded-3xl border border-emerald-500/50 shadow-2xl hover:border-emerald-500 transition-all duration-300 text-center relative overflow-hidden group hover:scale-[1.02]">
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-emerald-500 group-hover:text-white transition-all">
+                            <i class="fas fa-map-marked-alt text-emerald-500 text-xl group-hover:text-white"></i>
+                        </div>
+                        <p class="text-4xl md:text-5xl font-black text-emerald-500 leading-none mb-2"><?php echo e(number_format($stats['kecamatan'] ?? 0)); ?></p>
+                        <p class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">Kecamatan</p>
                     </div>
-                    <p class="text-4xl md:text-5xl font-black text-navy-900 leading-none mb-2"><?php echo e(number_format($stats['kecamatan'] ?? 0)); ?></p>
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Kecamatan</p>
                 </div>
 
                 <!-- Card 3 -->
-                <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md hover:bg-white transition-all duration-300 text-center relative group">
-                    <div class="w-14 h-14 bg-red-500/5 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-red-500 group-hover:text-white transition-all">
-                        <i class="fas fa-exclamation-triangle text-red-500 text-xl group-hover:text-white"></i>
+                <div class="bg-[#0f0e2c] text-white p-8 rounded-3xl border border-red-500/50 shadow-2xl hover:border-red-500 transition-all duration-300 text-center relative overflow-hidden group hover:scale-[1.02]">
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 bg-red-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-red-500 group-hover:text-white transition-all">
+                            <i class="fas fa-exclamation-triangle text-red-500 text-xl group-hover:text-white"></i>
+                        </div>
+                        <p class="text-4xl md:text-5xl font-black text-red-500 leading-none mb-2"><?php echo e(number_format($stats['rusak_berat'] ?? 0)); ?></p>
+                        <p class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">Kerusakan Berat</p>
                     </div>
-                    <p class="text-4xl md:text-5xl font-black text-navy-900 leading-none mb-2"><?php echo e(number_format($stats['rusak_berat'] ?? 0)); ?></p>
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Kerusakan Berat</p>
                 </div>
 
                 <!-- Card 4 (AI Accent) -->
-                <div class="bg-navy-900 text-white p-8 rounded-3xl shadow-xl shadow-navy-900/20 text-center relative overflow-hidden group hover:scale-[1.02] transition-all duration-300">
+                <div class="bg-[#0f0e2c] text-white p-8 rounded-3xl shadow-2xl border border-gold-500/60 text-center relative overflow-hidden group hover:scale-[1.02] hover:border-gold-500 transition-all duration-300">
                     <div class="relative z-10">
-                        <div class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:rotate-12 transition-all">
+                        <div class="w-14 h-14 bg-gold-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:rotate-12 transition-all">
                             <i class="fas fa-robot text-gold-500 text-xl"></i>
                         </div>
                         <p class="text-4xl md:text-5xl font-black text-gold-500 leading-none mb-2"><?php echo e($stats['akurasi_ai'] ?? 0); ?>%</p>
-                        <p class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">Akurasi Model AI</p>
+                        <p class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">Cakupan Analisis AI</p>
                     </div>
                     <i class="fas fa-brain absolute -right-6 -bottom-6 text-white/5 text-[120px]"></i>
                 </div>
@@ -459,20 +511,20 @@
             <!-- Detailed Grid Statistics -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12 reveal-up">
                 <!-- Sebaran Kecamatan -->
-                <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-xl shadow-slate-900/5">
+                <div class="bg-[#0f0e2c]/60 backdrop-blur-xl p-8 rounded-3xl border border-white/5 shadow-2xl">
                     <div class="flex items-center gap-3 mb-8">
                         <div class="w-2.5 h-6 bg-gold-500 rounded-full"></div>
-                        <h5 class="text-sm font-extrabold text-navy-900 uppercase tracking-wider">Kepadatan Titik Data per Wilayah</h5>
+                        <h5 class="text-sm font-extrabold text-white uppercase tracking-wider">Kepadatan Titik Data per Wilayah</h5>
                     </div>
                     <div class="space-y-5">
                         <?php $__currentLoopData = $sebaranKecamatan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $nama => $count): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <div>
                                 <div class="flex justify-between text-xs font-bold uppercase tracking-wider mb-2">
-                                    <span class="text-slate-500"><?php echo e($nama ?: 'Wilayah Tidak Diketahui'); ?></span>
-                                    <span class="text-navy-900 font-extrabold"><?php echo e($count); ?> Titik</span>
+                                    <span class="text-slate-400"><?php echo e($nama ?: 'Wilayah Tidak Diketahui'); ?></span>
+                                    <span class="text-white font-extrabold"><?php echo e($count); ?> Titik</span>
                                 </div>
-                                <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
-                                    <div class="bg-gradient-to-r from-navy-800 to-gold-500 h-full rounded-full" style="width: <?php echo e($stats['total'] > 0 ? ($count / $stats['total'] * 100) : 0); ?>%"></div>
+                                <div class="w-full bg-white/5 h-3 rounded-full overflow-hidden">
+                                    <div class="bg-gradient-to-r from-blue-500 to-gold-500 h-full rounded-full" style="width: <?php echo e($stats['total'] > 0 ? ($count / $stats['total'] * 100) : 0); ?>%"></div>
                                 </div>
                             </div>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -498,31 +550,31 @@
             </div>
 
             <!-- Table Ringkasan Wilayah -->
-            <div class="mt-12 bg-white rounded-3xl border border-slate-100 shadow-xl shadow-slate-900/5 overflow-hidden reveal-up">
-                <div class="p-8 border-b border-slate-50 flex items-center gap-3">
-                    <div class="w-2.5 h-6 bg-navy-900 rounded-full"></div>
-                    <h5 class="text-sm font-extrabold text-navy-900 uppercase tracking-wider">Ringkasan Keparahan Kondisi</h5>
+            <div class="mt-12 bg-[#0f0e2c]/60 backdrop-blur-xl rounded-3xl border border-white/5 shadow-2xl overflow-hidden reveal-up">
+                <div class="p-8 border-b border-white/5 flex items-center gap-3">
+                    <div class="w-2.5 h-6 bg-gold-500 rounded-full"></div>
+                    <h5 class="text-sm font-extrabold text-white uppercase tracking-wider">Ringkasan Keparahan Kondisi</h5>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="bg-slate-50 border-b border-slate-100">
+                            <tr class="bg-white/5 border-b border-white/10">
                                 <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Kecamatan</th>
-                                <th class="px-8 py-5 text-[10px] font-black text-navy-900 uppercase tracking-widest text-center">Total Aset</th>
+                                <th class="px-8 py-5 text-[10px] font-black text-slate-300 uppercase tracking-widest text-center">Total Aset</th>
                                 <th class="px-8 py-5 text-[10px] font-black text-emerald-500 uppercase tracking-widest text-center">Kondisi Baik</th>
                                 <th class="px-8 py-5 text-[10px] font-black text-amber-500 uppercase tracking-widest text-center">Kondisi Sedang</th>
                                 <th class="px-8 py-5 text-[10px] font-black text-red-500 uppercase tracking-widest text-center">Rusak Berat</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-slate-100">
+                        <tbody class="divide-y divide-white/5">
                             <?php $__currentLoopData = $kondisiWilayah; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <tr class="hover:bg-navy-50/50 transition-all group border-l-4 border-transparent hover:border-gold-500 cursor-default">
-                                    <td class="px-8 py-5 text-sm font-bold text-navy-900 group-hover:translate-x-1 transition-transform"><?php echo e($item['nama'] ?: 'Lainnya'); ?></td>
-                                    <td class="px-8 py-5 text-center text-sm font-black text-navy-900"><?php echo e($item['total']); ?></td>
-                                    <td class="px-8 py-5 text-center text-sm font-semibold text-emerald-600"><?php echo e($item['baik']); ?></td>
-                                    <td class="px-8 py-5 text-center text-sm font-semibold text-amber-600"><?php echo e($item['rusak_sedang']); ?></td>
+                                <tr class="hover:bg-white/5 transition-all group border-l-4 border-transparent hover:border-gold-500 cursor-default">
+                                    <td class="px-8 py-5 text-sm font-bold text-slate-200 group-hover:text-white group-hover:translate-x-1 transition-transform"><?php echo e($item['nama'] ?: 'Lainnya'); ?></td>
+                                    <td class="px-8 py-5 text-center text-sm font-black text-white"><?php echo e($item['total']); ?></td>
+                                    <td class="px-8 py-5 text-center text-sm font-semibold text-emerald-400"><?php echo e($item['baik']); ?></td>
+                                    <td class="px-8 py-5 text-center text-sm font-semibold text-amber-400"><?php echo e($item['rusak_sedang']); ?></td>
                                     <td class="px-8 py-5 text-center">
-                                        <span class="inline-block px-3.5 py-1.5 bg-red-500/10 text-red-500 rounded-full text-[10px] font-black tracking-wide group-hover:bg-red-500 group-hover:text-white transition-all shadow-sm"><?php echo e($item['rusak_berat']); ?></span>
+                                        <span class="inline-block px-3.5 py-1.5 bg-red-500/20 text-red-400 rounded-full text-[10px] font-black tracking-wide group-hover:bg-red-500 group-hover:text-white transition-all shadow-sm"><?php echo e($item['rusak_berat']); ?></span>
                                     </td>
                                 </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -551,20 +603,20 @@
                 <div id="map" class="absolute inset-0 z-0"></div>
 
                 <!-- Custom Zoom Controls & GPS -->
-                <div class="absolute top-6 left-6 z-[9999] flex flex-col gap-2 pointer-events-auto">
-                    <button onclick="map.zoomIn()" class="w-12 h-12 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-gold-500 hover:bg-[#1e1b4b] transition-all group" title="Zoom In" aria-label="Zoom In Peta">
-                        <i class="fas fa-plus text-xs group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+                <div class="absolute top-24 md:top-6 left-4 md:left-6 z-[9999] flex flex-col gap-2 pointer-events-auto">
+                    <button onclick="map.zoomIn()" class="w-10 h-10 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-gold-500 hover:bg-[#1e1b4b] transition-all group" title="Zoom In" aria-label="Zoom In Peta">
+                        <i class="fas fa-plus text-[10px] group-hover:scale-110 transition-transform" aria-hidden="true"></i>
                     </button>
-                    <button onclick="map.zoomOut()" class="w-12 h-12 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-gold-500 hover:bg-[#1e1b4b] transition-all group" title="Zoom Out" aria-label="Zoom Out Peta">
-                        <i class="fas fa-minus text-xs group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+                    <button onclick="map.zoomOut()" class="w-10 h-10 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-gold-500 hover:bg-[#1e1b4b] transition-all group" title="Zoom Out" aria-label="Zoom Out Peta">
+                        <i class="fas fa-minus text-[10px] group-hover:scale-110 transition-transform" aria-hidden="true"></i>
                     </button>
-                    <button onclick="locateUser()" class="w-12 h-12 mt-4 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-blue-400 hover:bg-[#1e1b4b] transition-all group" title="Lokasi Saya" aria-label="Gunakan Lokasi Saat Ini">
-                        <i class="fas fa-crosshairs text-sm group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+                    <button onclick="locateUser()" class="w-10 h-10 mt-2 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-blue-400 hover:bg-[#1e1b4b] transition-all group" title="Lokasi Saya" aria-label="Gunakan Lokasi Saat Ini">
+                        <i class="fas fa-crosshairs text-xs group-hover:scale-110 transition-transform" aria-hidden="true"></i>
                     </button>
                     <!-- Heatmap Toggle Button -->
-                    <button id="toggle-heatmap" onclick="toggleHeatmap()" class="w-12 h-12 mt-4 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-[#1e1b4b] transition-all group relative" title="Aktifkan Heatmap Kerusakan" aria-label="Toggle Heatmap Kerusakan">
-                        <i class="fas fa-fire text-sm group-hover:scale-110 transition-transform" aria-hidden="true"></i>
-                        <span id="heatmap-indicator" class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-[#0f0e2c] hidden"></span>
+                    <button id="toggle-heatmap" onclick="toggleHeatmap()" class="w-10 h-10 mt-2 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-[#1e1b4b] transition-all group relative" title="Aktifkan Heatmap Kerusakan" aria-label="Toggle Heatmap Kerusakan">
+                        <i class="fas fa-fire text-xs group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+                        <span id="heatmap-indicator" class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-[#0f0e2c] hidden"></span>
                     </button>
                 </div>
 
@@ -577,95 +629,84 @@
                     <div id="search-results" class="hidden absolute top-full left-0 mt-2 w-full bg-[#0f0e2c]/95 backdrop-blur-2xl border border-white/10 rounded-xl shadow-2xl max-h-56 overflow-y-auto"></div>
                 </div>
 
-                <!-- Mini Legend -->
-                <div class="absolute bottom-6 left-6 z-[9999] pointer-events-auto bg-[#0f0e2c]/80 backdrop-blur-md px-4 py-3 rounded-2xl border border-white/10 flex gap-4 shadow-2xl">
-                    <div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50"></div><span class="text-[9px] text-white font-bold uppercase tracking-wider">Baik</span></div>
-                    <div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50"></div><span class="text-[9px] text-white font-bold uppercase tracking-wider">Sedang</span></div>
-                    <div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-red-500 shadow-sm shadow-red-500/50"></div><span class="text-[9px] text-white font-bold uppercase tracking-wider">Berat</span></div>
-                </div>
+                <!-- Mini Legend (Removed) -->
 
                 <!-- FLOATING UI WIDGETS -->
 
-                <!-- Top Right Dropdowns (Category & District Filter) -->
-                <div class="absolute top-16 right-6 md:top-6 md:right-6 z-[9999] flex flex-col gap-3 w-64 pointer-events-auto">
-                    <!-- Category Selector -->
+                <!-- Top Right Dropdowns (Unified Filter) -->
+                <div class="absolute top-24 right-4 md:top-6 md:right-6 z-[9999] flex flex-col gap-2 w-48 pointer-events-auto">
+                    <!-- Main Filter Button -->
                     <div class="relative w-full z-50">
-                        <button onclick="toggleMenu('kategori-menu')" class="w-full bg-[#0f0e2c]/90 backdrop-blur-xl border border-white/10 text-white px-5 py-4 rounded-2xl flex justify-between items-center shadow-2xl hover:bg-[#1e1b4b] transition-all">
-                            <div class="flex items-center gap-3">
-                                <i class="fas fa-layer-group text-xs text-gold-500"></i>
-                                <span class="text-[10px] font-bold uppercase tracking-wider">Kategori Objek</span>
+                        <button onclick="toggleMenu('filter-utama')" class="w-full bg-[#0f0e2c]/90 backdrop-blur-xl border border-white/10 text-white px-3.5 py-3 rounded-xl flex justify-between items-center shadow-2xl hover:bg-[#1e1b4b] transition-all">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-filter text-[10px] text-gold-500"></i>
+                                <span class="text-[9px] font-bold uppercase tracking-wider">Filter Peta</span>
                             </div>
-                            <i class="fas fa-chevron-down text-xs text-slate-400"></i>
+                            <i class="fas fa-chevron-down text-[10px] text-slate-400"></i>
                         </button>
-                        <div id="kategori-menu" class="hidden absolute top-full mt-2 w-full bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-2xl p-2.5 shadow-2xl border border-white/10">
-                            <!-- Select All Category -->
-                            <label class="flex items-center justify-between p-3 hover:bg-white/5 rounded-xl cursor-pointer transition-all border-b border-white/5 mb-1.5 pb-2.5">
-                                <span class="text-[10px] font-black text-gold-500 uppercase tracking-wider">Pilih Semua</span>
-                                <input type="checkbox" id="check-all-categories" class="w-4.5 h-4.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" checked>
-                            </label>
-                            <label class="flex items-center justify-between p-3 hover:bg-white/5 rounded-xl cursor-pointer transition-all">
-                                <span class="text-[10px] font-bold text-slate-200 uppercase tracking-wider">Jalan</span>
-                                <input type="checkbox" class="filter-category w-4.5 h-4.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="jalan" checked>
-                            </label>
-                            <label class="flex items-center justify-between p-3 hover:bg-white/5 rounded-xl cursor-pointer transition-all">
-                                <span class="text-[10px] font-bold text-slate-200 uppercase tracking-wider">Titian</span>
-                                <input type="checkbox" class="filter-category w-4.5 h-4.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="titian" checked>
-                            </label>
-                            <label class="flex items-center justify-between p-3 hover:bg-white/5 rounded-xl cursor-pointer transition-all">
-                                <span class="text-[10px] font-bold text-slate-200 uppercase tracking-wider">Jembatan</span>
-                                <input type="checkbox" class="filter-category w-4.5 h-4.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="jembatan" checked>
-                            </label>
+                        
+                        <div id="filter-utama" class="hidden absolute top-full mt-2 right-0 w-56 bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-xl p-3 shadow-2xl border border-white/10 max-h-[60vh] overflow-y-auto custom-scrollbar flex flex-col gap-3">
+                            
+                            <!-- SECTION: Kategori Objek -->
+                            <div>
+                                <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest px-1 mb-1 block">Kategori Objek</span>
+                                <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all border-b border-white/5 mb-1 pb-2">
+                                    <span class="text-[9px] font-black text-gold-500 uppercase tracking-wider">Pilih Semua</span>
+                                    <input type="checkbox" id="check-all-categories" class="w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" checked>
+                                </label>
+                                <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all">
+                                    <span class="text-[9px] font-bold text-slate-200 uppercase tracking-wider">Jalan</span>
+                                    <input type="checkbox" class="filter-category w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="jalan" checked>
+                                </label>
+                                <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all">
+                                    <span class="text-[9px] font-bold text-slate-200 uppercase tracking-wider">Titian</span>
+                                    <input type="checkbox" class="filter-category w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="titian" checked>
+                                </label>
+                                <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all">
+                                    <span class="text-[9px] font-bold text-slate-200 uppercase tracking-wider">Jembatan</span>
+                                    <input type="checkbox" class="filter-category w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="jembatan" checked>
+                                </label>
+                            </div>
+
+                            <!-- SECTION: Pilih Kecamatan -->
+                            <div class="border-t border-white/10 pt-2">
+                                <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest px-1 mb-1 block">Pilih Kecamatan</span>
+                                <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all border-b border-white/5 mb-1 pb-2">
+                                    <span class="text-[9px] font-black text-gold-500 uppercase tracking-wider">Pilih Semua</span>
+                                    <input type="checkbox" id="check-all-districts" class="w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" checked>
+                                </label>
+                                <?php $kecColors = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#06b6d4']; ?>
+                                <?php $__currentLoopData = $semuaWilayah; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $wil): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all group">
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" class="filter-district w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="<?php echo e($wil->id_kecamatan); ?>" checked>
+                                        <span class="text-[9px] font-bold text-slate-200 uppercase tracking-wider"><?php echo e($wil->nama_kecamatan); ?></span>
+                                    </div>
+                                    <div class="w-2 h-2 rounded-full" style="background: <?php echo e($kecColors[$index % count($kecColors)]); ?>"></div>
+                                </label>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </div>
+
+                            <!-- SECTION: Layer Tambahan -->
+                            <div class="border-t border-white/10 pt-2 flex flex-col gap-1.5">
+                                <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest px-1 mb-1 block">Layer Tambahan</span>
+                                <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all border border-white/5 bg-white/5">
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" id="toggle-kelurahan-lines" class="w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" checked>
+                                        <span class="text-[9px] font-bold text-slate-200 uppercase tracking-wider">Batas Kelurahan</span>
+                                    </div>
+                                    <i class="fas fa-home text-gold-500 text-[9px]"></i>
+                                </label>
+                                <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all border border-white/5 bg-white/5">
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" id="toggle-banjir-lines" class="w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-blue-500 focus:ring-blue-500">
+                                        <span class="text-[9px] font-bold text-slate-200 uppercase tracking-wider">Kerawanan Banjir</span>
+                                    </div>
+                                    <i class="fas fa-water text-blue-500 text-[9px]"></i>
+                                </label>
+                            </div>
+
                         </div>
-                    </div>
-
-                    <!-- District Selector -->
-                    <div class="relative w-full z-40">
-                        <button onclick="toggleMenu('wilayah-menu')" class="w-full bg-[#0f0e2c]/90 backdrop-blur-xl border border-white/10 text-white px-5 py-4 rounded-2xl flex justify-between items-center shadow-2xl hover:bg-[#1e1b4b] transition-all">
-                            <div class="flex items-center gap-3">
-                                <i class="fas fa-map-location-dot text-xs text-gold-500"></i>
-                                <span class="text-[10px] font-bold uppercase tracking-wider">Pilih Kecamatan</span>
-                            </div>
-                            <i class="fas fa-chevron-down text-xs text-slate-400"></i>
-                        </button>
-                        <div id="wilayah-menu" class="hidden absolute top-full mt-2 w-full bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-2xl p-2.5 shadow-2xl border border-white/10 max-h-[300px] overflow-y-auto custom-scrollbar">
-                            <!-- Select All Districts -->
-                            <label class="flex items-center justify-between p-3 hover:bg-white/5 rounded-xl cursor-pointer transition-all border-b border-white/5 mb-1.5 pb-2.5">
-                                <span class="text-[10px] font-black text-gold-500 uppercase tracking-wider">Pilih Semua</span>
-                                <input type="checkbox" id="check-all-districts" class="w-4.5 h-4.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" checked>
-                            </label>
-                            <?php $kecColors = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#06b6d4']; ?>
-                            <?php $__currentLoopData = $semuaWilayah; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $wil): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <label class="flex items-center justify-between p-3 hover:bg-white/5 rounded-xl cursor-pointer transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <input type="checkbox" class="filter-district w-4.5 h-4.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="<?php echo e($wil->id_kecamatan); ?>" checked>
-                                    <span class="text-[10px] font-bold text-slate-200 uppercase tracking-wider"><?php echo e($wil->nama_kecamatan); ?></span>
-                                </div>
-                                <div class="w-2.5 h-2.5 rounded-full" style="background: <?php echo e($kecColors[$index % count($kecColors)]); ?>"></div>
-                            </label>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </div>
-                    </div>
-
-                    <!-- Kelurahan Toggle Card -->
-                    <div class="relative w-full z-30">
-                        <label class="w-full bg-[#0f0e2c]/90 backdrop-blur-xl border border-white/10 text-white px-5 py-4 rounded-2xl flex justify-between items-center shadow-2xl hover:bg-[#1e1b4b] cursor-pointer transition-all">
-                            <div class="flex items-center gap-3">
-                                <input type="checkbox" id="toggle-kelurahan-lines" class="w-4.5 h-4.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" checked>
-                                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-200">Kelurahan</span>
-                            </div>
-                            <i class="fas fa-home text-gold-500 text-xs"></i>
-                        </label>
-                    </div>
-
-                    <!-- Peta Banjir Toggle Card -->
-                    <div class="relative w-full z-20 mt-3">
-                        <label class="w-full bg-[#0f0e2c]/90 backdrop-blur-xl border border-white/10 text-white px-5 py-4 rounded-2xl flex justify-between items-center shadow-2xl hover:bg-[#1e1b4b] cursor-pointer transition-all">
-                            <div class="flex items-center gap-3">
-                                <input type="checkbox" id="toggle-banjir-lines" class="w-4.5 h-4.5 rounded border-slate-600 bg-transparent text-blue-500 focus:ring-blue-500">
-                                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-200">Kerawanan Banjir</span>
-                            </div>
-                            <i class="fas fa-water text-blue-500 text-xs"></i>
-                        </label>
                     </div>
                 </div>
 
@@ -674,47 +715,47 @@
                 <!-- Floating Lapor Button has been moved to header -->
 
                 <!-- Bottom Left Stats Box Widget (Glassmorphic Dark UI) -->
-                <div class="absolute bottom-6 left-6 z-[9999] bg-[#0f0e2c]/90 backdrop-blur-xl rounded-3xl p-2.5 text-white w-72 shadow-2xl border border-white/10 pointer-events-auto transition-all duration-300">
-                    <div class="flex justify-between items-center bg-white/5 p-3.5 rounded-2xl cursor-pointer hover:bg-white/10 transition-all" onclick="document.getElementById('stats-body').classList.toggle('hidden'); document.getElementById('stats-chevron').classList.toggle('rotate-180');">
-                        <div class="flex items-center gap-3">
-                            <i class="fas fa-chart-pie text-gold-500 text-xs"></i>
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-slate-200">Statistik Filter</span>
+                <div class="absolute bottom-6 left-6 z-[9999] bg-[#0f0e2c]/90 backdrop-blur-xl rounded-2xl p-1.5 text-white w-48 shadow-2xl border border-white/10 pointer-events-auto transition-all duration-300">
+                    <div class="flex justify-between items-center bg-white/5 p-2 rounded-xl cursor-pointer hover:bg-white/10 transition-all" onclick="document.getElementById('stats-body').classList.toggle('hidden'); document.getElementById('stats-chevron').classList.toggle('rotate-180');">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-chart-pie text-gold-500 text-[10px]"></i>
+                            <span class="text-[8px] font-extrabold uppercase tracking-widest text-slate-200">Statistik Filter</span>
                         </div>
-                        <i id="stats-chevron" class="fas fa-chevron-down text-slate-400 text-xs transition-transform duration-300"></i>
+                        <i id="stats-chevron" class="fas fa-chevron-down text-slate-400 text-[10px] transition-transform duration-300"></i>
                     </div>
                     
-                    <div id="stats-body" class="space-y-3.5 pt-4 pb-2 px-3 hidden transition-all duration-300">
+                    <div id="stats-body" class="space-y-3 pt-3 pb-2 px-2 hidden transition-all duration-300">
                         <div class="flex justify-between items-center">
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Total Titik</span>
-                            <span id="stat-total" class="bg-indigo-500/20 text-[#6366f1] px-3.5 py-1 rounded-xl text-xs font-black min-w-[55px] text-center border border-indigo-500/20">0</span>
+                            <span class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Total Titik</span>
+                            <span id="stat-total" class="bg-indigo-500/20 text-[#6366f1] px-2 py-0.5 rounded-lg text-[10px] font-black min-w-[45px] text-center border border-indigo-500/20">0</span>
                         </div>
                         <div class="flex justify-between items-center">
-                            <div class="flex items-center gap-2.5">
-                                <div class="w-3 h-3 rounded-full bg-emerald-500 shadow-md shadow-emerald-500/20"></div>
-                                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-300">Baik</span>
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-md shadow-emerald-500/20"></div>
+                                <span class="text-[9px] font-bold uppercase tracking-wider text-slate-300">Baik</span>
                             </div>
-                            <span id="stat-baik" class="bg-emerald-500/20 text-emerald-400 px-3.5 py-1 rounded-xl text-xs font-black min-w-[55px] text-center border border-emerald-500/20">0</span>
+                            <span id="stat-baik" class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-lg text-[10px] font-black min-w-[45px] text-center border border-emerald-500/20">0</span>
                         </div>
                         <div class="flex justify-between items-center">
-                            <div class="flex items-center gap-2.5">
-                                <div class="w-3 h-3 rounded-full bg-amber-500 shadow-md shadow-amber-500/20"></div>
-                                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-300">Sedang</span>
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-amber-500 shadow-md shadow-amber-500/20"></div>
+                                <span class="text-[9px] font-bold uppercase tracking-wider text-slate-300">Sedang</span>
                             </div>
-                            <span id="stat-sedang" class="bg-amber-500/20 text-amber-400 px-3.5 py-1 rounded-xl text-xs font-black min-w-[55px] text-center border border-amber-500/20">0</span>
+                            <span id="stat-sedang" class="bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-lg text-[10px] font-black min-w-[45px] text-center border border-amber-500/20">0</span>
                         </div>
                         <div class="flex justify-between items-center">
-                            <div class="flex items-center gap-2.5">
-                                <div class="w-3 h-3 rounded-full bg-red-500 shadow-md shadow-red-500/20"></div>
-                                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-300">Rusak Berat</span>
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-red-500 shadow-md shadow-red-500/20"></div>
+                                <span class="text-[9px] font-bold uppercase tracking-wider text-slate-300">Berat</span>
                             </div>
-                            <span id="stat-berat" class="bg-red-500/20 text-red-400 px-3.5 py-1 rounded-xl text-xs font-black min-w-[55px] text-center border border-red-500/20">0</span>
+                            <span id="stat-berat" class="bg-red-500/20 text-red-400 px-2 py-0.5 rounded-lg text-[10px] font-black min-w-[45px] text-center border border-red-500/20">0</span>
                         </div>
                     </div>
                 </div>
 
 
                 <!-- Bottom Right Basemap Selector (Circular Glassmorphic UI) -->
-                <div class="absolute bottom-6 right-28 z-[9999] pointer-events-auto">
+                <div class="absolute bottom-6 right-6 z-[9999] pointer-events-auto">
                     <button onclick="toggleMenu('layer-options')" class="w-14 h-14 bg-[#0f0e2c]/95 backdrop-blur-xl rounded-full flex items-center justify-center text-white/80 hover:text-gold-500 shadow-2xl border border-white/10 hover:scale-105 transition-all">
                         <i class="fas fa-layer-group text-xl"></i>
                     </button>
@@ -808,7 +849,7 @@
 
         let activeKelurahanId = null;
 
-        const dataInfra = <?php echo json_encode($dataInfrastruktur, 15, 512) ?>;
+        let dataInfra = <?php echo json_encode($dataInfrastruktur, 15, 512) ?>;
         const dataWilayah = <?php echo json_encode($semuaWilayah, 15, 512) ?>;
         const dataKelurahan = <?php echo json_encode($dataKelurahan, 15, 512) ?>;
         const map = L.map('map', { zoomControl: false }).setView([-3.316694, 114.590111], 13);
@@ -1174,7 +1215,7 @@
         }
 
         function toggleMenu(id) {
-            const menus = ['layer-options', 'kategori-menu', 'wilayah-menu'];
+            const menus = ['layer-options', 'filter-utama'];
             
             menus.forEach(menuId => {
                 const el = document.getElementById(menuId);
@@ -1503,20 +1544,20 @@
         </div>
     </div>
     <!-- Modal Lapor Warga -->
-    <div id="modal-lapor" class="hidden fixed inset-0 z-[10000] flex items-center justify-center p-4 sm:p-6 backdrop-blur-md bg-navy-900/50 transition-all duration-300">
-        <div class="bg-white w-full max-w-2xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+    <div id="modal-lapor" class="hidden fixed inset-0 z-[10000] flex items-center justify-center p-4 sm:p-6 backdrop-blur-xl bg-[#0a091d]/80 transition-all duration-300">
+        <div class="bg-[#0f0e2c]/95 backdrop-blur-3xl w-full max-w-2xl rounded-[2.5rem] shadow-2xl border border-white/10 overflow-hidden flex flex-col max-h-[90vh]">
             <!-- Header -->
-            <div class="bg-gradient-to-r from-navy-900 to-navy-800 p-6 flex justify-between items-center text-white shrink-0">
+            <div class="p-6 flex justify-between items-center text-white shrink-0 border-b border-white/10">
                 <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center border border-white/20">
+                    <div class="w-12 h-12 bg-gold-500/10 rounded-2xl flex items-center justify-center border border-gold-500/20">
                         <i class="fas fa-bullhorn text-xl text-gold-500"></i>
                     </div>
                     <div>
                         <h3 class="font-black text-xl tracking-tight leading-none mb-1">Lapor Kerusakan</h3>
-                        <p class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">Partisipasi Warga Banjarmasin</p>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Partisipasi Warga Banjarmasin</p>
                     </div>
                 </div>
-                <button onclick="document.getElementById('modal-lapor').classList.add('hidden')" class="w-10 h-10 bg-white/10 hover:bg-red-500 text-white rounded-xl flex items-center justify-center transition-all">
+                <button onclick="document.getElementById('modal-lapor').classList.add('hidden')" class="w-10 h-10 bg-white/5 hover:bg-red-500 hover:text-white text-slate-400 rounded-xl flex items-center justify-center transition-all border border-white/10 hover:border-red-500">
                     <i class="fas fa-times text-lg"></i>
                 </button>
             </div>
@@ -1530,52 +1571,52 @@
                         <!-- Nama & HP -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div>
-                                <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2 ml-1">Nama Pelapor <span class="text-red-500">*</span></label>
-                                <input type="text" name="nama_pelapor" required placeholder="Nama Anda" class="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
+                                <label class="block text-[10px] font-black text-slate-300 uppercase tracking-widest mb-2 ml-1">Nama Pelapor <span class="text-red-500">*</span></label>
+                                <input type="text" name="nama_pelapor" required placeholder="Nama Anda" class="w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-sm font-semibold text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all placeholder-slate-500">
                             </div>
                             <div>
-                                <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2 ml-1">No. WhatsApp <span class="text-red-500">*</span></label>
-                                <input type="text" name="no_hp" required placeholder="Nomor WhatsApp (Agar tim bisa menghubungi)" class="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
+                                <label class="block text-[10px] font-black text-slate-300 uppercase tracking-widest mb-2 ml-1">No. WhatsApp <span class="text-red-500">*</span></label>
+                                <input type="text" name="no_hp" required placeholder="Nomor WhatsApp (Agar tim bisa menghubungi)" class="w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-sm font-semibold text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all placeholder-slate-500">
                             </div>
                         </div>
 
                         <!-- Deskripsi -->
                         <div>
-                            <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2 ml-1">Deskripsi Kerusakan <span class="text-red-500">*</span></label>
-                            <textarea name="deskripsi" required rows="3" placeholder="Contoh: Jalan berlubang cukup dalam dan sering digenangi air saat hujan..." class="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all resize-none"></textarea>
+                            <label class="block text-[10px] font-black text-slate-300 uppercase tracking-widest mb-2 ml-1">Deskripsi Kerusakan <span class="text-red-500">*</span></label>
+                            <textarea name="deskripsi" required rows="3" placeholder="Contoh: Jalan berlubang cukup dalam dan sering digenangi air saat hujan..." class="w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-sm font-semibold text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all resize-none placeholder-slate-500"></textarea>
                         </div>
 
                         <!-- Lokasi GPS & Map Picker -->
-                        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200">
+                        <div class="p-5 bg-white/5 rounded-2xl border border-white/10">
                             <div class="flex items-center justify-between mb-4">
                                 <div>
-                                    <h4 class="font-black text-navy-900 text-sm">Titik Lokasi <span class="text-red-500">*</span></h4>
-                                    <p class="text-[10px] text-slate-500 font-medium">Geser pin pada peta atau klik tombol GPS.</p>
+                                    <h4 class="font-black text-white text-sm">Titik Lokasi <span class="text-red-500">*</span></h4>
+                                    <p class="text-[10px] text-slate-400 font-medium">Geser pin pada peta atau klik tombol GPS.</p>
                                 </div>
-                                <button type="button" onclick="getWargaLocation(this)" class="px-4 py-2 bg-navy-900 hover:bg-gold-500 text-white hover:text-navy-900 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all flex items-center gap-2">
+                                <button type="button" onclick="getWargaLocation(this)" class="px-4 py-2 bg-blue-500/20 hover:bg-blue-500 border border-blue-500/50 hover:border-blue-500 text-blue-400 hover:text-white rounded-xl font-black text-[10px] uppercase tracking-widest transition-all flex items-center gap-2">
                                     <i class="fas fa-crosshairs"></i> Ambil GPS
                                 </button>
                             </div>
                             
                             <!-- Mini Map for Picking Location -->
-                            <div id="warga-map" class="w-full h-48 rounded-xl z-10 mb-3 border border-slate-300"></div>
+                            <div id="warga-map" class="w-full h-48 rounded-xl z-10 mb-3 border border-white/20"></div>
 
                             <div class="grid grid-cols-2 gap-3">
-                                <input type="text" id="warga-lat" name="latitude" required readonly placeholder="Latitude" class="w-full px-4 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 outline-none focus:ring-2 focus:ring-navy-500 transition-all cursor-not-allowed">
-                                <input type="text" id="warga-lng" name="longitude" required readonly placeholder="Longitude" class="w-full px-4 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 outline-none focus:ring-2 focus:ring-navy-500 transition-all cursor-not-allowed">
+                                <input type="text" id="warga-lat" name="latitude" required readonly placeholder="Latitude" class="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs font-bold text-slate-400 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all cursor-not-allowed">
+                                <input type="text" id="warga-lng" name="longitude" required readonly placeholder="Longitude" class="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs font-bold text-slate-400 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all cursor-not-allowed">
                             </div>
                         </div>
 
                         <!-- Foto Bukti -->
                         <div>
-                            <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2 ml-1">Foto Bukti Lapangan <span class="text-red-500">*</span></label>
-                            <div class="relative w-full h-40 border-2 border-dashed border-slate-300 rounded-2xl bg-slate-50 hover:bg-gold-50 hover:border-gold-300 transition-all cursor-pointer flex flex-col items-center justify-center overflow-hidden group">
+                            <label class="block text-[10px] font-black text-slate-300 uppercase tracking-widest mb-2 ml-1">Foto Bukti Lapangan <span class="text-red-500">*</span></label>
+                            <div class="relative w-full h-40 border-2 border-dashed border-white/20 rounded-2xl bg-white/5 hover:bg-gold-500/5 hover:border-gold-500/50 transition-all cursor-pointer flex flex-col items-center justify-center overflow-hidden group">
                                 <input type="file" name="foto" required accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="previewWargaFoto(this)">
                                 <div id="warga-foto-placeholder" class="text-center px-4">
-                                    <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-2 shadow-sm text-slate-400 group-hover:text-gold-500 transition-colors">
+                                    <div class="w-12 h-12 bg-white/10 border border-white/10 rounded-full flex items-center justify-center mx-auto mb-2 text-slate-400 group-hover:text-gold-500 group-hover:border-gold-500/50 group-hover:bg-gold-500/10 transition-colors">
                                         <i class="fas fa-camera text-xl"></i>
                                     </div>
-                                    <p class="text-xs font-bold text-slate-500">Ketuk untuk mengambil foto</p>
+                                    <p class="text-xs font-bold text-slate-400">Ketuk untuk mengambil foto</p>
                                 </div>
                                 <img id="warga-foto-preview" class="hidden absolute inset-0 w-full h-full object-cover">
                             </div>
@@ -1585,11 +1626,11 @@
             </div>
 
             <!-- Footer -->
-            <div class="p-6 bg-slate-50 border-t border-slate-100 flex justify-end gap-3 shrink-0">
-                <button type="button" onclick="document.getElementById('modal-lapor').classList.add('hidden')" class="px-6 py-3.5 bg-white border border-slate-200 hover:bg-slate-100 text-slate-600 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all">
+            <div class="p-6 border-t border-white/10 flex justify-end gap-3 shrink-0 bg-[#0f0e2c]">
+                <button type="button" onclick="document.getElementById('modal-lapor').classList.add('hidden')" class="px-6 py-3.5 bg-white/5 border border-white/10 hover:bg-white/10 text-slate-300 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all">
                     Batal
                 </button>
-                <button type="submit" form="form-lapor-warga" class="px-8 py-3.5 bg-gold-500 hover:bg-gold-600 text-white rounded-xl font-black text-[10px] uppercase tracking-widest transition-all shadow-lg shadow-gold-500/30 flex items-center gap-2">
+                <button type="submit" form="form-lapor-warga" class="px-8 py-3.5 bg-gold-500 hover:bg-gold-600 text-white rounded-xl font-black text-[10px] uppercase tracking-widest transition-all shadow-lg shadow-gold-500/30 flex items-center gap-2 border border-gold-400">
                     Kirim Laporan <i class="fas fa-paper-plane"></i>
                 </button>
             </div>
@@ -1693,5 +1734,79 @@
         });
     </script>
     <?php endif; ?>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Navbar Scroll Logic
+            const navbar = document.getElementById('navbar');
+            
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.remove('nav-transparent');
+                    navbar.classList.add('nav-scrolled');
+                } else {
+                    navbar.classList.remove('nav-scrolled');
+                    navbar.classList.add('nav-transparent');
+                }
+            });
+
+            // Intersection Observer for Reveal Animations
+            const revealElements = document.querySelectorAll('.reveal-up');
+            
+            const revealOptions = {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    } else {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
+
+            revealElements.forEach(el => {
+                revealOnScroll.observe(el);
+            });
+            
+            // Initial render
+            applyFilters();
+
+            // Phase 4: Real-time Updates (AJAX Polling every 30s)
+            function fetchRealTimeData() {
+                fetch('/api/map-data')
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data && data.infrastruktur) {
+                            dataInfra = data.infrastruktur;
+                            
+                            // Re-render map
+                            applyFilters();
+                            
+                            // Update the DOM stats if available
+                            if (data.stats) {
+                                const statTotal = document.querySelector('#stat-total');
+                                const statKecamatan = document.querySelector('#stat-kecamatan');
+                                const statRusak = document.querySelector('#stat-rusak-berat');
+                                const statAkurasi = document.querySelector('#stat-akurasi');
+                                
+                                if (statTotal) statTotal.innerText = data.stats.total.toLocaleString('id-ID');
+                                if (statKecamatan) statKecamatan.innerText = data.stats.kecamatan.toLocaleString('id-ID');
+                                if (statRusak) statRusak.innerText = data.stats.rusak_berat.toLocaleString('id-ID');
+                                if (statAkurasi) statAkurasi.innerText = data.stats.akurasi_ai + '%';
+                            }
+                        }
+                    })
+                    .catch(err => console.error("Error fetching map data:", err));
+            }
+
+            // Jalankan polling setiap 30 detik
+            setInterval(fetchRealTimeData, 30000);
+        });
+    </script>
 </body>
 </html><?php /**PATH C:\laragon1\laragon\www\geo-sinfra\resources\views/landing.blade.php ENDPATH**/ ?>

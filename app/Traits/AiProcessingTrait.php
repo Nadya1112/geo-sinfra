@@ -25,16 +25,17 @@ trait AiProcessingTrait
                 Log::error("File gambar tidak ditemukan untuk analisis CNN: " . $filePath);
                 return false;
             }
-
-            // Eksekusi via Python CLI langsung (menggantikan HTTP POST ke Flask)
-            $pythonPath = 'python'; 
-            $scriptPath = base_path('predict.py');
-            $argScript = escapeshellarg($scriptPath);
-            $argImage = escapeshellarg($filePath);
-            $command = "$pythonPath $argScript $argImage";
+            // Kirim ke Flask API via HTTP POST (Lebih Cepat & Efisien)
+            $response = Http::timeout(30)->attach(
+                'image', file_get_contents($filePath), basename($filePath)
+            )->post($apiUrl);
             
-            $output = shell_exec($command . ' 2>&1');
-            $result = json_decode(trim($output), true);
+            if ($response->failed()) {
+                Log::error("API CNN Error: " . $response->body());
+                return $this->simulateCnnAnalysis($infrastrukturId);
+            }
+            
+            $result = $response->json();
 
             if ($result && isset($result['success']) && $result['success'] == true) {
                 

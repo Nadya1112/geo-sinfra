@@ -33,13 +33,13 @@
 </head>
 <body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800 text-left">
 
-    @include('kabid.partials.sidebar')
+    @include('tim_teknis.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-y-auto custom-scrollbar">
         <!-- HEADER -->
         <header class="bg-white border-b border-slate-100 px-8 py-5 flex justify-between items-center z-10 sticky top-0">
             <div class="flex items-center gap-4">
-                <a href="{{ route('kabid.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100">
+                <a href="{{ route('tim_teknis.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
@@ -156,7 +156,7 @@
                         </div>
                     </div>
                     <div>
-                        <form action="{{ route('kabid.validasi') }}" method="GET" class="flex items-center gap-2">
+                        <form action="{{ route('tim_teknis.validasi') }}" method="GET" class="flex items-center gap-2">
                             <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Tampilan:</label>
                             <select name="show" onchange="this.form.submit()" class="text-xs font-bold text-navy-900 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all shadow-sm">
                                 <option value="10" {{ request('show') != 'all' ? 'selected' : '' }}>10 Baris</option>
@@ -168,17 +168,17 @@
                 
                 <!-- FILTER TABS & ADVANCED FILTER -->
                 <div class="px-8 py-4 bg-white border-b border-slate-100">
-                    <form action="{{ route('kabid.validasi') }}" method="GET" class="flex flex-col gap-4">
+                    <form action="{{ route('tim_teknis.validasi') }}" method="GET" class="flex flex-col gap-4">
                         <input type="hidden" name="show" value="{{ request('show') }}">
                         @php $currentStatus = request('status', 'Pending'); @endphp
                         <input type="hidden" name="status" value="{{ $currentStatus }}">
 
                         <!-- Filter Status -->
                         <div class="flex flex-wrap gap-2 mb-2">
-                            <a href="{{ route('kabid.validasi', array_merge(request()->query(), ['status' => 'All'])) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $currentStatus == 'All' ? 'bg-navy-900 text-white shadow-md' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200' }}">Semua Antrean</a>
-                            <a href="{{ route('kabid.validasi', array_merge(request()->query(), ['status' => 'Pending'])) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $currentStatus == 'Pending' ? 'bg-amber-500 text-white shadow-md shadow-amber-500/20' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200' }}">Menunggu (Pending)</a>
-                            <a href="{{ route('kabid.validasi', array_merge(request()->query(), ['status' => 'Validated'])) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $currentStatus == 'Validated' ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200' }}">Disetujui (Validated)</a>
-                            <a href="{{ route('kabid.validasi', array_merge(request()->query(), ['status' => 'Rejected'])) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $currentStatus == 'Rejected' ? 'bg-rose-500 text-white shadow-md shadow-rose-500/20' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200' }}">Ditolak / Perbaikan</a>
+                            <a href="{{ route('tim_teknis.validasi', array_merge(request()->query(), ['status' => 'All'])) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $currentStatus == 'All' ? 'bg-navy-900 text-white shadow-md' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200' }}">Semua Antrean</a>
+                            <a href="{{ route('tim_teknis.validasi', array_merge(request()->query(), ['status' => 'Pending'])) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $currentStatus == 'Pending' ? 'bg-amber-500 text-white shadow-md shadow-amber-500/20' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200' }}">Menunggu (Pending)</a>
+                            <a href="{{ route('tim_teknis.validasi', array_merge(request()->query(), ['status' => 'Validated'])) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $currentStatus == 'Validated' ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200' }}">Disetujui (Validated)</a>
+                            <a href="{{ route('tim_teknis.validasi', array_merge(request()->query(), ['status' => 'Rejected'])) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $currentStatus == 'Rejected' ? 'bg-rose-500 text-white shadow-md shadow-rose-500/20' : 'bg-white text-slate-400 hover:bg-slate-100 border border-slate-200' }}">Ditolak / Perbaikan</a>
                         </div>
 
                         <!-- Advanced Filter -->
@@ -206,7 +206,7 @@
                                 <button type="submit" class="px-6 py-2.5 bg-navy-900 text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-gold-500 transition-all shadow-md w-full md:w-auto">
                                     Filter
                                 </button>
-                                <a href="{{ route('kabid.validasi', ['status' => $currentStatus]) }}" class="px-4 py-2.5 bg-white text-slate-400 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-100 hover:text-slate-600 transition-all border border-slate-200 shadow-sm flex items-center justify-center">
+                                <a href="{{ route('tim_teknis.validasi', ['status' => $currentStatus]) }}" class="px-4 py-2.5 bg-white text-slate-400 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-100 hover:text-slate-600 transition-all border border-slate-200 shadow-sm flex items-center justify-center">
                                     <i class="fas fa-sync-alt"></i>
                                 </a>
                             </div>
@@ -215,7 +215,7 @@
                 </div>
 
 
-                <form id="bulkForm" action="{{ route('kabid.validasi.bulk') }}" method="POST">
+                <form id="bulkForm" action="{{ route('tim_teknis.validasi.bulk') }}" method="POST">
                     @csrf
                     <input type="hidden" name="status" id="bulkStatus" value="">
                     
@@ -338,14 +338,14 @@
                                 <td class="px-6 py-5 min-w-[260px]">
                                     <div class="flex items-center justify-center gap-2">
                                         {{-- Detail --}}
-                                        <a href="{{ route('kabid.infrastruktur.show', $item->id_infrastruktur) }}" class="flex items-center justify-center gap-2 px-3 py-2.5 bg-navy-50 text-navy-900 rounded-xl hover:bg-gold-500 hover:text-white transition-all border border-navy-100 shadow-sm group" title="Lihat Detail">
+                                        <a href="{{ route('tim_teknis.infrastruktur.show', $item->id_infrastruktur) }}" class="flex items-center justify-center gap-2 px-3 py-2.5 bg-navy-50 text-navy-900 rounded-xl hover:bg-gold-500 hover:text-white transition-all border border-navy-100 shadow-sm group" title="Lihat Detail">
                                             <i class="fas fa-eye text-[10px] group-hover:scale-110 transition-transform"></i>
                                             <span class="text-[9px] font-black uppercase tracking-widest hidden 2xl:block">Detail</span>
                                         </a>
 
                                         {{-- ACC --}}
                                         @if($item->status_validasi == 'Pending')
-                                            <form action="{{ route('kabid.validasi.proses', $item->id_infrastruktur) }}" method="POST" class="flex-1" onsubmit="return promptCatatan(event, this, 'Validated')">
+                                            <form action="{{ route('tim_teknis.validasi.proses', $item->id_infrastruktur) }}" method="POST" class="flex-1" onsubmit="return promptCatatan(event, this, 'Validated')">
                                                 @csrf
                                                 <input type="hidden" name="status" value="Validated">
                                                 <button type="submit" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-[#059669] text-white rounded-xl hover:bg-[#047857] transition-all shadow-lg shadow-[#059669]/20 group border border-[#059669]" title="Setujui Validasi">
@@ -355,7 +355,7 @@
                                             </form>
                                             
                                             {{-- Tolak --}}
-                                            <form action="{{ route('kabid.validasi.proses', $item->id_infrastruktur) }}" method="POST" class="flex-1" onsubmit="return promptCatatan(event, this, 'Rejected')">
+                                            <form action="{{ route('tim_teknis.validasi.proses', $item->id_infrastruktur) }}" method="POST" class="flex-1" onsubmit="return promptCatatan(event, this, 'Rejected')">
                                                 @csrf
                                                 <input type="hidden" name="status" value="Rejected">
                                                 <button type="submit" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-500 hover:text-white transition-all border border-rose-200 shadow-sm group" title="Tolak Validasi">

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil Kabid | GEO-SINFRA</title>
+    <title>Profil Tim Teknis | GEO-SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -27,13 +27,13 @@
 </head>
 <body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800 text-left">
 
-    @include('kabid.partials.sidebar')
+    @include('tim_teknis.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden">
         {{-- ── Header ── --}}
         <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 px-8 py-5 flex justify-between items-center z-40 shrink-0">
             <div class="flex items-center gap-4">
-                <a href="{{ route('kabid.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-white border border-slate-200 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 hover:border-gold-200 transition-all shadow-sm">
+                <a href="{{ route('tim_teknis.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-white border border-slate-200 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 hover:border-gold-200 transition-all shadow-sm">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
@@ -69,7 +69,7 @@
                 </div>
                 @endif
 
-                <form action="{{ route('kabid.profile.update') }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <form action="{{ route('tim_teknis.profile.update') }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     @csrf
                     @method('PUT')
 

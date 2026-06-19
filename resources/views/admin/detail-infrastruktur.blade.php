@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -13,6 +13,7 @@
 
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
@@ -42,7 +43,7 @@
         }
     </style>
 </head>
-<body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800 font-sans">
+<body class="bg-navy-50 dark:bg-navy-950 text-slate-800 dark:text-slate-200 antialiased flex overflow-hidden h-screen transition-colors duration-300">
 
     @include('admin.partials.sidebar')
 
@@ -57,7 +58,7 @@
                 </a>
                 <div>
                     <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
-                    <h2 class="text-xl font-black text-navy-900 leading-none">Detail {{ ucfirst($inf->jenis) ?? 'Infrastruktur' }}</h2>
+                    <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Detail {{ ucfirst($inf->jenis) ?? 'Infrastruktur' }}</h2>
                 </div>
             </div>
 
@@ -82,7 +83,7 @@
                 {{-- SLOT 2: Jam (Realtime jika belum verifikasi, Waktu Verifikasi jika sudah) --}}
                 <div class="text-right hidden sm:block">
                     @if(($inf->status_verifikasi ?? 'Pending') != 'Verified')
-                        <p class="text-[11px] font-black text-navy-900" id="mini-clock">00:00 WITA</p>
+                        <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
                         <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                     @else
                         <p class="text-[11px] font-black text-navy-900">{{ \Carbon\Carbon::parse($inf->updated_at)->translatedFormat('H:i') }} WITA</p>
@@ -94,7 +95,7 @@
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin.profile') }}" class="text-right group">
-                        <p class="text-[11px] font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
+                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
                         <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">Online</p>
                     </a>
                     <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 overflow-hidden hover:shadow-lg transition-all shadow-md">
@@ -387,7 +388,7 @@
                     <div class="bg-amber-50 rounded-[2.5rem] p-8 border border-amber-100 shadow-sm relative overflow-hidden mt-6">
                         <div class="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-bl-full"></div>
                         <h4 class="text-sm font-black text-amber-900 uppercase tracking-widest mb-3 flex items-center gap-2">
-                            <i class="fas fa-comment-dots text-amber-500"></i> Catatan Eksekutif (Kabid)
+                            <i class="fas fa-comment-dots text-amber-500"></i> Catatan Eksekutif (Tim Teknis)
                         </h4>
                         <div class="p-5 bg-white/60 rounded-2xl border border-amber-200/50">
                             <p class="text-sm font-bold text-slate-600 leading-relaxed">{{ $inf->alasan_penolakan }}</p>
@@ -412,15 +413,15 @@
                             </div>
                         </div>
 
-                        <div class="relative rounded-2xl overflow-hidden bg-navy-950 aspect-video flex items-center justify-center group">
+                        <div class="relative rounded-2xl overflow-hidden bg-navy-950 aspect-[3/4] w-full flex items-center justify-center group">
                             @if($fotoUrl)
                                 <img src="{{ $fotoUrl }}" alt="Foto Infrastruktur"
                                      class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
 
                                 {{-- Detection overlay --}}
                                 @if(!in_array(strtolower($inf->kondisi ?? ''), ['baik','menunggu ai']))
-                                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                                    <div class="relative w-1/2 h-1/2 border-2 border-red-500/60 bg-red-500/5 animate-pulse">
+                                <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-6">
+                                    <div class="relative w-[50%] h-[50%] border-2 border-red-500/60 bg-red-500/5 animate-pulse">
                                         <div class="absolute -top-1 -left-1 w-4 h-4 border-t-4 border-l-4 border-red-500"></div>
                                         <div class="absolute -top-1 -right-1 w-4 h-4 border-t-4 border-r-4 border-red-500"></div>
                                         <div class="absolute -bottom-1 -left-1 w-4 h-4 border-b-4 border-l-4 border-red-500"></div>
@@ -542,3 +543,4 @@
     </script>
 </body>
 </html>
+

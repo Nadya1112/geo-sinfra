@@ -35,20 +35,20 @@
 </head>
 <body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800 text-left">
 
-    @include('kabid.partials.sidebar')
+    @include('tim_teknis.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-y-auto custom-scrollbar">
         <!-- HEADER -->
         <header class="bg-white border-b border-slate-100 px-8 py-5 flex justify-between items-center z-10 sticky top-0">
             <div class="flex items-center gap-4">
-                <a href="{{ route('kabid.validasi') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100">
+                <a href="{{ route('tim_teknis.validasi') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
                     <p class="text-[10px] font-extrabold text-gold-500 uppercase tracking-[0.2em] mb-1">Verifikasi Usulan</p>
                     <div class="flex items-center gap-4">
                         <h2 class="text-xl font-black text-navy-900">Detail Infrastruktur</h2>
-                        <a href="{{ route('kabid.infrastruktur.pdf', $infrastruktur->id_infrastruktur) }}" target="_blank" class="px-3 py-1.5 bg-rose-50 text-rose-600 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-rose-500 hover:text-white transition-colors border border-rose-100 flex items-center gap-2 shadow-sm">
+                        <a href="{{ route('tim_teknis.infrastruktur.pdf', $infrastruktur->id_infrastruktur) }}" target="_blank" class="px-3 py-1.5 bg-rose-50 text-rose-600 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-rose-500 hover:text-white transition-colors border border-rose-100 flex items-center gap-2 shadow-sm">
                             <i class="fas fa-file-pdf"></i> Cetak PDF
                         </a>
                     </div>
@@ -89,7 +89,7 @@
                         $fotoUrl   = $cleanPath ? asset('storage/' . (str_contains($cleanPath, 'infrastruktur/') ? $cleanPath : 'infrastruktur/' . $cleanPath)) : null;
                     @endphp
                     <div class="bg-white rounded-[2.5rem] p-4 border border-slate-100 shadow-sm overflow-hidden">
-                        <div class="relative h-64 rounded-[2rem] overflow-hidden group bg-navy-950 flex items-center justify-center">
+                        <div class="relative aspect-[3/4] w-full rounded-[2rem] overflow-hidden group bg-navy-950 flex items-center justify-center">
                             @if($fotoUrl)
                                 <img src="{{ $fotoUrl }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all flex items-end p-6">
@@ -160,14 +160,14 @@
                     <div class="bg-white rounded-[2.5rem] p-6 border border-slate-100 shadow-sm">
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Tindakan Verifikasi</p>
                         <div class="flex flex-col gap-3">
-                            <form action="{{ route('kabid.validasi.proses', $infrastruktur->id_infrastruktur) }}" method="POST">
+                            <form action="{{ route('tim_teknis.validasi.proses', $infrastruktur->id_infrastruktur) }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="status" value="Verified">
                                 <button type="submit" class="w-full flex items-center justify-center gap-2 py-3 bg-[#059669] text-white rounded-2xl hover:bg-[#047857] transition-all shadow-lg shadow-[#059669]/20 font-black text-[11px] uppercase tracking-widest">
                                     <i class="fas fa-check"></i> Terima Usulan
                                 </button>
                             </form>
-                            <form action="{{ route('kabid.validasi.proses', $infrastruktur->id_infrastruktur) }}" method="POST">
+                            <form action="{{ route('tim_teknis.validasi.proses', $infrastruktur->id_infrastruktur) }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="status" value="Rejected">
                                 <button type="submit" class="w-full flex items-center justify-center gap-2 py-3 bg-white border border-rose-200 text-rose-500 rounded-2xl hover:bg-rose-50 hover:border-rose-300 transition-all font-black text-[11px] uppercase tracking-widest">
@@ -183,7 +183,7 @@
                             <i class="fas fa-tasks text-blue-500"></i> Status Pengerjaan (Tindak Lanjut)
                         </h4>
                         
-                        <form action="{{ route('kabid.perbaikan.update', $infrastruktur->id_infrastruktur) }}" method="POST">
+                        <form action="{{ route('tim_teknis.perbaikan.update', $infrastruktur->id_infrastruktur) }}" method="POST">
                             @csrf
                             <div class="space-y-3">
                                 <label class="flex items-center justify-between p-3 rounded-2xl border cursor-pointer transition-all {{ $infrastruktur->status_perbaikan == 'Menunggu' ? 'border-amber-500 bg-amber-50' : 'border-slate-200 hover:bg-slate-50' }}">
@@ -233,7 +233,7 @@
                     <div class="bg-amber-50 rounded-[2.5rem] p-6 border border-amber-100 shadow-sm relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-bl-full"></div>
                         <h4 class="text-[10px] font-black text-amber-900 uppercase tracking-widest mb-3 flex items-center gap-2">
-                            <i class="fas fa-comment-dots text-amber-500"></i> Catatan Eksekutif (Kabid)
+                            <i class="fas fa-comment-dots text-amber-500"></i> Catatan Eksekutif (Tim Teknis)
                         </h4>
                         <div class="p-4 bg-white/60 rounded-2xl border border-amber-200/50">
                             <p class="text-xs font-bold text-slate-600 leading-relaxed">{{ $infrastruktur->alasan_penolakan }}</p>

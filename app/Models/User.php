@@ -26,7 +26,7 @@ class User extends Authenticatable
 
     /**
      * Kolom yang bisa diisi secara massal.
-     * Pastikan kolom 'role' ada di database (admin, surveyor, kabid).
+     * Pastikan kolom 'role' ada di database (admin, surveyor, tim_teknis).
      */
     protected $fillable = [
         'name', 
@@ -95,8 +95,8 @@ class User extends Authenticatable
         return $this->role === 'surveyor';
     }
 
-    public function isKabid(): bool
+    public function isTimTeknis(): bool
     {
-        return $this->role === 'kabid';
+        return $this->role === 'tim_teknis';
     }
 }

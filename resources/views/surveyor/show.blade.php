@@ -79,7 +79,7 @@
                     
                     {{-- Preview Gambar --}}
                     <div class="bg-white rounded-[2.5rem] p-4 border border-slate-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
-                        <div class="relative h-64 rounded-[2rem] overflow-hidden bg-navy-950 group flex items-center justify-center">
+                        <div class="relative aspect-[3/4] w-full rounded-[2rem] overflow-hidden bg-navy-950 group flex items-center justify-center">
                             @php $cleanPath = str_replace('\\', '/', $infrastruktur->foto_terbaru); @endphp
                             <img src="{{ asset('storage/' . (str_contains($cleanPath, 'infrastruktur/') ? $cleanPath : 'infrastruktur/' . $cleanPath)) }}" class="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105">
                             
@@ -90,8 +90,8 @@
                             @endphp
 
                             @if(strtolower($infrastruktur->kondisi) != 'baik' && strtolower($infrastruktur->kondisi) != 'menunggu ai')
-                                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                                    <div class="relative w-1/2 h-1/2 border-2 border-red-500/50 bg-red-500/5 animate-pulse">
+                                <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-6">
+                                    <div class="relative w-[50%] h-[50%] border-2 border-red-500/50 bg-red-500/5 animate-pulse">
                                         <div class="absolute -top-1 -left-1 w-3 h-3 border-t-[3px] border-l-[3px] border-red-500"></div>
                                         <div class="absolute -top-1 -right-1 w-3 h-3 border-t-[3px] border-r-[3px] border-red-500"></div>
                                         <div class="absolute -bottom-1 -left-1 w-3 h-3 border-b-[3px] border-l-[3px] border-red-500"></div>
@@ -162,7 +162,7 @@
                                     @if($infrastruktur->status_validasi == 'Rejected')
                                         <span class="px-3 py-1 bg-red-500/10 border border-red-500/20 rounded-lg text-[8px] font-black uppercase tracking-widest text-red-400">Ditolak</span>
                                     @elseif($infrastruktur->status_validasi == 'Validated')
-                                        <span class="px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-[8px] font-black uppercase tracking-widest text-emerald-400">Di-ACC Kabid</span>
+                                        <span class="px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-[8px] font-black uppercase tracking-widest text-emerald-400">Di-ACC Tim Teknis</span>
                                     @elseif($infrastruktur->status_verifikasi == 'Verified')
                                         <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-lg text-[8px] font-black uppercase tracking-widest text-blue-400">Terverifikasi Admin</span>
                                     @else
@@ -179,7 +179,7 @@
                 <div class="bg-amber-50 rounded-[2.5rem] p-6 border border-amber-100 shadow-sm relative overflow-hidden lg:col-span-1">
                     <div class="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-bl-full"></div>
                     <h4 class="text-[10px] font-black text-amber-900 uppercase tracking-widest mb-3 flex items-center gap-2">
-                        <i class="fas fa-comment-dots text-amber-500"></i> Catatan Eksekutif (Kabid)
+                        <i class="fas fa-comment-dots text-amber-500"></i> Catatan Eksekutif (Tim Teknis)
                     </h4>
                     <div class="p-4 bg-white/60 rounded-2xl border border-amber-200/50">
                         <p class="text-xs font-bold text-slate-600 leading-relaxed">{{ $infrastruktur->alasan_penolakan }}</p>

@@ -57,7 +57,7 @@
             <p>Mohon segera menindaklanjuti dan memvalidasi laporan ini melalui portal Executive WebGIS atau menu Rekomendasi Prioritas.</p>
 
             <div class="btn-container">
-                <a href="{{ route('kabid.prioritas') }}" class="btn">Lihat Detail di Aplikasi</a>
+                <a href="{{ route('tim_teknis.prioritas') }}" class="btn">Lihat Detail di Aplikasi</a>
             </div>
         </div>
         <div class="footer">

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kabid Dashboard | GEO-SINFRA</title>
+    <title>Tim Teknis Dashboard | GEO-SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -27,7 +27,7 @@
 </head>
 <body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800 text-left">
 
-    @include('kabid.partials.sidebar')
+    @include('tim_teknis.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-y-auto">
         <header class="bg-white border-b border-slate-100 px-8 py-5 flex justify-between items-center z-10 sticky top-0">
@@ -42,7 +42,7 @@
                     <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
-                <a href="{{ route('kabid.profile') }}" class="flex items-center gap-3 group">
+                <a href="{{ route('tim_teknis.profile') }}" class="flex items-center gap-3 group">
                     <div class="text-right">
                         <p class="text-[11px] font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-colors">{{ auth()->user()->name }}</p>
                         <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
@@ -77,7 +77,7 @@
                     </div>
                 </div>
                 <div class="relative z-10 hidden md:block">
-                    <a href="{{ route('kabid.laporan') }}?kondisi=Berat" class="px-6 py-4 bg-white text-rose-600 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-rose-50 transition-colors shadow-lg flex items-center gap-3">
+                    <a href="{{ route('tim_teknis.laporan') }}?kondisi=Berat" class="px-6 py-4 bg-white text-rose-600 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-rose-50 transition-colors shadow-lg flex items-center gap-3">
                         Tinjau Sekarang <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
@@ -167,7 +167,7 @@
 
             <!-- Main Menu Cards -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <a href="{{ route('kabid.monitoring') }}" class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group relative overflow-hidden">
+                <a href="{{ route('tim_teknis.monitoring') }}" class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group relative overflow-hidden">
                     <div class="absolute -right-6 -top-6 w-24 h-24 bg-navy-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
                     <div class="relative z-10 flex flex-col h-full justify-between gap-6">
                         <div class="w-14 h-14 bg-navy-900 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-navy-200">
@@ -180,7 +180,7 @@
                     </div>
                 </a>
 
-                <a href="{{ route('kabid.validasi') }}" class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group relative overflow-hidden">
+                <a href="{{ route('tim_teknis.validasi') }}" class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group relative overflow-hidden">
                     <div class="absolute -right-6 -top-6 w-24 h-24 bg-gold-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
                     <div class="relative z-10 flex flex-col h-full justify-between gap-6">
                         <div class="w-14 h-14 bg-gold-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-gold-200">
@@ -195,7 +195,7 @@
 
 
 
-                <a href="{{ route('kabid.laporan') }}" class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group relative overflow-hidden">
+                <a href="{{ route('tim_teknis.laporan') }}" class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group relative overflow-hidden">
                     <div class="absolute -right-6 -top-6 w-24 h-24 bg-gold-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
                     <div class="relative z-10 flex flex-col h-full justify-between gap-6">
                         <div class="w-14 h-14 bg-gold-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-gold-200">

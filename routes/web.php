@@ -99,6 +99,75 @@ Route::get('/', function () {
     )); 
 });
 
+// API Endpoint for Map Polling
+Route::get('/api/map-data', function () {
+    $tahun = request('tahun');
+    
+    $query = DB::table('infrastruktur')
+        ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
+        ->leftJoin('kecamatan', 'kelurahan.id_kecamatan', '=', 'kecamatan.id_kecamatan')
+        ->leftJoin('analisis_ai', 'infrastruktur.id_infrastruktur', '=', 'analisis_ai.id_infrastruktur')
+        ->leftJoin('users', 'infrastruktur.id_user', '=', 'users.id')
+        ->select(
+            'infrastruktur.*', 
+            'kelurahan.id_kecamatan as id_kecamatan_from_kel',
+            'kelurahan.nama_kelurahan',
+            'kecamatan.nama_kecamatan',
+            'users.name as nama_surveyor',
+            'analisis_ai.label_prioritas',
+            'analisis_ai.skor_dt'
+        )
+        ->whereNull('infrastruktur.deleted_at');
+
+    if ($tahun && $tahun !== 'all') {
+        $query->whereYear('infrastruktur.created_at', $tahun);
+    }
+
+    $dataInfrastruktur = $query->get()
+        ->map(function($item) {
+            $item->id_kecamatan = $item->id_kecamatan ?? $item->id_kecamatan_from_kel;
+            return $item;
+        });
+
+    $totalAktif = $dataInfrastruktur->count();
+    $totalDianalisis = $dataInfrastruktur->filter(fn($i) => !is_null($i->label_prioritas))->count();
+    $akurasiAi = $totalAktif > 0 ? round(($totalDianalisis / $totalAktif) * 100) : 0;
+
+    $stats = [
+        'total'       => $totalAktif,
+        'kecamatan'   => DB::table('kecamatan')->whereNull('deleted_at')->count(),
+        'rusak_berat' => $dataInfrastruktur->where('label_prioritas', 'Rusak Berat')->count(),
+        'akurasi_ai'  => $akurasiAi,
+    ];
+
+    return response()->json([
+        'infrastruktur' => $dataInfrastruktur,
+        'stats' => $stats
+    ]);
+});
+
+// API Endpoint for Admin Notifications (Check New Reports)
+Route::get('/api/check-laporan', function () {
+    $lastChecked = request('last_checked');
+    
+    $query = DB::table('laporan_warga')
+        ->where('status', 'menunggu')
+        ->whereNull('deleted_at');
+        
+    if ($lastChecked) {
+        // Find reports created after the last checked timestamp
+        $query->where('created_at', '>', date('Y-m-d H:i:s', $lastChecked));
+    }
+    
+    $newReports = $query->get();
+    
+    return response()->json([
+        'count' => $newReports->count(),
+        'reports' => $newReports,
+        'timestamp' => time() // return current server time for the next check
+    ]);
+});
+
 /** * Grup Autentikasi 
  */
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -258,22 +327,22 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/territory', [App\Http\Controllers\Surveyor\SurveyorController::class, 'updateTerritories'])->name('surveyor.territory.update');
     });
 
-    // --- AREA KABID ---
-    Route::middleware(['role:kabid'])->prefix('kabid')->group(function () {
-        Route::get('/dashboard', [App\Http\Controllers\Kabid\KabidController::class, 'index'])->name('kabid.dashboard');
-        Route::get('/monitoring', [App\Http\Controllers\Kabid\KabidController::class, 'monitoring'])->name('kabid.monitoring');
-        Route::get('/prioritas', [App\Http\Controllers\Kabid\KabidController::class, 'prioritas'])->name('kabid.prioritas');
+    // --- AREA TIM TEKNIS ---
+    Route::middleware(['role:tim_teknis'])->prefix('tim-teknis')->group(function () {
+        Route::get('/dashboard', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'index'])->name('tim_teknis.dashboard');
+        Route::get('/monitoring', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'monitoring'])->name('tim_teknis.monitoring');
+        Route::get('/prioritas', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'prioritas'])->name('tim_teknis.prioritas');
 
-        Route::get('/validasi', [App\Http\Controllers\Kabid\KabidController::class, 'validasi'])->name('kabid.validasi');
-        Route::post('/validasi/bulk', [App\Http\Controllers\Kabid\KabidController::class, 'bulkValidasi'])->name('kabid.validasi.bulk');
-        Route::post('/validasi/{id}', [App\Http\Controllers\Kabid\KabidController::class, 'prosesValidasi'])->name('kabid.validasi.proses');
+        Route::get('/validasi', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'validasi'])->name('tim_teknis.validasi');
+        Route::post('/validasi/bulk', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'bulkValidasi'])->name('tim_teknis.validasi.bulk');
+        Route::post('/validasi/{id}', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'prosesValidasi'])->name('tim_teknis.validasi.proses');
 
-        Route::get('/laporan', [App\Http\Controllers\Kabid\KabidController::class, 'laporan'])->name('kabid.laporan');
-        Route::get('/infrastruktur/{id}', [App\Http\Controllers\Kabid\KabidController::class, 'show'])->name('kabid.infrastruktur.show');
-        Route::post('/infrastruktur/{id}/status-perbaikan', [App\Http\Controllers\Kabid\KabidController::class, 'updateStatusPerbaikan'])->name('kabid.perbaikan.update');
-        Route::get('/infrastruktur/{id}/pdf', [App\Http\Controllers\Kabid\KabidController::class, 'exportPdf'])->name('kabid.infrastruktur.pdf');
-        Route::get('/profile', [App\Http\Controllers\Kabid\KabidController::class, 'profile'])->name('kabid.profile');
-        Route::put('/profile', [App\Http\Controllers\Kabid\KabidController::class, 'updateProfile'])->name('kabid.profile.update');
+        Route::get('/laporan', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'laporan'])->name('tim_teknis.laporan');
+        Route::get('/infrastruktur/{id}', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'show'])->name('tim_teknis.infrastruktur.show');
+        Route::post('/infrastruktur/{id}/status-perbaikan', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'updateStatusPerbaikan'])->name('tim_teknis.perbaikan.update');
+        Route::get('/infrastruktur/{id}/pdf', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'exportPdf'])->name('tim_teknis.infrastruktur.pdf');
+        Route::get('/profile', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'profile'])->name('tim_teknis.profile');
+        Route::put('/profile', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'updateProfile'])->name('tim_teknis.profile.update');
     });
     
 });

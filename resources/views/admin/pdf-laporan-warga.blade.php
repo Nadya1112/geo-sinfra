@@ -96,10 +96,17 @@
                     <td>{{ $laporan->latitude }}<br>{{ $laporan->longitude }}</td>
                     <td>
                         @if($laporan->label_ai)
-                            <strong>{{ strtoupper($laporan->label_ai) }}</strong><br>
-                            Skor: {{ $laporan->skor_ai ? ($laporan->skor_ai * 100) . '%' : '-' }}
+                            @php
+                                $badgeClass = match($laporan->label_ai) {
+                                    'Rusak Berat'  => 'background-color: #fef2f2; color: #b91c1c; border-color: #fca5a5;',
+                                    'Rusak Sedang' => 'background-color: #fff7ed; color: #c2410c; border-color: #fdba74;',
+                                    default        => 'background-color: #ecfdf5; color: #047857; border-color: #6ee7b7;'
+                                };
+                            @endphp
+                            <span style="display: inline-block; padding: 3px 8px; font-size: 10px; font-weight: bold; text-transform: uppercase; border-radius: 3px; border: 1px solid; {{ $badgeClass }}">{{ strtoupper($laporan->label_ai) }}</span><br>
+                            <span style="font-size: 9px; color: #555; margin-top: 3px; display: inline-block;">Skor: {{ $laporan->skor_ai ? round($laporan->skor_ai * 100) . '%' : '-' }}</span>
                         @else
-                            -
+                            <span style="color:#999; font-style:italic;">-</span>
                         @endif
                     </td>
                     <td><strong>{{ strtoupper($laporan->status) }}</strong></td>
@@ -118,7 +125,7 @@
                 <td style="width:60%;"></td>
                 <td style="width:40%; text-align:center;">
                     <div class="ttd-kota-tgl">Banjarmasin, {{ now()->translatedFormat('d F Y') }}</div>
-                    <div class="ttd-jabatan">Kepala Bidang Kawasan Permukiman</div>
+                    <div class="ttd-jabatan">Koordinator Tim Teknis</div>
                     <div class="ttd-ruang"></div>
                     <div class="ttd-nama">HIZBULWATHONI, S.T.</div>
                     <div class="ttd-nip">NIP. 19760814 200604 1 008</div>
