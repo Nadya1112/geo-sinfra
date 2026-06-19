@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -22,6 +22,13 @@
                     }
                 }
             }
+        }
+    </script>
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
         }
     </script>
 
@@ -183,7 +190,7 @@
                                             @endphp
                                             <div class="inline-flex items-center gap-2 px-3 py-1.5 mb-3 rounded-lg border {{ $aiColor }} text-[10px] uppercase tracking-wider shadow-sm">
                                                 <i class="fas {{ $aiIcon }} animate-pulse"></i> 
-                                                <span>Dianalisis AI: {!! $statusText !!} {{ $skorPercent ? "<span class='text-gold-500 font-black ml-1'>($skorPercent Yakin)</span>" : '' }}</span>
+                                                <span>Dianalisis AI: {!! $statusText !!} {!! $skorPercent ? "<span class='text-gold-500 font-black ml-1'>($skorPercent Yakin)</span>" : '' !!}</span>
                                             </div>
                                         @endif
                                         
@@ -206,12 +213,12 @@
                                             @method('PUT')
                                             
                                             @php
-                                                $statusColor = 'bg-slate-100 text-slate-700 border-slate-200';
-                                                if($laporan->status == 'Menunggu') $statusColor = 'bg-yellow-50 text-yellow-700 border-yellow-200';
-                                                if($laporan->status == 'Ditinjau') $statusColor = 'bg-blue-50 text-blue-700 border-blue-200';
-                                                if($laporan->status == 'Diproses') $statusColor = 'bg-indigo-50 text-indigo-700 border-indigo-200';
-                                                if($laporan->status == 'Selesai') $statusColor = 'bg-emerald-50 text-emerald-700 border-emerald-200';
-                                                if($laporan->status == 'Ditolak') $statusColor = 'bg-red-50 text-red-700 border-red-200';
+                                                $statusColor = 'bg-slate-100 text-slate-700 dark:bg-navy-900 dark:text-slate-300 border-slate-200 dark:border-white/10';
+                                                if($laporan->status == 'Menunggu') $statusColor = 'bg-yellow-50 text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-400 border-yellow-200 dark:border-yellow-500/20';
+                                                if($laporan->status == 'Ditinjau') $statusColor = 'bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400 border-blue-200 dark:border-blue-500/20';
+                                                if($laporan->status == 'Diproses') $statusColor = 'bg-indigo-50 text-indigo-700 dark:bg-indigo-900/20 dark:text-indigo-400 border-indigo-200 dark:border-indigo-500/20';
+                                                if($laporan->status == 'Selesai') $statusColor = 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400 border-emerald-200 dark:border-emerald-500/20';
+                                                if($laporan->status == 'Ditolak') $statusColor = 'bg-red-50 text-red-700 dark:bg-red-900/20 dark:text-red-400 border-red-200 dark:border-red-500/20';
                                             @endphp
                                             
                                             <select name="status" onchange="this.form.submit()" class="w-full appearance-none pl-3 pr-8 py-1.5 rounded-lg text-xs font-bold border {{ $statusColor }} focus:outline-none focus:ring-2 focus:ring-navy-500 cursor-pointer shadow-sm">
@@ -219,7 +226,7 @@
                                                 <option value="Ditinjau" {{ $laporan->status == 'Ditinjau' ? 'selected' : '' }}>👀 Ditinjau</option>
                                                 <option value="Diproses" {{ $laporan->status == 'Diproses' ? 'selected' : '' }}>⚙️ Diproses</option>
                                                 <option value="Selesai" {{ $laporan->status == 'Selesai' ? 'selected' : '' }}>✅ Selesai</option>
-                                                <option value="Ditolak" {{ $laporan->status == 'Ditolak' ? 'selected' : '' }}>❌ Ditolak</option>
+                                                <option value="Ditolak" {{ $laporan->status == 'Ditolak' ? 'selected' : '' }}>❌ Tidak Valid</option>
                                             </select>
                                             <i class="fas fa-chevron-down absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] opacity-60 pointer-events-none"></i>
                                         </form>
@@ -230,7 +237,7 @@
                                             @method('PUT')
                                             
                                             @php
-                                                $assignColor = $laporan->id_surveyor ? 'bg-indigo-50 text-indigo-700 border-indigo-200' : 'bg-slate-100 text-slate-500 border-slate-200';
+                                                $assignColor = $laporan->id_surveyor ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-900/20 dark:text-indigo-400 border-indigo-200 dark:border-indigo-500/20' : 'bg-slate-100 text-slate-500 dark:bg-navy-900 dark:text-slate-400 border-slate-200 dark:border-white/10';
                                             @endphp
                                             
                                             <select name="id_surveyor" onchange="this.form.submit()" class="w-full appearance-none pl-3 pr-8 py-1.5 rounded-lg text-xs font-bold border {{ $assignColor }} focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer shadow-sm">

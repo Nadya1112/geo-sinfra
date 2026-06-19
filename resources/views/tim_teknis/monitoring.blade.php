@@ -5,19 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitoring Peta | GEO-SINFRA</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
+            <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
                     colors: {
-                        navy: { 50: '#f0f4f8', 100: '#d9e2ec', 200: '#bcccdc', 300: '#9fb3c8', 400: '#829ab1', 500: '#627d98', 600: '#486581', 700: '#334e68', 800: '#243b53', 900: '#0f0e2c', 950: '#0a091d' },
-                        gold: { 50: '#fbf8f1', 100: '#f5ebd9', 200: '#eed9b9', 300: '#e5c292', 400: '#dba665', 500: '#c5a059', 600: '#b48135', 700: '#96652a', 800: '#7c5327', 900: '#644422', 950: '#382310' }
-                    },
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        navy: { 50:'#f4f4fa', 100:'#e9e9f3', 200:'#c7c8e3', 300:'#9fb3c8', 400:'#829ab1', 500:'#6366f1', 600:'#486581', 700:'#334e68', 800:'#1e1b4b', 900:'#0f0e2c', 950:'#070617' },
+                        gold: { 50:'#fdfbf7', 100:'#fbf7ed', 200:'#eed9b9', 300:'#e5c292', 400:'#dba665', 500:'#c5a059', 600:'#b38f4a', 700:'#9d7c3d', 800:'#7c5327', 900:'#644422', 950:'#382310' }
                     }
                 }
             }
+        }
+    </script>
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
         }
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -26,31 +39,31 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style> body { font-family: 'Plus Jakarta Sans', sans-serif; } </style>
 </head>
-<body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800 text-left">
+<body class="bg-slate-50 dark:bg-[#0f0e2c] flex h-screen overflow-hidden text-slate-800 dark:text-white text-left font-sans dark:bg-navy-950 transition-colors duration-300">
 
     @include('tim_teknis.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden">
-        <header class="bg-white border-b border-slate-100 px-8 py-5 flex justify-between items-center z-10 sticky top-0">
+        <header class="bg-white dark:bg-[#1e1b4b] border-b border-slate-100 dark:border-white/10 px-8 py-5 flex justify-between items-center z-10 sticky top-0">
             <div class="flex items-center gap-4">
-                <a href="{{ route('tim_teknis.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100">
+                <a href="{{ route('tim_teknis.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100 dark:border-white/10">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
                     <p class="text-[10px] font-extrabold text-rose-500 uppercase tracking-[0.2em] mb-1"><i class="fas fa-satellite-dish mr-1 animate-pulse"></i> Executive WebGIS</p>
-                    <h2 class="text-xl font-black text-navy-900">Peta Sebaran & Prioritas Penanganan</h2>
+                    <h2 class="text-xl font-black text-navy-900 dark:text-white">Peta Sebaran & Prioritas Penanganan</h2>
                 </div>
             </div>
             
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
                     <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <a href="{{ route('tim_teknis.profile') }}" class="flex items-center gap-3 group">
                     <div class="text-right">
-                        <p class="text-[11px] font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-colors">{{ auth()->user()->name }}</p>
+                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-colors">{{ auth()->user()->name }}</p>
                         <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
                     </div>
                     <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shadow-md group-hover:shadow-lg transition-all overflow-hidden">
@@ -80,7 +93,7 @@
             <!-- Stats & Legend UI Bottom Left -->
             <div class="absolute bottom-10 left-6 z-10">
                 <div id="condition-card" class="bg-navy-900/80 backdrop-blur-xl p-1.5 rounded-[2rem] border border-white/10 shadow-2xl min-w-[160px]">
-                    <button onclick="toggleMenu('condition-options')" class="w-full px-4 py-2.5 rounded-[1.5rem] text-[8px] font-black uppercase tracking-widest bg-white/10 text-white flex items-center justify-between shadow-sm hover:bg-gold-500 hover:text-white transition-all group border border-white/5">
+                    <button onclick="toggleMenu('condition-options')" class="w-full px-4 py-2.5 rounded-[1.5rem] text-[8px] font-black uppercase tracking-widest bg-white/10 dark:bg-[#1e1b4b]/10 text-white flex items-center justify-between shadow-sm hover:bg-gold-500 hover:text-white transition-all group border border-white/5">
                         <div class="flex items-center gap-2.5">
                             <div class="w-5 h-5 bg-gold-500/20 text-gold-400 group-hover:text-white roun flex items-center justify-center transition-colors">
                                 <i class="fas fa-chart-pie text-[9px]"></i>
@@ -134,7 +147,7 @@
                             <i class="fas fa-chevron-down text-[7px]"></i>
                         </button>
                         <div id="category-options" class="hidden mt-1.5 p-1 flex flex-col gap-0.5">
-                            <button onclick="toggleType('Semua')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="Semua">
+                            <button onclick="toggleType('Semua')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 dark:hover:bg-[#1e1b4b]/10 transition-all flex items-center justify-between group" data-id="Semua">
                                 <div class="flex items-center gap-2.5">
                                     <div class="w-3 h-3 roun border border-white/20 flex items-center justify-center group-hover:border-gold-400 transition-colors">
                                         <i class="fas fa-check text-[6px] text-gold-400 check-icon" style="opacity:1"></i>
@@ -142,7 +155,7 @@
                                     <span class="group-hover:text-white transition-colors">Semua Objek</span>
                                 </div>
                             </button>
-                            <button onclick="toggleType('Jalan')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Jalan">
+                            <button onclick="toggleType('Jalan')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 dark:hover:bg-[#1e1b4b]/10 transition-all flex items-center justify-between group" data-type="Jalan">
                                 <div class="flex items-center gap-2.5">
                                     <div class="w-3 h-3 roun border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors">
                                         <i class="fas fa-check text-[6px] text-blue-400 check-icon" style="opacity:1"></i>
@@ -151,7 +164,7 @@
                                 </div>
                                 <div class="w-2 h-2 rounded-full bg-blue-500 shadow-lg shadow-blue-500/40"></div>
                             </button>
-                            <button onclick="toggleType('Jembatan')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Jembatan">
+                            <button onclick="toggleType('Jembatan')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 dark:hover:bg-[#1e1b4b]/10 transition-all flex items-center justify-between group" data-type="Jembatan">
                                 <div class="flex items-center gap-2.5">
                                     <div class="w-3 h-3 roun border border-white/20 flex items-center justify-center group-hover:border-indigo-400 transition-colors">
                                         <i class="fas fa-check text-[6px] text-indigo-400 check-icon" style="opacity:1"></i>
@@ -160,7 +173,7 @@
                                 </div>
                                 <div class="w-2 h-2 rounded-full bg-indigo-500 shadow-lg shadow-indigo-500/40"></div>
                             </button>
-                            <button onclick="toggleType('Titian')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-type="Titian">
+                            <button onclick="toggleType('Titian')" class="type-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 dark:hover:bg-[#1e1b4b]/10 transition-all flex items-center justify-between group" data-type="Titian">
                                 <div class="flex items-center gap-2.5">
                                     <div class="w-3 h-3 roun border border-white/20 flex items-center justify-center group-hover:border-amber-400 transition-colors">
                                         <i class="fas fa-check text-[6px] text-amber-400 check-icon" style="opacity:1"></i>
@@ -169,8 +182,8 @@
                                 </div>
                                 <div class="w-2 h-2 rounded-full bg-amber-500 shadow-lg shadow-amber-500/40"></div>
                             </button>
-                            <div class="h-[1px] bg-white/5 my-1"></div>
-                            <button onclick="toggleKelurahanPoints()" class="w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" id="kel-toggle-btn">
+                            <div class="h-[1px] bg-white/5 dark:bg-[#1e1b4b]/5 my-1"></div>
+                            <button onclick="toggleKelurahanPoints()" class="w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 dark:hover:bg-[#1e1b4b]/10 transition-all flex items-center justify-between group" id="kel-toggle-btn">
                                 <div class="flex items-center gap-2.5">
                                     <div class="w-3 h-3 roun border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
                                         <i class="fas fa-check text-[6px] text-emerald-400" id="kel-check-icon" style="opacity:0"></i>
@@ -182,11 +195,11 @@
                         </div>
                     </div>
 
-                    <div class="h-[1px] bg-white/5 mx-3 my-0.5"></div>
+                    <div class="h-[1px] bg-white/5 dark:bg-[#1e1b4b]/5 mx-3 my-0.5"></div>
 
                     <!-- Kecamatan Section -->
                     <div class="p-0.5">
-                        <button onclick="toggleMenu('territory-options')" class="w-full px-4 py-2.5 rounded-[1.5rem] text-[8px] font-black uppercase tracking-widest bg-white/10 text-white flex items-center justify-between shadow-lg hover:bg-white/20 transition-all group border border-white/5">
+                        <button onclick="toggleMenu('territory-options')" class="w-full px-4 py-2.5 rounded-[1.5rem] text-[8px] font-black uppercase tracking-widest bg-white/10 dark:bg-[#1e1b4b]/10 text-white flex items-center justify-between shadow-lg hover:bg-white/20 dark:hover:bg-[#1e1b4b]/20 transition-all group border border-white/5">
                             <div class="flex items-center gap-2.5">
                                 <i class="fas fa-map-location-dot text-[9px] opacity-70 text-gold-400"></i>
                                 <span id="current-kec-label" class="truncate max-w-[90px]">Wilayah</span>
@@ -195,7 +208,7 @@
                         </button>
                         <div id="territory-options" class="hidden mt-1.5 p-1 flex flex-col gap-0.5 max-h-40 overflow-y-auto custom-scrollbar">
                             <!-- Select All Territories -->
-                            <button onclick="toggleKecamatan('Semua')" class="w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-emerald-400 hover:bg-white/10 transition-all flex items-center justify-between group border-b border-white/5 mb-1" id="btn-select-all-kec">
+                            <button onclick="toggleKecamatan('Semua')" class="w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-emerald-400 hover:bg-white/10 dark:hover:bg-[#1e1b4b]/10 transition-all flex items-center justify-between group border-b border-white/5 mb-1" id="btn-select-all-kec">
                                 <div class="flex items-center gap-2.5">
                                     <div class="w-3 h-3 roun border border-emerald-400/50 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
                                         <i class="fas fa-check text-[6px] text-emerald-400 check-icon" id="icon-select-all-kec" style="opacity:1"></i>
@@ -204,7 +217,7 @@
                                 </div>
                             </button>
 
-                            <button onclick="toggleKecamatan('Semua')" class="kec-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group hidden" data-id="Semua">
+                            <button onclick="toggleKecamatan('Semua')" class="kec-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 dark:hover:bg-[#1e1b4b]/10 transition-all flex items-center justify-between group hidden" data-id="Semua">
                                 <div class="flex items-center gap-2.5">
                                     <div class="w-3 h-3 roun border border-white/20 flex items-center justify-center group-hover:border-gold-400 transition-colors">
                                         <i class="fas fa-check text-[6px] text-gold-400 check-icon" style="opacity:1"></i>
@@ -213,7 +226,7 @@
                                 </div>
                             </button>
                             @foreach($kecamatan as $kec)
-                            <button onclick="toggleKecamatan('{{ $kec->id_kecamatan }}')" class="kec-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="{{ $kec->id_kecamatan }}">
+                            <button onclick="toggleKecamatan('{{ $kec->id_kecamatan }}')" class="kec-btn w-full px-3.5 py-2 rounded-xl text-[7.5px] font-black uppercase tracking-widest text-slate-400 hover:bg-white/10 dark:hover:bg-[#1e1b4b]/10 transition-all flex items-center justify-between group" data-id="{{ $kec->id_kecamatan }}">
                                 <div class="flex items-center gap-2.5">
                                     <div class="w-3 h-3 roun border border-white/20 flex items-center justify-center group-hover:border-gold-400 transition-colors">
                                         <i class="fas fa-check text-[6px] text-gold-400 check-icon" style="opacity:1"></i>
@@ -230,42 +243,42 @@
             <!-- Layer Switcher -->
             <div class="absolute bottom-10 right-6 z-10">
                 <div class="bg-navy-900/80 backdrop-blur-xl p-2 rounded-[2.5rem] border border-white/10 shadow-2xl">
-                    <button onclick="toggleMenu('layer-options')" class="w-12 h-12 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-gold-500 transition-all group border border-white/5">
+                    <button onclick="toggleMenu('layer-options')" class="w-12 h-12 rounded-full bg-white/10 dark:bg-[#1e1b4b]/10 text-white flex items-center justify-center hover:bg-gold-500 transition-all group border border-white/5">
                         <i class="fas fa-layer-group text-sm"></i>
                     </button>
                     <div id="layer-options" class="hidden absolute bottom-full right-0 mb-3 p-2 bg-navy-900/90 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl flex flex-col gap-2 min-w-[140px]">
-                        <button onclick="changeBaseLayer('greyscale')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 transition-all group">
+                        <button onclick="changeBaseLayer('greyscale')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 dark:hover:bg-[#1e1b4b]/10 transition-all group">
                             <div class="w-8 h-8 rounded-lg bg-gray-500/20 flex items-center justify-center text-gray-400 group-hover:bg-gray-500 group-hover:text-white transition-all">
                                 <i class="fas fa-adjust text-[10px]"></i>
                             </div>
                             <span class="text-[9px] font-black uppercase tracking-widest text-gray-300 group-hover:text-white">Greyscale</span>
                         </button>
-                        <button onclick="changeBaseLayer('satellite')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 transition-all group">
+                        <button onclick="changeBaseLayer('satellite')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 dark:hover:bg-[#1e1b4b]/10 transition-all group">
                             <div class="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white transition-all">
                                 <i class="fas fa-satellite text-[10px]"></i>
                             </div>
                             <span class="text-[9px] font-black uppercase tracking-widest text-gray-300 group-hover:text-white">Satelit</span>
                         </button>
-                        <button onclick="changeBaseLayer('osm')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 transition-all group">
+                        <button onclick="changeBaseLayer('osm')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 dark:hover:bg-[#1e1b4b]/10 transition-all group">
                             <div class="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-400 group-hover:bg-amber-500 group-hover:text-white transition-all">
                                 <i class="fas fa-map-marked-alt text-[10px]"></i>
                             </div>
                             <span class="text-[9px] font-black uppercase tracking-widest text-gray-300 group-hover:text-white">OSM Default</span>
                         </button>
-                        <button onclick="changeBaseLayer('dark')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 transition-all group">
+                        <button onclick="changeBaseLayer('dark')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 dark:hover:bg-[#1e1b4b]/10 transition-all group">
                             <div class="w-8 h-8 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-all">
                                 <i class="fas fa-moon text-[10px]"></i>
                             </div>
                             <span class="text-[9px] font-black uppercase tracking-widest text-gray-300 group-hover:text-white">Gelap</span>
                         </button>
-                        <button onclick="changeBaseLayer('street')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 transition-all group">
+                        <button onclick="changeBaseLayer('street')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 dark:hover:bg-[#1e1b4b]/10 transition-all group">
                             <div class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all">
                                 <i class="fas fa-road text-[10px]"></i>
                             </div>
                             <span class="text-[9px] font-black uppercase tracking-widest text-gray-300 group-hover:text-white">Jalan</span>
                         </button>
-                        <div class="h-[1px] bg-white/10 my-1 mx-2"></div>
-                        <button onclick="toggleFloodLayer()" class="flex items-center justify-between px-4 py-3 rounded-2xl hover:bg-white/10 transition-all group w-full text-left">
+                        <div class="h-[1px] bg-white/10 dark:bg-[#1e1b4b]/10 my-1 mx-2"></div>
+                        <button onclick="toggleFloodLayer()" class="flex items-center justify-between px-4 py-3 rounded-2xl hover:bg-white/10 dark:hover:bg-[#1e1b4b]/10 transition-all group w-full text-left">
                             <div class="flex items-center gap-3">
                                 <i class="fas fa-water text-blue-400 text-[10px]"></i>
                                 <span class="text-[9px] font-black uppercase tracking-widest text-slate-300 group-hover:text-white transition-colors">Rawan Banjir</span>
@@ -324,12 +337,12 @@
             if(showFloodLayer) {
                 map.addLayer(floodLayer);
                 bg.classList.replace('bg-slate-700', 'bg-blue-500');
-                dot.classList.replace('bg-slate-400', 'bg-white');
+                dot.classList.replace('bg-slate-400', 'bg-white dark:bg-[#1e1b4b]');
                 dot.classList.replace('left-[2px]', 'left-[14px]');
             } else {
                 map.removeLayer(floodLayer);
                 bg.classList.replace('bg-blue-500', 'bg-slate-700');
-                dot.classList.replace('bg-white', 'bg-slate-400');
+                dot.classList.replace('bg-white dark:bg-[#1e1b4b]', 'bg-slate-400');
                 dot.classList.replace('left-[14px]', 'left-[2px]');
             }
         }
@@ -359,7 +372,7 @@
                         this.setStyle({ fillOpacity: 0.35, weight: 2.5 });
                     }); // Do NOT add to map yet — applyFilters() controls visibility
 
-                    poly.bindPopup(`<p class="text-[10px] font-black text-navy-900 uppercase">${kec.nama_kecamatan}</p>`, { 
+                    poly.bindPopup(`<p class="text-[10px] font-black text-navy-900 dark:text-white uppercase">${kec.nama_kecamatan}</p>`, { 
                         className: 'custom-polygon-popup', 
                         closeButton: false 
                     });
@@ -430,12 +443,12 @@
                     <div class="p-1" style="min-width: 240px;">
                         <div class="relative h-32 rounded-2xl bg-slate-100 mb-3 overflow-hidden shadow-inner">
                             <img src="${finalUrl}" class="w-full h-full object-cover" onerror="this.style.display='none'">
-                            <div class="absolute top-2 left-2 px-2 py-1 bg-white/90 backdrop-blur-md rounded-lg text-[7px] font-black uppercase tracking-widest text-navy-900">
+                            <div class="absolute top-2 left-2 px-2 py-1 bg-white/90 dark:bg-[#1e1b4b]/90 backdrop-blur-md rounded-lg text-[7px] font-black uppercase tracking-widest text-navy-900 dark:text-white">
                                 ${rawJenis}
                             </div>
                         </div>
                         <div class="px-1">
-                            <h4 class="text-xs font-black text-navy-900 mb-1">${point.nama_objek || point.nama_infrastruktur || '-'}</h4>
+                            <h4 class="text-xs font-black text-navy-900 dark:text-white mb-1">${point.nama_objek || point.nama_infrastruktur || '-'}</h4>
                             <p class="text-[8px] text-slate-400 font-bold uppercase mb-3">Wilayah: ${point.kelurahan?.nama_kelurahan ?? '-'}</p>
                             
                             <div class="flex items-center gap-2 mb-3">
@@ -491,7 +504,7 @@
                         poly.bindPopup(`
                             <div class="px-2 py-0.5 text-center">
                                 <p class="text-[8px] font-black text-slate-500 uppercase tracking-[0.2em] mb-0.5">Kelurahan</p>
-                                <p class="text-[10px] font-black uppercase tracking-widest text-navy-900">${kel.nama_kelurahan}</p>
+                                <p class="text-[10px] font-black uppercase tracking-widest text-navy-900 dark:text-white">${kel.nama_kelurahan}</p>
                             </div>
                         `, { 
                             className: 'custom-polygon-popup', 

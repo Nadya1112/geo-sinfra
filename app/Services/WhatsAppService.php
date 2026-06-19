@@ -29,7 +29,7 @@ class WhatsAppService
         $link = route('tim_teknis.prioritas');
 
         $message = "🚨 *URGENT: PERINGATAN DARURAT INFRASTRUKTUR* 🚨\n\n";
-        $message .= "Yth. Bapak/Ibu Kepala Bidang,\n";
+        $message .= "Yth. Bapak/Ibu Tim Teknis,\n";
         $message .= "Sistem mendeteksi adanya laporan infrastruktur dengan tingkat kerusakan *SANGAT BERAT* yang membutuhkan perhatian segera.\n\n";
         $message .= "📋 *DETAIL LAPORAN:*\n";
         $message .= "▪️ *Nama Objek:* $namaObjek\n";
@@ -81,7 +81,7 @@ class WhatsAppService
         $link = route('tim_teknis.validasi');
 
         $message = "🔔 *PEMBERITAHUAN VALIDASI (ACC) SINFRA* 🔔\n\n";
-        $message .= "Yth. Bapak/Ibu Kepala Bidang,\n";
+        $message .= "Yth. Bapak/Ibu Tim Teknis,\n";
         $message .= "Terdapat laporan infrastruktur baru yang telah diverifikasi oleh Admin dan menunggu *Validasi (ACC)* dari Bapak/Ibu.\n\n";
         $message .= "📋 *DETAIL LAPORAN:*\n";
         $message .= "▪️ *Nama Objek:* $namaObjek\n";

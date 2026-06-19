@@ -242,7 +242,7 @@
             @csrf
             <button type="submit" class="flex items-center gap-3 px-4 py-3.5 text-red-400 hover:text-red-300 w-full text-left text-sm font-bold transition group rounded-xl hover:bg-red-500/10">
                 <i class="fas fa-sign-out-alt group-hover:-translate-x-1 transition-transform"></i> 
-                Keluar Sistem
+                Log Out
             </button>
         </form>
     </div>

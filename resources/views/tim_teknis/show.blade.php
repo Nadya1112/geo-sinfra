@@ -6,19 +6,32 @@
     <title>Detail Infrastruktur | GEO-SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
+            <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
                     colors: {
-                        navy: { 50: '#f0f4f8', 100: '#d9e2ec', 200: '#bcccdc', 300: '#9fb3c8', 400: '#829ab1', 500: '#627d98', 600: '#486581', 700: '#334e68', 800: '#243b53', 900: '#0f0e2c', 950: '#0a091d' },
-                        gold: { 50: '#fbf8f1', 100: '#f5ebd9', 200: '#eed9b9', 300: '#e5c292', 400: '#dba665', 500: '#c5a059', 600: '#b48135', 700: '#96652a', 800: '#7c5327', 900: '#644422', 950: '#382310' }
-                    },
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        navy: { 50:'#f4f4fa', 100:'#e9e9f3', 200:'#c7c8e3', 300:'#9fb3c8', 400:'#829ab1', 500:'#6366f1', 600:'#486581', 700:'#334e68', 800:'#1e1b4b', 900:'#0f0e2c', 950:'#070617' },
+                        gold: { 50:'#fdfbf7', 100:'#fbf7ed', 200:'#eed9b9', 300:'#e5c292', 400:'#dba665', 500:'#c5a059', 600:'#b38f4a', 700:'#9d7c3d', 800:'#7c5327', 900:'#644422', 950:'#382310' }
                     }
                 }
             }
+        }
+    </script>
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
         }
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -33,21 +46,21 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     </style>
 </head>
-<body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800 text-left">
+<body class="bg-slate-50 dark:bg-[#0f0e2c] flex h-screen overflow-hidden text-slate-800 dark:text-white text-left font-sans dark:bg-navy-950 transition-colors duration-300">
 
     @include('tim_teknis.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-y-auto custom-scrollbar">
         <!-- HEADER -->
-        <header class="bg-white border-b border-slate-100 px-8 py-5 flex justify-between items-center z-10 sticky top-0">
+        <header class="bg-white dark:bg-[#1e1b4b] border-b border-slate-100 dark:border-white/10 px-8 py-5 flex justify-between items-center z-10 sticky top-0">
             <div class="flex items-center gap-4">
-                <a href="{{ route('tim_teknis.validasi') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100">
+                <a href="{{ route('tim_teknis.validasi') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100 dark:border-white/10">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
                     <p class="text-[10px] font-extrabold text-gold-500 uppercase tracking-[0.2em] mb-1">Verifikasi Usulan</p>
                     <div class="flex items-center gap-4">
-                        <h2 class="text-xl font-black text-navy-900">Detail Infrastruktur</h2>
+                        <h2 class="text-xl font-black text-navy-900 dark:text-white">Detail Infrastruktur</h2>
                         <a href="{{ route('tim_teknis.infrastruktur.pdf', $infrastruktur->id_infrastruktur) }}" target="_blank" class="px-3 py-1.5 bg-rose-50 text-rose-600 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-rose-500 hover:text-white transition-colors border border-rose-100 flex items-center gap-2 shadow-sm">
                             <i class="fas fa-file-pdf"></i> Cetak PDF
                         </a>
@@ -57,13 +70,13 @@
 
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
                     <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
                     <div class="text-right">
-                        <p class="text-[11px] font-black text-navy-900 leading-none uppercase">{{ auth()->user()->name }}</p>
+                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase">{{ auth()->user()->name }}</p>
                         <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1 leading-none">ONLINE</p>
                     </div>
                     <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shadow-md group-hover:shadow-lg transition-all overflow-hidden">
@@ -88,7 +101,7 @@
                         $cleanPath = $infrastruktur->foto_terbaru ? str_replace('\\', '/', $infrastruktur->foto_terbaru) : null;
                         $fotoUrl   = $cleanPath ? asset('storage/' . (str_contains($cleanPath, 'infrastruktur/') ? $cleanPath : 'infrastruktur/' . $cleanPath)) : null;
                     @endphp
-                    <div class="bg-white rounded-[2.5rem] p-4 border border-slate-100 shadow-sm overflow-hidden">
+                    <div class="bg-white dark:bg-[#1e1b4b] rounded-[2.5rem] p-4 border border-slate-100 dark:border-white/10 shadow-sm overflow-hidden">
                         <div class="relative aspect-[3/4] w-full rounded-[2rem] overflow-hidden group bg-navy-950 flex items-center justify-center">
                             @if($fotoUrl)
                                 <img src="{{ $fotoUrl }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
@@ -96,7 +109,7 @@
                                     <p class="text-white text-[10px] font-bold uppercase tracking-widest">Foto Dokumentasi</p>
                                 </div>
                                 <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <a href="{{ $fotoUrl }}" target="_blank" class="bg-white text-navy-900 px-4 py-2 rounded-xl text-[9px] font-black shadow-xl uppercase tracking-widest hover:scale-105 transition-all flex items-center gap-2">
+                                    <a href="{{ $fotoUrl }}" target="_blank" class="bg-white dark:bg-[#1e1b4b] text-navy-900 dark:text-white px-4 py-2 rounded-xl text-[9px] font-black shadow-xl uppercase tracking-widest hover:scale-105 transition-all flex items-center gap-2">
                                         <i class="fas fa-expand"></i> Lihat Full
                                     </a>
                                 </div>
@@ -112,7 +125,7 @@
                     <!-- AI Analysis Panel -->
                     <!-- HYBRID AI RESULTS -->
                     <div class="bg-navy-900 rounded-[2.5rem] p-8 text-white shadow-xl relative overflow-hidden">
-                        <div class="absolute top-0 right-0 -mt-8 -mr-8 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
+                        <div class="absolute top-0 right-0 -mt-8 -mr-8 w-32 h-32 bg-white/5 dark:bg-[#1e1b4b]/5 rounded-full blur-2xl"></div>
                         <h4 class="text-[10px] font-black text-gold-300 uppercase tracking-[0.2em] mb-8 flex items-center gap-3">
                             <i class="fas fa-microchip"></i> Hybrid AI Analysis
                         </h4>
@@ -124,7 +137,7 @@
                                     <p class="text-[9px] font-black text-slate-300 uppercase tracking-widest">Vision (CNN)</p>
                                     <p class="text-xl font-black text-white">{{ $infrastruktur->cnn ? round($infrastruktur->cnn->skor_cnn * 100) : '0' }}%</p>
                                 </div>
-                                <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+                                <div class="w-full bg-white/10 dark:bg-[#1e1b4b]/10 h-1.5 rounded-full overflow-hidden">
                                     <div class="bg-gradient-to-r from-gold-500 to-gold-300 h-full" style="width: {{ $infrastruktur->cnn ? ($infrastruktur->cnn->skor_cnn * 100) : '0' }}%"></div>
                                 </div>
                                 <p class="text-[8px] font-bold text-slate-400 mt-2 italic text-right">{{ $infrastruktur->cnn->label_kondisi ?? 'Scanning visual...' }}</p>
@@ -136,7 +149,7 @@
                                     <p class="text-[9px] font-black text-slate-300 uppercase tracking-widest">Logic (DT)</p>
                                     <p class="text-xl font-black text-white">{{ $infrastruktur->analisis->skor_dt ?? '0' }}<span class="text-xs text-slate-400 ml-0.5">/100</span></p>
                                 </div>
-                                <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+                                <div class="w-full bg-white/10 dark:bg-[#1e1b4b]/10 h-1.5 rounded-full overflow-hidden">
                                     <div class="bg-gradient-to-r from-[#059669] to-emerald-400 h-full" style="width: {{ $infrastruktur->analisis->skor_dt ?? '0' }}%"></div>
                                 </div>
                                 <p class="text-[8px] font-bold {{ ($infrastruktur->analisis->label_prioritas ?? '') == 'Rusak Berat' ? 'text-rose-400' : 'text-[#059669]' }} mt-2 italic text-right">
@@ -147,7 +160,7 @@
                             <div class="pt-6 border-t border-white/10">
                                 <div class="flex items-center justify-between mb-4">
                                     <p class="text-[9px] font-black text-slate-300 uppercase tracking-widest">Verification</p>
-                                    <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[8px] font-black uppercase tracking-widest {{ $infrastruktur->status_verifikasi == 'Verified' ? 'text-[#059669]' : 'text-amber-400' }}">
+                                    <span class="px-3 py-1 bg-white/5 dark:bg-[#1e1b4b]/5 border border-white/10 rounded-lg text-[8px] font-black uppercase tracking-widest {{ $infrastruktur->status_verifikasi == 'Verified' ? 'text-[#059669]' : 'text-amber-400' }}">
                                         {{ $infrastruktur->status_verifikasi ?? 'Pending' }}
                                     </span>
                                 </div>
@@ -157,7 +170,7 @@
 
                     <!-- Aksi Verifikasi -->
                     @if($infrastruktur->status_verifikasi == 'Pending')
-                    <div class="bg-white rounded-[2.5rem] p-6 border border-slate-100 shadow-sm">
+                    <div class="bg-white dark:bg-[#1e1b4b] rounded-[2.5rem] p-6 border border-slate-100 dark:border-white/10 shadow-sm">
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Tindakan Verifikasi</p>
                         <div class="flex flex-col gap-3">
                             <form action="{{ route('tim_teknis.validasi.proses', $infrastruktur->id_infrastruktur) }}" method="POST">
@@ -170,23 +183,23 @@
                             <form action="{{ route('tim_teknis.validasi.proses', $infrastruktur->id_infrastruktur) }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="status" value="Rejected">
-                                <button type="submit" class="w-full flex items-center justify-center gap-2 py-3 bg-white border border-rose-200 text-rose-500 rounded-2xl hover:bg-rose-50 hover:border-rose-300 transition-all font-black text-[11px] uppercase tracking-widest">
+                                <button type="submit" class="w-full flex items-center justify-center gap-2 py-3 bg-white dark:bg-[#1e1b4b] border border-rose-200 text-rose-500 rounded-2xl hover:bg-rose-50 hover:border-rose-300 transition-all font-black text-[11px] uppercase tracking-widest">
                                     <i class="fas fa-times"></i> Tolak Usulan
                                 </button>
                             </form>
                         </div>
                     </div>
                     @elseif($infrastruktur->status_validasi == 'Validated')
-                    <div class="bg-white rounded-[2.5rem] p-6 border border-slate-100 shadow-sm relative overflow-hidden">
+                    <div class="bg-white dark:bg-[#1e1b4b] rounded-[2.5rem] p-6 border border-slate-100 dark:border-white/10 shadow-sm relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-bl-full"></div>
-                        <h4 class="text-[10px] font-black text-navy-900 uppercase tracking-widest mb-4 flex items-center gap-2">
+                        <h4 class="text-[10px] font-black text-navy-900 dark:text-white uppercase tracking-widest mb-4 flex items-center gap-2">
                             <i class="fas fa-tasks text-blue-500"></i> Status Pengerjaan (Tindak Lanjut)
                         </h4>
                         
                         <form action="{{ route('tim_teknis.perbaikan.update', $infrastruktur->id_infrastruktur) }}" method="POST">
                             @csrf
                             <div class="space-y-3">
-                                <label class="flex items-center justify-between p-3 rounded-2xl border cursor-pointer transition-all {{ $infrastruktur->status_perbaikan == 'Menunggu' ? 'border-amber-500 bg-amber-50' : 'border-slate-200 hover:bg-slate-50' }}">
+                                <label class="flex items-center justify-between p-3 rounded-2xl border cursor-pointer transition-all {{ $infrastruktur->status_perbaikan == 'Menunggu' ? 'border-amber-500 bg-amber-50' : 'border-slate-200 dark:border-white/20 hover:bg-slate-50 dark:bg-[#0f0e2c]' }}">
                                     <div class="flex items-center gap-3">
                                         <div class="w-8 h-8 rounded-xl {{ $infrastruktur->status_perbaikan == 'Menunggu' ? 'bg-amber-500 text-white' : 'bg-slate-100 text-slate-400' }} flex items-center justify-center text-xs shadow-sm">
                                             <i class="fas fa-clock"></i>
@@ -199,7 +212,7 @@
                                     <input type="radio" name="status_perbaikan" value="Menunggu" class="w-4 h-4 text-amber-500 border-slate-300 focus:ring-amber-500" {{ $infrastruktur->status_perbaikan == 'Menunggu' ? 'checked' : '' }} onchange="this.form.submit()">
                                 </label>
 
-                                <label class="flex items-center justify-between p-3 rounded-2xl border cursor-pointer transition-all {{ $infrastruktur->status_perbaikan == 'Proses Perbaikan' ? 'border-blue-500 bg-blue-50' : 'border-slate-200 hover:bg-slate-50' }}">
+                                <label class="flex items-center justify-between p-3 rounded-2xl border cursor-pointer transition-all {{ $infrastruktur->status_perbaikan == 'Proses Perbaikan' ? 'border-blue-500 bg-blue-50' : 'border-slate-200 dark:border-white/20 hover:bg-slate-50 dark:bg-[#0f0e2c]' }}">
                                     <div class="flex items-center gap-3">
                                         <div class="w-8 h-8 rounded-xl {{ $infrastruktur->status_perbaikan == 'Proses Perbaikan' ? 'bg-blue-500 text-white' : 'bg-slate-100 text-slate-400' }} flex items-center justify-center text-xs shadow-sm">
                                             <i class="fas fa-tools"></i>
@@ -212,7 +225,7 @@
                                     <input type="radio" name="status_perbaikan" value="Proses Perbaikan" class="w-4 h-4 text-blue-500 border-slate-300 focus:ring-blue-500" {{ $infrastruktur->status_perbaikan == 'Proses Perbaikan' ? 'checked' : '' }} onchange="this.form.submit()">
                                 </label>
 
-                                <label class="flex items-center justify-between p-3 rounded-2xl border cursor-pointer transition-all {{ $infrastruktur->status_perbaikan == 'Selesai' ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200 hover:bg-slate-50' }}">
+                                <label class="flex items-center justify-between p-3 rounded-2xl border cursor-pointer transition-all {{ $infrastruktur->status_perbaikan == 'Selesai' ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20' : 'border-slate-200 dark:border-white/20 hover:bg-slate-50 dark:bg-[#0f0e2c]' }}">
                                     <div class="flex items-center gap-3">
                                         <div class="w-8 h-8 rounded-xl {{ $infrastruktur->status_perbaikan == 'Selesai' ? 'bg-emerald-500 text-white' : 'bg-slate-100 text-slate-400' }} flex items-center justify-center text-xs shadow-sm">
                                             <i class="fas fa-check-double"></i>
@@ -235,7 +248,7 @@
                         <h4 class="text-[10px] font-black text-amber-900 uppercase tracking-widest mb-3 flex items-center gap-2">
                             <i class="fas fa-comment-dots text-amber-500"></i> Catatan Eksekutif (Tim Teknis)
                         </h4>
-                        <div class="p-4 bg-white/60 rounded-2xl border border-amber-200/50">
+                        <div class="p-4 bg-white/60 dark:bg-[#1e1b4b]/60 rounded-2xl border border-amber-200/50">
                             <p class="text-xs font-bold text-slate-600 leading-relaxed">{{ $infrastruktur->alasan_penolakan }}</p>
                         </div>
                     </div>
@@ -244,15 +257,15 @@
 
                 <!-- Kolom Kanan: Info & Peta -->
                 <div class="lg:col-span-2 space-y-6">
-                    <div class="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm">
+                    <div class="bg-white dark:bg-[#1e1b4b] rounded-[2.5rem] p-8 border border-slate-100 dark:border-white/10 shadow-sm">
                         <div class="flex justify-between items-start mb-8">
                             <div>
                                 <p class="text-[10px] font-black text-gold-500 uppercase tracking-widest mb-1">{{ ucfirst($infrastruktur->jenis) }}</p>
-                                <h3 class="text-2xl font-black text-navy-900">{{ $infrastruktur->nama_infrastruktur }}</h3>
+                                <h3 class="text-2xl font-black text-navy-900 dark:text-white">{{ $infrastruktur->nama_infrastruktur }}</h3>
                             </div>
                             <div class="text-right">
                                 <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Diinput Pada</p>
-                                <p class="text-xs font-black text-navy-900">{{ $infrastruktur->created_at->translatedFormat('d F Y, H:i') }} WITA</p>
+                                <p class="text-xs font-black text-navy-900 dark:text-white">{{ $infrastruktur->created_at->translatedFormat('d F Y, H:i') }} WITA</p>
                             </div>
                         </div>
 
@@ -264,7 +277,7 @@
                                     </div>
                                     <div>
                                         <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Kecamatan</p>
-                                        <p class="text-sm font-bold text-navy-900">{{ $infrastruktur->kelurahan->kecamatan->nama_kecamatan ?? '-' }}</p>
+                                        <p class="text-sm font-bold text-navy-900 dark:text-white">{{ $infrastruktur->kelurahan->kecamatan->nama_kecamatan ?? '-' }}</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start gap-4">
@@ -273,7 +286,7 @@
                                     </div>
                                     <div>
                                         <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Kelurahan</p>
-                                        <p class="text-sm font-bold text-navy-900">{{ $infrastruktur->kelurahan->nama_kelurahan ?? '-' }}</p>
+                                        <p class="text-sm font-bold text-navy-900 dark:text-white">{{ $infrastruktur->kelurahan->nama_kelurahan ?? '-' }}</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start gap-4">
@@ -282,7 +295,7 @@
                                     </div>
                                     <div>
                                         <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Surveyor</p>
-                                        <p class="text-sm font-bold text-navy-900">{{ $infrastruktur->user->name ?? '-' }}</p>
+                                        <p class="text-sm font-bold text-navy-900 dark:text-white">{{ $infrastruktur->user->name ?? '-' }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -293,7 +306,7 @@
                                     </div>
                                     <div>
                                         <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Koordinat</p>
-                                        <p class="text-xs font-bold text-navy-900">{{ $infrastruktur->latitude }}, {{ $infrastruktur->longitude }}</p>
+                                        <p class="text-xs font-bold text-navy-900 dark:text-white">{{ $infrastruktur->latitude }}, {{ $infrastruktur->longitude }}</p>
                                     </div>
                                 </div>
 
@@ -301,17 +314,17 @@
                         </div>
 
                         <!-- Detail Teknis -->
-                        <div class="border-t border-slate-100 pt-6 mb-8 mt-2">
+                        <div class="border-t border-slate-100 dark:border-white/10 pt-6 mb-8 mt-2">
                             <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Informasi Fisik Lapangan</p>
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-5">
                                 <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-center">
                                     <p class="text-[9px] font-black text-slate-400 uppercase tracking-wider mb-1">Panjang</p>
-                                    <p class="text-xl font-black text-navy-900">{{ number_format($infrastruktur->panjang ?? 0, 1) }}</p>
+                                    <p class="text-xl font-black text-navy-900 dark:text-white">{{ number_format($infrastruktur->panjang ?? 0, 1) }}</p>
                                     <p class="text-[8px] text-slate-400 font-bold">meter</p>
                                 </div>
                                 <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-center">
                                     <p class="text-[9px] font-black text-slate-400 uppercase tracking-wider mb-1">Lebar</p>
-                                    <p class="text-xl font-black text-navy-900">{{ number_format($infrastruktur->lebar ?? 0, 1) }}</p>
+                                    <p class="text-xl font-black text-navy-900 dark:text-white">{{ number_format($infrastruktur->lebar ?? 0, 1) }}</p>
                                     <p class="text-[8px] text-slate-400 font-bold">meter</p>
                                 </div>
                                 <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-center">
@@ -348,7 +361,7 @@
                         </div>
 
                         <!-- Mini Map -->
-                        <div class="relative rounded-[2rem] border border-slate-100 shadow-inner overflow-hidden">
+                        <div class="relative rounded-[2rem] border border-slate-100 dark:border-white/10 shadow-inner overflow-hidden">
                             <div id="map" class="h-[280px] w-full z-0"></div>
                         </div>
                     </div>

@@ -228,11 +228,9 @@
                 <div class="kontak">Telp: (0511) 3365592 &nbsp;|&nbsp; Email: ampihkumuh@gmail.com</div>
             </div>
 
-            {{-- Logo GEO-SINFRA (kanan) --}}
+            {{-- Spacer (kanan) --}}
             <div class="kop-logo-kanan">
-                @if($logoKananB64)
-                    <img src="{{ $logoKananB64 }}" alt="GEO-SINFRA">
-                @endif
+                {{-- Logo GEO-SINFRA dihapus sesuai permintaan --}}
             </div>
         </div>
         <div class="garis-bawah-kop"></div>

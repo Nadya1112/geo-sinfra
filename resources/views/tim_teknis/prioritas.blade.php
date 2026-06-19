@@ -6,19 +6,32 @@
     <title>Prioritas Penanganan | GEO-SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
+            <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
                     colors: {
-                        navy: { 50: '#f0f4f8', 100: '#d9e2ec', 200: '#bcccdc', 300: '#9fb3c8', 400: '#829ab1', 500: '#627d98', 600: '#486581', 700: '#334e68', 800: '#243b53', 900: '#0f0e2c', 950: '#0a091d' },
-                        gold: { 50: '#fbf8f1', 100: '#f5ebd9', 200: '#eed9b9', 300: '#e5c292', 400: '#dba665', 500: '#c5a059', 600: '#b48135', 700: '#96652a', 800: '#7c5327', 900: '#644422', 950: '#382310' }
-                    },
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        navy: { 50:'#f4f4fa', 100:'#e9e9f3', 200:'#c7c8e3', 300:'#9fb3c8', 400:'#829ab1', 500:'#6366f1', 600:'#486581', 700:'#334e68', 800:'#1e1b4b', 900:'#0f0e2c', 950:'#070617' },
+                        gold: { 50:'#fdfbf7', 100:'#fbf7ed', 200:'#eed9b9', 300:'#e5c292', 400:'#dba665', 500:'#c5a059', 600:'#b38f4a', 700:'#9d7c3d', 800:'#7c5327', 900:'#644422', 950:'#382310' }
                     }
                 }
             }
+        }
+    </script>
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
         }
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -30,31 +43,31 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     </style>
 </head>
-<body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800 text-left">
+<body class="bg-slate-50 dark:bg-[#0f0e2c] flex h-screen overflow-hidden text-slate-800 dark:text-white text-left font-sans dark:bg-navy-950 transition-colors duration-300">
 
     @include('tim_teknis.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden">
-        <header class="bg-white border-b border-slate-100 px-8 py-5 flex justify-between items-center z-10 sticky top-0">
+        <header class="bg-white dark:bg-[#1e1b4b] border-b border-slate-100 dark:border-white/10 px-8 py-5 flex justify-between items-center z-10 sticky top-0">
             <div class="flex items-center gap-4">
-                <a href="{{ route('tim_teknis.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100">
+                <a href="{{ route('tim_teknis.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100 dark:border-white/10">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
                     <p class="text-[10px] font-extrabold text-gold-500 uppercase tracking-[0.2em] mb-1">Decision Support</p>
-                    <h2 class="text-xl font-black text-navy-900">Rekomendasi Prioritas</h2>
+                    <h2 class="text-xl font-black text-navy-900 dark:text-white">Rekomendasi Prioritas</h2>
                 </div>
             </div>
             
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
                     <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <a href="{{ route('tim_teknis.profile') }}" class="flex items-center gap-3 group">
                     <div class="text-right">
-                        <p class="text-[11px] font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-colors">{{ auth()->user()->name }}</p>
+                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-colors">{{ auth()->user()->name }}</p>
                         <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
                     </div>
                     <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shadow-md group-hover:shadow-lg transition-all overflow-hidden">
@@ -72,11 +85,11 @@
             
             <!-- Header Banner -->
             <div class="flex items-center gap-5 bg-rose-50 border border-rose-100 rounded-[2rem] p-8 shadow-sm">
-                <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-rose-500 shadow-sm border border-rose-100 shrink-0">
+                <div class="w-16 h-16 bg-white dark:bg-[#1e1b4b] rounded-2xl flex items-center justify-center text-rose-500 shadow-sm border border-rose-100 shrink-0">
                     <i class="fas fa-exclamation-triangle text-3xl animate-pulse"></i>
                 </div>
                 <div>
-                    <h2 class="text-2xl font-black text-navy-900 leading-none mb-2">Rekomendasi Prioritas Penanganan</h2>
+                    <h2 class="text-2xl font-black text-navy-900 dark:text-white leading-none mb-2">Rekomendasi Prioritas Penanganan</h2>
                     <p class="text-sm font-bold text-slate-500">Daftar infrastruktur dengan tingkat kerusakan <span class="text-rose-500 font-black uppercase tracking-widest px-2 py-0.5 bg-rose-100 rounded-md text-xs">Sangat Berat</span> yang dianalisis oleh AI. Membutuhkan alokasi anggaran dan perbaikan segera.</p>
                 </div>
             </div>
@@ -85,7 +98,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 pb-10">
                 @forelse($prioritas as $index => $item)
                     <!-- Card Item -->
-                    <div class="bg-white rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden hover:shadow-2xl transition-all duration-300 group relative">
+                    <div class="bg-white dark:bg-[#1e1b4b] rounded-[2rem] border border-slate-100 dark:border-white/10 shadow-sm overflow-hidden hover:shadow-2xl transition-all duration-300 group relative">
                         <!-- Ranking Badge -->
                         <div class="absolute top-4 right-4 z-10 w-10 h-10 bg-rose-500 text-white rounded-xl flex items-center justify-center font-black text-lg shadow-lg shadow-rose-500/30">
                             #{{ $index + 1 }}
@@ -103,7 +116,7 @@
                             <div class="absolute inset-0 bg-gradient-to-t from-navy-900 via-navy-900/40 to-transparent"></div>
                             
                             <div class="absolute bottom-5 left-5 right-5">
-                                <span class="px-2.5 py-1 bg-white/20 backdrop-blur-md roun border border-white/20 text-[9px] font-black uppercase tracking-widest text-white mb-2 inline-block">
+                                <span class="px-2.5 py-1 bg-white/20 dark:bg-[#1e1b4b]/20 backdrop-blur-md roun border border-white/20 text-[9px] font-black uppercase tracking-widest text-white mb-2 inline-block">
                                     {{ ucfirst($item->jenis) ?? 'Infrastruktur' }}
                                 </span>
                                 <h3 class="text-xl font-black text-white leading-tight line-clamp-2">{{ $item->nama_objek ?? $item->nama_infrastruktur ?? 'Tanpa Nama' }}</h3>
@@ -113,12 +126,12 @@
                         <!-- Content Section -->
                         <div class="p-6">
                             <div class="flex items-start gap-3 mb-5 border-b border-slate-50 pb-5">
-                                <div class="w-10 h-10 rounded-xl bg-slate-50 text-slate-400 flex items-center justify-center shrink-0 border border-slate-100">
+                                <div class="w-10 h-10 rounded-xl bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 flex items-center justify-center shrink-0 border border-slate-100 dark:border-white/10">
                                     <i class="fas fa-map-marker-alt"></i>
                                 </div>
                                 <div>
                                     <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Lokasi Detail</p>
-                                    <p class="text-sm font-bold text-navy-900 leading-tight">
+                                    <p class="text-sm font-bold text-navy-900 dark:text-white leading-tight">
                                         {{ $item->kelurahan->nama_kelurahan ?? '-' }}, {{ $item->kelurahan->kecamatan->nama_kecamatan ?? '-' }}
                                     </p>
                                 </div>
@@ -136,7 +149,7 @@
                                 </div>
                                 <div>
                                     <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Surveyor</p>
-                                    <div class="flex items-center gap-2 px-3 py-2 bg-slate-50 border border-slate-100 rounded-xl">
+                                    <div class="flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl">
                                         <i class="fas fa-user-circle text-slate-400"></i>
                                         <span class="text-[10px] font-black text-slate-600 uppercase tracking-widest truncate w-full">
                                             {{ $item->user->name ?? 'Sistem' }}
@@ -151,11 +164,11 @@
                         </div>
                     </div>
                 @empty
-                    <div class="col-span-full py-24 flex flex-col items-center justify-center border-2 border-dashed border-emerald-200 rounded-[3rem] bg-emerald-50/50">
-                        <div class="w-24 h-24 bg-white rounded-full shadow-sm flex items-center justify-center mb-6">
+                    <div class="col-span-full py-24 flex flex-col items-center justify-center border-2 border-dashed border-emerald-200 rounded-[3rem] bg-emerald-50/50 dark:bg-[#0f0e2c]">
+                        <div class="w-24 h-24 bg-white dark:bg-[#1e1b4b] rounded-full shadow-sm flex items-center justify-center mb-6">
                             <i class="fas fa-shield-alt text-5xl text-emerald-400"></i>
                         </div>
-                        <h3 class="text-2xl font-black text-navy-900 mb-2">Semua Aman Terkendali!</h3>
+                        <h3 class="text-2xl font-black text-navy-900 dark:text-white mb-2">Semua Aman Terkendali!</h3>
                         <p class="text-slate-500 font-bold text-center max-w-md">Luar biasa! Saat ini tidak ada infrastruktur dengan kondisi rusak berat yang mendesak untuk ditangani.</p>
                     </div>
                 @endforelse

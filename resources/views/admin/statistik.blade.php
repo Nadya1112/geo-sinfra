@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -119,8 +119,8 @@
                         <span class="text-[8px] font-black text-navy-800 bg-navy-50 border border-navy-100 px-2 py-1 rounded-lg uppercase tracking-wider">User</span>
                     </div>
                     <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Surveyor & Tim Teknis</p>
-                    <h3 class="text-3xl font-black text-navy-900">{{ $jumlahSurveyor + $jumlahTim Teknis }}</h3>
-                    <p class="text-[9px] text-slate-400 font-semibold mt-1">{{ $jumlahSurveyor }} surveyor · {{ $jumlahTim Teknis }} tim_teknis</p>
+                    <h3 class="text-3xl font-black text-navy-900">{{ $jumlahSurveyor + $jumlahTimTeknis }}</h3>
+                    <p class="text-[9px] text-slate-400 font-semibold mt-1">{{ $jumlahSurveyor }} surveyor · {{ $jumlahTimTeknis }} tim_teknis</p>
                 </div>
 
                 {{-- Wilayah --}}

@@ -64,7 +64,7 @@
                 <div class="alamat">Jl. R.E. Martadinata No. 1 Blok B Lt. 2, Kec. Banjarmasin Tengah, Kota Banjarmasin, Kalimantan Selatan 70111</div>
                 <div class="kontak">Telp: (0511) 3365592 &nbsp;|&nbsp; Email: ampihkumuh@gmail.com</div>
             </div>
-            <div class="kop-logo-kanan">@if($logoKananB64)<img src="{{ $logoKananB64 }}" alt="GEO-SINFRA">@endif</div>
+            <div class="kop-logo-kanan"></div>
         </div>
         <div class="garis-bawah-kop"></div>
     </div>

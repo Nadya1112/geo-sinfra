@@ -27,7 +27,7 @@
             <h1>🚨 Peringatan Darurat Infrastruktur</h1>
         </div>
         <div class="content">
-            <p>Yth. Bapak/Ibu Kepala Bidang,</p>
+            <p>Yth. Bapak/Ibu Tim Teknis,</p>
             <p>Sistem <strong>GEO-SINFRA</strong> dan Analisis AI mendeteksi adanya laporan infrastruktur baru dengan tingkat kerusakan <strong>SANGAT BERAT / KRITIS</strong> yang membutuhkan perhatian segera.</p>
             
             <div class="details">

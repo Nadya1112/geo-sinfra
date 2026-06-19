@@ -5,19 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cetak Laporan & Rekapitulasi | Tim Teknis SINFRA</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
+        <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
                     colors: {
-                        navy: { 50: '#f0f4f8', 100: '#d9e2ec', 200: '#bcccdc', 300: '#9fb3c8', 400: '#829ab1', 500: '#627d98', 600: '#486581', 700: '#334e68', 800: '#243b53', 900: '#0f0e2c', 950: '#0a091d' },
-                        gold: { 50: '#fbf8f1', 100: '#f5ebd9', 200: '#eed9b9', 300: '#e5c292', 400: '#dba665', 500: '#c5a059', 600: '#b48135', 700: '#96652a', 800: '#7c5327', 900: '#644422', 950: '#382310' }
-                    },
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        navy: { 50:'#f4f4fa', 100:'#e9e9f3', 200:'#c7c8e3', 300:'#9fb3c8', 400:'#829ab1', 500:'#6366f1', 600:'#486581', 700:'#334e68', 800:'#1e1b4b', 900:'#0f0e2c', 950:'#070617' },
+                        gold: { 50:'#fdfbf7', 100:'#fbf7ed', 200:'#eed9b9', 300:'#e5c292', 400:'#dba665', 500:'#c5a059', 600:'#b38f4a', 700:'#9d7c3d', 800:'#7c5327', 900:'#644422', 950:'#382310' }
                     }
                 }
             }
+        }
+    </script>
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
         }
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -36,7 +42,7 @@
             main { width: 100%; margin: 0; padding: 0; height: auto !important; overflow: visible !important; display: block !important; }
             
             /* Table Formatting for Formal Document */
-            .bg-white { background: transparent !important; box-shadow: none !important; border: none !important; }
+            .print-no-style { background: transparent !important; box-shadow: none !important; border: none !important; border-radius: 0 !important; }
             .rounded-\[2rem\] { border-radius: 0 !important; }
             table { border-collapse: collapse !important; width: 100% !important; border: 1px solid black !important; table-layout: fixed !important; }
             th, td { border: 1px solid black !important; padding: 8px !important; color: black !important; font-size: 11pt !important; word-wrap: break-word !important; }
@@ -48,7 +54,7 @@
             .mt-6 { margin-top: 15px !important; }
             .ttd-box {
                 display: block !important;
-                margin-top: 40px;
+                margin-top: 15px;
                 text-align: right;
                 font-family: 'Times New Roman', Times, serif;
                 font-size: 11pt;
@@ -58,6 +64,7 @@
                 display: inline-block;
                 text-align: center;
                 width: 260px;
+                line-height: 1.5;
             }
         }
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
@@ -65,31 +72,31 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     </style>
 </head>
-<body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800 text-left">
+<body class="bg-slate-50 dark:bg-[#0f0e2c] flex h-screen overflow-hidden text-slate-800 dark:text-white text-left font-sans dark:bg-navy-950 transition-colors duration-300">
 
     @include('tim_teknis.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden">
-        <header class="bg-white border-b border-slate-100 px-8 py-5 flex justify-between items-center z-10 no-print sticky top-0">
+        <header class="bg-white dark:bg-[#1e1b4b] border-b border-slate-100 dark:border-white/10 px-8 py-5 flex justify-between items-center z-10 no-print sticky top-0">
             <div class="flex items-center gap-4">
-                <a href="{{ route('tim_teknis.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100">
+                <a href="{{ route('tim_teknis.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100 dark:border-white/10">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
                     <p class="text-[10px] font-extrabold text-gold-500 uppercase tracking-[0.2em] mb-1">Reporting Center</p>
-                    <h2 class="text-xl font-black text-navy-900">Laporan & Rekapitulasi</h2>
+                    <h2 class="text-xl font-black text-navy-900 dark:text-white">Laporan & Rekapitulasi</h2>
                 </div>
             </div>
             
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
                     <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <a href="{{ route('tim_teknis.profile') }}" class="flex items-center gap-3 group">
                     <div class="text-right">
-                        <p class="text-[11px] font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-colors">{{ auth()->user()->name }}</p>
+                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-colors">{{ auth()->user()->name }}</p>
                         <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
                     </div>
                     <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shadow-md group-hover:shadow-lg transition-all overflow-hidden">
@@ -111,7 +118,7 @@
                     <i class="fas fa-layer-group absolute -right-4 -bottom-4 text-7xl text-white opacity-10"></i>
                     <div class="relative z-10 flex flex-col justify-between h-full">
                         <div class="flex items-center gap-3 mb-6">
-                            <div class="w-10 h-10 rounded-[0.8rem] bg-white/20 backdrop-blur-sm flex items-center justify-center text-white border border-white/10 shadow-inner">
+                            <div class="w-10 h-10 rounded-[0.8rem] bg-white/20 dark:bg-[#1e1b4b]/20 backdrop-blur-sm flex items-center justify-center text-white border border-white/10 shadow-inner">
                                 <i class="fas fa-layer-group text-sm"></i>
                             </div>
                             <p class="text-[10px] font-black text-white uppercase tracking-widest mt-1">Total Laporan</p>
@@ -128,7 +135,7 @@
                     <i class="fas fa-check-double absolute -right-4 -bottom-4 text-7xl text-white opacity-10"></i>
                     <div class="relative z-10 flex flex-col justify-between h-full">
                         <div class="flex items-center gap-3 mb-6">
-                            <div class="w-10 h-10 rounded-[0.8rem] bg-white/20 backdrop-blur-sm flex items-center justify-center text-white border border-white/10 shadow-inner">
+                            <div class="w-10 h-10 rounded-[0.8rem] bg-white/20 dark:bg-[#1e1b4b]/20 backdrop-blur-sm flex items-center justify-center text-white border border-white/10 shadow-inner">
                                 <i class="fas fa-check text-sm"></i>
                             </div>
                             <p class="text-[10px] font-black text-white uppercase tracking-widest mt-1">Kondisi Baik</p>
@@ -145,7 +152,7 @@
                     <i class="fas fa-exclamation-triangle absolute -right-4 -bottom-4 text-7xl text-white opacity-10"></i>
                     <div class="relative z-10 flex flex-col justify-between h-full">
                         <div class="flex items-center gap-3 mb-6">
-                            <div class="w-10 h-10 rounded-[0.8rem] bg-white/20 backdrop-blur-sm flex items-center justify-center text-white border border-white/10 shadow-inner">
+                            <div class="w-10 h-10 rounded-[0.8rem] bg-white/20 dark:bg-[#1e1b4b]/20 backdrop-blur-sm flex items-center justify-center text-white border border-white/10 shadow-inner">
                                 <i class="fas fa-exclamation text-sm"></i>
                             </div>
                             <p class="text-[10px] font-black text-white uppercase tracking-widest mt-1">Kondisi Sedang</p>
@@ -162,7 +169,7 @@
                     <i class="fas fa-times-circle absolute -right-4 -bottom-4 text-7xl text-white opacity-10"></i>
                     <div class="relative z-10 flex flex-col justify-between h-full">
                         <div class="flex items-center gap-3 mb-6">
-                            <div class="w-10 h-10 rounded-[0.8rem] bg-white/20 backdrop-blur-sm flex items-center justify-center text-white border border-white/10 shadow-inner">
+                            <div class="w-10 h-10 rounded-[0.8rem] bg-white/20 dark:bg-[#1e1b4b]/20 backdrop-blur-sm flex items-center justify-center text-white border border-white/10 shadow-inner">
                                 <i class="fas fa-times text-sm"></i>
                             </div>
                             <p class="text-[10px] font-black text-white uppercase tracking-widest mt-1">Kondisi Berat</p>
@@ -176,18 +183,18 @@
             </div>
 
             <!-- Filter Section (No Print) -->
-            <div class="bg-white rounded-[2rem] p-8 border border-slate-100 shadow-sm mb-8 no-print">
+            <div class="bg-white dark:bg-[#1e1b4b] rounded-[2rem] p-8 border border-slate-100 dark:border-white/10 shadow-sm mb-8 no-print">
                 <form action="{{ route('tim_teknis.laporan') }}" method="GET" class="flex flex-col gap-6">
                     <input type="hidden" name="show" value="{{ request('show') }}">
                     
                     <div class="flex flex-wrap md:flex-nowrap gap-6 items-end">
                         <div class="w-full md:flex-1">
                             <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Cari Nama</label>
-                            <input type="text" name="search" value="{{ request('search') }}" placeholder="Ketik infrastruktur..." class="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                            <input type="text" name="search" value="{{ request('search') }}" placeholder="Ketik infrastruktur..." class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
                         </div>
                         <div class="w-full md:flex-1">
                             <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Wilayah</label>
-                            <select name="kecamatan" class="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                            <select name="kecamatan" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
                                 <option value="">Semua Kecamatan</option>
                                 @foreach($kecamatan as $kec)
                                     <option value="{{ $kec->id_kecamatan }}" {{ request('kecamatan') == $kec->id_kecamatan ? 'selected' : '' }}>
@@ -198,7 +205,7 @@
                         </div>
                         <div class="w-full md:flex-1">
                             <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Kondisi</label>
-                            <select name="kondisi" class="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                            <select name="kondisi" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
                                 <option value="">Semua Kondisi</option>
                                 <option value="Baik" {{ request('kondisi') == 'Baik' ? 'selected' : '' }}>Baik</option>
                                 <option value="Rusak Sedang" {{ request('kondisi') == 'Rusak Sedang' ? 'selected' : '' }}>Rusak Sedang</option>
@@ -207,7 +214,7 @@
                         </div>
                         <div class="w-full md:flex-1">
                             <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Infrastruktur</label>
-                            <select name="jenis" class="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                            <select name="jenis" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
                                 <option value="">Semua Infrastruktur</option>
                                 <option value="Jalan" {{ request('jenis') == 'Jalan' ? 'selected' : '' }}>Jalan</option>
                                 <option value="Titian" {{ request('jenis') == 'Titian' ? 'selected' : '' }}>Titian</option>
@@ -219,17 +226,17 @@
                     <div class="flex flex-wrap md:flex-nowrap gap-6 items-end">
                         <div class="w-full md:flex-1">
                             <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Mulai Tanggal</label>
-                            <input type="date" name="start_date" value="{{ request('start_date') }}" class="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                            <input type="date" name="start_date" value="{{ request('start_date') }}" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
                         </div>
                         <div class="w-full md:flex-1">
                             <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Sampai Tanggal</label>
-                            <input type="date" name="end_date" value="{{ request('end_date') }}" class="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                            <input type="date" name="end_date" value="{{ request('end_date') }}" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
                         </div>
                         <div class="w-full md:flex-1 flex gap-2 justify-end">
                             <button type="submit" class="px-6 py-2.5 bg-navy-900 text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-gold-500 transition-all shadow-lg shadow-navy-900/10">
                                 Filter Data
                             </button>
-                            <a href="{{ route('tim_teknis.laporan') }}" class="px-4 py-2.5 bg-slate-50 text-slate-400 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-100 hover:text-slate-600 transition-all flex items-center border border-slate-100 shadow-sm" title="Reset Filter">
+                            <a href="{{ route('tim_teknis.laporan') }}" class="px-4 py-2.5 bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-100 hover:text-slate-600 transition-all flex items-center border border-slate-100 dark:border-white/10 shadow-sm" title="Reset Filter">
                                 <i class="fas fa-sync-alt"></i>
                             </a>
                         </div>
@@ -259,15 +266,16 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden mt-6">
+            <!-- TABLE SECTION -->
+            <div class="print-no-style bg-white dark:bg-[#1e1b4b] rounded-[2rem] border border-slate-100 dark:border-white/10 shadow-sm overflow-hidden mt-6">
                 <!-- Header with Tampilan Dropdown -->
-                <div class="px-8 py-6 border-b border-slate-50 flex justify-between items-center bg-slate-50/30 no-print">
+                <div class="px-8 py-6 border-b border-slate-50 flex justify-between items-center bg-slate-50 dark:bg-[#0f0e2c]/30 no-print">
                     <div>
-                        <h3 class="text-sm font-black text-navy-900 uppercase tracking-widest">Data Laporan</h3>
+                        <h3 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-widest">Data Laporan</h3>
                         <p class="text-[9px] text-slate-400 font-bold uppercase mt-1">Hasil filter rekapitulasi data</p>
                     </div>
                     <div class="flex items-center gap-4">
-                        <div class="flex items-center gap-2 mr-2 border-r border-slate-200 pr-4">
+                        <div class="flex items-center gap-2 mr-2 border-r border-slate-200 dark:border-white/20 pr-4">
                             <button onclick="printAllData()" class="no-print px-4 py-2 bg-rose-50 text-rose-600 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-rose-100 hover:scale-[1.02] transition-all flex items-center gap-2 border border-rose-100 shadow-sm">
                                 <i class="fas fa-file-pdf"></i> Cetak PDF
                             </button>
@@ -286,7 +294,7 @@
                                 @endif
                             @endforeach
                             <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Tampilan:</label>
-                            <select name="show" onchange="this.form.submit()" class="text-xs font-bold text-navy-900 bg-white border border-slate-200 rounded-xl px-3 py-1.5 focus:outline-none focus:border-gold-500 transition-colors">
+                            <select name="show" onchange="this.form.submit()" class="text-xs font-bold text-navy-900 dark:text-white bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 rounded-xl px-3 py-1.5 focus:outline-none focus:border-gold-500 transition-colors">
                                 <option value="10" {{ request('show') != 'all' ? 'selected' : '' }}>Per 10 Data</option>
                                 <option value="all" {{ request('show') == 'all' ? 'selected' : '' }}>Semua Data</option>
                             </select>
@@ -297,22 +305,22 @@
                 <div class="bg-navy-50/50 px-6 py-4 border-b border-navy-100/50 flex flex-wrap items-center gap-3 no-print">
                     <span class="text-[9px] font-black text-navy-400 uppercase tracking-widest mr-2">Filter Aktif:</span>
                     @if(request('search'))
-                        <span class="px-3 py-1 bg-white text-navy-600 rounded-full text-[10px] font-bold shadow-sm border border-navy-100">
+                        <span class="px-3 py-1 bg-white dark:bg-[#1e1b4b] text-navy-600 rounded-full text-[10px] font-bold shadow-sm border border-navy-100">
                             <i class="fas fa-search mr-1"></i> "{{ request('search') }}"
                         </span>
                     @endif
                     @if(request('kecamatan'))
-                        <span class="px-3 py-1 bg-white text-navy-600 rounded-full text-[10px] font-bold shadow-sm border border-navy-100">
+                        <span class="px-3 py-1 bg-white dark:bg-[#1e1b4b] text-navy-600 rounded-full text-[10px] font-bold shadow-sm border border-navy-100">
                             <i class="fas fa-map-marker-alt mr-1"></i> {{ $kecamatan->find(request('kecamatan'))->nama_kecamatan ?? 'Wilayah' }}
                         </span>
                     @endif
                     @if(request('kondisi'))
-                        <span class="px-3 py-1 bg-white text-navy-600 rounded-full text-[10px] font-bold shadow-sm border border-navy-100">
+                        <span class="px-3 py-1 bg-white dark:bg-[#1e1b4b] text-navy-600 rounded-full text-[10px] font-bold shadow-sm border border-navy-100">
                             <i class="fas fa-clipboard-list mr-1"></i> {{ request('kondisi') }}
                         </span>
                     @endif
                     @if(request('jenis'))
-                        <span class="px-3 py-1 bg-white text-navy-600 rounded-full text-[10px] font-bold shadow-sm border border-navy-100">
+                        <span class="px-3 py-1 bg-white dark:bg-[#1e1b4b] text-navy-600 rounded-full text-[10px] font-bold shadow-sm border border-navy-100">
                             <i class="fas fa-layer-group mr-1"></i> {{ request('jenis') }}
                         </span>
                     @endif
@@ -323,24 +331,24 @@
                 @endif
                 <table id="laporanTable" class="w-full text-left">
                     <thead>
-                        <tr class="bg-slate-50/50 text-[9px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100">
-                            <th class="px-6 py-4 text-center border-b border-slate-100" style="width: 10%;">No</th>
-                            <th class="px-6 py-4 text-center border-b border-slate-100" style="width: 30%;">Infrastruktur</th>
-                            <th class="px-6 py-4 text-center border-b border-slate-100" style="width: 20%;">Wilayah</th>
-                            <th class="px-6 py-4 text-center border-b border-slate-100" style="width: 20%;">Kondisi</th>
-                            <th class="px-6 py-4 text-center border-b border-slate-100" style="width: 20%;">Tanggal Data</th>
+                        <tr class="bg-slate-50 dark:bg-[#0f0e2c]/50 text-[9px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 dark:border-white/10">
+                            <th class="px-6 py-4 text-center border-b border-slate-100 dark:border-white/10" style="width: 10%;">No</th>
+                            <th class="px-6 py-4 text-center border-b border-slate-100 dark:border-white/10" style="width: 30%;">Infrastruktur</th>
+                            <th class="px-6 py-4 text-center border-b border-slate-100 dark:border-white/10" style="width: 20%;">Wilayah</th>
+                            <th class="px-6 py-4 text-center border-b border-slate-100 dark:border-white/10" style="width: 20%;">Kondisi</th>
+                            <th class="px-6 py-4 text-center border-b border-slate-100 dark:border-white/10" style="width: 20%;">Tanggal Data</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-50">
                         @forelse($reports as $index => $item)
-                        <tr class="group hover:bg-slate-50/50 transition-all">
+                        <tr class="group hover:bg-slate-50 dark:bg-[#0f0e2c]/50 transition-all">
                             <td class="px-6 py-3 text-xs font-bold text-slate-400 text-center">{{ request('show') == 'all' ? $index + 1 : ($reports->currentPage() - 1) * $reports->perPage() + $index + 1 }}</td>
                             <td class="px-6 py-3">
-                                <span class="text-xs font-black text-navy-900 uppercase">{{ $item->nama_objek }}</span><br style="mso-data-placement:same-cell;">
+                                <span class="text-xs font-black text-navy-900 dark:text-white uppercase">{{ $item->nama_objek }}</span><br style="mso-data-placement:same-cell;">
                                 <span class="text-[9px] text-slate-400 font-bold uppercase">{{ $item->jenis }}</span>
                             </td>
                             <td class="px-6 py-3">
-                                <span class="text-xs font-bold text-navy-900">{{ $item->kelurahan->nama_kelurahan ?? '-' }}</span><br style="mso-data-placement:same-cell;">
+                                <span class="text-xs font-bold text-navy-900 dark:text-white">{{ $item->kelurahan->nama_kelurahan ?? '-' }}</span><br style="mso-data-placement:same-cell;">
                                 <span class="text-[9px] text-slate-400 font-bold uppercase">{{ $item->kelurahan->kecamatan->nama_kecamatan ?? '-' }}</span>
                             </td>
                             <td class="px-6 py-3">
@@ -349,7 +357,7 @@
                                         $aiLabel = $item->analisis->label_prioritas ?? '';
                                         $aiLabelLower = strtolower($aiLabel);
                                         
-                                        $condClass = 'bg-slate-50 text-slate-600 border-slate-200';
+                                        $condClass = 'bg-slate-50 dark:bg-[#0f0e2c] text-slate-600 border-slate-200 dark:border-white/20';
                                         if (str_contains($aiLabelLower, 'berat')) {
                                             $condClass = 'bg-[#be123c]/10 text-[#be123c] border-[#be123c]/30';
                                         } elseif (str_contains($aiLabelLower, 'sedang') || str_contains($aiLabelLower, 'ringan')) {
@@ -377,24 +385,26 @@
                             </td>
                         </tr>
                         @endforelse
+
                     </tbody>
                 </table>
 
-                <!-- Tanda Tangan (Print Only) -->
-                <div class="hidden print-only ttd-box">
-                    <div class="ttd-inner">
-                        <p style="margin-bottom: 4px;">Banjarmasin, {{ now()->translatedFormat('d F Y') }}</p>
-                        <p style="margin-bottom: 80px;">Mengetahui,<br><strong>Koordinator Tim Teknis</strong></p>
-                        <p style="margin: 0; font-weight: bold; text-decoration: underline;">HIZBULWATHONI, S.T.</p>
-                        <p style="margin: 0;">NIP. 19760814 200604 1 008</p>
-                    </div>
-                </div>
                 
                 @if(request('show') != 'all' && isset($reports) && $reports instanceof \Illuminate\Pagination\LengthAwarePaginator)
-                    <div class="px-8 py-4 border-t border-slate-50 bg-slate-50/10 no-print">
+                    <div class="px-8 py-4 border-t border-slate-50 bg-slate-50 dark:bg-[#0f0e2c]/10 no-print">
                         {{ $reports->links() }}
                     </div>
                 @endif
+            </div>
+
+            <!-- Tanda Tangan (Print Only) -->
+            <div class="hidden print-only ttd-box">
+                <div class="ttd-inner">
+                    <p style="margin-bottom: 4px;">Banjarmasin, {{ now()->translatedFormat('d F Y') }}</p>
+                    <p style="margin-bottom: 60px;">Mengetahui,<br><strong>Koordinator Tim Teknis</strong></p>
+                    <p style="margin: 0; font-weight: bold; text-decoration: underline;">HIZBULWATHONI, S.T.</p>
+                    <p style="margin: 0;">NIP. 19760814 200604 1 008</p>
+                </div>
             </div>
         </div>
     </main>

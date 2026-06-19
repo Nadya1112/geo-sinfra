@@ -21,6 +21,7 @@
     
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
@@ -32,6 +33,13 @@
             }
         }
     </script>
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
     <style> 
         body { font-family: 'Plus Jakarta Sans', sans-serif; } 
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
@@ -40,32 +48,32 @@
         .leaflet-container { font-family: inherit; }
     </style>
 </head>
-<body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800 text-left font-sans">
+<body class="bg-slate-50 dark:bg-[#0f0e2c] flex h-screen overflow-hidden text-slate-800 text-left font-sans dark:bg-navy-950 dark:text-white transition-colors duration-300">
 
     @include('surveyor.partials.sidebar')
 
-    <main class="flex-1 flex flex-col h-screen overflow-y-auto custom-scrollbar bg-slate-50">
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto custom-scrollbar bg-slate-50 dark:bg-[#0f0e2c]">
         {{-- ── Header ── --}}
-        <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 px-8 py-5 flex justify-between items-center sticky top-0 z-[1000] shadow-sm">
+        <header class="bg-white/80 dark:bg-[#1e1b4b]/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 px-8 py-5 flex justify-between items-center sticky top-0 z-[1000] shadow-sm">
             <div class="flex items-center gap-4">
-                <a href="{{ route('surveyor.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-white text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 transition-all border border-slate-200 hover:border-gold-200">
+                <a href="{{ route('surveyor.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-white dark:bg-[#1e1b4b] text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 transition-all border border-slate-200 dark:border-white/20 hover:border-gold-200">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
                     <p class="text-[9px] font-black text-gold-500 uppercase tracking-[0.2em] mb-0.5">Sistem Input Geospasial</p>
-                    <h2 class="text-xl font-black text-navy-900 tracking-tight">Input Data Lapangan</h2>
+                    <h2 class="text-xl font-black text-navy-900 dark:text-white tracking-tight">Input Data Lapangan</h2>
                 </div>
             </div>
             
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
                     <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
                     <div class="text-right">
-                        <p class="text-[10px] font-black text-navy-900 leading-none uppercase">{{ auth()->user()->name }}</p>
+                        <p class="text-[10px] font-black text-navy-900 dark:text-white leading-none uppercase">{{ auth()->user()->name }}</p>
                         <p class="text-[8px] font-bold text-emerald-500 uppercase mt-1">Online</p>
                     </div>
                     <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-navy-800 overflow-hidden shadow-md">
@@ -83,7 +91,7 @@
             <div class="max-w-7xl mx-auto">
                 @if($errors->any())
                 <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-2xl flex items-center gap-4 animate-pulse">
-                    <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-red-500 shadow-sm border border-red-100">
+                    <div class="w-10 h-10 bg-white dark:bg-[#1e1b4b] rounded-xl flex items-center justify-center text-red-500 shadow-sm border border-red-100">
                         <i class="fas fa-exclamation-circle"></i>
                     </div>
                     <div>
@@ -117,13 +125,13 @@
                         <div class="lg:col-span-7 space-y-8">
                             
                             {{-- Section: Identitas Laporan --}}
-                            <div class="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="bg-white dark:bg-[#1e1b4b] rounded-[2.5rem] p-8 border border-slate-100 dark:border-white/10 shadow-sm hover:shadow-md transition-shadow">
                                 <div class="flex items-center gap-4 mb-8 pb-6 border-b border-slate-50">
-                                    <div class="w-12 h-12 rounded-2xl bg-navy-50 flex items-center justify-center text-gold-500 border border-navy-100">
+                                    <div class="w-12 h-12 rounded-2xl bg-navy-50 dark:bg-navy-900 flex items-center justify-center text-gold-500 border border-navy-100">
                                         <i class="fas fa-file-signature text-xl"></i>
                                     </div>
                                     <div>
-                                        <h4 class="font-black text-navy-900 uppercase tracking-tight text-lg">Identitas Laporan</h4>
+                                        <h4 class="font-black text-navy-900 dark:text-white uppercase tracking-tight text-lg">Identitas Laporan</h4>
                                         <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Klasifikasi Objek Infrastruktur</p>
                                     </div>
                                 </div>
@@ -131,20 +139,20 @@
                                 <div class="space-y-6">
                                 <div class="grid grid-cols-1 gap-5">
                                     <div>
-                                        <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3 ml-1">Alamat / Lokasi Jalan <span class="text-red-500">*</span></label>
+                                        <label class="block text-[10px] font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Alamat / Lokasi Jalan <span class="text-red-500">*</span></label>
                                         <div class="relative group">
                                             <i class="fas fa-map-pin absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors"></i>
-                                            <input type="text" name="nama_infrastruktur" placeholder="Contoh: Gg. Manggis RT 02 / Jalan Hasan Basry" class="w-full pl-12 pr-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900" required>
+                                            <input type="text" name="nama_infrastruktur" placeholder="Contoh: Gg. Manggis RT 02 / Jalan Hasan Basry" class="w-full pl-12 pr-5 py-4 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900 dark:text-white" required>
                                         </div>
                                     </div>
                                 </div>
 
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                                         <div>
-                                            <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3 ml-1">Kecamatan Wilayah <span class="text-red-500">*</span></label>
+                                            <label class="block text-[10px] font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Kecamatan Wilayah <span class="text-red-500">*</span></label>
                                             <div class="relative group">
                                                 <i class="fas fa-map-location-dot absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors z-10"></i>
-                                                <select name="id_kecamatan" id="id_kecamatan" class="w-full pl-12 pr-10 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none appearance-none cursor-pointer transition-all relative z-0 text-navy-900" required onchange="filterKelurahan()">
+                                                <select name="id_kecamatan" id="id_kecamatan" class="w-full pl-12 pr-10 py-4 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none appearance-none cursor-pointer transition-all relative z-0 text-navy-900 dark:text-white" required onchange="filterKelurahan()">
                                                     <option value="">Pilih Kecamatan...</option>
                                                     @foreach($semuaKecamatan as $kec)
                                                         <option value="{{ $kec->id_kecamatan }}" {{ count($semuaKecamatan) == 1 ? 'selected' : '' }}>{{ $kec->nama_kecamatan }}</option>
@@ -154,10 +162,10 @@
                                             </div>
                                         </div>
                                         <div>
-                                            <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3 ml-1">Kelurahan / Desa <span class="text-red-500">*</span></label>
+                                            <label class="block text-[10px] font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Kelurahan / Desa <span class="text-red-500">*</span></label>
                                             <div class="relative group">
                                                 <i class="fas fa-city absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors z-10"></i>
-                                                <select name="id_kelurahan" id="id_kelurahan" class="w-full pl-12 pr-10 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none appearance-none cursor-pointer transition-all relative z-0 text-navy-900" required onchange="focusToKelurahan()">
+                                                <select name="id_kelurahan" id="id_kelurahan" class="w-full pl-12 pr-10 py-4 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none appearance-none cursor-pointer transition-all relative z-0 text-navy-900 dark:text-white" required onchange="focusToKelurahan()">
                                                     <option value="">Pilih Kelurahan...</option>
                                                     @foreach($semuaKelurahan as $kel)
                                                         <option value="{{ $kel->id_kelurahan }}" 
@@ -176,13 +184,13 @@
                             </div>
 
                             {{-- Section: Spesifikasi Teknis --}}
-                            <div class="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="bg-white dark:bg-[#1e1b4b] rounded-[2.5rem] p-8 border border-slate-100 dark:border-white/10 shadow-sm hover:shadow-md transition-shadow">
                                 <div class="flex items-center gap-4 mb-8 pb-6 border-b border-slate-50">
-                                    <div class="w-12 h-12 rounded-2xl bg-navy-50 flex items-center justify-center text-gold-500 border border-navy-100">
+                                    <div class="w-12 h-12 rounded-2xl bg-navy-50 dark:bg-navy-900 flex items-center justify-center text-gold-500 border border-navy-100">
                                         <i class="fas fa-ruler-combined text-xl"></i>
                                     </div>
                                     <div>
-                                        <h4 class="font-black text-navy-900 uppercase tracking-tight text-lg">Spesifikasi Teknis</h4>
+                                        <h4 class="font-black text-navy-900 dark:text-white uppercase tracking-tight text-lg">Spesifikasi Teknis</h4>
                                         <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Dimensi & Material Infrastruktur</p>
                                     </div>
                                 </div>
@@ -192,27 +200,27 @@
                                         <div class="space-y-6">
                                             <div class="grid grid-cols-2 gap-4">
                                                 <div>
-                                                    <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3 ml-1">Panjang (m) <span class="text-red-500">*</span></label>
+                                                    <label class="block text-[10px] font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Panjang (m) <span class="text-red-500">*</span></label>
                                                     <div class="relative group">
                                                         <i class="fas fa-arrows-left-right absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors"></i>
-                                                        <input type="number" step="0.01" name="panjang" placeholder="0.00" class="w-full pl-12 pr-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900" required>
+                                                        <input type="number" step="0.01" name="panjang" placeholder="0.00" class="w-full pl-12 pr-5 py-3.5 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900 dark:text-white" required>
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3 ml-1">Lebar (m) <span class="text-red-500">*</span></label>
+                                                    <label class="block text-[10px] font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Lebar (m) <span class="text-red-500">*</span></label>
                                                     <div class="relative group">
                                                         <i class="fas fa-arrows-up-down absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors"></i>
-                                                        <input type="number" step="0.01" name="lebar" placeholder="0.00" class="w-full pl-12 pr-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900" required>
+                                                        <input type="number" step="0.01" name="lebar" placeholder="0.00" class="w-full pl-12 pr-5 py-3.5 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900 dark:text-white" required>
                                                     </div>
                                                 </div>
                                             </div>
                                             
                                             {{-- Material Utama --}}
                                             <div>
-                                                <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3 ml-1">Material Utama  <span class="text-red-500">*</span></label>
+                                                <label class="block text-[10px] font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Material Utama  <span class="text-red-500">*</span></label>
                                                 <div class="relative group">
                                                     <i class="fas fa-layer-group absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors z-10"></i>
-                                                    <select name="material_eksisting" class="w-full pl-12 pr-10 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none appearance-none cursor-pointer transition-all relative z-0 text-navy-900" required>
+                                                    <select name="material_eksisting" class="w-full pl-12 pr-10 py-3.5 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none appearance-none cursor-pointer transition-all relative z-0 text-navy-900 dark:text-white" required>
                                                         <option value="" disabled selected>Pilih Material Utama...</option>
                                                         <option value="Cor Beton">Cor Beton</option>
                                                         <option value="Titian (Kayu Ulin)">Titian (Kayu Ulin)</option>
@@ -229,30 +237,30 @@
                                         </div>
                                         
                                         <div class="space-y-4">
-                                            <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3 ml-1">Ketersediaan </label>
+                                            <label class="block text-[10px] font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Ketersediaan </label>
                                             <div class="space-y-3">
-                                                <label class="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-200 cursor-pointer hover:bg-gold-50 hover:border-gold-200 transition-all group">
+                                                <label class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-[#0f0e2c] rounded-2xl border border-slate-200 dark:border-white/20 cursor-pointer hover:bg-gold-50 hover:border-gold-200 transition-all group">
                                                     <input type="checkbox" name="has_drainase" value="1" class="peer hidden">
                                                     <div class="w-6 h-6 rounded-lg border-2 border-slate-300 peer-checked:bg-gold-500 peer-checked:border-gold-500 transition-all flex items-center justify-center">
                                                         <i class="fas fa-check text-xs text-white opacity-0 peer-checked:opacity-100"></i>
                                                     </div>
-                                                    <span class="text-xs font-black text-navy-900 uppercase tracking-widest">Saluran Drainase</span>
+                                                    <span class="text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest">Saluran Drainase</span>
                                                 </label>
-                                                <label class="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-200 cursor-pointer hover:bg-gold-50 hover:border-gold-200 transition-all group">
+                                                <label class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-[#0f0e2c] rounded-2xl border border-slate-200 dark:border-white/20 cursor-pointer hover:bg-gold-50 hover:border-gold-200 transition-all group">
                                                     <input type="checkbox" name="has_gorong_gorong" value="1" class="peer hidden">
                                                     <div class="w-6 h-6 rounded-lg border-2 border-slate-300 peer-checked:bg-gold-500 peer-checked:border-gold-500 transition-all flex items-center justify-center">
                                                         <i class="fas fa-check text-xs text-white opacity-0 peer-checked:opacity-100"></i>
                                                     </div>
-                                                    <span class="text-xs font-black text-navy-900 uppercase tracking-widest">Gorong-gorong</span>
+                                                    <span class="text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest">Gorong-gorong</span>
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="pt-4 border-t border-slate-50">
-                                        <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3 ml-1">Deskripsi Kondisi Fisik Lapangan <span class="text-slate-400 font-medium">(Opsional)</span></label>
+                                        <label class="block text-[10px] font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Deskripsi Kondisi Fisik Lapangan <span class="text-slate-400 font-medium">(Opsional)</span></label>
                                         <div class="relative group">
-                                            <textarea name="kondisi" id="kondisi-textarea" rows="3" placeholder="Deskripsikan kerusakan spesifik (Contoh: retak dan berlubang akibat genangan air)..." class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900"></textarea>
+                                            <textarea name="kondisi" id="kondisi-textarea" rows="3" placeholder="Deskripsikan kerusakan spesifik (Contoh: retak dan berlubang akibat genangan air)..." class="w-full px-5 py-4 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900 dark:text-white"></textarea>
                                         </div>
                                     </div>
 
@@ -264,18 +272,18 @@
                         <div class="lg:col-span-5 space-y-8">
                             
                             {{-- Section: Peta --}}
-                            <div class="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="bg-white dark:bg-[#1e1b4b] rounded-[2.5rem] p-8 border border-slate-100 dark:border-white/10 shadow-sm hover:shadow-md transition-shadow">
                                 <div class="flex items-center justify-between mb-8 pb-4 border-b border-slate-50">
                                     <div class="flex items-center gap-4">
-                                        <div class="w-12 h-12 rounded-2xl bg-navy-50 flex items-center justify-center text-gold-500 border border-navy-100">
+                                        <div class="w-12 h-12 rounded-2xl bg-navy-50 dark:bg-navy-900 flex items-center justify-center text-gold-500 border border-navy-100">
                                             <i class="fas fa-location-crosshairs text-xl"></i>
                                         </div>
                                         <div>
-                                            <h4 class="font-black text-navy-900 uppercase tracking-tight text-lg">Titik Lokasi</h4>
+                                            <h4 class="font-black text-navy-900 dark:text-white uppercase tracking-tight text-lg">Titik Lokasi</h4>
                                             <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Akurasi Geospasial</p>
                                         </div>
                                     </div>
-                                    <button type="button" id="btn-gps" onclick="getLocation(this)" class="px-4 py-3 bg-navy-900 hover:bg-gold-500 hover:text-navy-900 text-white rounded-xl text-[9px] font-black uppercase tracking-widest flex items-center gap-2 transition-all shadow-md active:scale-95 border border-white/10">
+                                    <button type="button" id="btn-gps" onclick="getLocation(this)" class="px-4 py-3 bg-navy-900 hover:bg-gold-500 hover:text-navy-900 dark:text-white text-white rounded-xl text-[9px] font-black uppercase tracking-widest flex items-center gap-2 transition-all shadow-md active:scale-95 border border-white/10">
                                         <i class="fas fa-crosshairs"></i>
                                         Sync GPS
                                     </button>
@@ -287,45 +295,45 @@
                                     <!-- Offline Map Warning -->
                                     <div id="offline-map-warning" class="hidden absolute inset-0 z-[5] bg-slate-100/90 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center border-2 border-orange-200">
                                         <i class="fas fa-wifi-slash text-3xl text-orange-400 mb-3"></i>
-                                        <h5 class="text-xs font-black text-navy-900 uppercase tracking-widest mb-1">Peta Offline</h5>
+                                        <h5 class="text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-1">Peta Offline</h5>
                                         <p class="text-[10px] text-slate-500 font-bold leading-relaxed max-w-xs">Gambar peta tidak dapat dimuat tanpa internet, namun pencatatan koordinat GPS tetap berfungsi akurat.</p>
                                     </div>
 
                                     <div class="absolute top-4 right-4 z-10">
-                                        <button type="button" onclick="toggleFloodLayer()" id="btn-flood-layer" class="w-10 h-10 bg-white/90 backdrop-blur-md rounded-xl shadow-lg border border-slate-100 text-slate-400 hover:text-blue-500 hover:border-blue-200 transition-all flex items-center justify-center group" title="Tampilkan Area Rawan Banjir">
+                                        <button type="button" onclick="toggleFloodLayer()" id="btn-flood-layer" class="w-10 h-10 bg-white/90 dark:bg-[#1e1b4b]/90 backdrop-blur-md rounded-xl shadow-lg border border-slate-100 dark:border-white/10 text-slate-400 hover:text-blue-500 hover:border-blue-200 transition-all flex items-center justify-center group" title="Tampilkan Area Rawan Banjir">
                                             <i class="fas fa-water text-sm group-hover:scale-110 transition-transform"></i>
                                         </button>
                                     </div>
                                     <div class="absolute bottom-4 left-4 right-4 z-10 pointer-events-none">
-                                        <div class="bg-white/90 backdrop-blur-md px-4 py-3 rounded-xl shadow-lg border border-slate-100 text-center flex items-center justify-center gap-2 pointer-events-none">
+                                        <div class="bg-white/90 dark:bg-[#1e1b4b]/90 backdrop-blur-md px-4 py-3 rounded-xl shadow-lg border border-slate-100 dark:border-white/10 text-center flex items-center justify-center gap-2 pointer-events-none">
                                             <div class="w-2 h-2 rounded-full bg-gold-500 animate-pulse"></div>
-                                            <p class="text-[9px] font-black uppercase tracking-widest text-navy-900">Klik Pada Peta Untuk Geser Pin</p>
+                                            <p class="text-[9px] font-black uppercase tracking-widest text-navy-900 dark:text-white">Klik Pada Peta Untuk Geser Pin</p>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="grid grid-cols-2 gap-4">
-                                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 relative group">
+                                    <div class="bg-slate-50 dark:bg-[#0f0e2c] p-4 rounded-2xl border border-slate-200 dark:border-white/20 relative group">
                                         <div class="absolute top-2 right-2 text-red-500 text-[10px]"><i class="fas fa-asterisk"></i></div>
                                         <label class="block text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Latitude</label>
-                                        <input type="text" id="lat-input" name="latitude" readonly class="w-full bg-transparent border-none p-0 text-xs font-black text-navy-900 outline-none cursor-default" required placeholder="Kosong">
+                                        <input type="text" id="lat-input" name="latitude" readonly class="w-full bg-transparent border-none p-0 text-xs font-black text-navy-900 dark:text-white outline-none cursor-default" required placeholder="Kosong">
                                     </div>
-                                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 relative group">
+                                    <div class="bg-slate-50 dark:bg-[#0f0e2c] p-4 rounded-2xl border border-slate-200 dark:border-white/20 relative group">
                                         <div class="absolute top-2 right-2 text-red-500 text-[10px]"><i class="fas fa-asterisk"></i></div>
                                         <label class="block text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Longitude</label>
-                                        <input type="text" id="lng-input" name="longitude" readonly class="w-full bg-transparent border-none p-0 text-xs font-black text-navy-900 outline-none cursor-default" required placeholder="Kosong">
+                                        <input type="text" id="lng-input" name="longitude" readonly class="w-full bg-transparent border-none p-0 text-xs font-black text-navy-900 dark:text-white outline-none cursor-default" required placeholder="Kosong">
                                     </div>
                                 </div>
                             </div>
 
                             {{-- Section: Dokumentasi & Submit --}}
-                            <div class="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="bg-white dark:bg-[#1e1b4b] rounded-[2.5rem] p-8 border border-slate-100 dark:border-white/10 shadow-sm hover:shadow-md transition-shadow">
                                 <div class="flex items-center gap-4 mb-8 pb-4 border-b border-slate-50">
-                                    <div class="w-12 h-12 rounded-2xl bg-navy-50 flex items-center justify-center text-gold-500 border border-navy-100">
+                                    <div class="w-12 h-12 rounded-2xl bg-navy-50 dark:bg-navy-900 flex items-center justify-center text-gold-500 border border-navy-100">
                                         <i class="fas fa-camera text-xl"></i>
                                     </div>
                                     <div>
-                                        <h4 class="font-black text-navy-900 uppercase tracking-tight text-lg">Dokumentasi <span class="text-red-500">*</span></h4>
+                                        <h4 class="font-black text-navy-900 dark:text-white uppercase tracking-tight text-lg">Dokumentasi <span class="text-red-500">*</span></h4>
                                         <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Foto Visual Lapangan</p>
                                     </div>
                                 </div>
@@ -333,12 +341,12 @@
                                 <div class="space-y-6">
                                     <div class="relative group cursor-pointer h-72">
                                         <input type="file" name="foto" id="foto-input" accept="image/*" capture="environment" class="absolute inset-0 opacity-0 z-10 cursor-pointer" required onchange="previewImage(event)">
-                                        <div id="foto-preview-container" class="absolute inset-0 border-[3px] border-dashed border-slate-200 rounded-[2rem] flex flex-col items-center justify-center gap-4 group-hover:bg-gold-50/50 group-hover:border-gold-300 transition-all overflow-hidden bg-slate-50">
+                                        <div id="foto-preview-container" class="absolute inset-0 border-[3px] border-dashed border-slate-200 dark:border-white/20 rounded-[2rem] flex flex-col items-center justify-center gap-4 group-hover:bg-gold-50/50 group-hover:border-gold-300 transition-all overflow-hidden bg-slate-50 dark:bg-[#0f0e2c]">
                                             <div id="placeholder-elements" class="flex flex-col items-center text-center px-6">
-                                                <div class="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-3 group-hover:scale-110 transition-transform border border-slate-100">
+                                                <div class="w-16 h-16 bg-white dark:bg-[#1e1b4b] rounded-2xl shadow-sm flex items-center justify-center mb-3 group-hover:scale-110 transition-transform border border-slate-100 dark:border-white/10">
                                                     <i class="fas fa-camera text-2xl text-gold-500"></i>
                                                 </div>
-                                                <p class="text-xs font-black text-navy-900 uppercase tracking-widest mb-1">Ambil Foto Langsung</p>
+                                                <p class="text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-1">Ambil Foto Langsung</p>
                                                 <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider text-center">Tap area ini untuk upload bukti visual</p>
                                             </div>
                                             <img id="image-preview" src="#" alt="Preview" class="hidden absolute inset-0 w-full h-full object-cover">
@@ -353,9 +361,9 @@
                                         </p>
                                     </div>
 
-                                    <div class="grid grid-cols-1 gap-4 pt-4 border-t border-slate-100">
+                                    <div class="grid grid-cols-1 gap-4 pt-4 border-t border-slate-100 dark:border-white/10">
                                         <div class="flex items-center justify-between px-2 mb-2">
-                                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Tgl Survey: <span class="text-navy-900">{{ date('d M Y') }}</span></span>
+                                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Tgl Survey: <span class="text-navy-900 dark:text-white">{{ date('d M Y') }}</span></span>
                                             <input type="hidden" name="tgl_survey" value="{{ date('Y-m-d') }}">
                                         </div>
                                         <button type="submit" id="btn-submit" class="w-full py-5 bg-gold-500 hover:bg-gold-600 text-white rounded-[2rem] font-black text-[11px] uppercase tracking-[0.2em] transition-all shadow-xl shadow-gold-500/20 active:scale-95 flex items-center justify-center gap-3">
@@ -431,12 +439,12 @@
             if(showFloodLayer) {
                 map.addLayer(floodLayer);
                 btn.classList.replace('text-slate-400', 'text-blue-500');
-                btn.classList.replace('border-slate-100', 'border-blue-200');
+                btn.classList.replace('border-slate-100 dark:border-white/10', 'border-blue-200');
                 btn.classList.add('bg-blue-50');
             } else {
                 map.removeLayer(floodLayer);
                 btn.classList.replace('text-blue-500', 'text-slate-400');
-                btn.classList.replace('border-blue-200', 'border-slate-100');
+                btn.classList.replace('border-blue-200', 'border-slate-100 dark:border-white/10');
                 btn.classList.remove('bg-blue-50');
             }
         }
