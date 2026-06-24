@@ -12,7 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('analisis_ai', function (Blueprint $table) {
-            $table->text('param_kondisi')->nullable()->change();
+            if (!Schema::hasColumn('analisis_ai', 'param_kondisi')) {
+                $table->text('param_kondisi')->nullable();
+            } else {
+                $table->text('param_kondisi')->nullable()->change();
+            }
         });
     }
 
