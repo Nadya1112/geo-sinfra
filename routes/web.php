@@ -22,6 +22,20 @@ Route::view('/offline', 'offline')->name('offline');
 Route::post('/lapor-warga', [PublicReportController::class, 'store'])->name('lapor.warga')->middleware('throttle:3,1');
 
 Route::get('/', function () {
+    // PROTEKSI: Jika tabel belum ada di database (misal belum migrate), jangan crash.
+    if (!\Illuminate\Support\Facades\Schema::hasTable('kecamatan') || !\Illuminate\Support\Facades\Schema::hasTable('infrastruktur')) {
+        return view('landing', [
+            'semuaWilayah' => collect(),
+            'dataInfrastruktur' => collect(),
+            'dataKelurahan' => collect(),
+            'stats' => ['total' => 0, 'kecamatan' => 0, 'rusak_berat' => 0, 'akurasi_ai' => 0],
+            'sebaranKecamatan' => collect(),
+            'topKategori' => '-',
+            'topKategoriCount' => 0,
+            'kondisiWilayah' => collect(),
+        ]);
+    }
+
     $semuaWilayah = DB::table('kecamatan')->whereNull('deleted_at')->get();
     
     // Ambil data infrastruktur dengan join ke kelurahan untuk memastikan id_kecamatan selalu ada
@@ -101,6 +115,13 @@ Route::get('/', function () {
 
 // API Endpoint for Map Polling
 Route::get('/api/map-data', function () {
+    if (!\Illuminate\Support\Facades\Schema::hasTable('infrastruktur') || !\Illuminate\Support\Facades\Schema::hasTable('kecamatan')) {
+        return response()->json([
+            'infrastruktur' => [],
+            'stats' => ['total' => 0, 'kecamatan' => 0, 'rusak_berat' => 0, 'akurasi_ai' => 0]
+        ]);
+    }
+
     $tahun = request('tahun');
     
     $query = DB::table('infrastruktur')
@@ -148,6 +169,14 @@ Route::get('/api/map-data', function () {
 
 // API Endpoint for Admin Notifications (Check New Reports)
 Route::get('/api/check-laporan', function () {
+    if (!\Illuminate\Support\Facades\Schema::hasTable('laporan_warga')) {
+        return response()->json([
+            'count' => 0,
+            'reports' => [],
+            'timestamp' => time()
+        ]);
+    }
+
     $lastChecked = request('last_checked');
     
     $query = DB::table('laporan_warga')
