@@ -19,7 +19,8 @@ return new class extends Migration
             $table->unsignedBigInteger('reference_id')->nullable(); // ID objek terkait
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // DIPERBAIKI: Mengarahkan ke 'id_user' (karena itu primary key di tabel users kamu)
+            $table->foreign('user_id')->references('id_user')->on('users')->onDelete('cascade');
         });
     }
 
