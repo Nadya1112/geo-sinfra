@@ -21,6 +21,13 @@ use Illuminate\Support\Facades\DB;
 Route::view('/offline', 'offline')->name('offline');
 Route::post('/lapor-warga', [PublicReportController::class, 'store'])->name('lapor.warga')->middleware('throttle:3,1');
 
+Route::get('/debug-schema', function () {
+    return response()->json([
+        'users' => \Illuminate\Support\Facades\Schema::getColumnListing('users'),
+        'infrastruktur' => \Illuminate\Support\Facades\Schema::getColumnListing('infrastruktur')
+    ]);
+});
+
 Route::get('/', function () {
     // PROTEKSI: Jika tabel belum ada di database (misal belum migrate), jangan crash.
     if (!\Illuminate\Support\Facades\Schema::hasTable('kecamatan') || !\Illuminate\Support\Facades\Schema::hasTable('infrastruktur')) {

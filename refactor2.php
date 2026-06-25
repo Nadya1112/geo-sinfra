@@ -1,4 +1,4 @@
-<?php
+x`<?php
 $files = [
     'resources/views/emails/darurat_notification.blade.php',
     'resources/views/admin/detail-infrastruktur.blade.php',
