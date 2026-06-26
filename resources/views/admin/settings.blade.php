@@ -109,8 +109,8 @@
                             <label class="block text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2 ml-1">Jam Operasional</label>
                             @php $currentHours = $settings['operational_hours'] ?? 'Senin - Jumat, 08:00 - 16:00'; @endphp
                             <select name="operational_hours" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-navy-950 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold text-navy-900 dark:text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
-                                <option value="Senin-Kamis: 08.00-16.30 | Jumat: 08.00-11.00" {{ $currentHours == 'Senin-Kamis: 08.00-16.30 | Jumat: 08.00-11.00' ? 'selected' : '' }}>Senin-Kamis: 08.00-16.30 | Jumat: 08.00-11.00</option>
-                                <option value="Senin - Jumat, 08.00 - 16.00" {{ $currentHours == 'Senin - Jumat, 08.00 - 16.00' ? 'selected' : '' }}>Senin - Jumat, 08.00 - 16.00</option>
+                                <option value="Senin - Kamis, 08.00 - 16.30" {{ $currentHours == 'Senin - Kamis, 08.00 - 16.30' ? 'selected' : '' }}>Senin - Kamis, 08.00 - 16.30</option>
+                                <option value="Jumat, 08.00 - 11.00" {{ $currentHours == 'Jumat, 08.00 - 11.00' ? 'selected' : '' }}>Jumat, 08.00 - 11.00</option>
                             </select>
                         </div>
                     </div>
