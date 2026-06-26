@@ -104,7 +104,13 @@
                         </div>
                         <div>
                             <label class="block text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2 ml-1">Jam Operasional</label>
-                            <input type="text" name="operational_hours" value="{{ $settings['operational_hours'] ?? 'Senin - Jumat, 08:00 - 16:00' }}" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-navy-950 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold text-navy-900 dark:text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
+                            @php $currentHours = $settings['operational_hours'] ?? 'Senin - Jumat, 08:00 - 16:00'; @endphp
+                            <select name="operational_hours" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-navy-950 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold text-navy-900 dark:text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all appearance-none cursor-pointer">
+                                <option value="Senin - Jumat, 08:00 - 16:00" {{ $currentHours == 'Senin - Jumat, 08:00 - 16:00' ? 'selected' : '' }}>Senin - Jumat, 08:00 - 16:00</option>
+                                <option value="Senin - Jumat, 09:00 - 17:00" {{ $currentHours == 'Senin - Jumat, 09:00 - 17:00' ? 'selected' : '' }}>Senin - Jumat, 09:00 - 17:00</option>
+                                <option value="Senin - Sabtu, 08:00 - 16:00" {{ $currentHours == 'Senin - Sabtu, 08:00 - 16:00' ? 'selected' : '' }}>Senin - Sabtu, 08:00 - 16:00</option>
+                                <option value="Senin - Minggu, 24 Jam" {{ $currentHours == 'Senin - Minggu, 24 Jam' ? 'selected' : '' }}>Senin - Minggu, 24 Jam</option>
+                            </select>
                         </div>
                     </div>
 
