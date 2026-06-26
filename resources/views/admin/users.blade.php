@@ -95,14 +95,14 @@
         <div class="flex-1 p-8 overflow-y-auto custom-scrollbar">
             
             @if(session('success'))
-            <div class="mb-6 px-6 py-4 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-2xl flex items-center gap-3">
+            <div class="mb-6 px-4 py-3 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-2xl flex items-center gap-3">
                 <i class="fas fa-check-circle"></i>
                 <p class="text-xs font-bold">{{ session('success') }}</p>
             </div>
             @endif
 
             @if(session('error'))
-            <div class="mb-6 px-6 py-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl flex items-center gap-3">
+            <div class="mb-6 px-4 py-3 bg-red-50 border border-red-100 text-red-700 rounded-2xl flex items-center gap-3">
                 <i class="fas fa-exclamation-circle"></i>
                 <p class="text-xs font-bold">{{ session('error') }}</p>
             </div>
@@ -140,20 +140,20 @@
                 <div class="overflow-x-auto w-full custom-scrollbar"><table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
-                            <th class="px-4 md:px-5 py-4 text-xs font-black text-gold-500 uppercase tracking-widest w-12 text-center">No.</th>
-                            <th class="px-4 md:px-5 py-4 text-xs font-black text-gold-500 uppercase tracking-widest">Nama User</th>
-                            <th class="px-4 md:px-5 py-4 text-xs font-black text-gold-500 uppercase tracking-widest">Email Address</th>
-                            <th class="px-4 md:px-5 py-4 text-xs font-black text-gold-500 uppercase tracking-widest">Role / Jabatan</th>
-                            <th class="px-4 md:px-5 py-4 text-xs font-black text-gold-500 uppercase tracking-widest text-center">Aksi</th>
+                            <th class="px-4 md:px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest w-12 text-center">No.</th>
+                            <th class="px-4 md:px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Nama User</th>
+                            <th class="px-4 md:px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Email Address</th>
+                            <th class="px-4 md:px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Role / Jabatan</th>
+                            <th class="px-4 md:px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-50">
                         @foreach($users as $index => $user)
                         <tr class="hover:bg-slate-50/50 transition">
-                            <td class="px-4 md:px-5 py-4 text-center">
+                            <td class="px-4 md:px-4 py-3 text-center">
                                 <span class="text-xs font-black text-navy-900">{{ request('show') == 'all' ? $index + 1 : ($users->currentPage() - 1) * $users->perPage() + $index + 1 }}</span>
                             </td>
-                            <td class="px-4 md:px-5 py-4">
+                            <td class="px-4 md:px-4 py-3">
                                 <div class="flex items-center gap-4">
                                     <div class="w-10 h-10 {{ $user->role == 'admin' ? 'bg-gold-500/10 text-gold-500 border-gold-500/20' : ($user->role == 'tim_teknis' ? 'bg-navy-900/10 text-navy-900 border-navy-900/20' : 'bg-slate-100 text-slate-600 border-slate-200') }} rounded-xl flex items-center justify-center font-bold text-xs border">
                                         {{ substr($user->name, 0, 1) }}
@@ -164,14 +164,14 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-4 md:px-5 py-4 text-sm font-medium text-slate-500">{{ $user->email }}</td>
-                            <td class="px-4 md:px-5 py-4">
+                            <td class="px-4 md:px-4 py-3 text-xs font-medium text-slate-500">{{ $user->email }}</td>
+                            <td class="px-4 md:px-4 py-3">
                                 <span class="px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-tighter 
                                     {{ $user->role == 'admin' ? 'bg-gold-500/10 text-gold-500 border border-gold-500/20' : ($user->role == 'tim_teknis' ? 'bg-navy-900/10 text-navy-900 border border-navy-900/20' : 'bg-slate-100 text-slate-600 border border-slate-200') }}">
                                     {{ $user->role }}
                                 </span>
                             </td>
-                            <td class="px-4 md:px-5 py-4">
+                            <td class="px-4 md:px-4 py-3">
                                 <div class="flex justify-center gap-2">
                                     @if($user->role !== 'tim_teknis')
                                     

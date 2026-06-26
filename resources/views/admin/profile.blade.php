@@ -61,14 +61,14 @@
         <div class="flex-1 overflow-y-auto custom-scrollbar p-8 pb-16">
             <div class="max-w-4xl mx-auto">
                 @if(session('success'))
-                <div class="mb-6 px-6 py-4 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-2xl flex items-center gap-3 shadow-sm">
+                <div class="mb-6 px-4 py-3 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-2xl flex items-center gap-3 shadow-sm">
                     <i class="fas fa-check-circle"></i>
                     <p class="text-xs font-bold">{{ session('success') }}</p>
                 </div>
                 @endif
 
                 @if($errors->any())
-                <div class="mb-6 px-6 py-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl shadow-sm">
+                <div class="mb-6 px-4 py-3 bg-red-50 border border-red-100 text-red-700 rounded-2xl shadow-sm">
                     <ul class="list-disc list-inside text-xs font-bold">
                         @foreach($errors->all() as $error)
                             <li>{{ $error }}</li>

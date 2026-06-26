@@ -133,13 +133,13 @@
                     <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
-                                <th class="px-5 py-4 text-xs font-black text-gold-500 tracking-widest text-center w-12">NO</th>
-                                <th class="hidden md:table-cell px-5 py-4 text-xs font-black text-gold-500 tracking-widest text-center w-20">FOTO</th>
-                                <th class="px-5 py-4 text-xs font-black text-gold-500 tracking-widest">INFRASTRUKTUR</th>
-                                <th class="px-5 py-4 text-xs font-black text-gold-500 tracking-widest">WILAYAH</th>
-                                <th class="px-5 py-4 text-xs font-black text-gold-500 tracking-widest text-center">ANALISIS AI</th>
-                                <th class="px-5 py-4 text-xs font-black text-gold-500 tracking-widest text-center">KONDISI</th>
-                                <th class="px-5 py-4 text-xs font-black text-gold-500 tracking-widest text-center">AKSI</th>
+                                <th class="px-4 py-3 text-xs font-black text-gold-500 tracking-widest text-center w-12">NO</th>
+                                <th class="hidden md:table-cell px-4 py-3 text-xs font-black text-gold-500 tracking-widest text-center w-20">FOTO</th>
+                                <th class="px-4 py-3 text-xs font-black text-gold-500 tracking-widest">INFRASTRUKTUR</th>
+                                <th class="px-4 py-3 text-xs font-black text-gold-500 tracking-widest">WILAYAH</th>
+                                <th class="px-4 py-3 text-xs font-black text-gold-500 tracking-widest text-center">ANALISIS AI</th>
+                                <th class="px-4 py-3 text-xs font-black text-gold-500 tracking-widest text-center">KONDISI</th>
+                                <th class="px-4 py-3 text-xs font-black text-gold-500 tracking-widest text-center">AKSI</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-50">
@@ -176,12 +176,12 @@
                             <tr class="hover:bg-slate-50/60 transition-colors">
 
                                 {{-- No --}}
-                                <td class="px-5 py-4 text-center">
+                                <td class="px-4 py-3 text-center">
                                     <span class="text-xs font-black text-slate-400">{{ $nomor }}</span>
                                 </td>
 
                                 {{-- Foto --}}
-                                <td class="hidden md:table-cell px-5 py-4 text-center">
+                                <td class="hidden md:table-cell px-4 py-3 text-center">
                                     <div class="w-14 h-14 rounded-2xl overflow-hidden border-2 border-slate-100 shadow-sm mx-auto bg-slate-100 flex items-center justify-center">
                                         @if($inf->foto_terbaru)
                                             @php $cleanPath = str_replace('\\', '/', $inf->foto_terbaru); @endphp
@@ -194,7 +194,7 @@
                                 </td>
 
                                 {{-- Nama & Jenis --}}
-                                <td class="px-5 py-4 max-w-[200px]">
+                                <td class="px-4 py-3 max-w-[200px]">
                                     <p class="text-sm font-black text-navy-900 leading-snug truncate">{{ $inf->nama_objek ?? $inf->nama_infrastruktur }}</p>
                                     <span class="inline-block mt-1 px-2 py-0.5 bg-gold-500/10 text-gold-600 text-xs font-black rounded-md tracking-wider uppercase">
                                         {{ ucfirst($inf->jenis) }}
@@ -203,7 +203,7 @@
                                 </td>
 
                                 {{-- Wilayah --}}
-                                <td class="px-5 py-4">
+                                <td class="px-4 py-3">
                                     <div class="flex items-start gap-2">
                                         <i class="fas fa-map-marker-alt text-gold-500 text-xs mt-0.5 shrink-0"></i>
                                         <div>
@@ -214,7 +214,7 @@
                                 </td>
 
                                 {{-- Analisis AI --}}
-                                <td class="px-5 py-4">
+                                <td class="px-4 py-3">
                                     <div class="flex flex-col gap-1.5 items-center min-w-[130px]">
                                         <div class="flex items-center gap-2 w-full">
                                             <span class="shrink-0 px-1.5 py-0.5 bg-navy-900 text-white rounded text-[7px] font-black tracking-wider">CNN</span>
@@ -233,14 +233,14 @@
                                 </td>
 
                                 {{-- Kondisi --}}
-                                <td class="px-5 py-4 text-center">
+                                <td class="px-4 py-3 text-center">
                                     <span class="inline-block px-3 py-1.5 rounded-xl text-xs font-black tracking-wider uppercase {{ $labelColor }}">
                                         {{ $labelAkhir }}
                                     </span>
                                 </td>
 
                                 {{-- Aksi --}}
-                                <td class="px-5 py-4">
+                                <td class="px-4 py-3">
                                     <div class="flex items-center justify-center gap-1.5 w-max mx-auto">
 
                                         {{-- Verifikasi --}}
@@ -303,7 +303,7 @@
 
                 {{-- Pagination --}}
                 @if(request('show') != 'all' && isset($infrastruktur) && $infrastruktur instanceof \Illuminate\Pagination\LengthAwarePaginator)
-                    <div class="px-8 py-5 border-t border-slate-50">
+                    <div class="px-4 py-3 border-t border-slate-50">
                         {{ $infrastruktur->links() }}
                     </div>
                 @endif

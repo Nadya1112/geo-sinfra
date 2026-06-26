@@ -89,7 +89,7 @@
         <div class="flex-1 p-8 overflow-y-auto custom-scrollbar text-left">
             
             @if ($errors->any())
-            <div class="max-w-3xl mx-auto mb-6 px-6 py-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl">
+            <div class="max-w-3xl mx-auto mb-6 px-4 py-3 bg-red-50 border border-red-100 text-red-700 rounded-2xl">
                 <p class="text-xs font-bold mb-2">Gagal menyimpan data:</p>
                 <ul class="list-disc list-inside text-sm font-medium ml-4">
                     @foreach ($errors->all() as $error)
@@ -131,10 +131,10 @@
                         </div>
 
                         <div class="pt-8 flex gap-3">
-                            <button type="submit" class="flex-1 bg-gold-500 text-white text-xs px-6 py-4 rounded-2xl font-bold shadow-lg shadow-gold-500/10 hover:bg-gold-600 transition tracking-widest uppercase flex items-center justify-center gap-2">
+                            <button type="submit" class="flex-1 bg-gold-500 text-white text-xs px-4 py-3 rounded-2xl font-bold shadow-lg shadow-gold-500/10 hover:bg-gold-600 transition tracking-widest uppercase flex items-center justify-center gap-2">
                                 <i class="fas fa-save mr-2"></i> Simpan Data Wilayah
                             </button>
-                            <a href="{{ route('admin.wilayah') }}" class="flex-1 bg-slate-100 text-slate-500 text-xs px-6 py-4 rounded-2xl font-bold hover:bg-slate-200 transition text-center flex items-center justify-center gap-2 tracking-widest uppercase">
+                            <a href="{{ route('admin.wilayah') }}" class="flex-1 bg-slate-100 text-slate-500 text-xs px-4 py-3 rounded-2xl font-bold hover:bg-slate-200 transition text-center flex items-center justify-center gap-2 tracking-widest uppercase">
                                 Batal
                             </a>
                         </div>

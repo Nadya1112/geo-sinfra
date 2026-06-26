@@ -143,8 +143,8 @@
                         </div>
 
                         <div class="pt-10 flex gap-3">
-                            <button type="submit" class="flex-1 bg-gold-500 text-white text-xs px-6 py-4 rounded-2xl font-bold shadow-lg shadow-gold-500/10 hover:bg-gold-600 transition tracking-widest uppercase">Simpan Perubahan</button>
-                            <a href="{{ route('admin.users') }}" class="flex-1 bg-slate-100 text-slate-500 text-xs px-6 py-4 rounded-2xl font-bold hover:bg-slate-200 transition text-center flex items-center justify-center gap-2 tracking-widest uppercase">
+                            <button type="submit" class="flex-1 bg-gold-500 text-white text-xs px-4 py-3 rounded-2xl font-bold shadow-lg shadow-gold-500/10 hover:bg-gold-600 transition tracking-widest uppercase">Simpan Perubahan</button>
+                            <a href="{{ route('admin.users') }}" class="flex-1 bg-slate-100 text-slate-500 text-xs px-4 py-3 rounded-2xl font-bold hover:bg-slate-200 transition text-center flex items-center justify-center gap-2 tracking-widest uppercase">
                                 <i class="fas fa-times-circle text-xs"></i> Batal
                             </a>
                         </div>

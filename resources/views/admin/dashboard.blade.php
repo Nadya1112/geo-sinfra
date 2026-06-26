@@ -108,7 +108,7 @@
 
         <div class="p-4 md:p-8 text-left">
             @if(session('success'))
-            <div class="mb-6 px-6 py-4 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-2xl flex items-center gap-3 shadow-sm">
+            <div class="mb-6 px-4 py-3 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-2xl flex items-center gap-3 shadow-sm">
                 <i class="fas fa-check-circle"></i>
                 <p class="text-xs font-bold">{{ session('success') }}</p>
             </div>

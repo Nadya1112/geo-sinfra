@@ -87,7 +87,7 @@
             <div class="max-w-7xl mx-auto space-y-6">
 
                 @if(session('success'))
-                <div class="bg-emerald-50 border border-emerald-200 text-emerald-700 px-6 py-4 rounded-2xl mb-6 flex items-center gap-4 shadow-sm animate-fade-in">
+                <div class="bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-3 rounded-2xl mb-6 flex items-center gap-4 shadow-sm animate-fade-in">
                     <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center shrink-0">
                         <i class="fas fa-check text-emerald-600"></i>
                     </div>
@@ -149,18 +149,18 @@
                         <table class="w-full text-left text-sm whitespace-nowrap md:whitespace-normal">
                             <thead class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
                                 <tr>
-                                    <th class="px-6 py-4 font-extrabold uppercase tracking-widest text-xs text-gold-500">Waktu Lapor</th>
-                                    <th class="px-6 py-4 font-extrabold uppercase tracking-widest text-xs text-gold-500">Pelapor</th>
-                                    <th class="px-6 py-4 font-extrabold uppercase tracking-widest text-xs text-gold-500">Laporan Kerusakan</th>
-                                    <th class="px-5 py-4 font-extrabold uppercase tracking-widest text-xs text-gold-500 text-center">Status</th>
-                                    <th class="px-5 py-4 font-extrabold uppercase tracking-widest text-xs text-gold-500 text-center">Penugasan</th>
-                                    <th class="px-5 py-4 font-extrabold uppercase tracking-widest text-xs text-gold-500 text-center">Aksi</th>
+                                    <th class="px-4 py-3 font-extrabold uppercase tracking-widest text-xs text-gold-500">Waktu Lapor</th>
+                                    <th class="px-4 py-3 font-extrabold uppercase tracking-widest text-xs text-gold-500">Pelapor</th>
+                                    <th class="px-4 py-3 font-extrabold uppercase tracking-widest text-xs text-gold-500">Laporan Kerusakan</th>
+                                    <th class="px-4 py-3 font-extrabold uppercase tracking-widest text-xs text-gold-500 text-center">Status</th>
+                                    <th class="px-4 py-3 font-extrabold uppercase tracking-widest text-xs text-gold-500 text-center">Penugasan</th>
+                                    <th class="px-4 py-3 font-extrabold uppercase tracking-widest text-xs text-gold-500 text-center">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100">
                                 @forelse($laporanWarga as $laporan)
                                 <tr class="hover:bg-slate-50/80 transition-colors group">
-                                    <td class="px-6 py-4">
+                                    <td class="px-4 py-3">
                                         <div class="flex items-center gap-2">
                                             <i class="far fa-clock text-slate-400"></i>
                                             <div>
@@ -169,11 +169,11 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-4 py-3">
                                         <p class="font-bold text-navy-900">{{ $laporan->nama_pelapor }}</p>
                                         <p class="text-xs font-semibold text-slate-500 mt-0.5"><i class="fas fa-phone-alt text-xs text-slate-400 mr-1"></i> {{ $laporan->no_hp }}</p>
                                     </td>
-                                    <td class="px-6 py-4 min-w-[250px]">
+                                    <td class="px-4 py-3 min-w-[250px]">
                                         <p class="text-sm font-medium text-slate-700 line-clamp-2 leading-relaxed mb-2">{{ $laporan->deskripsi }}</p>
                                         
                                         @if($laporan->label_ai)
@@ -211,7 +211,7 @@
                                             </a>
                                         </div>
                                     </td>
-                                    <td class="px-5 py-4 text-center">
+                                    <td class="px-4 py-3 text-center">
                                         <form action="{{ route('admin.laporan-warga.status', $laporan->id) }}" method="POST" class="inline-block relative w-36 text-left">
                                             @csrf
                                             @method('PUT')
@@ -235,7 +235,7 @@
                                             <i class="fas fa-chevron-down absolute right-2.5 top-1/2 -translate-y-1/2 text-xs opacity-60 pointer-events-none"></i>
                                         </form>
                                     </td>
-                                    <td class="px-5 py-4 text-center">
+                                    <td class="px-4 py-3 text-center">
                                         <form action="{{ route('admin.laporan-warga.assign', $laporan->id) }}" method="POST" class="inline-block relative w-36 text-left">
                                             @csrf
                                             @method('PUT')
@@ -255,7 +255,7 @@
                                             <i class="fas fa-chevron-down absolute right-2.5 top-1/2 -translate-y-1/2 text-xs opacity-60 pointer-events-none"></i>
                                         </form>
                                     </td>
-                                    <td class="px-5 py-4 text-center">
+                                    <td class="px-4 py-3 text-center">
                                         <div class="flex items-center justify-center gap-2 mx-auto">
                                             @if(!$laporan->id_infrastruktur)
                                             <a href="{{ route('admin.laporan-warga.convert', $laporan->id) }}" title="Verifikasi & Tindak Lanjuti" class="w-8 h-8 flex items-center justify-center bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg text-xs font-black transition shadow-sm hover:scale-105">

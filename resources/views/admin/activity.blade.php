@@ -102,14 +102,14 @@
                 <table class="w-full text-left border-collapse min-w-[800px]">
                     <thead>
                         <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
-                            <th class="px-8 py-5 text-xs font-black text-gold-500 uppercase tracking-widest">Waktu</th>
-                            <th class="px-8 py-5 text-xs font-black text-gold-500 uppercase tracking-widest">Pengguna</th>
-                            <th class="px-8 py-5 text-xs font-black text-gold-500 uppercase tracking-widest">Aktivitas</th>
-                            <th class="px-8 py-5 text-xs font-black text-gold-500 uppercase tracking-widest">Modul</th>
-                            <th class="px-8 py-5 text-xs font-black text-gold-500 uppercase tracking-widest text-right">IP Address</th>
+                            <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Waktu</th>
+                            <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Pengguna</th>
+                            <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Aktivitas</th>
+                            <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Modul</th>
+                            <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest text-right">IP Address</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-slate-50 text-sm font-medium">
+                    <tbody class="divide-y divide-slate-50 text-xs font-medium">
                         <!-- Dynamic Data Rows -->
                         @forelse($activities as $activity)
                             @php
@@ -142,10 +142,10 @@
                                 }
                             @endphp
                             <tr class="hover:bg-slate-50/50 transition-colors group">
-                                <td class="px-8 py-5 text-xs text-slate-500 whitespace-nowrap">
+                                <td class="px-4 py-3 text-xs text-slate-500 whitespace-nowrap">
                                     <i class="fas fa-clock mr-2 text-slate-300"></i> {{ $activity->created_at->format('Y-m-d H:i:s') }}
                                 </td>
-                                <td class="px-8 py-5">
+                                <td class="px-4 py-3">
                                     <div class="flex items-center gap-3">
                                         <div class="w-8 h-8 rounded-full bg-{{$roleColor}}-100 text-{{$roleColor}}-600 flex items-center justify-center text-xs font-bold border border-{{$roleColor}}-200">
                                             {{ $activity->user ? strtoupper(substr($activity->user->name, 0, 2)) : 'SYS' }}
@@ -156,17 +156,17 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="px-8 py-5">
+                                <td class="px-4 py-3">
                                     <span class="px-3 py-1 bg-{{$badgeColor}}-50 text-{{$badgeColor}}-600 text-xs font-black uppercase tracking-widest rounded-lg border border-{{$badgeColor}}-100 inline-flex items-center gap-2 shadow-sm">
                                         <i class="fas {{ $icon }}"></i> {{ $actionName }}
                                     </span>
                                 </td>
-                                <td class="px-8 py-5 font-bold text-navy-800 uppercase text-xs">{{ $activity->type }} {!! $activity->reference_id ? "<span class='text-slate-400 text-xs'>(ID: {$activity->reference_id})</span>" : "" !!}</td>
-                                <td class="px-8 py-5 text-right font-mono text-sm text-slate-400 group-hover:text-slate-600">{{ $activity->ip_address ?? '127.0.0.1' }}</td>
+                                <td class="px-4 py-3 font-bold text-navy-800 uppercase text-xs">{{ $activity->type }} {!! $activity->reference_id ? "<span class='text-slate-400 text-xs'>(ID: {$activity->reference_id})</span>" : "" !!}</td>
+                                <td class="px-4 py-3 text-right font-mono text-sm text-slate-400 group-hover:text-slate-600">{{ $activity->ip_address ?? '127.0.0.1' }}</td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="px-8 py-10 text-center text-sm font-semibold text-gray-400">
+                                <td colspan="5" class="px-8 py-10 text-center text-xs font-semibold text-gray-400">
                                     <i class="fas fa-history text-2xl mb-2 block text-gray-300"></i>
                                     Belum ada aktivitas yang direkam oleh sistem.
                                 </td>

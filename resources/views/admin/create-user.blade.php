@@ -95,7 +95,7 @@
         <div class="flex-1 p-8 overflow-y-auto custom-scrollbar text-left">
             
             @if ($errors->any())
-            <div class="max-w-4xl mx-auto mb-6 px-6 py-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl">
+            <div class="max-w-4xl mx-auto mb-6 px-4 py-3 bg-red-50 border border-red-100 text-red-700 rounded-2xl">
                 <div class="flex items-center gap-3 mb-2 text-left">
                     <i class="fas fa-exclamation-triangle"></i>
                     <p class="text-xs font-bold">Gagal menyimpan data. Silakan periksa kembali:</p>
@@ -169,8 +169,8 @@
                         </div>
 
                         <div class="pt-10 flex gap-3 text-left">
-                            <button type="submit" class="flex-1 bg-gold-500 text-white text-xs px-6 py-4 rounded-2xl font-bold shadow-lg shadow-gold-500/10 hover:bg-gold-600 transition tracking-widest uppercase">Simpan User</button>
-                            <a href="{{ route('admin.users') }}" class="flex-1 bg-slate-100 text-slate-500 text-xs px-6 py-4 rounded-2xl font-bold hover:bg-slate-200 transition text-center flex items-center justify-center gap-2 text-left tracking-widest uppercase">
+                            <button type="submit" class="flex-1 bg-gold-500 text-white text-xs px-4 py-3 rounded-2xl font-bold shadow-lg shadow-gold-500/10 hover:bg-gold-600 transition tracking-widest uppercase">Simpan User</button>
+                            <a href="{{ route('admin.users') }}" class="flex-1 bg-slate-100 text-slate-500 text-xs px-4 py-3 rounded-2xl font-bold hover:bg-slate-200 transition text-center flex items-center justify-center gap-2 text-left tracking-widest uppercase">
                                 <i class="fas fa-times-circle text-xs"></i> Batal
                             </a>
                         </div>
