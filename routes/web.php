@@ -320,6 +320,10 @@ Route::middleware(['auth'])->group(function () {
         // Backup
         Route::post('/backup', [AdminController::class, 'backupDatabase'])->name('admin.backup');
 
+        // Pengaturan Sistem
+        Route::get('/settings', [App\Http\Controllers\SettingController::class, 'index'])->name('admin.settings');
+        Route::post('/settings', [App\Http\Controllers\SettingController::class, 'update'])->name('admin.settings.update');
+
         // Test Koneksi AI
         Route::get('/test-ai', function() {
             try {
