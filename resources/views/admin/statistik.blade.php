@@ -55,7 +55,7 @@
                     <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Ringkasan Statistik</h2>
                 </div>
                 <div class="hidden md:block w-[1px] h-8 bg-slate-200 ml-4 mr-2"></div>
-                <a href="{{ route('admin.infrastruktur.export') }}" class="ml-2 px-4 py-2 bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white border border-emerald-100 hover:border-emerald-500 rounded-xl text-xs font-black tracking-widest uppercase transition-all shadow-sm hover:shadow-lg hover:shadow-emerald-500/20 flex items-center gap-2">
+                <a href="{{ route('admin.infrastruktur.export') }}" class="hidden md:flex ml-2 px-4 py-2 bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white border border-emerald-100 hover:border-emerald-500 rounded-xl text-xs font-black tracking-widest uppercase transition-all shadow-sm hover:shadow-lg hover:shadow-emerald-500/20 flex items-center gap-2">
                     <i class="fas fa-file-excel"></i> Export Excel
                 </a>
             </div>
