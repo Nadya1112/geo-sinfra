@@ -371,24 +371,24 @@
         <div class="max-w-7xl mx-auto px-6 md:px-8 w-full flex justify-between items-center">
             <!-- Brand -->
             <div class="flex items-center">
-                <a href="#" class="h-16 flex items-center gap-3">
-                    <img src="{{ asset('logo_geo-sinfra.png') }}" class="h-12 w-auto object-contain drop-shadow-md transition-all duration-300" alt="Logo Geo-Sinfra">
-                    <h2 class="nav-brand text-xl font-extrabold tracking-tighter uppercase leading-none transition-colors duration-300">GEO-SINFRA</h2>
+                <a href="#" class="h-16 flex items-center gap-2.5">
+                    <img src="{{ asset('logo_geo-sinfra.png') }}" class="h-9 md:h-10 w-auto object-contain drop-shadow-md transition-all duration-300" alt="Logo Geo-Sinfra">
+                    <h2 class="nav-brand text-lg font-extrabold tracking-tighter uppercase leading-none transition-colors duration-300">GEO-SINFRA</h2>
                 </a>
             </div>
             
             <!-- Navbar Actions -->
             <div class="flex items-center gap-2 md:gap-4">
-                <a href="#peta" class="nav-link text-sm font-bold transition-colors uppercase tracking-wider hidden md:block">Peta</a>
-                <a href="#statistik" class="nav-link text-sm font-bold transition-colors uppercase tracking-wider hidden md:block">Statistik</a>
+                <a href="#peta" class="nav-link text-xs font-bold transition-colors uppercase tracking-wider hidden md:block">Peta</a>
+                <a href="#statistik" class="nav-link text-xs font-bold transition-colors uppercase tracking-wider hidden md:block">Statistik</a>
                 
-                <button onclick="document.getElementById('modal-lapor').classList.remove('hidden')" class="bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white px-4 md:px-5 py-2.5 rounded-xl text-xs md:text-sm font-black transition-all shadow-lg shadow-red-500/30 hover:shadow-red-500/50 hover:-translate-y-0.5 flex items-center gap-2 uppercase tracking-wider border border-red-500/50">
+                <button onclick="document.getElementById('modal-lapor').classList.remove('hidden')" class="bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white px-3 md:px-4 py-2 rounded-lg text-[10px] md:text-xs font-black transition-all shadow-lg shadow-red-500/30 hover:shadow-red-500/50 hover:-translate-y-0.5 flex items-center gap-2 uppercase tracking-wider border border-red-500/50">
                     <i class="fas fa-bullhorn animate-pulse"></i> <span class="hidden sm:inline">Lapor Kerusakan</span><span class="sm:hidden">Lapor</span>
                 </button>
 
-                <div class="nav-divider w-px h-5 mx-2 hidden md:block transition-colors duration-300"></div>
+                <div class="nav-divider w-px h-5 mx-1 md:mx-2 hidden md:block transition-colors duration-300"></div>
                 
-                <a href="{{ url('/login') }}" class="bg-navy-900 text-gold-500 hover:bg-gold-500 hover:text-white px-4 md:px-5 py-2.5 rounded-xl text-xs md:text-sm font-bold transition-all shadow-sm flex items-center gap-2 uppercase tracking-wider">
+                <a href="{{ url('/login') }}" class="bg-navy-900 text-gold-500 hover:bg-gold-500 hover:text-white px-3 md:px-4 py-2 rounded-lg text-[10px] md:text-xs font-bold transition-all shadow-sm flex items-center gap-2 uppercase tracking-wider">
                     <i class="fas fa-lock"></i> <span class="hidden sm:inline">Login</span>
                 </a>
             </div>
