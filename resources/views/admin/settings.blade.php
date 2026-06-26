@@ -65,6 +65,9 @@
     <main class="flex-1 overflow-y-auto custom-scrollbar flex flex-col h-screen relative">
         <header class="sticky top-0 bg-white/80 dark:bg-navy-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/5 px-4 md:px-8 py-4 flex justify-between items-center z-40">
             <div class="flex items-center gap-2 md:gap-4">
+                <a href="{{ route('admin.dashboard') }}" class="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white border border-slate-200 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 hover:border-gold-200 transition-all shadow-sm">
+                    <i class="fas fa-arrow-left text-sm"></i>
+                </a>
                 <div class="text-left">
                     <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Administrator Portal</p>
                     <h2 class="text-lg md:text-xl font-black text-navy-900 dark:text-white leading-none">Pengaturan Sistem</h2>
@@ -105,7 +108,7 @@
                         <div>
                             <label class="block text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2 ml-1">Jam Operasional</label>
                             @php $currentHours = $settings['operational_hours'] ?? 'Senin - Jumat, 08:00 - 16:00'; @endphp
-                            <select name="operational_hours" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-navy-950 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold text-navy-900 dark:text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all appearance-none cursor-pointer">
+                            <select name="operational_hours" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-navy-950 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold text-navy-900 dark:text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
                                 <option value="Senin - Jumat, 08:00 - 16:00" {{ $currentHours == 'Senin - Jumat, 08:00 - 16:00' ? 'selected' : '' }}>Senin - Jumat, 08:00 - 16:00</option>
                                 <option value="Senin - Jumat, 09:00 - 17:00" {{ $currentHours == 'Senin - Jumat, 09:00 - 17:00' ? 'selected' : '' }}>Senin - Jumat, 09:00 - 17:00</option>
                                 <option value="Senin - Sabtu, 08:00 - 16:00" {{ $currentHours == 'Senin - Sabtu, 08:00 - 16:00' ? 'selected' : '' }}>Senin - Sabtu, 08:00 - 16:00</option>
