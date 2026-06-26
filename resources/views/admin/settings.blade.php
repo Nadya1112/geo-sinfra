@@ -109,10 +109,8 @@
                             <label class="block text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2 ml-1">Jam Operasional</label>
                             @php $currentHours = $settings['operational_hours'] ?? 'Senin - Jumat, 08:00 - 16:00'; @endphp
                             <select name="operational_hours" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-navy-950 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold text-navy-900 dark:text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
-                                <option value="Senin - Jumat, 08:00 - 16:00" {{ $currentHours == 'Senin - Jumat, 08:00 - 16:00' ? 'selected' : '' }}>Senin - Jumat, 08:00 - 16:00</option>
-                                <option value="Senin - Jumat, 09:00 - 17:00" {{ $currentHours == 'Senin - Jumat, 09:00 - 17:00' ? 'selected' : '' }}>Senin - Jumat, 09:00 - 17:00</option>
-                                <option value="Senin - Sabtu, 08:00 - 16:00" {{ $currentHours == 'Senin - Sabtu, 08:00 - 16:00' ? 'selected' : '' }}>Senin - Sabtu, 08:00 - 16:00</option>
-                                <option value="Senin - Minggu, 24 Jam" {{ $currentHours == 'Senin - Minggu, 24 Jam' ? 'selected' : '' }}>Senin - Minggu, 24 Jam</option>
+                                <option value="Senin-Kamis: 08.00-16.30 | Jumat: 08.00-11.00" {{ $currentHours == 'Senin-Kamis: 08.00-16.30 | Jumat: 08.00-11.00' ? 'selected' : '' }}>Senin-Kamis: 08.00-16.30 | Jumat: 08.00-11.00</option>
+                                <option value="Senin - Jumat, 08.00 - 16.00" {{ $currentHours == 'Senin - Jumat, 08.00 - 16.00' ? 'selected' : '' }}>Senin - Jumat, 08.00 - 16.00</option>
                             </select>
                         </div>
                     </div>
@@ -132,7 +130,7 @@
 
                     <div class="pt-6 border-t border-slate-100 dark:border-white/10 flex justify-end">
                         <button type="submit" class="px-8 py-3.5 bg-gold-500 hover:bg-gold-600 text-navy-950 font-black rounded-xl shadow-xl shadow-gold-500/20 hover:shadow-gold-500/40 transition-all flex items-center gap-2">
-                            <i class="fas fa-save"></i> Simpan Pengaturan
+                            <i class="fas fa-save"></i> Simpan
                         </button>
                     </div>
                 </form>
