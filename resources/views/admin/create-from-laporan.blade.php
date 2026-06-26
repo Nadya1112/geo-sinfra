@@ -37,8 +37,8 @@
         .leaflet-control-zoom-out { border-bottom: none !important; }
     </style>
 <style>
-    @media (min-width: 768px) { html { zoom: 0.9 !important; } }
-    @media (max-width: 767px) { html { zoom: 0.5 !important; } }
+    
+    
 </style>
 </head>
 <body class="bg-navy-50 dark:bg-navy-950 text-slate-800 dark:text-slate-200 antialiased flex overflow-hidden h-screen transition-colors duration-300">

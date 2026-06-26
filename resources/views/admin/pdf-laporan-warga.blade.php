@@ -45,8 +45,8 @@
         .footer { position: fixed; bottom: -10px; left: 0; right: 0; text-align: center; font-size: 9px; color: #9ca3af; border-top: 1px solid #e5e7eb; padding-top: 6px; }
     </style>
 <style>
-    @media (min-width: 768px) { html { zoom: 0.9 !important; } }
-    @media (max-width: 767px) { html { zoom: 0.5 !important; } }
+    
+    
 </style>
 </head>
 <body>
