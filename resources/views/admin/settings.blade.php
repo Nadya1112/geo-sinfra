@@ -1,14 +1,80 @@
-@extends('layouts.app') <!-- Pastikan layout ini sesuai dengan yang lain -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengaturan | Admin SINFRA</title>
+    <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        navy: {
+                            50: '#f4f4fa',
+                            100: '#e9e9f3',
+                            200: '#c7c8e3',
+                            500: '#6366f1',
+                            800: '#1e1b4b',
+                            900: '#0f0e2c',
+                            950: '#070617',
+                        },
+                        gold: {
+                            50: '#fdfbf7',
+                            100: '#fbf7ed',
+                            500: '#c5a059',
+                            600: '#b38f4a',
+                            700: '#9d7c3d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
 
-@section('content')
-<div class="min-h-screen bg-navy-50 dark:bg-navy-950 text-slate-800 dark:text-slate-200 transition-colors duration-300">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        html { transition: background-color 0.3s ease, color 0.3s ease; }
+        @media (min-width: 768px) { html { font-size: 14px; } }
+        @media (max-width: 767px) { html { font-size: 12px; } }
+    </style>
+</head>
+<body class="bg-navy-50 dark:bg-navy-950 text-slate-800 dark:text-slate-200 antialiased selection:bg-gold-500 selection:text-white flex overflow-hidden h-screen transition-colors duration-300">
+
     @include('admin.partials.sidebar')
+
     <main class="flex-1 overflow-y-auto custom-scrollbar flex flex-col h-screen relative">
         <header class="sticky top-0 bg-white/80 dark:bg-navy-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/5 px-4 md:px-8 py-4 flex justify-between items-center z-40">
             <div class="flex items-center gap-2 md:gap-4">
                 <div class="text-left">
                     <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Administrator Portal</p>
                     <h2 class="text-lg md:text-xl font-black text-navy-900 dark:text-white leading-none">Pengaturan Sistem</h2>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-3 md:gap-6">
+                <div class="text-right">
+                    <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter">{{ now()->translatedFormat('d M Y') }}</p>
                 </div>
             </div>
         </header>
@@ -64,5 +130,15 @@
             </div>
         </div>
     </main>
-</div>
-@endsection
+    
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' WITA';
+            document.getElementById('mini-clock').textContent = timeString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
