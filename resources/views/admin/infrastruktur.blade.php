@@ -134,7 +134,7 @@
                         <thead>
                             <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
                                 <th class="px-5 py-4 text-xs font-black text-gold-500 tracking-widest text-center w-12">NO</th>
-                                <th class="px-5 py-4 text-xs font-black text-gold-500 tracking-widest text-center w-20">FOTO</th>
+                                <th class="hidden md:table-cell px-5 py-4 text-xs font-black text-gold-500 tracking-widest text-center w-20">FOTO</th>
                                 <th class="px-5 py-4 text-xs font-black text-gold-500 tracking-widest">INFRASTRUKTUR</th>
                                 <th class="px-5 py-4 text-xs font-black text-gold-500 tracking-widest">WILAYAH</th>
                                 <th class="px-5 py-4 text-xs font-black text-gold-500 tracking-widest text-center">ANALISIS AI</th>
@@ -181,7 +181,7 @@
                                 </td>
 
                                 {{-- Foto --}}
-                                <td class="px-5 py-4 text-center">
+                                <td class="hidden md:table-cell px-5 py-4 text-center">
                                     <div class="w-14 h-14 rounded-2xl overflow-hidden border-2 border-slate-100 shadow-sm mx-auto bg-slate-100 flex items-center justify-center">
                                         @if($inf->foto_terbaru)
                                             @php $cleanPath = str_replace('\\', '/', $inf->foto_terbaru); @endphp
