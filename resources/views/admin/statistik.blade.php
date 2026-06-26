@@ -89,7 +89,7 @@
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
 
                 {{-- Total Infrastruktur --}}
-                <div class="stat-card bg-white rounded-3xl border border-slate-100 shadow-sm p-6">
+                <a href="{{ route('admin.infrastruktur') }}" class="block stat-card bg-white rounded-3xl border border-slate-100 shadow-sm p-6 cursor-pointer">
                     <div class="flex items-start justify-between mb-4">
                         <div class="w-11 h-11 bg-navy-900 rounded-2xl flex items-center justify-center shadow-md shadow-navy-900/20">
                             <i class="fas fa-road text-gold-500"></i>
@@ -99,10 +99,10 @@
                     <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Total Infrastruktur</p>
                     <h3 class="text-3xl font-black text-navy-900">{{ $jumlahInfrastruktur }}</h3>
                     <p class="text-xs text-slate-400 font-semibold mt-1">Objek terdaftar</p>
-                </div>
+                </a>
 
                 {{-- Analisis AI --}}
-                <div class="stat-card bg-white rounded-3xl border border-slate-100 shadow-sm p-6">
+                <a href="{{ route('admin.simulasi-ai') }}" class="block stat-card bg-white rounded-3xl border border-slate-100 shadow-sm p-6 cursor-pointer">
                     <div class="flex items-start justify-between mb-4">
                         <div class="w-11 h-11 bg-gold-500 rounded-2xl flex items-center justify-center shadow-md shadow-gold-500/20">
                             <i class="fas fa-brain text-white"></i>
@@ -112,10 +112,10 @@
                     <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Teranalisis AI</p>
                     <h3 class="text-3xl font-black text-navy-900">{{ $jumlahAnalisis }}</h3>
                     <p class="text-xs text-slate-400 font-semibold mt-1">Data diproses</p>
-                </div>
+                </a>
 
                 {{-- Surveyor & Tim Teknis --}}
-                <div class="stat-card bg-white rounded-3xl border border-slate-100 shadow-sm p-6">
+                <a href="{{ route('admin.users') }}" class="block stat-card bg-white rounded-3xl border border-slate-100 shadow-sm p-6 cursor-pointer">
                     <div class="flex items-start justify-between mb-4">
                         <div class="w-11 h-11 bg-navy-500 rounded-2xl flex items-center justify-center shadow-md shadow-navy-500/20">
                             <i class="fas fa-users text-white"></i>
@@ -125,10 +125,10 @@
                     <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Surveyor & Tim Teknis</p>
                     <h3 class="text-3xl font-black text-navy-900">{{ $jumlahSurveyor + $jumlahTimTeknis }}</h3>
                     <p class="text-xs text-slate-400 font-semibold mt-1">{{ $jumlahSurveyor }} surveyor · {{ $jumlahTimTeknis }} tim_teknis</p>
-                </div>
+                </a>
 
                 {{-- Wilayah --}}
-                <div class="stat-card bg-white rounded-3xl border border-slate-100 shadow-sm p-6">
+                <a href="{{ route('admin.wilayah') }}" class="block stat-card bg-white rounded-3xl border border-slate-100 shadow-sm p-6 cursor-pointer">
                     <div class="flex items-start justify-between mb-4">
                         <div class="w-11 h-11 bg-emerald-500 rounded-2xl flex items-center justify-center shadow-md shadow-emerald-500/20">
                             <i class="fas fa-map text-white"></i>
@@ -138,7 +138,7 @@
                     <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Wilayah</p>
                     <h3 class="text-3xl font-black text-navy-900">{{ $jumlahWilayah }}</h3>
                     <p class="text-xs text-slate-400 font-semibold mt-1">Kecamatan terpetakan</p>
-                </div>
+                </a>
             </div>
 
             {{-- ── Grid Utama ── --}}
