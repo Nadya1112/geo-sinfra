@@ -154,7 +154,7 @@
                                     </div>
                                 </td>
                                 <td class="px-4 py-3">
-                                    <span class="px-3 py-1 bg-{{$badgeColor}}-50 text-{{$badgeColor}}-600 text-xs font-black uppercase tracking-widest rounded-lg border border-{{$badgeColor}}-100 inline-flex items-center gap-2 shadow-sm">
+                                    <span class="px-2.5 py-1 bg-{{$badgeColor}}-50 text-{{$badgeColor}}-600 text-[10px] font-bold uppercase tracking-wider rounded-lg border border-{{$badgeColor}}-100 inline-flex items-center gap-1.5 shadow-sm">
                                         <i class="fas {{ $icon }}"></i> {{ $actionName }}
                                     </span>
                                 </td>
