@@ -106,7 +106,6 @@
                             <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Pengguna</th>
                             <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Aktivitas</th>
                             <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Kategori</th>
-                            <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest text-right">IP Address</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-50 text-xs font-medium">
@@ -160,11 +159,10 @@
                                     </span>
                                 </td>
                                 <td class="px-4 py-3 font-bold text-navy-800 uppercase text-xs">{{ $activity->type }} {!! $activity->reference_id ? "<span class='text-slate-400 text-xs'>(ID: {$activity->reference_id})</span>" : "" !!}</td>
-                                <td class="px-4 py-3 text-right font-mono text-sm text-slate-400 group-hover:text-slate-600">{{ $activity->ip_address ?? '127.0.0.1' }}</td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="px-8 py-10 text-center text-xs font-semibold text-gray-400">
+                                <td colspan="4" class="px-8 py-10 text-center text-sm font-semibold text-gray-400">
                                     <i class="fas fa-history text-2xl mb-2 block text-gray-300"></i>
                                     Belum ada aktivitas yang direkam oleh sistem.
                                 </td>
