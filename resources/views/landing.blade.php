@@ -876,6 +876,10 @@
                             <i class="fas fa-phone-alt text-gold-500"></i>
                             <span class="text-sm text-slate-400">(0511) 3365592</span>
                         </li>
+                        <li class="flex items-center gap-4">
+                            <i class="fas fa-clock text-gold-500"></i>
+                            <span class="text-sm text-slate-400">{{ \App\Helpers\SettingHelper::get('operational_hours', 'Senin - Kamis, 08.00 - 16.30') }}</span>
+                        </li>
                     </ul>
                 </div>
                 
