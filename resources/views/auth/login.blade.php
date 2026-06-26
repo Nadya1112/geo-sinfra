@@ -128,7 +128,6 @@
                 </div>
 
                 <div class="mb-8 text-center">
-                    <h2 class="text-xl md:text-2xl font-black text-navy-900 mb-1.5 tracking-tight hidden md:block">Masuk</h2>
                     <p class="text-slate-400 font-bold text-[9px] md:text-xs uppercase tracking-wider">Silakan masukkan akun Anda</p>
                 </div>
 
