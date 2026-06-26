@@ -87,7 +87,7 @@
     <div class="flex flex-col md:flex-row min-h-screen">
         
         <!-- Left Banner (Premium Dark UI) -->
-        <div class="w-full md:w-1/2 bg-premium-mesh flex flex-col items-center justify-center p-6 md:p-10 text-center relative overflow-hidden">
+        <div class="hidden md:flex w-full md:w-1/2 bg-premium-mesh flex-col items-center justify-center p-6 md:p-10 text-center relative overflow-hidden">
             <div class="grid-pattern"></div>
             
             <!-- Floating Back Button -->
@@ -111,7 +111,13 @@
         </div>
 
         <!-- Right Login Form -->
-        <div class="w-full md:w-1/2 bg-white flex flex-col items-center justify-center p-6 md:p-10 ">
+        <div class="w-full md:w-1/2 bg-white flex flex-col items-center justify-center p-6 md:p-10 relative">
+            
+            <!-- Mobile Back Button -->
+            <a href="{{ url('/') }}" class="md:hidden absolute top-6 left-6 z-50 w-10 h-10 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 flex items-center justify-center text-slate-500 hover:text-navy-900 transition-all shadow-sm">
+                <i class="fas fa-arrow-left text-xs"></i>
+            </a>
+
             <div class="w-full max-w-[400px]">
                 
                 <div class="mb-8 text-center">
