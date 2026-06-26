@@ -143,7 +143,10 @@
                             @endphp
                             <tr class="hover:bg-slate-50/50 transition-colors group">
                                 <td class="px-4 py-3 text-xs text-slate-500 whitespace-nowrap">
-                                    <i class="fas fa-clock mr-2 text-slate-300"></i> {{ $activity->created_at->format('Y-m-d H:i:s') }}
+                                    <div class="flex flex-col gap-0.5">
+                                        <span class="font-bold text-navy-900">{{ $activity->created_at->format('Y-m-d') }}</span>
+                                        <span class="text-[10px] text-slate-400"><i class="fas fa-clock mr-1 text-slate-300"></i> {{ $activity->created_at->format('H:i:s') }}</span>
+                                    </div>
                                 </td>
                                 <td class="px-4 py-3">
                                     <div>
