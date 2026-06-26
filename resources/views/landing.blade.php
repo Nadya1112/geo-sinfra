@@ -433,16 +433,16 @@
         <div class="grid-pattern"></div>
         <div class="max-w-7xl mx-auto px-6 md:px-8 w-full relative z-10">
             <div class="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
-                <div class="max-w-3xl text-center md:text-left">
-                    <h3 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white tracking-tight leading-[1.1] mb-3 md:mb-5">
+                <div class="max-w-2xl text-center md:text-left">
+                    <h3 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1] mb-3 md:mb-5">
                         <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-500 via-yellow-400 to-[#6366f1] block md:inline whitespace-nowrap">GEO-SINFRA</span>
                     </h3>
-                    <p class="text-slate-300 font-semibold text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl leading-relaxed mb-4 md:mb-5 max-w-2xl mx-auto md:mx-0">
+                    <p class="text-slate-300 font-semibold text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed mb-4 md:mb-5 max-w-xl mx-auto md:mx-0">
                         Sistem Informasi Pemetaan Infrastruktur Permukiman 
                         <br class="hidden md:block" />
                         Kota Banjarmasin
                     </p>
-                    <p class="text-slate-400 font-medium text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed mb-8 md:mb-10 max-w-2xl mx-auto md:mx-0">
+                    <p class="text-slate-400 font-medium text-xs sm:text-sm md:text-base leading-relaxed mb-8 md:mb-10 max-w-xl mx-auto md:mx-0">
                         Sebuah platform cerdas berbasis WebGIS dan Kecerdasan Buatan (AI) yang dirancang untuk memantau, melaporkan, dan menganalisis kondisi infrastruktur di seluruh wilayah Kota Banjarmasin secara real-time.
                     </p>
                     <div class="flex flex-col sm:flex-row justify-center md:justify-start gap-3 md:gap-4 max-w-xs mx-auto sm:max-w-none">
@@ -456,7 +456,7 @@
                 </div>
                 
                 <!-- Bouncing Logo -->
-                <div class="hidden md:flex justify-center items-center w-64 h-64 lg:w-80 lg:h-80 animate-bounce">
+                <div class="hidden md:flex justify-center items-center w-56 h-56 lg:w-72 lg:h-72 animate-bounce">
                     <img src="{{ asset('logo_geo-sinfra.png') }}" alt="Logo Geo-Sinfra" class="w-full h-full object-contain drop-shadow-[0_10px_20px_rgba(255,255,255,0.2)]">
                 </div>
             </div>
