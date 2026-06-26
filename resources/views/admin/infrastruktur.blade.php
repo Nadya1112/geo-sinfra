@@ -101,7 +101,7 @@
                             name="search"
                             value="{{ request('search') }}"
                             placeholder="Cari infrastruktur..." 
-                            class="flex-1 pl-4 pr-4 py-2.5 bg-white border border-slate-100 text-xs font-semibold focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm w-full">
+                            class="flex-1 pl-4 pr-4 py-2.5 bg-white border border-slate-100 text-xs font-semibold focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm">
                         <button type="submit" class="bg-white border-y border-r border-slate-100 px-5 py-2.5 rounded-r-2xl hover:bg-slate-50 transition-all shadow-sm group shrink-0">
                             <i class="fas fa-search text-slate-400 group-hover:text-gold-500 transition-colors text-xs"></i>
                         </button>
