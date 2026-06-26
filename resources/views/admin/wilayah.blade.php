@@ -56,7 +56,7 @@
     @include('admin.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden text-left font-sans">
-        <header class="bg-white/85 dark:bg-navy-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/5 px-8 py-5 flex justify-between items-center z-40 text-left transition-colors duration-300">
+        <header class="bg-white/85 dark:bg-navy-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/5 px-4 pl-16 md:px-8 py-4 md:py-5 flex flex-col md:flex-row gap-4 md:gap-0 md:justify-between items-start md:items-center z-40 text-left transition-colors duration-300">
             <div class="flex items-center gap-4 text-left">
                 <a href="{{ route('admin.dashboard') }}" 
                    class="w-10 h-10 bg-white border border-slate-100 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/20 hover:shadow-lg hover:shadow-gold-500/5 transition-all group"
@@ -65,7 +65,7 @@
                 </a>
 
                 <div class="text-left">
-                    <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
+                    <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Administrator Portal</p>
                     <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Manajemen Wilayah</h2>
                 </div>
             </div>
@@ -126,7 +126,7 @@
             </div>
 
             <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden mb-10">
-                <table class="w-full text-left border-collapse">
+                <div class="overflow-x-auto w-full custom-scrollbar"><table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
                             <th class="px-8 py-5 text-xs font-black text-gold-500 uppercase tracking-widest w-24 text-center">No.</th>
@@ -182,7 +182,7 @@
                         </tr>
                         @endforelse
                     </tbody>
-                </table>
+                </table></div>
                 
                 @if(request('show') != 'all' && isset($wilayah) && $wilayah instanceof \Illuminate\Pagination\LengthAwarePaginator)
                     <div class="px-8 py-4 border-t border-gray-50 bg-gray-50/10">

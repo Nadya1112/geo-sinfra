@@ -44,13 +44,13 @@
     @include('admin.partials.sidebar')
 
     <main class="flex-1 overflow-y-auto custom-scrollbar text-left relative">
-        <header class="sticky top-0 bg-white/80 backdrop-blur-xl border-b border-slate-100 px-8 py-5 flex justify-between items-center z-40 text-left shadow-sm">
+        <header class="sticky top-0 bg-white/80 backdrop-blur-xl border-b border-slate-100 px-4 pl-16 md:px-8 py-4 md:py-5 flex flex-col md:flex-row gap-4 md:gap-0 md:justify-between items-start md:items-center z-40 text-left shadow-sm">
             <div class="flex items-center gap-4">
                 <a href="{{ route('admin.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-white text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 transition-all border border-slate-200 hover:border-gold-200">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div class="text-left">
-                    <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Playground</p>
+                    <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Playground</p>
                     <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Simulasi Model AI</h2>
                 </div>
             </div>
@@ -77,7 +77,7 @@
             </div>
         </header>
 
-        <div class="p-8 text-left">
+        <div class="p-4 md:p-8 text-left">
             <div class="max-w-4xl mx-auto space-y-6 animate-fade-in">
 
                 <!-- Header Section -->
@@ -159,7 +159,7 @@
                             <div id="result-success" class="flex-1 flex flex-col justify-center hidden space-y-6">
                                 <!-- Status Badge -->
                                 <div class="text-center">
-                                    <span class="text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-2 block">Klasifikasi Kondisi</span>
+                                    <span class="text-xs font-black text-slate-400 uppercase tracking-wider mb-2 block">Klasifikasi Kondisi</span>
                                     <div id="pred-badge" class="inline-block px-6 py-2 rounded-xl text-sm font-black uppercase tracking-wider text-white shadow-lg">
                                         BAIK
                                     </div>

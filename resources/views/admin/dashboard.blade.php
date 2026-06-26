@@ -78,9 +78,9 @@
     @include('admin.partials.sidebar')
 
     <main class="flex-1 overflow-y-auto custom-scrollbar text-left">
-        <header class="sticky top-0 bg-white/80 dark:bg-navy-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/5 px-8 py-5 flex justify-between items-center z-40 text-left transition-colors duration-300">
+        <header class="sticky top-0 bg-white/80 dark:bg-navy-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/5 px-4 pl-16 md:px-8 py-4 md:py-5 flex flex-col md:flex-row gap-4 md:gap-0 md:justify-between items-start md:items-center z-40 text-left transition-colors duration-300">
             <div class="text-left">
-                <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
+                <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Administrator Portal</p>
                 <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Beranda Utama</h2>
             </div>
 
@@ -106,7 +106,7 @@
             </div>
         </header>
 
-        <div class="p-8 text-left">
+        <div class="p-4 md:p-8 text-left">
             @if(session('success'))
             <div class="mb-6 px-6 py-4 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-2xl flex items-center gap-3 shadow-sm">
                 <i class="fas fa-check-circle"></i>
