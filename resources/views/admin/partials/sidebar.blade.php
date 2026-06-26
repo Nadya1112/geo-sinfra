@@ -339,3 +339,4 @@
     // Jalankan pengecekan setiap 15 detik
     setInterval(checkNewLaporan, 15000);
 </script>
+
