@@ -120,6 +120,14 @@
 
             <div class="w-full max-w-[400px]">
                 
+                <!-- Mobile Logo -->
+                <div class="md:hidden flex flex-col items-center mb-6">
+                    <div class="w-16 h-16 mb-3 shadow-lg rounded-full overflow-hidden border border-slate-100 bg-white">
+                        <img src="{{ asset('logo_geo-sinfra.png') }}" class="w-full h-full object-contain" alt="Logo">
+                    </div>
+                    <h1 class="text-lg font-black text-navy-900 tracking-tight uppercase">GEO-SINFRA</h1>
+                </div>
+
                 <div class="mb-8 text-center">
                     <h2 class="text-xl md:text-2xl font-black text-navy-900 mb-1.5 tracking-tight">Masuk</h2>
                     <p class="text-slate-400 font-bold text-[10px] md:text-xs uppercase tracking-widest">Silakan masukkan akun Anda</p>
