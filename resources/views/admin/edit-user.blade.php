@@ -53,7 +53,7 @@
         @include('admin.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden text-left font-sans">
-        <header class="bg-white/85 dark:bg-navy-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/5 px-4 pl-16 md:px-8 py-4 md:py-5 flex flex-col md:flex-row gap-4 md:gap-0 md:justify-between items-start md:items-center z-40 text-left transition-colors duration-300">
+        <header class="bg-white/85 dark:bg-navy-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/5 px-4 pl-16 md:px-8 py-4 flex justify-between items-center z-40 text-left transition-colors duration-300">
             <div class="flex items-center gap-4 text-left">
                 <a href="{{ route('admin.users') }}" 
                    class="w-10 h-10 bg-white border border-slate-100 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/20 hover:shadow-lg hover:shadow-gold-500/5 transition-all group"
@@ -67,13 +67,13 @@
             </div>
 
             <div class="flex items-center gap-6 text-left">
-                <div class="text-right hidden sm:block">
+                <div class="text-right">
                     <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('d M Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
-                    <a href="{{ route('admin.profile') }}" class="text-right group">
+                    <a href="{{ route('admin.profile') }}" class="text-right group hidden md:block">
                         <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
                         <p class="text-xs font-bold text-emerald-500 uppercase mt-1">Online</p>
                     </a>

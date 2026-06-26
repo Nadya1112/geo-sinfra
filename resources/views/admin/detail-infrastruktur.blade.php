@@ -54,7 +54,7 @@
     <main class="flex-1 flex flex-col h-screen overflow-hidden">
 
         {{-- ── Header ── --}}
-        <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 px-4 pl-16 md:px-8 py-4 md:py-5 flex flex-col md:flex-row gap-4 md:gap-0 md:justify-between items-start md:items-center z-40 shrink-0">
+        <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 px-4 pl-16 md:px-8 py-4 flex justify-between items-center z-40 shrink-0">
             <div class="flex items-center gap-4">
                 <a href="{{ route('admin.infrastruktur') }}"
                    class="w-10 h-10 bg-white border border-slate-100 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/30 hover:shadow-md transition-all group">
@@ -85,10 +85,10 @@
                 <div class="h-8 w-[1px] bg-slate-100"></div>
 
                 {{-- SLOT 2: Jam (Realtime jika belum verifikasi, Waktu Verifikasi jika sudah) --}}
-                <div class="text-right hidden sm:block">
+                <div class="text-right">
                     @if(($inf->status_verifikasi ?? 'Pending') != 'Verified')
                         <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                        <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('d M Y') }}</p>
                     @else
                         <p class="text-sm font-black text-navy-900">{{ \Carbon\Carbon::parse($inf->updated_at)->translatedFormat('H:i') }} WITA</p>
                         <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ \Carbon\Carbon::parse($inf->updated_at)->translatedFormat('l, d F Y') }}</p>
@@ -98,7 +98,7 @@
 
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
-                    <a href="{{ route('admin.profile') }}" class="text-right group">
+                    <a href="{{ route('admin.profile') }}" class="text-right group hidden md:block">
                         <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
                         <p class="text-xs font-bold text-emerald-500 uppercase mt-1">Online</p>
                     </a>

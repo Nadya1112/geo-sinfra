@@ -78,20 +78,20 @@
     @include('admin.partials.sidebar')
 
     <main class="flex-1 overflow-y-auto custom-scrollbar text-left">
-        <header class="sticky top-0 bg-white/80 dark:bg-navy-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/5 px-4 pl-16 md:px-8 py-4 md:py-5 flex flex-col md:flex-row gap-4 md:gap-0 md:justify-between items-start md:items-center z-40 text-left transition-colors duration-300">
+        <header class="sticky top-0 bg-white/80 dark:bg-navy-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/5 px-4 pl-16 md:px-8 py-4 flex justify-between items-center z-40 text-left transition-colors duration-300">
             <div class="text-left">
                 <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Administrator Portal</p>
                 <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Beranda Utama</h2>
             </div>
 
-            <div class="flex items-center gap-6">
-                <div class="text-right hidden sm:block">
+            <div class="flex items-center gap-3 md:gap-6">
+                <div class="text-right">
                     <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter">{{ now()->translatedFormat('d M Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100 dark:bg-white/10"></div>
                 <div class="flex items-center gap-3">
-                    <a href="{{ route('admin.profile') }}" class="text-right group">
+                    <a href="{{ route('admin.profile') }}" class="text-right group hidden md:block">
                         <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
                         <p class="text-xs font-bold text-emerald-500 uppercase mt-1">Online</p>
                     </a>
@@ -248,7 +248,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
                     
                     <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm flex items-center justify-between group hover:shadow-md transition-shadow">
-                        <div class="flex items-center gap-6">
+                        <div class="flex items-center gap-3 md:gap-6">
                             <div class="w-16 h-16 bg-blue-50 text-blue-500 rounded-2xl flex items-center justify-center border border-blue-100 shadow-sm group-hover:scale-105 transition-transform">
                                 <i class="fas fa-database text-3xl"></i>
                             </div>
@@ -263,7 +263,7 @@
                     </div>
 
                     <a href="{{ route('admin.activity') }}" class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm flex items-center justify-between group hover:shadow-md transition-shadow">
-                        <div class="flex items-center gap-6">
+                        <div class="flex items-center gap-3 md:gap-6">
                             <div class="w-16 h-16 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center border border-emerald-100 shadow-sm group-hover:scale-105 transition-transform">
                                 <i class="fas fa-shield-alt text-3xl"></i>
                             </div>

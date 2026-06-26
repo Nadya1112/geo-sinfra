@@ -39,7 +39,7 @@
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden">
         {{-- ── Header ── --}}
-        <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 px-4 pl-16 md:px-8 py-4 md:py-5 flex flex-col md:flex-row gap-4 md:gap-0 md:justify-between items-start md:items-center z-40 shrink-0">
+        <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 px-4 pl-16 md:px-8 py-4 flex justify-between items-center z-40 shrink-0">
             <div class="flex items-center gap-4">
                 <a href="{{ route('admin.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-white border border-slate-200 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 hover:border-gold-200 transition-all shadow-sm">
                     <i class="fas fa-arrow-left text-sm"></i>
@@ -50,10 +50,10 @@
                 </div>
             </div>
             
-            <div class="flex items-center gap-6">
-                <div class="text-right hidden sm:block">
+            <div class="flex items-center gap-3 md:gap-6">
+                <div class="text-right">
                     <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('d M Y') }}</p>
                 </div>
             </div>
         </header>
