@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riwayat Data Saya | GEO-SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -48,21 +48,21 @@
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
-                    <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Manajemen Laporan</p>
+                    <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Manajemen Laporan</p>
                     <h2 class="text-xl font-black text-navy-900 dark:text-white tracking-tight">Riwayat Survey Anda</h2>
                 </div>
             </div>
 
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
                     <div class="text-right">
-                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase">{{ auth()->user()->name }}</p>
-                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase">{{ auth()->user()->name }}</p>
+                        <p class="text-xs font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
                     </div>
                     <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-navy-800 overflow-hidden shadow-md">
                         @if(auth()->user()->profile_photo)
@@ -112,13 +112,13 @@
                         <table class="w-full text-left border-collapse">
                             <thead>
                                 <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
-                                    <th class="px-4 py-2 text-[10px] font-black text-gold-500 uppercase tracking-widest text-center w-12">NO</th>
-                                    <th class="px-4 py-2 text-[10px] font-black text-gold-500 uppercase tracking-widest w-20 text-center">FOTO</th>
-                                    <th class="px-4 py-2 text-[10px] font-black text-gold-500 uppercase tracking-widest">INFRASTRUKTUR</th>
-                                    <th class="px-4 py-2 text-[10px] font-black text-gold-500 uppercase tracking-widest">WILAYAH</th>
-                                    <th class="px-4 py-2 text-[10px] font-black text-gold-500 uppercase tracking-widest text-center">STATUS VALIDASI</th>
-                                    <th class="px-4 py-2 text-[10px] font-black text-gold-500 uppercase tracking-widest text-center">STATUS KONDISI</th>
-                                    <th class="px-4 py-2 text-[10px] font-black text-gold-500 uppercase tracking-widest text-center">AKSI</th>
+                                    <th class="px-4 py-2 text-xs font-black text-gold-500 uppercase tracking-widest text-center w-12">NO</th>
+                                    <th class="px-4 py-2 text-xs font-black text-gold-500 uppercase tracking-widest w-20 text-center">FOTO</th>
+                                    <th class="px-4 py-2 text-xs font-black text-gold-500 uppercase tracking-widest">INFRASTRUKTUR</th>
+                                    <th class="px-4 py-2 text-xs font-black text-gold-500 uppercase tracking-widest">WILAYAH</th>
+                                    <th class="px-4 py-2 text-xs font-black text-gold-500 uppercase tracking-widest text-center">STATUS VALIDASI</th>
+                                    <th class="px-4 py-2 text-xs font-black text-gold-500 uppercase tracking-widest text-center">STATUS KONDISI</th>
+                                    <th class="px-4 py-2 text-xs font-black text-gold-500 uppercase tracking-widest text-center">AKSI</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-50">
@@ -141,7 +141,7 @@
                                             {{-- Indikator Verified (Ceklis Hijau) --}}
                                             @if($item->status_verifikasi == 'Verified')
                                             <div class="absolute -top-1 -right-1 w-5 h-5 bg-emerald-500 rounded-full border-[2px] border-white flex items-center justify-center shadow-sm">
-                                                <i class="fas fa-check text-[8px] text-white"></i>
+                                                <i class="fas fa-check text-xs text-white"></i>
                                             </div>
                                             @endif
                                         </div>
@@ -150,18 +150,18 @@
                                     {{-- NAMA INFRASTRUKTUR --}}
                                     <td class="px-4 py-2">
                                         <p class="text-xs font-black text-navy-900 dark:text-white uppercase tracking-tight mb-0.5">{{ $item->nama_infrastruktur ?? $item->nama_objek }}</p>
-                                        <span class="inline-flex px-1.5 py-0.5 bg-navy-50 dark:bg-navy-900 text-navy-600 rounded-md text-[8px] font-black uppercase tracking-widest">{{ ucfirst($item->jenis) }}</span>
+                                        <span class="inline-flex px-1.5 py-0.5 bg-navy-50 dark:bg-navy-900 text-navy-600 rounded-md text-xs font-black uppercase tracking-widest">{{ ucfirst($item->jenis) }}</span>
                                     </td>
 
                                     {{-- LOKASI --}}
                                     <td class="px-4 py-2">
                                         <div class="flex items-center gap-2">
                                             <div class="w-6 h-6 rounded-md bg-gold-50 text-gold-500 flex items-center justify-center shrink-0">
-                                                <i class="fas fa-map-marker-alt text-[10px]"></i>
+                                                <i class="fas fa-map-marker-alt text-xs"></i>
                                             </div>
                                             <div>
-                                                <p class="text-[10px] font-black text-navy-900 dark:text-white uppercase tracking-wider">{{ $item->kelurahan ? $item->kelurahan->nama_kelurahan : '-' }}</p>
-                                                <p class="text-[8px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">
+                                                <p class="text-xs font-black text-navy-900 dark:text-white uppercase tracking-wider">{{ $item->kelurahan ? $item->kelurahan->nama_kelurahan : '-' }}</p>
+                                                <p class="text-xs text-slate-400 font-bold uppercase tracking-widest mt-0.5">
                                                     KEC. {{ $item->kelurahan && $item->kelurahan->kecamatan ? $item->kelurahan->kecamatan->nama_kecamatan : '-' }}
                                                 </p>
                                             </div>
@@ -172,15 +172,15 @@
                                     <td class="px-4 py-2 text-center">
                                         @if($item->status_validasi == 'Rejected')
                                             <div class="inline-flex flex-col items-center">
-                                                <span class="inline-flex px-2 py-0.5 bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-500/20 rounded-md text-[8px] font-black uppercase tracking-widest shadow-sm mb-0.5">Ditolak</span>
-                                                <button onclick="alert('Alasan Penolakan: {{ addslashes($item->alasan_penolakan) }}')" class="text-[9px] font-bold text-red-500 hover:text-red-700 underline cursor-pointer">Lihat Alasan</button>
+                                                <span class="inline-flex px-2 py-0.5 bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-500/20 rounded-md text-xs font-black uppercase tracking-widest shadow-sm mb-0.5">Ditolak</span>
+                                                <button onclick="alert('Alasan Penolakan: {{ addslashes($item->alasan_penolakan) }}')" class="text-xs font-bold text-red-500 hover:text-red-700 underline cursor-pointer">Lihat Alasan</button>
                                             </div>
                                         @elseif($item->status_validasi == 'Validated')
-                                            <span class="inline-flex px-2 py-1 bg-emerald-100 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20 rounded-lg text-[9px] font-black uppercase tracking-widest shadow-sm">Di-ACC</span>
+                                            <span class="inline-flex px-2 py-1 bg-emerald-100 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20 rounded-lg text-xs font-black uppercase tracking-widest shadow-sm">Di-ACC</span>
                                         @elseif($item->status_verifikasi == 'Verified')
-                                            <span class="inline-flex px-2 py-1 bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20 rounded-lg text-[9px] font-black uppercase tracking-widest shadow-sm">Verified</span>
+                                            <span class="inline-flex px-2 py-1 bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20 rounded-lg text-xs font-black uppercase tracking-widest shadow-sm">Verified</span>
                                         @else
-                                            <span class="inline-flex px-2 py-1 bg-slate-100 dark:bg-navy-900 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-white/20 rounded-lg text-[9px] font-black uppercase tracking-widest shadow-sm">Pending</span>
+                                            <span class="inline-flex px-2 py-1 bg-slate-100 dark:bg-navy-900 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-white/20 rounded-lg text-xs font-black uppercase tracking-widest shadow-sm">Pending</span>
                                         @endif
                                     </td>
 
@@ -199,18 +199,18 @@
                                                             $style = $labelMap[$item->analisis->label_prioritas] ?? ['bg' => 'bg-slate-50 dark:bg-[#0f0e2c]', 'text' => 'text-slate-600 dark:text-slate-400', 'icon' => 'fa-info-circle'];
                                                         @endphp
                                                         <div class="flex items-center gap-1.5 px-3 py-1.5 {{ $style['bg'] }}">
-                                                            <i class="fas {{ $style['icon'] }} {{ $style['text'] }} text-[10px]"></i>
-                                                            <span class="text-[10px] font-black {{ $style['text'] }} uppercase tracking-wider">{{ $item->analisis->label_prioritas }}</span>
+                                                            <i class="fas {{ $style['icon'] }} {{ $style['text'] }} text-xs"></i>
+                                                            <span class="text-xs font-black {{ $style['text'] }} uppercase tracking-wider">{{ $item->analisis->label_prioritas }}</span>
                                                         </div>
                                                     @else
                                                         <div class="flex items-center gap-1 px-3 py-1.5 bg-slate-50 dark:bg-[#0f0e2c]">
-                                                            <span class="text-[10px] font-black text-slate-500 uppercase tracking-wider">Menunggu Status</span>
+                                                            <span class="text-xs font-black text-slate-500 uppercase tracking-wider">Menunggu Status</span>
                                                         </div>
                                                     @endif
                                                 </div>
                                             </div>
                                         @else
-                                            <p class="text-[9px] text-slate-400 font-bold uppercase text-center">-</p>
+                                            <p class="text-xs text-slate-400 font-bold uppercase text-center">-</p>
                                         @endif
                                     </td>
 
@@ -218,10 +218,10 @@
                                     <td class="px-4 py-2 text-center">
                                         <div class="flex items-center justify-center gap-1.5">
                                             <a href="{{ route('surveyor.infrastruktur.edit', $item->id_infrastruktur) }}" class="w-7 h-7 flex items-center justify-center bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 text-slate-400 rounded-md hover:bg-gold-500 hover:text-white hover:border-gold-500 hover:shadow-sm transition-all cursor-pointer" title="Edit Data">
-                                                <i class="fas fa-pen text-[10px]"></i>
+                                                <i class="fas fa-pen text-xs"></i>
                                             </a>
                                             <a href="{{ route('surveyor.infrastruktur.show', $item->id_infrastruktur) }}" class="w-7 h-7 flex items-center justify-center bg-navy-900 text-gold-500 rounded-md hover:bg-navy-950 hover:text-white transition-all shadow-sm cursor-pointer" title="Lihat Detail">
-                                                <i class="fas fa-eye text-[10px]"></i>
+                                                <i class="fas fa-eye text-xs"></i>
                                             </a>
 
                                             {{-- Tombol Hapus: hanya muncul jika data masih Pending --}}
@@ -230,7 +230,7 @@
                                                 onclick="konfirmasiHapus({{ $item->id_infrastruktur }}, '{{ addslashes($item->nama_objek ?? $item->nama_infrastruktur) }}')"
                                                 class="w-7 h-7 flex items-center justify-center bg-white dark:bg-[#1e1b4b] border border-red-200 text-red-400 rounded-md hover:bg-red-500 hover:text-white hover:border-red-500 hover:shadow-sm transition-all cursor-pointer"
                                                 title="Hapus Data (hanya Pending)">
-                                                <i class="fas fa-trash text-[10px]"></i>
+                                                <i class="fas fa-trash text-xs"></i>
                                             </button>
                                             <form id="form-hapus-{{ $item->id_infrastruktur }}"
                                                 action="{{ route('surveyor.infrastruktur.destroy', $item->id_infrastruktur) }}"

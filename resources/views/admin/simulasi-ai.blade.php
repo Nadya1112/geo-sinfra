@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulasi AI | Admin SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     
@@ -46,21 +46,21 @@
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div class="text-left">
-                    <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Playground</p>
+                    <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Playground</p>
                     <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Simulasi Model AI</h2>
                 </div>
             </div>
 
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin.profile') }}" class="text-right group">
-                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
-                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">Online</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
+                        <p class="text-xs font-bold text-emerald-500 uppercase mt-1">Online</p>
                     </a>
                     <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden shadow-md">
                         @if(auth()->user()->profile_photo)
@@ -96,7 +96,7 @@
                         <div class="space-y-4">
                             <div class="flex items-center justify-between mb-2">
                                 <h3 class="text-sm font-black text-navy-900 uppercase tracking-widest"><i class="fas fa-image text-gold-500 mr-2"></i> Input Citra</h3>
-                                <button onclick="document.getElementById('image-input').click()" class="text-[10px] bg-navy-50 text-navy-600 hover:bg-navy-900 hover:text-white px-3 py-1.5 rounded-lg font-bold transition-colors">
+                                <button onclick="document.getElementById('image-input').click()" class="text-xs bg-navy-50 text-navy-600 hover:bg-navy-900 hover:text-white px-3 py-1.5 rounded-lg font-bold transition-colors">
                                     Pilih File
                                 </button>
                             </div>
@@ -155,7 +155,7 @@
                             <div id="result-success" class="flex-1 flex flex-col justify-center hidden space-y-6">
                                 <!-- Status Badge -->
                                 <div class="text-center">
-                                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 block">Klasifikasi Kondisi</span>
+                                    <span class="text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-2 block">Klasifikasi Kondisi</span>
                                     <div id="pred-badge" class="inline-block px-6 py-2 rounded-xl text-sm font-black uppercase tracking-wider text-white shadow-lg">
                                         BAIK
                                     </div>
@@ -164,7 +164,7 @@
                                 <!-- Confidence Meter -->
                                 <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
                                     <div class="flex justify-between items-end mb-2">
-                                        <span class="text-[10px] font-black text-navy-900 uppercase tracking-widest">Tingkat Keyakinan (Confidence)</span>
+                                        <span class="text-xs font-black text-navy-900 uppercase tracking-widest">Tingkat Keyakinan (Confidence)</span>
                                         <span id="pred-conf-text" class="text-xl font-black text-navy-900 dark:text-white leading-none">0%</span>
                                     </div>
                                     <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
@@ -175,7 +175,7 @@
                                 <!-- Details -->
                                 <div class="bg-navy-900 text-white p-5 rounded-2xl shadow-inner relative overflow-hidden">
                                     <i class="fas fa-info-circle absolute -right-2 -bottom-2 text-white/5 text-5xl"></i>
-                                    <span class="text-[9px] font-bold text-gold-500 uppercase tracking-widest mb-1 block">Rekomendasi Sistem</span>
+                                    <span class="text-xs font-bold text-gold-500 uppercase tracking-widest mb-1 block">Rekomendasi Sistem</span>
                                     <p id="pred-rekomendasi" class="text-xs leading-relaxed font-medium">Berdasarkan hasil analisis citra, infrastruktur terpantau aman.</p>
                                 </div>
                             </div>

@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Validasi Usulan | GEO-SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -56,21 +56,21 @@
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
-                    <p class="text-[10px] font-extrabold text-gold-500 uppercase tracking-[0.2em] mb-1">Manajemen Validasi</p>
+                    <p class="text-xs font-extrabold text-gold-500 uppercase tracking-[0.2em] mb-1">Manajemen Validasi</p>
                     <h2 class="text-xl font-black text-navy-900 dark:text-white">Validasi Usulan</h2>
                 </div>
             </div>
             
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
                     <div class="text-right">
-                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase">{{ auth()->user()->name }}</p>
-                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1 leading-none">ONLINE</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase">{{ auth()->user()->name }}</p>
+                        <p class="text-xs font-bold text-emerald-500 uppercase mt-1 leading-none">ONLINE</p>
                     </div>
                     <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shadow-md group-hover:shadow-lg transition-all overflow-hidden">
                         @if(auth()->user()->profile_photo)
@@ -106,11 +106,11 @@
                             <div class="w-10 h-10 bg-white/20 dark:bg-[#1e1b4b]/20 backdrop-blur-sm text-white rounded-xl flex items-center justify-center border border-white/30 shadow-inner">
                                 <i class="fas fa-clock text-sm"></i>
                             </div>
-                            <p class="text-[10px] font-black text-white/90 uppercase tracking-widest drop-shadow-sm">Menunggu Validasi</p>
+                            <p class="text-xs font-black text-white/90 uppercase tracking-widest drop-shadow-sm">Menunggu Validasi</p>
                         </div>
                         <div class="flex items-end gap-2">
                             <h3 class="text-4xl font-black text-white leading-none drop-shadow-md">{{ $counts['pending'] }}</h3>
-                            <span class="text-[10px] font-bold text-amber-100 mb-1 uppercase tracking-wider">Usulan</span>
+                            <span class="text-xs font-bold text-amber-100 mb-1 uppercase tracking-wider">Usulan</span>
                         </div>
                     </div>
                 </div>
@@ -126,11 +126,11 @@
                             <div class="w-10 h-10 bg-white/20 dark:bg-[#1e1b4b]/20 backdrop-blur-sm text-white rounded-xl flex items-center justify-center border border-white/30 shadow-inner">
                                 <i class="fas fa-check-double text-sm"></i>
                             </div>
-                            <p class="text-[10px] font-black text-white/90 uppercase tracking-widest drop-shadow-sm">Telah Diterima</p>
+                            <p class="text-xs font-black text-white/90 uppercase tracking-widest drop-shadow-sm">Telah Diterima</p>
                         </div>
                         <div class="flex items-end gap-2">
                             <h3 class="text-4xl font-black text-white leading-none drop-shadow-md">{{ $counts['verified'] }}</h3>
-                            <span class="text-[10px] font-bold text-emerald-100 mb-1 uppercase tracking-wider">Verified</span>
+                            <span class="text-xs font-bold text-emerald-100 mb-1 uppercase tracking-wider">Verified</span>
                         </div>
                     </div>
                 </div>
@@ -146,11 +146,11 @@
                             <div class="w-10 h-10 bg-white/20 dark:bg-[#1e1b4b]/20 backdrop-blur-sm text-white rounded-xl flex items-center justify-center border border-white/30 shadow-inner">
                                 <i class="fas fa-times-circle text-sm"></i>
                             </div>
-                            <p class="text-[10px] font-black text-white/90 uppercase tracking-widest drop-shadow-sm">Ditolak / Perbaikan</p>
+                            <p class="text-xs font-black text-white/90 uppercase tracking-widest drop-shadow-sm">Ditolak / Perbaikan</p>
                         </div>
                         <div class="flex items-end gap-2">
                             <h3 class="text-4xl font-black text-white leading-none drop-shadow-md">{{ $counts['rejected'] }}</h3>
-                            <span class="text-[10px] font-bold text-rose-100 mb-1 uppercase tracking-wider">Rejected</span>
+                            <span class="text-xs font-bold text-rose-100 mb-1 uppercase tracking-wider">Rejected</span>
                         </div>
                     </div>
                 </div>
@@ -165,12 +165,12 @@
                         </div>
                         <div>
                             <h3 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-widest">Antrean Validasi</h3>
-                            <p class="text-[9px] text-slate-400 font-bold uppercase mt-1">Daftar laporan surveyor yang menunggu keputusan</p>
+                            <p class="text-xs text-slate-400 font-bold uppercase mt-1">Daftar laporan surveyor yang menunggu keputusan</p>
                         </div>
                     </div>
                     <div>
                         <form action="{{ route('tim_teknis.validasi') }}" method="GET" class="flex items-center gap-2">
-                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Tampilan:</label>
+                            <label class="text-xs font-black text-slate-400 uppercase tracking-widest">Tampilan:</label>
                             <select name="show" onchange="this.form.submit()" class="text-xs font-bold text-navy-900 dark:text-white bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-xl px-3 py-2 focus:outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all shadow-sm">
                                 <option value="10" {{ request('show') != 'all' ? 'selected' : '' }}>10 Baris</option>
                                 <option value="all" {{ request('show') == 'all' ? 'selected' : '' }}>Semua Data</option>
@@ -188,16 +188,16 @@
 
                         <!-- Filter Status -->
                         <div class="flex flex-wrap gap-2 mb-2">
-                            <a href="{{ route('tim_teknis.validasi', array_merge(request()->query(), ['status' => 'All'])) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $currentStatus == 'All' ? 'bg-navy-900 text-white shadow-md' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Semua Antrean</a>
-                            <a href="{{ route('tim_teknis.validasi', array_merge(request()->query(), ['status' => 'Pending'])) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $currentStatus == 'Pending' ? 'bg-amber-500 text-white shadow-md shadow-amber-500/20' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Menunggu (Pending)</a>
-                            <a href="{{ route('tim_teknis.validasi', array_merge(request()->query(), ['status' => 'Validated'])) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $currentStatus == 'Validated' ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Disetujui (Validated)</a>
-                            <a href="{{ route('tim_teknis.validasi', array_merge(request()->query(), ['status' => 'Rejected'])) }}" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $currentStatus == 'Rejected' ? 'bg-rose-500 text-white shadow-md shadow-rose-500/20' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Ditolak / Perbaikan</a>
+                            <a href="{{ route('tim_teknis.validasi', array_merge(request()->query(), ['status' => 'All'])) }}" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all {{ $currentStatus == 'All' ? 'bg-navy-900 text-white shadow-md' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Semua Antrean</a>
+                            <a href="{{ route('tim_teknis.validasi', array_merge(request()->query(), ['status' => 'Pending'])) }}" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all {{ $currentStatus == 'Pending' ? 'bg-amber-500 text-white shadow-md shadow-amber-500/20' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Menunggu (Pending)</a>
+                            <a href="{{ route('tim_teknis.validasi', array_merge(request()->query(), ['status' => 'Validated'])) }}" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all {{ $currentStatus == 'Validated' ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Disetujui (Validated)</a>
+                            <a href="{{ route('tim_teknis.validasi', array_merge(request()->query(), ['status' => 'Rejected'])) }}" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all {{ $currentStatus == 'Rejected' ? 'bg-rose-500 text-white shadow-md shadow-rose-500/20' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Ditolak / Perbaikan</a>
                         </div>
 
                         <!-- Advanced Filter -->
                         <div class="flex flex-wrap md:flex-nowrap gap-4 items-end bg-slate-50 dark:bg-[#0f0e2c]/50 p-4 rounded-2xl border border-slate-100 dark:border-white/10">
                             <div class="w-full md:flex-1">
-                                <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Wilayah Kecamatan</label>
+                                <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Wilayah Kecamatan</label>
                                 <select name="kecamatan" class="w-full bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:border-gold-500 transition-all shadow-sm">
                                     <option value="">Semua Kecamatan</option>
                                     @foreach($kecamatan as $kec)
@@ -208,18 +208,18 @@
                                 </select>
                             </div>
                             <div class="w-full md:flex-1">
-                                <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Mulai Tanggal</label>
+                                <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Mulai Tanggal</label>
                                 <input type="date" name="start_date" value="{{ request('start_date') }}" class="w-full bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:border-gold-500 transition-all shadow-sm">
                             </div>
                             <div class="w-full md:flex-1">
-                                <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Sampai Tanggal</label>
+                                <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Sampai Tanggal</label>
                                 <input type="date" name="end_date" value="{{ request('end_date') }}" class="w-full bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:border-gold-500 transition-all shadow-sm">
                             </div>
                             <div class="w-full md:flex-[0.5] flex gap-2 justify-end">
-                                <button type="submit" class="px-6 py-2.5 bg-navy-900 text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-gold-500 transition-all shadow-md w-full md:w-auto">
+                                <button type="submit" class="px-6 py-2.5 bg-navy-900 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-gold-500 transition-all shadow-md w-full md:w-auto">
                                     Filter
                                 </button>
-                                <a href="{{ route('tim_teknis.validasi', ['status' => $currentStatus]) }}" class="px-4 py-2.5 bg-white dark:bg-[#1e1b4b] text-slate-400 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-100 hover:text-slate-600 transition-all border border-slate-200 dark:border-white/20 shadow-sm flex items-center justify-center">
+                                <a href="{{ route('tim_teknis.validasi', ['status' => $currentStatus]) }}" class="px-4 py-2.5 bg-white dark:bg-[#1e1b4b] text-slate-400 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-100 hover:text-slate-600 transition-all border border-slate-200 dark:border-white/20 shadow-sm flex items-center justify-center">
                                     <i class="fas fa-sync-alt"></i>
                                 </a>
                             </div>
@@ -234,14 +234,14 @@
                     
                     <div id="bulkActionBar" class="px-8 py-3 bg-indigo-50 dark:bg-indigo-900/20 border-b border-indigo-100 dark:border-indigo-500/20 flex items-center gap-4 transition-all duration-300 hidden">
                         <div class="flex items-center gap-2">
-                            <span class="w-6 h-6 rounded-full bg-indigo-500 text-white flex items-center justify-center text-[10px] font-black shadow-sm" id="selectedCount">0</span>
-                            <span class="text-[10px] font-black text-indigo-900 dark:text-indigo-400 uppercase tracking-widest">Data Terpilih</span>
+                            <span class="w-6 h-6 rounded-full bg-indigo-500 text-white flex items-center justify-center text-xs font-black shadow-sm" id="selectedCount">0</span>
+                            <span class="text-xs font-black text-indigo-900 dark:text-indigo-400 uppercase tracking-widest">Data Terpilih</span>
                         </div>
                         <div class="h-4 w-[2px] bg-indigo-200 rounded-full"></div>
-                        <button type="button" onclick="submitBulk('Validated')" class="px-4 py-1.5 bg-emerald-500 text-white rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-emerald-600 transition-all shadow-sm shadow-emerald-500/30 border border-emerald-600 flex items-center gap-2 group">
+                        <button type="button" onclick="submitBulk('Validated')" class="px-4 py-1.5 bg-emerald-500 text-white rounded-lg text-xs font-black uppercase tracking-widest hover:bg-emerald-600 transition-all shadow-sm shadow-emerald-500/30 border border-emerald-600 flex items-center gap-2 group">
                             <i class="fas fa-check-double group-hover:scale-110 transition-transform"></i> Setujui Semua
                         </button>
-                        <button type="button" onclick="submitBulk('Rejected')" class="px-4 py-1.5 bg-rose-500 text-white rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-rose-600 transition-all shadow-sm shadow-rose-500/30 border border-rose-600 flex items-center gap-2 group">
+                        <button type="button" onclick="submitBulk('Rejected')" class="px-4 py-1.5 bg-rose-500 text-white rounded-lg text-xs font-black uppercase tracking-widest hover:bg-rose-600 transition-all shadow-sm shadow-rose-500/30 border border-rose-600 flex items-center gap-2 group">
                             <i class="fas fa-times group-hover:scale-110 transition-transform"></i> Tolak Semua
                         </button>
                     </div>
@@ -249,7 +249,7 @@
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
                             <thead>
-                                <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md text-[10px] font-black text-gold-500 uppercase tracking-widest">
+                                <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md text-xs font-black text-gold-500 uppercase tracking-widest">
                                     <th class="px-6 py-4 w-10 border-b border-navy-800 text-center">
                                         <input type="checkbox" id="selectAll" class="roun border-slate-300 text-gold-500 focus:ring-gold-500 cursor-pointer w-4 h-4">
                                     </th>
@@ -286,13 +286,13 @@
                                         </div>
                                         <div>
                                             <h4 class="text-[13px] font-black text-navy-900 dark:text-white leading-tight mb-0.5">{{ $item->nama_objek }}</h4>
-                                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">{{ $item->jenis }}</p>
+                                            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">{{ $item->jenis }}</p>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-6 py-5 min-w-[150px]">
                                     <p class="text-xs font-bold text-navy-900 dark:text-white mb-0.5">{{ $item->kelurahan->nama_kelurahan ?? '-' }}</p>
-                                    <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest">{{ $item->kelurahan->kecamatan->nama_kecamatan ?? '-' }}</p>
+                                    <p class="text-xs text-slate-400 font-bold uppercase tracking-widest">{{ $item->kelurahan->kecamatan->nama_kecamatan ?? '-' }}</p>
                                 </td>
                                 <td class="px-6 py-5 min-w-[150px]">
                                     <div class="flex items-center gap-3">
@@ -318,11 +318,11 @@
                                                 $aiClass = 'bg-[#059669]/10 text-[#059669] border-[#059669]/30';
                                             }
                                         @endphp
-                                        <span class="px-2.5 py-1 rounded-md border text-[9px] font-black uppercase tracking-widest whitespace-nowrap {{ $aiClass }}">
+                                        <span class="px-2.5 py-1 rounded-md border text-xs font-black uppercase tracking-widest whitespace-nowrap {{ $aiClass }}">
                                             {{ $aiLabel ?: 'Belum Dianalisis' }}
                                         </span>
                                         @if($aiScore !== null)
-                                            <span class="text-[8px] font-bold text-slate-400 uppercase flex items-center gap-1.5 tracking-widest mt-1">
+                                            <span class="text-xs font-bold text-slate-400 uppercase flex items-center gap-1.5 tracking-widest mt-1">
                                                 <i class="fas fa-chart-bar text-gold-500"></i> Skor Prioritas: {{ number_format($aiScore, 1) }}%
                                             </span>
                                         @endif
@@ -342,8 +342,8 @@
                                                 default => 'fa-clock'
                                             };
                                         @endphp
-                                        <span class="px-3 py-1.5 rounded-xl text-[9px] font-black uppercase tracking-widest border flex items-center gap-2 w-fit {{ $statusClass }}">
-                                            <i class="fas {{ $statusIcon }} text-[10px]"></i>
+                                        <span class="px-3 py-1.5 rounded-xl text-xs font-black uppercase tracking-widest border flex items-center gap-2 w-fit {{ $statusClass }}">
+                                            <i class="fas {{ $statusIcon }} text-xs"></i>
                                             {{ $item->status_validasi == 'Validated' ? 'Diterima' : ($item->status_validasi == 'Rejected' ? 'Ditolak' : 'Menunggu') }}
                                         </span>
                                     </div>
@@ -352,8 +352,8 @@
                                     <div class="flex items-center justify-center gap-2">
                                         {{-- Detail --}}
                                         <a href="{{ route('tim_teknis.infrastruktur.show', $item->id_infrastruktur) }}" class="flex items-center justify-center gap-2 px-3 py-2.5 bg-navy-50 text-navy-900 dark:text-white rounded-xl hover:bg-gold-500 hover:text-white transition-all border border-navy-100 shadow-sm group" title="Lihat Detail">
-                                            <i class="fas fa-eye text-[10px] group-hover:scale-110 transition-transform"></i>
-                                            <span class="text-[9px] font-black uppercase tracking-widest hidden 2xl:block">Detail</span>
+                                            <i class="fas fa-eye text-xs group-hover:scale-110 transition-transform"></i>
+                                            <span class="text-xs font-black uppercase tracking-widest hidden 2xl:block">Detail</span>
                                         </a>
 
                                         {{-- ACC --}}
@@ -362,8 +362,8 @@
                                                 @csrf
                                                 <input type="hidden" name="status" value="Validated">
                                                 <button type="submit" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-[#059669] text-white rounded-xl hover:bg-[#047857] transition-all shadow-lg shadow-[#059669]/20 group border border-[#059669]" title="Setujui Validasi">
-                                                    <i class="fas fa-check text-[10px] group-hover:scale-110 transition-transform"></i>
-                                                    <span class="text-[9px] font-black uppercase tracking-widest">ACC</span>
+                                                    <i class="fas fa-check text-xs group-hover:scale-110 transition-transform"></i>
+                                                    <span class="text-xs font-black uppercase tracking-widest">ACC</span>
                                                 </button>
                                             </form>
                                             
@@ -372,18 +372,18 @@
                                                 @csrf
                                                 <input type="hidden" name="status" value="Rejected">
                                                 <button type="submit" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-500 hover:text-white transition-all border border-rose-200 shadow-sm group" title="Tolak Validasi">
-                                                    <i class="fas fa-times text-[10px] group-hover:scale-110 transition-transform"></i>
-                                                    <span class="text-[9px] font-black uppercase tracking-widest">Tolak</span>
+                                                    <i class="fas fa-times text-xs group-hover:scale-110 transition-transform"></i>
+                                                    <span class="text-xs font-black uppercase tracking-widest">Tolak</span>
                                                 </button>
                                             </form>
                                         @else
                                             <button disabled class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 bg-slate-50 dark:bg-[#0f0e2c] text-slate-300 rounded-xl border border-slate-100 dark:border-white/10 cursor-not-allowed">
-                                                <i class="fas fa-check text-[10px]"></i>
-                                                <span class="text-[9px] font-black uppercase tracking-widest">ACC</span>
+                                                <i class="fas fa-check text-xs"></i>
+                                                <span class="text-xs font-black uppercase tracking-widest">ACC</span>
                                             </button>
                                             <button disabled class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 bg-slate-50 dark:bg-[#0f0e2c] text-slate-300 rounded-xl border border-slate-100 dark:border-white/10 cursor-not-allowed">
-                                                <i class="fas fa-times text-[10px]"></i>
-                                                <span class="text-[9px] font-black uppercase tracking-widest">Tolak</span>
+                                                <i class="fas fa-times text-xs"></i>
+                                                <span class="text-xs font-black uppercase tracking-widest">Tolak</span>
                                             </button>
                                         @endif
                                     </div>
@@ -426,7 +426,7 @@
                 <p class="text-sm text-slate-500 mb-6 font-medium" id="validasiModalDesc">Silakan masukkan catatan.</p>
                 
                 <div class="mb-8">
-                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Catatan / Alasan</label>
+                    <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Catatan / Alasan</label>
                     <textarea id="validasiCatatanInput" rows="4" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl p-4 text-sm font-medium text-navy-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-4 focus:ring-gold-500/20 transition-all placeholder:text-slate-300" placeholder="Ketik catatan di sini..."></textarea>
                     <p id="validasiError" class="text-xs text-rose-500 mt-2 font-bold hidden flex items-center gap-1.5">
                         <i class="fas fa-exclamation-circle"></i> Catatan/Alasan wajib diisi untuk penolakan!

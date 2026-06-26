@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laporan Warga | Admin SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
 
@@ -51,21 +51,21 @@
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
                 <div class="text-left">
-                    <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
+                    <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
                     <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Laporan Warga</h2>
                 </div>
             </div>
 
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin.profile') }}" class="text-right group">
-                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
-                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">Online</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
+                        <p class="text-xs font-bold text-emerald-500 uppercase mt-1">Online</p>
                     </a>
                     <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md">
                         @if(auth()->user()->profile_photo)
@@ -97,13 +97,13 @@
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-2">
                     <div>
                         <h4 class="font-extrabold text-lg text-navy-900">Data Laporan Warga</h4>
-                        <p class="text-[10px] text-slate-400 font-semibold mt-0.5">Pantau, proses, dan kelola laporan kerusakan dari masyarakat</p>
+                        <p class="text-xs text-slate-400 font-semibold mt-0.5">Pantau, proses, dan kelola laporan kerusakan dari masyarakat</p>
                     </div>
 
                     <div class="flex flex-wrap items-center gap-3">
                         {{-- Export PDF --}}
                         <a href="{{ route('admin.laporan-warga.pdf') }}" target="_blank"
-                            class="px-4 py-2 bg-red-50 text-red-600 hover:bg-red-500 hover:text-white border border-red-100 hover:border-red-500 rounded-xl text-[10px] font-black tracking-widest uppercase transition-all shadow-sm flex items-center gap-2">
+                            class="px-4 py-2 bg-red-50 text-red-600 hover:bg-red-500 hover:text-white border border-red-100 hover:border-red-500 rounded-xl text-xs font-black tracking-widest uppercase transition-all shadow-sm flex items-center gap-2">
                             <i class="fas fa-file-pdf"></i> Ekspor PDF
                         </a>
                     </div>
@@ -113,7 +113,7 @@
                 <div class="bg-white p-5 rounded-[2rem] shadow-sm border border-slate-100 flex flex-col md:flex-row gap-4 items-center justify-between mb-4">
                     <form method="GET" action="{{ route('admin.laporan-warga') }}" class="flex flex-col md:flex-row gap-3 w-full">
                         <div class="flex-1 relative">
-                            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-[10px]"></i>
+                            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
                             <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Cari nama pelapor, deskripsi, atau no HP..." 
                                    class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all font-medium">
                         </div>
@@ -129,11 +129,11 @@
                             <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
                         </div>
                         @if($search || ($status && $status !== 'all'))
-                        <a href="{{ route('admin.laporan-warga') }}" class="px-5 py-2.5 bg-red-50 text-red-600 font-bold text-[10px] uppercase tracking-widest rounded-xl hover:bg-red-100 transition-all text-center flex items-center justify-center shrink-0">
+                        <a href="{{ route('admin.laporan-warga') }}" class="px-5 py-2.5 bg-red-50 text-red-600 font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-red-100 transition-all text-center flex items-center justify-center shrink-0">
                             Reset
                         </a>
                         @endif
-                        <button type="submit" class="px-6 py-2.5 bg-navy-900 text-white font-bold text-[10px] uppercase tracking-widest rounded-xl hover:bg-navy-800 transition-all shadow-md flex items-center justify-center shrink-0">
+                        <button type="submit" class="px-6 py-2.5 bg-navy-900 text-white font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-navy-800 transition-all shadow-md flex items-center justify-center shrink-0">
                             Cari
                         </button>
                     </form>
@@ -145,12 +145,12 @@
                         <table class="w-full text-left text-sm whitespace-nowrap md:whitespace-normal">
                             <thead class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
                                 <tr>
-                                    <th class="px-6 py-4 font-extrabold uppercase tracking-widest text-[10px] text-gold-500">Waktu Lapor</th>
-                                    <th class="px-6 py-4 font-extrabold uppercase tracking-widest text-[10px] text-gold-500">Pelapor</th>
-                                    <th class="px-6 py-4 font-extrabold uppercase tracking-widest text-[10px] text-gold-500">Laporan Kerusakan</th>
-                                    <th class="px-5 py-4 font-extrabold uppercase tracking-widest text-[10px] text-gold-500 text-center">Status</th>
-                                    <th class="px-5 py-4 font-extrabold uppercase tracking-widest text-[10px] text-gold-500 text-center">Penugasan</th>
-                                    <th class="px-5 py-4 font-extrabold uppercase tracking-widest text-[10px] text-gold-500 text-center">Aksi</th>
+                                    <th class="px-6 py-4 font-extrabold uppercase tracking-widest text-xs text-gold-500">Waktu Lapor</th>
+                                    <th class="px-6 py-4 font-extrabold uppercase tracking-widest text-xs text-gold-500">Pelapor</th>
+                                    <th class="px-6 py-4 font-extrabold uppercase tracking-widest text-xs text-gold-500">Laporan Kerusakan</th>
+                                    <th class="px-5 py-4 font-extrabold uppercase tracking-widest text-xs text-gold-500 text-center">Status</th>
+                                    <th class="px-5 py-4 font-extrabold uppercase tracking-widest text-xs text-gold-500 text-center">Penugasan</th>
+                                    <th class="px-5 py-4 font-extrabold uppercase tracking-widest text-xs text-gold-500 text-center">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100">
@@ -167,7 +167,7 @@
                                     </td>
                                     <td class="px-6 py-4">
                                         <p class="font-bold text-navy-900">{{ $laporan->nama_pelapor }}</p>
-                                        <p class="text-xs font-semibold text-slate-500 mt-0.5"><i class="fas fa-phone-alt text-[10px] text-slate-400 mr-1"></i> {{ $laporan->no_hp }}</p>
+                                        <p class="text-xs font-semibold text-slate-500 mt-0.5"><i class="fas fa-phone-alt text-xs text-slate-400 mr-1"></i> {{ $laporan->no_hp }}</p>
                                     </td>
                                     <td class="px-6 py-4 min-w-[250px]">
                                         <p class="text-sm font-medium text-slate-700 line-clamp-2 leading-relaxed mb-2">{{ $laporan->deskripsi }}</p>
@@ -188,7 +188,7 @@
                                                 }
                                                 $skorPercent = $laporan->skor_ai ? round($laporan->skor_ai * 100) . '%' : '';
                                             @endphp
-                                            <div class="inline-flex items-center gap-2 px-3 py-1.5 mb-3 rounded-lg border {{ $aiColor }} text-[10px] uppercase tracking-wider shadow-sm">
+                                            <div class="inline-flex items-center gap-2 px-3 py-1.5 mb-3 rounded-lg border {{ $aiColor }} text-xs uppercase tracking-wider shadow-sm">
                                                 <i class="fas {{ $aiIcon }} animate-pulse"></i> 
                                                 <span>Dianalisis AI: {!! $statusText !!} {!! $skorPercent ? "<span class='text-gold-500 font-black ml-1'>($skorPercent Yakin)</span>" : '' !!}</span>
                                             </div>
@@ -196,13 +196,13 @@
                                         
                                         <div class="flex gap-2">
                                             @if($laporan->foto)
-                                                <button onclick="showPhotoModal('{{ asset('storage/' . $laporan->foto) }}')" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-colors">
+                                                <button onclick="showPhotoModal('{{ asset('storage/' . $laporan->foto) }}')" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors">
                                                     <i class="fas fa-image"></i> Lihat Foto
                                                 </button>
                                             @endif
                                             
                                             <a href="https://www.google.com/maps/search/?api=1&query={{ $laporan->latitude }},{{ $laporan->longitude }}" target="_blank" 
-                                               class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-colors">
+                                               class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors">
                                                 <i class="fas fa-map-marker-alt"></i> Cek Lokasi
                                             </a>
                                         </div>
@@ -228,7 +228,7 @@
                                                 <option value="Selesai" {{ $laporan->status == 'Selesai' ? 'selected' : '' }}>✅ Selesai</option>
                                                 <option value="Ditolak" {{ $laporan->status == 'Ditolak' ? 'selected' : '' }}>❌ Tidak Valid</option>
                                             </select>
-                                            <i class="fas fa-chevron-down absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] opacity-60 pointer-events-none"></i>
+                                            <i class="fas fa-chevron-down absolute right-2.5 top-1/2 -translate-y-1/2 text-xs opacity-60 pointer-events-none"></i>
                                         </form>
                                     </td>
                                     <td class="px-5 py-4 text-center">
@@ -248,7 +248,7 @@
                                                     </option>
                                                 @endforeach
                                             </select>
-                                            <i class="fas fa-chevron-down absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] opacity-60 pointer-events-none"></i>
+                                            <i class="fas fa-chevron-down absolute right-2.5 top-1/2 -translate-y-1/2 text-xs opacity-60 pointer-events-none"></i>
                                         </form>
                                     </td>
                                     <td class="px-5 py-4 text-center">

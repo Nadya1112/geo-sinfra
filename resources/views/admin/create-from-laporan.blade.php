@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Laporan Warga | Admin SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -50,20 +50,20 @@
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
                 <div>
-                    <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
+                    <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
                     <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Detail Laporan Warga</h2>
                 </div>
             </div>
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin.profile') }}" class="text-right group">
-                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
-                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">Online</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
+                        <p class="text-xs font-bold text-emerald-500 uppercase mt-1">Online</p>
                     </a>
                     <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md">
                         @if(auth()->user()->profile_photo)
@@ -78,10 +78,10 @@
 
         <div class="flex-1 overflow-y-auto custom-scrollbar p-8 pb-16">
             <div class="flex items-center gap-3 mb-6">
-                <span class="px-3 py-1.5 bg-emerald-500 text-white rounded-xl text-[9px] font-black tracking-widest uppercase shadow-sm shadow-emerald-500/20">
+                <span class="px-3 py-1.5 bg-emerald-500 text-white rounded-xl text-xs font-black tracking-widest uppercase shadow-sm shadow-emerald-500/20">
                     <i class="fas fa-check-double mr-1"></i> Verifikasi Laporan
                 </span>
-                <span class="text-[10px] text-slate-400 font-semibold">Lengkapi data teknis yang kurang untuk memverifikasi laporan warga menjadi aset infrastruktur.</span>
+                <span class="text-xs text-slate-400 font-semibold">Lengkapi data teknis yang kurang untuk memverifikasi laporan warga menjadi aset infrastruktur.</span>
             </div>
 
             @if($errors->any())
@@ -91,7 +91,7 @@
                 </div>
                 <div>
                     <h4 class="text-sm font-black text-red-800 uppercase mb-1">Validasi Gagal!</h4>
-                    <ul class="text-[11px] text-red-600 font-semibold space-y-0.5">
+                    <ul class="text-sm text-red-600 font-semibold space-y-0.5">
                         @foreach($errors->all() as $error)
                             <li>• {{ $error }}</li>
                         @endforeach
@@ -116,14 +116,14 @@
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                                 <div class="md:col-span-2">
-                                    <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">Nama Infrastruktur <span class="text-red-400">*</span></label>
+                                    <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Nama Infrastruktur <span class="text-red-400">*</span></label>
                                     <input type="text" name="nama_infrastruktur"
                                            value="{{ old('nama_infrastruktur') }}" placeholder="Contoh: Titian Jl. Kelayan A, Gang Mutiara..."
                                            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all"
                                            required>
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">Jenis Infrastruktur <span class="text-red-400">*</span></label>
+                                    <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Jenis Infrastruktur <span class="text-red-400">*</span></label>
                                     <select name="jenis" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all" required>
                                         @php $jenisTerpilih = old('jenis') ?? $laporan->jenis_ai; @endphp
                                         <option value="" disabled {{ empty($jenisTerpilih) ? 'selected' : '' }}>-- Pilih Jenis --</option>
@@ -133,7 +133,7 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">Kecamatan</label>
+                                    <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Kecamatan</label>
                                     <select name="id_kecamatan" id="select-kecamatan" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
                                         @foreach($semuaKecamatan as $kec)
                                             <option value="{{ $kec->id_kecamatan }}">{{ $kec->nama_kecamatan }}</option>
@@ -141,7 +141,7 @@
                                     </select>
                                 </div>
                                 <div class="md:col-span-2">
-                                    <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">Kelurahan</label>
+                                    <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Kelurahan</label>
                                     <select name="id_kelurahan" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all" required>
                                         @foreach($semuaKelurahan as $kel)
                                             <option value="{{ $kel->id_kelurahan }}">{{ $kel->nama_kelurahan }}</option>
@@ -162,7 +162,7 @@
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
                                 <div>
-                                    <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">Material <span class="text-red-400">*</span></label>
+                                    <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Material <span class="text-red-400">*</span></label>
                                     <select name="material_eksisting" class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all" required>
                                         <option value="" disabled selected>-- Pilih Material --</option>
                                         <option value="Cor Beton">Cor Beton</option>
@@ -173,16 +173,16 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">Panjang (m) <span class="text-red-400">*</span></label>
+                                    <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Panjang (m) <span class="text-red-400">*</span></label>
                                     <input type="number" step="0.01" name="panjang" class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all" required>
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">Lebar (m) <span class="text-red-400">*</span></label>
+                                    <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Lebar (m) <span class="text-red-400">*</span></label>
                                     <input type="number" step="0.01" name="lebar" class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all" required>
                                 </div>
                             </div>
                             <div>
-                                <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">
+                                <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">
                                     Deskripsi Kerusakan <span class="text-red-400">*</span>
                                 </label>
                                 <textarea name="kondisi" rows="3" class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all" required>{{ old('kondisi') ?? $laporan->deskripsi }}</textarea>
@@ -200,11 +200,11 @@
                             </div>
                             <div class="grid grid-cols-2 gap-5 mb-5">
                                 <div>
-                                    <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">Latitude</label>
+                                    <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Latitude</label>
                                     <input type="text" name="latitude" id="lat-input" value="{{ $laporan->latitude }}" readonly class="w-full px-4 py-3 bg-slate-100 border border-slate-200 rounded-xl text-sm font-semibold text-slate-500">
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">Longitude</label>
+                                    <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Longitude</label>
                                     <input type="text" name="longitude" id="lng-input" value="{{ $laporan->longitude }}" readonly class="w-full px-4 py-3 bg-slate-100 border border-slate-200 rounded-xl text-sm font-semibold text-slate-500">
                                 </div>
                             </div>
@@ -231,16 +231,16 @@
                                     </div>
                                 @endif
                             </div>
-                            <p class="text-[9px] text-slate-400 font-semibold mt-2">
+                            <p class="text-xs text-slate-400 font-semibold mt-2">
                                 <i class="fas fa-info-circle mr-1 text-gold-500"></i> Foto ini akan disalin ke database Infrastruktur saat disimpan.
                             </p>
                         </div>
 
                         <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6 space-y-3">
-                            <button type="submit" class="w-full flex items-center justify-center gap-2 bg-navy-900 hover:bg-navy-950 text-white py-3.5 rounded-2xl font-black text-[11px] tracking-widest transition-all shadow-lg shadow-navy-900/20 uppercase">
+                            <button type="submit" class="w-full flex items-center justify-center gap-2 bg-navy-900 hover:bg-navy-950 text-white py-3.5 rounded-2xl font-black text-sm tracking-widest transition-all shadow-lg shadow-navy-900/20 uppercase">
                                 <i class="fas fa-check-circle"></i> Verifikasi & Simpan Aset
                             </button>
-                            <a href="{{ route('admin.laporan-warga') }}" class="w-full flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-500 py-3.5 rounded-2xl font-black text-[11px] tracking-widest transition-all uppercase">
+                            <a href="{{ route('admin.laporan-warga') }}" class="w-full flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-500 py-3.5 rounded-2xl font-black text-sm tracking-widest transition-all uppercase">
                                 <i class="fas fa-times"></i> Batal
                             </a>
                         </div>

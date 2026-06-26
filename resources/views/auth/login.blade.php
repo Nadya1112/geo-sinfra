@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Masuk | GEO-SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     
@@ -125,7 +125,7 @@
                     @csrf
                     
                     <div>
-                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
+                        <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
                             Email / Nomor WhatsApp <span class="text-gold-500">*</span>
                         </label>
                         <input type="text" name="login" placeholder="Email atau 0812xxxx" value="{{ old('login') }}" required autocomplete="username"
@@ -133,7 +133,7 @@
                     </div>
 
                     <div>
-                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
+                        <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
                             Kata Sandi <span class="text-gold-500">*</span>
                         </label>
                         <div class="relative">
@@ -148,7 +148,7 @@
                     </div>
 
                     <div>
-                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
+                        <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
                             Verifikasi Keamanan: {{ $n1 ?? 3 }} + {{ $n2 ?? 5 }} <span class="text-gold-500">*</span>
                         </label>
                         <input type="number" name="captcha" placeholder="Jawaban Anda" required
@@ -163,14 +163,14 @@
                     <div class="flex items-center justify-between font-bold text-xs uppercase tracking-wider">
                         <label class="flex items-center gap-2.5 cursor-pointer text-slate-400 hover:text-navy-900 transition">
                             <input type="checkbox" name="remember" class="w-4.5 h-4.5 rounded border-slate-300 text-gold-500 focus:ring-0 cursor-pointer">
-                            <span class="text-[10px]">Ingat Saya</span>
+                            <span class="text-xs">Ingat Saya</span>
                         </label>
-                        <a href="{{ route('password.request') }}" class="text-gold-500 hover:text-gold-600 transition-colors text-[10px]">Lupa Password?</a>
+                        <a href="{{ route('password.request') }}" class="text-gold-500 hover:text-gold-600 transition-colors text-xs">Lupa Password?</a>
                     </div>
                 </form>
 
                 <div class="mt-16 pt-8 border-t border-slate-100 text-center font-bold text-xs uppercase tracking-wider">
-                    <p class="text-slate-400 text-[10px]">
+                    <p class="text-slate-400 text-xs">
                         Belum punya akun? 
                         <a href="{{ route('register') }}" class="text-gold-500 font-extrabold hover:text-gold-600 transition-colors ml-1">Buat Akun Baru</a>
                     </p>

@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Infrastruktur | Admin SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -57,7 +57,7 @@
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
                 <div>
-                    <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
+                    <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
                     <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Detail {{ ucfirst($inf->jenis) ?? 'Infrastruktur' }}</h2>
                 </div>
             </div>
@@ -68,12 +68,12 @@
                     <form action="{{ route('admin.infrastruktur.verifikasi', $inf->id_infrastruktur) }}" method="POST">
                         @csrf
                         <button type="submit" onclick="return confirm('Verifikasi aset ini?')"
-                            class="bg-emerald-500 hover:bg-emerald-600 text-white text-[11px] px-5 py-2.5 rounded-xl font-black shadow-md shadow-emerald-500/20 hover:shadow-emerald-500/30 transition flex items-center gap-2">
+                            class="bg-emerald-500 hover:bg-emerald-600 text-white text-sm px-5 py-2.5 rounded-xl font-black shadow-md shadow-emerald-500/20 hover:shadow-emerald-500/30 transition flex items-center gap-2">
                             <i class="fas fa-check-double"></i> Verifikasi
                         </button>
                     </form>
                 @else
-                    <span class="flex items-center gap-2 bg-emerald-500 text-white px-4 py-2.5 rounded-xl text-[10px] font-black shadow-sm shadow-emerald-500/20">
+                    <span class="flex items-center gap-2 bg-emerald-500 text-white px-4 py-2.5 rounded-xl text-xs font-black shadow-sm shadow-emerald-500/20">
                         <i class="fas fa-check-double text-white"></i> Terverifikasi
                     </span>
                 @endif
@@ -83,11 +83,11 @@
                 {{-- SLOT 2: Jam (Realtime jika belum verifikasi, Waktu Verifikasi jika sudah) --}}
                 <div class="text-right hidden sm:block">
                     @if(($inf->status_verifikasi ?? 'Pending') != 'Verified')
-                        <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                     @else
-                        <p class="text-[11px] font-black text-navy-900">{{ \Carbon\Carbon::parse($inf->updated_at)->translatedFormat('H:i') }} WITA</p>
-                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ \Carbon\Carbon::parse($inf->updated_at)->translatedFormat('l, d F Y') }}</p>
+                        <p class="text-sm font-black text-navy-900">{{ \Carbon\Carbon::parse($inf->updated_at)->translatedFormat('H:i') }} WITA</p>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ \Carbon\Carbon::parse($inf->updated_at)->translatedFormat('l, d F Y') }}</p>
                     @endif
                 </div>
 
@@ -95,8 +95,8 @@
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin.profile') }}" class="text-right group">
-                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
-                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">Online</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
+                        <p class="text-xs font-bold text-emerald-500 uppercase mt-1">Online</p>
                     </a>
                     <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 overflow-hidden hover:shadow-lg transition-all shadow-md">
                         @if(auth()->user()->profile_photo)
@@ -122,10 +122,10 @@
 
             {{-- ID & Status Badge --}}
             <div class="flex flex-wrap items-center gap-3 mb-6">
-                <span class="px-3 py-1.5 bg-navy-900 text-gold-500 rounded-xl text-[9px] font-black tracking-widest uppercase">
+                <span class="px-3 py-1.5 bg-navy-900 text-gold-500 rounded-xl text-xs font-black tracking-widest uppercase">
                     <i class="fas fa-hashtag mr-1"></i> INF-{{ $inf->id_infrastruktur }}
                 </span>
-                <span class="px-3 py-1.5 bg-gold-500/10 text-gold-600 border border-gold-500/20 rounded-xl text-[9px] font-black tracking-widest uppercase">
+                <span class="px-3 py-1.5 bg-gold-500/10 text-gold-600 border border-gold-500/20 rounded-xl text-xs font-black tracking-widest uppercase">
                     {{ strtoupper(ucfirst($inf->jenis) ?? 'Infrastruktur') }}
                 </span>
                 @php
@@ -136,10 +136,10 @@
                     ];
                     $statusClass = $statusMap[strtolower($inf->kondisi ?? '')] ?? 'bg-slate-50 text-slate-500 border-slate-200';
                 @endphp
-                <span class="px-3 py-1.5 border rounded-xl text-[9px] font-black tracking-widest uppercase {{ $statusClass }}">
+                <span class="px-3 py-1.5 border rounded-xl text-xs font-black tracking-widest uppercase {{ $statusClass }}">
                     {{ strtoupper($inf->kondisi ?? 'Pending') }}
                 </span>
-                <span class="text-[10px] text-slate-400 font-semibold">
+                <span class="text-xs text-slate-400 font-semibold">
                     <i class="fas fa-user-circle mr-1"></i> Surveyor: {{ $inf->nama_user ?? 'Tidak diketahui' }}
                 </span>
             </div>
@@ -164,21 +164,21 @@
                             </div>
                             <div>
                                 <h4 class="text-sm font-black text-navy-900 uppercase tracking-wider">Identitas & Wilayah</h4>
-                                <p class="text-[9px] text-slate-400 font-semibold mt-0.5">Informasi dasar aset infrastruktur</p>
+                                <p class="text-xs text-slate-400 font-semibold mt-0.5">Informasi dasar aset infrastruktur</p>
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {{-- Nama --}}
                             <div class="md:col-span-2">
-                                <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Nama Infrastruktur</p>
+                                <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Nama Infrastruktur</p>
                                 <div class="px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-sm font-black text-navy-900">
                                     {{ $inf->nama_objek ?? $inf->nama_infrastruktur }}
                                 </div>
                             </div>
                             {{-- Jenis --}}
                             <div>
-                                <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Jenis Infrastruktur</p>
+                                <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Jenis Infrastruktur</p>
                                 <div class="px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl flex items-center gap-2">
                                     <span class="px-2 py-0.5 bg-navy-900 text-gold-500 rounded-md text-[7px] font-black tracking-wider uppercase">AI</span>
                                     <span class="text-sm font-black text-navy-900 uppercase">{{ ucfirst($inf->jenis) ?? '—' }}</span>
@@ -186,24 +186,24 @@
                             </div>
                             {{-- Material --}}
                             <div>
-                                <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Material Utama</p>
+                                <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Material Utama</p>
                                 <div class="px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-sm font-semibold text-slate-700">
                                     {{ $inf->material_eksisting ?? '—' }}
                                 </div>
                             </div>
                             {{-- Kecamatan --}}
                             <div>
-                                <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Kecamatan</p>
+                                <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Kecamatan</p>
                                 <div class="px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2">
-                                    <i class="fas fa-map-marker-alt text-gold-500 text-[10px]"></i>
+                                    <i class="fas fa-map-marker-alt text-gold-500 text-xs"></i>
                                     {{ $inf->nama_kecamatan ?? '—' }}
                                 </div>
                             </div>
                             {{-- Kelurahan --}}
                             <div>
-                                <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Kelurahan</p>
+                                <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Kelurahan</p>
                                 <div class="px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2">
-                                    <i class="fas fa-map-marker-alt text-gold-500 text-[10px]"></i>
+                                    <i class="fas fa-map-marker-alt text-gold-500 text-xs"></i>
                                     {{ $inf->nama_kelurahan ?? '—' }}
                                 </div>
                             </div>
@@ -218,52 +218,52 @@
                             </div>
                             <div>
                                 <h4 class="text-sm font-black text-navy-900 uppercase tracking-wider">Detail Teknis</h4>
-                                <p class="text-[9px] text-slate-400 font-semibold mt-0.5">Dimensi, kondisi, dan parameter lapangan</p>
+                                <p class="text-xs text-slate-400 font-semibold mt-0.5">Dimensi, kondisi, dan parameter lapangan</p>
                             </div>
                         </div>
 
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-5">
                             <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-center">
-                                <p class="text-[9px] font-black text-slate-400 uppercase tracking-wider mb-1">Panjang</p>
+                                <p class="text-xs font-black text-slate-400 uppercase tracking-wider mb-1">Panjang</p>
                                 <p class="text-xl font-black text-navy-900">{{ number_format($inf->panjang ?? 0, 1) }}</p>
-                                <p class="text-[8px] text-slate-400 font-bold">meter</p>
+                                <p class="text-xs text-slate-400 font-bold">meter</p>
                             </div>
                             <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-center">
-                                <p class="text-[9px] font-black text-slate-400 uppercase tracking-wider mb-1">Lebar</p>
+                                <p class="text-xs font-black text-slate-400 uppercase tracking-wider mb-1">Lebar</p>
                                 <p class="text-xl font-black text-navy-900">{{ number_format($inf->lebar ?? 0, 1) }}</p>
-                                <p class="text-[8px] text-slate-400 font-bold">meter</p>
+                                <p class="text-xs text-slate-400 font-bold">meter</p>
                             </div>
                             <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-center">
-                                <p class="text-[9px] font-black text-slate-400 uppercase tracking-wider mb-1">Drainase</p>
+                                <p class="text-xs font-black text-slate-400 uppercase tracking-wider mb-1">Drainase</p>
                                 @if(($inf->has_drainase ?? 'tidak') == 'ya')
                                     <i class="fas fa-check-circle text-2xl text-emerald-500 my-1 block"></i>
-                                    <p class="text-[8px] text-emerald-600 font-black uppercase">Ada</p>
+                                    <p class="text-xs text-emerald-600 font-black uppercase">Ada</p>
                                 @else
                                     <i class="fas fa-times-circle text-2xl text-red-400 my-1 block"></i>
-                                    <p class="text-[8px] text-red-500 font-black uppercase">Tidak Ada</p>
+                                    <p class="text-xs text-red-500 font-black uppercase">Tidak Ada</p>
                                 @endif
                             </div>
                             <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-center">
-                                <p class="text-[9px] font-black text-slate-400 uppercase tracking-wider mb-1">Gorong-gorong</p>
+                                <p class="text-xs font-black text-slate-400 uppercase tracking-wider mb-1">Gorong-gorong</p>
                                 @if(($inf->has_gorong_gorong ?? 'tidak') == 'ya')
                                     <i class="fas fa-check-circle text-2xl text-emerald-500 my-1 block"></i>
-                                    <p class="text-[8px] text-emerald-600 font-black uppercase">Ada</p>
+                                    <p class="text-xs text-emerald-600 font-black uppercase">Ada</p>
                                 @else
                                     <i class="fas fa-times-circle text-2xl text-red-400 my-1 block"></i>
-                                    <p class="text-[8px] text-red-500 font-black uppercase">Tidak Ada</p>
+                                    <p class="text-xs text-red-500 font-black uppercase">Tidak Ada</p>
                                 @endif
                             </div>
                         </div>
 
                         <div>
-                            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Deskripsi Kondisi Lapangan</p>
+                            <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Deskripsi Kondisi Lapangan</p>
                             <div class="px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 italic leading-relaxed">
                                 @if(strtolower($inf->kondisi ?? '') == 'menunggu ai')
                                     <div class="flex items-center gap-2 text-amber-600 mb-2 not-italic">
                                         <i class="fas fa-exclamation-triangle text-xs"></i>
-                                        <span class="text-[9px] font-black uppercase tracking-widest">Deskripsi Belum Lengkap</span>
+                                        <span class="text-xs font-black uppercase tracking-widest">Deskripsi Belum Lengkap</span>
                                     </div>
-                                    <p class="text-[10px] text-slate-400 not-italic">Silakan edit dan masukkan kata kunci kerusakan agar Decision Tree dapat memberikan skor akurat.</p>
+                                    <p class="text-xs text-slate-400 not-italic">Silakan edit dan masukkan kata kunci kerusakan agar Decision Tree dapat memberikan skor akurat.</p>
                                 @else
                                     "{{ $inf->kondisi ?? '—' }}"
                                 @endif
@@ -279,19 +279,19 @@
                             </div>
                             <div>
                                 <h4 class="text-sm font-black text-navy-900 uppercase tracking-wider">Lokasi Geografis</h4>
-                                <p class="text-[9px] text-slate-400 font-semibold mt-0.5">Koordinat dan visualisasi peta</p>
+                                <p class="text-xs text-slate-400 font-semibold mt-0.5">Koordinat dan visualisasi peta</p>
                             </div>
                         </div>
 
                         <div class="grid grid-cols-2 gap-4 mb-5">
                             <div>
-                                <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Latitude</p>
+                                <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Latitude</p>
                                 <div class="px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-sm font-mono font-bold text-navy-900">
                                     {{ $inf->latitude ?? '—' }}
                                 </div>
                             </div>
                             <div>
-                                <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Longitude</p>
+                                <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Longitude</p>
                                 <div class="px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-sm font-mono font-bold text-navy-900">
                                     {{ $inf->longitude ?? '—' }}
                                 </div>
@@ -312,9 +312,9 @@
                             </div>
                             <div>
                                 <h4 class="text-sm font-black text-white uppercase tracking-wider">Hybrid AI Analytics</h4>
-                                <p class="text-[9px] text-slate-400 font-semibold mt-0.5">Decision Tree + CNN Vision Integration</p>
+                                <p class="text-xs text-slate-400 font-semibold mt-0.5">Decision Tree + CNN Vision Integration</p>
                             </div>
-                            <span class="ml-auto px-3 py-1.5 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-xl text-[8px] font-black uppercase tracking-wider">
+                            <span class="ml-auto px-3 py-1.5 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-xl text-xs font-black uppercase tracking-wider">
                                 <i class="fas fa-shield-alt mr-1"></i> Terverifikasi
                             </span>
                         </div>
@@ -330,7 +330,7 @@
                                 <p class="text-4xl font-black text-white mb-1">
                                     {{ $hasilCnn ? round($hasilCnn->skor_cnn * 100) : 0 }}<span class="text-sm font-bold text-slate-400 ml-1">%</span>
                                 </p>
-                                <p class="text-[10px] font-black text-gold-500 uppercase tracking-wider mb-3">{{ $hasilCnn->label_kondisi ?? 'Scanning...' }}</p>
+                                <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-3">{{ $hasilCnn->label_kondisi ?? 'Scanning...' }}</p>
                                 <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
                                     <div class="bg-gradient-to-r from-navy-500 to-gold-500 h-full rounded-full transition-all duration-1000"
                                          style="width: {{ $hasilCnn ? ($hasilCnn->skor_cnn * 100) : 0 }}%"></div>
@@ -351,7 +351,7 @@
                                     $prioColor = str_contains(strtolower($labelPrio), 'berat') ? 'text-red-400' :
                                          (str_contains(strtolower($labelPrio), 'sedang') ? 'text-orange-400' : 'text-emerald-400');
                                 @endphp
-                                <p class="text-[10px] font-black {{ $prioColor }} uppercase tracking-wider mb-3">{{ $labelPrio }}</p>
+                                <p class="text-xs font-black {{ $prioColor }} uppercase tracking-wider mb-3">{{ $labelPrio }}</p>
                                 <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
                                     <div class="bg-gradient-to-r from-gold-500 to-gold-600 h-full rounded-full transition-all duration-1000"
                                          style="width: {{ $hasilAi->skor_dt ?? 0 }}%"></div>
@@ -366,7 +366,7 @@
                                     <i class="fas fa-lightbulb text-gold-500"></i>
                                 </div>
                                 <div>
-                                    <p class="text-[9px] font-black text-gold-500 uppercase tracking-widest mb-1.5">Rekomendasi AI</p>
+                                    <p class="text-xs font-black text-gold-500 uppercase tracking-widest mb-1.5">Rekomendasi AI</p>
                                     <p class="text-sm font-semibold text-slate-300 italic leading-relaxed">
                                         "{{ $hasilAi->rekomendasi ?? 'Melakukan kalkulasi aturan Decision Tree...' }}"
                                     </p>
@@ -409,7 +409,7 @@
                             </div>
                             <div>
                                 <h4 class="text-sm font-black text-navy-900 uppercase tracking-wider">Dokumentasi Visual</h4>
-                                <p class="text-[9px] text-slate-400 font-semibold mt-0.5">Foto survei lapangan</p>
+                                <p class="text-xs text-slate-400 font-semibold mt-0.5">Foto survei lapangan</p>
                             </div>
                         </div>
 
@@ -426,7 +426,7 @@
                                         <div class="absolute -top-1 -right-1 w-4 h-4 border-t-4 border-r-4 border-red-500"></div>
                                         <div class="absolute -bottom-1 -left-1 w-4 h-4 border-b-4 border-l-4 border-red-500"></div>
                                         <div class="absolute -bottom-1 -right-1 w-4 h-4 border-b-4 border-r-4 border-red-500"></div>
-                                        <div class="absolute -top-7 left-0 bg-red-600 text-white text-[8px] font-black px-2 py-1 rounded flex items-center gap-1">
+                                        <div class="absolute -top-7 left-0 bg-red-600 text-white text-xs font-black px-2 py-1 rounded flex items-center gap-1">
                                             <i class="fas fa-exclamation-triangle"></i>
                                             KERUSAKAN {{ round(($hasilCnn->skor_cnn ?? 0) * 100) }}%
                                         </div>
@@ -437,20 +437,20 @@
 
                                 <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                                     <a href="{{ $fotoUrl }}" target="_blank"
-                                       class="bg-white text-navy-900 px-4 py-2 rounded-xl text-[9px] font-black shadow-xl uppercase tracking-widest hover:scale-105 transition-all flex items-center gap-2">
+                                       class="bg-white text-navy-900 px-4 py-2 rounded-xl text-xs font-black shadow-xl uppercase tracking-widest hover:scale-105 transition-all flex items-center gap-2">
                                         <i class="fas fa-expand"></i> Lihat Full
                                     </a>
                                 </div>
                             @else
                                 <div class="text-center py-10">
                                     <i class="fas fa-image text-5xl text-slate-700 mb-3 block"></i>
-                                    <p class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Tidak Ada Foto</p>
+                                    <p class="text-xs font-black text-slate-500 uppercase tracking-widest">Tidak Ada Foto</p>
                                 </div>
                             @endif
                         </div>
 
                         @if($fotoUrl)
-                        <p class="text-[8px] text-slate-400 font-semibold mt-2 truncate">
+                        <p class="text-xs text-slate-400 font-semibold mt-2 truncate">
                             <i class="fas fa-user-circle mr-1"></i> {{ $inf->nama_user ?? 'Surveyor' }}
                         </p>
                         @endif
@@ -458,7 +458,7 @@
 
                     {{-- Info Ringkas --}}
                     <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6">
-                        <h5 class="text-[10px] font-black text-navy-900 uppercase tracking-widest mb-4">
+                        <h5 class="text-xs font-black text-navy-900 uppercase tracking-widest mb-4">
                             <i class="fas fa-list-ul mr-1 text-gold-500"></i> Ringkasan Data
                         </h5>
                         <div class="space-y-3">
@@ -476,8 +476,8 @@
                             @endphp
                             @foreach($rows as $row)
                             <div class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
-                                <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">{{ $row['label'] }}</span>
-                                <span class="text-[10px] font-black text-navy-900">{{ $row['value'] }}</span>
+                                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">{{ $row['label'] }}</span>
+                                <span class="text-xs font-black text-navy-900">{{ $row['value'] }}</span>
                             </div>
                             @endforeach
                         </div>
@@ -486,15 +486,15 @@
                     {{-- Tombol Aksi --}}
                     <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6 space-y-3">
                         <a href="{{ route('admin.infrastruktur.edit', $inf->id_infrastruktur) }}"
-                            class="w-full flex items-center justify-center gap-2 bg-gold-500 hover:bg-gold-600 text-white py-3.5 rounded-2xl font-black text-[11px] tracking-widest transition-all shadow-md shadow-gold-500/20 uppercase">
+                            class="w-full flex items-center justify-center gap-2 bg-gold-500 hover:bg-gold-600 text-white py-3.5 rounded-2xl font-black text-sm tracking-widest transition-all shadow-md shadow-gold-500/20 uppercase">
                             <i class="fas fa-edit"></i> Edit Data
                         </a>
                         <a href="{{ route('admin.infrastruktur.pdf', $inf->id_infrastruktur) }}"
-                            class="w-full flex items-center justify-center gap-2 bg-navy-900 hover:bg-navy-950 text-white py-3.5 rounded-2xl font-black text-[11px] tracking-widest transition-all shadow-md shadow-navy-900/20 uppercase">
+                            class="w-full flex items-center justify-center gap-2 bg-navy-900 hover:bg-navy-950 text-white py-3.5 rounded-2xl font-black text-sm tracking-widest transition-all shadow-md shadow-navy-900/20 uppercase">
                             <i class="fas fa-file-pdf"></i> Export PDF
                         </a>
                         <a href="{{ route('admin.infrastruktur') }}"
-                            class="w-full flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-500 py-3.5 rounded-2xl font-black text-[11px] tracking-widest transition-all uppercase">
+                            class="w-full flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-500 py-3.5 rounded-2xl font-black text-sm tracking-widest transition-all uppercase">
                             <i class="fas fa-arrow-left"></i> Kembali
                         </a>
                     </div>

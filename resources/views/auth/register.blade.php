@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Akun | GEO-SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     
@@ -127,7 +127,7 @@
                     @csrf
                     
                     <div>
-                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
+                        <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
                             Nama Lengkap <span class="text-gold-500">*</span>
                         </label>
                         <input type="text" name="name" placeholder="Masukkan nama lengkap" value="{{ old('name') }}" required 
@@ -135,7 +135,7 @@
                     </div>
 
                     <div>
-                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
+                        <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
                             Email / NIP <span class="text-gold-500">*</span>
                         </label>
                         <input type="text" name="email" placeholder="nama@disperkim.go.id atau NIP" value="{{ old('email') }}" required 
@@ -143,7 +143,7 @@
                     </div>
 
                     <div>
-                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
+                        <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
                             Nomor WhatsApp <span class="text-gold-500">*</span>
                         </label>
                         <input type="text" name="no_hp" placeholder="Contoh: 08123456789" value="{{ old('no_hp') }}" required 
@@ -151,7 +151,7 @@
                     </div>
 
                     <div>
-                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
+                        <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
                             Role Akses <span class="text-gold-500">*</span>
                         </label>
                         <div class="relative">
@@ -167,7 +167,7 @@
                     </div>
 
                     <div>
-                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
+                        <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
                             Buat Sandi <span class="text-gold-500">*</span>
                         </label>
                         <input type="password" name="password" placeholder="Minimal 8 karakter" required 
@@ -175,7 +175,7 @@
                     </div>
 
                     <div>
-                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
+                        <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
                             Konfirmasi Kata Sandi <span class="text-gold-500">*</span>
                         </label>
                         <input type="password" name="password_confirmation" placeholder="Ulangi kata sandi" required 
@@ -189,7 +189,7 @@
                 </form>
 
                 <div class="mt-8 pt-6 border-t border-slate-100 text-center font-bold text-xs uppercase tracking-wider">
-                    <p class="text-slate-400 text-[10px]">
+                    <p class="text-slate-400 text-xs">
                         Sudah punya akun? 
                         <a href="{{ route('login') }}" class="text-gold-500 font-extrabold hover:text-gold-600 transition-colors ml-1">Masuk di sini</a>
                     </p>

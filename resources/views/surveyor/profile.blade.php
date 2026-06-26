@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil Saya | Surveyor SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -48,15 +48,15 @@
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
-                    <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Pengaturan Akun</p>
+                    <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Pengaturan Akun</p>
                     <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Profil Saya</h2>
                 </div>
             </div>
             
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
             </div>
         </header>
@@ -105,8 +105,8 @@
                             
                             <h4 class="font-black text-navy-900 dark:text-white text-lg uppercase tracking-wider">{{ auth()->user()->name }}</h4>
                             <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-navy-50 dark:bg-navy-900 border border-navy-100 rounded-lg mt-2">
-                                <i class="fas fa-shield-alt text-gold-500 text-[10px]"></i>
-                                <p class="text-[10px] font-black text-navy-900 dark:text-white uppercase tracking-widest">{{ auth()->user()->role }}</p>
+                                <i class="fas fa-shield-alt text-gold-500 text-xs"></i>
+                                <p class="text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest">{{ auth()->user()->role }}</p>
                             </div>
                         </div>
                     </div>
@@ -122,13 +122,13 @@
                             <div class="space-y-6">
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
-                                        <label class="block text-[10px] font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Nama Lengkap</label>
+                                        <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Nama Lengkap</label>
                                         <input type="text" name="name" value="{{ auth()->user()->name }}" 
                                                class="w-full px-5 py-3.5 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl text-sm font-semibold outline-none focus:border-gold-500 focus:ring-4 focus:ring-gold-500/10 transition-all text-navy-900 dark:text-white" required>
                                     </div>
 
                                     <div>
-                                        <label class="block text-[10px] font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Alamat Email</label>
+                                        <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Alamat Email</label>
                                         <input type="email" name="email" value="{{ auth()->user()->email }}" 
                                                class="w-full px-5 py-3.5 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl text-sm font-semibold outline-none focus:border-gold-500 focus:ring-4 focus:ring-gold-500/10 transition-all text-navy-900 dark:text-white" required>
                                     </div>
@@ -141,18 +141,18 @@
                                         </div>
                                         <div>
                                             <h4 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-wider">Keamanan Akun</h4>
-                                            <p class="text-[10px] font-bold text-slate-400 italic">Kosongkan jika tidak ingin mengubah kata sandi</p>
+                                            <p class="text-xs font-bold text-slate-400 italic">Kosongkan jika tidak ingin mengubah kata sandi</p>
                                         </div>
                                     </div>
 
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div>
-                                            <label class="block text-[10px] font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Kata Sandi Baru</label>
+                                            <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Kata Sandi Baru</label>
                                             <input type="password" name="password" 
                                                    class="w-full px-5 py-3.5 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl text-sm font-semibold outline-none focus:border-gold-500 focus:ring-4 focus:ring-gold-500/10 transition-all text-navy-900 dark:text-white placeholder:text-slate-300" placeholder="••••••••">
                                         </div>
                                         <div>
-                                            <label class="block text-[10px] font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Konfirmasi Sandi</label>
+                                            <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Konfirmasi Sandi</label>
                                             <input type="password" name="password_confirmation" 
                                                    class="w-full px-5 py-3.5 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl text-sm font-semibold outline-none focus:border-gold-500 focus:ring-4 focus:ring-gold-500/10 transition-all text-navy-900 dark:text-white placeholder:text-slate-300" placeholder="••••••••">
                                         </div>
@@ -160,7 +160,7 @@
                                 </div>
 
                                 <div class="pt-8">
-                                    <button type="submit" class="w-full bg-navy-900 text-white py-4 rounded-2xl font-black shadow-xl shadow-navy-900/10 hover:bg-gold-500 hover:shadow-gold-500/20 transition-all tracking-widest text-[11px] uppercase group flex items-center justify-center gap-3">
+                                    <button type="submit" class="w-full bg-navy-900 text-white py-4 rounded-2xl font-black shadow-xl shadow-navy-900/10 hover:bg-gold-500 hover:shadow-gold-500/20 transition-all tracking-widest text-sm uppercase group flex items-center justify-center gap-3">
                                         Simpan Perubahan <i class="fas fa-save group-hover:scale-110 transition-transform"></i>
                                     </button>
                                 </div>

@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log Aktivitas Sistem | Admin SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     
@@ -45,21 +45,21 @@
                 </a>
 
                 <div class="text-left">
-                    <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
+                    <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
                     <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Log Aktivitas Sistem</h2>
                 </div>
             </div>
             
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin.profile') }}" class="text-right group">
-                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
-                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">Online</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
+                        <p class="text-xs font-bold text-emerald-500 uppercase mt-1">Online</p>
                     </a>
                     <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md">
                         @if(auth()->user()->profile_photo)
@@ -88,7 +88,7 @@
                     </form>
 
                     <button class="bg-navy-900 text-gold-500 text-xs px-6 py-2.5 rounded-2xl font-bold shadow-lg shadow-navy-900/10 hover:bg-navy-800 hover:text-white transition flex items-center gap-2 whitespace-nowrap">
-                        <i class="fas fa-download text-[10px]"></i> Ekspor CSV
+                        <i class="fas fa-download text-xs"></i> Ekspor CSV
                     </button>
                 </div>
             </div>
@@ -97,11 +97,11 @@
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
-                            <th class="px-8 py-5 text-[10px] font-black text-gold-500 uppercase tracking-widest">Waktu</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-gold-500 uppercase tracking-widest">Pengguna</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-gold-500 uppercase tracking-widest">Aktivitas</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-gold-500 uppercase tracking-widest">Modul</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-gold-500 uppercase tracking-widest text-right">IP Address</th>
+                            <th class="px-8 py-5 text-xs font-black text-gold-500 uppercase tracking-widest">Waktu</th>
+                            <th class="px-8 py-5 text-xs font-black text-gold-500 uppercase tracking-widest">Pengguna</th>
+                            <th class="px-8 py-5 text-xs font-black text-gold-500 uppercase tracking-widest">Aktivitas</th>
+                            <th class="px-8 py-5 text-xs font-black text-gold-500 uppercase tracking-widest">Modul</th>
+                            <th class="px-8 py-5 text-xs font-black text-gold-500 uppercase tracking-widest text-right">IP Address</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-50 text-sm font-medium">
@@ -147,17 +147,17 @@
                                         </div>
                                         <div>
                                             <p class="font-bold text-navy-900">{{ $activity->user ? $activity->user->name : 'Sistem Otomatis' }}</p>
-                                            <p class="text-[9px] text-slate-400 uppercase tracking-wider">{{ $activity->user ? $activity->user->role : 'System' }}</p>
+                                            <p class="text-xs text-slate-400 uppercase tracking-wider">{{ $activity->user ? $activity->user->role : 'System' }}</p>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-8 py-5">
-                                    <span class="px-3 py-1 bg-{{$badgeColor}}-50 text-{{$badgeColor}}-600 text-[10px] font-black uppercase tracking-widest rounded-lg border border-{{$badgeColor}}-100 inline-flex items-center gap-2 shadow-sm">
+                                    <span class="px-3 py-1 bg-{{$badgeColor}}-50 text-{{$badgeColor}}-600 text-xs font-black uppercase tracking-widest rounded-lg border border-{{$badgeColor}}-100 inline-flex items-center gap-2 shadow-sm">
                                         <i class="fas {{ $icon }}"></i> {{ $actionName }}
                                     </span>
                                 </td>
-                                <td class="px-8 py-5 font-bold text-navy-800 uppercase text-xs">{{ $activity->type }} {!! $activity->reference_id ? "<span class='text-slate-400 text-[10px]'>(ID: {$activity->reference_id})</span>" : "" !!}</td>
-                                <td class="px-8 py-5 text-right font-mono text-[11px] text-slate-400 group-hover:text-slate-600">{{ $activity->ip_address ?? '127.0.0.1' }}</td>
+                                <td class="px-8 py-5 font-bold text-navy-800 uppercase text-xs">{{ $activity->type }} {!! $activity->reference_id ? "<span class='text-slate-400 text-xs'>(ID: {$activity->reference_id})</span>" : "" !!}</td>
+                                <td class="px-8 py-5 text-right font-mono text-sm text-slate-400 group-hover:text-slate-600">{{ $activity->ip_address ?? '127.0.0.1' }}</td>
                             </tr>
                         @empty
                             <tr>

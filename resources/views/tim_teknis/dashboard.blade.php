@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tim Teknis Dashboard | GEO-SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -46,20 +46,20 @@
     <main class="flex-1 flex flex-col h-screen overflow-y-auto">
         <header class="bg-white dark:bg-[#1e1b4b] border-b border-slate-100 dark:border-white/10 px-8 py-5 flex justify-between items-center z-10 sticky top-0">
             <div>
-                <p class="text-[10px] font-extrabold text-gold-500 uppercase tracking-[0.2em] mb-1">Portal Tim Teknis</p>
+                <p class="text-xs font-extrabold text-gold-500 uppercase tracking-[0.2em] mb-1">Portal Tim Teknis</p>
                 <h2 class="text-xl font-black text-navy-900 dark:text-white">Panel Pengawasan</h2>
             </div>
             
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <a href="{{ route('tim_teknis.profile') }}" class="flex items-center gap-3 group">
                     <div class="text-right">
-                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-colors">{{ auth()->user()->name }}</p>
-                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-colors">{{ auth()->user()->name }}</p>
+                        <p class="text-xs font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
                     </div>
                     <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shadow-md group-hover:shadow-lg transition-all overflow-hidden">
                         @if(auth()->user()->profile_photo)
@@ -85,7 +85,7 @@
                     <div>
                         <div class="flex items-center gap-3 mb-1">
                             <h3 class="text-xl font-black text-white tracking-tight">PERINGATAN DARURAT</h3>
-                            <span class="px-3 py-1 bg-rose-900/50 text-white text-[10px] font-black uppercase tracking-widest rounded-full border border-white/20 animate-pulse">Action Required</span>
+                            <span class="px-3 py-1 bg-rose-900/50 text-white text-xs font-black uppercase tracking-widest rounded-full border border-white/20 animate-pulse">Action Required</span>
                         </div>
                         <p class="text-rose-100 text-sm font-medium">Analisis AI mendeteksi <strong class="text-white text-lg">{{ $totalRusakBerat }} infrastruktur</strong> dalam kondisi kritis (Rusak Berat). Segera lakukan peninjauan dan alokasi anggaran perbaikan.</p>
                     </div>
@@ -118,8 +118,8 @@
                                 <i class="fas fa-database text-lg"></i>
                             </div>
                             <div>
-                                <p class="text-[10px] font-black text-gold-400 uppercase tracking-widest">Total Terdata</p>
-                                <h3 class="text-2xl font-black text-white">{{ $totalInfrastruktur ?? 0 }} <span class="text-[10px] font-bold text-gold-400/50 italic ml-1">Objek</span></h3>
+                                <p class="text-xs font-black text-gold-400 uppercase tracking-widest">Total Terdata</p>
+                                <h3 class="text-2xl font-black text-white">{{ $totalInfrastruktur ?? 0 }} <span class="text-xs font-bold text-gold-400/50 italic ml-1">Objek</span></h3>
                             </div>
                         </div>
                     </div>
@@ -131,8 +131,8 @@
                                 <i class="fas fa-check-circle text-lg"></i>
                             </div>
                             <div>
-                                <p class="text-[10px] font-black text-emerald-400 uppercase tracking-widest">Baik <span class="text-[8px] text-white/40 normal-case font-medium">(AI)</span></p>
-                                <h3 class="text-2xl font-black text-white">{{ $totalBaik ?? 0 }} <span class="text-[10px] font-bold text-emerald-400/50 italic ml-1">Lokasi</span></h3>
+                                <p class="text-xs font-black text-emerald-400 uppercase tracking-widest">Baik <span class="text-xs text-white/40 normal-case font-medium">(AI)</span></p>
+                                <h3 class="text-2xl font-black text-white">{{ $totalBaik ?? 0 }} <span class="text-xs font-bold text-emerald-400/50 italic ml-1">Lokasi</span></h3>
                             </div>
                         </div>
                     </div>
@@ -144,8 +144,8 @@
                                 <i class="fas fa-exclamation-circle text-lg"></i>
                             </div>
                             <div>
-                                <p class="text-[10px] font-black text-amber-400 uppercase tracking-widest">Rusak Sedang <span class="text-[8px] text-white/40 normal-case font-medium">(AI)</span></p>
-                                <h3 class="text-2xl font-black text-white">{{ $totalRusakSedang ?? 0 }} <span class="text-[10px] font-bold text-amber-400/50 italic ml-1">Lokasi</span></h3>
+                                <p class="text-xs font-black text-amber-400 uppercase tracking-widest">Rusak Sedang <span class="text-xs text-white/40 normal-case font-medium">(AI)</span></p>
+                                <h3 class="text-2xl font-black text-white">{{ $totalRusakSedang ?? 0 }} <span class="text-xs font-bold text-amber-400/50 italic ml-1">Lokasi</span></h3>
                             </div>
                         </div>
                     </div>
@@ -157,8 +157,8 @@
                                 <i class="fas fa-triangle-exclamation text-lg"></i>
                             </div>
                             <div>
-                                <p class="text-[10px] font-black text-rose-400 uppercase tracking-widest">Rusak Berat <span class="text-[8px] text-white/40 normal-case font-medium">(AI)</span></p>
-                                <h3 class="text-2xl font-black text-white">{{ $totalRusakBerat ?? 0 }} <span class="text-[10px] font-bold text-rose-400/50 italic ml-1">Lokasi</span></h3>
+                                <p class="text-xs font-black text-rose-400 uppercase tracking-widest">Rusak Berat <span class="text-xs text-white/40 normal-case font-medium">(AI)</span></p>
+                                <h3 class="text-2xl font-black text-white">{{ $totalRusakBerat ?? 0 }} <span class="text-xs font-bold text-rose-400/50 italic ml-1">Lokasi</span></h3>
                             </div>
                         </div>
                     </div>
@@ -170,8 +170,8 @@
                                 <i class="fas fa-clipboard-check text-lg"></i>
                             </div>
                             <div>
-                                <p class="text-[10px] font-black text-blue-300 uppercase tracking-widest">Antrean Validasi</p>
-                                <h3 class="text-2xl font-black text-white">{{ $totalPending ?? 0 }} <span class="text-[10px] font-bold text-blue-300/50 italic ml-1">Laporan</span></h3>
+                                <p class="text-xs font-black text-blue-300 uppercase tracking-widest">Antrean Validasi</p>
+                                <h3 class="text-2xl font-black text-white">{{ $totalPending ?? 0 }} <span class="text-xs font-bold text-blue-300/50 italic ml-1">Laporan</span></h3>
                             </div>
                         </div>
                     </div>
@@ -189,7 +189,7 @@
                         </div>
                         <div>
                             <h4 class="font-black text-navy-900 dark:text-white text-sm uppercase tracking-tight mb-2">Monitoring Peta Sebaran</h4>
-                            <p class="text-[10px] text-slate-500 font-bold leading-relaxed">Pantau persebaran infrastruktur di seluruh wilayah Banjarmasin secara real-time.</p>
+                            <p class="text-xs text-slate-500 font-bold leading-relaxed">Pantau persebaran infrastruktur di seluruh wilayah Banjarmasin secara real-time.</p>
                         </div>
                     </div>
                 </a>
@@ -202,7 +202,7 @@
                         </div>
                         <div>
                             <h4 class="font-black text-navy-900 dark:text-white text-sm uppercase tracking-tight mb-2">Validasi Usulan Perbaikan</h4>
-                            <p class="text-[10px] text-slate-500 font-bold leading-relaxed">Tinjau dan beri persetujuan pada laporan kerusakan dari surveyor lapangan.</p>
+                            <p class="text-xs text-slate-500 font-bold leading-relaxed">Tinjau dan beri persetujuan pada laporan kerusakan dari surveyor lapangan.</p>
                         </div>
                     </div>
                 </a>
@@ -217,7 +217,7 @@
                         </div>
                         <div>
                             <h4 class="font-black text-navy-900 dark:text-white text-sm uppercase tracking-tight mb-2">Cetak Laporan Resmi PDF</h4>
-                            <p class="text-[10px] text-slate-500 font-bold leading-relaxed">Ekspor ringkasan data pengawasan menjadi dokumen resmi siap cetak.</p>
+                            <p class="text-xs text-slate-500 font-bold leading-relaxed">Ekspor ringkasan data pengawasan menjadi dokumen resmi siap cetak.</p>
                         </div>
                     </div>
                 </a>

@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Data Lapangan | GEO-SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -53,21 +53,21 @@
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
-                    <p class="text-[9px] font-black text-gold-500 uppercase tracking-[0.2em] mb-0.5">Edit Data</p>
+                    <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-0.5">Edit Data</p>
                     <h2 class="text-xl font-black text-navy-900 dark:text-white tracking-tight">Perbarui Laporan Lapangan</h2>
                 </div>
             </div>
             
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <a href="{{ route('surveyor.profile') }}" class="flex items-center gap-3">
                     <div class="text-right">
-                        <p class="text-[10px] font-black text-navy-900 dark:text-white leading-none uppercase">{{ auth()->user()->name }}</p>
-                        <p class="text-[8px] font-bold text-emerald-500 uppercase mt-1">Online</p>
+                        <p class="text-xs font-black text-navy-900 dark:text-white leading-none uppercase">{{ auth()->user()->name }}</p>
+                        <p class="text-xs font-bold text-emerald-500 uppercase mt-1">Online</p>
                     </div>
                     <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-navy-800 overflow-hidden shadow-md">
                         @if(auth()->user()->profile_photo)
@@ -89,7 +89,7 @@
                     </div>
                     <div>
                         <h4 class="text-xs font-black text-red-900 uppercase tracking-tighter">Gagal Memperbarui Laporan!</h4>
-                        <p class="text-[10px] text-red-700 font-medium mt-1">Harap periksa kembali semua isian yang wajib diisi (bertanda <span class="text-red-500">*</span>).</p>
+                        <p class="text-xs text-red-700 font-medium mt-1">Harap periksa kembali semua isian yang wajib diisi (bertanda <span class="text-red-500">*</span>).</p>
                     </div>
                 </div>
                 @endif
@@ -108,7 +108,7 @@
                             <div class="flex items-center justify-between mb-8 p-4 bg-slate-50 dark:bg-[#0f0e2c] rounded-2xl border border-slate-100 dark:border-white/10">
                                 <h4 class="font-black text-navy-900 dark:text-white text-xs uppercase tracking-widest">Status Terkini</h4>
                                 <div class="flex items-center gap-3">
-                                    <span class="px-4 py-1.5 rounded-xl text-[10px] font-black tracking-widest border uppercase shadow-sm
+                                    <span class="px-4 py-1.5 rounded-xl text-xs font-black tracking-widest border uppercase shadow-sm
                                         {{ $infrastruktur->kondisi == 'Baik' ? 'bg-emerald-50 text-emerald-600 border-emerald-200' : 
                                         ($infrastruktur->kondisi == 'Rusak Sedang' ? 'bg-amber-50 text-amber-600 border-amber-200' : 
                                         ($infrastruktur->kondisi == 'Rusak Berat' ? 'bg-red-50 text-red-600 border-red-200' : 'bg-white dark:bg-[#1e1b4b] text-slate-500 border-slate-200 dark:border-white/20')) }}">
@@ -117,12 +117,12 @@
                                     @if($infrastruktur->cnn || $infrastruktur->analisis)
                                     <div class="flex gap-2">
                                         @if($infrastruktur->cnn)
-                                            <span class="px-3 py-1.5 rounded-xl bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 text-[9px] font-black text-slate-500 shadow-sm">
+                                            <span class="px-3 py-1.5 rounded-xl bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 text-xs font-black text-slate-500 shadow-sm">
                                                 CNN: <span class="text-navy-900 dark:text-white">{{ number_format($infrastruktur->cnn->skor_cnn * 100, 1) }}%</span>
                                             </span>
                                         @endif
                                         @if($infrastruktur->analisis)
-                                            <span class="px-3 py-1.5 rounded-xl bg-gold-50 border border-gold-200 text-[9px] font-black text-slate-500 shadow-sm">
+                                            <span class="px-3 py-1.5 rounded-xl bg-gold-50 border border-gold-200 text-xs font-black text-slate-500 shadow-sm">
                                                 AI: <span class="text-gold-600">{{ $infrastruktur->analisis->label_prioritas }}</span>
                                             </span>
                                         @endif
@@ -137,14 +137,14 @@
                                 </div>
                                 <div>
                                     <h4 class="font-black text-navy-900 dark:text-white uppercase tracking-tight text-lg">Identitas Laporan</h4>
-                                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Klasifikasi Objek Infrastruktur</p>
+                                    <p class="text-xs text-slate-400 font-bold uppercase tracking-widest mt-1">Klasifikasi Objek Infrastruktur</p>
                                 </div>
                             </div>
 
                             <div class="space-y-6">
                                 <div class="grid grid-cols-1 gap-5">
                                     <div>
-                                        <label class="block text-[10px] font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Alamat / Lokasi Jalan <span class="text-red-500">*</span></label>
+                                        <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Alamat / Lokasi Jalan <span class="text-red-500">*</span></label>
                                         <div class="relative group">
                                             <i class="fas fa-map-pin absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors"></i>
                                             <input type="text" name="nama_infrastruktur" value="{{ old('nama_infrastruktur', $infrastruktur->nama_objek) }}" placeholder="Contoh: Gg. Manggis RT 02 / Jalan Hasan Basry" class="w-full pl-12 pr-5 py-4 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900 dark:text-white" required>
@@ -154,10 +154,10 @@
 
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                                     <div>
-                                        <label class="block text-[10px] font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">
+                                        <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">
                                             Kecamatan Wilayah <span class="text-red-500">*</span>
                                             @if(auth()->user()->id_kecamatan)
-                                                <span class="ml-2 text-[8px] text-gold-600 bg-gold-50 px-2 py-0.5 rounded-full font-bold">WILAYAH TUGAS ANDA</span>
+                                                <span class="ml-2 text-xs text-gold-600 bg-gold-50 px-2 py-0.5 rounded-full font-bold">WILAYAH TUGAS ANDA</span>
                                             @endif
                                         </label>
                                         <div class="relative group">
@@ -168,11 +168,11 @@
                                                     <option value="{{ $kec->id_kecamatan }}" {{ $infrastruktur->id_kecamatan == $kec->id_kecamatan ? 'selected' : '' }}>{{ $kec->nama_kecamatan }}</option>
                                                 @endforeach
                                             </select>
-                                            <i class="fas fa-chevron-down absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-[10px]"></i>
+                                            <i class="fas fa-chevron-down absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs"></i>
                                         </div>
                                     </div>
                                     <div>
-                                        <label class="block text-[10px] font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Kelurahan / Desa <span class="text-red-500">*</span></label>
+                                        <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Kelurahan / Desa <span class="text-red-500">*</span></label>
                                         <div class="relative group">
                                             <i class="fas fa-city absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors z-10"></i>
                                             <select name="id_kelurahan" id="id_kelurahan" class="w-full pl-12 pr-10 py-4 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none appearance-none cursor-pointer transition-all relative z-0 text-navy-900 dark:text-white" required onchange="focusToKelurahan()">
@@ -187,7 +187,7 @@
                                                     </option>
                                                 @endforeach
                                             </select>
-                                            <i class="fas fa-chevron-down absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-[10px]"></i>
+                                            <i class="fas fa-chevron-down absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -202,7 +202,7 @@
                                 </div>
                                 <div>
                                     <h4 class="font-black text-navy-900 dark:text-white uppercase tracking-tight text-lg">Spesifikasi Teknis</h4>
-                                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Dimensi & Material Infrastruktur</p>
+                                    <p class="text-xs text-slate-400 font-bold uppercase tracking-widest mt-1">Dimensi & Material Infrastruktur</p>
                                 </div>
                             </div>
 
@@ -211,14 +211,14 @@
                                     <div class="space-y-6">
                                         <div class="grid grid-cols-2 gap-4">
                                             <div>
-                                                <label class="block text-[10px] font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Panjang (m) <span class="text-red-500">*</span></label>
+                                                <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Panjang (m) <span class="text-red-500">*</span></label>
                                                 <div class="relative group">
                                                     <i class="fas fa-arrows-left-right absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors"></i>
                                                     <input type="number" step="0.01" name="panjang" value="{{ old('panjang', $infrastruktur->panjang) }}" placeholder="0.00" class="w-full pl-12 pr-5 py-3.5 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900 dark:text-white" required>
                                                 </div>
                                             </div>
                                             <div>
-                                                <label class="block text-[10px] font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Lebar (m) <span class="text-red-500">*</span></label>
+                                                <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Lebar (m) <span class="text-red-500">*</span></label>
                                                 <div class="relative group">
                                                     <i class="fas fa-arrows-up-down absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors"></i>
                                                     <input type="number" step="0.01" name="lebar" value="{{ old('lebar', $infrastruktur->lebar) }}" placeholder="0.00" class="w-full pl-12 pr-5 py-3.5 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900 dark:text-white" required>
@@ -228,7 +228,7 @@
                                         
                                         {{-- Material Utama --}}
                                         <div>
-                                            <label class="block text-[10px] font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Material Utama  <span class="text-red-500">*</span></label>
+                                            <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Material Utama  <span class="text-red-500">*</span></label>
                                             <div class="relative group">
                                                 <i class="fas fa-layer-group absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors z-10"></i>
                                                 <select name="material_eksisting" class="w-full pl-12 pr-10 py-3.5 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none appearance-none cursor-pointer transition-all relative z-0 text-navy-900 dark:text-white" required>
@@ -237,13 +237,13 @@
                                                         <option value="{{ $mat }}" {{ (old('material_eksisting', $infrastruktur->material_eksisting) == $mat) ? 'selected' : '' }}>{{ $mat }}</option>
                                                     @endforeach
                                                 </select>
-                                                <i class="fas fa-chevron-down absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-[10px]"></i>
+                                                <i class="fas fa-chevron-down absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs"></i>
                                             </div>
                                         </div>
                                     </div>
                                     
                                     <div class="space-y-4">
-                                        <label class="block text-[10px] font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Ketersediaan </label>
+                                        <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Ketersediaan </label>
                                         <div class="space-y-3">
                                             <label class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-[#0f0e2c] rounded-2xl border border-slate-200 dark:border-white/20 cursor-pointer hover:bg-gold-50 hover:border-gold-200 transition-all group">
                                                 <input type="checkbox" name="has_drainase" value="1" {{ $infrastruktur->has_drainase == 'ya' ? 'checked' : '' }} class="peer hidden">
@@ -264,11 +264,11 @@
                                 </div>
 
                                 <div class="pt-4 border-t border-slate-50">
-                                    <label class="block text-[10px] font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Deskripsi Kondisi Fisik Lapangan <span class="text-slate-400 font-medium">(Opsional)</span></label>
+                                    <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Deskripsi Kondisi Fisik Lapangan <span class="text-slate-400 font-medium">(Opsional)</span></label>
                                     <div class="relative group">
                                         <textarea name="kondisi" id="kondisi-textarea" rows="3" placeholder="Deskripsikan kerusakan spesifik..." class="w-full px-5 py-4 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900 dark:text-white">{{ old('kondisi', $infrastruktur->kondisi) }}</textarea>
                                     </div>
-                                    <p class="text-[9px] text-slate-400 mt-2 italic font-medium px-2">* Memperbarui deskripsi akan menyebabkan AI menghitung ulang prioritas.</p>
+                                    <p class="text-xs text-slate-400 mt-2 italic font-medium px-2">* Memperbarui deskripsi akan menyebabkan AI menghitung ulang prioritas.</p>
                                 </div>
 
                             </div>
@@ -287,10 +287,10 @@
                                     </div>
                                     <div>
                                         <h4 class="font-black text-navy-900 dark:text-white uppercase tracking-tight text-lg">Titik Lokasi</h4>
-                                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Akurasi Geospasial</p>
+                                        <p class="text-xs text-slate-400 font-bold uppercase tracking-widest mt-1">Akurasi Geospasial</p>
                                     </div>
                                 </div>
-                                <button type="button" onclick="getLocation()" class="px-4 py-3 bg-navy-900 hover:bg-gold-500 hover:text-navy-900 dark:text-white text-white rounded-xl text-[9px] font-black uppercase tracking-widest flex items-center gap-2 transition-all shadow-md active:scale-95 border border-white/10">
+                                <button type="button" onclick="getLocation()" class="px-4 py-3 bg-navy-900 hover:bg-gold-500 hover:text-navy-900 dark:text-white text-white rounded-xl text-xs font-black uppercase tracking-widest flex items-center gap-2 transition-all shadow-md active:scale-95 border border-white/10">
                                     <i class="fas fa-crosshairs"></i>
                                     Sync GPS
                                 </button>
@@ -301,18 +301,18 @@
                                 <div class="absolute bottom-4 left-4 right-4 z-10">
                                     <div class="bg-white/90 dark:bg-[#1e1b4b]/90 backdrop-blur-md px-4 py-3 rounded-xl shadow-lg border border-slate-100 dark:border-white/10 text-center flex items-center justify-center gap-2">
                                         <div class="w-2 h-2 rounded-full bg-gold-500 animate-pulse"></div>
-                                        <p class="text-[9px] font-black uppercase tracking-widest text-navy-900 dark:text-white">Klik Peta Untuk Menggeser Pin</p>
+                                        <p class="text-xs font-black uppercase tracking-widest text-navy-900 dark:text-white">Klik Peta Untuk Menggeser Pin</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="bg-slate-50 dark:bg-[#0f0e2c] p-4 rounded-2xl border border-slate-200 dark:border-white/20">
-                                    <label class="block text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Latitude</label>
+                                    <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Latitude</label>
                                     <input type="text" id="lat-input" name="latitude" value="{{ old('latitude', $infrastruktur->latitude) }}" class="w-full bg-transparent border-none p-0 text-xs font-black text-navy-900 dark:text-white outline-none focus:ring-0">
                                 </div>
                                 <div class="bg-slate-50 dark:bg-[#0f0e2c] p-4 rounded-2xl border border-slate-200 dark:border-white/20">
-                                    <label class="block text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Longitude</label>
+                                    <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Longitude</label>
                                     <input type="text" id="lng-input" name="longitude" value="{{ old('longitude', $infrastruktur->longitude) }}" class="w-full bg-transparent border-none p-0 text-xs font-black text-navy-900 dark:text-white outline-none focus:ring-0">
                                 </div>
                             </div>
@@ -320,18 +320,18 @@
 
                         {{-- Section: Dokumentasi & Submit --}}
                         <div class="bg-white dark:bg-[#1e1b4b] rounded-[2.5rem] p-8 border border-slate-100 dark:border-white/10 shadow-sm hover:shadow-md transition-shadow">
-                            <h4 class="text-[10px] font-black text-navy-900 dark:text-white mb-6 border-b border-slate-50 pb-4 uppercase tracking-widest">Dokumentasi Visual (Terkunci)</h4>
+                            <h4 class="text-xs font-black text-navy-900 dark:text-white mb-6 border-b border-slate-50 pb-4 uppercase tracking-widest">Dokumentasi Visual (Terkunci)</h4>
                             <div class="relative rounded-[2rem] overflow-hidden border border-slate-100 dark:border-white/10 shadow-inner bg-slate-50 dark:bg-[#0f0e2c] h-52 flex items-center justify-center mb-8">
                                 @if($infrastruktur->foto_terbaru)
                                     <img src="{{ asset('storage/infrastruktur/' . $infrastruktur->foto_terbaru) }}" class="absolute inset-0 w-full h-full object-cover">
                                 @else
                                     <div class="text-center">
                                         <i class="fas fa-image text-3xl text-slate-300 mb-2"></i>
-                                        <p class="text-[10px] font-bold text-slate-400 uppercase">Tidak ada foto</p>
+                                        <p class="text-xs font-bold text-slate-400 uppercase">Tidak ada foto</p>
                                     </div>
                                 @endif
                                 <div class="absolute inset-0 bg-navy-900/40 flex items-center justify-center backdrop-blur-[2px]">
-                                    <span class="px-5 py-2.5 bg-white/95 dark:bg-[#1e1b4b]/95 backdrop-blur-md rounded-xl text-[9px] font-black text-navy-900 dark:text-white uppercase tracking-widest border border-slate-200 dark:border-white/20 shadow-lg flex items-center gap-2">
+                                    <span class="px-5 py-2.5 bg-white/95 dark:bg-[#1e1b4b]/95 backdrop-blur-md rounded-xl text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest border border-slate-200 dark:border-white/20 shadow-lg flex items-center gap-2">
                                         <i class="fas fa-lock text-gold-500"></i> Foto Dilindungi AI
                                     </span>
                                 </div>
@@ -339,10 +339,10 @@
 
                             <div class="grid grid-cols-1 gap-4 pt-4 border-t border-slate-100 dark:border-white/10">
                                 <div class="flex items-center justify-between px-2 mb-2">
-                                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Tgl Survey: <span class="text-navy-900 dark:text-white">{{ \Carbon\Carbon::parse($infrastruktur->tgl_survey)->translatedFormat('d M Y') }}</span></span>
+                                    <span class="text-xs font-black text-slate-400 uppercase tracking-widest">Tgl Survey: <span class="text-navy-900 dark:text-white">{{ \Carbon\Carbon::parse($infrastruktur->tgl_survey)->translatedFormat('d M Y') }}</span></span>
                                     <input type="hidden" name="tgl_survey" value="{{ $infrastruktur->tgl_survey }}">
                                 </div>
-                                <button type="submit" id="btn-submit" class="w-full py-5 bg-navy-900 hover:bg-gold-500 text-white hover:text-navy-900 dark:text-white rounded-[2rem] font-black text-[11px] uppercase tracking-[0.2em] transition-all shadow-xl active:scale-95 flex items-center justify-center gap-3">
+                                <button type="submit" id="btn-submit" class="w-full py-5 bg-navy-900 hover:bg-gold-500 text-white hover:text-navy-900 dark:text-white rounded-[2rem] font-black text-sm uppercase tracking-[0.2em] transition-all shadow-xl active:scale-95 flex items-center justify-center gap-3">
                                     <span id="btn-text">Simpan Perubahan</span>
                                     <i class="fas fa-save group-hover:scale-110 transition-transform"></i>
                                 </button>
@@ -425,7 +425,7 @@
                 
                 map.setView([defLat, defLng], 17);
                 updateMarker(defLat, defLng);
-                btn.innerHTML = '<span class="text-emerald-400 font-bold text-[10px]"><i class="fas fa-check"></i> Sukses (Simulasi)</span>';
+                btn.innerHTML = '<span class="text-emerald-400 font-bold text-xs"><i class="fas fa-check"></i> Sukses (Simulasi)</span>';
                 setTimeout(() => { btn.innerHTML = originalHtml; }, 3000);
             };
 
@@ -435,7 +435,7 @@
                     const lng = position.coords.longitude;
                     map.setView([lat, lng], 17);
                     updateMarker(lat, lng);
-                    btn.innerHTML = '<span class="text-emerald-400 font-bold text-[10px]"><i class="fas fa-check"></i> Sukses</span>';
+                    btn.innerHTML = '<span class="text-emerald-400 font-bold text-xs"><i class="fas fa-check"></i> Sukses</span>';
                     setTimeout(() => { btn.innerHTML = originalHtml; }, 3000);
                 }, function() {
                     fallbackLocation();

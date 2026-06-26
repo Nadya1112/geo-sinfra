@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Surveyor Dashboard | GEO-SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -45,20 +45,20 @@
         {{-- ── Header ── --}}
         <header class="bg-white/80 dark:bg-[#1e1b4b]/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 px-8 py-5 flex justify-between items-center z-40 shrink-0">
             <div>
-                <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Surveyor Portal</p>
+                <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Surveyor Portal</p>
                 <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Dashboard Utama</h2>
             </div>
             
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <a href="{{ route('surveyor.profile') }}" class="flex items-center gap-3 group">
                     <div class="text-right">
-                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-colors">{{ auth()->user()->name }}</p>
-                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-colors">{{ auth()->user()->name }}</p>
+                        <p class="text-xs font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
                     </div>
                     <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shadow-md group-hover:shadow-lg transition-all overflow-hidden">
                         @if(auth()->user()->profile_photo)
@@ -82,12 +82,12 @@
                     </div>
                     <div>
                         <h4 class="text-sm font-black text-orange-900 uppercase tracking-tight">Wilayah Tugas Belum Ditentukan!</h4>
-                        <p class="text-[11px] text-orange-700 font-medium mt-1">
+                        <p class="text-sm text-orange-700 font-medium mt-1">
                             Anda belum memilih wilayah tugas. Harap tentukan wilayah kerja Anda agar laporan dapat diproses.
                         </p>
                     </div>
                 </div>
-                <button onclick="toggleModal('territoryModal')" class="px-6 py-3 bg-orange-500 text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-orange-600 transition-all shadow-md flex items-center gap-2">
+                <button onclick="toggleModal('territoryModal')" class="px-6 py-3 bg-orange-500 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-orange-600 transition-all shadow-md flex items-center gap-2">
                     <i class="fas fa-map-marked-alt"></i> Pilih Wilayah Sekarang
                 </button>
             </div>
@@ -101,11 +101,11 @@
                 <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
                     <div>
                         <h3 class="text-3xl font-black text-white mb-3 leading-tight">Selamat Datang, <span class="text-gold-500">{{ auth()->user()->name }}</span>!</h3>
-                        <p class="text-slate-300 text-[11px] font-medium max-w-xl leading-relaxed">
+                        <p class="text-slate-300 text-sm font-medium max-w-xl leading-relaxed">
                             Siap untuk mendata infrastruktur hari ini? Pastikan GPS aktif dan foto yang diambil jelas untuk hasil pemantauan status kondisi yang akurat di lapangan.
                         </p>
                     </div>
-                    <a href="{{ route('surveyor.input') }}" class="shrink-0 px-8 py-4 bg-gold-500 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-gold-600 transition-all shadow-lg shadow-gold-500/20 flex items-center gap-3 group">
+                    <a href="{{ route('surveyor.input') }}" class="shrink-0 px-8 py-4 bg-gold-500 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-gold-600 transition-all shadow-lg shadow-gold-500/20 flex items-center gap-3 group">
                         Mulai Survey <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                     </a>
                 </div>
@@ -119,8 +119,8 @@
                             <i class="fas fa-file-alt text-blue-500 dark:text-blue-400"></i>
                         </div>
                     </div>
-                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Survey Saya</p>
-                    <h3 class="text-3xl font-black text-blue-600 dark:text-blue-400">{{ $totalSurvey }} <span class="text-[10px] font-bold text-slate-400">Laporan</span></h3>
+                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Total Survey Saya</p>
+                    <h3 class="text-3xl font-black text-blue-600 dark:text-blue-400">{{ $totalSurvey }} <span class="text-xs font-bold text-slate-400">Laporan</span></h3>
                 </div>
                 
                 <div class="bg-orange-50 dark:bg-orange-900/20 p-6 rounded-3xl border border-orange-100 dark:border-orange-500/20 shadow-sm hover:-translate-y-1 transition-transform">
@@ -129,8 +129,8 @@
                             <i class="fas fa-clock"></i>
                         </div>
                     </div>
-                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Menunggu Validasi</p>
-                    <h3 class="text-3xl font-black text-orange-600 dark:text-orange-400">{{ $waitingValidation }} <span class="text-[10px] font-bold text-slate-400">Objek</span></h3>
+                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Menunggu Validasi</p>
+                    <h3 class="text-3xl font-black text-orange-600 dark:text-orange-400">{{ $waitingValidation }} <span class="text-xs font-bold text-slate-400">Objek</span></h3>
                 </div>
                 
                 <div class="bg-emerald-50 dark:bg-emerald-900/20 p-6 rounded-3xl border border-emerald-100 dark:border-emerald-500/20 shadow-sm hover:-translate-y-1 transition-transform">
@@ -139,8 +139,8 @@
                             <i class="fas fa-check-double"></i>
                         </div>
                     </div>
-                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Terverifikasi AI</p>
-                    <h3 class="text-3xl font-black text-emerald-600 dark:text-emerald-400">{{ $verifiedAI }} <span class="text-[10px] font-bold text-slate-400">Selesai</span></h3>
+                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Terverifikasi AI</p>
+                    <h3 class="text-3xl font-black text-emerald-600 dark:text-emerald-400">{{ $verifiedAI }} <span class="text-xs font-bold text-slate-400">Selesai</span></h3>
                 </div>
                 
                 <div class="bg-red-50 dark:bg-red-900/20 p-6 rounded-3xl border border-red-100 dark:border-red-500/20 shadow-sm hover:-translate-y-1 transition-transform">
@@ -149,8 +149,8 @@
                             <i class="fas fa-rotate-left"></i>
                         </div>
                     </div>
-                    <p class="text-[9px] font-black text-red-400 uppercase tracking-widest mb-1">Ditolak / Revisi</p>
-                    <h3 class="text-3xl font-black text-red-600 dark:text-red-400">{{ $totalRejected }} <span class="text-[10px] font-bold text-red-400/50">Tindakan</span></h3>
+                    <p class="text-xs font-black text-red-400 uppercase tracking-widest mb-1">Ditolak / Revisi</p>
+                    <h3 class="text-3xl font-black text-red-600 dark:text-red-400">{{ $totalRejected }} <span class="text-xs font-bold text-red-400/50">Tindakan</span></h3>
                 </div>
             </div>
 
@@ -163,7 +163,7 @@
                             <i class="fas fa-tasks text-xl"></i>
                         </div>
                         <div>
-                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Tugas</p>
+                            <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Total Tugas</p>
                             <h3 class="text-2xl font-black text-indigo-600 dark:text-indigo-400">{{ $totalTugas }}</h3>
                         </div>
                     </div>
@@ -175,7 +175,7 @@
                             <i class="fas fa-clock text-xl"></i>
                         </div>
                         <div>
-                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Tugas Menunggu</p>
+                            <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Tugas Menunggu</p>
                             <h3 class="text-2xl font-black text-orange-600 dark:text-orange-400">{{ $tugasMenunggu }}</h3>
                         </div>
                     </div>
@@ -187,7 +187,7 @@
                             <i class="fas fa-check-circle text-xl"></i>
                         </div>
                         <div>
-                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Tugas Selesai</p>
+                            <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Tugas Selesai</p>
                             <h3 class="text-2xl font-black text-emerald-600 dark:text-emerald-400">{{ $tugasSelesai }}</h3>
                         </div>
                     </div>
@@ -209,21 +209,21 @@
                             <div class="w-8 h-8 bg-white dark:bg-[#1e1b4b] rounded-lg flex items-center justify-center text-gold-500 font-black shadow-sm shrink-0 group-hover:bg-gold-500 group-hover:text-white transition-colors">1</div>
                             <div>
                                 <p class="text-xs font-black text-navy-900 dark:text-white uppercase">Pilih Detail Infrastruktur</p>
-                                <p class="text-[10px] text-slate-500 mt-1 font-medium">Pastikan seluruh form mulai dari Jenis hingga Material Utama sesuai kondisi lapangan.</p>
+                                <p class="text-xs text-slate-500 mt-1 font-medium">Pastikan seluruh form mulai dari Jenis hingga Material Utama sesuai kondisi lapangan.</p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4 p-4 bg-slate-50 dark:bg-[#0f0e2c] rounded-2xl border border-slate-100 dark:border-white/10 group hover:border-gold-500/30 transition-colors">
                             <div class="w-8 h-8 bg-white dark:bg-[#1e1b4b] rounded-lg flex items-center justify-center text-gold-500 font-black shadow-sm shrink-0 group-hover:bg-gold-500 group-hover:text-white transition-colors">2</div>
                             <div>
                                 <p class="text-xs font-black text-navy-900 dark:text-white uppercase">Ambil Foto Fokus</p>
-                                <p class="text-[10px] text-slate-500 mt-1 font-medium">AI membutuhkan foto yang jelas dan terpusat pada area yang rusak untuk akurasi.</p>
+                                <p class="text-xs text-slate-500 mt-1 font-medium">AI membutuhkan foto yang jelas dan terpusat pada area yang rusak untuk akurasi.</p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4 p-4 bg-slate-50 dark:bg-[#0f0e2c] rounded-2xl border border-slate-100 dark:border-white/10 group hover:border-gold-500/30 transition-colors">
                             <div class="w-8 h-8 bg-white dark:bg-[#1e1b4b] rounded-lg flex items-center justify-center text-gold-500 font-black shadow-sm shrink-0 group-hover:bg-gold-500 group-hover:text-white transition-colors">3</div>
                             <div>
                                 <p class="text-xs font-black text-navy-900 dark:text-white uppercase">Aktifkan GPS</p>
-                                <p class="text-[10px] text-slate-500 mt-1 font-medium">Koordinat akan terisi otomatis jika GPS HP Anda aktif saat form dibuka.</p>
+                                <p class="text-xs text-slate-500 mt-1 font-medium">Koordinat akan terisi otomatis jika GPS HP Anda aktif saat form dibuka.</p>
                             </div>
                         </div>
                     </div>
@@ -236,17 +236,17 @@
                         <div class="relative z-10 flex items-center justify-between gap-4">
                             <div>
                                 <div class="flex items-center gap-2 mb-2">
-                                    <span class="px-2 py-0.5 bg-red-500/20 text-red-400 border border-red-500/30 rounded text-[8px] font-black uppercase tracking-widest">Waspada Banjir</span>
+                                    <span class="px-2 py-0.5 bg-red-500/20 text-red-400 border border-red-500/30 rounded text-xs font-black uppercase tracking-widest">Waspada Banjir</span>
                                 </div>
                                 <h4 class="font-black text-xl leading-none mb-1">Hujan Lebat</h4>
-                                <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Banjarmasin, 28°C</p>
+                                <p class="text-xs text-slate-400 font-bold uppercase tracking-widest">Banjarmasin, 28°C</p>
                             </div>
                             <div class="w-16 h-16 bg-white/10 dark:bg-[#1e1b4b]/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-blue-400 shadow-inner border border-white/10 shrink-0">
                                 <i class="fas fa-cloud-showers-heavy text-3xl"></i>
                             </div>
                         </div>
                         <div class="relative z-10 mt-6 pt-4 border-t border-white/10">
-                            <p class="text-[10px] text-slate-300 font-medium leading-relaxed">
+                            <p class="text-xs text-slate-300 font-medium leading-relaxed">
                                 <strong class="text-white">Peringatan Lapangan:</strong> Hati-hati saat mengambil foto di area genangan. Pastikan kamera fokus pada titik kerusakan drainase atau aspal yang terendam.
                             </p>
                         </div>
@@ -259,9 +259,9 @@
                             <div class="flex justify-between items-start mb-8">
                                 <div>
                                     <h4 class="font-black text-lg mb-1">Wilayah Tugas Anda</h4>
-                                    <p class="text-slate-400 text-[9px] uppercase tracking-widest font-bold">Kecamatan Tanggung Jawab</p>
+                                    <p class="text-slate-400 text-xs uppercase tracking-widest font-bold">Kecamatan Tanggung Jawab</p>
                                 </div>
-                                <button onclick="toggleModal('territoryModal')" class="px-4 py-2 bg-white/5 dark:bg-[#1e1b4b]/5 hover:bg-white/10 dark:bg-[#1e1b4b]/10 text-gold-500 border border-white/10 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all backdrop-blur-md">
+                                <button onclick="toggleModal('territoryModal')" class="px-4 py-2 bg-white/5 dark:bg-[#1e1b4b]/5 hover:bg-white/10 dark:bg-[#1e1b4b]/10 text-gold-500 border border-white/10 rounded-xl text-xs font-black uppercase tracking-widest transition-all backdrop-blur-md">
                                     <i class="fas fa-edit mr-2"></i> Kelola
                                 </button>
                             </div>
@@ -276,7 +276,7 @@
                                 </div>
                                 @empty
                                 <div class="bg-white/5 dark:bg-[#1e1b4b]/5 border border-white/10 rounded-2xl p-6 backdrop-blur-md text-center">
-                                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Belum ada wilayah tugas.</p>
+                                    <p class="text-xs text-slate-400 font-bold uppercase tracking-widest">Belum ada wilayah tugas.</p>
                                 </div>
                                 @endforelse
                             </div>
@@ -287,7 +287,7 @@
                     <div class="bg-white dark:bg-[#1e1b4b] rounded-[2.5rem] p-8 border border-slate-100 dark:border-white/10 shadow-sm">
                         <div class="flex justify-between items-center mb-6">
                             <h4 class="font-black text-lg text-navy-900 dark:text-white">Upload Terbaru</h4>
-                            <a href="{{ route('surveyor.history') }}" class="text-[10px] font-black text-gold-500 uppercase tracking-widest hover:text-gold-600 transition-colors">Semua Riwayat</a>
+                            <a href="{{ route('surveyor.history') }}" class="text-xs font-black text-gold-500 uppercase tracking-widest hover:text-gold-600 transition-colors">Semua Riwayat</a>
                         </div>
                         <div class="space-y-4">
                             @forelse($recentUploads as $upload)
@@ -298,16 +298,16 @@
                                 </div>
                                 <div class="flex-1 min-w-0">
                                     <p class="text-xs font-black text-navy-900 dark:text-white truncate uppercase">{{ $upload->nama_infrastruktur }}</p>
-                                    <p class="text-[9px] text-slate-400 font-bold uppercase">{{ $upload->created_at->diffForHumans() }}</p>
+                                    <p class="text-xs text-slate-400 font-bold uppercase">{{ $upload->created_at->diffForHumans() }}</p>
                                 </div>
                                 @if($upload->status_verifikasi == 'Verified')
-                                    <div class="px-2 py-1 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-500/20 rounded-lg text-[8px] font-black uppercase tracking-wider">Verified</div>
+                                    <div class="px-2 py-1 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-500/20 rounded-lg text-xs font-black uppercase tracking-wider">Verified</div>
                                 @else
-                                    <div class="px-2 py-1 bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 border border-orange-100 dark:border-orange-500/20 rounded-lg text-[8px] font-black uppercase tracking-wider">Pending</div>
+                                    <div class="px-2 py-1 bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 border border-orange-100 dark:border-orange-500/20 rounded-lg text-xs font-black uppercase tracking-wider">Pending</div>
                                 @endif
                             </div>
                             @empty
-                            <p class="text-[10px] text-slate-400 font-bold text-center py-6 uppercase tracking-wider">Belum ada data diunggah.</p>
+                            <p class="text-xs text-slate-400 font-bold text-center py-6 uppercase tracking-wider">Belum ada data diunggah.</p>
                             @endforelse
                         </div>
                     </div>
@@ -325,7 +325,7 @@
                 <div class="flex justify-between items-center mb-8 pb-4 border-b border-slate-100 dark:border-white/10">
                     <div>
                         <h3 class="text-xl font-black text-navy-900 dark:text-white">Kelola Wilayah Tugas</h3>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1">Pilih kecamatan yang menjadi tanggung jawab Anda</p>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mt-1">Pilih kecamatan yang menjadi tanggung jawab Anda</p>
                     </div>
                     <button onclick="toggleModal('territoryModal')" class="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 rounded-xl hover:bg-red-50 hover:text-red-500 transition-all">
                         <i class="fas fa-times"></i>
@@ -347,10 +347,10 @@
                     </div>
 
                     <div class="flex gap-3">
-                        <button type="button" onclick="toggleModal('territoryModal')" class="flex-1 py-4 bg-slate-100 text-slate-500 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-200 transition-all">
+                        <button type="button" onclick="toggleModal('territoryModal')" class="flex-1 py-4 bg-slate-100 text-slate-500 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-slate-200 transition-all">
                             Batal
                         </button>
-                        <button type="submit" class="flex-[2] py-4 bg-navy-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-gold-500 transition-all shadow-xl shadow-navy-900/10">
+                        <button type="submit" class="flex-[2] py-4 bg-navy-900 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-gold-500 transition-all shadow-xl shadow-navy-900/10">
                             Simpan Perubahan
                         </button>
                     </div>

@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manajemen Wilayah | Admin SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     
@@ -61,21 +61,21 @@
                 </a>
 
                 <div class="text-left">
-                    <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
+                    <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
                     <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Manajemen Wilayah</h2>
                 </div>
             </div>
             
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin.profile') }}" class="text-right group">
-                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
-                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">Online</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
+                        <p class="text-xs font-bold text-emerald-500 uppercase mt-1">Online</p>
                     </a>
                     <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md">
                         @if(auth()->user()->profile_photo)
@@ -105,7 +105,7 @@
                 
                 <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
                     <form action="{{ route('admin.wilayah') }}" method="GET" class="flex items-center flex-1 md:w-[400px]">
-                        <select name="show" onchange="this.form.submit()" class="pl-4 pr-8 py-2.5 bg-white border border-slate-100 border-r-0 rounded-l-2xl text-[10px] font-bold text-navy-900 focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm">
+                        <select name="show" onchange="this.form.submit()" class="pl-4 pr-8 py-2.5 bg-white border border-slate-100 border-r-0 rounded-l-2xl text-xs font-bold text-navy-900 focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm">
                             <option value="10" {{ request('show') != 'all' ? 'selected' : '' }}>Per 10 Data</option>
                             <option value="all" {{ request('show') == 'all' ? 'selected' : '' }}>Semua Data</option>
                         </select>
@@ -116,7 +116,7 @@
                     </form>
 
                     <a href="{{ route('admin.wilayah.create') }}" class="bg-gold-500 text-white text-xs px-6 py-2.5 rounded-2xl font-bold shadow-lg shadow-gold-500/10 hover:bg-gold-600 hover:shadow-gold-500/20 transition flex items-center gap-2 whitespace-nowrap">
-                        <i class="fas fa-plus text-[10px]"></i> Tambah Wilayah
+                        <i class="fas fa-plus text-xs"></i> Tambah Wilayah
                     </a>
                 </div>
             </div>
@@ -125,11 +125,11 @@
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
-                            <th class="px-8 py-5 text-[10px] font-black text-gold-500 uppercase tracking-widest w-24 text-center">No.</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-gold-500 uppercase tracking-widest">Nama Kecamatan</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-gold-500 uppercase tracking-widest">Kelurahan</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-gold-500 uppercase tracking-widest text-center">Total Infrastruktur</th>
-                            <th class="px-8 py-5 text-[10px] font-black text-gold-500 uppercase tracking-widest text-center w-32">Aksi</th>
+                            <th class="px-8 py-5 text-xs font-black text-gold-500 uppercase tracking-widest w-24 text-center">No.</th>
+                            <th class="px-8 py-5 text-xs font-black text-gold-500 uppercase tracking-widest">Nama Kecamatan</th>
+                            <th class="px-8 py-5 text-xs font-black text-gold-500 uppercase tracking-widest">Kelurahan</th>
+                            <th class="px-8 py-5 text-xs font-black text-gold-500 uppercase tracking-widest text-center">Total Infrastruktur</th>
+                            <th class="px-8 py-5 text-xs font-black text-gold-500 uppercase tracking-widest text-center w-32">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-50">

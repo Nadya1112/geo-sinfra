@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Offline Mode | GEO-SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -49,10 +49,10 @@
                 </p>
             </div>
 
-            <button onclick="window.history.back()" class="w-full py-4 bg-navy-900 hover:bg-gold-500 hover:text-navy-900 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all shadow-md flex items-center justify-center gap-3">
+            <button onclick="window.history.back()" class="w-full py-4 bg-navy-900 hover:bg-gold-500 hover:text-navy-900 text-white rounded-2xl font-black text-sm uppercase tracking-widest transition-all shadow-md flex items-center justify-center gap-3">
                 <i class="fas fa-arrow-left"></i> Kembali Sebelumnya
             </button>
-            <button onclick="window.location.reload()" class="w-full py-4 mt-3 bg-white hover:bg-slate-50 text-navy-900 border border-slate-200 rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all shadow-sm flex items-center justify-center gap-3">
+            <button onclick="window.location.reload()" class="w-full py-4 mt-3 bg-white hover:bg-slate-50 text-navy-900 border border-slate-200 rounded-2xl font-black text-sm uppercase tracking-widest transition-all shadow-sm flex items-center justify-center gap-3">
                 <i class="fas fa-sync-alt"></i> Coba Muat Ulang
             </button>
         </div>

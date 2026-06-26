@@ -1,4 +1,4 @@
-{{-- Tombol Hamburger (Hanya muncul di mobile) --}}
+﻿{{-- Tombol Hamburger (Hanya muncul di mobile) --}}
 <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="fixed top-4 left-4 z-[9999] w-10 h-10 bg-navy-900 text-gold-500 rounded-xl flex items-center justify-center shadow-lg md:hidden border border-white/10 hover:bg-navy-800 transition-all active:scale-95">
     <i class="fas fa-bars text-sm" id="menu-icon"></i>
 </button>
@@ -48,7 +48,7 @@
                     <span>Laporan Warga</span>
                 </div>
                 @if(isset($laporanMenungguCount) && $laporanMenungguCount > 0)
-                <span class="bg-red-500 text-white text-[10px] font-black px-1.5 py-0.5 rounded-md min-w-[20px] text-center shadow-lg">{{ $laporanMenungguCount }}</span>
+                <span class="bg-red-500 text-white text-xs font-black px-1.5 py-0.5 rounded-md min-w-[20px] text-center shadow-lg">{{ $laporanMenungguCount }}</span>
                 @endif
             </a>
 
@@ -65,7 +65,7 @@
             </a>
 
             <div class="pt-4 mt-2 border-t border-white/5">
-                <p class="text-[8px] font-black text-slate-500 uppercase tracking-[0.2em] mb-3 px-2">Sistem & Keamanan</p>
+                <p class="text-xs font-black text-slate-500 uppercase tracking-[0.2em] mb-3 px-2">Sistem & Keamanan</p>
                 <a href="{{ route('admin.activity') }}" 
                    class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.activity') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
                     <i class="fas fa-shield-alt {{ request()->routeIs('admin.activity') ? '' : 'group-hover:text-gold-500' }}"></i> 
@@ -90,7 +90,7 @@
                     <i class="fas fa-palette group-hover:text-gold-500 transition-colors"></i>
                     <span>Tema Tampilan</span>
                 </div>
-                <i class="fas fa-chevron-up text-[10px] opacity-50"></i>
+                <i class="fas fa-chevron-up text-xs opacity-50"></i>
             </button>
             
             <div id="theme-menu-desktop" class="hidden absolute bottom-14 left-0 w-full bg-[#1e1b4b] rounded-xl shadow-2xl border border-white/10 p-1.5 z-50 mb-1">
@@ -142,12 +142,12 @@
             </div>
             <div class="flex-1 min-w-0">
                 <p class="text-xs font-black text-white uppercase truncate">{{ auth()->user()->name }}</p>
-                <p class="text-[9px] font-bold text-emerald-400 uppercase mt-0.5">● Online</p>
+                <p class="text-xs font-bold text-emerald-400 uppercase mt-0.5">● Online</p>
             </div>
-            <i class="fas fa-chevron-right text-[8px] text-slate-500 group-hover:text-gold-400 transition-colors"></i>
+            <i class="fas fa-chevron-right text-xs text-slate-500 group-hover:text-gold-400 transition-colors"></i>
         </a>
         
-        <p class="text-[8px] font-black text-slate-500 uppercase tracking-[0.2em] mb-3 px-2">Menu Utama</p>
+        <p class="text-xs font-black text-slate-500 uppercase tracking-[0.2em] mb-3 px-2">Menu Utama</p>
         <nav class="space-y-1.5">
             <a href="{{ route('admin.dashboard') }}" 
                class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.dashboard') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
@@ -180,7 +180,7 @@
                     <span>Laporan Warga</span>
                 </div>
                 @if(isset($laporanMenungguCount) && $laporanMenungguCount > 0)
-                <span class="bg-red-500 text-white text-[10px] font-black px-1.5 py-0.5 rounded-md min-w-[20px] text-center shadow-lg">{{ $laporanMenungguCount }}</span>
+                <span class="bg-red-500 text-white text-xs font-black px-1.5 py-0.5 rounded-md min-w-[20px] text-center shadow-lg">{{ $laporanMenungguCount }}</span>
                 @endif
             </a>
 
@@ -197,7 +197,7 @@
             </a>
 
             <div class="pt-4 mt-2 border-t border-white/5">
-                <p class="text-[8px] font-black text-slate-500 uppercase tracking-[0.2em] mb-3 px-2">Sistem & Keamanan</p>
+                <p class="text-xs font-black text-slate-500 uppercase tracking-[0.2em] mb-3 px-2">Sistem & Keamanan</p>
                 <a href="{{ route('admin.activity') }}" 
                    class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.activity') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
                     <i class="fas fa-shield-alt {{ request()->routeIs('admin.activity') ? '' : 'group-hover:text-gold-500' }}"></i> 
@@ -222,7 +222,7 @@
                     <i class="fas fa-palette group-hover:text-gold-500 transition-colors"></i>
                     <span>Tema Tampilan</span>
                 </div>
-                <i class="fas fa-chevron-up text-[10px] opacity-50"></i>
+                <i class="fas fa-chevron-up text-xs opacity-50"></i>
             </button>
             
             <div id="theme-menu-mobile" class="hidden absolute bottom-16 left-0 w-full bg-[#1e1b4b] rounded-xl shadow-2xl border border-white/10 p-1.5 z-50 mb-1">
@@ -350,8 +350,8 @@
                 </div>
                 <div class="flex-1">
                     <h5 class="text-xs font-black text-navy-900 dark:text-white mb-1 leading-tight">${title}</h5>
-                    <p class="text-[10px] font-medium text-slate-500 dark:text-slate-400 mb-2">${message}</p>
-                    <a href="${link}" class="inline-block bg-gold-500 text-white text-[9px] font-bold px-3 py-1.5 rounded-lg hover:bg-gold-600 transition-colors">Lihat Detail</a>
+                    <p class="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2">${message}</p>
+                    <a href="${link}" class="inline-block bg-gold-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg hover:bg-gold-600 transition-colors">Lihat Detail</a>
                 </div>
                 <button onclick="document.getElementById('${toastId}').remove()" class="text-slate-400 hover:text-red-500 transition-colors">
                     <i class="fas fa-times text-xs"></i>

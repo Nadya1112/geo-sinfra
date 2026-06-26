@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | Admin SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     
@@ -76,20 +76,20 @@
     <main class="flex-1 overflow-y-auto custom-scrollbar text-left">
         <header class="sticky top-0 bg-white/80 dark:bg-navy-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/5 px-8 py-5 flex justify-between items-center z-40 text-left transition-colors duration-300">
             <div class="text-left">
-                <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
+                <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
                 <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Beranda Utama</h2>
             </div>
 
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100 dark:bg-white/10"></div>
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin.profile') }}" class="text-right group">
-                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
-                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">Online</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
+                        <p class="text-xs font-bold text-emerald-500 uppercase mt-1">Online</p>
                     </a>
                     <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md">
                         @if(auth()->user()->profile_photo)
@@ -141,22 +141,22 @@
                         </div>
                         <div class="text-left">
                             <div class="flex items-center gap-2 mb-1.5">
-                                <span class="px-2.5 py-1 bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 rounded-md text-[8px] font-black uppercase tracking-widest shadow-sm">Sistem Pemetaan Aktif</span>
-                                <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Banjarmasin, Kalsel</span>
+                                <span class="px-2.5 py-1 bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 rounded-md text-xs font-black uppercase tracking-widest shadow-sm">Sistem Pemetaan Aktif</span>
+                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Banjarmasin, Kalsel</span>
                             </div>
                             <h4 class="text-2xl font-black text-white leading-tight">{{ number_format($totalInfrastruktur) }} Aset Diawasi</h4>
-                            <p class="text-[11px] text-slate-300 font-medium mt-1">Total infrastruktur di Kota Banjarmasin yang terdata dan dianalisis oleh AI ({{ $persenDianalisis }}% teranalisis).</p>
+                            <p class="text-sm text-slate-300 font-medium mt-1">Total infrastruktur di Kota Banjarmasin yang terdata dan dianalisis oleh AI ({{ $persenDianalisis }}% teranalisis).</p>
                         </div>
                     </div>
                     
                     <div class="flex sm:flex-col justify-between sm:justify-center gap-6 sm:gap-3 relative z-10 shrink-0 bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-sm w-full sm:w-auto">
                         <div class="text-center sm:text-right">
-                            <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Rusak Berat</p>
+                            <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-0.5">Rusak Berat</p>
                             <p class="text-xl font-black text-red-500">{{ number_format($rusakBerat) }} <span class="text-sm text-red-400"><i class="fas fa-exclamation-triangle"></i></span></p>
                         </div>
                         <div class="w-px sm:w-full h-10 sm:h-px bg-white/10 my-auto"></div>
                         <div class="text-center sm:text-right">
-                            <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Kondisi Baik</p>
+                            <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-0.5">Kondisi Baik</p>
                             <p class="text-xl font-black text-emerald-400">{{ number_format($kondisiBaik) }} <span class="text-sm text-emerald-300"><i class="fas fa-check-circle"></i></span></p>
                         </div>
                     </div>
@@ -171,7 +171,7 @@
                     <h5 class="font-black text-navy-900 dark:text-white mb-2">Rekomendasi Prioritas AI</h5>
                     @if($rekomendasi)
                         <h5 class="text-sm font-black text-navy-900 dark:text-white mt-4 mb-2 line-clamp-1 leading-snug">{{ $rekomendasi->nama_objek ?? $rekomendasi->nama_infrastruktur }}</h5>
-                        <p class="text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-6 flex items-center gap-1.5"><i class="fas fa-map-marker-alt text-slate-400"></i> Kelurahan {{ $rekomendasi->nama_kelurahan }}</p>
+                        <p class="text-sm font-bold text-slate-500 dark:text-slate-400 mb-6 flex items-center gap-1.5"><i class="fas fa-map-marker-alt text-slate-400"></i> Kelurahan {{ $rekomendasi->nama_kelurahan }}</p>
                         <a href="{{ route('admin.infrastruktur.show', $rekomendasi->id_infrastruktur) }}" class="inline-flex items-center justify-center gap-2 w-full bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 py-3 rounded-xl text-xs font-black hover:bg-red-100 dark:hover:bg-red-500/20 transition-colors uppercase tracking-wider">
                             Lihat Detail <i class="fas fa-arrow-right"></i>
                         </a>
@@ -180,7 +180,7 @@
                             <i class="fas fa-check-circle text-lg"></i>
                         </div>
                         <h5 class="text-sm font-black text-navy-900 dark:text-white mt-4 mb-2 leading-snug">Semua Aman</h5>
-                        <p class="text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-6">Tidak ada infrastruktur dengan prioritas rusak berat saat ini.</p>
+                        <p class="text-sm font-bold text-slate-500 dark:text-slate-400 mb-6">Tidak ada infrastruktur dengan prioritas rusak berat saat ini.</p>
                     @endif
                 </div>
             </div>
@@ -191,48 +191,48 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 text-left">
                     
                     <button onclick="openQuickModal('Tambah User', 'Daftarkan Surveyor atau Admin baru ke dalam sistem untuk memperluas tim operasional.', '{{ route('admin.users.create') }}', 'fa-user-plus', 'bg-blue-50 text-blue-500 border border-blue-100')" class="group bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-navy-950/5 hover:border-gold-500/50 transition-all text-left w-full relative">
-                        <div class="absolute top-4 right-4 bg-blue-50 text-blue-500 border border-blue-100 text-[9px] font-black px-2 py-1 rounded-lg">{{ number_format($totalUser) }} User</div>
+                        <div class="absolute top-4 right-4 bg-blue-50 text-blue-500 border border-blue-100 text-xs font-black px-2 py-1 rounded-lg">{{ number_format($totalUser) }} User</div>
                         <div class="w-12 h-12 bg-navy-50 text-gold-500 border border-navy-100 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-all">
                             <i class="fas fa-user-plus text-lg"></i>
                         </div>
                         <h5 class="font-black text-navy-900 mb-1">Tambah User</h5>
-                        <p class="text-[10px] text-slate-400 font-semibold leading-relaxed text-left">Daftarkan Surveyor atau Admin baru ke dalam sistem.</p>
+                        <p class="text-xs text-slate-400 font-semibold leading-relaxed text-left">Daftarkan Surveyor atau Admin baru ke dalam sistem.</p>
                     </button>
 
                     <button onclick="openQuickModal('Kelola Wilayah', 'Tambahkan atau edit data master wilayah kecamatan dan kelurahan untuk pemetaan.', '{{ route('admin.wilayah') }}', 'fa-sitemap', 'bg-emerald-50 text-emerald-500 border border-emerald-100')" class="group bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-navy-950/5 hover:border-gold-500/50 transition-all text-left w-full relative">
-                        <div class="absolute top-4 right-4 bg-emerald-50 text-emerald-500 border border-emerald-100 text-[9px] font-black px-2 py-1 rounded-lg">{{ number_format($totalWilayah) }} Area</div>
+                        <div class="absolute top-4 right-4 bg-emerald-50 text-emerald-500 border border-emerald-100 text-xs font-black px-2 py-1 rounded-lg">{{ number_format($totalWilayah) }} Area</div>
                         <div class="w-12 h-12 bg-navy-50 text-gold-500 border border-navy-100 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-all">
                             <i class="fas fa-sitemap text-lg"></i>
                         </div>
                         <h5 class="font-black text-navy-900 mb-1">Kelola Wilayah</h5>
-                        <p class="text-[10px] text-slate-400 font-semibold leading-relaxed text-left">Kelola data master wilayah kecamatan dan kelurahan.</p>
+                        <p class="text-xs text-slate-400 font-semibold leading-relaxed text-left">Kelola data master wilayah kecamatan dan kelurahan.</p>
                     </button>
 
                     <button onclick="openQuickModal('Statistik Data', 'Lihat laporan analitik AI, kurva-S, dan distribusi prioritas infrastruktur kota.', '{{ route('admin.statistik') }}', 'fa-chart-pie', 'bg-purple-50 text-purple-500 border border-purple-100')" class="group bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-navy-950/5 hover:border-gold-500/50 transition-all text-left w-full relative">
-                        <div class="absolute top-4 right-4 bg-purple-50 text-purple-500 border border-purple-100 text-[9px] font-black px-2 py-1 rounded-lg">{{ $persenDianalisis }}% AI</div>
+                        <div class="absolute top-4 right-4 bg-purple-50 text-purple-500 border border-purple-100 text-xs font-black px-2 py-1 rounded-lg">{{ $persenDianalisis }}% AI</div>
                         <div class="w-12 h-12 bg-navy-50 text-gold-500 border border-navy-100 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-all">
                             <i class="fas fa-chart-pie text-lg"></i>
                         </div>
                         <h5 class="font-black text-navy-900 mb-1">Statistik Data</h5>
-                        <p class="text-[10px] text-slate-400 font-semibold leading-relaxed text-left">Lihat rekapitulasi data dan prediksi prioritas harian.</p>
+                        <p class="text-xs text-slate-400 font-semibold leading-relaxed text-left">Lihat rekapitulasi data dan prediksi prioritas harian.</p>
                     </button>
 
                     <button onclick="openQuickModal('Data Master', 'Telusuri, edit, atau hapus seluruh data survei infrastruktur beserta hasil AI.', '{{ route('admin.infrastruktur') }}', 'fa-database', 'bg-orange-50 text-orange-500 border border-orange-100')" class="group bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-navy-950/5 hover:border-gold-500/50 transition-all text-left w-full relative">
-                        <div class="absolute top-4 right-4 bg-orange-50 text-orange-500 border border-orange-100 text-[9px] font-black px-2 py-1 rounded-lg">{{ number_format($totalInfrastruktur) }} Aset</div>
+                        <div class="absolute top-4 right-4 bg-orange-50 text-orange-500 border border-orange-100 text-xs font-black px-2 py-1 rounded-lg">{{ number_format($totalInfrastruktur) }} Aset</div>
                         <div class="w-12 h-12 bg-navy-50 text-gold-500 border border-navy-100 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-all">
                             <i class="fas fa-database text-lg"></i>
                         </div>
                         <h5 class="font-black text-navy-900 mb-1">Data Master</h5>
-                        <p class="text-[10px] text-slate-400 font-semibold leading-relaxed text-left">Lihat dan kelola seluruh data infrastruktur lapangan.</p>
+                        <p class="text-xs text-slate-400 font-semibold leading-relaxed text-left">Lihat dan kelola seluruh data infrastruktur lapangan.</p>
                     </button>
 
                     <button onclick="openQuickModal('Laporan Warga', 'Tindak lanjuti pengaduan warga terkait infrastruktur rusak dan tugaskan surveyor.', '{{ route('admin.laporan-warga') }}', 'fa-bullhorn', 'bg-red-50 text-red-500 border border-red-100')" class="group bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-navy-950/5 hover:border-gold-500/50 transition-all text-left w-full relative">
-                        <div class="absolute top-4 right-4 bg-red-50 text-red-500 border border-red-100 text-[9px] font-black px-2 py-1 rounded-lg">{{ number_format($totalLaporanWarga ?? 0) }} Laporan</div>
+                        <div class="absolute top-4 right-4 bg-red-50 text-red-500 border border-red-100 text-xs font-black px-2 py-1 rounded-lg">{{ number_format($totalLaporanWarga ?? 0) }} Laporan</div>
                         <div class="w-12 h-12 bg-navy-50 text-gold-500 border border-navy-100 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-all">
                             <i class="fas fa-bullhorn text-lg"></i>
                         </div>
                         <h5 class="font-black text-navy-900 mb-1">Laporan Warga</h5>
-                        <p class="text-[10px] text-slate-400 font-semibold leading-relaxed text-left">Kelola dan tindak lanjuti laporan kerusakan dari masyarakat.</p>
+                        <p class="text-xs text-slate-400 font-semibold leading-relaxed text-left">Kelola dan tindak lanjuti laporan kerusakan dari masyarakat.</p>
                     </button>
 
                 </div>
@@ -250,7 +250,7 @@
                             </div>
                             <div>
                                 <h5 class="font-black text-navy-900 text-lg mb-1">Backup Database</h5>
-                                <p class="text-[10px] text-slate-400 font-semibold leading-relaxed max-w-xs">Unduh salinan keamanan (dump) dari seluruh basis data koordinat dan infrastruktur saat ini.</p>
+                                <p class="text-xs text-slate-400 font-semibold leading-relaxed max-w-xs">Unduh salinan keamanan (dump) dari seluruh basis data koordinat dan infrastruktur saat ini.</p>
                             </div>
                         </div>
                         <button onclick="startBackup()" class="px-6 py-3 bg-navy-900 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-gold-500 hover:shadow-lg transition-all flex items-center gap-2">
@@ -265,7 +265,7 @@
                             </div>
                             <div>
                                 <h5 class="font-black text-navy-900 text-lg mb-1">Audit Trail & Log</h5>
-                                <p class="text-[10px] text-slate-400 font-semibold leading-relaxed max-w-xs">Pantau riwayat aktivitas pengguna, penambahan data, dan perubahan konfigurasi sistem.</p>
+                                <p class="text-xs text-slate-400 font-semibold leading-relaxed max-w-xs">Pantau riwayat aktivitas pengguna, penambahan data, dan perubahan konfigurasi sistem.</p>
                             </div>
                         </div>
                         <div class="w-12 h-12 bg-slate-50 text-slate-400 rounded-xl flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white transition-colors">
@@ -282,7 +282,7 @@
                     <i class="fas fa-info text-xs"></i>
                 </div>
                 <div>
-                    <p class="text-[11px] text-navy-900 font-semibold text-left">Sistem berjalan optimal. Hybrid Model (CNN) aktif dan siap memproses data survei terbaru.</p>
+                    <p class="text-sm text-navy-900 font-semibold text-left">Sistem berjalan optimal. Hybrid Model (CNN) aktif dan siap memproses data survei terbaru.</p>
                 </div>
             </div>
 
@@ -305,7 +305,7 @@
                         </div>
                         <div>
                             <h3 id="qm-title" class="text-lg font-black text-navy-900">Title</h3>
-                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">Akses Cepat</p>
+                            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mt-0.5">Akses Cepat</p>
                         </div>
                     </div>
                     <button onclick="closeQuickModal()" class="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-400 rounded-xl hover:bg-red-50 hover:text-red-500 transition-all shrink-0">
@@ -316,10 +316,10 @@
                 <p id="qm-desc" class="text-xs text-slate-500 font-medium leading-relaxed mb-8">Description here</p>
                 
                 <div class="flex gap-3">
-                    <button type="button" onclick="closeQuickModal()" class="flex-1 py-4 bg-slate-100 text-slate-500 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-200 transition-all">
+                    <button type="button" onclick="closeQuickModal()" class="flex-1 py-4 bg-slate-100 text-slate-500 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-slate-200 transition-all">
                         Batal
                     </button>
-                    <a id="qm-btn" href="#" class="flex-[2] py-4 flex items-center justify-center gap-2 bg-navy-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-gold-500 transition-all shadow-xl shadow-navy-900/10 group">
+                    <a id="qm-btn" href="#" class="flex-[2] py-4 flex items-center justify-center gap-2 bg-navy-900 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-gold-500 transition-all shadow-xl shadow-navy-900/10 group">
                         Lanjutkan <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                     </a>
                 </div>

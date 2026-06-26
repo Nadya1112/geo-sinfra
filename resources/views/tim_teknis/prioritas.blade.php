@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prioritas Penanganan | GEO-SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -54,21 +54,21 @@
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
-                    <p class="text-[10px] font-extrabold text-gold-500 uppercase tracking-[0.2em] mb-1">Decision Support</p>
+                    <p class="text-xs font-extrabold text-gold-500 uppercase tracking-[0.2em] mb-1">Decision Support</p>
                     <h2 class="text-xl font-black text-navy-900 dark:text-white">Rekomendasi Prioritas</h2>
                 </div>
             </div>
             
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <a href="{{ route('tim_teknis.profile') }}" class="flex items-center gap-3 group">
                     <div class="text-right">
-                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-colors">{{ auth()->user()->name }}</p>
-                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-colors">{{ auth()->user()->name }}</p>
+                        <p class="text-xs font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
                     </div>
                     <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shadow-md group-hover:shadow-lg transition-all overflow-hidden">
                         @if(auth()->user()->profile_photo)
@@ -116,7 +116,7 @@
                             <div class="absolute inset-0 bg-gradient-to-t from-navy-900 via-navy-900/40 to-transparent"></div>
                             
                             <div class="absolute bottom-5 left-5 right-5">
-                                <span class="px-2.5 py-1 bg-white/20 dark:bg-[#1e1b4b]/20 backdrop-blur-md roun border border-white/20 text-[9px] font-black uppercase tracking-widest text-white mb-2 inline-block">
+                                <span class="px-2.5 py-1 bg-white/20 dark:bg-[#1e1b4b]/20 backdrop-blur-md roun border border-white/20 text-xs font-black uppercase tracking-widest text-white mb-2 inline-block">
                                     {{ ucfirst($item->jenis) ?? 'Infrastruktur' }}
                                 </span>
                                 <h3 class="text-xl font-black text-white leading-tight line-clamp-2">{{ $item->nama_objek ?? $item->nama_infrastruktur ?? 'Tanpa Nama' }}</h3>
@@ -130,7 +130,7 @@
                                     <i class="fas fa-map-marker-alt"></i>
                                 </div>
                                 <div>
-                                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Lokasi Detail</p>
+                                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Lokasi Detail</p>
                                     <p class="text-sm font-bold text-navy-900 dark:text-white leading-tight">
                                         {{ $item->kelurahan->nama_kelurahan ?? '-' }}, {{ $item->kelurahan->kecamatan->nama_kecamatan ?? '-' }}
                                     </p>
@@ -139,19 +139,19 @@
                             
                             <div class="grid grid-cols-2 gap-4 mb-6">
                                 <div>
-                                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Status Kondisi</p>
+                                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Status Kondisi</p>
                                     <div class="flex items-center gap-2 px-3 py-2 bg-rose-50 border border-rose-100 rounded-xl">
                                         <div class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></div>
-                                        <span class="text-[10px] font-black text-rose-600 uppercase tracking-widest whitespace-nowrap">
+                                        <span class="text-xs font-black text-rose-600 uppercase tracking-widest whitespace-nowrap">
                                             {{ $item->analisis->label_prioritas ?? 'Rusak Berat' }}
                                         </span>
                                     </div>
                                 </div>
                                 <div>
-                                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Surveyor</p>
+                                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Surveyor</p>
                                     <div class="flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl">
                                         <i class="fas fa-user-circle text-slate-400"></i>
-                                        <span class="text-[10px] font-black text-slate-600 uppercase tracking-widest truncate w-full">
+                                        <span class="text-xs font-black text-slate-600 uppercase tracking-widest truncate w-full">
                                             {{ $item->user->name ?? 'Sistem' }}
                                         </span>
                                     </div>
@@ -159,7 +159,7 @@
                             </div>
 
                             <a href="{{ route('tim_teknis.infrastruktur.show', $item->id ?? $item->id_infrastruktur) }}" class="flex items-center justify-center gap-2 w-full py-3.5 bg-navy-900 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-gold-500 hover:text-white transition-all shadow-lg shadow-navy-900/20 group-hover:shadow-gold-500/30">
-                                Lihat Detail Data <i class="fas fa-arrow-right text-[10px]"></i>
+                                Lihat Detail Data <i class="fas fa-arrow-right text-xs"></i>
                             </a>
                         </div>
                     </div>

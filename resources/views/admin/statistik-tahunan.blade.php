@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Statistik Tahunan {{ $year }} | Admin SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -45,7 +45,7 @@
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
                 <div>
-                    <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
+                    <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
                     <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Statistik Tahunan</h2>
                 </div>
             </div>
@@ -54,31 +54,31 @@
                 {{-- Tahun Dropdown --}}
                 <form action="{{ url()->current() }}" method="GET" class="relative group">
                     <select name="year" onchange="this.form.submit()" 
-                            class="appearance-none bg-navy-900 text-gold-500 pl-8 pr-7 py-2 rounded-xl text-[10px] font-black tracking-widest uppercase outline-none cursor-pointer hover:shadow-lg hover:shadow-navy-900/20 transition-all">
+                            class="appearance-none bg-navy-900 text-gold-500 pl-8 pr-7 py-2 rounded-xl text-xs font-black tracking-widest uppercase outline-none cursor-pointer hover:shadow-lg hover:shadow-navy-900/20 transition-all">
                         @foreach($availableYears ?? [$year] as $y)
                             <option value="{{ $y }}" {{ $y == $year ? 'selected' : '' }}>{{ $y }}</option>
                         @endforeach
                     </select>
-                    <i class="fas fa-calendar-alt absolute left-3 top-1/2 -translate-y-1/2 text-gold-500 text-[10px] pointer-events-none group-hover:scale-110 transition-transform"></i>
-                    <i class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gold-500 text-[8px] pointer-events-none group-hover:translate-y-0.5 transition-transform"></i>
+                    <i class="fas fa-calendar-alt absolute left-3 top-1/2 -translate-y-1/2 text-gold-500 text-xs pointer-events-none group-hover:scale-110 transition-transform"></i>
+                    <i class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gold-500 text-xs pointer-events-none group-hover:translate-y-0.5 transition-transform"></i>
                 </form>
 
                 {{-- Cetak --}}
                 <button onclick="window.print()"
-                    class="flex items-center gap-2 bg-gold-500 hover:bg-gold-600 text-navy-950 px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-gold-500/20 transition-all">
+                    class="flex items-center gap-2 bg-gold-500 hover:bg-gold-600 text-navy-950 px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest shadow-md shadow-gold-500/20 transition-all">
                     <i class="fas fa-print"></i> Cetak Laporan
                 </button>
 
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin.profile') }}" class="text-right group">
-                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
-                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">Online</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
+                        <p class="text-xs font-bold text-emerald-500 uppercase mt-1">Online</p>
                     </a>
                     <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 overflow-hidden hover:shadow-lg transition-all shadow-md">
                         @if(auth()->user()->profile_photo)
@@ -106,10 +106,10 @@
                         </div>
                         <div>
                             <h4 class="text-sm font-black text-white uppercase tracking-wider">Grafik Pertumbuhan Laporan</h4>
-                            <p class="text-[9px] text-slate-400 font-semibold mt-0.5">Kurva-S kumulatif data survey per bulan · Tahun {{ $year }}</p>
+                            <p class="text-xs text-slate-400 font-semibold mt-0.5">Kurva-S kumulatif data survey per bulan · Tahun {{ $year }}</p>
                         </div>
                     </div>
-                    <span class="px-4 py-2 bg-emerald-500 text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-emerald-500/30">
+                    <span class="px-4 py-2 bg-emerald-500 text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-lg shadow-emerald-500/30">
                         <i class="fas fa-shield-alt mr-1"></i> Data Terverifikasi
                     </span>
                 </div>
@@ -130,7 +130,7 @@
                         </div>
                         <div>
                             <h4 class="text-sm font-black text-navy-900 uppercase tracking-wider">Distribusi Jenis Infrastruktur</h4>
-                            <p class="text-[9px] text-slate-400 font-semibold mt-0.5">Tahun {{ $year }}</p>
+                            <p class="text-xs text-slate-400 font-semibold mt-0.5">Tahun {{ $year }}</p>
                         </div>
                     </div>
 
@@ -158,8 +158,8 @@
                                 <div class="flex-1 flex justify-between items-center">
                                     <p class="text-xs font-black text-navy-900 uppercase">{{ $c['label'] }}</p>
                                     <div class="flex items-center gap-2">
-                                        <span class="text-[9px] font-bold text-slate-400">{{ $pct }}%</span>
-                                        <span class="text-sm font-black text-navy-900">{{ $s->total }} <span class="text-[9px] text-slate-400 font-semibold">titik</span></span>
+                                        <span class="text-xs font-bold text-slate-400">{{ $pct }}%</span>
+                                        <span class="text-sm font-black text-navy-900">{{ $s->total }} <span class="text-xs text-slate-400 font-semibold">titik</span></span>
                                     </div>
                                 </div>
                             </div>
@@ -184,7 +184,7 @@
                         </div>
                         <div>
                             <h4 class="text-sm font-black text-navy-900 uppercase tracking-wider">Kondisi per Kecamatan</h4>
-                            <p class="text-[9px] text-slate-400 font-semibold mt-0.5">Rekapitulasi wilayah · Tahun {{ $year }}</p>
+                            <p class="text-xs text-slate-400 font-semibold mt-0.5">Rekapitulasi wilayah · Tahun {{ $year }}</p>
                         </div>
                     </div>
 
@@ -192,11 +192,11 @@
                         <table class="w-full text-left border-collapse">
                             <thead>
                                 <tr class="bg-slate-50 border-b border-slate-100">
-                                    <th class="px-3 py-3 text-[9px] font-black text-slate-400 tracking-widest uppercase">Kecamatan</th>
-                                    <th class="px-3 py-3 text-[9px] font-black text-emerald-500 tracking-widest text-center">Baik</th>
-                                    <th class="px-3 py-3 text-[9px] font-black text-orange-500 tracking-widest text-center">Sedang</th>
-                                    <th class="px-3 py-3 text-[9px] font-black text-red-500 tracking-widest text-center">Berat</th>
-                                    <th class="px-3 py-3 text-[9px] font-black text-slate-400 tracking-widest text-right">Total</th>
+                                    <th class="px-3 py-3 text-xs font-black text-slate-400 tracking-widest uppercase">Kecamatan</th>
+                                    <th class="px-3 py-3 text-xs font-black text-emerald-500 tracking-widest text-center">Baik</th>
+                                    <th class="px-3 py-3 text-xs font-black text-orange-500 tracking-widest text-center">Sedang</th>
+                                    <th class="px-3 py-3 text-xs font-black text-red-500 tracking-widest text-center">Berat</th>
+                                    <th class="px-3 py-3 text-xs font-black text-slate-400 tracking-widest text-right">Total</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-50">
@@ -204,21 +204,21 @@
                                 <tr class="hover:bg-slate-50/60 transition-colors">
                                     <td class="px-3 py-3">
                                         <div class="flex items-center gap-2">
-                                            <i class="fas fa-map-marker-alt text-gold-500 text-[9px]"></i>
-                                            <p class="text-[10px] font-black text-navy-900 uppercase">{{ $item['nama'] }}</p>
+                                            <i class="fas fa-map-marker-alt text-gold-500 text-xs"></i>
+                                            <p class="text-xs font-black text-navy-900 uppercase">{{ $item['nama'] }}</p>
                                         </div>
                                     </td>
                                     <td class="px-3 py-3 text-center">
-                                        <span class="text-[10px] font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg">{{ $item['baik'] }}</span>
+                                        <span class="text-xs font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg">{{ $item['baik'] }}</span>
                                     </td>
                                     <td class="px-3 py-3 text-center">
-                                        <span class="text-[10px] font-black text-orange-600 bg-orange-50 px-2 py-0.5 rounded-lg">{{ $item['sedang'] }}</span>
+                                        <span class="text-xs font-black text-orange-600 bg-orange-50 px-2 py-0.5 rounded-lg">{{ $item['sedang'] }}</span>
                                     </td>
                                     <td class="px-3 py-3 text-center">
-                                        <span class="text-[10px] font-black text-red-600 bg-red-50 px-2 py-0.5 rounded-lg">{{ $item['berat'] }}</span>
+                                        <span class="text-xs font-black text-red-600 bg-red-50 px-2 py-0.5 rounded-lg">{{ $item['berat'] }}</span>
                                     </td>
                                     <td class="px-3 py-3 text-right">
-                                        <span class="text-[10px] font-black text-navy-900 bg-navy-50 border border-navy-100 px-2 py-0.5 rounded-lg">{{ $item['total'] }}</span>
+                                        <span class="text-xs font-black text-navy-900 bg-navy-50 border border-navy-100 px-2 py-0.5 rounded-lg">{{ $item['total'] }}</span>
                                     </td>
                                 </tr>
                                 @endforeach

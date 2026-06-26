@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verifikasi OTP | GEO-SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     
@@ -133,7 +133,7 @@
                     @csrf
                     
                     <div>
-                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1 text-center">
+                        <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1 text-center">
                             Kode OTP <span class="text-gold-500">*</span>
                         </label>
                         <input type="text" name="otp_code" placeholder="------" required maxlength="6" autofocus
@@ -161,7 +161,7 @@
                         <form action="{{ route('register.resendOtp') }}" method="POST" class="w-full">
                             @csrf
                             <input type="hidden" name="method" value="wa">
-                            <button type="submit" class="w-full py-3 border-2 border-gold-500 text-gold-600 hover:bg-gold-50 hover:text-gold-700 font-extrabold rounded-xl transition-all text-[10px] uppercase tracking-wider flex items-center justify-center gap-2">
+                            <button type="submit" class="w-full py-3 border-2 border-gold-500 text-gold-600 hover:bg-gold-50 hover:text-gold-700 font-extrabold rounded-xl transition-all text-xs uppercase tracking-wider flex items-center justify-center gap-2">
                                 <i class="fab fa-whatsapp text-sm"></i> Kirim Ulang via WhatsApp
                             </button>
                         </form>
@@ -169,14 +169,14 @@
                         <form action="{{ route('register.resendOtp') }}" method="POST" class="w-full">
                             @csrf
                             <input type="hidden" name="method" value="call">
-                            <button type="submit" class="w-full py-3 border-2 border-slate-200 text-slate-500 hover:border-slate-300 hover:bg-slate-50 hover:text-navy-900 font-extrabold rounded-xl transition-all text-[10px] uppercase tracking-wider flex items-center justify-center gap-2">
+                            <button type="submit" class="w-full py-3 border-2 border-slate-200 text-slate-500 hover:border-slate-300 hover:bg-slate-50 hover:text-navy-900 font-extrabold rounded-xl transition-all text-xs uppercase tracking-wider flex items-center justify-center gap-2">
                                 <i class="fas fa-phone-alt text-sm"></i> Panggil via Telepon
                             </button>
                         </form>
                     </div>
                     
                     <div class="mt-6">
-                        <a href="{{ route('register') }}" class="text-slate-400 hover:text-navy-900 transition-colors text-[10px] uppercase tracking-wider font-bold">
+                        <a href="{{ route('register') }}" class="text-slate-400 hover:text-navy-900 transition-colors text-xs uppercase tracking-wider font-bold">
                             <i class="fas fa-arrow-left mr-1"></i> Kembali ke Pendaftaran
                         </a>
                     </div>

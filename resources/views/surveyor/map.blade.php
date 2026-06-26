@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Peta Sebaran Saya | GEO-SINFRA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -43,21 +43,21 @@
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
-                    <p class="text-[10px] font-extrabold text-gold-500 uppercase tracking-[0.2em] mb-1">Visualisasi Geografis</p>
+                    <p class="text-xs font-extrabold text-gold-500 uppercase tracking-[0.2em] mb-1">Visualisasi Geografis</p>
                     <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Peta Sebaran Laporan Saya</h2>
                 </div>
             </div>
             
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-navy-100"></div>
                 <a href="{{ route('surveyor.profile') }}" class="flex items-center gap-3 group">
                     <div class="text-right">
-                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
-                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
+                        <p class="text-xs font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
                     </div>
                     <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md">
                         @if(auth()->user()->profile_photo)
@@ -78,20 +78,20 @@
             <!-- Custom Zoom Controls Top Left -->
             <div class="absolute top-4 left-4 z-[9999] flex flex-col gap-1.5 pointer-events-auto">
                 <button onclick="map.zoomIn()" class="w-8 h-8 bg-[#1e1b4b]/80 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:bg-[#1e1b4b] transition-all group">
-                    <i class="fas fa-plus text-[9px] group-hover:scale-110 transition-transform"></i>
+                    <i class="fas fa-plus text-xs group-hover:scale-110 transition-transform"></i>
                 </button>
                 <button onclick="map.zoomOut()" class="w-8 h-8 bg-[#1e1b4b]/80 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:bg-[#1e1b4b] transition-all group">
-                    <i class="fas fa-minus text-[9px] group-hover:scale-110 transition-transform"></i>
+                    <i class="fas fa-minus text-xs group-hover:scale-110 transition-transform"></i>
                 </button>
             </div>
 
             <!-- Map Overlay UI Bottom Left -->
             <div class="absolute bottom-6 left-4 z-[9999] pointer-events-auto">
                 <div id="condition-card" class="bg-navy-900/90 backdrop-blur-xl p-1 rounded-2xl border border-white/10 shadow-2xl min-w-[140px] transition-all duration-300">
-                    <button onclick="toggleConditionMenu()" class="w-full px-3 py-2 rounded-xl text-[8px] font-black uppercase tracking-wider bg-white/5 text-white flex items-center justify-between hover:bg-white/10 transition-all group border border-white/5">
+                    <button onclick="toggleConditionMenu()" class="w-full px-3 py-2 rounded-xl text-xs font-black uppercase tracking-wider bg-white/5 text-white flex items-center justify-between hover:bg-white/10 transition-all group border border-white/5">
                         <div class="flex items-center gap-1.5">
                             <div class="w-4 h-4 bg-gold-500/20 text-gold-400 rounded flex items-center justify-center">
-                                <i class="fas fa-list-check text-[8px]"></i>
+                                <i class="fas fa-list-check text-xs"></i>
                             </div>
                             <span id="current-cond-label">Kondisi</span>
                         </div>
@@ -133,9 +133,9 @@
                 <div class="bg-navy-900/90 backdrop-blur-xl p-1 rounded-2xl border border-white/10 shadow-2xl min-w-[150px] transition-all duration-300 max-h-[80vh] flex flex-col">
                     <!-- Category Section -->
                     <div id="category-card" class="p-0.5">
-                        <button onclick="toggleCategoryMenu()" class="w-full px-3 py-2 rounded-xl text-[8px] font-black uppercase tracking-wider bg-white/5 text-white flex items-center justify-between hover:bg-white/10 transition-all group border border-white/5">
+                        <button onclick="toggleCategoryMenu()" class="w-full px-3 py-2 rounded-xl text-xs font-black uppercase tracking-wider bg-white/5 text-white flex items-center justify-between hover:bg-white/10 transition-all group border border-white/5">
                             <div class="flex items-center gap-1.5">
-                                <i class="fas fa-layer-group text-[8px] opacity-70 text-gold-400"></i>
+                                <i class="fas fa-layer-group text-xs opacity-70 text-gold-400"></i>
                                 <span id="current-cat-label" class="truncate max-w-[80px]">Semua Kategori</span>
                             </div>
                             <i id="cat-chevron" class="fas fa-chevron-down text-[6px] transition-transform duration-300"></i>
@@ -187,7 +187,7 @@
                                     </div>
                                     <span class="group-hover:text-white transition-colors">Kelurahan</span>
                                 </div>
-                                <i class="fas fa-home text-emerald-500 text-[8px]"></i>
+                                <i class="fas fa-home text-emerald-500 text-xs"></i>
                             </button>
                         </div>
                     </div>
@@ -196,9 +196,9 @@
 
                     <!-- Territory Section -->
                     <div id="territory-card" class="p-0.5 flex flex-col overflow-hidden">
-                        <button onclick="toggleTerritoryMenu()" class="w-full px-3 py-2 rounded-xl text-[8px] font-black uppercase tracking-wider bg-white/5 text-white flex items-center justify-between hover:bg-white/10 transition-all group border border-white/5 shrink-0">
+                        <button onclick="toggleTerritoryMenu()" class="w-full px-3 py-2 rounded-xl text-xs font-black uppercase tracking-wider bg-white/5 text-white flex items-center justify-between hover:bg-white/10 transition-all group border border-white/5 shrink-0">
                             <div class="flex items-center gap-1.5">
-                                <i class="fas fa-map-location-dot text-[8px] opacity-70 text-gold-400"></i>
+                                <i class="fas fa-map-location-dot text-xs opacity-70 text-gold-400"></i>
                                 <span id="current-territory-label" class="truncate max-w-[80px]">Semua Wilayah</span>
                             </div>
                             <i id="territory-chevron" class="fas fa-chevron-down text-[6px] transition-transform duration-300"></i>
@@ -239,38 +239,38 @@
                     <div id="layer-options" class="hidden absolute bottom-full right-0 mb-2 p-1.5 bg-[#1e1b4b]/90 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex flex-col gap-1 min-w-[120px]">
                         <button onclick="changeBaseLayer('greyscale')" class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-white/10 transition-all group">
                             <div class="w-6 h-6 rounded-md bg-gray-500/20 flex items-center justify-center text-gray-400 group-hover:bg-gray-500 group-hover:text-white transition-all">
-                                <i class="fas fa-adjust text-[8px]"></i>
+                                <i class="fas fa-adjust text-xs"></i>
                             </div>
                             <span class="text-[7px] font-black uppercase tracking-wider text-gray-300 group-hover:text-white">Greyscale</span>
                         </button>
                         <button onclick="changeBaseLayer('satellite')" class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-white/10 transition-all group">
                             <div class="w-6 h-6 rounded-md bg-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white transition-all">
-                                <i class="fas fa-satellite text-[8px]"></i>
+                                <i class="fas fa-satellite text-xs"></i>
                             </div>
                             <span class="text-[7px] font-black uppercase tracking-wider text-gray-300 group-hover:text-white">Satelit</span>
                         </button>
                         <button onclick="changeBaseLayer('osm')" class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-white/10 transition-all group">
                             <div class="w-6 h-6 rounded-md bg-amber-500/20 flex items-center justify-center text-amber-400 group-hover:bg-amber-500 group-hover:text-white transition-all">
-                                <i class="fas fa-map-marked-alt text-[8px]"></i>
+                                <i class="fas fa-map-marked-alt text-xs"></i>
                             </div>
                             <span class="text-[7px] font-black uppercase tracking-wider text-gray-300 group-hover:text-white">OSM</span>
                         </button>
                         <button onclick="changeBaseLayer('dark')" class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-white/10 transition-all group">
                             <div class="w-6 h-6 rounded-md bg-indigo-500/20 flex items-center justify-center text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-all">
-                                <i class="fas fa-moon text-[8px]"></i>
+                                <i class="fas fa-moon text-xs"></i>
                             </div>
                             <span class="text-[7px] font-black uppercase tracking-wider text-gray-300 group-hover:text-white">Gelap</span>
                         </button>
                         <button onclick="changeBaseLayer('street')" class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-white/10 transition-all group">
                             <div class="w-6 h-6 rounded-md bg-blue-500/20 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all">
-                                <i class="fas fa-road text-[8px]"></i>
+                                <i class="fas fa-road text-xs"></i>
                             </div>
                             <span class="text-[7px] font-black uppercase tracking-wider text-gray-300 group-hover:text-white">Jalan</span>
                         </button>
                         <div class="h-[1px] bg-white/10 my-0.5 mx-1"></div>
                         <button onclick="toggleFloodLayer()" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-white/10 transition-all group w-full text-left">
                             <div class="flex items-center gap-2">
-                                <i class="fas fa-water text-blue-400 text-[8px]"></i>
+                                <i class="fas fa-water text-blue-400 text-xs"></i>
                                 <span class="text-[7px] font-black uppercase tracking-wider text-slate-300 group-hover:text-white transition-colors">Banjir</span>
                             </div>
                             <div class="w-5 h-2.5 rounded-full bg-slate-700 relative border border-white/10 transition-colors" id="flood-toggle-bg">
@@ -331,10 +331,10 @@
         // --- Layer Rawan Banjir (Mock) ---
         let showFloodLayer = false;
         const floodLayer = L.layerGroup([
-            L.circle([-3.315, 114.590], { color: '#ef4444', fillColor: '#ef4444', fillOpacity: 0.2, weight: 1, radius: 800 }).bindPopup('<div class="text-center"><p class="text-[10px] font-black text-red-500 uppercase">Zona Merah</p><p class="text-xs">Rawan Banjir Tinggi</p></div>'),
-            L.circle([-3.325, 114.598], { color: '#f59e0b', fillColor: '#f59e0b', fillOpacity: 0.2, weight: 1, radius: 1200 }).bindPopup('<div class="text-center"><p class="text-[10px] font-black text-orange-500 uppercase">Zona Kuning</p><p class="text-xs">Rawan Banjir Sedang</p></div>'),
-            L.circle([-3.295, 114.580], { color: '#ef4444', fillColor: '#ef4444', fillOpacity: 0.2, weight: 1, radius: 900 }).bindPopup('<div class="text-center"><p class="text-[10px] font-black text-red-500 uppercase">Zona Merah</p><p class="text-xs">Rawan Banjir Tinggi</p></div>'),
-            L.circle([-3.330, 114.570], { color: '#f59e0b', fillColor: '#f59e0b', fillOpacity: 0.2, weight: 1, radius: 1000 }).bindPopup('<div class="text-center"><p class="text-[10px] font-black text-orange-500 uppercase">Zona Kuning</p><p class="text-xs">Rawan Banjir Sedang</p></div>')
+            L.circle([-3.315, 114.590], { color: '#ef4444', fillColor: '#ef4444', fillOpacity: 0.2, weight: 1, radius: 800 }).bindPopup('<div class="text-center"><p class="text-xs font-black text-red-500 uppercase">Zona Merah</p><p class="text-xs">Rawan Banjir Tinggi</p></div>'),
+            L.circle([-3.325, 114.598], { color: '#f59e0b', fillColor: '#f59e0b', fillOpacity: 0.2, weight: 1, radius: 1200 }).bindPopup('<div class="text-center"><p class="text-xs font-black text-orange-500 uppercase">Zona Kuning</p><p class="text-xs">Rawan Banjir Sedang</p></div>'),
+            L.circle([-3.295, 114.580], { color: '#ef4444', fillColor: '#ef4444', fillOpacity: 0.2, weight: 1, radius: 900 }).bindPopup('<div class="text-center"><p class="text-xs font-black text-red-500 uppercase">Zona Merah</p><p class="text-xs">Rawan Banjir Tinggi</p></div>'),
+            L.circle([-3.330, 114.570], { color: '#f59e0b', fillColor: '#f59e0b', fillOpacity: 0.2, weight: 1, radius: 1000 }).bindPopup('<div class="text-center"><p class="text-xs font-black text-orange-500 uppercase">Zona Kuning</p><p class="text-xs">Rawan Banjir Sedang</p></div>')
         ]);
 
         function toggleFloodLayer() {
@@ -375,7 +375,7 @@
 
                     poly.bindPopup(`
                         <div class="px-2 py-0.5 text-center">
-                            <p class="text-[9px] font-black uppercase tracking-widest text-[#1e1b4b]">${kec.nama_kecamatan}</p>
+                            <p class="text-xs font-black uppercase tracking-widest text-[#1e1b4b]">${kec.nama_kecamatan}</p>
                         </div>
                     `, {
                         className: 'custom-polygon-popup',
@@ -455,36 +455,36 @@
                         
                         <div class="mb-3">
                             <h6 class="text-white font-extrabold text-base uppercase leading-tight truncate max-w-[250px] mb-1" title="${point.nama_infrastruktur || point.nama_objek || 'Tanpa Nama'}">${point.nama_infrastruktur || point.nama_objek || 'Tanpa Nama'}</h6>
-                            <p class="text-gold-500 text-[11px] font-bold uppercase tracking-widest">${rawJenis || 'Infrastruktur'}</p>
+                            <p class="text-gold-500 text-sm font-bold uppercase tracking-widest">${rawJenis || 'Infrastruktur'}</p>
                         </div>
                         
                         <div class="space-y-2 mb-3.5">
                             <div class="flex items-start gap-2.5">
                                 <i class="fas fa-map-marker-alt text-slate-400 text-xs mt-0.5 w-4 text-center"></i>
-                                <span class="text-slate-300 text-[11px] leading-relaxed flex-1">${point.kelurahan && point.kelurahan.kecamatan ? point.kelurahan.kecamatan.nama_kecamatan : 'Lokasi tidak diketahui'}</span>
+                                <span class="text-slate-300 text-sm leading-relaxed flex-1">${point.kelurahan && point.kelurahan.kecamatan ? point.kelurahan.kecamatan.nama_kecamatan : 'Lokasi tidak diketahui'}</span>
                             </div>
                             <div class="flex items-start gap-2.5">
                                 <i class="fas fa-clock text-slate-400 text-xs mt-0.5 w-4 text-center"></i>
-                                <span class="text-slate-300 text-[11px] leading-relaxed flex-1">Update: ${new Date(point.updated_at).toLocaleDateString('id-ID', {day:'2-digit', month:'long', year:'numeric'})}</span>
+                                <span class="text-slate-300 text-sm leading-relaxed flex-1">Update: ${new Date(point.updated_at).toLocaleDateString('id-ID', {day:'2-digit', month:'long', year:'numeric'})}</span>
                             </div>
                             <div class="flex items-start gap-2.5">
                                 <i class="fas fa-robot text-slate-400 text-xs mt-0.5 w-4 text-center"></i>
-                                <span class="text-slate-300 text-[11px] leading-relaxed flex-1">CNN Score: ${point.cnn ? (point.cnn.skor_cnn * 100).toFixed(1) + '%' : 'N/A'}</span>
+                                <span class="text-slate-300 text-sm leading-relaxed flex-1">CNN Score: ${point.cnn ? (point.cnn.skor_cnn * 100).toFixed(1) + '%' : 'N/A'}</span>
                             </div>
                         </div>
 
                         <div class="border-t border-white/10 pt-3.5 flex items-center justify-between gap-3 mt-3 mb-3.5">
-                            <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Kondisi:</span>
-                            <div class="px-3.5 py-1.5 ${conditionColor} text-[10px] font-black uppercase tracking-wider rounded-lg shadow-md">
+                            <span class="text-slate-400 text-xs font-bold uppercase tracking-widest">Kondisi:</span>
+                            <div class="px-3.5 py-1.5 ${conditionColor} text-xs font-black uppercase tracking-wider rounded-lg shadow-md">
                                 ${prioritas}
                             </div>
                         </div>
                         
                         <div class="flex gap-2">
-                            <a href="/surveyor/infrastruktur/${point.id_infrastruktur}/edit" class="flex-1 bg-navy-900 border border-gold-500/30 hover:bg-gold-500 hover:border-gold-500 text-gold-500 hover:text-white font-bold text-[10px] py-2.5 rounded-lg transition-all shadow-sm uppercase tracking-widest flex justify-center items-center gap-2">
+                            <a href="/surveyor/infrastruktur/${point.id_infrastruktur}/edit" class="flex-1 bg-navy-900 border border-gold-500/30 hover:bg-gold-500 hover:border-gold-500 text-gold-500 hover:text-white font-bold text-xs py-2.5 rounded-lg transition-all shadow-sm uppercase tracking-widest flex justify-center items-center gap-2">
                                 <i class="fas fa-edit"></i> Edit
                             </a>
-                            <a href="/surveyor/infrastruktur/${point.id_infrastruktur}" class="w-10 flex justify-center items-center bg-white/10 hover:bg-white/20 text-white font-bold text-[10px] py-2.5 rounded-lg transition-all shadow-sm">
+                            <a href="/surveyor/infrastruktur/${point.id_infrastruktur}" class="w-10 flex justify-center items-center bg-white/10 hover:bg-white/20 text-white font-bold text-xs py-2.5 rounded-lg transition-all shadow-sm">
                                 <i class="fas fa-eye text-xs"></i>
                             </a>
                         </div>
@@ -537,8 +537,8 @@
 
                         poly.bindPopup(`
                             <div class="px-2 py-0.5 text-center">
-                                <p class="text-[8px] font-black text-slate-500 uppercase tracking-[0.2em] mb-0.5">Kelurahan</p>
-                                <p class="text-[10px] font-black uppercase tracking-widest text-[#1e1b4b]">${kel.nama_kelurahan}</p>
+                                <p class="text-xs font-black text-slate-500 uppercase tracking-[0.2em] mb-0.5">Kelurahan</p>
+                                <p class="text-xs font-black uppercase tracking-widest text-[#1e1b4b]">${kel.nama_kelurahan}</p>
                             </div>
                         `, {
                             className: 'custom-polygon-popup',

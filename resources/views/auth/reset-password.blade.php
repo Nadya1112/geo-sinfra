@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atur Ulang Sandi | GEO-SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     
@@ -55,14 +55,14 @@
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                             <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
                         </span>
-                        <span class="text-[9px] font-bold text-red-600 uppercase tracking-widest">
+                        <span class="text-xs font-bold text-red-600 uppercase tracking-widest">
                             Sesi Berakhir: <span id="countdown" class="font-black">05:00</span>
                         </span>
                     </div>
                 </div>
 
                 @if($errors->any())
-                    <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 text-[10px] font-bold rounded-r-lg shadow-sm">
+                    <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 text-xs font-bold rounded-r-lg shadow-sm">
                         <ul class="list-disc list-inside">
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
@@ -76,13 +76,13 @@
                     <input type="hidden" name="token" value="{{ $token }}">
 
                     <div>
-                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 ml-1">Email Konfirmasi</label>
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 ml-1">Email Konfirmasi</label>
                         <input type="email" name="email" value="{{ old('email') }}" placeholder="admin@disperkim.go.id" required 
                             class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm font-medium">
                     </div>
 
                     <div>
-                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 ml-1">Sandi Baru</label>
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 ml-1">Sandi Baru</label>
                         <div class="relative">
                             <input type="password" name="password" id="password" placeholder="Minimal 8 karakter" required 
                                 class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm font-medium pr-12">
@@ -93,7 +93,7 @@
                     </div>
 
                     <div>
-                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 ml-1">Ulangi Sandi</label>
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 ml-1">Ulangi Sandi</label>
                         <div class="relative">
                             <input type="password" name="password_confirmation" id="password_confirm" placeholder="Ulangi sandi baru" required 
                                 class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm font-medium pr-12">

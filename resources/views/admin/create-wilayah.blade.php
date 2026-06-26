@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Wilayah | Admin SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -55,21 +55,21 @@
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
                 <div class="text-left">
-                    <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
+                    <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
                     <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Tambah Data Wilayah</h2>
                 </div>
             </div>
             
             <div class="flex items-center gap-6 text-left">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin.profile') }}" class="text-right group">
-                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
-                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">Online</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
+                        <p class="text-xs font-bold text-emerald-500 uppercase mt-1">Online</p>
                     </a>
                     <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md">
                         @if(auth()->user()->profile_photo)
@@ -87,7 +87,7 @@
             @if ($errors->any())
             <div class="max-w-3xl mx-auto mb-6 px-6 py-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl">
                 <p class="text-xs font-bold mb-2">Gagal menyimpan data:</p>
-                <ul class="list-disc list-inside text-[11px] font-medium ml-4">
+                <ul class="list-disc list-inside text-sm font-medium ml-4">
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
@@ -101,7 +101,7 @@
                     
                     <div class="space-y-6">
                         <div>
-                            <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">Pilih Kecamatan <span class="text-red-500">*</span></label>
+                            <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Pilih Kecamatan <span class="text-red-500">*</span></label>
                             <div class="relative">
                                 <select name="id_kecamatan" class="w-full px-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none appearance-none" required>
                                     <option value="" disabled selected>-- Pilih Kecamatan --</option>
@@ -116,14 +116,14 @@
                         </div>
 
                         <div>
-                            <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">Nama Kelurahan <span class="text-red-500">*</span></label>
+                            <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Nama Kelurahan <span class="text-red-500">*</span></label>
                             <input type="text" name="nama_kelurahan" value="{{ old('nama_kelurahan') }}" placeholder="Contoh: Antasan Besar" class="w-full px-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all" required>
                         </div>
 
                         <div>
-                            <label class="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2">Data Geometri (GeoJSON) <span class="text-slate-400 font-medium normal-case ml-1">(Opsional)</span></label>
+                            <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Data Geometri (GeoJSON) <span class="text-slate-400 font-medium normal-case ml-1">(Opsional)</span></label>
                             <textarea name="geometri" rows="5" placeholder='{"type": "Polygon", "coordinates": [...]}' class="w-full px-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-xs font-mono focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">{{ old('geometri') }}</textarea>
-                            <p class="text-[9px] text-slate-400 mt-2 italic font-medium">Masukkan format GeoJSON untuk menampilkan poligon di peta.</p>
+                            <p class="text-xs text-slate-400 mt-2 italic font-medium">Masukkan format GeoJSON untuk menampilkan poligon di peta.</p>
                         </div>
 
                         <div class="pt-8 flex gap-3">

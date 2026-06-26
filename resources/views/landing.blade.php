@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GEO-SINFRA</title>
     <meta name="description" content="GEO-SINFRA adalah Sistem Pemetaan Infrastruktur Permukiman Kota Banjarmasin berbasis Web GIS dan Kecerdasan Buatan (AI) untuk monitoring, pelaporan, dan klasifikasi kerusakan infrastruktur.">
     <meta name="keywords" content="GIS, Pemetaan, Infrastruktur, Banjarmasin, Artificial Intelligence, SINFRA, Dinas PUPR, Jalan, Jembatan">
@@ -54,13 +54,19 @@
     </script>
 
     <style>
-        html, body { overflow-x: hidden; width: 100%; }
+        *, *::before, *::after { box-sizing: border-box; }
+        html { overflow-x: hidden; width: 100%; scroll-behavior: smooth; }
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
             background-color: #f8fafc; 
             color: #0f172a; 
             opacity: 0; 
-            transition: opacity 0.8s ease-in; 
+            transition: opacity 0.8s ease-in;
+            overflow-x: hidden;
+            width: 100%;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         body.loaded { opacity: 1; }
 
@@ -302,7 +308,7 @@
             background: rgba(15, 14, 44, 0.2);
             backdrop-filter: blur(8px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            height: 100px;
+            height: 80px;
         }
         #navbar.nav-transparent .nav-brand, 
         #navbar.nav-transparent .nav-link {
@@ -316,11 +322,11 @@
         }
         
         #navbar.nav-scrolled {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(226, 232, 240, 1);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
-            height: 80px;
+            height: 70px;
         }
         #navbar.nav-scrolled .nav-brand {
             color: #0f0e2c;
@@ -334,6 +340,19 @@
         #navbar.nav-scrolled .nav-divider {
             background: #cbd5e1;
         }
+
+        /* Desktop responsive font improvements */
+        @media (min-width: 1024px) {
+            .hero-premium { min-height: 90vh; }
+        }
+        @media (min-width: 1280px) {
+            .hero-premium { min-height: 85vh; }
+        }
+        
+        /* Ensure all sections stay within viewport width */
+        section, footer, nav {
+            max-width: 100vw;
+        }
     </style>
 </head>
 <body class="antialiased font-sans bg-slate-50 text-slate-800">
@@ -343,8 +362,8 @@
         <div class="loader-glow mb-4">
             <i class="fas fa-globe-asia text-[#c5a059] text-4xl animate-pulse"></i>
         </div>
-        <h2 class="text-white font-extrabold tracking-[0.6em] uppercase text-xs">GEO-SINFRA</h2>
-        <p class="text-slate-400 text-[9px] tracking-widest mt-2 uppercase">Sistem Pemetaan Infrastruktur Permukiman Kota Banjarmasin</p>
+        <h2 class="text-white font-extrabold tracking-[0.6em] uppercase text-sm">GEO-SINFRA</h2>
+        <p class="text-slate-400 text-xs tracking-widest mt-2 uppercase">Sistem Pemetaan Infrastruktur Permukiman Kota Banjarmasin</p>
     </div>
  
     <!-- Header / Navbar -->
@@ -363,13 +382,13 @@
                 <a href="#peta" class="nav-link text-sm font-bold transition-colors uppercase tracking-wider hidden md:block">Peta</a>
                 <a href="#statistik" class="nav-link text-sm font-bold transition-colors uppercase tracking-wider hidden md:block">Statistik</a>
                 
-                <button onclick="document.getElementById('modal-lapor').classList.remove('hidden')" class="bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white px-4 md:px-5 py-2 rounded-xl text-[10px] md:text-xs font-black transition-all shadow-lg shadow-red-500/30 hover:shadow-red-500/50 hover:-translate-y-0.5 flex items-center gap-2 uppercase tracking-widest border border-red-500/50">
+                <button onclick="document.getElementById('modal-lapor').classList.remove('hidden')" class="bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white px-4 md:px-5 py-2.5 rounded-xl text-xs md:text-sm font-black transition-all shadow-lg shadow-red-500/30 hover:shadow-red-500/50 hover:-translate-y-0.5 flex items-center gap-2 uppercase tracking-wider border border-red-500/50">
                     <i class="fas fa-bullhorn animate-pulse"></i> <span class="hidden sm:inline">Lapor Kerusakan</span><span class="sm:hidden">Lapor</span>
                 </button>
 
-                <div class="nav-divider w-px h-4 mx-1 hidden md:block transition-colors duration-300"></div>
+                <div class="nav-divider w-px h-5 mx-2 hidden md:block transition-colors duration-300"></div>
                 
-                <a href="{{ url('/login') }}" class="bg-navy-900 text-gold-500 hover:bg-gold-500 hover:text-white px-4 md:px-5 py-2 rounded-xl text-[10px] md:text-xs font-bold transition-all shadow-sm flex items-center gap-2 uppercase tracking-widest">
+                <a href="{{ url('/login') }}" class="bg-navy-900 text-gold-500 hover:bg-gold-500 hover:text-white px-4 md:px-5 py-2.5 rounded-xl text-xs md:text-sm font-bold transition-all shadow-sm flex items-center gap-2 uppercase tracking-wider">
                     <i class="fas fa-lock"></i> <span class="hidden sm:inline">Login</span>
                 </a>
             </div>
@@ -378,27 +397,27 @@
 
 
     <!-- Hero Section -->
-    <section class="hero-premium py-24 md:py-32 flex items-center min-h-[580px]">
+    <section class="hero-premium py-28 md:py-36 lg:py-40 flex items-center min-h-[600px]">
         <div class="grid-pattern"></div>
         <div class="max-w-7xl mx-auto px-6 md:px-8 w-full relative z-10">
             <div class="flex flex-col md:flex-row items-center justify-between gap-12">
                 <div class="max-w-3xl">
-                    <h3 class="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.08] mb-4">
+                    <h3 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white tracking-tight leading-[1.08] mb-5">
                         <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-500 via-yellow-400 to-[#6366f1] whitespace-nowrap">GEO-SINFRA</span>
                     </h3>
-                    <p class="text-slate-300 font-semibold text-lg md:text-2xl leading-relaxed mb-4 max-w-2xl">
+                    <p class="text-slate-300 font-semibold text-lg md:text-xl lg:text-2xl xl:text-3xl leading-relaxed mb-5 max-w-2xl">
                         Sistem Informasi Pemetaan Infrastruktur Permukiman 
                         <br class="hidden md:block" />
                         Kota Banjarmasin
                     </p>
-                    <p class="text-slate-400 font-medium text-sm md:text-base leading-relaxed mb-10 max-w-2xl">
+                    <p class="text-slate-400 font-medium text-sm md:text-base lg:text-lg leading-relaxed mb-10 max-w-2xl">
                         Sebuah platform cerdas berbasis WebGIS dan Kecerdasan Buatan (AI) yang dirancang untuk memantau, melaporkan, dan menganalisis kondisi infrastruktur di seluruh wilayah Kota Banjarmasin secara real-time.
                     </p>
                     <div class="flex flex-wrap gap-4">
-                        <a href="#peta" class="btn-shine bg-gradient-to-r from-gold-500 to-gold-600 text-white px-8 py-4.5 rounded-2xl font-bold text-xs uppercase tracking-widest hover:scale-105 transition-all shadow-xl shadow-gold-500/20">
+                        <a href="#peta" class="btn-shine bg-gradient-to-r from-gold-500 to-gold-600 text-white px-8 py-4 rounded-2xl font-bold text-sm uppercase tracking-wider hover:scale-105 transition-all shadow-xl shadow-gold-500/20">
                             <i class="fas fa-map mr-2"></i> Eksplorasi Peta GIS
                         </a>
-                        <a href="#statistik" class="bg-white/10 backdrop-blur-md text-white border border-white/20 px-8 py-4.5 rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-white hover:text-navy-950 transition-all">
+                        <a href="#statistik" class="bg-white/10 backdrop-blur-md text-white border border-white/20 px-8 py-4 rounded-2xl font-bold text-sm uppercase tracking-wider hover:bg-white hover:text-navy-950 transition-all">
                             Analisis Statistik
                         </a>
                     </div>
@@ -420,8 +439,8 @@
                     <i class="fas fa-map-location-dot text-2xl"></i>
                 </div>
                 <div>
-                    <h5 class="text-sm font-extrabold text-navy-900 uppercase tracking-wider mb-2">Interaktif GIS</h5>
-                    <p class="text-xs text-slate-500 leading-relaxed">Visualisasi geospasial real-time yang membagi sebaran aset infrastruktur per kelurahan secara presisi.</p>
+                    <h5 class="text-base font-extrabold text-navy-900 uppercase tracking-wider mb-2">Interaktif GIS</h5>
+                    <p class="text-sm text-slate-500 leading-relaxed">Visualisasi geospasial real-time yang membagi sebaran aset infrastruktur per kelurahan secara presisi.</p>
                 </div>
             </div>
             
@@ -430,8 +449,8 @@
                     <i class="fas fa-brain text-2xl"></i>
                 </div>
                 <div>
-                    <h5 class="text-sm font-extrabold text-navy-900 uppercase tracking-wider mb-2">Analisis AI Prediktif</h5>
-                    <p class="text-xs text-slate-500 leading-relaxed">Klasifikasi otomatis jenis dan kondisi kerusakan menggunakan model CNN & Decision Tree hybrid.</p>
+                    <h5 class="text-base font-extrabold text-navy-900 uppercase tracking-wider mb-2">Analisis AI Prediktif</h5>
+                    <p class="text-sm text-slate-500 leading-relaxed">Klasifikasi otomatis jenis dan kondisi kerusakan menggunakan model CNN & Decision Tree hybrid.</p>
                 </div>
             </div>
 
@@ -440,8 +459,8 @@
                     <i class="fas fa-file-shield text-2xl"></i>
                 </div>
                 <div>
-                    <h5 class="text-sm font-extrabold text-navy-900 uppercase tracking-wider mb-2">Pengambilan Keputusan</h5>
-                    <p class="text-xs text-slate-500 leading-relaxed">Penentuan prioritas perbaikan berbasis bobot skor kerusakan teknis untuk efisiensi anggaran daerah.</p>
+                    <h5 class="text-base font-extrabold text-navy-900 uppercase tracking-wider mb-2">Pengambilan Keputusan</h5>
+                    <p class="text-sm text-slate-500 leading-relaxed">Penentuan prioritas perbaikan berbasis bobot skor kerusakan teknis untuk efisiensi anggaran daerah.</p>
                 </div>
             </div>
         </div>
@@ -457,8 +476,8 @@
 
         <div class="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
             <div class="text-center mb-20 reveal-up">
-                <span class="text-gold-500 font-extrabold text-xs uppercase tracking-[0.3em] mb-3 block">RINGKASAN INFRASTRUKTUR</span>
-                <h4 class="text-white font-black text-4xl md:text-5xl tracking-tight mb-4">Statistik GEO-SINFRA</h4>
+                <span class="text-gold-500 font-extrabold text-sm uppercase tracking-[0.3em] mb-3 block">RINGKASAN INFRASTRUKTUR</span>
+                <h4 class="text-white font-black text-4xl md:text-5xl lg:text-6xl tracking-tight mb-4">Statistik GEO-SINFRA</h4>
                 <div class="w-16 h-1.5 bg-gold-500 mx-auto rounded-full"></div>
             </div>
             
@@ -470,7 +489,7 @@
                             <i class="fas fa-database text-blue-500 text-xl group-hover:text-white"></i>
                         </div>
                         <p class="text-4xl md:text-5xl font-black text-blue-500 leading-none mb-2">{{ number_format($stats['total'] ?? 0) }}</p>
-                        <p class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">Total Titik Terdata</p>
+                        <p class="text-xs font-bold text-slate-300 uppercase tracking-widest">Total Titik Terdata</p>
                     </div>
                 </div>
 
@@ -481,7 +500,7 @@
                             <i class="fas fa-map-marked-alt text-emerald-500 text-xl group-hover:text-white"></i>
                         </div>
                         <p class="text-4xl md:text-5xl font-black text-emerald-500 leading-none mb-2">{{ number_format($stats['kecamatan'] ?? 0) }}</p>
-                        <p class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">Kecamatan</p>
+                        <p class="text-xs font-bold text-slate-300 uppercase tracking-widest">Kecamatan</p>
                     </div>
                 </div>
 
@@ -492,7 +511,7 @@
                             <i class="fas fa-exclamation-triangle text-red-500 text-xl group-hover:text-white"></i>
                         </div>
                         <p class="text-4xl md:text-5xl font-black text-red-500 leading-none mb-2">{{ number_format($stats['rusak_berat'] ?? 0) }}</p>
-                        <p class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">Kerusakan Berat</p>
+                        <p class="text-xs font-bold text-slate-300 uppercase tracking-widest">Kerusakan Berat</p>
                     </div>
                 </div>
 
@@ -503,7 +522,7 @@
                             <i class="fas fa-robot text-gold-500 text-xl"></i>
                         </div>
                         <p class="text-4xl md:text-5xl font-black text-gold-500 leading-none mb-2">{{ $stats['akurasi_ai'] ?? 0 }}%</p>
-                        <p class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">Cakupan Analisis AI</p>
+                        <p class="text-xs font-bold text-slate-300 uppercase tracking-widest">Cakupan Analisis AI</p>
                     </div>
                     <i class="fas fa-brain absolute -right-6 -bottom-6 text-white/5 text-[120px]"></i>
                 </div>
@@ -515,12 +534,12 @@
                 <div class="bg-[#0f0e2c]/60 backdrop-blur-xl p-8 rounded-3xl border border-white/5 shadow-2xl">
                     <div class="flex items-center gap-3 mb-8">
                         <div class="w-2.5 h-6 bg-gold-500 rounded-full"></div>
-                        <h5 class="text-sm font-extrabold text-white uppercase tracking-wider">Kepadatan Titik Data per Wilayah</h5>
+                        <h5 class="text-base font-extrabold text-white uppercase tracking-wider">Kepadatan Titik Data per Wilayah</h5>
                     </div>
                     <div class="space-y-5">
                         @foreach($sebaranKecamatan as $nama => $count)
                             <div>
-                                <div class="flex justify-between text-xs font-bold uppercase tracking-wider mb-2">
+                                <div class="flex justify-between text-sm font-bold uppercase tracking-wider mb-2">
                                     <span class="text-slate-400">{{ $nama ?: 'Wilayah Tidak Diketahui' }}</span>
                                     <span class="text-white font-extrabold">{{ $count }} Titik</span>
                                 </div>
@@ -536,15 +555,15 @@
                 <div class="bg-[#0f0e2c] p-10 rounded-3xl shadow-2xl relative overflow-hidden flex flex-col justify-between text-white border border-white/5">
                     <div class="grid-pattern"></div>
                     <div class="relative z-10">
-                        <span class="text-gold-500 font-extrabold text-[10px] uppercase tracking-[0.3em] mb-2 block">KATEGORI DOMINAN</span>
+                        <span class="text-gold-500 font-extrabold text-xs uppercase tracking-[0.3em] mb-2 block">KATEGORI DOMINAN</span>
                         <h5 class="text-4xl font-black uppercase tracking-tight mb-4">{{ $topKategori }}</h5>
-                        <p class="text-slate-400 text-xs leading-relaxed max-w-sm mb-6">
+                        <p class="text-slate-400 text-sm leading-relaxed max-w-sm mb-6">
                             Kategori infrastruktur ini memiliki jumlah laporan tertinggi di sistem GIS dan menjadi perhatian utama dalam proses monitoring pemeliharaan.
                         </p>
                     </div>
                     <div class="relative z-10 flex items-baseline gap-2">
                         <span class="text-6xl font-black text-gold-500">{{ number_format($topKategoriCount) }}</span>
-                        <span class="text-slate-300 font-extrabold text-xs uppercase tracking-wider">Aset Teridentifikasi</span>
+                        <span class="text-slate-300 font-extrabold text-sm uppercase tracking-wider">Aset Teridentifikasi</span>
                     </div>
                     <i class="fas fa-chart-pie absolute -right-6 -bottom-6 text-white/5 text-[150px]"></i>
                 </div>
@@ -554,17 +573,17 @@
             <div class="mt-12 bg-[#0f0e2c]/60 backdrop-blur-xl rounded-3xl border border-white/5 shadow-2xl overflow-hidden reveal-up">
                 <div class="p-8 border-b border-white/5 flex items-center gap-3">
                     <div class="w-2.5 h-6 bg-gold-500 rounded-full"></div>
-                    <h5 class="text-sm font-extrabold text-white uppercase tracking-wider">Ringkasan Keparahan Kondisi</h5>
+                    <h5 class="text-base font-extrabold text-white uppercase tracking-wider">Ringkasan Keparahan Kondisi</h5>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="bg-white/5 border-b border-white/10">
-                                <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Kecamatan</th>
-                                <th class="px-8 py-5 text-[10px] font-black text-slate-300 uppercase tracking-widest text-center">Total Aset</th>
-                                <th class="px-8 py-5 text-[10px] font-black text-emerald-500 uppercase tracking-widest text-center">Kondisi Baik</th>
-                                <th class="px-8 py-5 text-[10px] font-black text-amber-500 uppercase tracking-widest text-center">Kondisi Sedang</th>
-                                <th class="px-8 py-5 text-[10px] font-black text-red-500 uppercase tracking-widest text-center">Rusak Berat</th>
+                                <th class="px-8 py-5 text-xs font-black text-slate-400 uppercase tracking-widest">Kecamatan</th>
+                                <th class="px-8 py-5 text-xs font-black text-slate-300 uppercase tracking-widest text-center">Total Aset</th>
+                                <th class="px-8 py-5 text-xs font-black text-emerald-500 uppercase tracking-widest text-center">Kondisi Baik</th>
+                                <th class="px-8 py-5 text-xs font-black text-amber-500 uppercase tracking-widest text-center">Kondisi Sedang</th>
+                                <th class="px-8 py-5 text-xs font-black text-red-500 uppercase tracking-widest text-center">Rusak Berat</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-white/5">
@@ -575,7 +594,7 @@
                                     <td class="px-8 py-5 text-center text-sm font-semibold text-emerald-400">{{ $item['baik'] }}</td>
                                     <td class="px-8 py-5 text-center text-sm font-semibold text-amber-400">{{ $item['rusak_sedang'] }}</td>
                                     <td class="px-8 py-5 text-center">
-                                        <span class="inline-block px-3.5 py-1.5 bg-red-500/20 text-red-400 rounded-full text-[10px] font-black tracking-wide group-hover:bg-red-500 group-hover:text-white transition-all shadow-sm">{{ $item['rusak_berat'] }}</span>
+                                        <span class="inline-block px-3.5 py-1.5 bg-red-500/20 text-red-400 rounded-full text-xs font-black tracking-wide group-hover:bg-red-500 group-hover:text-white transition-all shadow-sm">{{ $item['rusak_berat'] }}</span>
                                     </td>
                                 </tr>
                             @endforeach
@@ -591,25 +610,25 @@
         <div class="w-full px-4 md:px-12">
             <div class="max-w-7xl mx-auto mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4 px-2">
                 <div>
-                    <span class="text-gold-500 font-extrabold text-xs uppercase tracking-[0.3em] mb-2 block">PETA INTERAKTIF</span>
-                    <h4 class="text-navy-900 font-black text-3xl tracking-tight">Peta Sebaran</h4>
+                    <span class="text-gold-500 font-extrabold text-sm uppercase tracking-[0.3em] mb-2 block">PETA INTERAKTIF</span>
+                    <h4 class="text-navy-900 font-black text-3xl lg:text-4xl tracking-tight">Peta Sebaran</h4>
                 </div>
-                <p class="text-slate-500 text-sm max-w-md">
+                <p class="text-slate-500 text-sm lg:text-base max-w-md">
                     Gunakan peta GIS interaktif di bawah ini untuk melihat titik lokasi dan tingkat kerusakan infrastruktur permukiman secara real-time.
                 </p>
             </div>
 
-            <div class="relative bg-white rounded-[2.5rem] shadow-2xl overflow-hidden w-full h-[550px] md:h-[850px] z-10">
+            <div class="relative bg-white rounded-[2.5rem] shadow-2xl overflow-hidden w-full h-[550px] md:h-[750px] lg:h-[850px] z-10">
                 <!-- Map Container -->
                 <div id="map" class="absolute inset-0 z-0"></div>
 
                 <!-- Custom Zoom Controls & GPS -->
                 <div class="absolute top-20 md:top-6 left-2 md:left-6 z-[9999] flex flex-col gap-2 pointer-events-auto">
                     <button onclick="map.zoomIn()" class="w-10 h-10 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-gold-500 hover:bg-[#1e1b4b] transition-all group" title="Zoom In" aria-label="Zoom In Peta">
-                        <i class="fas fa-plus text-[10px] group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+                        <i class="fas fa-plus text-xs group-hover:scale-110 transition-transform" aria-hidden="true"></i>
                     </button>
                     <button onclick="map.zoomOut()" class="w-10 h-10 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-gold-500 hover:bg-[#1e1b4b] transition-all group" title="Zoom Out" aria-label="Zoom Out Peta">
-                        <i class="fas fa-minus text-[10px] group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+                        <i class="fas fa-minus text-xs group-hover:scale-110 transition-transform" aria-hidden="true"></i>
                     </button>
                     <button onclick="locateUser()" class="w-10 h-10 mt-2 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-blue-400 hover:bg-[#1e1b4b] transition-all group" title="Lokasi Saya" aria-label="Gunakan Lokasi Saat Ini">
                         <i class="fas fa-crosshairs text-xs group-hover:scale-110 transition-transform" aria-hidden="true"></i>
@@ -624,7 +643,7 @@
                 <!-- Search Bar -->
                 <div class="absolute top-4 left-14 md:top-6 md:left-1/2 md:-translate-x-1/2 z-[9999] pointer-events-auto w-[55%] md:w-80">
                     <div class="relative w-full">
-                        <input type="text" id="search-infra" placeholder="Cari infrastruktur..." aria-label="Cari infrastruktur atau jalan" class="w-full bg-[#0f0e2c]/90 backdrop-blur-xl border border-white/10 text-white pl-8 pr-3 py-2 md:pl-10 md:pr-4 md:py-3 rounded-xl md:rounded-2xl shadow-2xl focus:outline-none focus:border-gold-500 transition-colors text-[10px] md:text-xs font-bold tracking-wide placeholder-slate-400" autocomplete="off">
+                        <input type="text" id="search-infra" placeholder="Cari infrastruktur..." aria-label="Cari infrastruktur atau jalan" class="w-full bg-[#0f0e2c]/90 backdrop-blur-xl border border-white/10 text-white pl-8 pr-3 py-2 md:pl-10 md:pr-4 md:py-3 rounded-xl md:rounded-2xl shadow-2xl focus:outline-none focus:border-gold-500 transition-colors text-xs md:text-xs font-bold tracking-wide placeholder-slate-400" autocomplete="off">
                         <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gold-500 text-sm" aria-hidden="true"></i>
                     </div>
                     <div id="search-results" class="hidden absolute top-full left-0 mt-2 w-full bg-[#0f0e2c]/95 backdrop-blur-2xl border border-white/10 rounded-xl shadow-2xl max-h-56 overflow-y-auto"></div>
@@ -640,41 +659,41 @@
                     <div class="relative w-full z-50">
                         <button onclick="toggleMenu('filter-utama')" class="w-full bg-[#0f0e2c]/90 backdrop-blur-xl border border-white/10 text-white px-2 py-2 md:px-3.5 md:py-3 rounded-xl flex justify-between items-center shadow-2xl hover:bg-[#1e1b4b] transition-all">
                             <div class="flex items-center gap-1 md:gap-2">
-                                <i class="fas fa-filter text-[10px] text-gold-500"></i>
-                                <span class="text-[8px] md:text-[9px] font-bold uppercase tracking-wider hidden md:inline">Filter Peta</span>
-                                <span class="text-[8px] font-bold uppercase tracking-wider md:hidden">Filter</span>
+                                <i class="fas fa-filter text-xs text-gold-500"></i>
+                                <span class="text-xs md:text-xs font-bold uppercase tracking-wider hidden md:inline">Filter Peta</span>
+                                <span class="text-xs font-bold uppercase tracking-wider md:hidden">Filter</span>
                             </div>
-                            <i class="fas fa-chevron-down text-[8px] md:text-[10px] text-slate-400"></i>
+                            <i class="fas fa-chevron-down text-xs md:text-xs text-slate-400"></i>
                         </button>
                         
                         <div id="filter-utama" class="hidden absolute top-full mt-2 right-0 w-56 bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-xl p-3 shadow-2xl border border-white/10 max-h-[60vh] overflow-y-auto custom-scrollbar flex flex-col gap-3">
                             
                             <!-- SECTION: Kategori Objek -->
                             <div>
-                                <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest px-1 mb-1 block">Kategori Objek</span>
+                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest px-1 mb-1 block">Kategori Objek</span>
                                 <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all border-b border-white/5 mb-1 pb-2">
-                                    <span class="text-[9px] font-black text-gold-500 uppercase tracking-wider">Pilih Semua</span>
+                                    <span class="text-xs font-black text-gold-500 uppercase tracking-wider">Pilih Semua</span>
                                     <input type="checkbox" id="check-all-categories" class="w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" checked>
                                 </label>
                                 <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all">
-                                    <span class="text-[9px] font-bold text-slate-200 uppercase tracking-wider">Jalan</span>
+                                    <span class="text-xs font-bold text-slate-200 uppercase tracking-wider">Jalan</span>
                                     <input type="checkbox" class="filter-category w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="jalan" checked>
                                 </label>
                                 <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all">
-                                    <span class="text-[9px] font-bold text-slate-200 uppercase tracking-wider">Titian</span>
+                                    <span class="text-xs font-bold text-slate-200 uppercase tracking-wider">Titian</span>
                                     <input type="checkbox" class="filter-category w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="titian" checked>
                                 </label>
                                 <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all">
-                                    <span class="text-[9px] font-bold text-slate-200 uppercase tracking-wider">Jembatan</span>
+                                    <span class="text-xs font-bold text-slate-200 uppercase tracking-wider">Jembatan</span>
                                     <input type="checkbox" class="filter-category w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="jembatan" checked>
                                 </label>
                             </div>
 
                             <!-- SECTION: Pilih Kecamatan -->
                             <div class="border-t border-white/10 pt-2">
-                                <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest px-1 mb-1 block">Pilih Kecamatan</span>
+                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest px-1 mb-1 block">Pilih Kecamatan</span>
                                 <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all border-b border-white/5 mb-1 pb-2">
-                                    <span class="text-[9px] font-black text-gold-500 uppercase tracking-wider">Pilih Semua</span>
+                                    <span class="text-xs font-black text-gold-500 uppercase tracking-wider">Pilih Semua</span>
                                     <input type="checkbox" id="check-all-districts" class="w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" checked>
                                 </label>
                                 @php $kecColors = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#06b6d4']; @endphp
@@ -682,7 +701,7 @@
                                 <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all group">
                                     <div class="flex items-center gap-2">
                                         <input type="checkbox" class="filter-district w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="{{ $wil->id_kecamatan }}" checked>
-                                        <span class="text-[9px] font-bold text-slate-200 uppercase tracking-wider">{{ $wil->nama_kecamatan }}</span>
+                                        <span class="text-xs font-bold text-slate-200 uppercase tracking-wider">{{ $wil->nama_kecamatan }}</span>
                                     </div>
                                     <div class="w-2 h-2 rounded-full" style="background: {{ $kecColors[$index % count($kecColors)] }}"></div>
                                 </label>
@@ -691,9 +710,9 @@
 
                             <!-- SECTION: Filter Tahun (Waktu) -->
                             <div class="border-t border-white/10 pt-2 flex flex-col gap-1.5 mb-2">
-                                <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest px-1 mb-1 block">Periode Waktu</span>
+                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest px-1 mb-1 block">Periode Waktu</span>
                                 <div class="relative">
-                                    <select id="filter-tahun" onchange="fetchMapData()" class="w-full bg-[#0f0e2c] border border-white/10 text-slate-200 text-[10px] font-bold rounded-lg px-3 py-2.5 appearance-none cursor-pointer focus:outline-none focus:border-gold-500/50 transition-all">
+                                    <select id="filter-tahun" onchange="fetchMapData()" class="w-full bg-[#0f0e2c] border border-white/10 text-slate-200 text-xs font-bold rounded-lg px-3 py-2.5 appearance-none cursor-pointer focus:outline-none focus:border-gold-500/50 transition-all">
                                         <option value="all">Semua Tahun</option>
                                         @php
                                             // Get distinct years from database to populate dropdown
@@ -708,26 +727,26 @@
                                             <option value="{{ $year }}">{{ $year }}</option>
                                         @endforeach
                                     </select>
-                                    <i class="fas fa-calendar-alt absolute right-3 top-1/2 -translate-y-1/2 text-gold-500 text-[10px] pointer-events-none"></i>
+                                    <i class="fas fa-calendar-alt absolute right-3 top-1/2 -translate-y-1/2 text-gold-500 text-xs pointer-events-none"></i>
                                 </div>
                             </div>
 
                             <!-- SECTION: Layer Tambahan -->
                             <div class="border-t border-white/10 pt-2 flex flex-col gap-1.5">
-                                <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest px-1 mb-1 block">Layer Tambahan</span>
+                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest px-1 mb-1 block">Layer Tambahan</span>
                                 <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all border border-white/5 bg-white/5">
                                     <div class="flex items-center gap-2">
                                         <input type="checkbox" id="toggle-kelurahan-lines" class="w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" checked>
-                                        <span class="text-[9px] font-bold text-slate-200 uppercase tracking-wider">Batas Kelurahan</span>
+                                        <span class="text-xs font-bold text-slate-200 uppercase tracking-wider">Batas Kelurahan</span>
                                     </div>
-                                    <i class="fas fa-home text-gold-500 text-[9px]"></i>
+                                    <i class="fas fa-home text-gold-500 text-xs"></i>
                                 </label>
                                 <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all border border-white/5 bg-white/5">
                                     <div class="flex items-center gap-2">
                                         <input type="checkbox" id="toggle-banjir-lines" class="w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-blue-500 focus:ring-blue-500">
-                                        <span class="text-[9px] font-bold text-slate-200 uppercase tracking-wider">Kerawanan Banjir</span>
+                                        <span class="text-xs font-bold text-slate-200 uppercase tracking-wider">Kerawanan Banjir</span>
                                     </div>
-                                    <i class="fas fa-water text-blue-500 text-[9px]"></i>
+                                    <i class="fas fa-water text-blue-500 text-xs"></i>
                                 </label>
                             </div>
 
@@ -743,37 +762,37 @@
                 <div class="absolute bottom-8 left-2 md:bottom-6 md:left-6 z-[9999] bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl md:rounded-2xl p-1.5 text-white w-32 md:w-48 shadow-2xl border border-white/10 pointer-events-auto transition-all duration-300">
                     <div class="flex justify-between items-center bg-white/5 p-1.5 md:p-2 rounded-lg md:rounded-xl cursor-pointer hover:bg-white/10 transition-all" onclick="document.getElementById('stats-body').classList.toggle('hidden'); document.getElementById('stats-chevron').classList.toggle('rotate-180');">
                         <div class="flex items-center gap-2">
-                            <i class="fas fa-chart-pie text-gold-500 text-[10px]"></i>
-                            <span class="text-[8px] font-extrabold uppercase tracking-widest text-slate-200">Statistik Filter</span>
+                            <i class="fas fa-chart-pie text-gold-500 text-xs"></i>
+                            <span class="text-xs font-extrabold uppercase tracking-widest text-slate-200">Statistik Filter</span>
                         </div>
-                        <i id="stats-chevron" class="fas fa-chevron-down text-slate-400 text-[10px] transition-transform duration-300"></i>
+                        <i id="stats-chevron" class="fas fa-chevron-down text-slate-400 text-xs transition-transform duration-300"></i>
                     </div>
                     
                     <div id="stats-body" class="space-y-3 pt-3 pb-2 px-2 hidden transition-all duration-300">
                         <div class="flex justify-between items-center">
-                            <span class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Total Titik</span>
-                            <span id="stat-total" class="bg-indigo-500/20 text-[#6366f1] px-2 py-0.5 rounded-lg text-[10px] font-black min-w-[45px] text-center border border-indigo-500/20">0</span>
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Titik</span>
+                            <span id="stat-total" class="bg-indigo-500/20 text-[#6366f1] px-2 py-0.5 rounded-lg text-xs font-black min-w-[45px] text-center border border-indigo-500/20">0</span>
                         </div>
                         <div class="flex justify-between items-center">
                             <div class="flex items-center gap-2">
                                 <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-md shadow-emerald-500/20"></div>
-                                <span class="text-[9px] font-bold uppercase tracking-wider text-slate-300">Baik</span>
+                                <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Baik</span>
                             </div>
-                            <span id="stat-baik" class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-lg text-[10px] font-black min-w-[45px] text-center border border-emerald-500/20">0</span>
+                            <span id="stat-baik" class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-lg text-xs font-black min-w-[45px] text-center border border-emerald-500/20">0</span>
                         </div>
                         <div class="flex justify-between items-center">
                             <div class="flex items-center gap-2">
                                 <div class="w-2 h-2 rounded-full bg-amber-500 shadow-md shadow-amber-500/20"></div>
-                                <span class="text-[9px] font-bold uppercase tracking-wider text-slate-300">Sedang</span>
+                                <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Sedang</span>
                             </div>
-                            <span id="stat-sedang" class="bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-lg text-[10px] font-black min-w-[45px] text-center border border-amber-500/20">0</span>
+                            <span id="stat-sedang" class="bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-lg text-xs font-black min-w-[45px] text-center border border-amber-500/20">0</span>
                         </div>
                         <div class="flex justify-between items-center">
                             <div class="flex items-center gap-2">
                                 <div class="w-2 h-2 rounded-full bg-red-500 shadow-md shadow-red-500/20"></div>
-                                <span class="text-[9px] font-bold uppercase tracking-wider text-slate-300">Berat</span>
+                                <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Berat</span>
                             </div>
-                            <span id="stat-berat" class="bg-red-500/20 text-red-400 px-2 py-0.5 rounded-lg text-[10px] font-black min-w-[45px] text-center border border-red-500/20">0</span>
+                            <span id="stat-berat" class="bg-red-500/20 text-red-400 px-2 py-0.5 rounded-lg text-xs font-black min-w-[45px] text-center border border-red-500/20">0</span>
                         </div>
                     </div>
                 </div>
@@ -785,13 +804,13 @@
                         <i class="fas fa-layer-group text-xl"></i>
                     </button>
                     <div id="layer-options" class="hidden absolute bottom-[4.5rem] right-0 w-48 bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-2xl p-2.5 shadow-2xl border border-white/10 flex flex-col gap-1.5">
-                        <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest px-3.5 mb-1">Gaya Basemap</span>
-                        <button onclick="setBasemap('google')" class="basemap-btn bg-white/10 text-white w-full px-4 py-3 rounded-xl text-[9px] font-black uppercase tracking-wider hover:bg-white/20 transition-all text-left">Default</button>
-                        <button onclick="setBasemap('satelit')" class="basemap-btn text-slate-400 w-full px-4 py-3 rounded-xl text-[9px] font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-left">Satelit</button>
-                        <button onclick="setBasemap('dark')" class="basemap-btn text-slate-400 w-full px-4 py-3 rounded-xl text-[9px] font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-left">Gelap</button>
-                        <button onclick="setBasemap('greyscale')" class="basemap-btn text-slate-400 w-full px-4 py-3 rounded-xl text-[9px] font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-left">Abu-abu</button>
-                        <button onclick="setBasemap('osm')" class="basemap-btn text-slate-400 w-full px-4 py-3 rounded-xl text-[9px] font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-left">OSM</button>
-                        <button onclick="setBasemap('banjir')" class="basemap-btn text-slate-400 w-full px-4 py-3 rounded-xl text-[9px] font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-left text-blue-400">Peta Banjir</button>
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest px-3.5 mb-1">Gaya Basemap</span>
+                        <button onclick="setBasemap('google')" class="basemap-btn bg-white/10 text-white w-full px-4 py-3 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-white/20 transition-all text-left">Default</button>
+                        <button onclick="setBasemap('satelit')" class="basemap-btn text-slate-400 w-full px-4 py-3 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-left">Satelit</button>
+                        <button onclick="setBasemap('dark')" class="basemap-btn text-slate-400 w-full px-4 py-3 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-left">Gelap</button>
+                        <button onclick="setBasemap('greyscale')" class="basemap-btn text-slate-400 w-full px-4 py-3 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-left">Abu-abu</button>
+                        <button onclick="setBasemap('osm')" class="basemap-btn text-slate-400 w-full px-4 py-3 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-left">OSM</button>
+                        <button onclick="setBasemap('banjir')" class="basemap-btn text-slate-400 w-full px-4 py-3 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-left text-blue-400">Peta Banjir</button>
                     </div>
                 </div>
             </div>
@@ -811,35 +830,35 @@
                 
                 <!-- Contact -->
                 <div>
-                    <h5 class="text-sm font-black text-white uppercase tracking-wider mb-6">Hubungi Kami</h5>
+                    <h5 class="text-base font-black text-white uppercase tracking-wider mb-6">Hubungi Kami</h5>
                     <ul class="space-y-4">
                         <li class="flex items-start gap-4">
                             <i class="fas fa-map-marker-alt text-gold-500 mt-1"></i>
-                            <span class="text-xs text-slate-400 leading-relaxed"><strong class="text-white">Dinas Perumahan Rakyat dan Kawasan Permukiman Kota Banjarmasin</strong><br>Jalan R.E Martadinata No. 1 Blok B Lantai 2 Kec. Banjarmasin Tengah, Kota Banjarmasin Kalimantan Selatan - 70111</span>
+                            <span class="text-sm text-slate-400 leading-relaxed"><strong class="text-white">Dinas Perumahan Rakyat dan Kawasan Permukiman Kota Banjarmasin</strong><br>Jalan R.E Martadinata No. 1 Blok B Lantai 2 Kec. Banjarmasin Tengah, Kota Banjarmasin Kalimantan Selatan - 70111</span>
                         </li>
                         <li class="flex items-center gap-4">
                             <i class="fas fa-envelope text-gold-500"></i>
-                            <span class="text-xs text-slate-400">ampihkumuh@gmail.com</span>
+                            <span class="text-sm text-slate-400">ampihkumuh@gmail.com</span>
                         </li>
                         <li class="flex items-center gap-4">
                             <i class="fas fa-phone-alt text-gold-500"></i>
-                            <span class="text-xs text-slate-400">(0511) 3365592</span>
+                            <span class="text-sm text-slate-400">(0511) 3365592</span>
                         </li>
                     </ul>
                 </div>
                 
                 <!-- Links -->
                 <div>
-                    <h5 class="text-sm font-black text-white uppercase tracking-wider mb-6">Tautan Penting</h5>
+                    <h5 class="text-base font-black text-white uppercase tracking-wider mb-6">Tautan Penting</h5>
                     <ul class="space-y-3">
-                        <li><a href="#peta" class="text-xs text-slate-400 hover:text-gold-500 transition-colors flex items-center gap-2"><i class="fas fa-angle-right text-[10px]"></i> Peta Sebaran</a></li>
-                        <li><a href="#statistik" class="text-xs text-slate-400 hover:text-gold-500 transition-colors flex items-center gap-2"><i class="fas fa-angle-right text-[10px]"></i> Statistik Data</a></li>
+                        <li><a href="#peta" class="text-sm text-slate-400 hover:text-gold-500 transition-colors flex items-center gap-2"><i class="fas fa-angle-right text-xs"></i> Peta Sebaran</a></li>
+                        <li><a href="#statistik" class="text-sm text-slate-400 hover:text-gold-500 transition-colors flex items-center gap-2"><i class="fas fa-angle-right text-xs"></i> Statistik Data</a></li>
                     </ul>
                 </div>
             </div>
             
             <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center gap-6 relative">
-                <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest md:absolute md:left-1/2 md:-translate-x-1/2 text-center">&copy; Developed by NADYA Kota Banjarmasin 2026</p>
+                <p class="text-xs font-bold text-slate-500 uppercase tracking-widest md:absolute md:left-1/2 md:-translate-x-1/2 text-center">&copy; Developed by NADYA Kota Banjarmasin 2026</p>
                 <div class="flex gap-4 md:ml-auto">
                     <a href="https://www.instagram.com/disperkim.banjarmasin?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:bg-gold-500 hover:text-white transition-all shadow-sm hover:shadow-gold-500/50" title="Instagram"><i class="fab fa-instagram"></i></a>
                     <span class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-500 cursor-default" title="YouTube (Belum Tersedia)"><i class="fab fa-youtube"></i></span>
@@ -1028,7 +1047,7 @@
                                     fillColor: fillColor,
                                     dashArray: (activeKelurahanId == kel.id_kelurahan || showBanjir) ? '0' : '4, 4'
                                 }
-                            }).bindTooltip(`<div class="text-[9px] font-bold text-navy-900 leading-none">Kel. ${kel.nama_kelurahan}${showBanjir ? ' (Simulasi Banjir)' : ''}</div>`, { sticky: true }).addTo(polygonsLayer);
+                            }).bindTooltip(`<div class="text-xs font-bold text-navy-900 leading-none">Kel. ${kel.nama_kelurahan}${showBanjir ? ' (Simulasi Banjir)' : ''}</div>`, { sticky: true }).addTo(polygonsLayer);
 
                             // Event saat poligon kelurahan diklik
                             layer.on('click', function(e) {
@@ -1110,28 +1129,28 @@
                         
                         <div class="mb-3">
                             <h6 class="text-white font-extrabold text-base uppercase leading-tight truncate max-w-[250px] mb-1" title="${item.nama_objek || 'Aset Tanpa Nama'}">${item.nama_objek || 'Aset Tanpa Nama'}</h6>
-                            <p class="text-gold-500 text-[11px] font-bold uppercase tracking-widest">${item.jenis || 'Infrastruktur'}</p>
+                            <p class="text-gold-500 text-sm font-bold uppercase tracking-widest">${item.jenis || 'Infrastruktur'}</p>
                         </div>
                         
                         <div class="space-y-2 mb-3.5">
                             <div class="flex items-start gap-2.5">
                                 <i class="fas fa-map-marker-alt text-slate-400 text-xs mt-0.5 w-4 text-center"></i>
-                                <span class="text-slate-300 text-[11px] leading-relaxed flex-1">${item.nama_kecamatan || 'Lokasi tidak diketahui'}</span>
+                                <span class="text-slate-300 text-sm leading-relaxed flex-1">${item.nama_kecamatan || 'Lokasi tidak diketahui'}</span>
                             </div>
                             <div class="flex items-start gap-2.5">
                                 <i class="fas fa-clock text-slate-400 text-xs mt-0.5 w-4 text-center"></i>
-                                <span class="text-slate-300 text-[11px] leading-relaxed flex-1">Update: ${lastUpdateStr}</span>
+                                <span class="text-slate-300 text-sm leading-relaxed flex-1">Update: ${lastUpdateStr}</span>
                             </div>
                         </div>
 
                         <div class="border-t border-white/10 pt-3.5 flex items-center justify-between gap-3 mt-3 mb-2.5">
-                            <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Kondisi:</span>
-                            <div class="px-3.5 py-1.5 ${conditionColor} text-[10px] font-black uppercase tracking-wider rounded-lg shadow-md">
+                            <span class="text-slate-400 text-xs font-bold uppercase tracking-widest">Kondisi:</span>
+                            <div class="px-3.5 py-1.5 ${conditionColor} text-xs font-black uppercase tracking-wider rounded-lg shadow-md">
                                 ${item.label_prioritas || 'N/A'}
                             </div>
                         </div>
                         
-                        <button onclick="openDetailModal(${item.id_infrastruktur})" class="w-full bg-white/10 hover:bg-gold-500 text-white font-bold text-[10px] py-2.5 rounded-lg transition-all shadow-sm uppercase tracking-widest flex justify-center items-center gap-2">
+                        <button onclick="openDetailModal(${item.id_infrastruktur})" class="w-full bg-white/10 hover:bg-gold-500 text-white font-bold text-xs py-2.5 rounded-lg transition-all shadow-sm uppercase tracking-widest flex justify-center items-center gap-2">
                             <i class="fas fa-expand-arrows-alt"></i> Lihat Detail
                         </button>
                     </div>
@@ -1427,8 +1446,8 @@
                         const div = document.createElement('div');
                         div.className = 'p-3 border-b border-white/5 hover:bg-white/10 cursor-pointer transition-colors';
                         div.innerHTML = `
-                            <p class="text-[10px] font-bold text-white mb-0.5">${i.nama_objek || 'Tanpa Nama'}</p>
-                            <p class="text-[8px] text-slate-400"><i class="fas fa-map-marker-alt text-gold-500 mr-1"></i>Kel. ${i.nama_kelurahan}</p>
+                            <p class="text-xs font-bold text-white mb-0.5">${i.nama_objek || 'Tanpa Nama'}</p>
+                            <p class="text-xs text-slate-400"><i class="fas fa-map-marker-alt text-gold-500 mr-1"></i>Kel. ${i.nama_kelurahan}</p>
                         `;
                         div.onclick = () => {
                             map.setView([parseFloat(i.latitude), parseFloat(i.longitude)], 18);
@@ -1440,7 +1459,7 @@
                     });
                 } else {
                     searchResults.classList.remove('hidden');
-                    searchResults.innerHTML = '<div class="p-4 text-[10px] text-slate-400 text-center">Tidak ada hasil ditemukan</div>';
+                    searchResults.innerHTML = '<div class="p-4 text-xs text-slate-400 text-center">Tidak ada hasil ditemukan</div>';
                 }
             });
         }
@@ -1477,7 +1496,7 @@
                     })
                 }).addTo(map);
             }
-            userMarker.bindPopup('<div class="text-[10px] font-bold text-center">Lokasi Anda Saat Ini</div>').openPopup();
+            userMarker.bindPopup('<div class="text-xs font-bold text-center">Lokasi Anda Saat Ini</div>').openPopup();
         });
 
         map.on('locationerror', function(e) {
@@ -1531,11 +1550,11 @@
                     </div>
                     <div>
                         <h3 class="font-black text-navy-900 text-base md:text-lg uppercase tracking-tight leading-none mb-1" id="modal-title">Detail Aset</h3>
-                        <p class="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest" id="modal-jenis">Infrastruktur</p>
+                        <p class="text-xs md:text-xs font-bold text-slate-400 uppercase tracking-widest" id="modal-jenis">Infrastruktur</p>
                     </div>
                 </div>
                 <div class="flex items-center gap-2 md:gap-4">
-                    <span id="modal-badge" class="px-3 py-1 md:px-4 md:py-1.5 rounded-lg text-[10px] md:text-xs font-black uppercase tracking-wider bg-emerald-500 text-white shadow-md">Baik</span>
+                    <span id="modal-badge" class="px-3 py-1 md:px-4 md:py-1.5 rounded-lg text-xs md:text-xs font-black uppercase tracking-wider bg-emerald-500 text-white shadow-md">Baik</span>
                     <button onclick="closeDetailModal()" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-red-50 hover:text-red-500 transition-colors">
                         <i class="fas fa-times"></i>
                     </button>
@@ -1550,12 +1569,12 @@
                     <!-- Left Col: Lokasi -->
                     <div class="space-y-6">
                         <div>
-                            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1"><i class="fas fa-map mr-1"></i> Kecamatan</span>
+                            <span class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1"><i class="fas fa-map mr-1"></i> Kecamatan</span>
                             <p id="modal-kecamatan" class="font-black text-navy-900 text-xl">Banjarmasin Tengah</p>
                         </div>
                         
                         <div>
-                            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1"><i class="fas fa-map-pin mr-1"></i> Kelurahan</span>
+                            <span class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1"><i class="fas fa-map-pin mr-1"></i> Kelurahan</span>
                             <p id="modal-kelurahan" class="font-black text-navy-900 text-xl">Kertak Baru</p>
                         </div>
                     </div>
@@ -1579,7 +1598,7 @@
                     </div>
                     <div>
                         <h3 class="font-black text-xl tracking-tight leading-none mb-1">Lapor Kerusakan</h3>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Partisipasi Warga Banjarmasin</p>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Partisipasi Warga Banjarmasin</p>
                     </div>
                 </div>
                 <button onclick="document.getElementById('modal-lapor').classList.add('hidden')" class="w-10 h-10 bg-white/5 hover:bg-red-500 hover:text-white text-slate-400 rounded-xl flex items-center justify-center transition-all border border-white/10 hover:border-red-500">
@@ -1596,18 +1615,18 @@
                         <!-- Nama & HP -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div>
-                                <label class="block text-[10px] font-black text-slate-300 uppercase tracking-widest mb-2 ml-1">Nama Pelapor <span class="text-red-500">*</span></label>
+                                <label class="block text-xs font-black text-slate-300 uppercase tracking-widest mb-2 ml-1">Nama Pelapor <span class="text-red-500">*</span></label>
                                 <input type="text" name="nama_pelapor" required placeholder="Nama Anda" class="w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-sm font-semibold text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all placeholder-slate-500">
                             </div>
                             <div>
-                                <label class="block text-[10px] font-black text-slate-300 uppercase tracking-widest mb-2 ml-1">No. WhatsApp <span class="text-red-500">*</span></label>
+                                <label class="block text-xs font-black text-slate-300 uppercase tracking-widest mb-2 ml-1">No. WhatsApp <span class="text-red-500">*</span></label>
                                 <input type="text" name="no_hp" required placeholder="Nomor WhatsApp (Agar tim bisa menghubungi)" class="w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-sm font-semibold text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all placeholder-slate-500">
                             </div>
                         </div>
 
                         <!-- Deskripsi -->
                         <div>
-                            <label class="block text-[10px] font-black text-slate-300 uppercase tracking-widest mb-2 ml-1">Deskripsi Kerusakan <span class="text-red-500">*</span></label>
+                            <label class="block text-xs font-black text-slate-300 uppercase tracking-widest mb-2 ml-1">Deskripsi Kerusakan <span class="text-red-500">*</span></label>
                             <textarea name="deskripsi" required rows="3" placeholder="Contoh: Jalan berlubang cukup dalam dan sering digenangi air saat hujan..." class="w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-sm font-semibold text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all resize-none placeholder-slate-500"></textarea>
                         </div>
 
@@ -1616,9 +1635,9 @@
                             <div class="flex items-center justify-between mb-4">
                                 <div>
                                     <h4 class="font-black text-white text-sm">Titik Lokasi <span class="text-red-500">*</span></h4>
-                                    <p class="text-[10px] text-slate-400 font-medium">Geser pin pada peta atau klik tombol GPS.</p>
+                                    <p class="text-xs text-slate-400 font-medium">Geser pin pada peta atau klik tombol GPS.</p>
                                 </div>
-                                <button type="button" onclick="getWargaLocation(this)" class="px-4 py-2 bg-blue-500/20 hover:bg-blue-500 border border-blue-500/50 hover:border-blue-500 text-blue-400 hover:text-white rounded-xl font-black text-[10px] uppercase tracking-widest transition-all flex items-center gap-2">
+                                <button type="button" onclick="getWargaLocation(this)" class="px-4 py-2 bg-blue-500/20 hover:bg-blue-500 border border-blue-500/50 hover:border-blue-500 text-blue-400 hover:text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2">
                                     <i class="fas fa-crosshairs"></i> Ambil GPS
                                 </button>
                             </div>
@@ -1634,7 +1653,7 @@
 
                         <!-- Foto Bukti -->
                         <div>
-                            <label class="block text-[10px] font-black text-slate-300 uppercase tracking-widest mb-2 ml-1">Foto Bukti Lapangan <span class="text-red-500">*</span></label>
+                            <label class="block text-xs font-black text-slate-300 uppercase tracking-widest mb-2 ml-1">Foto Bukti Lapangan <span class="text-red-500">*</span></label>
                             <div class="relative w-full h-40 border-2 border-dashed border-white/20 rounded-2xl bg-white/5 hover:bg-gold-500/5 hover:border-gold-500/50 transition-all cursor-pointer flex flex-col items-center justify-center overflow-hidden group">
                                 <input type="file" name="foto" required accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="previewWargaFoto(this)">
                                 <div id="warga-foto-placeholder" class="text-center px-4">
@@ -1652,10 +1671,10 @@
 
             <!-- Footer -->
             <div class="p-6 border-t border-white/10 flex justify-end gap-3 shrink-0 bg-[#0f0e2c]">
-                <button type="button" onclick="document.getElementById('modal-lapor').classList.add('hidden')" class="px-6 py-3.5 bg-white/5 border border-white/10 hover:bg-white/10 text-slate-300 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all">
+                <button type="button" onclick="document.getElementById('modal-lapor').classList.add('hidden')" class="px-6 py-3.5 bg-white/5 border border-white/10 hover:bg-white/10 text-slate-300 rounded-xl font-black text-xs uppercase tracking-widest transition-all">
                     Batal
                 </button>
-                <button type="submit" form="form-lapor-warga" class="px-8 py-3.5 bg-gold-500 hover:bg-gold-600 text-white rounded-xl font-black text-[10px] uppercase tracking-widest transition-all shadow-lg shadow-gold-500/30 flex items-center gap-2 border border-gold-400">
+                <button type="submit" form="form-lapor-warga" class="px-8 py-3.5 bg-gold-500 hover:bg-gold-600 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-gold-500/30 flex items-center gap-2 border border-gold-400">
                     Kirim Laporan <i class="fas fa-paper-plane"></i>
                 </button>
             </div>
@@ -1819,7 +1838,7 @@
 
             function fetchMapData() {
                 // Show loading state if needed
-                document.querySelectorAll('.stat-val').forEach(el => el.innerHTML = '<i class="fas fa-spinner fa-spin text-[8px]"></i>');
+                document.querySelectorAll('.stat-val').forEach(el => el.innerHTML = '<i class="fas fa-spinner fa-spin text-xs"></i>');
                 
                 const tahun = getSelectedTahun();
                 fetch('/api/map-data?tahun=' + tahun)

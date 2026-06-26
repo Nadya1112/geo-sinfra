@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitoring Peta | GEO-SINFRA</title>
     <script src="https://cdn.tailwindcss.com"></script>
             <script>
@@ -51,21 +51,21 @@
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
-                    <p class="text-[10px] font-extrabold text-rose-500 uppercase tracking-[0.2em] mb-1"><i class="fas fa-satellite-dish mr-1 animate-pulse"></i> Executive WebGIS</p>
+                    <p class="text-xs font-extrabold text-rose-500 uppercase tracking-[0.2em] mb-1"><i class="fas fa-satellite-dish mr-1 animate-pulse"></i> Executive WebGIS</p>
                     <h2 class="text-xl font-black text-navy-900 dark:text-white">Peta Sebaran & Prioritas Penanganan</h2>
                 </div>
             </div>
             
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <a href="{{ route('tim_teknis.profile') }}" class="flex items-center gap-3 group">
                     <div class="text-right">
-                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-colors">{{ auth()->user()->name }}</p>
-                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-colors">{{ auth()->user()->name }}</p>
+                        <p class="text-xs font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
                     </div>
                     <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shadow-md group-hover:shadow-lg transition-all overflow-hidden">
                         @if(auth()->user()->profile_photo)
@@ -84,20 +84,20 @@
             <!-- Custom Zoom Controls -->
             <div class="absolute top-6 left-6 z-10 flex flex-col gap-2">
                 <button onclick="map.zoomIn()" class="w-10 h-10 bg-navy-900/80 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:bg-gold-500 transition-all group">
-                    <i class="fas fa-plus text-[10px] group-hover:scale-110 transition-transform"></i>
+                    <i class="fas fa-plus text-xs group-hover:scale-110 transition-transform"></i>
                 </button>
                 <button onclick="map.zoomOut()" class="w-10 h-10 bg-navy-900/80 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:bg-gold-500 transition-all group">
-                    <i class="fas fa-minus text-[10px] group-hover:scale-110 transition-transform"></i>
+                    <i class="fas fa-minus text-xs group-hover:scale-110 transition-transform"></i>
                 </button>
             </div>
 
             <!-- Stats & Legend UI Bottom Left -->
             <div class="absolute bottom-10 left-6 z-10">
                 <div id="condition-card" class="bg-navy-900/80 backdrop-blur-xl p-1.5 rounded-[2rem] border border-white/10 shadow-2xl min-w-[160px]">
-                    <button onclick="toggleMenu('condition-options')" class="w-full px-4 py-2.5 rounded-[1.5rem] text-[8px] font-black uppercase tracking-widest bg-white/10 dark:bg-[#1e1b4b]/10 text-white flex items-center justify-between shadow-sm hover:bg-gold-500 hover:text-white transition-all group border border-white/5">
+                    <button onclick="toggleMenu('condition-options')" class="w-full px-4 py-2.5 rounded-[1.5rem] text-xs font-black uppercase tracking-widest bg-white/10 dark:bg-[#1e1b4b]/10 text-white flex items-center justify-between shadow-sm hover:bg-gold-500 hover:text-white transition-all group border border-white/5">
                         <div class="flex items-center gap-2.5">
                             <div class="w-5 h-5 bg-gold-500/20 text-gold-400 group-hover:text-white roun flex items-center justify-center transition-colors">
-                                <i class="fas fa-chart-pie text-[9px]"></i>
+                                <i class="fas fa-chart-pie text-xs"></i>
                             </div>
                             <span>Statistik</span>
                         </div>
@@ -105,30 +105,30 @@
                     </button>
                     
                     <div id="condition-options" class="mt-1.5 p-1 flex flex-col gap-0.5">
-                        <div class="w-full px-3.5 py-1.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-slate-300 flex items-center justify-between group">
+                        <div class="w-full px-3.5 py-1.5 rounded-xl text-xs font-black uppercase tracking-widest text-slate-300 flex items-center justify-between group">
                             <span>Total</span>
-                            <span id="stat-total" class="text-[8px] font-black text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-md border border-blue-400/20">0</span>
+                            <span id="stat-total" class="text-xs font-black text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-md border border-blue-400/20">0</span>
                         </div>
-                        <div class="w-full px-3.5 py-1.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-slate-400 flex items-center justify-between group">
+                        <div class="w-full px-3.5 py-1.5 rounded-xl text-xs font-black uppercase tracking-widest text-slate-400 flex items-center justify-between group">
                             <div class="flex items-center gap-2.5">
                                 <div class="w-2 h-2 bg-[#059669] rounded-full shadow-lg shadow-[#059669]/40"></div>
                                 <span>Baik</span>
                             </div>
-                            <span id="stat-baik" class="text-[8px] font-black text-[#059669] bg-[#059669]/10 px-2 py-0.5 rounded-md border border-[#059669]/20">0</span>
+                            <span id="stat-baik" class="text-xs font-black text-[#059669] bg-[#059669]/10 px-2 py-0.5 rounded-md border border-[#059669]/20">0</span>
                         </div>
-                        <div class="w-full px-3.5 py-1.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-slate-400 flex items-center justify-between group">
+                        <div class="w-full px-3.5 py-1.5 rounded-xl text-xs font-black uppercase tracking-widest text-slate-400 flex items-center justify-between group">
                             <div class="flex items-center gap-2.5">
                                 <div class="w-2 h-2 bg-[#d97706] rounded-full shadow-lg shadow-[#d97706]/40"></div>
                                 <span>Sedang</span>
                             </div>
-                            <span id="stat-sedang" class="text-[8px] font-black text-[#d97706] bg-[#d97706]/10 px-2 py-0.5 rounded-md border border-[#d97706]/20">0</span>
+                            <span id="stat-sedang" class="text-xs font-black text-[#d97706] bg-[#d97706]/10 px-2 py-0.5 rounded-md border border-[#d97706]/20">0</span>
                         </div>
-                        <div class="w-full px-3.5 py-1.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-slate-400 flex items-center justify-between group">
+                        <div class="w-full px-3.5 py-1.5 rounded-xl text-xs font-black uppercase tracking-widest text-slate-400 flex items-center justify-between group">
                             <div class="flex items-center gap-2.5">
                                 <div class="w-2 h-2 bg-[#be123c] rounded-full shadow-lg shadow-[#be123c]/40"></div>
                                 <span>Berat</span>
                             </div>
-                            <span id="stat-berat" class="text-[8px] font-black text-[#be123c] bg-[#be123c]/10 px-2 py-0.5 rounded-md border border-[#be123c]/20">0</span>
+                            <span id="stat-berat" class="text-xs font-black text-[#be123c] bg-[#be123c]/10 px-2 py-0.5 rounded-md border border-[#be123c]/20">0</span>
                         </div>
                     </div>
                 </div>
@@ -140,9 +140,9 @@
                     
                     <!-- Kategori Section -->
                     <div class="p-0.5">
-                        <button onclick="toggleMenu('category-options')" class="w-full px-4 py-2.5 rounded-[1.5rem] text-[8px] font-black uppercase tracking-widest bg-gold-500/90 text-white flex items-center justify-between shadow-lg hover:bg-gold-500 transition-all group">
+                        <button onclick="toggleMenu('category-options')" class="w-full px-4 py-2.5 rounded-[1.5rem] text-xs font-black uppercase tracking-widest bg-gold-500/90 text-white flex items-center justify-between shadow-lg hover:bg-gold-500 transition-all group">
                             <div class="flex items-center gap-2.5">
-                                <i class="fas fa-layer-group text-[9px] opacity-70"></i>
+                                <i class="fas fa-layer-group text-xs opacity-70"></i>
                                 <span id="current-cat-label" class="truncate max-w-[90px]">Kategori Objek</span>
                             </div>
                             <i class="fas fa-chevron-down text-[7px]"></i>
@@ -191,7 +191,7 @@
                                     </div>
                                     <span class="group-hover:text-white transition-colors text-left">Wilayah Kelurahan</span>
                                 </div>
-                                <i class="fas fa-home text-emerald-500 text-[10px]"></i>
+                                <i class="fas fa-home text-emerald-500 text-xs"></i>
                             </button>
                         </div>
                     </div>
@@ -200,9 +200,9 @@
 
                     <!-- Kecamatan Section -->
                     <div class="p-0.5">
-                        <button onclick="toggleMenu('territory-options')" class="w-full px-4 py-2.5 rounded-[1.5rem] text-[8px] font-black uppercase tracking-widest bg-white/10 dark:bg-[#1e1b4b]/10 text-white flex items-center justify-between shadow-lg hover:bg-white/20 dark:hover:bg-[#1e1b4b]/20 transition-all group border border-white/5">
+                        <button onclick="toggleMenu('territory-options')" class="w-full px-4 py-2.5 rounded-[1.5rem] text-xs font-black uppercase tracking-widest bg-white/10 dark:bg-[#1e1b4b]/10 text-white flex items-center justify-between shadow-lg hover:bg-white/20 dark:hover:bg-[#1e1b4b]/20 transition-all group border border-white/5">
                             <div class="flex items-center gap-2.5">
-                                <i class="fas fa-map-location-dot text-[9px] opacity-70 text-gold-400"></i>
+                                <i class="fas fa-map-location-dot text-xs opacity-70 text-gold-400"></i>
                                 <span id="current-kec-label" class="truncate max-w-[90px]">Wilayah</span>
                             </div>
                             <i class="fas fa-chevron-down text-[7px]"></i>
@@ -250,39 +250,39 @@
                     <div id="layer-options" class="hidden absolute bottom-full right-0 mb-3 p-2 bg-navy-900/90 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl flex flex-col gap-2 min-w-[140px]">
                         <button onclick="changeBaseLayer('greyscale')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 dark:hover:bg-[#1e1b4b]/10 transition-all group">
                             <div class="w-8 h-8 rounded-lg bg-gray-500/20 flex items-center justify-center text-gray-400 group-hover:bg-gray-500 group-hover:text-white transition-all">
-                                <i class="fas fa-adjust text-[10px]"></i>
+                                <i class="fas fa-adjust text-xs"></i>
                             </div>
-                            <span class="text-[9px] font-black uppercase tracking-widest text-gray-300 group-hover:text-white">Greyscale</span>
+                            <span class="text-xs font-black uppercase tracking-widest text-gray-300 group-hover:text-white">Greyscale</span>
                         </button>
                         <button onclick="changeBaseLayer('satellite')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 dark:hover:bg-[#1e1b4b]/10 transition-all group">
                             <div class="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white transition-all">
-                                <i class="fas fa-satellite text-[10px]"></i>
+                                <i class="fas fa-satellite text-xs"></i>
                             </div>
-                            <span class="text-[9px] font-black uppercase tracking-widest text-gray-300 group-hover:text-white">Satelit</span>
+                            <span class="text-xs font-black uppercase tracking-widest text-gray-300 group-hover:text-white">Satelit</span>
                         </button>
                         <button onclick="changeBaseLayer('osm')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 dark:hover:bg-[#1e1b4b]/10 transition-all group">
                             <div class="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-400 group-hover:bg-amber-500 group-hover:text-white transition-all">
-                                <i class="fas fa-map-marked-alt text-[10px]"></i>
+                                <i class="fas fa-map-marked-alt text-xs"></i>
                             </div>
-                            <span class="text-[9px] font-black uppercase tracking-widest text-gray-300 group-hover:text-white">OSM Default</span>
+                            <span class="text-xs font-black uppercase tracking-widest text-gray-300 group-hover:text-white">OSM Default</span>
                         </button>
                         <button onclick="changeBaseLayer('dark')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 dark:hover:bg-[#1e1b4b]/10 transition-all group">
                             <div class="w-8 h-8 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-all">
-                                <i class="fas fa-moon text-[10px]"></i>
+                                <i class="fas fa-moon text-xs"></i>
                             </div>
-                            <span class="text-[9px] font-black uppercase tracking-widest text-gray-300 group-hover:text-white">Gelap</span>
+                            <span class="text-xs font-black uppercase tracking-widest text-gray-300 group-hover:text-white">Gelap</span>
                         </button>
                         <button onclick="changeBaseLayer('street')" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white/10 dark:hover:bg-[#1e1b4b]/10 transition-all group">
                             <div class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all">
-                                <i class="fas fa-road text-[10px]"></i>
+                                <i class="fas fa-road text-xs"></i>
                             </div>
-                            <span class="text-[9px] font-black uppercase tracking-widest text-gray-300 group-hover:text-white">Jalan</span>
+                            <span class="text-xs font-black uppercase tracking-widest text-gray-300 group-hover:text-white">Jalan</span>
                         </button>
                         <div class="h-[1px] bg-white/10 dark:bg-[#1e1b4b]/10 my-1 mx-2"></div>
                         <button onclick="toggleFloodLayer()" class="flex items-center justify-between px-4 py-3 rounded-2xl hover:bg-white/10 dark:hover:bg-[#1e1b4b]/10 transition-all group w-full text-left">
                             <div class="flex items-center gap-3">
-                                <i class="fas fa-water text-blue-400 text-[10px]"></i>
-                                <span class="text-[9px] font-black uppercase tracking-widest text-slate-300 group-hover:text-white transition-colors">Rawan Banjir</span>
+                                <i class="fas fa-water text-blue-400 text-xs"></i>
+                                <span class="text-xs font-black uppercase tracking-widest text-slate-300 group-hover:text-white transition-colors">Rawan Banjir</span>
                             </div>
                             <div class="w-6 h-3 rounded-full bg-slate-700 relative border border-white/10 transition-colors" id="flood-toggle-bg">
                                 <div id="flood-toggle-dot" class="absolute left-[2px] top-[2px] w-2 h-2 bg-slate-400 rounded-full transition-all"></div>
@@ -324,10 +324,10 @@
         // --- Layer Rawan Banjir (Mock) ---
         let showFloodLayer = false;
         const floodLayer = L.layerGroup([
-            L.circle([-3.315, 114.590], { color: '#ef4444', fillColor: '#ef4444', fillOpacity: 0.2, weight: 1, radius: 800 }).bindPopup('<div class="text-center"><p class="text-[10px] font-black text-red-500 uppercase">Zona Merah</p><p class="text-xs">Rawan Banjir Tinggi</p></div>'),
-            L.circle([-3.325, 114.598], { color: '#f59e0b', fillColor: '#f59e0b', fillOpacity: 0.2, weight: 1, radius: 1200 }).bindPopup('<div class="text-center"><p class="text-[10px] font-black text-orange-500 uppercase">Zona Kuning</p><p class="text-xs">Rawan Banjir Sedang</p></div>'),
-            L.circle([-3.295, 114.580], { color: '#ef4444', fillColor: '#ef4444', fillOpacity: 0.2, weight: 1, radius: 900 }).bindPopup('<div class="text-center"><p class="text-[10px] font-black text-red-500 uppercase">Zona Merah</p><p class="text-xs">Rawan Banjir Tinggi</p></div>'),
-            L.circle([-3.330, 114.570], { color: '#f59e0b', fillColor: '#f59e0b', fillOpacity: 0.2, weight: 1, radius: 1000 }).bindPopup('<div class="text-center"><p class="text-[10px] font-black text-orange-500 uppercase">Zona Kuning</p><p class="text-xs">Rawan Banjir Sedang</p></div>')
+            L.circle([-3.315, 114.590], { color: '#ef4444', fillColor: '#ef4444', fillOpacity: 0.2, weight: 1, radius: 800 }).bindPopup('<div class="text-center"><p class="text-xs font-black text-red-500 uppercase">Zona Merah</p><p class="text-xs">Rawan Banjir Tinggi</p></div>'),
+            L.circle([-3.325, 114.598], { color: '#f59e0b', fillColor: '#f59e0b', fillOpacity: 0.2, weight: 1, radius: 1200 }).bindPopup('<div class="text-center"><p class="text-xs font-black text-orange-500 uppercase">Zona Kuning</p><p class="text-xs">Rawan Banjir Sedang</p></div>'),
+            L.circle([-3.295, 114.580], { color: '#ef4444', fillColor: '#ef4444', fillOpacity: 0.2, weight: 1, radius: 900 }).bindPopup('<div class="text-center"><p class="text-xs font-black text-red-500 uppercase">Zona Merah</p><p class="text-xs">Rawan Banjir Tinggi</p></div>'),
+            L.circle([-3.330, 114.570], { color: '#f59e0b', fillColor: '#f59e0b', fillOpacity: 0.2, weight: 1, radius: 1000 }).bindPopup('<div class="text-center"><p class="text-xs font-black text-orange-500 uppercase">Zona Kuning</p><p class="text-xs">Rawan Banjir Sedang</p></div>')
         ]);
 
         function toggleFloodLayer() {
@@ -373,7 +373,7 @@
                         this.setStyle({ fillOpacity: 0.35, weight: 2.5 });
                     }); // Do NOT add to map yet — applyFilters() controls visibility
 
-                    poly.bindPopup(`<p class="text-[10px] font-black text-navy-900 dark:text-white uppercase">${kec.nama_kecamatan}</p>`, { 
+                    poly.bindPopup(`<p class="text-xs font-black text-navy-900 dark:text-white uppercase">${kec.nama_kecamatan}</p>`, { 
                         className: 'custom-polygon-popup', 
                         closeButton: false 
                     });
@@ -450,7 +450,7 @@
                         </div>
                         <div class="px-1">
                             <h4 class="text-xs font-black text-navy-900 dark:text-white mb-1">${point.nama_objek || point.nama_infrastruktur || '-'}</h4>
-                            <p class="text-[8px] text-slate-400 font-bold uppercase mb-3">Wilayah: ${point.kelurahan?.nama_kelurahan ?? '-'}</p>
+                            <p class="text-xs text-slate-400 font-bold uppercase mb-3">Wilayah: ${point.kelurahan?.nama_kelurahan ?? '-'}</p>
                             
                             <div class="flex items-center gap-2 mb-3">
                                 <span class="px-2 py-1 rounded-full text-[7px] font-black uppercase tracking-widest" style="background-color: ${color}15; color: ${color}; border: 1px solid ${color}30;">
@@ -461,7 +461,7 @@
                                 </span>
                             </div>
 
-                            <a href="#" class="block w-full py-2 bg-navy-900 text-white rounded-xl text-[8px] font-black uppercase tracking-widest text-center hover:bg-gold-500 transition-all shadow-lg shadow-navy-900/10">Detail Laporan</a>
+                            <a href="#" class="block w-full py-2 bg-navy-900 text-white rounded-xl text-xs font-black uppercase tracking-widest text-center hover:bg-gold-500 transition-all shadow-lg shadow-navy-900/10">Detail Laporan</a>
                         </div>
                     </div>
                 `;
@@ -504,8 +504,8 @@
 
                         poly.bindPopup(`
                             <div class="px-2 py-0.5 text-center">
-                                <p class="text-[8px] font-black text-slate-500 uppercase tracking-[0.2em] mb-0.5">Kelurahan</p>
-                                <p class="text-[10px] font-black uppercase tracking-widest text-navy-900 dark:text-white">${kel.nama_kelurahan}</p>
+                                <p class="text-xs font-black text-slate-500 uppercase tracking-[0.2em] mb-0.5">Kelurahan</p>
+                                <p class="text-xs font-black uppercase tracking-widest text-navy-900 dark:text-white">${kel.nama_kelurahan}</p>
                             </div>
                         `, { 
                             className: 'custom-polygon-popup', 

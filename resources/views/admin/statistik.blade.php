@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ringkasan Statistik | Admin SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -47,25 +47,25 @@
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
                 <div>
-                    <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
+                    <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Administrator Portal</p>
                     <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Ringkasan Statistik</h2>
                 </div>
                 <div class="hidden md:block w-[1px] h-8 bg-slate-200 ml-4 mr-2"></div>
-                <a href="{{ route('admin.infrastruktur.export') }}" class="ml-2 px-4 py-2 bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white border border-emerald-100 hover:border-emerald-500 rounded-xl text-[10px] font-black tracking-widest uppercase transition-all shadow-sm hover:shadow-lg hover:shadow-emerald-500/20 flex items-center gap-2">
+                <a href="{{ route('admin.infrastruktur.export') }}" class="ml-2 px-4 py-2 bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white border border-emerald-100 hover:border-emerald-500 rounded-xl text-xs font-black tracking-widest uppercase transition-all shadow-sm hover:shadow-lg hover:shadow-emerald-500/20 flex items-center gap-2">
                     <i class="fas fa-file-excel"></i> Export Excel
                 </a>
             </div>
 
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin.profile') }}" class="text-right group">
-                        <p class="text-[11px] font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
-                        <p class="text-[9px] font-bold text-emerald-500 uppercase mt-1">Online</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
+                        <p class="text-xs font-bold text-emerald-500 uppercase mt-1">Online</p>
                     </a>
                     <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 overflow-hidden hover:shadow-lg transition-all shadow-md">
                         @if(auth()->user()->profile_photo)
@@ -90,11 +90,11 @@
                         <div class="w-11 h-11 bg-navy-900 rounded-2xl flex items-center justify-center shadow-md shadow-navy-900/20">
                             <i class="fas fa-road text-gold-500"></i>
                         </div>
-                        <span class="text-[8px] font-black text-emerald-500 bg-emerald-50 border border-emerald-100 px-2 py-1 rounded-lg uppercase tracking-wider">Aktif</span>
+                        <span class="text-xs font-black text-emerald-500 bg-emerald-50 border border-emerald-100 px-2 py-1 rounded-lg uppercase tracking-wider">Aktif</span>
                     </div>
-                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Infrastruktur</p>
+                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Total Infrastruktur</p>
                     <h3 class="text-3xl font-black text-navy-900">{{ $jumlahInfrastruktur }}</h3>
-                    <p class="text-[9px] text-slate-400 font-semibold mt-1">Objek terdaftar</p>
+                    <p class="text-xs text-slate-400 font-semibold mt-1">Objek terdaftar</p>
                 </div>
 
                 {{-- Analisis AI --}}
@@ -103,11 +103,11 @@
                         <div class="w-11 h-11 bg-gold-500 rounded-2xl flex items-center justify-center shadow-md shadow-gold-500/20">
                             <i class="fas fa-brain text-white"></i>
                         </div>
-                        <span class="text-[8px] font-black text-gold-600 bg-gold-50 border border-gold-100 px-2 py-1 rounded-lg uppercase tracking-wider">AI</span>
+                        <span class="text-xs font-black text-gold-600 bg-gold-50 border border-gold-100 px-2 py-1 rounded-lg uppercase tracking-wider">AI</span>
                     </div>
-                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Teranalisis AI</p>
+                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Teranalisis AI</p>
                     <h3 class="text-3xl font-black text-navy-900">{{ $jumlahAnalisis }}</h3>
-                    <p class="text-[9px] text-slate-400 font-semibold mt-1">Data diproses</p>
+                    <p class="text-xs text-slate-400 font-semibold mt-1">Data diproses</p>
                 </div>
 
                 {{-- Surveyor & Tim Teknis --}}
@@ -116,11 +116,11 @@
                         <div class="w-11 h-11 bg-navy-500 rounded-2xl flex items-center justify-center shadow-md shadow-navy-500/20">
                             <i class="fas fa-users text-white"></i>
                         </div>
-                        <span class="text-[8px] font-black text-navy-800 bg-navy-50 border border-navy-100 px-2 py-1 rounded-lg uppercase tracking-wider">User</span>
+                        <span class="text-xs font-black text-navy-800 bg-navy-50 border border-navy-100 px-2 py-1 rounded-lg uppercase tracking-wider">User</span>
                     </div>
-                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Surveyor & Tim Teknis</p>
+                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Surveyor & Tim Teknis</p>
                     <h3 class="text-3xl font-black text-navy-900">{{ $jumlahSurveyor + $jumlahTimTeknis }}</h3>
-                    <p class="text-[9px] text-slate-400 font-semibold mt-1">{{ $jumlahSurveyor }} surveyor · {{ $jumlahTimTeknis }} tim_teknis</p>
+                    <p class="text-xs text-slate-400 font-semibold mt-1">{{ $jumlahSurveyor }} surveyor · {{ $jumlahTimTeknis }} tim_teknis</p>
                 </div>
 
                 {{-- Wilayah --}}
@@ -129,11 +129,11 @@
                         <div class="w-11 h-11 bg-emerald-500 rounded-2xl flex items-center justify-center shadow-md shadow-emerald-500/20">
                             <i class="fas fa-map text-white"></i>
                         </div>
-                        <span class="text-[8px] font-black text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-1 rounded-lg uppercase tracking-wider">SIG</span>
+                        <span class="text-xs font-black text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-1 rounded-lg uppercase tracking-wider">SIG</span>
                     </div>
-                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Wilayah</p>
+                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Wilayah</p>
                     <h3 class="text-3xl font-black text-navy-900">{{ $jumlahWilayah }}</h3>
-                    <p class="text-[9px] text-slate-400 font-semibold mt-1">Kecamatan terpetakan</p>
+                    <p class="text-xs text-slate-400 font-semibold mt-1">Kecamatan terpetakan</p>
                 </div>
             </div>
 
@@ -148,7 +148,7 @@
                             </div>
                             <div>
                                 <h4 class="text-sm font-black text-navy-900 uppercase tracking-wider">Prediksi Prioritas Perbaikan</h4>
-                                <p class="text-[9px] text-slate-400 font-semibold mt-0.5">Berdasarkan klasifikasi Hybrid AI (CNN + Decision Tree)</p>
+                                <p class="text-xs text-slate-400 font-semibold mt-0.5">Berdasarkan klasifikasi Hybrid AI (CNN + Decision Tree)</p>
                             </div>
                         </div>
 
@@ -173,14 +173,14 @@
                                         <div class="flex justify-between items-center mb-1.5">
                                             <p class="text-xs font-black text-navy-900">{{ $p['label'] }}</p>
                                             <div class="flex items-center gap-2">
-                                                <span class="text-[9px] font-bold {{ $p['text'] }}">{{ $pct }}%</span>
-                                                <span class="text-xs font-black text-navy-900">{{ $p['count'] }} <span class="text-[9px] text-slate-400 font-semibold">titik</span></span>
+                                                <span class="text-xs font-bold {{ $p['text'] }}">{{ $pct }}%</span>
+                                                <span class="text-xs font-black text-navy-900">{{ $p['count'] }} <span class="text-xs text-slate-400 font-semibold">titik</span></span>
                                             </div>
                                         </div>
                                         <div class="w-full bg-white/70 h-1.5 rounded-full overflow-hidden">
                                             <div class="{{ $p['bar'] }} h-full rounded-full transition-all duration-700" style="width: {{ $pct }}%"></div>
                                         </div>
-                                        <p class="text-[9px] {{ $p['text'] }} font-semibold mt-1">{{ $p['desc'] }}</p>
+                                        <p class="text-xs {{ $p['text'] }} font-semibold mt-1">{{ $p['desc'] }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -197,7 +197,7 @@
                             </div>
                             <div>
                                 <h4 class="text-sm font-black text-white uppercase tracking-wider">Distribusi Kondisi</h4>
-                                <p class="text-[9px] text-slate-400 font-semibold mt-0.5">Proporsi kondisi seluruh infrastruktur</p>
+                                <p class="text-xs text-slate-400 font-semibold mt-0.5">Proporsi kondisi seluruh infrastruktur</p>
                             </div>
                         </div>
 
@@ -206,7 +206,7 @@
                                 <canvas id="donutChart"></canvas>
                                 <div class="absolute inset-0 flex flex-col items-center justify-center">
                                     <p class="text-2xl font-black text-white">{{ $jumlahInfrastruktur }}</p>
-                                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Total</p>
+                                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total</p>
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 gap-3 w-full">
@@ -218,10 +218,10 @@
                                 <div class="bg-white/5 border border-white/10 rounded-2xl p-3">
                                     <div class="flex items-center gap-2 mb-1">
                                         <span class="w-2.5 h-2.5 rounded-full {{ $item['color'] }} shrink-0"></span>
-                                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">{{ $item['label'] }}</span>
+                                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">{{ $item['label'] }}</span>
                                     </div>
                                     <p class="text-xl font-black {{ $item['text'] }}">{{ $item['count'] }}</p>
-                                    <p class="text-[8px] text-slate-500 font-semibold">{{ $total > 0 ? round(($item['count']/$total)*100) : 0 }}%</p>
+                                    <p class="text-xs text-slate-500 font-semibold">{{ $total > 0 ? round(($item['count']/$total)*100) : 0 }}%</p>
                                 </div>
                                 @endforeach
                             </div>

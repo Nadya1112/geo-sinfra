@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lupa Password | GEO-SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     
@@ -127,7 +127,7 @@
                     @csrf
                     
                     <div>
-                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
+                        <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
                             Alamat Email <span class="text-gold-500">*</span>
                         </label>
                         <input type="email" name="email" placeholder="nama@disperkim.go.id" required

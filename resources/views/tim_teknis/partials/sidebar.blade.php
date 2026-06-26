@@ -1,4 +1,4 @@
-{{-- Tombol Hamburger (Hanya muncul di mobile) --}}
+﻿{{-- Tombol Hamburger (Hanya muncul di mobile) --}}
 <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="fixed top-4 left-4 z-[9999] w-10 h-10 bg-navy-900 text-gold-500 rounded-xl flex items-center justify-center shadow-lg md:hidden border border-white/10 hover:bg-navy-800 transition-all active:scale-95">
     <i class="fas fa-bars text-sm" id="menu-icon"></i>
 </button>
@@ -45,7 +45,7 @@
                     Validasi Usulan
                 </div>
                 @if($pendingValidasiCount > 0)
-                    <span class="bg-rose-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full shadow-sm animate-pulse">
+                    <span class="bg-rose-500 text-white text-xs font-black px-2 py-0.5 rounded-full shadow-sm animate-pulse">
                         {{ $pendingValidasiCount }}
                     </span>
                 @endif
@@ -67,7 +67,7 @@
                     <i class="fas fa-palette group-hover:text-gold-500 transition-colors"></i>
                     <span>Tema Tampilan</span>
                 </div>
-                <i class="fas fa-chevron-up text-[10px] opacity-50"></i>
+                <i class="fas fa-chevron-up text-xs opacity-50"></i>
             </button>
             
             <div id="theme-menu-desktop" class="hidden absolute bottom-16 left-0 w-full bg-[#1e1b4b] rounded-xl shadow-2xl border border-white/10 p-1.5 z-50 mb-1">
@@ -120,13 +120,13 @@
             </div>
             <div class="flex-1 min-w-0">
                 <p class="text-xs font-black text-white uppercase truncate">{{ auth()->check() ? auth()->user()->name : 'Tim Teknis' }}</p>
-                <p class="text-[9px] font-bold text-emerald-400 uppercase mt-0.5">● Online</p>
+                <p class="text-xs font-bold text-emerald-400 uppercase mt-0.5">● Online</p>
             </div>
-            <i class="fas fa-chevron-right text-[8px] text-slate-500 group-hover:text-gold-400 transition-colors"></i>
+            <i class="fas fa-chevron-right text-xs text-slate-500 group-hover:text-gold-400 transition-colors"></i>
         </a>
         
         {{-- Navigation --}}
-        <p class="text-[8px] font-black text-slate-500 uppercase tracking-[0.2em] mb-3 px-2">Menu Utama</p>
+        <p class="text-xs font-black text-slate-500 uppercase tracking-[0.2em] mb-3 px-2">Menu Utama</p>
         <nav class="space-y-1">
             <a href="{{ route('tim_teknis.dashboard') }}" 
                class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('tim_teknis.dashboard') ? 'bg-gold-500 text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
@@ -153,7 +153,7 @@
                     Validasi Usulan
                 </div>
                 @if($pendingValidasiCount > 0)
-                    <span class="bg-rose-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full shadow-sm animate-pulse">
+                    <span class="bg-rose-500 text-white text-xs font-black px-2 py-0.5 rounded-full shadow-sm animate-pulse">
                         {{ $pendingValidasiCount }}
                     </span>
                 @endif
@@ -175,7 +175,7 @@
                     <i class="fas fa-palette group-hover:text-gold-500 transition-colors"></i>
                     <span>Tema Tampilan</span>
                 </div>
-                <i class="fas fa-chevron-up text-[10px] opacity-50"></i>
+                <i class="fas fa-chevron-up text-xs opacity-50"></i>
             </button>
             
             <div id="theme-menu-mobile" class="hidden absolute bottom-16 left-0 w-full bg-[#1e1b4b] rounded-xl shadow-2xl border border-white/10 p-1.5 z-50 mb-1">
