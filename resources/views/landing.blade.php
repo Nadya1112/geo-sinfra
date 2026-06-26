@@ -672,14 +672,7 @@
                     </button>
                 </div>
 
-                <!-- Search Bar -->
-                <div class="absolute top-4 left-14 md:top-6 md:left-1/2 md:-translate-x-1/2 z-[9999] pointer-events-auto w-[55%] md:w-80">
-                    <div class="relative w-full">
-                        <input type="text" id="search-infra" placeholder="Cari infrastruktur..." aria-label="Cari infrastruktur atau jalan" class="w-full bg-[#0f0e2c]/90 backdrop-blur-xl border border-white/10 text-white pl-8 pr-3 py-2 md:pl-10 md:pr-4 md:py-3 rounded-xl md:rounded-2xl shadow-2xl focus:outline-none focus:border-gold-500 transition-colors text-xs md:text-xs font-bold tracking-wide placeholder-slate-400" autocomplete="off">
-                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gold-500 text-sm" aria-hidden="true"></i>
-                    </div>
-                    <div id="search-results" class="hidden absolute top-full left-0 mt-2 w-full bg-[#0f0e2c]/95 backdrop-blur-2xl border border-white/10 rounded-xl shadow-2xl max-h-56 overflow-y-auto"></div>
-                </div>
+
 
                 <!-- Mini Legend (Removed) -->
 
