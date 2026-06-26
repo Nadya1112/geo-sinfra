@@ -19,7 +19,7 @@
 </head>
 <body class="antialiased bg-gray-50">
 
-    <div class="flex flex-col md:flex-row h-screen overflow-hidden">
+    <div class="flex flex-col md:flex-row min-h-screen">
         
         <div class="w-full md:w-1/2 bg-government-gradient flex flex-col items-center justify-center p-12 text-center relative text-white">
             <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>

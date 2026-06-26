@@ -80,7 +80,7 @@
 </head>
 <body class="antialiased bg-slate-50 font-sans">
 
-    <div class="flex flex-col md:flex-row h-screen overflow-hidden">
+    <div class="flex flex-col md:flex-row min-h-screen">
         
         <!-- Left Banner (Premium Dark UI) -->
         <div class="w-full md:w-1/2 bg-premium-mesh flex flex-col items-center justify-center p-12 text-center relative overflow-hidden">
@@ -107,7 +107,7 @@
         </div>
 
         <!-- Right Register Form -->
-        <div class="w-full md:w-1/2 bg-white p-8 md:p-12 overflow-y-auto flex items-start justify-center">
+        <div class="w-full md:w-1/2 bg-white p-8 md:p-12  flex items-start justify-center">
             <div class="w-full max-w-md my-auto py-8">
                 
                 <div class="mb-8 text-center">
