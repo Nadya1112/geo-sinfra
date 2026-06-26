@@ -84,7 +84,7 @@
                     <p class="text-xs text-slate-400 font-semibold mt-0.5">Kelola seluruh aset infrastruktur permukiman</p>
                 </div>
 
-                <div class="flex flex-col lg:flex-row flex-wrap items-center gap-3 w-full lg:w-auto">
+                <div class="flex flex-col lg:flex-row items-center gap-3 w-full lg:w-auto">
                     {{-- Export Excel --}}
                     <a href="{{ route('admin.infrastruktur.export') }}"
                         class="bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white border border-emerald-100 rounded-2xl text-xs px-5 py-2.5 font-bold transition-all shadow-sm flex items-center gap-2 whitespace-nowrap w-full lg:w-auto justify-center">
@@ -92,7 +92,7 @@
                     </a>
 
                     {{-- Filter & Search --}}
-                    <form action="{{ route('admin.infrastruktur') }}" method="GET" class="flex items-center w-full lg:w-[350px]">
+                    <form action="{{ route('admin.infrastruktur') }}" method="GET" class="flex items-center w-full lg:w-[280px] xl:w-[350px]">
                         <select name="show" onchange="this.form.submit()" class="pl-4 pr-8 py-2.5 bg-white border border-slate-100 border-r-0 rounded-l-2xl text-xs font-bold text-navy-900 focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm shrink-0">
                             <option value="10" {{ request('show') != 'all' ? 'selected' : '' }}>10 Data</option>
                             <option value="all" {{ request('show') == 'all' ? 'selected' : '' }}>Semua Data</option>
