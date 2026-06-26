@@ -96,17 +96,17 @@
             </a>
             
             <div class="relative z-10 w-full max-w-sm">
-                <div class="w-24 h-24 mx-auto mb-6 shadow-2xl shadow-navy-950/50 rounded-full overflow-hidden border-2 border-white/10 bg-white">
+                <div class="w-20 h-20 mx-auto mb-5 shadow-2xl shadow-navy-950/50 rounded-full overflow-hidden border-2 border-white/10 bg-white">
                     <img src="{{ asset('logo_geo-sinfra.png') }}" class="w-full h-full object-contain" alt="Logo">
                 </div>
                 
-                <h1 class="text-3xl md:text-4xl font-black text-white tracking-tight mb-2 md:mb-3 text-center uppercase">
+                <h1 class="text-2xl md:text-3xl font-black text-white tracking-tight mb-2 md:mb-3 text-center uppercase">
                     GEO-SINFRA
                 </h1>
                 <p class="text-slate-300 font-medium text-sm leading-relaxed max-w-xs mx-auto">
                     Sistem Pemetaan Infrastruktur Permukiman Kota Banjarmasin
                 </p>
-                <div class="mt-16 w-16 h-1.5 bg-gold-500 rounded-full mx-auto opacity-75"></div>
+                <div class="mt-10 w-12 h-1 bg-gold-500 rounded-full mx-auto opacity-75"></div>
             </div>
         </div>
 
@@ -115,8 +115,8 @@
             <div class="w-full max-w-[400px]">
                 
                 <div class="mb-8 text-center">
-                    <h2 class="text-2xl md:text-3xl font-black text-navy-900 mb-1.5 tracking-tight">Masuk</h2>
-                    <p class="text-slate-400 font-bold text-xs uppercase tracking-widest">Silakan masukkan akun Anda</p>
+                    <h2 class="text-xl md:text-2xl font-black text-navy-900 mb-1.5 tracking-tight">Masuk</h2>
+                    <p class="text-slate-400 font-bold text-[10px] md:text-xs uppercase tracking-widest">Silakan masukkan akun Anda</p>
                 </div>
 
                 @if($errors->any())
@@ -133,7 +133,7 @@
                             Email / Nomor WhatsApp <span class="text-gold-500">*</span>
                         </label>
                         <input type="text" name="login" placeholder="Email atau 0812xxxx" value="{{ old('login') }}" required autocomplete="username"
-                            class="w-full px-4 py-3 md:py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 focus:bg-white outline-none transition-all text-sm font-semibold text-navy-900">
+                            class="w-full px-4 py-2.5 md:py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 focus:bg-white outline-none transition-all text-sm font-semibold text-navy-900">
                     </div>
 
                     <div>
@@ -142,7 +142,7 @@
                         </label>
                         <div class="relative">
                             <input type="password" name="password" id="password" placeholder="••••••••" required autocomplete="current-password"
-                                class="w-full px-4 py-3 md:py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 focus:bg-white outline-none transition-all text-sm font-semibold text-navy-900 pr-12">
+                                class="w-full px-4 py-2.5 md:py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 focus:bg-white outline-none transition-all text-sm font-semibold text-navy-900 pr-12">
                             
                             <button type="button" onclick="togglePassword()" 
                                 class="absolute inset-y-0 right-0 pr-5 flex items-center text-slate-400 hover:text-gold-500 transition-colors">
@@ -156,11 +156,11 @@
                             Verifikasi Keamanan: {{ $n1 ?? 3 }} + {{ $n2 ?? 5 }} <span class="text-gold-500">*</span>
                         </label>
                         <input type="number" name="captcha" placeholder="Jawaban Anda" required
-                            class="w-full px-4 py-3 md:py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 focus:bg-white outline-none transition-all text-sm font-semibold text-navy-900">
+                            class="w-full px-4 py-2.5 md:py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 focus:bg-white outline-none transition-all text-sm font-semibold text-navy-900">
                     </div>
 
                     <button type="submit" 
-                        class="btn-shine w-full py-3.5 md:py-4 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-white text-xs font-black rounded-xl shadow-xl shadow-gold-500/10 hover:shadow-gold-500/20 hover:scale-[1.01] transition-all active:scale-[0.98] uppercase tracking-[0.2em] text-center block">
+                        class="btn-shine w-full py-3 md:py-3.5 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-white text-xs font-black rounded-xl shadow-xl shadow-gold-500/10 hover:shadow-gold-500/20 hover:scale-[1.01] transition-all active:scale-[0.98] uppercase tracking-[0.2em] text-center block">
                         MASUK
                     </button>
 
