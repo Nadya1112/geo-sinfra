@@ -388,9 +388,41 @@
 
                 <div class="nav-divider w-px h-5 mx-1 md:mx-2 hidden md:block transition-colors duration-300"></div>
                 
-                <a href="{{ url('/login') }}" class="bg-navy-900 text-gold-500 hover:bg-gold-500 hover:text-white px-3 md:px-4 py-2 rounded-lg text-[10px] md:text-xs font-bold transition-all shadow-sm flex items-center gap-2 uppercase tracking-wider">
-                    <i class="fas fa-lock"></i> <span class="hidden sm:inline">Login</span>
+                <a href="{{ url('/login') }}" class="bg-navy-900 text-gold-500 hover:bg-gold-500 hover:text-white px-3 md:px-4 py-2 rounded-lg text-[10px] md:text-xs font-bold transition-all shadow-sm hidden md:flex items-center gap-2 uppercase tracking-wider">
+                    <i class="fas fa-lock"></i> <span>Login</span>
                 </a>
+
+                <!-- Mobile Hamburger Menu -->
+                <div class="relative md:hidden ml-1">
+                    <button onclick="document.getElementById('mobile-dropdown').classList.toggle('hidden')" class="bg-[#0f0e2c] text-gold-500 hover:bg-gold-500 hover:text-white w-9 h-9 flex items-center justify-center rounded-xl text-sm transition-all shadow-md border border-white/10">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <!-- Dropdown -->
+                    <div id="mobile-dropdown" class="hidden absolute right-0 mt-3 w-48 bg-white rounded-xl shadow-2xl py-2 border border-slate-100 z-[6000]">
+                        <a href="#peta" onclick="document.getElementById('mobile-dropdown').classList.add('hidden')" class="flex items-center px-4 py-3 text-xs font-black text-navy-900 hover:bg-slate-50 border-b border-slate-100 uppercase tracking-widest">
+                            <i class="fas fa-map-marked-alt w-6 text-gold-500 text-center"></i> Peta
+                        </a>
+                        <a href="#statistik" onclick="document.getElementById('mobile-dropdown').classList.add('hidden')" class="flex items-center px-4 py-3 text-xs font-black text-navy-900 hover:bg-slate-50 border-b border-slate-100 uppercase tracking-widest">
+                            <i class="fas fa-chart-pie w-6 text-gold-500 text-center"></i> Statistik
+                        </a>
+                        <a href="{{ url('/login') }}" class="flex items-center px-4 py-3 text-xs font-black text-navy-900 hover:bg-slate-50 uppercase tracking-widest">
+                            <i class="fas fa-lock w-6 text-gold-500 text-center"></i> Login
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Click outside listener for dropdown -->
+                <script>
+                    document.addEventListener('click', function(event) {
+                        const dropdown = document.getElementById('mobile-dropdown');
+                        if (dropdown) {
+                            const button = dropdown.previousElementSibling;
+                            if (!dropdown.contains(event.target) && !button.contains(event.target) && !dropdown.classList.contains('hidden')) {
+                                dropdown.classList.add('hidden');
+                            }
+                        }
+                    });
+                </script>
             </div>
         </div>
     </nav>
