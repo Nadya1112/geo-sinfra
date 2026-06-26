@@ -45,8 +45,8 @@
         .footer { position: fixed; bottom: -10px; left: 0; right: 0; text-align: center; font-size: 9px; color: #9ca3af; border-top: 1px solid #e5e7eb; padding-top: 6px; }
     </style>
 <style>
-    
-    
+    @media (min-width: 768px) { html { font-size: 14px; } }
+    @media (max-width: 767px) { html { font-size: 12px; } }
 </style>
 </head>
 <body>

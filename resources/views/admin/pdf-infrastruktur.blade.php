@@ -190,8 +190,8 @@
         }
     </style>
 <style>
-    
-    
+    @media (min-width: 768px) { html { font-size: 14px; } }
+    @media (max-width: 767px) { html { font-size: 12px; } }
 </style>
 </head>
 <body>

@@ -69,8 +69,8 @@
         html { transition: background-color 0.3s ease, color 0.3s ease; }
     </style>
 <style>
-    
-    
+    @media (min-width: 768px) { html { font-size: 14px; } }
+    @media (max-width: 767px) { html { font-size: 12px; } }
 </style>
 </head>
 <body class="bg-navy-50 dark:bg-navy-950 text-slate-800 dark:text-slate-200 antialiased selection:bg-gold-500 selection:text-white flex overflow-hidden h-screen transition-colors duration-300">
