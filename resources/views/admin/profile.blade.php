@@ -40,13 +40,13 @@
     <main class="flex-1 flex flex-col h-screen overflow-hidden">
         {{-- ── Header ── --}}
         <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 px-4 md:px-8 py-4 flex justify-between items-center z-40 shrink-0">
-            <div class="flex items-center gap-4">
-                <a href="{{ route('admin.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-white border border-slate-200 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 hover:border-gold-200 transition-all shadow-sm">
+            <div class="flex items-center gap-2 md:gap-4">
+                <a href="{{ route('admin.dashboard') }}" class="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white border border-slate-200 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 hover:border-gold-200 transition-all shadow-sm">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
                     <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Administrator Portal</p>
-                    <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Profil Saya</h2>
+                    <h2 class="text-lg md:text-xl font-black text-navy-900 dark:text-white leading-none">Profil Saya</h2>
                 </div>
             </div>
             
@@ -95,7 +95,7 @@
                                         <img id="preview-photo" class="w-full h-full object-cover hidden">
                                     @endif
                                 </div>
-                                <label for="profile_photo" class="absolute bottom-0 right-0 z-20 w-10 h-10 bg-gold-500 text-white rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:bg-gold-600 transition-all border-4 border-white">
+                                <label for="profile_photo" class="absolute bottom-0 right-0 z-20 w-8 h-8 md:w-10 md:h-10 bg-gold-500 text-white rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:bg-gold-600 transition-all border-4 border-white">
                                     <i class="fas fa-camera text-xs"></i>
                                     <input type="file" name="profile_photo" id="profile_photo" class="hidden" accept="image/*" onchange="previewImage(this)">
                                 </label>
@@ -197,5 +197,6 @@
     </script>
 </body>
 </html>
+
 
 

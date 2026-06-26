@@ -45,13 +45,13 @@
 
     <main class="flex-1 overflow-y-auto custom-scrollbar text-left relative">
         <header class="sticky top-0 bg-white/80 backdrop-blur-xl border-b border-slate-100 px-4 pl-16 md:px-8 py-4 flex justify-between items-center z-40 text-left shadow-sm">
-            <div class="flex items-center gap-4">
-                <a href="{{ route('admin.dashboard') }}" class="hidden md:flex w-10 h-10 items-center justify-center bg-white text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 transition-all border border-slate-200 hover:border-gold-200">
+            <div class="flex items-center gap-2 md:gap-4">
+                <a href="{{ route('admin.dashboard') }}" class="hidden md:flex w-8 h-8 md:w-10 md:h-10 items-center justify-center bg-white text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 transition-all border border-slate-200 hover:border-gold-200">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div class="text-left">
                     <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Playground</p>
-                    <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Simulasi Model AI</h2>
+                    <h2 class="text-lg md:text-xl font-black text-navy-900 dark:text-white leading-none">Simulasi Model AI</h2>
                 </div>
             </div>
 
@@ -66,7 +66,7 @@
                         <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
                         <p class="text-xs font-bold text-emerald-500 uppercase mt-1">Online</p>
                     </a>
-                    <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden shadow-md">
+                    <a href="{{ route('admin.profile') }}" class="w-8 h-8 md:w-10 md:h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden shadow-md">
                         @if(auth()->user()->profile_photo)
                             <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
                         @else
@@ -81,7 +81,7 @@
             <div class="max-w-4xl mx-auto space-y-6 animate-fade-in">
 
                 <!-- Header Section -->
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-navy-900 rounded-[2rem] p-8 shadow-2xl relative overflow-hidden border border-white/5">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 md:gap-4 bg-navy-900 rounded-[2rem] p-8 shadow-2xl relative overflow-hidden border border-white/5">
                     <div class="relative z-10">
                         <h1 class="text-3xl font-black text-white mb-2 tracking-tight">Simulasi Model AI <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-500 to-yellow-300">(Playground)</span></h1>
                         <p class="text-slate-400 text-sm font-medium">Uji coba langsung deteksi kerusakan infrastruktur menggunakan model Convolutional Neural Network (CNN) tanpa harus mengisi form survei.</p>
@@ -169,7 +169,7 @@
                                 <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
                                     <div class="flex justify-between items-end mb-2">
                                         <span class="text-xs font-black text-navy-900 uppercase tracking-widest">Tingkat Keyakinan (Confidence)</span>
-                                        <span id="pred-conf-text" class="text-xl font-black text-navy-900 dark:text-white leading-none">0%</span>
+                                        <span id="pred-conf-text" class="text-lg md:text-xl font-black text-navy-900 dark:text-white leading-none">0%</span>
                                     </div>
                                     <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
                                         <div id="pred-conf-bar" class="h-full rounded-full bg-gradient-to-r from-navy-800 to-gold-500 transition-all duration-1000 w-0"></div>
@@ -343,4 +343,5 @@
     </script>
 </body>
 </html>
+
 
