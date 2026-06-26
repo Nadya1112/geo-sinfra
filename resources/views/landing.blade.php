@@ -884,7 +884,7 @@
             </div>
             
             <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center gap-6 relative">
-                <p class="text-xs font-bold text-slate-500 uppercase tracking-widest md:absolute md:left-1/2 md:-translate-x-1/2 text-center">&copy; Developed by NADYA Kota Banjarmasin 2026</p>
+                <p class="text-xs font-bold text-slate-500 uppercase tracking-widest md:absolute md:left-1/2 md:-translate-x-1/2 text-center">&copy; 2026 GEO-SINFRA. Hak Cipta Dilindungi.</p>
                 <div class="flex gap-4 md:ml-auto">
                     <a href="https://www.instagram.com/disperkim.banjarmasin?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:bg-gold-500 hover:text-white transition-all shadow-sm hover:shadow-gold-500/50" title="Instagram"><i class="fab fa-instagram"></i></a>
                     <span class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-500 cursor-default" title="YouTube (Belum Tersedia)"><i class="fab fa-youtube"></i></span>
