@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -16,6 +16,10 @@
             background: radial-gradient(circle at center, #1e40af 0%, #1e1b4b 100%);
         }
     </style>
+<style>
+    @media (min-width: 768px) { html { zoom: 0.9 !important; } }
+    @media (max-width: 767px) { html { zoom: 0.5 !important; } }
+</style>
 </head>
 <body class="antialiased bg-gray-50">
 

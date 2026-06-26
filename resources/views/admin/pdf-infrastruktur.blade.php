@@ -189,6 +189,10 @@
             padding-top: 6px;
         }
     </style>
+<style>
+    @media (min-width: 768px) { html { zoom: 0.9 !important; } }
+    @media (max-width: 767px) { html { zoom: 0.5 !important; } }
+</style>
 </head>
 <body>
 

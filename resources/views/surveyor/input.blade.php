@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -47,6 +47,10 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         .leaflet-container { font-family: inherit; }
     </style>
+<style>
+    @media (min-width: 768px) { html { zoom: 0.9 !important; } }
+    @media (max-width: 767px) { html { zoom: 0.5 !important; } }
+</style>
 </head>
 <body class="bg-slate-50 dark:bg-[#0f0e2c] flex h-screen overflow-hidden text-slate-800 text-left font-sans dark:bg-navy-950 dark:text-white transition-colors duration-300">
 
@@ -691,7 +695,16 @@
                     Swal.fire('Berhasil!', 'Data survei berhasil diunggah ke server dan dianalisis AI.', 'success')
                     .then(() => { window.location.href = "{{ route('surveyor.history') }}"; });
                 } else {
-                    Swal.fire('Gagal', 'Terjadi kesalahan pada server saat mengunggah data.', 'error');
+                    let errorMessage = 'Terjadi kesalahan pada server saat mengunggah data.';
+                    try {
+                        const errData = await response.json();
+                        if (errData.message) errorMessage = errData.message;
+                        if (errData.errors) errorMessage = Object.values(errData.errors).flat().join('<br>');
+                    } catch(e) {
+                        // Jika bukan JSON, mungkin error 500 HTML
+                        errorMessage += '<br>Status: ' + response.status;
+                    }
+                    Swal.fire({ title: 'Gagal', html: errorMessage, icon: 'error' });
                     resetSubmitButton();
                 }
             } catch (error) {

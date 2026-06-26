@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -354,6 +354,10 @@
             max-width: 100vw;
         }
     </style>
+<style>
+    @media (min-width: 768px) { html { zoom: 0.9 !important; } }
+    @media (max-width: 767px) { html { zoom: 0.5 !important; } }
+</style>
 </head>
 <body class="antialiased font-sans bg-slate-50 text-slate-800">
 
@@ -388,44 +392,85 @@
 
                 <div class="nav-divider w-px h-5 mx-2 hidden md:block transition-colors duration-300"></div>
                 
-                <a href="{{ url('/login') }}" class="bg-navy-900 text-gold-500 hover:bg-gold-500 hover:text-white px-4 md:px-5 py-2.5 rounded-xl text-xs md:text-sm font-bold transition-all shadow-sm flex items-center gap-2 uppercase tracking-wider">
+                <a href="{{ url('/login') }}" class="hidden md:flex bg-navy-900 text-gold-500 hover:bg-gold-500 hover:text-white px-4 md:px-5 py-2.5 rounded-xl text-xs md:text-sm font-bold transition-all shadow-sm items-center gap-2 uppercase tracking-wider">
                     <i class="fas fa-lock"></i> <span class="hidden sm:inline">Login</span>
                 </a>
+
+                <!-- Mobile 3-Dots Menu -->
+                <div class="relative md:hidden">
+                    <button onclick="document.getElementById('mobile-dropdown').classList.toggle('hidden')" class="bg-navy-900 text-gold-500 hover:bg-gold-500 hover:text-white w-[38px] h-[38px] flex items-center justify-center rounded-xl text-sm transition-all shadow-sm border border-gold-500/20">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <!-- Dropdown -->
+                    <div id="mobile-dropdown" class="hidden absolute right-0 mt-3 w-48 bg-white rounded-xl shadow-2xl py-2 border border-slate-100 z-[6000]">
+                        <a href="#peta" onclick="document.getElementById('mobile-dropdown').classList.add('hidden')" class="flex items-center px-4 py-3 text-xs font-black text-navy-900 hover:bg-slate-50 border-b border-slate-100 uppercase tracking-widest">
+                            <i class="fas fa-map-marked-alt w-6 text-gold-500 text-center"></i> Peta
+                        </a>
+                        <a href="#statistik" onclick="document.getElementById('mobile-dropdown').classList.add('hidden')" class="flex items-center px-4 py-3 text-xs font-black text-navy-900 hover:bg-slate-50 border-b border-slate-100 uppercase tracking-widest">
+                            <i class="fas fa-chart-pie w-6 text-gold-500 text-center"></i> Statistik
+                        </a>
+                        <a href="{{ url('/login') }}" class="flex items-center px-4 py-3 text-xs font-black text-navy-900 hover:bg-slate-50 uppercase tracking-widest">
+                            <i class="fas fa-sign-in-alt w-6 text-gold-500 text-center"></i> Login
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Click outside listener for dropdown -->
+                <script>
+                    document.addEventListener('click', function(event) {
+                        const dropdown = document.getElementById('mobile-dropdown');
+                        const button = dropdown.previousElementSibling;
+                        if (!dropdown.contains(event.target) && !button.contains(event.target) && !dropdown.classList.contains('hidden')) {
+                            dropdown.classList.add('hidden');
+                        }
+                    });
+                </script>
             </div>
         </div>
     </nav>
 
 
     <!-- Hero Section -->
-    <section class="hero-premium py-28 md:py-36 lg:py-40 flex items-center min-h-[600px]">
-        <div class="grid-pattern"></div>
-        <div class="max-w-7xl mx-auto px-6 md:px-8 w-full relative z-10">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-12">
-                <div class="max-w-3xl">
-                    <h3 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white tracking-tight leading-[1.08] mb-5">
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-500 via-yellow-400 to-[#6366f1] whitespace-nowrap">GEO-SINFRA</span>
-                    </h3>
-                    <p class="text-slate-300 font-semibold text-lg md:text-xl lg:text-2xl xl:text-3xl leading-relaxed mb-5 max-w-2xl">
-                        Sistem Informasi Pemetaan Infrastruktur Permukiman 
-                        <br class="hidden md:block" />
-                        Kota Banjarmasin
-                    </p>
-                    <p class="text-slate-400 font-medium text-sm md:text-base lg:text-lg leading-relaxed mb-10 max-w-2xl">
-                        Sebuah platform cerdas berbasis WebGIS dan Kecerdasan Buatan (AI) yang dirancang untuk memantau, melaporkan, dan menganalisis kondisi infrastruktur di seluruh wilayah Kota Banjarmasin secara real-time.
-                    </p>
-                    <div class="flex flex-wrap gap-4">
-                        <a href="#peta" class="btn-shine bg-gradient-to-r from-gold-500 to-gold-600 text-white px-8 py-4 rounded-2xl font-bold text-sm uppercase tracking-wider hover:scale-105 transition-all shadow-xl shadow-gold-500/20">
-                            <i class="fas fa-map mr-2"></i> Eksplorasi Peta GIS
-                        </a>
-                        <a href="#statistik" class="bg-white/10 backdrop-blur-md text-white border border-white/20 px-8 py-4 rounded-2xl font-bold text-sm uppercase tracking-wider hover:bg-white hover:text-navy-950 transition-all">
-                            Analisis Statistik
-                        </a>
-                    </div>
+    <section class="relative pt-32 pb-20 md:pt-40 md:pb-28 flex items-center min-h-[600px] overflow-hidden bg-gradient-to-b from-blue-50/50 to-white">
+        <div class="max-w-7xl mx-auto px-6 md:px-8 w-full relative z-10 text-center">
+            
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold-50 border border-gold-100 mb-6 md:mb-8 mx-auto shadow-sm">
+                <div class="w-2 h-2 rounded-full bg-gold-500"></div>
+                <span class="text-[10px] md:text-xs font-bold text-gold-700 tracking-wider uppercase">Sistem Pemetaan Infrastruktur Digital</span>
+            </div>
+
+            <h1 class="text-4xl md:text-6xl font-black text-navy-900 tracking-tight leading-[1.1] mb-5 md:mb-6 max-w-4xl mx-auto">
+                Transformasi Digital Pemetaan
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-500 to-yellow-500 block md:inline mt-1 md:mt-0">Infrastruktur</span>
+            </h1>
+            
+            <p class="text-slate-500 font-medium text-sm md:text-xl leading-relaxed mb-8 md:mb-10 max-w-2xl mx-auto px-4 md:px-0">
+                Pantau progres proyek secara <strong class="text-navy-900">real-time</strong> dengan teknologi <strong>GIS</strong> dan analisis <strong>AI</strong>. Kelola pelaporan digital terintegrasi dari lapangan hingga level manajemen.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 max-w-xs mx-auto sm:max-w-none">
+                <a href="#peta" class="w-full sm:w-auto bg-blue-500 text-white px-8 py-4 md:py-4 rounded-xl font-bold text-sm md:text-sm hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2">
+                    <i class="fas fa-bolt"></i> Masuk Dashboard
+                </a>
+                <a href="#statistik" class="w-full sm:w-auto bg-white text-navy-900 border border-slate-200 px-8 py-4 md:py-4 rounded-xl font-bold text-sm md:text-sm hover:bg-slate-50 transition-all shadow-sm flex items-center justify-center gap-2">
+                    <i class="fas fa-chevron-right text-slate-400 text-xs"></i> Pelajari Fitur
+                </a>
+            </div>
+
+            <!-- Features -->
+            <div class="flex flex-row justify-center items-center gap-6 md:gap-12 mt-12 text-[10px] md:text-xs font-bold text-slate-500">
+                <div class="flex flex-col md:flex-row items-center gap-1.5 md:gap-2 text-center">
+                    <i class="fas fa-check-circle text-emerald-500 text-sm md:text-base"></i>
+                    <span>SSL<br class="md:hidden"/>Terenkripsi</span>
                 </div>
-                
-                <!-- Bouncing Logo -->
-                <div class="hidden md:flex justify-center items-center w-64 h-64 lg:w-80 lg:h-80 animate-bounce">
-                    <img src="{{ asset('logo_geo-sinfra.png') }}" alt="Logo Geo-Sinfra" class="w-full h-full object-contain drop-shadow-[0_10px_20px_rgba(255,255,255,0.2)]">
+                <div class="flex flex-col md:flex-row items-center gap-1.5 md:gap-2 text-center">
+                    <i class="fas fa-check-circle text-emerald-500 text-sm md:text-base"></i>
+                    <span>Multi-Role<br class="md:hidden"/>Access</span>
+                </div>
+                <div class="flex flex-col md:flex-row items-center gap-1.5 md:gap-2 text-center">
+                    <i class="fas fa-check-circle text-emerald-500 text-sm md:text-base"></i>
+                    <span>24/7<br class="md:hidden"/>Online</span>
                 </div>
             </div>
         </div>

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -24,6 +24,10 @@
     <style> 
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
     </style>
+<style>
+    @media (min-width: 768px) { html { zoom: 0.9 !important; } }
+    @media (max-width: 767px) { html { zoom: 0.5 !important; } }
+</style>
 </head>
 <body class="bg-slate-50 flex items-center justify-center min-h-screen text-slate-800 font-sans p-6">
     <div class="max-w-md w-full bg-white rounded-[2.5rem] p-8 md:p-10 text-center border border-slate-100 shadow-xl shadow-slate-900/5 relative overflow-hidden">

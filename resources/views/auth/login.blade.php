@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -77,29 +77,33 @@
             transition: all 0.6s ease-in-out;
         }
     </style>
+<style>
+    @media (min-width: 768px) { html { zoom: 0.9 !important; } }
+    @media (max-width: 767px) { html { zoom: 0.5 !important; } }
+</style>
 </head>
 <body class="antialiased bg-slate-50 font-sans">
 
     <div class="flex flex-col md:flex-row min-h-screen">
         
         <!-- Left Banner (Premium Dark UI) -->
-        <div class="w-full md:w-1/2 bg-premium-mesh flex flex-col items-center justify-center p-12 text-center relative overflow-hidden">
+        <div class="w-full md:w-1/2 bg-premium-mesh flex flex-col items-center justify-center p-6 md:p-10 text-center relative overflow-hidden">
             <div class="grid-pattern"></div>
             
             <!-- Floating Back Button -->
-            <a href="{{ url('/') }}" class="absolute top-6 left-6 z-50 w-12 h-12 bg-white/5 hover:bg-white/15 backdrop-blur-md rounded-2xl border border-white/10 flex items-center justify-center text-white hover:text-gold-500 hover:scale-105 transition-all shadow-xl">
-                <i class="fas fa-arrow-left text-sm"></i>
+            <a href="{{ url('/') }}" class="absolute top-6 left-6 z-50 w-10 h-10 bg-white/5 hover:bg-white/15 backdrop-blur-md rounded-xl border border-white/10 flex items-center justify-center text-white hover:text-gold-500 hover:scale-105 transition-all shadow-xl">
+                <i class="fas fa-arrow-left text-xs"></i>
             </a>
             
-            <div class="relative z-10 max-w-md">
-                <div class="w-24 h-24 mx-auto mb-8 shadow-2xl shadow-navy-950/50 rounded-full overflow-hidden border-2 border-white/10 bg-white">
+            <div class="relative z-10 w-full max-w-sm">
+                <div class="w-24 h-24 mx-auto mb-6 shadow-2xl shadow-navy-950/50 rounded-full overflow-hidden border-2 border-white/10 bg-white">
                     <img src="{{ asset('logo_geo-sinfra.png') }}" class="w-full h-full object-contain" alt="Logo">
                 </div>
                 
-                <h1 class="text-4xl md:text-5xl font-black text-white tracking-tight mb-4 text-center uppercase">
+                <h1 class="text-3xl md:text-4xl font-black text-white tracking-tight mb-2 md:mb-3 text-center uppercase">
                     GEO-SINFRA
                 </h1>
-                <p class="text-slate-300 font-medium text-base md:text-lg leading-relaxed max-w-sm mx-auto">
+                <p class="text-slate-300 font-medium text-sm leading-relaxed max-w-xs mx-auto">
                     Sistem Pemetaan Infrastruktur Permukiman Kota Banjarmasin
                 </p>
                 <div class="mt-16 w-16 h-1.5 bg-gold-500 rounded-full mx-auto opacity-75"></div>
@@ -107,12 +111,12 @@
         </div>
 
         <!-- Right Login Form -->
-        <div class="w-full md:w-1/2 bg-white flex flex-col items-center justify-center p-8 md:p-20 ">
-            <div class="w-full max-w-md">
+        <div class="w-full md:w-1/2 bg-white flex flex-col items-center justify-center p-6 md:p-10 ">
+            <div class="w-full max-w-[400px]">
                 
-                <div class="mb-10 text-center">
-                    <h2 class="text-4xl font-black text-navy-900 mb-2 tracking-tight">Masuk</h2>
-                    <p class="text-slate-400 font-semibold text-xs uppercase tracking-widest">Silakan masukkan akun Anda</p>
+                <div class="mb-8 text-center">
+                    <h2 class="text-2xl md:text-3xl font-black text-navy-900 mb-1.5 tracking-tight">Masuk</h2>
+                    <p class="text-slate-400 font-bold text-xs uppercase tracking-widest">Silakan masukkan akun Anda</p>
                 </div>
 
                 @if($errors->any())
@@ -125,20 +129,20 @@
                     @csrf
                     
                     <div>
-                        <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
+                        <label class="block text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1">
                             Email / Nomor WhatsApp <span class="text-gold-500">*</span>
                         </label>
                         <input type="text" name="login" placeholder="Email atau 0812xxxx" value="{{ old('login') }}" required autocomplete="username"
-                            class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 focus:bg-white outline-none transition-all text-sm font-semibold text-navy-900">
+                            class="w-full px-4 py-3 md:py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 focus:bg-white outline-none transition-all text-sm font-semibold text-navy-900">
                     </div>
 
                     <div>
-                        <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
+                        <label class="block text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1">
                             Kata Sandi <span class="text-gold-500">*</span>
                         </label>
                         <div class="relative">
                             <input type="password" name="password" id="password" placeholder="••••••••" required autocomplete="current-password"
-                                class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 focus:bg-white outline-none transition-all text-sm font-semibold text-navy-900 pr-12">
+                                class="w-full px-4 py-3 md:py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 focus:bg-white outline-none transition-all text-sm font-semibold text-navy-900 pr-12">
                             
                             <button type="button" onclick="togglePassword()" 
                                 class="absolute inset-y-0 right-0 pr-5 flex items-center text-slate-400 hover:text-gold-500 transition-colors">
@@ -148,29 +152,29 @@
                     </div>
 
                     <div>
-                        <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
+                        <label class="block text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1">
                             Verifikasi Keamanan: {{ $n1 ?? 3 }} + {{ $n2 ?? 5 }} <span class="text-gold-500">*</span>
                         </label>
                         <input type="number" name="captcha" placeholder="Jawaban Anda" required
-                            class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 focus:bg-white outline-none transition-all text-sm font-semibold text-navy-900">
+                            class="w-full px-4 py-3 md:py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 focus:bg-white outline-none transition-all text-sm font-semibold text-navy-900">
                     </div>
 
                     <button type="submit" 
-                        class="btn-shine w-full py-4.5 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-white text-xs font-black rounded-2xl shadow-xl shadow-gold-500/10 hover:shadow-gold-500/20 hover:scale-[1.01] transition-all active:scale-[0.98] uppercase tracking-[0.2em] text-center block">
+                        class="btn-shine w-full py-3.5 md:py-4 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-white text-xs font-black rounded-xl shadow-xl shadow-gold-500/10 hover:shadow-gold-500/20 hover:scale-[1.01] transition-all active:scale-[0.98] uppercase tracking-[0.2em] text-center block">
                         MASUK
                     </button>
 
-                    <div class="flex items-center justify-between font-bold text-xs uppercase tracking-wider">
-                        <label class="flex items-center gap-2.5 cursor-pointer text-slate-400 hover:text-navy-900 transition">
-                            <input type="checkbox" name="remember" class="w-4.5 h-4.5 rounded border-slate-300 text-gold-500 focus:ring-0 cursor-pointer">
-                            <span class="text-xs">Ingat Saya</span>
+                    <div class="flex items-center justify-between font-bold text-[11px] uppercase tracking-wider mt-1">
+                        <label class="flex items-center gap-2 cursor-pointer text-slate-400 hover:text-navy-900 transition">
+                            <input type="checkbox" name="remember" class="w-4 h-4 rounded border-slate-300 text-gold-500 focus:ring-0 cursor-pointer">
+                            <span>Ingat Saya</span>
                         </label>
-                        <a href="{{ route('password.request') }}" class="text-gold-500 hover:text-gold-600 transition-colors text-xs">Lupa Password?</a>
+                        <a href="{{ route('password.request') }}" class="text-gold-500 hover:text-gold-600 transition-colors">Lupa Password?</a>
                     </div>
                 </form>
 
-                <div class="mt-16 pt-8 border-t border-slate-100 text-center font-bold text-xs uppercase tracking-wider">
-                    <p class="text-slate-400 text-xs">
+                <div class="mt-8 pt-6 border-t border-slate-100 text-center font-bold text-[11px] uppercase tracking-wider">
+                    <p class="text-slate-400">
                         Belum punya akun? 
                         <a href="{{ route('register') }}" class="text-gold-500 font-extrabold hover:text-gold-600 transition-colors ml-1">Buat Akun Baru</a>
                     </p>
