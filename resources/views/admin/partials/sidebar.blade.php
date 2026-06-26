@@ -87,6 +87,11 @@
     <div class="p-6 border-t border-white/5 text-left bg-navy-950/20 relative">
 
 
+        <a href="{{ route('admin.settings') }}" class="flex items-center gap-3 px-4 py-3 mb-2 {{ request()->routeIs('admin.settings') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-bold transition group">
+            <i class="fas fa-cog group-hover:text-gold-500 transition-colors"></i>
+            <span>Pengaturan</span>
+        </a>
+
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="flex items-center gap-3 px-4 py-3 text-red-400 hover:text-red-300 w-full text-left text-sm font-bold transition group hover:bg-red-500/10 rounded-xl">
@@ -197,6 +202,11 @@
 
     <div class="p-6 border-t border-white/5 text-left bg-navy-950/20 relative">
 
+
+        <a href="{{ route('admin.settings') }}" class="flex items-center gap-3 px-4 py-3.5 mb-2 {{ request()->routeIs('admin.settings') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-bold transition group">
+            <i class="fas fa-cog group-hover:text-gold-500 transition-colors"></i>
+            <span>Pengaturan</span>
+        </a>
 
         <form method="POST" action="{{ route('logout') }}">
             @csrf
