@@ -154,8 +154,8 @@
                                     </div>
                                 </td>
                                 <td class="px-4 py-3">
-                                    <span class="px-2.5 py-1 bg-{{$badgeColor}}-50 text-{{$badgeColor}}-600 text-[10px] font-bold uppercase tracking-wider rounded-lg border border-{{$badgeColor}}-100 inline-flex items-center gap-1.5 shadow-sm">
-                                        <i class="fas {{ $icon }}"></i> {{ $actionName }}
+                                    <span class="px-2.5 py-1.5 bg-{{$badgeColor}}-50 text-{{$badgeColor}}-600 text-[10px] font-bold uppercase tracking-wider rounded-lg border border-{{$badgeColor}}-100 inline-flex items-start gap-1.5 shadow-sm max-w-[200px] md:max-w-xs whitespace-normal text-left leading-relaxed">
+                                        <i class="fas {{ $icon }} shrink-0 mt-0.5"></i> <span>{{ $actionName }}</span>
                                     </span>
                                 </td>
                                 <td class="px-4 py-3 font-bold text-navy-800 uppercase text-xs">{{ $activity->type }} {!! $activity->reference_id ? "<span class='text-slate-400 text-xs'>(ID: {$activity->reference_id})</span>" : "" !!}</td>
