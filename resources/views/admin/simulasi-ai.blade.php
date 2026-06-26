@@ -46,7 +46,9 @@
     <main class="flex-1 overflow-y-auto custom-scrollbar text-left relative">
         <header class="sticky top-0 bg-white/80 backdrop-blur-xl border-b border-slate-100 px-4 pl-16 md:px-8 py-4 flex justify-between items-center z-40 text-left shadow-sm">
             <div class="flex items-center gap-4">
-
+                <a href="{{ route('admin.dashboard') }}" class="hidden md:flex w-10 h-10 items-center justify-center bg-white text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 transition-all border border-slate-200 hover:border-gold-200">
+                    <i class="fas fa-arrow-left text-sm"></i>
+                </a>
                 <div class="text-left">
                     <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Playground</p>
                     <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Simulasi Model AI</h2>
