@@ -129,7 +129,7 @@
 
                 <div class="mb-8 text-center">
                     <h2 class="text-xl md:text-2xl font-black text-navy-900 mb-1.5 tracking-tight hidden md:block">Masuk</h2>
-                    <p class="text-slate-400 font-bold text-[10px] md:text-xs uppercase tracking-widest">Silakan masukkan akun Anda</p>
+                    <p class="text-slate-400 font-bold text-[9px] md:text-xs uppercase tracking-wider">Silakan masukkan akun Anda</p>
                 </div>
 
                 @if($errors->any())
@@ -142,7 +142,7 @@
                     @csrf
                     
                     <div>
-                        <label class="block text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1">
+                        <label class="block text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-wider mb-2 ml-1">
                             Email / Nomor WhatsApp <span class="text-gold-500">*</span>
                         </label>
                         <input type="text" name="login" placeholder="Email atau 0812xxxx" value="{{ old('login') }}" required autocomplete="username"
@@ -150,7 +150,7 @@
                     </div>
 
                     <div>
-                        <label class="block text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1">
+                        <label class="block text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-wider mb-2 ml-1">
                             Kata Sandi <span class="text-gold-500">*</span>
                         </label>
                         <div class="relative">
@@ -165,7 +165,7 @@
                     </div>
 
                     <div>
-                        <label class="block text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1">
+                        <label class="block text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-wider mb-2 ml-1">
                             Verifikasi Keamanan: {{ $n1 ?? 3 }} + {{ $n2 ?? 5 }} <span class="text-gold-500">*</span>
                         </label>
                         <input type="number" name="captcha" placeholder="Jawaban Anda" required
