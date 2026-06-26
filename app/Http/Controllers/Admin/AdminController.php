@@ -1006,6 +1006,49 @@ class AdminController extends Controller
         return view('admin.activity', compact('activities'));
     }
 
+    public function exportActivityExcel()
+    {
+        $activities = \App\Models\ActivityLog::with('user')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $headers = [
+            "Content-type"        => "application/vnd.ms-excel; charset=UTF-8",
+            "Content-Disposition" => "attachment; filename=Log_Aktivitas_" . date('Y-m-d') . ".xls",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        ];
+
+        $callback = function() use($activities) {
+            $html = '<html><head><meta charset="UTF-8"></head><body>';
+            $html .= '<table style="border-collapse: collapse; font-family: Calibri, sans-serif; font-size: 11pt;">';
+            $html .= '<thead><tr>';
+            $columns = ['ID', 'Waktu', 'Pengguna', 'Modul', 'Aktivitas', 'IP Address'];
+            
+            foreach ($columns as $col) {
+                $html .= '<th style="background-color: #1e1b4b; color: #ffffff; font-weight: bold; text-align: center; border: 1pt solid #000000; padding: 5px;">' . $col . '</th>';
+            }
+            $html .= '</tr></thead><tbody>';
+
+            foreach ($activities as $log) {
+                $html .= '<tr>';
+                $html .= '<td style="border: 0.5pt solid #000000; padding: 5px; text-align: center;">' . $log->id . '</td>';
+                $html .= '<td style="border: 0.5pt solid #000000; padding: 5px; text-align: center;">' . $log->created_at->format('Y-m-d H:i:s') . '</td>';
+                $html .= '<td style="border: 0.5pt solid #000000; padding: 5px;">' . ($log->user ? $log->user->name : 'Sistem') . '</td>';
+                $html .= '<td style="border: 0.5pt solid #000000; padding: 5px; text-align: center;">' . $log->module . '</td>';
+                $html .= '<td style="border: 0.5pt solid #000000; padding: 5px;">' . $log->activity . '</td>';
+                $html .= '<td style="border: 0.5pt solid #000000; padding: 5px; text-align: center;">' . $log->ip_address . '</td>';
+                $html .= '</tr>';
+            }
+            $html .= '</tbody></table></body></html>';
+
+            echo $html;
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
     public function backupDatabase()
     {
         // Fitur ekspor sederhana yang mengambil semua data dari tabel-tabel utama

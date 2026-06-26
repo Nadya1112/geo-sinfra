@@ -312,6 +312,7 @@ Route::middleware(['auth'])->group(function () {
 
         // Security & Audit
         Route::get('/activity', [AdminController::class, 'activity'])->name('admin.activity');
+        Route::get('/activity/export', [AdminController::class, 'exportActivityExcel'])->name('admin.activity.export');
         
         // Simulasi AI Playground
         Route::get('/simulasi-ai', [AdminController::class, 'simulasiAi'])->name('admin.simulasi-ai');
