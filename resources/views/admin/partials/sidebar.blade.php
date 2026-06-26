@@ -1,7 +1,9 @@
 {{-- Tombol Hamburger (Hanya muncul di mobile) --}}
+@if(!request()->routeIs('admin.profile'))
 <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="fixed top-4 left-4 z-[9999] w-10 h-10 bg-navy-900 text-gold-500 rounded-xl flex items-center justify-center shadow-lg md:hidden border border-white/10 hover:bg-navy-800 transition-all active:scale-95">
     <i class="fas fa-bars text-sm" id="menu-icon"></i>
 </button>
+@endif
 
 {{-- Overlay Background (muncul saat menu terbuka) --}}
 <div id="mobile-overlay" onclick="toggleMobileMenu()" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9998] hidden md:hidden transition-opacity duration-300 opacity-0"></div>
