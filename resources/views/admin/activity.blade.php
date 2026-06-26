@@ -105,7 +105,7 @@
                             <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Waktu</th>
                             <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Pengguna</th>
                             <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Aktivitas</th>
-                            <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Modul</th>
+                            <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Kategori</th>
                             <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest text-right">IP Address</th>
                         </tr>
                     </thead>
@@ -146,14 +146,9 @@
                                     <i class="fas fa-clock mr-2 text-slate-300"></i> {{ $activity->created_at->format('Y-m-d H:i:s') }}
                                 </td>
                                 <td class="px-4 py-3">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-8 h-8 rounded-full bg-{{$roleColor}}-100 text-{{$roleColor}}-600 flex items-center justify-center text-xs font-bold border border-{{$roleColor}}-200">
-                                            {{ $activity->user ? strtoupper(substr($activity->user->name, 0, 2)) : 'SYS' }}
-                                        </div>
-                                        <div>
-                                            <p class="font-bold text-navy-900">{{ $activity->user ? $activity->user->name : 'Sistem Otomatis' }}</p>
-                                            <p class="text-xs text-slate-400 uppercase tracking-wider">{{ $activity->user ? $activity->user->role : 'System' }}</p>
-                                        </div>
+                                    <div>
+                                        <p class="font-bold text-navy-900">{{ $activity->user ? $activity->user->name : 'Sistem Otomatis' }}</p>
+                                        <p class="text-[10px] text-slate-400 uppercase tracking-wider">{{ $activity->user ? $activity->user->role : 'System' }}</p>
                                     </div>
                                 </td>
                                 <td class="px-4 py-3">

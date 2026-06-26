@@ -1024,7 +1024,7 @@ class AdminController extends Controller
             $html = '<html><head><meta charset="UTF-8"></head><body>';
             $html .= '<table style="border-collapse: collapse; font-family: Calibri, sans-serif; font-size: 11pt;">';
             $html .= '<thead><tr>';
-            $columns = ['ID', 'Waktu', 'Pengguna', 'Modul', 'Aktivitas', 'IP Address'];
+            $columns = ['ID', 'Waktu', 'Pengguna', 'Kategori', 'Aktivitas', 'IP Address'];
             
             foreach ($columns as $col) {
                 $html .= '<th style="background-color: #1e1b4b; color: #ffffff; font-weight: bold; text-align: center; border: 1pt solid #000000; padding: 5px;">' . $col . '</th>';
