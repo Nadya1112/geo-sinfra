@@ -84,32 +84,33 @@
                     <p class="text-xs text-slate-400 font-semibold mt-0.5">Kelola seluruh aset infrastruktur permukiman</p>
                 </div>
 
-                <div class="flex flex-wrap items-center gap-3">
+                <div class="flex flex-col lg:flex-row flex-wrap items-center gap-3 w-full lg:w-auto">
                     {{-- Export Excel --}}
                     <a href="{{ route('admin.infrastruktur.export') }}"
-                        class="px-4 py-2 bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white border border-emerald-100 hover:border-emerald-500 rounded-xl text-xs font-black tracking-widest uppercase transition-all shadow-sm flex items-center gap-2">
-                        <i class="fas fa-file-excel"></i> Export Excel
+                        class="bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white border border-emerald-100 rounded-2xl text-xs px-5 py-2.5 font-bold transition-all shadow-sm flex items-center gap-2 whitespace-nowrap w-full lg:w-auto justify-center">
+                        <i class="fas fa-file-excel text-xs"></i> Export Excel
                     </a>
 
                     {{-- Filter & Search --}}
-                    <form action="{{ route('admin.infrastruktur') }}" method="GET" class="flex items-center gap-2">
-                        <select name="show" onchange="this.form.submit()"
-                            class="text-xs font-bold text-navy-900 bg-white border border-slate-200 rounded-xl px-3 py-2.5 focus:outline-none focus:border-gold-500 transition shadow-sm">
+                    <form action="{{ route('admin.infrastruktur') }}" method="GET" class="flex items-center w-full lg:w-[350px]">
+                        <select name="show" onchange="this.form.submit()" class="pl-4 pr-8 py-2.5 bg-white border border-slate-100 border-r-0 rounded-l-2xl text-xs font-bold text-navy-900 focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm shrink-0">
                             <option value="10" {{ request('show') != 'all' ? 'selected' : '' }}>10 Data</option>
                             <option value="all" {{ request('show') == 'all' ? 'selected' : '' }}>Semua Data</option>
                         </select>
-                        <div class="relative">
-                            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                            <input type="text" name="search" value="{{ request('search') }}"
-                                placeholder="Cari infrastruktur..."
-                                class="pl-8 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-bold outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition shadow-sm placeholder-slate-400 text-slate-600 w-52">
-                        </div>
+                        <input type="text" 
+                            name="search"
+                            value="{{ request('search') }}"
+                            placeholder="Cari infrastruktur..." 
+                            class="flex-1 pl-4 pr-4 py-2.5 bg-white border border-slate-100 text-xs font-semibold focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm w-full">
+                        <button type="submit" class="bg-white border-y border-r border-slate-100 px-5 py-2.5 rounded-r-2xl hover:bg-slate-50 transition-all shadow-sm group shrink-0">
+                            <i class="fas fa-search text-slate-400 group-hover:text-gold-500 transition-colors text-xs"></i>
+                        </button>
                     </form>
 
                     {{-- Tambah --}}
                     <a href="{{ route('admin.infrastruktur.create') }}"
-                        class="bg-gold-500 hover:bg-gold-600 text-white text-xs px-5 py-2.5 rounded-xl font-black shadow-md shadow-gold-500/20 hover:shadow-gold-500/30 transition flex items-center gap-2 whitespace-nowrap tracking-wider">
-                        <i class="fas fa-plus"></i> Tambah Data
+                        class="bg-gold-500 hover:bg-gold-600 text-white text-xs px-5 py-2.5 rounded-2xl font-bold shadow-lg shadow-gold-500/10 hover:shadow-gold-500/20 transition flex items-center justify-center gap-2 whitespace-nowrap w-full lg:w-auto">
+                        <i class="fas fa-plus text-xs"></i> Tambah Data
                     </a>
                 </div>
             </div>
