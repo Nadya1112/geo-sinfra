@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1280">
     <title>Offline Mode | GEO-SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -22,7 +22,7 @@
         }
     </script>
     <style> 
-        body { font-family: 'Plus Jakarta Sans', sans-serif; } 
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
     </style>
 </head>
 <body class="bg-slate-50 flex items-center justify-center min-h-screen text-slate-800 font-sans p-6">

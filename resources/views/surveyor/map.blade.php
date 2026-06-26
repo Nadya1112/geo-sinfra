@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1280">
     <title>Peta Sebaran Saya | GEO-SINFRA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -29,7 +29,8 @@
             document.documentElement.classList.remove('dark');
         }
     </script>
-    <style> body { font-family: 'Plus Jakarta Sans', sans-serif; } </style>
+    <style> body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
 </head>
 <body class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 text-left dark:bg-navy-950 dark:text-white transition-colors duration-300">
 

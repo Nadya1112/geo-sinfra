@@ -2,7 +2,7 @@
 <html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1280">
     <title>GEO-SINFRA</title>
     <meta name="description" content="GEO-SINFRA adalah Sistem Pemetaan Infrastruktur Permukiman Kota Banjarmasin berbasis Web GIS dan Kecerdasan Buatan (AI) untuk monitoring, pelaporan, dan klasifikasi kerusakan infrastruktur.">
     <meta name="keywords" content="GIS, Pemetaan, Infrastruktur, Banjarmasin, Artificial Intelligence, SINFRA, Dinas PUPR, Jalan, Jembatan">
@@ -54,6 +54,7 @@
     </script>
 
     <style>
+        html, body { overflow-x: hidden; width: 100%; }
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
             background-color: #f8fafc; 
@@ -603,7 +604,7 @@
                 <div id="map" class="absolute inset-0 z-0"></div>
 
                 <!-- Custom Zoom Controls & GPS -->
-                <div class="absolute top-24 md:top-6 left-4 md:left-6 z-[9999] flex flex-col gap-2 pointer-events-auto">
+                <div class="absolute top-20 md:top-6 left-2 md:left-6 z-[9999] flex flex-col gap-2 pointer-events-auto">
                     <button onclick="map.zoomIn()" class="w-10 h-10 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-gold-500 hover:bg-[#1e1b4b] transition-all group" title="Zoom In" aria-label="Zoom In Peta">
                         <i class="fas fa-plus text-[10px] group-hover:scale-110 transition-transform" aria-hidden="true"></i>
                     </button>
@@ -621,9 +622,9 @@
                 </div>
 
                 <!-- Search Bar -->
-                <div class="absolute top-6 left-1/2 -translate-x-1/2 z-[9999] pointer-events-auto hidden md:block w-80">
+                <div class="absolute top-4 left-14 md:top-6 md:left-1/2 md:-translate-x-1/2 z-[9999] pointer-events-auto w-[55%] md:w-80">
                     <div class="relative w-full">
-                        <input type="text" id="search-infra" placeholder="Cari infrastruktur atau jalan..." aria-label="Cari infrastruktur atau jalan" class="w-full bg-[#0f0e2c]/90 backdrop-blur-xl border border-white/10 text-white pl-10 pr-4 py-3 rounded-2xl shadow-2xl focus:outline-none focus:border-gold-500 transition-colors text-xs font-bold tracking-wide placeholder-slate-400" autocomplete="off">
+                        <input type="text" id="search-infra" placeholder="Cari infrastruktur..." aria-label="Cari infrastruktur atau jalan" class="w-full bg-[#0f0e2c]/90 backdrop-blur-xl border border-white/10 text-white pl-8 pr-3 py-2 md:pl-10 md:pr-4 md:py-3 rounded-xl md:rounded-2xl shadow-2xl focus:outline-none focus:border-gold-500 transition-colors text-[10px] md:text-xs font-bold tracking-wide placeholder-slate-400" autocomplete="off">
                         <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gold-500 text-sm" aria-hidden="true"></i>
                     </div>
                     <div id="search-results" class="hidden absolute top-full left-0 mt-2 w-full bg-[#0f0e2c]/95 backdrop-blur-2xl border border-white/10 rounded-xl shadow-2xl max-h-56 overflow-y-auto"></div>
@@ -634,15 +635,16 @@
                 <!-- FLOATING UI WIDGETS -->
 
                 <!-- Top Right Dropdowns (Unified Filter) -->
-                <div class="absolute top-24 right-4 md:top-6 md:right-6 z-[9999] flex flex-col gap-2 w-48 pointer-events-auto">
+                <div class="absolute top-4 right-2 md:top-6 md:right-6 z-[9999] flex flex-col gap-2 w-[30%] md:w-48 pointer-events-auto">
                     <!-- Main Filter Button -->
                     <div class="relative w-full z-50">
-                        <button onclick="toggleMenu('filter-utama')" class="w-full bg-[#0f0e2c]/90 backdrop-blur-xl border border-white/10 text-white px-3.5 py-3 rounded-xl flex justify-between items-center shadow-2xl hover:bg-[#1e1b4b] transition-all">
-                            <div class="flex items-center gap-2">
+                        <button onclick="toggleMenu('filter-utama')" class="w-full bg-[#0f0e2c]/90 backdrop-blur-xl border border-white/10 text-white px-2 py-2 md:px-3.5 md:py-3 rounded-xl flex justify-between items-center shadow-2xl hover:bg-[#1e1b4b] transition-all">
+                            <div class="flex items-center gap-1 md:gap-2">
                                 <i class="fas fa-filter text-[10px] text-gold-500"></i>
-                                <span class="text-[9px] font-bold uppercase tracking-wider">Filter Peta</span>
+                                <span class="text-[8px] md:text-[9px] font-bold uppercase tracking-wider hidden md:inline">Filter Peta</span>
+                                <span class="text-[8px] font-bold uppercase tracking-wider md:hidden">Filter</span>
                             </div>
-                            <i class="fas fa-chevron-down text-[10px] text-slate-400"></i>
+                            <i class="fas fa-chevron-down text-[8px] md:text-[10px] text-slate-400"></i>
                         </button>
                         
                         <div id="filter-utama" class="hidden absolute top-full mt-2 right-0 w-56 bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-xl p-3 shadow-2xl border border-white/10 max-h-[60vh] overflow-y-auto custom-scrollbar flex flex-col gap-3">
@@ -738,8 +740,8 @@
                 <!-- Floating Lapor Button has been moved to header -->
 
                 <!-- Bottom Left Stats Box Widget (Glassmorphic Dark UI) -->
-                <div class="absolute bottom-6 left-6 z-[9999] bg-[#0f0e2c]/90 backdrop-blur-xl rounded-2xl p-1.5 text-white w-48 shadow-2xl border border-white/10 pointer-events-auto transition-all duration-300">
-                    <div class="flex justify-between items-center bg-white/5 p-2 rounded-xl cursor-pointer hover:bg-white/10 transition-all" onclick="document.getElementById('stats-body').classList.toggle('hidden'); document.getElementById('stats-chevron').classList.toggle('rotate-180');">
+                <div class="absolute bottom-8 left-2 md:bottom-6 md:left-6 z-[9999] bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl md:rounded-2xl p-1.5 text-white w-32 md:w-48 shadow-2xl border border-white/10 pointer-events-auto transition-all duration-300">
+                    <div class="flex justify-between items-center bg-white/5 p-1.5 md:p-2 rounded-lg md:rounded-xl cursor-pointer hover:bg-white/10 transition-all" onclick="document.getElementById('stats-body').classList.toggle('hidden'); document.getElementById('stats-chevron').classList.toggle('rotate-180');">
                         <div class="flex items-center gap-2">
                             <i class="fas fa-chart-pie text-gold-500 text-[10px]"></i>
                             <span class="text-[8px] font-extrabold uppercase tracking-widest text-slate-200">Statistik Filter</span>
@@ -1522,29 +1524,29 @@
     <div id="detail-modal-overlay" class="fixed inset-0 z-[100000] bg-[#0f0e2c]/80 backdrop-blur-md hidden items-center justify-center p-4 opacity-0 transition-opacity duration-300">
         <div id="detail-modal-content" class="bg-white rounded-[2rem] w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl transform scale-95 transition-transform duration-300">
             <!-- Header -->
-            <div class="sticky top-0 bg-white/95 backdrop-blur-xl z-20 px-8 py-5 border-b border-slate-100 flex justify-between items-center">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-full bg-navy-50 flex items-center justify-center text-gold-500">
+            <div class="sticky top-0 bg-white/95 backdrop-blur-xl z-20 px-4 md:px-8 py-4 md:py-5 border-b border-slate-100 flex flex-wrap gap-2 justify-between items-center">
+                <div class="flex items-center gap-2 md:gap-4">
+                    <div class="hidden md:flex w-10 h-10 rounded-full bg-navy-50 items-center justify-center text-gold-500">
                         <i class="fas fa-map-marked-alt"></i>
                     </div>
                     <div>
-                        <h3 class="font-black text-navy-900 text-lg uppercase tracking-tight leading-none mb-1" id="modal-title">Detail Aset</h3>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest" id="modal-jenis">Infrastruktur</p>
+                        <h3 class="font-black text-navy-900 text-base md:text-lg uppercase tracking-tight leading-none mb-1" id="modal-title">Detail Aset</h3>
+                        <p class="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest" id="modal-jenis">Infrastruktur</p>
                     </div>
                 </div>
-                <div class="flex items-center gap-4">
-                    <span id="modal-badge" class="px-4 py-1.5 rounded-lg text-xs font-black uppercase tracking-wider bg-emerald-500 text-white shadow-md">Baik</span>
-                    <button onclick="closeDetailModal()" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-red-50 hover:text-red-500 transition-colors">
+                <div class="flex items-center gap-2 md:gap-4">
+                    <span id="modal-badge" class="px-3 py-1 md:px-4 md:py-1.5 rounded-lg text-[10px] md:text-xs font-black uppercase tracking-wider bg-emerald-500 text-white shadow-md">Baik</span>
+                    <button onclick="closeDetailModal()" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-red-50 hover:text-red-500 transition-colors">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
             </div>
             
             <!-- Body -->
-            <div class="p-8">
-                <img id="modal-img" src="" class="w-full h-80 object-cover rounded-3xl shadow-md mb-8 bg-slate-100">
+            <div class="p-4 md:p-8">
+                <img id="modal-img" src="" class="w-full h-48 md:h-80 object-cover rounded-2xl md:rounded-3xl shadow-md mb-6 md:mb-8 bg-slate-100">
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-slate-50 p-6 rounded-3xl border border-slate-100">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 items-center bg-slate-50 p-4 md:p-6 rounded-2xl md:rounded-3xl border border-slate-100">
                     <!-- Left Col: Lokasi -->
                     <div class="space-y-6">
                         <div>
