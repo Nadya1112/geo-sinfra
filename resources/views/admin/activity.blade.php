@@ -80,7 +80,7 @@
             
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
                 <div>
-                    <h4 class="font-extrabold text-lg text-navy-900">AUDIT TRAIL</h4>
+                    <h4 class="font-extrabold text-lg text-navy-900 uppercase">LOG AKTIVITAS</h4>
                     <p class="text-xs text-slate-400 font-medium text-left">Memantau seluruh aktivitas pengguna di sistem</p>
                 </div>
                 <div class="flex flex-row flex-nowrap items-center gap-2 w-full md:w-auto">
@@ -97,8 +97,9 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
-                <table class="w-full text-left border-collapse">
+            <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden mb-10">
+                <div class="overflow-x-auto w-full custom-scrollbar">
+                <table class="w-full text-left border-collapse min-w-[800px]">
                     <thead>
                         <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
                             <th class="px-8 py-5 text-xs font-black text-gold-500 uppercase tracking-widest">Waktu</th>
@@ -174,6 +175,7 @@
 
                     </tbody>
                 </table>
+                </div>
                 
                 @if($activities instanceof \Illuminate\Pagination\LengthAwarePaginator && $activities->hasPages())
                     <div class="px-8 py-4 border-t border-slate-50 bg-slate-50/30">
