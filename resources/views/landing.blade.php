@@ -432,9 +432,9 @@
     <section class="hero-premium py-16 md:py-36 lg:py-40 flex items-center min-h-[500px] md:min-h-[600px]">
         <div class="grid-pattern"></div>
         <div class="max-w-7xl mx-auto px-6 md:px-8 w-full relative z-10">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12">
                 <div class="max-w-2xl text-center md:text-left">
-                    <h3 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1] mb-3 md:mb-5">
+                    <h3 class="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tight leading-[1.1] mb-3 md:mb-5">
                         <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-500 via-yellow-400 to-[#6366f1] block md:inline whitespace-nowrap">GEO-SINFRA</span>
                     </h3>
                     <p class="text-slate-300 font-semibold text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed mb-4 md:mb-5 max-w-xl mx-auto md:mx-0">
@@ -466,7 +466,7 @@
     <!-- Key Metrics / Feature Highlight Cards -->
     <section class="py-12 bg-transparent relative -mt-16 z-20 max-w-7xl mx-auto px-6 md:px-8">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal-up">
-            <div class="bg-white p-8 rounded-3xl shadow-xl shadow-slate-900/5 border border-slate-100 flex gap-5 items-start hover:-translate-y-2 transition-all duration-300">
+            <div class="bg-white p-6 rounded-3xl shadow-xl shadow-slate-900/5 border border-slate-100 flex gap-5 items-start hover:-translate-y-2 transition-all duration-300">
                 <div class="w-14 h-14 bg-[#6366f1]/10 rounded-2xl flex items-center justify-center text-navy-500 shrink-0">
                     <i class="fas fa-map-location-dot text-2xl"></i>
                 </div>
@@ -476,7 +476,7 @@
                 </div>
             </div>
             
-            <div class="bg-white p-8 rounded-3xl shadow-xl shadow-slate-900/5 border border-slate-100 flex gap-5 items-start hover:-translate-y-2 transition-all duration-300">
+            <div class="bg-white p-6 rounded-3xl shadow-xl shadow-slate-900/5 border border-slate-100 flex gap-5 items-start hover:-translate-y-2 transition-all duration-300">
                 <div class="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500 shrink-0">
                     <i class="fas fa-brain text-2xl"></i>
                 </div>
@@ -486,7 +486,7 @@
                 </div>
             </div>
 
-            <div class="bg-white p-8 rounded-3xl shadow-xl shadow-slate-900/5 border border-slate-100 flex gap-5 items-start hover:-translate-y-2 transition-all duration-300">
+            <div class="bg-white p-6 rounded-3xl shadow-xl shadow-slate-900/5 border border-slate-100 flex gap-5 items-start hover:-translate-y-2 transition-all duration-300">
                 <div class="w-14 h-14 bg-amber-500/10 rounded-2xl flex items-center justify-center text-amber-500 shrink-0">
                     <i class="fas fa-file-shield text-2xl"></i>
                 </div>
@@ -499,7 +499,7 @@
     </section>
 
     <!-- Statistik Section -->
-    <section id="statistik" class="py-24 bg-[#0a091d] relative overflow-hidden">
+    <section id="statistik" class="py-16 lg:py-20 bg-[#0a091d] relative overflow-hidden">
         <!-- Background Accents -->
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
             <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-gold-500/5 blur-[120px]"></div>
@@ -509,51 +509,51 @@
         <div class="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
             <div class="text-center mb-20 reveal-up">
                 <span class="text-gold-500 font-extrabold text-sm uppercase tracking-[0.3em] mb-3 block">RINGKASAN INFRASTRUKTUR</span>
-                <h4 class="text-white font-black text-4xl md:text-5xl lg:text-6xl tracking-tight mb-4">Statistik GEO-SINFRA</h4>
+                <h4 class="text-white font-black text-3xl md:text-4xl lg:text-5xl tracking-tight mb-4">Statistik GEO-SINFRA</h4>
                 <div class="w-16 h-1.5 bg-gold-500 mx-auto rounded-full"></div>
             </div>
             
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 reveal-up">
                 <!-- Card 1 -->
-                <div class="bg-[#0f0e2c] text-white p-8 rounded-3xl border border-blue-500/50 shadow-2xl hover:border-blue-500 transition-all duration-300 text-center relative overflow-hidden group hover:scale-[1.02]">
+                <div class="bg-[#0f0e2c] text-white p-6 rounded-3xl border border-blue-500/50 shadow-2xl hover:border-blue-500 transition-all duration-300 text-center relative overflow-hidden group hover:scale-[1.02]">
                     <div class="relative z-10">
                         <div class="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-500 group-hover:text-white transition-all">
                             <i class="fas fa-database text-blue-500 text-xl group-hover:text-white"></i>
                         </div>
-                        <p class="text-4xl md:text-5xl font-black text-blue-500 leading-none mb-2">{{ number_format($stats['total'] ?? 0) }}</p>
+                        <p class="text-3xl md:text-4xl font-black text-blue-500 leading-none mb-2">{{ number_format($stats['total'] ?? 0) }}</p>
                         <p class="text-xs font-bold text-slate-300 uppercase tracking-widest">Total Titik Terdata</p>
                     </div>
                 </div>
 
                 <!-- Card 2 -->
-                <div class="bg-[#0f0e2c] text-white p-8 rounded-3xl border border-emerald-500/50 shadow-2xl hover:border-emerald-500 transition-all duration-300 text-center relative overflow-hidden group hover:scale-[1.02]">
+                <div class="bg-[#0f0e2c] text-white p-6 rounded-3xl border border-emerald-500/50 shadow-2xl hover:border-emerald-500 transition-all duration-300 text-center relative overflow-hidden group hover:scale-[1.02]">
                     <div class="relative z-10">
                         <div class="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-emerald-500 group-hover:text-white transition-all">
                             <i class="fas fa-map-marked-alt text-emerald-500 text-xl group-hover:text-white"></i>
                         </div>
-                        <p class="text-4xl md:text-5xl font-black text-emerald-500 leading-none mb-2">{{ number_format($stats['kecamatan'] ?? 0) }}</p>
+                        <p class="text-3xl md:text-4xl font-black text-emerald-500 leading-none mb-2">{{ number_format($stats['kecamatan'] ?? 0) }}</p>
                         <p class="text-xs font-bold text-slate-300 uppercase tracking-widest">Kecamatan</p>
                     </div>
                 </div>
 
                 <!-- Card 3 -->
-                <div class="bg-[#0f0e2c] text-white p-8 rounded-3xl border border-red-500/50 shadow-2xl hover:border-red-500 transition-all duration-300 text-center relative overflow-hidden group hover:scale-[1.02]">
+                <div class="bg-[#0f0e2c] text-white p-6 rounded-3xl border border-red-500/50 shadow-2xl hover:border-red-500 transition-all duration-300 text-center relative overflow-hidden group hover:scale-[1.02]">
                     <div class="relative z-10">
                         <div class="w-14 h-14 bg-red-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-red-500 group-hover:text-white transition-all">
                             <i class="fas fa-exclamation-triangle text-red-500 text-xl group-hover:text-white"></i>
                         </div>
-                        <p class="text-4xl md:text-5xl font-black text-red-500 leading-none mb-2">{{ number_format($stats['rusak_berat'] ?? 0) }}</p>
+                        <p class="text-3xl md:text-4xl font-black text-red-500 leading-none mb-2">{{ number_format($stats['rusak_berat'] ?? 0) }}</p>
                         <p class="text-xs font-bold text-slate-300 uppercase tracking-widest">Kerusakan Berat</p>
                     </div>
                 </div>
 
                 <!-- Card 4 (AI Accent) -->
-                <div class="bg-[#0f0e2c] text-white p-8 rounded-3xl shadow-2xl border border-gold-500/60 text-center relative overflow-hidden group hover:scale-[1.02] hover:border-gold-500 transition-all duration-300">
+                <div class="bg-[#0f0e2c] text-white p-6 rounded-3xl shadow-2xl border border-gold-500/60 text-center relative overflow-hidden group hover:scale-[1.02] hover:border-gold-500 transition-all duration-300">
                     <div class="relative z-10">
                         <div class="w-14 h-14 bg-gold-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:rotate-12 transition-all">
                             <i class="fas fa-robot text-gold-500 text-xl"></i>
                         </div>
-                        <p class="text-4xl md:text-5xl font-black text-gold-500 leading-none mb-2">{{ $stats['akurasi_ai'] ?? 0 }}%</p>
+                        <p class="text-3xl md:text-4xl font-black text-gold-500 leading-none mb-2">{{ $stats['akurasi_ai'] ?? 0 }}%</p>
                         <p class="text-xs font-bold text-slate-300 uppercase tracking-widest">Cakupan Analisis AI</p>
                     </div>
                     <i class="fas fa-brain absolute -right-6 -bottom-6 text-white/5 text-[120px]"></i>
@@ -561,9 +561,9 @@
             </div>
 
             <!-- Detailed Grid Statistics -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12 reveal-up">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-12 reveal-up">
                 <!-- Sebaran Kecamatan -->
-                <div class="bg-[#0f0e2c]/60 backdrop-blur-xl p-8 rounded-3xl border border-white/5 shadow-2xl">
+                <div class="bg-[#0f0e2c]/60 backdrop-blur-xl p-6 rounded-3xl border border-white/5 shadow-2xl">
                     <div class="flex items-center gap-3 mb-8">
                         <div class="w-2.5 h-6 bg-gold-500 rounded-full"></div>
                         <h5 class="text-base font-extrabold text-white uppercase tracking-wider">Kepadatan Titik Data per Wilayah</h5>
@@ -584,7 +584,7 @@
                 </div>
 
                 <!-- Highlight Card -->
-                <div class="bg-[#0f0e2c] p-10 rounded-3xl shadow-2xl relative overflow-hidden flex flex-col justify-between text-white border border-white/5">
+                <div class="bg-[#0f0e2c] p-8 rounded-3xl shadow-2xl relative overflow-hidden flex flex-col justify-between text-white border border-white/5">
                     <div class="grid-pattern"></div>
                     <div class="relative z-10">
                         <span class="text-gold-500 font-extrabold text-xs uppercase tracking-[0.3em] mb-2 block">KATEGORI DOMINAN</span>
@@ -594,7 +594,7 @@
                         </p>
                     </div>
                     <div class="relative z-10 flex items-baseline gap-2">
-                        <span class="text-6xl font-black text-gold-500">{{ number_format($topKategoriCount) }}</span>
+                        <span class="text-4xl lg:text-5xl font-black text-gold-500">{{ number_format($topKategoriCount) }}</span>
                         <span class="text-slate-300 font-extrabold text-sm uppercase tracking-wider">Aset Teridentifikasi</span>
                     </div>
                     <i class="fas fa-chart-pie absolute -right-6 -bottom-6 text-white/5 text-[150px]"></i>
@@ -603,7 +603,7 @@
 
             <!-- Table Ringkasan Wilayah -->
             <div class="mt-12 bg-[#0f0e2c]/60 backdrop-blur-xl rounded-3xl border border-white/5 shadow-2xl overflow-hidden reveal-up">
-                <div class="p-8 border-b border-white/5 flex items-center gap-3">
+                <div class="p-6 border-b border-white/5 flex items-center gap-3">
                     <div class="w-2.5 h-6 bg-gold-500 rounded-full"></div>
                     <h5 class="text-base font-extrabold text-white uppercase tracking-wider">Ringkasan Keparahan Kondisi</h5>
                 </div>
@@ -638,7 +638,7 @@
     </section>
 
     <!-- Map Section -->
-    <section id="peta" class="py-24 bg-slate-100 border-t border-slate-200/50 relative overflow-hidden">
+    <section id="peta" class="py-16 lg:py-20 bg-slate-100 border-t border-slate-200/50 relative overflow-hidden">
         <div class="w-full px-4 md:px-12">
             <div class="max-w-7xl mx-auto mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4 px-2">
                 <div>
@@ -1594,10 +1594,10 @@
             </div>
             
             <!-- Body -->
-            <div class="p-4 md:p-8">
+            <div class="p-4 md:p-6">
                 <img id="modal-img" src="" class="w-full h-48 md:h-80 object-cover rounded-2xl md:rounded-3xl shadow-md mb-6 md:mb-8 bg-slate-100">
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 items-center bg-slate-50 p-4 md:p-6 rounded-2xl md:rounded-3xl border border-slate-100">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-center bg-slate-50 p-4 md:p-6 rounded-2xl md:rounded-3xl border border-slate-100">
                     <!-- Left Col: Lokasi -->
                     <div class="space-y-6">
                         <div>
@@ -1639,7 +1639,7 @@
             </div>
 
             <!-- Body -->
-            <div class="p-8 overflow-y-auto custom-scrollbar flex-1">
+            <div class="p-6 overflow-y-auto custom-scrollbar flex-1">
                 <form action="{{ route('lapor.warga') }}" method="POST" enctype="multipart/form-data" id="form-lapor-warga">
                     @csrf
                     
