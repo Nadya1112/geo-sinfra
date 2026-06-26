@@ -111,7 +111,7 @@
         </div>
 
         <!-- Right Login Form -->
-        <div class="w-full md:w-1/2 bg-white flex flex-col items-center justify-center p-6 md:p-10 relative">
+        <div class="w-full md:w-1/2 bg-white flex flex-1 flex-col items-center justify-center p-6 md:p-10 relative min-h-screen md:min-h-0">
             
             <!-- Mobile Back Button -->
             <a href="{{ url('/') }}" class="md:hidden absolute top-6 left-6 z-50 w-10 h-10 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 flex items-center justify-center text-slate-500 hover:text-navy-900 transition-all shadow-sm">
