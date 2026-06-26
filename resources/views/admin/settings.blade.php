@@ -94,30 +94,8 @@
                 <form action="{{ route('admin.settings.update') }}" method="POST" class="bg-white dark:bg-navy-900 border border-slate-100 dark:border-white/10 rounded-3xl p-6 shadow-sm text-left">
                     @csrf
                     
-                    <h4 class="text-lg font-black text-navy-900 dark:text-white mb-6 border-b border-slate-100 dark:border-white/10 pb-4">Profil Instansi</h4>
+                    <h4 class="text-lg font-black text-navy-900 dark:text-white mb-6 border-b border-slate-100 dark:border-white/10 pb-4">Kontak & Informasi Publik</h4>
                     
-                    <div class="space-y-5 mb-8">
-                        <div>
-                            <label class="block text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2 ml-1">Nama Instansi</label>
-                            <input type="text" name="instansi_name" value="{{ $settings['instansi_name'] ?? 'Dinas Perumahan dan Kawasan Permukiman Kota Banjarmasin' }}" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-navy-950 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold text-navy-900 dark:text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2 ml-1">Alamat Instansi</label>
-                            <textarea name="instansi_address" rows="3" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-navy-950 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold text-navy-900 dark:text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all resize-none">{{ $settings['instansi_address'] ?? 'MHCQ+X84, Kertak Baru Ilir, Kec. Banjarmasin Tengah, Kota Banjarmasin, Kalimantan Selatan 70231' }}</textarea>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            <div>
-                                <label class="block text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2 ml-1">Website</label>
-                                <input type="text" name="instansi_website" value="{{ $settings['instansi_website'] ?? 'dprkp.banjarmasinkota.go.id' }}" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-navy-950 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold text-navy-900 dark:text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2 ml-1">Telepon Kantor</label>
-                                <input type="text" name="instansi_phone" value="{{ $settings['instansi_phone'] ?? '(0511) 3365592' }}" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-navy-950 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold text-navy-900 dark:text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
-                            </div>
-                        </div>
-                    </div>
-
-                    <h4 class="text-lg font-black text-navy-900 dark:text-white mb-6 border-b border-slate-100 dark:border-white/10 pb-4">Kontak Layanan Tambahan</h4>
                     <div class="space-y-5 mb-8">
                         <div>
                             <label class="block text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2 ml-1">Email Kontak Utama</label>
