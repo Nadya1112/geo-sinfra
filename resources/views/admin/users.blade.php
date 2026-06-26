@@ -114,24 +114,24 @@
                     <p class="text-xs text-slate-400 font-medium text-left font-sans">Kelola hak akses untuk Admin, Surveyor, dan Tim Teknis</p>
                 </div>
                 
-                <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
-                    <form action="{{ route('admin.users') }}" method="GET" class="flex items-center flex-1 md:w-[400px]">
-                        <select name="show" onchange="this.form.submit()" class="pl-4 pr-8 py-2.5 bg-white border border-slate-100 border-r-0 rounded-l-2xl text-xs font-bold text-navy-900 focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm">
-                            <option value="10" {{ request('show') != 'all' ? 'selected' : '' }}>Per 10 Data</option>
-                            <option value="all" {{ request('show') == 'all' ? 'selected' : '' }}>Semua Data</option>
+                <div class="flex flex-row flex-nowrap items-center gap-2 w-full md:w-auto">
+                    <form action="{{ route('admin.users') }}" method="GET" class="flex items-center flex-1 min-w-0 md:w-[400px]">
+                        <select name="show" onchange="this.form.submit()" class="pl-3 pr-7 py-2.5 bg-white border border-slate-100 border-r-0 rounded-l-2xl text-[10px] md:text-xs font-bold text-navy-900 focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm shrink-0">
+                            <option value="10" {{ request('show') != 'all' ? 'selected' : '' }}>10 Data</option>
+                            <option value="all" {{ request('show') == 'all' ? 'selected' : '' }}>Semua</option>
                         </select>
                         <input type="text" 
                             name="search"
                             value="{{ request('search') }}"
-                            placeholder="Ketik nama pengguna..." 
-                            class="flex-1 pl-4 pr-4 py-2.5 bg-white border border-slate-100 text-xs font-semibold focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm">
-                        <button type="submit" class="bg-white border-y border-r border-slate-100 px-5 py-2.5 rounded-r-2xl hover:bg-slate-50 transition-all shadow-sm group">
+                            placeholder="Cari..." 
+                            class="flex-1 min-w-[80px] pl-3 pr-3 py-2.5 bg-white border border-slate-100 text-[10px] md:text-xs font-semibold focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm">
+                        <button type="submit" class="bg-white border-y border-r border-slate-100 px-4 md:px-5 py-2.5 rounded-r-2xl hover:bg-slate-50 transition-all shadow-sm group shrink-0">
                             <i class="fas fa-search text-slate-400 group-hover:text-gold-500 transition-colors text-xs"></i>
                         </button>
                     </form>
 
-                    <a href="{{ route('admin.users.create') }}" class="bg-gold-500 text-white text-xs px-6 py-2.5 rounded-2xl font-bold shadow-lg shadow-gold-500/10 hover:bg-gold-600 hover:shadow-gold-500/20 transition flex items-center gap-2 whitespace-nowrap">
-                        <i class="fas fa-user-plus text-xs"></i> Tambah User
+                    <a href="{{ route('admin.users.create') }}" class="bg-gold-500 text-white text-xs px-4 md:px-6 py-2.5 rounded-2xl font-bold shadow-lg shadow-gold-500/10 hover:bg-gold-600 hover:shadow-gold-500/20 transition flex items-center justify-center gap-2 whitespace-nowrap shrink-0">
+                        <i class="fas fa-user-plus text-xs"></i> <span class="hidden sm:inline">Tambah User</span>
                     </a>
                 </div>
             </div>
