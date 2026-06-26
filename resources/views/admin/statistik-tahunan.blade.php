@@ -54,26 +54,7 @@
                 </div>
             </div>
 
-            <div class="flex items-center gap-4">
-                {{-- Tahun Dropdown --}}
-                <form action="{{ url()->current() }}" method="GET" class="relative group">
-                    <select name="year" onchange="this.form.submit()" 
-                            class="appearance-none bg-navy-900 text-gold-500 pl-8 pr-7 py-2 rounded-xl text-xs font-black tracking-widest uppercase outline-none cursor-pointer hover:shadow-lg hover:shadow-navy-900/20 transition-all">
-                        @foreach($availableYears ?? [$year] as $y)
-                            <option value="{{ $y }}" {{ $y == $year ? 'selected' : '' }}>{{ $y }}</option>
-                        @endforeach
-                    </select>
-                    <i class="fas fa-calendar-alt absolute left-3 top-1/2 -translate-y-1/2 text-gold-500 text-xs pointer-events-none group-hover:scale-110 transition-transform"></i>
-                    <i class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gold-500 text-xs pointer-events-none group-hover:translate-y-0.5 transition-transform"></i>
-                </form>
-
-                {{-- Cetak --}}
-                <button onclick="window.print()"
-                    class="flex items-center gap-2 bg-gold-500 hover:bg-gold-600 text-navy-950 px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest shadow-md shadow-gold-500/20 transition-all">
-                    <i class="fas fa-print"></i> Cetak Laporan
-                </button>
-
-                <div class="h-8 w-[1px] bg-slate-100"></div>
+            <div class="flex items-center gap-3 md:gap-6">
                 <div class="text-right">
                     <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('d M Y') }}</p>
@@ -96,7 +77,26 @@
         </header>
 
         {{-- ── Content ── --}}
-        <div class="flex-1 overflow-y-auto custom-scrollbar p-8 pb-16 space-y-6">
+        <div class="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-8 pb-16 space-y-6">
+
+            {{-- ── Toolbar: Tahun Dropdown + Cetak ── --}}
+            <div class="flex flex-row justify-between md:justify-end items-center gap-3">
+                <form action="{{ url()->current() }}" method="GET" class="relative group">
+                    <select name="year" onchange="this.form.submit()" 
+                            class="appearance-none bg-navy-900 text-gold-500 pl-4 pr-7 py-2.5 md:pl-8 md:pr-7 md:py-2.5 rounded-xl text-[10px] md:text-xs font-black tracking-widest uppercase outline-none cursor-pointer hover:shadow-lg hover:shadow-navy-900/20 transition-all shadow-sm">
+                        @foreach($availableYears ?? [$year] as $y)
+                            <option value="{{ $y }}" {{ $y == $year ? 'selected' : '' }}>Tahun {{ $y }}</option>
+                        @endforeach
+                    </select>
+                    <i class="fas fa-calendar-alt absolute left-3 top-1/2 -translate-y-1/2 text-gold-500 text-[10px] md:text-xs pointer-events-none hidden md:inline"></i>
+                    <i class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gold-500 text-[10px] md:text-xs pointer-events-none group-hover:translate-y-0.5 transition-transform"></i>
+                </form>
+
+                <button onclick="window.print()"
+                    class="flex items-center justify-center gap-2 bg-gold-500 hover:bg-gold-600 text-navy-950 px-4 md:px-5 py-2.5 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest shadow-md shadow-gold-500/20 transition-all shrink-0">
+                    <i class="fas fa-print"></i> Cetak
+                </button>
+            </div>
 
             {{-- ── Grafik Kurva-S ── --}}
             <div class="bg-navy-900 rounded-3xl p-8 relative overflow-hidden">
