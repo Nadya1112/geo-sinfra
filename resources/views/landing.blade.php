@@ -740,13 +740,14 @@
                                     <select id="filter-tahun" onchange="fetchMapData()" class="w-full bg-[#0f0e2c] border border-white/10 text-slate-200 text-xs font-bold rounded-lg px-3 py-2.5 appearance-none cursor-pointer focus:outline-none focus:border-gold-500/50 transition-all">
                                         <option value="all">Semua Tahun</option>
                                         @php
-                                            // Get distinct years from database to populate dropdown
+                                            // Get distinct years safely across any database (SQLite/MySQL)
                                             $years = \Illuminate\Support\Facades\DB::table('infrastruktur')
-                                                ->select(\Illuminate\Support\Facades\DB::raw('YEAR(created_at) as year'))
                                                 ->whereNull('deleted_at')
-                                                ->distinct()
-                                                ->orderBy('year', 'desc')
-                                                ->pluck('year');
+                                                ->whereNotNull('created_at')
+                                                ->pluck('created_at')
+                                                ->map(fn($date) => \Carbon\Carbon::parse($date)->year)
+                                                ->unique()
+                                                ->sortDesc();
                                         @endphp
                                         @foreach($years as $year)
                                             <option value="{{ $year }}">{{ $year }}</option>
