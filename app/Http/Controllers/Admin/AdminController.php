@@ -620,7 +620,7 @@ class AdminController extends Controller
                 'infrastruktur.tgl_survey'
             )
             ->whereNull('infrastruktur.deleted_at')
-            ->orderBy('infrastruktur.created_at', 'desc')
+            ->orderBy('infrastruktur.id_infrastruktur', 'asc')
             ->get();
 
         $headers = [
