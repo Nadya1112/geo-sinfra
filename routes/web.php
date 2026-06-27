@@ -50,7 +50,7 @@ Route::get('/', function () {
         ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
         ->leftJoin('kecamatan', 'kelurahan.id_kecamatan', '=', 'kecamatan.id_kecamatan')
         ->leftJoin('analisis_ai', 'infrastruktur.id_infrastruktur', '=', 'analisis_ai.id_infrastruktur')
-        ->leftJoin('users', 'infrastruktur.id_user', '=', 'users.id_user')
+        ->leftJoin('users', 'infrastruktur.id_user', '=', 'users.id')
         ->select(
             'infrastruktur.*', 
             'kelurahan.id_kecamatan as id_kecamatan_from_kel',
@@ -135,7 +135,7 @@ Route::get('/api/map-data', function () {
         ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
         ->leftJoin('kecamatan', 'kelurahan.id_kecamatan', '=', 'kecamatan.id_kecamatan')
         ->leftJoin('analisis_ai', 'infrastruktur.id_infrastruktur', '=', 'analisis_ai.id_infrastruktur')
-        ->leftJoin('users', 'infrastruktur.id_user', '=', 'users.id_user')
+        ->leftJoin('users', 'infrastruktur.id_user', '=', 'users.id')
         ->select(
             'infrastruktur.*', 
             'kelurahan.id_kecamatan as id_kecamatan_from_kel',

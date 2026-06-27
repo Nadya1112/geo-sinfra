@@ -21,7 +21,7 @@ class User extends Authenticatable
      * Primary Key. 
      * Jika di phpMyAdmin kamu menggunakan 'id_user', ubah 'id' menjadi 'id_user'.
      */
-    protected $primaryKey = 'id_user'; 
+    protected $primaryKey = 'id'; 
 
     /**
      * Kolom yang bisa diisi secara massal.
@@ -61,7 +61,7 @@ class User extends Authenticatable
     public function infrastrukturs(): HasMany
     {
         // 'id_user' adalah nama foreign key di tabel infrastruktur
-        return $this->hasMany(Infrastruktur::class, 'id_user', 'id_user');
+        return $this->hasMany(Infrastruktur::class, 'id_user', 'id');
     }
 
     /**
