@@ -108,6 +108,23 @@
 
                     </div>
 
+                    <h4 class="text-lg font-black text-navy-900 dark:text-white mb-6 border-b border-slate-100 dark:border-white/10 pb-4">Integrasi WhatsApp Bot (Fonnte)</h4>
+                    
+                    <div class="space-y-5 mb-8">
+                        <div class="p-4 bg-blue-500/10 border border-blue-500/20 rounded-2xl mb-4">
+                            <p class="text-xs text-blue-700 dark:text-blue-400 leading-relaxed font-medium"><strong>Fitur Baru:</strong> Masukkan Token Fonnte untuk mengaktifkan notifikasi otomatis ke WhatsApp Admin setiap kali ada laporan kerusakan masuk dari warga.</p>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2 ml-1">Fonnte API Token</label>
+                            <input type="password" name="fonnte_token" value="{{ $settings['fonnte_token'] ?? '' }}" placeholder="Masukkan token Fonnte Anda..." class="w-full px-5 py-3.5 bg-slate-50 dark:bg-navy-950 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold text-navy-900 dark:text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
+                            <p class="text-[10px] text-slate-400 mt-2 ml-2">Dapatkan token di <a href="https://md.fonnte.com/device" target="_blank" class="text-gold-500 hover:underline">dashboard Fonnte</a>.</p>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2 ml-1">Nomor WhatsApp Admin (Penerima Notifikasi)</label>
+                            <input type="text" name="fonnte_target" value="{{ $settings['fonnte_target'] ?? '' }}" placeholder="Contoh: 081234567890" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-navy-950 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold text-navy-900 dark:text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
+                        </div>
+                    </div>
+
                     <h4 class="text-lg font-black text-navy-900 dark:text-white mb-6 border-b border-slate-100 dark:border-white/10 pb-4">Pengaturan Peta Dasar</h4>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">

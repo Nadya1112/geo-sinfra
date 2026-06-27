@@ -35,6 +35,32 @@ class PublicReportController extends Controller
         // Analisis AI Otomatis
         $this->analyzeWithAI($laporan);
 
+        // Kirim Notifikasi WhatsApp via Fonnte
+        try {
+            $token = \App\Helpers\SettingHelper::get('fonnte_token');
+            $target = \App\Helpers\SettingHelper::get('fonnte_target');
+
+            if (!empty($token) && !empty($target)) {
+                $pesan = "*🚨 LAPORAN KERUSAKAN BARU (GEO-SINFRA)*\n\n";
+                $pesan .= "*Pelapor:* {$laporan->nama_pelapor}\n";
+                $pesan .= "*No. WA:* {$laporan->no_hp}\n";
+                $pesan .= "*Deskripsi:* {$laporan->deskripsi}\n\n";
+                $pesan .= "*Analisis AI (Awal):*\n";
+                $pesan .= "- Kondisi: {$laporan->label_ai}\n";
+                $pesan .= "- Kategori: " . ucfirst($laporan->jenis_ai) . "\n\n";
+                $pesan .= "Segera tinjau laporan ini di Dashboard Admin GEO-SINFRA.";
+
+                \Illuminate\Support\Facades\Http::withHeaders([
+                    'Authorization' => $token,
+                ])->post('https://api.fonnte.com/send', [
+                    'target' => $target,
+                    'message' => $pesan,
+                ]);
+            }
+        } catch (\Exception $e) {
+            Log::error("Gagal mengirim WA Fonnte: " . $e->getMessage());
+        }
+
         return redirect('/')->with('success_laporan', 'Laporan kerusakan berhasil dikirim! Sistem AI kami sedang menilainya dan Tim akan segera meninjaunya.');
     }
 
