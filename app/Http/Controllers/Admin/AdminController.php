@@ -134,8 +134,13 @@ class AdminController extends Controller
     {
         $year = $request->query('year', date('Y'));
         
+        $driver = DB::connection()->getDriverName();
+        $sqlYear = $driver === 'sqlite' ? "strftime('%Y', COALESCE(tgl_survey, created_at))" : "YEAR(COALESCE(tgl_survey, created_at))";
+        $sqlMonth = $driver === 'sqlite' ? "CAST(strftime('%m', COALESCE(tgl_survey, created_at)) AS INTEGER)" : "MONTH(COALESCE(tgl_survey, created_at))";
+        $sqlYearInfrastruktur = $driver === 'sqlite' ? "strftime('%Y', COALESCE(infrastruktur.tgl_survey, infrastruktur.created_at))" : "YEAR(COALESCE(infrastruktur.tgl_survey, infrastruktur.created_at))";
+        
         $minYear = DB::table('infrastruktur')
-            ->select(DB::raw('MIN(YEAR(COALESCE(tgl_survey, created_at))) as min_year'))
+            ->select(DB::raw("MIN($sqlYear) as min_year"))
             ->value('min_year');
             
         $currentYear = (int) date('Y');
@@ -150,8 +155,8 @@ class AdminController extends Controller
         
         // Data Perbulan (Jan - Des)
         $monthlyData = DB::table('infrastruktur')
-            ->select(DB::raw('MONTH(COALESCE(tgl_survey, created_at)) as month'), DB::raw('count(*) as total'))
-            ->where(DB::raw('YEAR(COALESCE(tgl_survey, created_at))'), $year)
+            ->select(DB::raw("$sqlMonth as month"), DB::raw('count(*) as total'))
+            ->where(DB::raw($sqlYear), $year)
             ->whereNull('deleted_at')
             ->groupBy('month')
             ->get()
@@ -167,7 +172,7 @@ class AdminController extends Controller
         // Statistik per Jenis (Tahunan)
         $statsJenis = DB::table('infrastruktur')
             ->select('jenis', DB::raw('count(*) as total'))
-            ->where(DB::raw('YEAR(COALESCE(tgl_survey, created_at))'), $year)
+            ->where(DB::raw($sqlYear), $year)
             ->whereNull('deleted_at')
             ->groupBy('jenis')
             ->get();
@@ -180,7 +185,7 @@ class AdminController extends Controller
                 ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
                 ->leftJoin('analisis_ai', 'infrastruktur.id_infrastruktur', '=', 'analisis_ai.id_infrastruktur')
                 ->where('kelurahan.id_kecamatan', $kec->id_kecamatan)
-                ->where(DB::raw('YEAR(COALESCE(infrastruktur.tgl_survey, infrastruktur.created_at))'), $year)
+                ->where(DB::raw($sqlYearInfrastruktur), $year)
                 ->whereNull('infrastruktur.deleted_at')
                 ->select(
                     DB::raw("COUNT(CASE WHEN LOWER(analisis_ai.label_prioritas) LIKE '%baik%' THEN 1 END) as baik"),
