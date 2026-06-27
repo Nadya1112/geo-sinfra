@@ -288,15 +288,24 @@
             try {
                 const response = await fetch('/api/predict-infrastructure', {
                     method: 'POST',
+                    headers: {
+                        'Accept': 'application/json'
+                    },
                     body: formData
                 });
 
                 if (!response.ok) {
-                    const errData = await response.json();
-                    throw new Error(errData.error || 'Server error: ' + response.status);
+                    const errText = await response.text();
+                    try {
+                        const errData = JSON.parse(errText);
+                        throw new Error(errData.error || errData.message || 'Server error: ' + response.status);
+                    } catch (parseError) {
+                        throw new Error('Server tidak merespons dengan benar (Kemungkinan file foto terlalu besar atau sesi habis).');
+                    }
                 }
 
-                const data = await response.json();
+                const errText2 = await response.text();
+                const data = JSON.parse(errText2);
                 
                 if (data.success) {
                     // Determine Colors & Text

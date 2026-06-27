@@ -15,6 +15,13 @@ class AIPredictController extends Controller
      */
     public function predict(Request $request)
     {
+        if (!$request->hasFile('image') || !$request->file('image')->isValid()) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Gambar gagal diunggah! Mungkin ukuran file terlalu besar (melebihi limit server PHP) atau format tidak didukung.'
+            ], 400);
+        }
+
         // 1. Validasi Input Gambar
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg|max:5120', // Maksimal 5MB
