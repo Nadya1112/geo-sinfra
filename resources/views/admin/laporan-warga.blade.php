@@ -105,10 +105,10 @@
                     </div>
 
                     <div class="flex flex-wrap items-center gap-3">
-                        {{-- Export PDF --}}
-                        <a href="{{ route('admin.laporan-warga.pdf') }}" target="_blank"
-                            class="px-4 py-2 bg-red-50 text-red-600 hover:bg-red-500 hover:text-white border border-red-100 hover:border-red-500 rounded-xl text-xs font-black tracking-widest uppercase transition-all shadow-sm flex items-center gap-2">
-                            <i class="fas fa-file-pdf"></i> Ekspor PDF
+                        {{-- Export Excel --}}
+                        <a href="{{ route('admin.laporan-warga.excel') }}" target="_blank"
+                            class="px-4 py-2 bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white border border-emerald-100 hover:border-emerald-500 rounded-xl text-xs font-black tracking-widest uppercase transition-all shadow-sm flex items-center gap-2">
+                            <i class="fas fa-file-excel"></i> Ekspor Excel
                         </a>
                     </div>
                 </div>

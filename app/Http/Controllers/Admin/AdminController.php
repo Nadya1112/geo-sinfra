@@ -953,39 +953,54 @@ class AdminController extends Controller
         return $pdf->download('Laporan_Warga_SINFRA_' . date('Ymd') . '.pdf');
     }
 
-    public function exportCsvLaporan()
+    public function exportExcelLaporan()
     {
         $laporanWarga = LaporanWarga::orderBy('created_at', 'desc')->get();
-        $this->logActivity('laporan', "Ekspor data Laporan Warga ke format CSV");
+        $this->logActivity('laporan', "Ekspor data Laporan Warga ke format Excel");
 
-        $filename = "Laporan_Warga_SINFRA_" . date('Ymd') . ".csv";
         $headers = [
-            "Content-type"        => "text/csv",
-            "Content-Disposition" => "attachment; filename=$filename",
+            "Content-type"        => "application/vnd.ms-excel; charset=UTF-8",
+            "Content-Disposition" => "attachment; filename=Rekap_Laporan_Warga_" . date('Y-m-d') . ".xls",
             "Pragma"              => "no-cache",
             "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
             "Expires"             => "0"
         ];
 
-        $columns = ['ID', 'TANGGAL', 'PELAPOR', 'NO HP', 'DESKRIPSI', 'PREDIKSI AI', 'KONDISI', 'STATUS'];
-
-        $callback = function() use($laporanWarga, $columns) {
-            $file = fopen('php://output', 'w');
-            fputcsv($file, $columns);
+        $callback = function() use($laporanWarga) {
+            echo '<html xmlns:x="urn:schemas-microsoft-com:office:excel">';
+            echo '<head><meta charset="utf-8">';
+            echo '<style>table, th, td { border: 0.5pt solid black; border-collapse: collapse; text-align: left; vertical-align: top; }</style>';
+            echo '</head><body>';
+            
+            echo '<table>';
+            echo '<tr><th colspan="8" style="text-align:center; font-size:16px; font-weight:bold; border:none; padding-bottom:10px;">REKAPITULASI LAPORAN WARGA (SINFRA)</th></tr>';
+            
+            echo '<tr style="background-color: #f3f4f6;">';
+            echo '<th>ID</th>';
+            echo '<th>TANGGAL</th>';
+            echo '<th>PELAPOR</th>';
+            echo '<th>NO HP</th>';
+            echo '<th>DESKRIPSI</th>';
+            echo '<th>PREDIKSI AI</th>';
+            echo '<th>KONDISI</th>';
+            echo '<th>STATUS</th>';
+            echo '</tr>';
 
             foreach ($laporanWarga as $lap) {
-                fputcsv($file, array(
-                    $lap->id_laporan,
-                    $lap->created_at->format('d/m/Y H:i'),
-                    $lap->nama_pelapor,
-                    $lap->no_hp,
-                    $lap->deskripsi,
-                    ucfirst($lap->jenis_ai),
-                    $lap->label_ai,
-                    $lap->status
-                ));
+                echo '<tr>';
+                echo '<td>' . $lap->id_laporan . '</td>';
+                echo '<td>' . $lap->created_at->format('d/m/Y H:i') . '</td>';
+                echo '<td>' . htmlspecialchars($lap->nama_pelapor) . '</td>';
+                echo '<td>' . htmlspecialchars($lap->no_hp) . '</td>';
+                echo '<td>' . htmlspecialchars($lap->deskripsi) . '</td>';
+                echo '<td>' . htmlspecialchars(ucfirst($lap->jenis_ai)) . '</td>';
+                echo '<td>' . htmlspecialchars($lap->label_ai) . '</td>';
+                echo '<td>' . htmlspecialchars($lap->status) . '</td>';
+                echo '</tr>';
             }
-            fclose($file);
+            
+            echo '</table>';
+            echo '</body></html>';
         };
 
         return response()->stream($callback, 200, $headers);

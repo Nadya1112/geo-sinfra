@@ -304,8 +304,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/laporan-warga/{id}/convert', [AdminController::class, 'storeFromLaporan'])->name('admin.laporan-warga.convert.store');
 
         // Ekspor Laporan
-        Route::get('/laporan-warga/export/pdf', [AdminController::class, 'exportPdfLaporan'])->name('admin.laporan-warga.pdf');
-        Route::get('/laporan-warga/export/csv', [AdminController::class, 'exportCsvLaporan'])->name('admin.laporan-warga.csv');
+        Route::get('/laporan-warga/export/excel', [AdminController::class, 'exportExcelLaporan'])->name('admin.laporan-warga.excel');
         Route::get('/infrastruktur/export/csv', [AdminController::class, 'exportCsvInfrastruktur'])->name('admin.infrastruktur.csv');
 
         // Manajemen Profil

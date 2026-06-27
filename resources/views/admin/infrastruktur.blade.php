@@ -107,11 +107,11 @@
                         <i class="fas fa-plus text-xs"></i> Tambah Data
                     </a>
                     
-                    {{-- Print PDF --}}
-                    <button onclick="window.print()"
-                        class="px-5 py-2.5 bg-red-50 text-red-600 hover:bg-red-500 hover:text-white border border-red-100 hover:border-red-500 rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2 w-full lg:w-auto">
-                        <i class="fas fa-print"></i> Print
-                    </button>
+                    {{-- Export Excel --}}
+                    <a href="{{ route('admin.infrastruktur.export') }}"
+                        class="px-5 py-2.5 bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white border border-emerald-100 hover:border-emerald-500 rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2 w-full lg:w-auto">
+                        <i class="fas fa-file-excel"></i> Excel
+                    </a>
                 </div>
             </div>
 
