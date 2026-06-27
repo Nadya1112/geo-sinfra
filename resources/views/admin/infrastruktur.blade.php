@@ -106,6 +106,12 @@
                         class="bg-gold-500 hover:bg-gold-600 text-white text-xs px-5 py-2.5 rounded-2xl font-bold shadow-lg shadow-gold-500/10 hover:shadow-gold-500/20 transition flex items-center justify-center gap-2 whitespace-nowrap w-full lg:w-auto">
                         <i class="fas fa-plus text-xs"></i> Tambah Data
                     </a>
+                    
+                    {{-- Print PDF --}}
+                    <button onclick="window.print()"
+                        class="px-5 py-2.5 bg-red-50 text-red-600 hover:bg-red-500 hover:text-white border border-red-100 hover:border-red-500 rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2 w-full lg:w-auto">
+                        <i class="fas fa-print"></i> Print
+                    </button>
                 </div>
             </div>
 
