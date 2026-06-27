@@ -40,21 +40,11 @@ class AIPredictController extends Controller
                 Log::error('AI Prediction API Error: ' . $response->body());
                 return response()->json([
                     'success' => false,
-                    'error' => 'Gagal terhubung ke Server AI. Pastikan ai_bridge.py sudah berjalan.'
+                    'error' => 'Gagal terhubung ke Server AI. Status: ' . $response->status() . ' Body: ' . $response->body()
                 ], 500);
             }
 
-            $result = $response->json();
-
-            // 5. Kembalikan hasil prediksi ke Frontend
-            if (isset($result['success']) && $result['success'] == true) {
-                return response()->json($result, 200);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'error' => $result['error'] ?? 'Terjadi kesalahan pada proses prediksi AI.'
-                ], 400);
-            }
+            return response()->json($response->json());
 
         } catch (\Exception $e) {
             Log::error('AI Prediction Exception: ' . $e->getMessage());

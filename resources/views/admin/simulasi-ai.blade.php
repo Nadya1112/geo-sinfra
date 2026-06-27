@@ -291,8 +291,13 @@
                     body: formData
                 });
 
-                const data = await response.json();
+                if (!response.ok) {
+                    const errData = await response.json();
+                    throw new Error(errData.error || 'Server error: ' + response.status);
+                }
 
+                const data = await response.json();
+                
                 if (data.success) {
                     // Determine Colors & Text
                     let label = data.kondisi || 'Baik';
@@ -330,8 +335,9 @@
                     document.getElementById('error-message').innerText = data.error || 'Gagal menganalisis gambar.';
                     showResult('error');
                 }
-            } catch (error) {
-                document.getElementById('error-message').innerText = 'Kesalahan koneksi ke server AI.';
+            } catch (e) {
+                console.error(e);
+                document.getElementById('error-message').innerText = e.message || 'Kesalahan koneksi ke server AI.';
                 showResult('error');
             } finally {
                 // Reset UI
