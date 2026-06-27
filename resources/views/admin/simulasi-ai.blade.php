@@ -286,7 +286,7 @@
             formData.append('_token', '{{ csrf_token() }}');
 
             try {
-                const response = await fetch('{{ url("/api/predict-infrastructure") }}', {
+                const response = await fetch('/api/predict-infrastructure', {
                     method: 'POST',
                     body: formData
                 });
