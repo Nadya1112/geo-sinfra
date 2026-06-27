@@ -637,8 +637,8 @@ class AdminController extends Controller
             $html .= '<table style="border-collapse: collapse; font-family: Calibri, sans-serif; font-size: 11pt;">';
             $html .= '<thead><tr>';
             $columns = [
-                'ID', 'Nama Infrastruktur', 'Jenis', 'Material', 'Kecamatan', 'Kelurahan', 
-                'Panjang (m)', 'Lebar (m)', 'Kondisi Lapangan', 'Status Kondisi', 'Skor Prioritas', 'Tanggal Survey'
+                'NO', 'NAMA OBJEK', 'JENIS', 'MATERIAL', 'KECAMATAN', 'KELURAHAN', 
+                'PANJANG (M)', 'LEBAR (M)', 'KONDISI', 'PRIORITAS AI', 'SKOR DT', 'TGL SURVEY'
             ];
             
             // Header dengan border tebal dan warna background
@@ -648,10 +648,11 @@ class AdminController extends Controller
             $html .= '</tr></thead><tbody>';
 
             // Data rows dengan border tipis (0.5pt) seperti default border Excel
+            $no = 1;
             foreach ($infrastrukturs as $inf) {
                 $html .= '<tr>';
                 $tdStyle = 'border: 0.5pt solid #000000; padding: 5px;';
-                $html .= '<td style="' . $tdStyle . '">' . $inf->id_infrastruktur . '</td>';
+                $html .= '<td style="' . $tdStyle . ' text-align: center;">' . $no++ . '</td>';
                 $html .= '<td style="' . $tdStyle . '">' . $inf->nama_objek . '</td>';
                 $html .= '<td style="' . $tdStyle . '">' . ucfirst($inf->jenis) . '</td>';
                 $html .= '<td style="' . $tdStyle . '">' . $inf->material_eksisting . '</td>';
@@ -976,7 +977,7 @@ class AdminController extends Controller
             echo '<tr><th colspan="8" style="text-align:center; font-size:16px; font-weight:bold; border:none; padding-bottom:10px;">REKAPITULASI LAPORAN WARGA (SINFRA)</th></tr>';
             
             echo '<tr style="background-color: #f3f4f6;">';
-            echo '<th>ID</th>';
+            echo '<th>NO</th>';
             echo '<th>TANGGAL</th>';
             echo '<th>PELAPOR</th>';
             echo '<th>NO HP</th>';
@@ -986,9 +987,10 @@ class AdminController extends Controller
             echo '<th>STATUS</th>';
             echo '</tr>';
 
+            $no = 1;
             foreach ($laporanWarga as $lap) {
                 echo '<tr>';
-                echo '<td>' . $lap->id_laporan . '</td>';
+                echo '<td style="text-align: center;">' . $no++ . '</td>';
                 echo '<td>' . $lap->created_at->format('d/m/Y H:i') . '</td>';
                 echo '<td>' . htmlspecialchars($lap->nama_pelapor) . '</td>';
                 echo '<td>' . htmlspecialchars($lap->no_hp) . '</td>';
