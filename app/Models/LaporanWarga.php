@@ -29,8 +29,8 @@ class LaporanWarga extends Model
         return $this->belongsTo(Infrastruktur::class, 'id_infrastruktur', 'id_infrastruktur');
     }
 
-    public function surveyor(): BelongsTo
+    public function surveyor()
     {
-        return $this->belongsTo(User::class, 'id_surveyor', 'id');
+        return $this->belongsTo(User::class, 'id_surveyor', 'id_user');
     }
 }
