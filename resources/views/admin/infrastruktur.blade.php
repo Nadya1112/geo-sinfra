@@ -85,12 +85,6 @@
                 </div>
 
                 <div class="flex flex-col lg:flex-row items-center gap-3 w-full lg:w-auto">
-                    {{-- Export Excel --}}
-                    <a href="{{ route('admin.infrastruktur.export') }}"
-                        class="bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white border border-emerald-100 rounded-2xl text-xs px-5 py-2.5 font-bold transition-all shadow-sm flex items-center gap-2 whitespace-nowrap w-full lg:w-auto justify-center">
-                        <i class="fas fa-file-excel text-xs"></i> Export Excel
-                    </a>
-
                     {{-- Filter & Search --}}
                     <form action="{{ route('admin.infrastruktur') }}" method="GET" class="flex items-center w-full lg:w-[280px] xl:w-[350px]">
                         <select name="show" onchange="this.form.submit()" class="pl-4 pr-8 py-2.5 bg-white border border-slate-100 border-r-0 rounded-l-2xl text-xs font-bold text-navy-900 focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm shrink-0">
@@ -112,18 +106,6 @@
                         class="bg-gold-500 hover:bg-gold-600 text-white text-xs px-5 py-2.5 rounded-2xl font-bold shadow-lg shadow-gold-500/10 hover:shadow-gold-500/20 transition flex items-center justify-center gap-2 whitespace-nowrap w-full lg:w-auto">
                         <i class="fas fa-plus text-xs"></i> Tambah Data
                     </a>
-                    
-                    {{-- Export CSV --}}
-                    <a href="{{ route('admin.infrastruktur.csv') }}" target="_blank"
-                        class="px-5 py-2.5 bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white border border-emerald-100 hover:border-emerald-500 rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2 w-full lg:w-auto">
-                        <i class="fas fa-file-excel"></i> CSV
-                    </a>
-                    
-                    {{-- Print PDF --}}
-                    <button onclick="window.print()"
-                        class="px-5 py-2.5 bg-red-50 text-red-600 hover:bg-red-500 hover:text-white border border-red-100 hover:border-red-500 rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2 w-full lg:w-auto">
-                        <i class="fas fa-print"></i> Print
-                    </button>
                 </div>
             </div>
 
