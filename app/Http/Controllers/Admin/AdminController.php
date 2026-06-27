@@ -948,6 +948,82 @@ class AdminController extends Controller
         return $pdf->download('Laporan_Warga_SINFRA_' . date('Ymd') . '.pdf');
     }
 
+    public function exportCsvLaporan()
+    {
+        $laporanWarga = LaporanWarga::orderBy('created_at', 'desc')->get();
+        $this->logActivity('laporan', "Ekspor data Laporan Warga ke format CSV");
+
+        $filename = "Laporan_Warga_SINFRA_" . date('Ymd') . ".csv";
+        $headers = [
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$filename",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        ];
+
+        $columns = ['ID', 'TANGGAL', 'PELAPOR', 'NO HP', 'DESKRIPSI', 'PREDIKSI AI', 'KONDISI', 'STATUS'];
+
+        $callback = function() use($laporanWarga, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($laporanWarga as $lap) {
+                fputcsv($file, array(
+                    $lap->id_laporan,
+                    $lap->created_at->format('d/m/Y H:i'),
+                    $lap->nama_pelapor,
+                    $lap->no_hp,
+                    $lap->deskripsi,
+                    ucfirst($lap->jenis_ai),
+                    $lap->label_ai,
+                    $lap->status
+                ));
+            }
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+    public function exportCsvInfrastruktur()
+    {
+        $infrastruktur = Infrastruktur::orderBy('created_at', 'desc')->get();
+        $this->logActivity('infrastruktur', "Ekspor data Infrastruktur ke format CSV");
+
+        $filename = "Infrastruktur_SINFRA_" . date('Ymd') . ".csv";
+        $headers = [
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$filename",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        ];
+
+        $columns = ['ID', 'NAMA', 'JENIS', 'KONDISI', 'KELURAHAN', 'LATITUDE', 'LONGITUDE', 'STATUS PERBAIKAN'];
+
+        $callback = function() use($infrastruktur, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($infrastruktur as $inf) {
+                fputcsv($file, array(
+                    $inf->id_infrastruktur,
+                    $inf->nama_infrastruktur,
+                    ucfirst($inf->jenis),
+                    $inf->kondisi,
+                    $inf->kelurahan,
+                    $inf->latitude,
+                    $inf->longitude,
+                    $inf->status_perbaikan
+                ));
+            }
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
     // ==========================================================
     // MODUL PROFIL ADMIN
     // ==========================================================
