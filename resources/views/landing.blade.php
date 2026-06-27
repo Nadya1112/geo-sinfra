@@ -863,11 +863,23 @@
                         </li>
                         <li class="flex items-center gap-4">
                             <i class="fas fa-envelope text-gold-500"></i>
-                            <span class="text-sm text-slate-400">ampihkumuh@gmail.com</span>
+                            <span class="text-sm text-slate-400">{{ \App\Helpers\SettingHelper::get('contact_email', 'ampihkumuh@gmail.com') }}</span>
                         </li>
                         <li class="flex items-center gap-4">
                             <i class="fas fa-phone-alt text-gold-500"></i>
-                            <span class="text-sm text-slate-400">(0511) 3365592</span>
+                            <span class="text-sm text-slate-400">{{ \App\Helpers\SettingHelper::get('instansi_phone', '(0511) 3365592') }}</span>
+                        </li>
+                        <li class="flex items-center gap-4">
+                            <i class="fab fa-whatsapp text-gold-500 text-lg"></i>
+                            <span class="text-sm text-slate-400">
+                                @php
+                                    $waNumber = \App\Helpers\SettingHelper::get('contact_wa', '+6281234567890');
+                                    $waLink = preg_replace('/[^0-9]/', '', $waNumber);
+                                @endphp
+                                <a href="https://wa.me/{{ $waLink }}" target="_blank" class="hover:text-gold-500 transition-colors" title="Chat WhatsApp">
+                                    {{ $waNumber }}
+                                </a>
+                            </span>
                         </li>
 
                     </ul>
