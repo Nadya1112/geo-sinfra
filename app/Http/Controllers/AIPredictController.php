@@ -22,10 +22,13 @@ class AIPredictController extends Controller
             ], 400);
         }
 
-        // 1. Validasi Input (Tanpa memicu fileinfo yang mati di server)
-        $request->validate([
-            'image' => 'required|file|max:20480', // Maksimal 20MB
-        ]);
+        // 1. Validasi Input Manual Total (Bypass Laravel Validator yang mungkin butuh finfo)
+        if (!$request->hasFile('image') || !$request->file('image')->isValid()) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Gambar gagal diunggah! Pastikan ukuran file tidak melebihi batas.'
+            ], 400);
+        }
 
         // Cek ekstensi manual tanpa fileinfo
         $file = $request->file('image');
@@ -39,13 +42,17 @@ class AIPredictController extends Controller
             ], 400);
         }
 
-        $absolutePath = null;
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $absolutePath = storage_path('app/temp_predict/' . $filename);
+        if (!file_exists(storage_path('app/temp_predict'))) {
+            mkdir(storage_path('app/temp_predict'), 0777, true);
+        }
+
         try {
-            // 2. Simpan sementara gambar yang diupload ke storage/app/public/temp_predict
-            $file = $request->file('image');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $path = $file->storeAs('temp_predict', $filename, 'local');
-            $absolutePath = Storage::disk('local')->path($path);
+            // 2. Simpan sementara menggunakan native PHP untuk menghindari Flysystem (yang butuh finfo)
+            if (!move_uploaded_file($_FILES['image']['tmp_name'], $absolutePath)) {
+                return response()->json(['success' => false, 'error' => 'Gagal menyimpan file secara internal.'], 500);
+            }
 
             // 3. Kirim ke Flask API via HTTP POST menggunakan Native cURL untuk menghindari finfo (Guzzle)
             $apiUrl = env('CNN_API_URL', 'http://127.0.0.1:5000/predict');
