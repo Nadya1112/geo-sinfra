@@ -300,7 +300,7 @@
                         const errData = JSON.parse(errText);
                         throw new Error(errData.error || errData.message || 'Server error: ' + response.status);
                     } catch (parseError) {
-                        throw new Error('Server tidak merespons dengan benar (Kemungkinan file foto terlalu besar atau sesi habis).');
+                        throw new Error('Server (Bukan JSON): ' + errText.substring(0, 150));
                     }
                 }
 
