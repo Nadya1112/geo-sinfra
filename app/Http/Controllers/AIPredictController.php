@@ -22,10 +22,22 @@ class AIPredictController extends Controller
             ], 400);
         }
 
-        // 1. Validasi Input Gambar
+        // 1. Validasi Input (Tanpa memicu fileinfo yang mati di server)
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:20480', // Maksimal 20MB
+            'image' => 'required|file|max:20480', // Maksimal 20MB
         ]);
+
+        // Cek ekstensi manual tanpa fileinfo
+        $file = $request->file('image');
+        $extension = strtolower($file->getClientOriginalExtension());
+        $allowedExtensions = ['jpeg', 'jpg', 'png', 'webp'];
+
+        if (!in_array($extension, $allowedExtensions)) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Format file tidak didukung! Gunakan JPG atau PNG.'
+            ], 400);
+        }
 
         $absolutePath = null;
         try {
