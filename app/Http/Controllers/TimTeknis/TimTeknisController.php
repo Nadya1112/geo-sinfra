@@ -280,7 +280,7 @@ class TimTeknisController extends Controller
         $inf = DB::table('infrastruktur')
             ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
             ->leftJoin('kecamatan', 'kelurahan.id_kecamatan', '=', 'kecamatan.id_kecamatan')
-            ->leftJoin('users', 'infrastruktur.id_user', '=', 'users.id')
+            ->leftJoin('users', 'infrastruktur.id_user', '=', 'users.id_user')
             ->leftJoin('citra_cnn', 'infrastruktur.id_infrastruktur', '=', 'citra_cnn.id_infrastruktur')
             ->leftJoin('analisis_ai', 'infrastruktur.id_infrastruktur', '=', 'analisis_ai.id_infrastruktur')
             ->where('infrastruktur.id_infrastruktur', $id)
