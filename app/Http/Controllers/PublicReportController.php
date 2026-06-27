@@ -56,6 +56,22 @@ class PublicReportController extends Controller
                     'target' => $target,
                     'message' => $pesan,
                 ]);
+
+                // Kirim Auto-Reply ke Warga (Pelapor)
+                $wargaPhone = $laporan->no_hp;
+                if (!empty($wargaPhone)) {
+                    $pesanWarga = "Halo Bapak/Ibu {$laporan->nama_pelapor}! 👋\n\n";
+                    $pesanWarga .= "Terima kasih atas laporan Anda terkait kerusakan infrastruktur *" . ucfirst($laporan->jenis_ai) . "*. Laporan Anda telah kami terima dan masuk ke dalam sistem pusat GEO-SINFRA.\n\n";
+                    $pesanWarga .= "Tim Teknis dari *Dinas Perumahan Rakyat dan Kawasan Permukiman (DPRKP) Kota Banjarmasin* akan segera meninjau laporan ini.\n\n";
+                    $pesanWarga .= "Mari bersama membangun Kota Banjarmasin yang lebih baik! Kayuh Baimbai! 🏙️";
+
+                    \Illuminate\Support\Facades\Http::withHeaders([
+                        'Authorization' => $token,
+                    ])->post('https://api.fonnte.com/send', [
+                        'target' => $wargaPhone,
+                        'message' => $pesanWarga,
+                    ]);
+                }
             }
         } catch (\Exception $e) {
             Log::error("Gagal mengirim WA Fonnte: " . $e->getMessage());
