@@ -12,11 +12,16 @@ return new class extends Migration
      */
     public function up(): void
     {
+        $driver = DB::connection()->getDriverName();
         // First change column to string or enum with new value
-        DB::statement("ALTER TABLE users MODIFY COLUMN role ENUM('admin', 'surveyor', 'kabid', 'tim_teknis') DEFAULT 'surveyor'");
+        if ($driver !== 'sqlite') {
+            DB::statement("ALTER TABLE users MODIFY COLUMN role ENUM('admin', 'surveyor', 'kabid', 'tim_teknis') DEFAULT 'surveyor'");
+        }
         DB::table('users')->where('role', 'kabid')->update(['role' => 'tim_teknis']);
         // Then restrict back if needed, or leave it
-        DB::statement("ALTER TABLE users MODIFY COLUMN role ENUM('admin', 'surveyor', 'tim_teknis') DEFAULT 'surveyor'");
+        if ($driver !== 'sqlite') {
+            DB::statement("ALTER TABLE users MODIFY COLUMN role ENUM('admin', 'surveyor', 'tim_teknis') DEFAULT 'surveyor'");
+        }
     }
 
     /**
@@ -24,8 +29,13 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::statement("ALTER TABLE users MODIFY COLUMN role ENUM('admin', 'surveyor', 'kabid', 'tim_teknis') DEFAULT 'surveyor'");
+        $driver = DB::connection()->getDriverName();
+        if ($driver !== 'sqlite') {
+            DB::statement("ALTER TABLE users MODIFY COLUMN role ENUM('admin', 'surveyor', 'kabid', 'tim_teknis') DEFAULT 'surveyor'");
+        }
         DB::table('users')->where('role', 'tim_teknis')->update(['role' => 'kabid']);
-        DB::statement("ALTER TABLE users MODIFY COLUMN role ENUM('admin', 'surveyor', 'kabid') DEFAULT 'surveyor'");
+        if ($driver !== 'sqlite') {
+            DB::statement("ALTER TABLE users MODIFY COLUMN role ENUM('admin', 'surveyor', 'kabid') DEFAULT 'surveyor'");
+        }
     }
 };
