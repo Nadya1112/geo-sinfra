@@ -24,7 +24,7 @@ class AIPredictController extends Controller
 
         // 1. Validasi Input Gambar
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:5120', // Maksimal 5MB
+            'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:20480', // Maksimal 20MB
         ]);
 
         $absolutePath = null;
