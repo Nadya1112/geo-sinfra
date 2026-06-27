@@ -47,23 +47,34 @@ class AIPredictController extends Controller
             $path = $file->storeAs('temp_predict', $filename, 'local');
             $absolutePath = Storage::disk('local')->path($path);
 
-            // 3. Kirim ke Flask API via HTTP POST
+            // 3. Kirim ke Flask API via HTTP POST menggunakan Native cURL untuk menghindari finfo (Guzzle)
             $apiUrl = env('CNN_API_URL', 'http://127.0.0.1:5000/predict');
             
-            $response = Http::timeout(30)->attach(
-                'image', file_get_contents($absolutePath), $filename
-            )->post($apiUrl);
+            $mimeType = 'image/' . ($extension == 'jpg' ? 'jpeg' : $extension);
+            $cfile = new \CURLFile($absolutePath, $mimeType, $filename);
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $apiUrl);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, ['image' => $cfile]);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+
+            $responseBody = curl_exec($ch);
+            $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            $curlError = curl_error($ch);
+            curl_close($ch);
 
             // 4. Cek respons dari Flask API
-            if ($response->failed()) {
-                Log::error('AI Prediction API Error: ' . $response->body());
+            if ($responseBody === false || $httpcode !== 200) {
+                Log::error('AI Prediction cURL Error: ' . $curlError . ' Body: ' . $responseBody);
                 return response()->json([
                     'success' => false,
-                    'error' => 'Gagal terhubung ke Server AI. Status: ' . $response->status() . ' Body: ' . $response->body()
+                    'error' => 'Gagal terhubung ke Server AI. Status: ' . $httpcode . ' Error: ' . $curlError
                 ], 500);
             }
 
-            return response()->json($response->json());
+            return response()->json(json_decode($responseBody, true));
 
         } catch (\Exception $e) {
             Log::error('AI Prediction Exception: ' . $e->getMessage());
