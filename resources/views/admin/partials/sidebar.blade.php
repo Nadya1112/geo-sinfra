@@ -251,17 +251,9 @@
         }
     }
 
-    function toggleThemeMenu(menuId) {
-        const menu = document.getElementById(menuId);
-        menu.classList.toggle('hidden');
-    }
+    
 
-    function setTheme(theme) {
-        if (theme === 'system') {
-            localStorage.removeItem('theme');
-            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                document.documentElement.classList.add('dark');
-            } else {
+     else {
                 document.documentElement.classList.remove('dark');
             }
         } else {
@@ -273,9 +265,9 @@
             }
         }
         
-        // Sembunyikan menu setelah memilih
-        document.getElementById('theme-menu-desktop').classList.add('hidden');
-        document.getElementById('theme-menu-mobile').classList.add('hidden');
+        
+        
+        
     }
 
     // --- REAL-TIME NOTIFICATION SYSTEM ---

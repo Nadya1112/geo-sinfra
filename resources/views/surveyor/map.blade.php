@@ -22,42 +22,39 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script>
-        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-    </script>
     <style> body { font-family: 'Plus Jakarta Sans', sans-serif; }
     </style>
 
+<style>
+    @media (min-width: 768px) { html { font-size: 14px; } }
+    @media (max-width: 767px) { html { font-size: 12px; } }
+</style>
 </head>
-<body class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 text-left dark:bg-navy-950 dark:text-white transition-colors duration-300">
+<body class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 text-left   transition-colors duration-300">
 
     @include('surveyor.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden">
-        <header class="bg-white dark:bg-[#1e1b4b] border-b border-navy-50 px-8 py-5 flex justify-between items-center z-10 shadow-sm relative">
+        <header class="bg-white  border-b border-navy-50 sticky top-0 px-4 pl-16 md:px-8 py-4 flex justify-between items-center z-10 shadow-sm relative">
             <div class="flex items-center gap-4">
-                <a href="{{ route('surveyor.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-navy-50 dark:bg-navy-900 text-navy-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 transition-all border border-navy-100">
+                <a href="{{ route('surveyor.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-navy-50  text-navy-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 transition-all border border-navy-100">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
                     <p class="text-xs font-extrabold text-gold-500 uppercase tracking-[0.2em] mb-1">Visualisasi Geografis</p>
-                    <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Peta Sebaran Laporan Saya</h2>
+                    <h2 class="text-xl font-black text-navy-900  leading-none">Peta Sebaran Laporan Saya</h2>
                 </div>
             </div>
             
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-sm font-black text-navy-900 " id="mini-clock">00:00 WITA</p>
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-navy-100"></div>
                 <a href="{{ route('surveyor.profile') }}" class="flex items-center gap-3 group">
                     <div class="text-right">
-                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
+                        <p class="text-sm font-black text-navy-900  leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
                         <p class="text-xs font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
                     </div>
                     <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md">
@@ -346,12 +343,12 @@
             if(showFloodLayer) {
                 map.addLayer(floodLayer);
                 bg.classList.replace('bg-slate-700', 'bg-blue-500');
-                dot.classList.replace('bg-slate-400', 'bg-white dark:bg-[#1e1b4b]');
+                dot.classList.replace('bg-slate-400', 'bg-white ');
                 dot.classList.replace('left-[2px]', 'left-[14px]');
             } else {
                 map.removeLayer(floodLayer);
                 bg.classList.replace('bg-blue-500', 'bg-slate-700');
-                dot.classList.replace('bg-white dark:bg-[#1e1b4b]', 'bg-slate-400');
+                dot.classList.replace('bg-white ', 'bg-slate-400');
                 dot.classList.replace('left-[14px]', 'left-[2px]');
             }
         }

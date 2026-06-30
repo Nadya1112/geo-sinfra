@@ -26,13 +26,8 @@ class PublicReportController extends Controller
         $file = $request->file('foto');
         $filename = time() . '_' . $file->getClientOriginalName();
         
-        // Simpan manual dengan file_get_contents untuk menghindari masalah tmp_name
         $publicLaporanPath = storage_path('app/public/laporan_warga');
-        if (!file_exists($publicLaporanPath)) {
-            mkdir($publicLaporanPath, 0777, true);
-        }
-        $absolutePath = $publicLaporanPath . '/' . $filename;
-        file_put_contents($absolutePath, file_get_contents($file->getRealPath()));
+        $file->move($publicLaporanPath, $filename);
         
         $fotoPath = 'laporan_warga/' . $filename;
 

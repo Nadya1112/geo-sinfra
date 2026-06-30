@@ -50,28 +50,7 @@
     </div>
 
     <div class="p-6 border-t border-white/5 text-left bg-navy-950/20 relative">
-        <!-- Theme Switcher (Desktop) -->
-        <div class="mb-2 relative">
-            <button onclick="toggleThemeMenu('theme-menu-desktop')" class="flex items-center justify-between w-full px-4 py-3.5 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-bold transition group">
-                <div class="flex items-center gap-3">
-                    <i class="fas fa-palette group-hover:text-gold-500 transition-colors"></i>
-                    <span>Tema Tampilan</span>
-                </div>
-                <i class="fas fa-chevron-up text-xs opacity-50"></i>
-            </button>
-            
-            <div id="theme-menu-desktop" class="hidden absolute bottom-16 left-0 w-full bg-[#1e1b4b] rounded-xl shadow-2xl border border-white/10 p-1.5 z-50 mb-1">
-                <button onclick="setTheme('light')" class="w-full text-left px-3 py-2.5 text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 rounded-lg flex items-center gap-2 transition-colors">
-                    <i class="fas fa-sun text-yellow-400 w-4 text-center"></i> Terang
-                </button>
-                <button onclick="setTheme('dark')" class="w-full text-left px-3 py-2.5 text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 rounded-lg flex items-center gap-2 transition-colors mt-0.5">
-                    <i class="fas fa-moon text-blue-400 w-4 text-center"></i> Gelap
-                </button>
-                <button onclick="setTheme('system')" class="w-full text-left px-3 py-2.5 text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 rounded-lg flex items-center gap-2 transition-colors mt-0.5 border-t border-white/5 pt-2">
-                    <i class="fas fa-desktop text-slate-400 w-4 text-center"></i> Sesuai Sistem
-                </button>
-            </div>
-        </div>
+        
 
         <form method="POST" action="{{ route('logout') }}">
             @csrf
@@ -191,21 +170,13 @@
         }
     }
 
-    // Theme Switcher Logic
-    function toggleThemeMenu(menuId) {
-        const menu = document.getElementById(menuId);
-        if (menu.classList.contains('hidden')) {
-            menu.classList.remove('hidden');
-        } else {
+    
+     else {
             menu.classList.add('hidden');
         }
     }
 
-    function setTheme(theme) {
-        if (theme === 'dark') {
-            localStorage.theme = 'dark';
-            document.documentElement.classList.add('dark');
-        } else if (theme === 'light') {
+     else if (theme === 'light') {
             localStorage.theme = 'light';
             document.documentElement.classList.remove('dark');
         } else {
@@ -225,16 +196,5 @@
     }
 
     // Menutup menu jika klik di luar
-    document.addEventListener('click', function(event) {
-        const desktopMenu = document.getElementById('theme-menu-desktop');
-        const mobileMenu = document.getElementById('theme-menu-mobile');
-        
-        if (!event.target.closest('[onclick="toggleThemeMenu(\'theme-menu-desktop\')"]') && !event.target.closest('#theme-menu-desktop')) {
-            if(desktopMenu && !desktopMenu.classList.contains('hidden')) desktopMenu.classList.add('hidden');
-        }
-        
-        if (!event.target.closest('[onclick="toggleThemeMenu(\'theme-menu-mobile\')"]') && !event.target.closest('#theme-menu-mobile')) {
-            if(mobileMenu && !mobileMenu.classList.contains('hidden')) mobileMenu.classList.add('hidden');
-        }
-    });
+    
 </script>

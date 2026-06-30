@@ -24,13 +24,6 @@
             }
         }
     </script>
-    <script>
-        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-    </script>
 
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -38,34 +31,38 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     </style>
 
+<style>
+    @media (min-width: 768px) { html { font-size: 14px; } }
+    @media (max-width: 767px) { html { font-size: 12px; } }
+</style>
 </head>
-<body class="bg-slate-50 dark:bg-[#0f0e2c] flex h-screen overflow-hidden text-slate-800 text-left font-sans dark:bg-navy-950 dark:text-white transition-colors duration-300">
+<body class="bg-slate-50  flex h-screen overflow-hidden text-slate-800 text-left font-sans   transition-colors duration-300">
 
     @include('surveyor.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden text-left font-sans relative">
-        <header class="bg-white/85 dark:bg-[#1e1b4b]/85 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 px-8 py-5 flex justify-between items-center z-40 text-left">
+        <header class="bg-white/85  backdrop-blur-xl border-b border-slate-100  sticky top-0 px-4 pl-16 md:px-8 py-4 flex justify-between items-center z-40 text-left">
             <div class="flex items-center gap-4 text-left ml-10 md:ml-0">
                 <a href="{{ route('surveyor.dashboard') }}"
-                   class="w-10 h-10 bg-white dark:bg-[#1e1b4b] border border-slate-100 dark:border-white/10 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/20 hover:shadow-lg hover:shadow-gold-500/5 transition-all group"
+                   class="w-10 h-10 bg-white  border border-slate-100  rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/20 hover:shadow-lg hover:shadow-gold-500/5 transition-all group"
                    title="Kembali ke Dashboard Utama">
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
                 <div class="text-left">
                     <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Surveyor Portal</p>
-                    <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Penugasan Laporan Warga</h2>
+                    <h2 class="text-xl font-black text-navy-900  leading-none">Penugasan Laporan Warga</h2>
                 </div>
             </div>
 
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-sm font-black text-navy-900 " id="mini-clock">00:00 WITA</p>
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
                     <a href="{{ route('surveyor.profile') }}" class="text-right group">
-                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
+                        <p class="text-sm font-black text-navy-900  leading-none uppercase group-hover:text-gold-500 transition-all">{{ auth()->user()->name }}</p>
                         <p class="text-xs font-bold text-emerald-500 uppercase mt-1">Online</p>
                     </a>
                     <a href="{{ route('surveyor.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md">
@@ -80,7 +77,7 @@
         </header>
 
         <!-- Content -->
-        <div class="flex-1 overflow-y-auto custom-scrollbar p-6 md:p-8 bg-slate-50 dark:bg-[#0f0e2c]/50">
+        <div class="flex-1 overflow-y-auto custom-scrollbar p-6 md:p-8 bg-slate-50 ">
             <div class="max-w-7xl mx-auto space-y-6">
 
                 @if(session('success'))
@@ -97,21 +94,21 @@
                 {{-- ── Toolbar: Judul + Filter + Ekspor ── --}}
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-2">
                     <div>
-                        <h4 class="font-extrabold text-lg text-navy-900 dark:text-white">Daftar Penugasan Laporan Warga</h4>
+                        <h4 class="font-extrabold text-lg text-navy-900 ">Daftar Penugasan Laporan Warga</h4>
                         <p class="text-xs text-slate-400 font-semibold mt-0.5">Tinjau lokasi laporan di lapangan dan ubah status laporan</p>
                     </div>
                 </div>
 
                 <!-- Filters & Search -->
-                <div class="bg-white dark:bg-[#1e1b4b] p-5 rounded-[2rem] shadow-sm border border-slate-100 dark:border-white/10 flex flex-col md:flex-row gap-4 items-center justify-between mb-4">
+                <div class="bg-white  p-5 rounded-[2rem] shadow-sm border border-slate-100  flex flex-col md:flex-row gap-4 items-center justify-between mb-4">
                     <form method="GET" action="{{ route('surveyor.laporan') }}" class="flex flex-col md:flex-row gap-3 w-full">
                         <div class="flex-1 relative">
                             <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
                             <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Cari nama pelapor, deskripsi, atau no HP..." 
-                                   class="w-full pl-11 pr-4 py-2.5 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-xl text-sm focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all font-medium">
+                                   class="w-full pl-11 pr-4 py-2.5 bg-slate-50  border border-slate-200  rounded-xl text-sm focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all font-medium">
                         </div>
                         <div class="w-full md:w-48 relative">
-                            <select name="status" onchange="this.form.submit()" class="w-full pl-4 pr-10 py-2.5 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-xl text-sm font-bold text-navy-900 dark:text-white focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 appearance-none">
+                            <select name="status" onchange="this.form.submit()" class="w-full pl-4 pr-10 py-2.5 bg-slate-50  border border-slate-200  rounded-xl text-sm font-bold text-navy-900  focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 appearance-none">
                                 <option value="all" {{ ($status ?? 'all') == 'all' ? 'selected' : '' }}>Semua Status</option>
                                 <option value="Menunggu" {{ ($status ?? '') == 'Menunggu' ? 'selected' : '' }}>Menunggu</option>
                                 <option value="Ditinjau" {{ ($status ?? '') == 'Ditinjau' ? 'selected' : '' }}>Ditinjau</option>
@@ -133,7 +130,7 @@
                 </div>
 
                 <!-- Table Container -->
-                <div class="bg-white dark:bg-[#1e1b4b] rounded-[2rem] shadow-xl shadow-slate-200/40 border border-slate-100 dark:border-white/10 overflow-hidden">
+                <div class="bg-white  rounded-[2rem] shadow-xl shadow-slate-200/40 border border-slate-100  overflow-hidden">
                     <div class="overflow-x-auto custom-scrollbar">
                         <table class="w-full text-left text-sm whitespace-nowrap md:whitespace-normal">
                             <thead class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
@@ -146,35 +143,35 @@
                             </thead>
                             <tbody class="divide-y divide-slate-100">
                                 @forelse($laporanWarga as $laporan)
-                                <tr class="hover:bg-slate-50 dark:hover:bg-white/5 dark:bg-[#0f0e2c]/80 transition-colors group">
+                                <tr class="hover:bg-slate-50   transition-colors group">
                                     <td class="px-6 py-4">
                                         <div class="flex items-center gap-2">
                                             <i class="far fa-clock text-slate-400"></i>
                                             <div>
-                                                <p class="font-bold text-navy-900 dark:text-white">{{ \Carbon\Carbon::parse($laporan->created_at)->format('d M Y') }}</p>
+                                                <p class="font-bold text-navy-900 ">{{ \Carbon\Carbon::parse($laporan->created_at)->format('d M Y') }}</p>
                                                 <p class="text-xs text-slate-500 font-medium">{{ \Carbon\Carbon::parse($laporan->created_at)->format('H:i') }}</p>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <p class="font-bold text-navy-900 dark:text-white">{{ $laporan->nama_pelapor }}</p>
+                                        <p class="font-bold text-navy-900 ">{{ $laporan->nama_pelapor }}</p>
                                         <p class="text-xs font-semibold text-slate-500 mt-0.5"><i class="fas fa-phone-alt text-xs text-slate-400 mr-1"></i> {{ $laporan->no_hp }}</p>
                                     </td>
                                     <td class="px-6 py-4 min-w-[250px]">
-                                        <p class="text-sm font-medium text-slate-700 dark:text-slate-300 line-clamp-2 leading-relaxed mb-2">{{ $laporan->deskripsi }}</p>
+                                        <p class="text-sm font-medium text-slate-700  line-clamp-2 leading-relaxed mb-2">{{ $laporan->deskripsi }}</p>
                                         
                                         @if($laporan->label_ai)
                                             @php
-                                                $aiColor = 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400 border-slate-200 dark:border-white/20';
+                                                $aiColor = 'bg-slate-100 text-slate-600   border-slate-200 ';
                                                 $aiIcon = 'fa-robot';
                                                 if(str_contains(strtolower($laporan->label_ai), 'berat')) {
-                                                    $aiColor = 'bg-red-50 text-red-600 dark:bg-red-900/20 dark:text-red-400 border-red-200 dark:border-red-500/20';
+                                                    $aiColor = 'bg-red-50 text-red-600   border-red-200 ';
                                                     $aiIcon = 'fa-exclamation-triangle';
                                                 } elseif(str_contains(strtolower($laporan->label_ai), 'sedang')) {
-                                                    $aiColor = 'bg-yellow-50 text-yellow-600 dark:bg-yellow-900/20 dark:text-yellow-400 border-yellow-200 dark:border-yellow-500/20';
+                                                    $aiColor = 'bg-yellow-50 text-yellow-600   border-yellow-200 ';
                                                     $aiIcon = 'fa-exclamation-circle';
                                                 } elseif(str_contains(strtolower($laporan->label_ai), 'baik')) {
-                                                    $aiColor = 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400 border-emerald-200 dark:border-emerald-500/20';
+                                                    $aiColor = 'bg-emerald-50 text-emerald-600   border-emerald-200 ';
                                                     $aiIcon = 'fa-check-circle';
                                                 }
                                                 $skorPercent = $laporan->skor_ai ? round($laporan->skor_ai * 100) . '%' : '';
@@ -203,12 +200,12 @@
                                             @method('PUT')
                                             
                                             @php
-                                                $statusColor = 'bg-slate-100 text-slate-700 dark:bg-[#1e1b4b] dark:text-slate-300 border-slate-200 dark:border-white/20';
-                                                if($laporan->status == 'Menunggu') $statusColor = 'bg-yellow-50 text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-400 border-yellow-200 dark:border-yellow-500/20';
-                                                if($laporan->status == 'Ditinjau') $statusColor = 'bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400 border-blue-200 dark:border-blue-500/20';
-                                                if($laporan->status == 'Diproses') $statusColor = 'bg-indigo-50 text-indigo-700 dark:bg-indigo-900/20 dark:text-indigo-400 border-indigo-200 dark:border-indigo-500/20';
-                                                if($laporan->status == 'Selesai') $statusColor = 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400 border-emerald-200 dark:border-emerald-500/20';
-                                                if($laporan->status == 'Ditolak') $statusColor = 'bg-red-50 text-red-700 dark:bg-red-900/20 dark:text-red-400 border-red-200 dark:border-red-500/20';
+                                                $statusColor = 'bg-slate-100 text-slate-700   border-slate-200 ';
+                                                if($laporan->status == 'Menunggu') $statusColor = 'bg-yellow-50 text-yellow-700   border-yellow-200 ';
+                                                if($laporan->status == 'Ditinjau') $statusColor = 'bg-blue-50 text-blue-700   border-blue-200 ';
+                                                if($laporan->status == 'Diproses') $statusColor = 'bg-indigo-50 text-indigo-700   border-indigo-200 ';
+                                                if($laporan->status == 'Selesai') $statusColor = 'bg-emerald-50 text-emerald-700   border-emerald-200 ';
+                                                if($laporan->status == 'Ditolak') $statusColor = 'bg-red-50 text-red-700   border-red-200 ';
                                             @endphp
                                             
                                             <select name="status" onchange="this.form.submit()" class="w-full appearance-none pl-3 pr-8 py-1.5 rounded-lg text-xs font-bold border {{ $statusColor }} focus:outline-none focus:ring-2 focus:ring-navy-500 cursor-pointer shadow-sm">
@@ -235,7 +232,7 @@
                     </div>
                     
                     @if($laporanWarga->hasPages())
-                    <div class="p-6 border-t border-slate-100 dark:border-white/10 bg-slate-50 dark:bg-[#0f0e2c]/50">
+                    <div class="p-6 border-t border-slate-100  bg-slate-50 ">
                         {{ $laporanWarga->links() }}
                     </div>
                     @endif
@@ -247,7 +244,7 @@
 
     <!-- Modal Foto -->
     <div id="photoModal" class="fixed inset-0 bg-navy-950/90 backdrop-blur-sm z-[9999] hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
-        <button onclick="closePhotoModal()" class="absolute top-6 right-6 w-12 h-12 bg-white/10 dark:bg-[#1e1b4b]/10 hover:bg-white/20 dark:bg-[#1e1b4b]/20 text-white rounded-full flex items-center justify-center transition-colors">
+        <button onclick="closePhotoModal()" class="absolute top-6 right-6 w-12 h-12 bg-white/10  hover:bg-white/20  text-white rounded-full flex items-center justify-center transition-colors">
             <i class="fas fa-times text-xl"></i>
         </button>
         <div class="max-w-4xl w-full max-h-[90vh] relative transform scale-95 transition-transform duration-300" id="photoModalContent">

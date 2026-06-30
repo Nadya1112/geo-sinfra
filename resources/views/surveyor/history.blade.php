@@ -22,13 +22,6 @@
             }
         }
     </script>
-    <script>
-        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-    </script>
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
@@ -36,33 +29,37 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     </style>
 
+<style>
+    @media (min-width: 768px) { html { font-size: 14px; } }
+    @media (max-width: 767px) { html { font-size: 12px; } }
+</style>
 </head>
-<body class="bg-slate-50 dark:bg-[#0f0e2c] flex h-screen overflow-hidden text-slate-800 font-sans dark:bg-navy-950 dark:text-white transition-colors duration-300">
+<body class="bg-slate-50  flex h-screen overflow-hidden text-slate-800 font-sans   transition-colors duration-300">
 
     @include('surveyor.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden">
         {{-- ── Header ── --}}
-        <header class="bg-white/80 dark:bg-[#1e1b4b]/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 px-8 py-5 flex justify-between items-center z-40 shrink-0">
+        <header class="bg-white/80  backdrop-blur-xl border-b border-slate-100  sticky top-0 px-4 pl-16 md:px-8 py-4 flex justify-between items-center z-40 shrink-0">
             <div class="flex items-center gap-4">
-                <a href="{{ route('surveyor.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-white dark:bg-[#1e1b4b] text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 transition-all border border-slate-200 dark:border-white/20 hover:border-gold-200">
+                <a href="{{ route('surveyor.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-white  text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 transition-all border border-slate-200  hover:border-gold-200">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
                     <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Manajemen Laporan</p>
-                    <h2 class="text-xl font-black text-navy-900 dark:text-white tracking-tight">Riwayat Survey Anda</h2>
+                    <h2 class="text-xl font-black text-navy-900  tracking-tight">Riwayat Survey Anda</h2>
                 </div>
             </div>
 
             <div class="flex items-center gap-6">
                 <div class="text-right hidden sm:block">
-                    <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-sm font-black text-navy-900 " id="mini-clock">00:00 WITA</p>
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
                     <div class="text-right">
-                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase">{{ auth()->user()->name }}</p>
+                        <p class="text-sm font-black text-navy-900  leading-none uppercase">{{ auth()->user()->name }}</p>
                         <p class="text-xs font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
                     </div>
                     <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-navy-800 overflow-hidden shadow-md">
@@ -76,7 +73,7 @@
             </div>
         </header>
 
-        <div class="flex-1 overflow-y-auto custom-scrollbar p-8 pb-16">
+        <div class="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-8 pb-16">
             <div class="max-w-7xl mx-auto">
 
                 {{-- Alert Sukses --}}
@@ -97,18 +94,18 @@
 
                 <div class="flex justify-between items-end mb-6">
                     <div>
-                        <h3 class="text-lg font-black text-navy-900 dark:text-white">Daftar Data Lapangan</h3>
+                        <h3 class="text-lg font-black text-navy-900 ">Daftar Data Lapangan</h3>
                         <p class="text-xs text-slate-400 font-medium mt-1">Seluruh laporan infrastruktur yang telah Anda kumpulkan.</p>
                     </div>
                     <form action="{{ route('surveyor.history') }}" method="GET" class="w-48">
-                        <select name="show" onchange="this.form.submit()" class="w-full bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 rounded-xl px-4 py-3 text-xs font-black text-navy-900 dark:text-white shadow-sm focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all cursor-pointer">
+                        <select name="show" onchange="this.form.submit()" class="w-full bg-white  border border-slate-200  rounded-xl px-4 py-3 text-xs font-black text-navy-900  shadow-sm focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all cursor-pointer">
                             <option value="10" {{ request('show') != 'all' ? 'selected' : '' }}>Tampilkan 10 Data</option>
                             <option value="all" {{ request('show') == 'all' ? 'selected' : '' }}>Tampilkan Semua</option>
                         </select>
                     </form>
                 </div>
 
-                <div class="bg-white dark:bg-[#1e1b4b] rounded-[2rem] border border-slate-100 dark:border-white/10 shadow-sm overflow-hidden mb-10">
+                <div class="bg-white  rounded-[2rem] border border-slate-100  shadow-sm overflow-hidden mb-10">
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
                             <thead>
@@ -124,7 +121,7 @@
                             </thead>
                             <tbody class="divide-y divide-slate-50">
                                 @forelse($riwayat as $index => $item)
-                                <tr class="hover:bg-slate-50 dark:hover:bg-white/5 dark:bg-[#0f0e2c]/50 transition-colors">
+                                <tr class="hover:bg-slate-50   transition-colors">
                                     <td class="px-4 py-2 text-center">
                                         <span class="text-xs font-black text-slate-400">{{ request('show') == 'all' ? $index + 1 : ($riwayat->currentPage() - 1) * $riwayat->perPage() + $index + 1 }}</span>
                                     </td>
@@ -150,8 +147,8 @@
 
                                     {{-- NAMA INFRASTRUKTUR --}}
                                     <td class="px-4 py-2">
-                                        <p class="text-xs font-black text-navy-900 dark:text-white uppercase tracking-tight mb-0.5">{{ $item->nama_infrastruktur ?? $item->nama_objek }}</p>
-                                        <span class="inline-flex px-1.5 py-0.5 bg-navy-50 dark:bg-navy-900 text-navy-600 rounded-md text-xs font-black uppercase tracking-widest">{{ ucfirst($item->jenis) }}</span>
+                                        <p class="text-xs font-black text-navy-900  uppercase tracking-tight mb-0.5">{{ $item->nama_infrastruktur ?? $item->nama_objek }}</p>
+                                        <span class="inline-flex px-1.5 py-0.5 bg-navy-50  text-navy-600 rounded-md text-xs font-black uppercase tracking-widest">{{ ucfirst($item->jenis) }}</span>
                                     </td>
 
                                     {{-- LOKASI --}}
@@ -161,7 +158,7 @@
                                                 <i class="fas fa-map-marker-alt text-xs"></i>
                                             </div>
                                             <div>
-                                                <p class="text-xs font-black text-navy-900 dark:text-white uppercase tracking-wider">{{ $item->kelurahan ? $item->kelurahan->nama_kelurahan : '-' }}</p>
+                                                <p class="text-xs font-black text-navy-900  uppercase tracking-wider">{{ $item->kelurahan ? $item->kelurahan->nama_kelurahan : '-' }}</p>
                                                 <p class="text-xs text-slate-400 font-bold uppercase tracking-widest mt-0.5">
                                                     KEC. {{ $item->kelurahan && $item->kelurahan->kecamatan ? $item->kelurahan->kecamatan->nama_kecamatan : '-' }}
                                                 </p>
@@ -173,15 +170,15 @@
                                     <td class="px-4 py-2 text-center">
                                         @if($item->status_validasi == 'Rejected')
                                             <div class="inline-flex flex-col items-center">
-                                                <span class="inline-flex px-2 py-0.5 bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-500/20 rounded-md text-xs font-black uppercase tracking-widest shadow-sm mb-0.5">Ditolak</span>
+                                                <span class="inline-flex px-2 py-0.5 bg-red-100  text-red-600  border border-red-200  rounded-md text-xs font-black uppercase tracking-widest shadow-sm mb-0.5">Ditolak</span>
                                                 <button onclick="alert('Alasan Penolakan: {{ addslashes($item->alasan_penolakan) }}')" class="text-xs font-bold text-red-500 hover:text-red-700 underline cursor-pointer">Lihat Alasan</button>
                                             </div>
                                         @elseif($item->status_validasi == 'Validated')
-                                            <span class="inline-flex px-2 py-1 bg-emerald-100 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20 rounded-lg text-xs font-black uppercase tracking-widest shadow-sm">Di-ACC</span>
+                                            <span class="inline-flex px-2 py-1 bg-emerald-100  text-emerald-600  border border-emerald-200  rounded-lg text-xs font-black uppercase tracking-widest shadow-sm">Di-ACC</span>
                                         @elseif($item->status_verifikasi == 'Verified')
-                                            <span class="inline-flex px-2 py-1 bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20 rounded-lg text-xs font-black uppercase tracking-widest shadow-sm">Verified</span>
+                                            <span class="inline-flex px-2 py-1 bg-blue-100  text-blue-600  border border-blue-200  rounded-lg text-xs font-black uppercase tracking-widest shadow-sm">Verified</span>
                                         @else
-                                            <span class="inline-flex px-2 py-1 bg-slate-100 dark:bg-navy-900 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-white/20 rounded-lg text-xs font-black uppercase tracking-widest shadow-sm">Pending</span>
+                                            <span class="inline-flex px-2 py-1 bg-slate-100  text-slate-500  border border-slate-200  rounded-lg text-xs font-black uppercase tracking-widest shadow-sm">Pending</span>
                                         @endif
                                     </td>
 
@@ -189,22 +186,22 @@
                                     <td class="px-4 py-2">
                                         @if($item->cnn || $item->analisis)
                                             <div class="flex justify-center">
-                                                <div class="inline-flex items-center bg-white dark:bg-[#1e1b4b] rounded-lg border border-slate-200 dark:border-white/20 shadow-sm overflow-hidden">
+                                                <div class="inline-flex items-center bg-white  rounded-lg border border-slate-200  shadow-sm overflow-hidden">
                                                     @if($item->analisis)
                                                         @php
                                                             $labelMap = [
-                                                                'Baik'        => ['bg' => 'bg-emerald-50 dark:bg-emerald-900/20', 'text' => 'text-emerald-600 dark:text-emerald-400', 'icon' => 'fa-check-circle'],
-                                                                'Rusak Sedang'=> ['bg' => 'bg-orange-50 dark:bg-orange-900/20',  'text' => 'text-orange-600 dark:text-orange-400',  'icon' => 'fa-hammer'],
-                                                                'Rusak Berat' => ['bg' => 'bg-red-50 dark:bg-red-900/20',     'text' => 'text-red-600 dark:text-red-400',     'icon' => 'fa-exclamation-triangle'],
+                                                                'Baik'        => ['bg' => 'bg-emerald-50 ', 'text' => 'text-emerald-600 ', 'icon' => 'fa-check-circle'],
+                                                                'Rusak Sedang'=> ['bg' => 'bg-orange-50 ',  'text' => 'text-orange-600 ',  'icon' => 'fa-hammer'],
+                                                                'Rusak Berat' => ['bg' => 'bg-red-50 ',     'text' => 'text-red-600 ',     'icon' => 'fa-exclamation-triangle'],
                                                             ];
-                                                            $style = $labelMap[$item->analisis->label_prioritas] ?? ['bg' => 'bg-slate-50 dark:bg-[#0f0e2c]', 'text' => 'text-slate-600 dark:text-slate-400', 'icon' => 'fa-info-circle'];
+                                                            $style = $labelMap[$item->analisis->label_prioritas] ?? ['bg' => 'bg-slate-50 ', 'text' => 'text-slate-600 ', 'icon' => 'fa-info-circle'];
                                                         @endphp
                                                         <div class="flex items-center gap-1.5 px-3 py-1.5 {{ $style['bg'] }}">
                                                             <i class="fas {{ $style['icon'] }} {{ $style['text'] }} text-xs"></i>
                                                             <span class="text-xs font-black {{ $style['text'] }} uppercase tracking-wider">{{ $item->analisis->label_prioritas }}</span>
                                                         </div>
                                                     @else
-                                                        <div class="flex items-center gap-1 px-3 py-1.5 bg-slate-50 dark:bg-[#0f0e2c]">
+                                                        <div class="flex items-center gap-1 px-3 py-1.5 bg-slate-50 ">
                                                             <span class="text-xs font-black text-slate-500 uppercase tracking-wider">Menunggu Status</span>
                                                         </div>
                                                     @endif
@@ -218,7 +215,7 @@
                                     {{-- AKSI --}}
                                     <td class="px-4 py-2 text-center">
                                         <div class="flex items-center justify-center gap-1.5">
-                                            <a href="{{ route('surveyor.infrastruktur.edit', $item->id_infrastruktur) }}" class="w-7 h-7 flex items-center justify-center bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 text-slate-400 rounded-md hover:bg-gold-500 hover:text-white hover:border-gold-500 hover:shadow-sm transition-all cursor-pointer" title="Edit Data">
+                                            <a href="{{ route('surveyor.infrastruktur.edit', $item->id_infrastruktur) }}" class="w-7 h-7 flex items-center justify-center bg-white  border border-slate-200  text-slate-400 rounded-md hover:bg-gold-500 hover:text-white hover:border-gold-500 hover:shadow-sm transition-all cursor-pointer" title="Edit Data">
                                                 <i class="fas fa-pen text-xs"></i>
                                             </a>
                                             <a href="{{ route('surveyor.infrastruktur.show', $item->id_infrastruktur) }}" class="w-7 h-7 flex items-center justify-center bg-navy-900 text-gold-500 rounded-md hover:bg-navy-950 hover:text-white transition-all shadow-sm cursor-pointer" title="Lihat Detail">
@@ -229,7 +226,7 @@
                                             @if($item->status_verifikasi === 'Pending')
                                             <button
                                                 onclick="konfirmasiHapus({{ $item->id_infrastruktur }}, '{{ addslashes($item->nama_objek ?? $item->nama_infrastruktur) }}')"
-                                                class="w-7 h-7 flex items-center justify-center bg-white dark:bg-[#1e1b4b] border border-red-200 text-red-400 rounded-md hover:bg-red-500 hover:text-white hover:border-red-500 hover:shadow-sm transition-all cursor-pointer"
+                                                class="w-7 h-7 flex items-center justify-center bg-white  border border-red-200 text-red-400 rounded-md hover:bg-red-500 hover:text-white hover:border-red-500 hover:shadow-sm transition-all cursor-pointer"
                                                 title="Hapus Data (hanya Pending)">
                                                 <i class="fas fa-trash text-xs"></i>
                                             </button>
@@ -247,11 +244,11 @@
                                 <tr>
                                     <td colspan="7" class="px-8 py-24 text-center">
                                         <div class="flex flex-col items-center gap-4">
-                                            <div class="w-24 h-24 bg-slate-50 dark:bg-[#0f0e2c] rounded-full flex items-center justify-center text-slate-300">
+                                            <div class="w-24 h-24 bg-slate-50  rounded-full flex items-center justify-center text-slate-300">
                                                 <i class="fas fa-folder-open text-5xl"></i>
                                             </div>
                                             <div>
-                                                <p class="text-sm text-navy-900 dark:text-white font-black uppercase tracking-wider mb-1">Riwayat Kosong</p>
+                                                <p class="text-sm text-navy-900  font-black uppercase tracking-wider mb-1">Riwayat Kosong</p>
                                                 <p class="text-xs text-slate-400 font-bold uppercase tracking-widest">Anda belum memiliki riwayat survey lapangan.</p>
                                             </div>
                                             <a href="{{ route('surveyor.input') }}" class="mt-4 px-8 py-3 bg-gold-500 text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-md shadow-gold-500/20 hover:bg-gold-600 transition-all active:scale-95">
@@ -265,7 +262,7 @@
                         </table>
                     </div>
                     @if(request('show') != 'all' && isset($riwayat) && $riwayat instanceof \Illuminate\Pagination\LengthAwarePaginator)
-                        <div class="px-8 py-5 border-t border-slate-100 dark:border-white/10 bg-white dark:bg-[#1e1b4b]">
+                        <div class="px-8 py-5 border-t border-slate-100  bg-white ">
                             {{ $riwayat->links() }}
                         </div>
                     @endif
