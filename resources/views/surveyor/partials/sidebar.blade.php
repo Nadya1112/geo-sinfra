@@ -150,7 +150,6 @@
         const isOpen = !sidebar.classList.contains('-translate-x-full');
         
         if (isOpen) {
-            // Tutup
             sidebar.classList.add('-translate-x-full');
             overlay.classList.add('opacity-0');
             setTimeout(() => overlay.classList.add('hidden'), 300);
@@ -158,7 +157,6 @@
             icon.classList.add('fa-bars');
             document.body.style.overflow = '';
         } else {
-            // Buka
             overlay.classList.remove('hidden');
             requestAnimationFrame(() => {
                 sidebar.classList.remove('-translate-x-full');
@@ -169,32 +167,4 @@
             document.body.style.overflow = 'hidden';
         }
     }
-
-    
-     else {
-            menu.classList.add('hidden');
-        }
-    }
-
-     else if (theme === 'light') {
-            localStorage.theme = 'light';
-            document.documentElement.classList.remove('dark');
-        } else {
-            localStorage.removeItem('theme');
-            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-        }
-        
-        document.getElementById('theme-menu-desktop').classList.add('hidden');
-        document.getElementById('theme-menu-mobile').classList.add('hidden');
-        
-        // Pemicu event kustom agar chart/peta bisa dirender ulang jika perlu
-        window.dispatchEvent(new Event('themeChanged'));
-    }
-
-    // Menutup menu jika klik di luar
-    
 </script>
