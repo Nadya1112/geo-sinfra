@@ -17,10 +17,24 @@ class PublicReportController extends Controller
             'deskripsi' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
-            'foto' => 'required|image|max:5120', // 5MB max
         ]);
 
-        $fotoPath = $request->file('foto')->store('laporan_warga', 'public');
+        if (!$request->hasFile('foto') || !$request->file('foto')->isValid()) {
+            return back()->withErrors(['foto' => 'Gambar gagal diunggah.']);
+        }
+
+        $file = $request->file('foto');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        
+        // Simpan manual untuk menghindari Flysystem dan finfo
+        $publicLaporanPath = storage_path('app/public/laporan_warga');
+        if (!file_exists($publicLaporanPath)) {
+            mkdir($publicLaporanPath, 0777, true);
+        }
+        $absolutePath = $publicLaporanPath . '/' . $filename;
+        move_uploaded_file($_FILES['foto']['tmp_name'], $absolutePath);
+        
+        $fotoPath = 'laporan_warga/' . $filename;
 
         $laporan = LaporanWarga::create([
             'nama_pelapor' => $request->nama_pelapor,
