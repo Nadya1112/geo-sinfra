@@ -128,24 +128,24 @@
 
             <!-- Floating Filters Right (Combined) -->
             <div class="absolute top-4 right-4 z-[9999] pointer-events-auto">
-                <div class="bg-navy-900/90 backdrop-blur-xl p-1 rounded-2xl border border-white/10 shadow-2xl min-w-[150px] transition-all duration-300 max-h-[80vh] flex flex-col">
+                <div class="bg-[#1e1b4b]/95 backdrop-blur-xl p-3 rounded-2xl border border-white/10 shadow-2xl w-48 flex flex-col gap-2">
                     <!-- Category Section -->
-                    <div id="category-card" class="p-0.5">
-                        <button onclick="toggleCategoryMenu()" class="w-full px-3 py-2 rounded-xl text-xs font-black uppercase tracking-wider bg-white/5 text-white flex items-center justify-between hover:bg-white/10 transition-all group border border-white/5">
-                            <div class="flex items-center gap-1.5">
-                                <i class="fas fa-layer-group text-xs opacity-70 text-gold-400"></i>
-                                <span id="current-cat-label" class="truncate max-w-[80px]">Semua Kategori</span>
+                    <div id="category-card" class="w-full relative">
+                        <button onclick="toggleCategoryMenu()" class="w-full px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider bg-white/5 text-white flex items-center justify-between hover:bg-white/10 transition-all border border-white/5 shadow-inner">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-layer-group text-sm opacity-90 text-gold-500"></i>
+                                <span id="current-cat-label" class="truncate max-w-[100px] text-[10px]">SEMUA KATE...</span>
                             </div>
-                            <i id="cat-chevron" class="fas fa-chevron-down text-[6px] transition-transform duration-300"></i>
+                            <i id="cat-chevron" class="fas fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                         </button>
                         
-                        <div id="category-options" class="hidden mt-0.5 p-0.5 flex flex-col">
+                        <div id="category-options" class="hidden mt-2 p-1.5 bg-[#0f0e2c]/90 rounded-xl border border-white/5 flex flex-col gap-1 max-h-[40vh] overflow-y-auto custom-scrollbar">
                             <button onclick="handleCategorySelect('Semua')" data-type="Semua" class="cat-opt-btn w-full px-3 py-1.5 rounded-lg text-[7px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
                                 <div class="flex items-center gap-1.5">
                                     <div class="w-2.5 h-2.5 rounded border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors">
                                         <i class="fas fa-check text-[5px] text-blue-400 opacity-0 transition-opacity"></i>
                                     </div>
-                                    <span class="group-hover:text-white transition-colors">Semua</span>
+                                    <span class="group-hover:text-white transition-colors">Semua Kategori</span>
                                 </div>
                                 <div class="w-2.5 h-2.5 rounded bg-gray-500/30"></div>
                             </button>
@@ -190,16 +190,16 @@
                         </div>
                     </div>
 
-                    <div class="h-[1px] bg-white/5 mx-2 my-0.5"></div>
+                    <div class="h-[1px] bg-white/5 w-full"></div>
 
                     <!-- Territory Section -->
-                    <div id="territory-card" class="p-0.5 flex flex-col overflow-hidden">
-                        <button onclick="toggleTerritoryMenu()" class="w-full px-3 py-2 rounded-xl text-xs font-black uppercase tracking-wider bg-white/5 text-white flex items-center justify-between hover:bg-white/10 transition-all group border border-white/5 shrink-0">
-                            <div class="flex items-center gap-1.5">
-                                <i class="fas fa-map-location-dot text-xs opacity-70 text-gold-400"></i>
-                                <span id="current-territory-label" class="truncate max-w-[80px]">Semua Wilayah</span>
+                    <div id="territory-card" class="w-full relative">
+                        <button onclick="toggleTerritoryMenu()" class="w-full px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider bg-white/5 text-white flex items-center justify-between hover:bg-white/10 transition-all border border-white/5 shadow-inner">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-map-location-dot text-sm opacity-90 text-gold-500"></i>
+                                <span id="current-territory-label" class="truncate max-w-[100px] text-[10px]">SEMUA WILA...</span>
                             </div>
-                            <i id="territory-chevron" class="fas fa-chevron-down text-[6px] transition-transform duration-300"></i>
+                            <i id="territory-chevron" class="fas fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                         </button>
                         
                         <div id="territory-options" class="hidden mt-0.5 p-0.5 flex-col overflow-y-auto custom-scrollbar" style="max-height: 20vh;">
