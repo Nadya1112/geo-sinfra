@@ -119,13 +119,13 @@ class SurveyorController extends Controller
             $file = $request->file('foto');
             $namaFoto = time() . '_' . $file->getClientOriginalName();
             
-            // Simpan gambar asli tanpa di-squish (distorsi) agar AI bisa mendeteksinya dengan akurat
-            // Pastikan folder ada
-            if (!Storage::disk('public')->exists('infrastruktur')) {
-                Storage::disk('public')->makeDirectory('infrastruktur');
+            $destinationPath = storage_path('app/public/infrastruktur');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
             }
             
-            $file->storeAs('infrastruktur', $namaFoto, 'public');
+            // Menggunakan fungsi native PHP untuk menghindari error php_fileinfo pada storeAs()
+            move_uploaded_file($_FILES['foto']['tmp_name'], $destinationPath . '/' . $namaFoto);
         }
 
         // 🌟 DIUBAH KE ELOQUENT MODEL agar memicu fungsi saved() di InfrastrukturObserver otomatis
@@ -257,14 +257,22 @@ class SurveyorController extends Controller
             $file = $request->file('foto');
             $namaFoto = time() . '_' . $file->getClientOriginalName();
             
-            // Simpan gambar asli tanpa di-squish (distorsi) agar AI bisa mendeteksinya dengan akurat
-            // Pastikan folder ada
-            if (!Storage::disk('public')->exists('infrastruktur')) {
-                Storage::disk('public')->makeDirectory('infrastruktur');
+            $destinationPath = storage_path('app/public/infrastruktur');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
             }
             
-            $file->storeAs('infrastruktur', $namaFoto, 'public');
-            $infrastruktur->foto_terbaru = $namaFoto;
+            // Native PHP upload bypasses php_fileinfo error
+            move_uploaded_file($_FILES['foto']['tmp_name'], $destinationPath . '/' . $namaFoto);
+
+            // Hapus foto lama jika ada
+            if ($infrastruktur->foto_terbaru && file_exists(storage_path('app/public/' . $infrastruktur->foto_terbaru))) {
+                unlink(storage_path('app/public/' . $infrastruktur->foto_terbaru));
+            }
+            $infrastruktur->foto_terbaru = 'infrastruktur/' . $namaFoto;
+            
+            // Analisis visual otomatis jika foto baru diunggah
+            $this->processCnnAnalysis($infrastruktur->id_infrastruktur, $infrastruktur->foto_terbaru);
         }
 
         $infrastruktur->nama_objek = $request->nama_infrastruktur;
@@ -364,12 +372,22 @@ class SurveyorController extends Controller
         }
 
         if ($request->hasFile('profile_photo')) {
-            if ($user->profile_photo) {
-                Storage::disk('public')->delete($user->profile_photo);
+            if ($user->profile_photo && file_exists(storage_path('app/public/' . $user->profile_photo))) {
+                unlink(storage_path('app/public/' . $user->profile_photo));
             }
-            $user->profile_photo = $request->file('profile_photo')->store('profile_photos', 'public');
-        }
-
+            
+            $file = $request->file('profile_photo');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            
+            $destinationPath = storage_path('app/public/profile_photos');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+            
+            move_uploaded_file($_FILES['profile_photo']['tmp_name'], $destinationPath . '/' . $filename);
+            $user->profile_photo = 'profile_photos/' . $filename;
+        } 
+        
         $user->save();
 
         return redirect()->route('surveyor.dashboard')->with('success', 'Profil Anda berhasil diperbarui!');
