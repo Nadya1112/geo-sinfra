@@ -1,4 +1,4 @@
-﻿{{-- Tombol Hamburger (Hanya muncul di mobile) --}}
+{{-- Tombol Hamburger (Hanya muncul di mobile) --}}
 <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="fixed top-4 left-4 z-[9999] w-10 h-10 bg-navy-900 text-gold-500 rounded-xl flex items-center justify-center shadow-lg md:hidden border border-white/10 hover:bg-navy-800 transition-all active:scale-95">
     <i class="fas fa-bars text-sm" id="menu-icon"></i>
 </button>
@@ -77,22 +77,6 @@
                 <i class="fas fa-times text-sm"></i>
             </button>
         </div>
-
-        {{-- User info --}}
-        <a href="{{ route('surveyor.profile') }}" class="flex items-center gap-3 p-3 bg-white/5 rounded-2xl mb-6 border border-white/5 hover:bg-white/10 transition-all group">
-            <div class="w-10 h-10 bg-navy-800 rounded-xl flex items-center justify-center text-gold-500 overflow-hidden border border-white/10">
-                @if(auth()->user()->profile_photo)
-                    <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
-                @else
-                    <i class="fas fa-user-circle text-lg"></i>
-                @endif
-            </div>
-            <div class="flex-1 min-w-0">
-                <p class="text-xs font-black text-white uppercase truncate">{{ auth()->user()->name }}</p>
-                <p class="text-xs font-bold text-emerald-400 uppercase mt-0.5">● Online</p>
-            </div>
-            <i class="fas fa-chevron-right text-xs text-slate-500 group-hover:text-gold-400 transition-colors"></i>
-        </a>
         
         {{-- Navigation --}}
         <p class="text-xs font-black text-slate-500 uppercase tracking-[0.2em] mb-3 px-2">Menu Utama</p>
