@@ -162,6 +162,10 @@ class SurveyorController extends Controller
             ->where('id_user', auth()->id())
             ->orderBy('created_at', 'desc');
             
+        if ($request->has('status') && $request->get('status') != '') {
+            $query->where('status_verifikasi', $request->get('status'));
+        }
+            
         if ($request->get('show') == 'all') {
             $riwayat = $query->get();
         } else {

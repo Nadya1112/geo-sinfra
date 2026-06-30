@@ -91,21 +91,26 @@
                     <p class="text-sm font-bold">{{ session('error') }}</p>
                 </div>
                 @endif
-
-                <div class="flex justify-between items-end mb-6">
+                <div class="flex justify-between items-end mb-6 flex-col md:flex-row gap-4">
                     <div>
                         <h3 class="text-lg font-black text-navy-900 ">Daftar Data Lapangan</h3>
                         <p class="text-xs text-slate-400 font-medium mt-1">Seluruh laporan infrastruktur yang telah Anda kumpulkan.</p>
                     </div>
-                    <form action="{{ route('surveyor.history') }}" method="GET" class="w-48">
-                        <select name="show" onchange="this.form.submit()" class="w-full bg-white  border border-slate-200  rounded-xl px-4 py-3 text-xs font-black text-navy-900  shadow-sm focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all cursor-pointer">
+                    <form action="{{ route('surveyor.history') }}" method="GET" class="flex gap-2 w-full md:w-auto mt-3 md:mt-0">
+                        <select name="status" onchange="this.form.submit()" class="w-full md:w-40 bg-white border border-slate-200 rounded-xl px-4 py-3 text-xs font-black text-navy-900 shadow-sm focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all cursor-pointer">
+                            <option value="">Semua Status</option>
+                            <option value="Menunggu Validasi" {{ request('status') == 'Menunggu Validasi' ? 'selected' : '' }}>Menunggu Validasi</option>
+                            <option value="Terverifikasi AI" {{ request('status') == 'Terverifikasi AI' ? 'selected' : '' }}>Terverifikasi AI</option>
+                            <option value="Ditolak" {{ request('status') == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
+                        </select>
+                        <select name="show" onchange="this.form.submit()" class="w-full md:w-48 bg-white border border-slate-200 rounded-xl px-4 py-3 text-xs font-black text-navy-900 shadow-sm focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all cursor-pointer">
                             <option value="10" {{ request('show') != 'all' ? 'selected' : '' }}>Tampilkan 10 Data</option>
                             <option value="all" {{ request('show') == 'all' ? 'selected' : '' }}>Tampilkan Semua</option>
                         </select>
                     </form>
                 </div>
 
-                <div class="bg-white  rounded-[2rem] border border-slate-100  shadow-sm overflow-hidden mb-10">
+                <div class="bg-white rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden mb-10">
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
                             <thead>

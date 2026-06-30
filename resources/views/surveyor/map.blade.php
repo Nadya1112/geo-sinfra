@@ -482,6 +482,9 @@
                             <a href="/surveyor/infrastruktur/${point.id_infrastruktur}/edit" class="flex-1 bg-navy-900 border border-gold-500/30 hover:bg-gold-500 hover:border-gold-500 text-gold-500 hover:text-white font-bold text-xs py-2.5 rounded-lg transition-all shadow-sm uppercase tracking-widest flex justify-center items-center gap-2">
                                 <i class="fas fa-edit"></i> Edit
                             </a>
+                            <a href="https://www.google.com/maps/dir/?api=1&destination=${point.latitude},${point.longitude}" target="_blank" title="Rute ke Lokasi" class="w-10 flex justify-center items-center bg-blue-500 hover:bg-blue-600 text-white font-bold text-xs py-2.5 rounded-lg transition-all shadow-sm">
+                                <i class="fas fa-route text-xs"></i>
+                            </a>
                             <a href="/surveyor/infrastruktur/${point.id_infrastruktur}" class="w-10 flex justify-center items-center bg-white/10 hover:bg-white/20 text-white font-bold text-xs py-2.5 rounded-lg transition-all shadow-sm">
                                 <i class="fas fa-eye text-xs"></i>
                             </a>
