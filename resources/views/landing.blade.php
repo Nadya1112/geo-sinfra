@@ -1812,7 +1812,13 @@
                 text: "{{ session('success_laporan') }}",
                 icon: 'success',
                 confirmButtonColor: '#1e1b4b',
-                confirmButtonText: 'Terima Kasih'
+                confirmButtonText: 'Teruskan ke WA Admin'
+            }).then((result) => {
+                @if(session('wa_link'))
+                if (result.isConfirmed) {
+                    window.open("{!! session('wa_link') !!}", '_blank');
+                }
+                @endif
             });
         });
     </script>

@@ -35,49 +35,30 @@ class PublicReportController extends Controller
         // Analisis AI Otomatis
         $this->analyzeWithAI($laporan);
 
-        // Kirim Notifikasi WhatsApp via Fonnte
-        try {
-            $token = \App\Helpers\SettingHelper::get('fonnte_token');
-            $target = \App\Helpers\SettingHelper::get('fonnte_target');
-
-            if (!empty($token) && !empty($target)) {
-                $pesan = "*🚨 LAPORAN KERUSAKAN BARU (GEO-SINFRA)*\n\n";
-                $pesan .= "*Pelapor:* {$laporan->nama_pelapor}\n";
-                $pesan .= "*No. WA:* {$laporan->no_hp}\n";
-                $pesan .= "*Deskripsi:* {$laporan->deskripsi}\n\n";
-                $pesan .= "*Analisis AI (Awal):*\n";
-                $pesan .= "- Kondisi: {$laporan->label_ai}\n";
-                $pesan .= "- Kategori: " . ucfirst($laporan->jenis_ai) . "\n\n";
-                $pesan .= "Segera tinjau laporan ini di Dashboard Admin GEO-SINFRA.";
-
-                \Illuminate\Support\Facades\Http::withHeaders([
-                    'Authorization' => $token,
-                ])->post('https://api.fonnte.com/send', [
-                    'target' => $target,
-                    'message' => $pesan,
-                ]);
-
-                // Kirim Auto-Reply ke Warga (Pelapor)
-                $wargaPhone = $laporan->no_hp;
-                if (!empty($wargaPhone)) {
-                    $pesanWarga = "Halo Bapak/Ibu {$laporan->nama_pelapor}! 👋\n\n";
-                    $pesanWarga .= "Terima kasih atas laporan Anda terkait kerusakan infrastruktur *" . ucfirst($laporan->jenis_ai) . "*. Laporan Anda telah kami terima dan masuk ke dalam sistem pusat GEO-SINFRA.\n\n";
-                    $pesanWarga .= "Tim Teknis dari *Dinas Perumahan Rakyat dan Kawasan Permukiman (DPRKP) Kota Banjarmasin* akan segera meninjau laporan ini.\n\n";
-                    $pesanWarga .= "Mari bersama membangun Kota Banjarmasin yang lebih baik! Kayuh Baimbai! 🏙️";
-
-                    \Illuminate\Support\Facades\Http::withHeaders([
-                        'Authorization' => $token,
-                    ])->post('https://api.fonnte.com/send', [
-                        'target' => $wargaPhone,
-                        'message' => $pesanWarga,
-                    ]);
-                }
+        // Format Nomor WhatsApp Admin
+        $target = \App\Helpers\SettingHelper::get('fonnte_target');
+        $waLink = null;
+        
+        if (!empty($target)) {
+            // Ubah awalan 0 menjadi 62
+            if (str_starts_with($target, '0')) {
+                $target = '62' . substr($target, 1);
             }
-        } catch (\Exception $e) {
-            Log::error("Gagal mengirim WA Fonnte: " . $e->getMessage());
+
+            $pesan = "*🚨 LAPORAN KERUSAKAN BARU (GEO-SINFRA)*\n\n";
+            $pesan .= "*Pelapor:* {$laporan->nama_pelapor}\n";
+            $pesan .= "*No. WA:* {$laporan->no_hp}\n";
+            $pesan .= "*Deskripsi:* {$laporan->deskripsi}\n\n";
+            $pesan .= "*Analisis AI (Awal):*\n";
+            $pesan .= "- Kondisi: {$laporan->label_ai}\n";
+            $pesan .= "- Kategori: " . ucfirst($laporan->jenis_ai) . "\n\n";
+            $pesan .= "Mohon segera ditindaklanjuti.";
+
+            $waLink = 'https://wa.me/' . $target . '?text=' . urlencode($pesan);
         }
 
-        return redirect('/')->with('success_laporan', 'Laporan kerusakan berhasil dikirim! Sistem AI kami sedang menilainya dan Tim akan segera meninjaunya.');
+        return redirect('/')->with('success_laporan', 'Laporan Anda telah tercatat di sistem kami! Silakan klik tombol di bawah untuk meneruskan laporan ini langsung ke WhatsApp Admin.')
+                            ->with('wa_link', $waLink);
     }
 
     private function analyzeWithAI($laporan)
