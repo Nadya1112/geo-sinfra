@@ -132,7 +132,9 @@ class SurveyorController extends Controller
         $infra = Infrastruktur::create([
             'id_user' => auth()->id(),
             'nama_objek' => $request->nama_infrastruktur,
+            'nama_infrastruktur' => $request->nama_infrastruktur,
             'jenis' => 'jalan',
+            'jenis_infrastruktur' => 'jalan',
             'id_kelurahan' => $request->id_kelurahan,
             'latitude' => str_replace(',', '.', $request->latitude),
             'longitude' => str_replace(',', '.', $request->longitude),
@@ -276,6 +278,9 @@ class SurveyorController extends Controller
         }
 
         $infrastruktur->nama_objek = $request->nama_infrastruktur;
+        $infrastruktur->nama_infrastruktur = $request->nama_infrastruktur;
+        $infrastruktur->jenis = 'jalan';
+        $infrastruktur->jenis_infrastruktur = 'jalan';
         $infrastruktur->id_kelurahan = $request->id_kelurahan;
         $infrastruktur->latitude = str_replace(',', '.', $request->latitude);
         $infrastruktur->longitude = str_replace(',', '.', $request->longitude);

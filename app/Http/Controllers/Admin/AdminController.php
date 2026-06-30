@@ -519,7 +519,10 @@ class AdminController extends Controller
         $infra = Infrastruktur::create([
             'id_user' => auth()->id(), 
             'id_kelurahan' => $request->id_kelurahan,
+            'nama_objek' => $request->nama_infrastruktur,
+            'nama_infrastruktur' => $request->nama_infrastruktur,
             'jenis' => strtolower($request->jenis),
+            'jenis_infrastruktur' => strtolower($request->jenis),
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
             'kondisi' => $request->kondisi, 
@@ -729,6 +732,9 @@ class AdminController extends Controller
             'has_gorong_gorong'  => $request->has_gorong_gorong,
             'foto_terbaru'       => $namaFoto,
             'nama_objek'         => $request->nama_infrastruktur,
+            'nama_infrastruktur' => $request->nama_infrastruktur,
+            'jenis' => strtolower($request->jenis),
+            'jenis_infrastruktur' => strtolower($request->jenis),
             'status_verifikasi'  => $request->status_verifikasi ?? $infra->status_verifikasi,
         ]);
 
@@ -916,7 +922,10 @@ class AdminController extends Controller
         $infra = Infrastruktur::create([
             'id_user' => auth()->id(), 
             'id_kelurahan' => $request->id_kelurahan,
+            'nama_objek' => $request->nama_infrastruktur,
+            'nama_infrastruktur' => $request->nama_infrastruktur,
             'jenis' => strtolower($request->jenis),
+            'jenis_infrastruktur' => strtolower($request->jenis),
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
             'kondisi' => $request->kondisi, 
