@@ -495,7 +495,8 @@
                 const marker = L.marker([point.latitude, point.longitude], {icon: icon})
                     .addTo(map)
                     .bindPopup(popupContent, {
-                        maxWidth: 300,
+                        maxWidth: 320,
+                        minWidth: 280,
                         className: 'custom-leaflet-popup'
                     });
                 
