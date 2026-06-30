@@ -40,10 +40,7 @@
         .leaflet-container { font-family: inherit; }
         .premium-shadow { box-shadow: 0 20px 50px rgba(0,0,0,0.05); }
     </style>
-<style>
-    @media (min-width: 768px) { html { zoom: 0.9 !important; } }
-    @media (max-width: 767px) { html { zoom: 0.5 !important; } }
-</style>
+
 </head>
 <body class="bg-slate-50 dark:bg-[#0f0e2c] flex h-screen overflow-hidden text-slate-800 text-left font-sans dark:bg-navy-950 dark:text-white transition-colors duration-300">
 
