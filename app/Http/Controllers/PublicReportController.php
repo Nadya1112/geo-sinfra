@@ -43,7 +43,7 @@ class PublicReportController extends Controller
             'foto' => $fotoPath,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
-            'status' => 'Menunggu Review',
+            'status' => 'Menunggu',
         ]);
 
         // Analisis AI Otomatis
