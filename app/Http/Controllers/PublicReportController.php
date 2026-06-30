@@ -84,13 +84,22 @@ class PublicReportController extends Controller
                 return $this->simulateCnnAnalysis($laporan);
             }
 
-            $pythonPath = 'python'; 
-            $scriptPath = base_path('predict.py');
-            $argScript = escapeshellarg($scriptPath);
-            $argImage = escapeshellarg($filePath);
-            $command = "$pythonPath $argScript $argImage";
+            $apiUrl = env('CNN_API_URL', 'http://127.0.0.1:5000/predict');
             
-            $output = shell_exec($command . ' 2>&1');
+            $extension = pathinfo($filePath, PATHINFO_EXTENSION);
+            $mimeType = 'image/' . ($extension == 'jpg' ? 'jpeg' : $extension);
+            $cfile = new \CURLFile($filePath, $mimeType, basename($filePath));
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $apiUrl);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, ['image' => $cfile]);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+
+            $output = curl_exec($ch);
+            curl_close($ch);
+
             $result = json_decode(trim($output), true);
 
             if ($result && isset($result['success']) && $result['success'] == true) {
