@@ -491,7 +491,7 @@ class AdminController extends Controller
             'id_kelurahan' => 'required|exists:kelurahan,id_kelurahan',
             'latitude' => 'required|string',
             'longitude' => 'required|string',
-            'foto' => 'required|image|mimes:jpeg,png,jpg|max:5120',
+            'foto' => 'required|max:5120',
             'material_eksisting' => 'required|string',
             'panjang' => 'required|numeric',
             'lebar' => 'required|numeric',
@@ -1064,7 +1064,7 @@ class AdminController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|min:8|confirmed',
-            'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+            'profile_photo' => 'nullable|max:2048'
         ]);
 
         $user->name = $request->name;

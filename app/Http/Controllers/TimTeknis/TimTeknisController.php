@@ -197,7 +197,7 @@ class TimTeknisController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|min:8|confirmed',
-            'profile_photo' => 'nullable|image|max:2048'
+            'profile_photo' => 'nullable|max:2048'
         ]);
 
         $user->name = $request->name;

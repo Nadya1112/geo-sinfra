@@ -103,7 +103,7 @@ class SurveyorController extends Controller
             'id_kelurahan' => 'required|exists:kelurahan,id_kelurahan',
             'latitude' => 'required',
             'longitude' => 'required',
-            'foto' => 'required|image|max:20480',
+            'foto' => 'required|max:20480',
             'kondisi' => 'nullable|string', // 🌟 Menangkap input deskripsi kerusakan teks untuk Decision Tree
             'material_eksisting' => 'nullable|string',
             'panjang' => 'required|numeric',
@@ -243,7 +243,7 @@ class SurveyorController extends Controller
             'latitude' => 'required|string',
             'longitude' => 'required|string',
             'kondisi' => 'nullable|string', // 🌟 Kolom pembaruan teks kondisi kerusakan
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:20480',
+            'foto' => 'nullable|max:20480',
             'material_eksisting' => 'nullable|string',
             'panjang' => 'required|numeric',
             'lebar' => 'required|numeric',
@@ -353,7 +353,7 @@ class SurveyorController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|min:8|confirmed',
-            'profile_photo' => 'nullable|image|max:2048'
+            'profile_photo' => 'nullable|max:2048'
         ]);
 
         $user->name = $request->name;
