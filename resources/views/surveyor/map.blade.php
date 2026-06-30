@@ -134,7 +134,7 @@
                         <button onclick="toggleCategoryMenu()" class="w-full px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider bg-white/5 text-white flex items-center justify-between hover:bg-white/10 transition-all border border-white/5 shadow-inner">
                             <div class="flex items-center gap-2">
                                 <i class="fas fa-layer-group text-sm opacity-90 text-gold-500"></i>
-                                <span id="current-cat-label" class="truncate max-w-[100px] text-[10px]">SEMUA KATE...</span>
+                                <span id="current-cat-label" class="truncate max-w-[130px] text-[10px]">SEMUA KATEGORI</span>
                             </div>
                             <i id="cat-chevron" class="fas fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                         </button>
@@ -197,7 +197,7 @@
                         <button onclick="toggleTerritoryMenu()" class="w-full px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider bg-white/5 text-white flex items-center justify-between hover:bg-white/10 transition-all border border-white/5 shadow-inner">
                             <div class="flex items-center gap-2">
                                 <i class="fas fa-map-location-dot text-sm opacity-90 text-gold-500"></i>
-                                <span id="current-territory-label" class="truncate max-w-[100px] text-[10px]">SEMUA WILA...</span>
+                                <span id="current-territory-label" class="truncate max-w-[130px] text-[10px]">SEMUA WILAYAH</span>
                             </div>
                             <i id="territory-chevron" class="fas fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                         </button>
@@ -285,10 +285,10 @@
         let currentBaseLayer;
         const baseLayers = {
             greyscale: L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'),
-            satellite: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'),
+            satellite: L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', { maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'] }),
             osm: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'),
             dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'),
-            street: L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png')
+            street: L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'] })
         };
         function updateClock() {
             const now = new Date();
