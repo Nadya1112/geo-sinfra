@@ -76,8 +76,8 @@ class PublicReportController extends Controller
                 if (!empty($wargaPhone)) {
                     $pesanWarga = "Halo Bapak/Ibu {$laporan->nama_pelapor}! 👋\n\n";
                     $pesanWarga .= "Terima kasih atas laporan Anda terkait kerusakan infrastruktur *" . ucfirst($laporan->jenis_ai) . "*. Laporan Anda telah kami terima dan masuk ke dalam sistem pusat GEO-SINFRA.\n\n";
-                    $pesanWarga .= "Tim Teknis dari *Dinas Perumahan Rakyat dan Kawasan Permukiman (DPRKP) Kota Banjarmasin* akan segera meninjau laporan ini.\n\n";
-                    $pesanWarga .= "Mari bersama membangun Kota Banjarmasin yang lebih baik! Kayuh Baimbai! 🏙️";
+                    $pesanWarga .= "Tim Teknis akan segera meninjau laporan ini.\n\n";
+                    $pesanWarga .= "Mari bersama membangun infrastruktur yang lebih baik! Salam, GEO-SINFRA! 🏙️";
 
                     \Illuminate\Support\Facades\Http::withHeaders([
                         'Authorization' => $token,
