@@ -114,7 +114,7 @@
                     </button>
                 </div>
 
-                <form id="survey-form" action="{{ route('surveyor.store') }}" method="POST" enctype="multipart/form-data">
+                <form id="survey-form" action="{{ route('surveyor.store', [], false) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -619,7 +619,7 @@
             for (let key of draftKeys) {
                 try {
                     const formData = await localforage.getItem(key);
-                    const response = await fetch('{{ route("surveyor.store") }}', {
+                    const response = await fetch('{{ route("surveyor.store", [], false) }}', {
                         method: 'POST',
                         body: formData,
                         headers: {
