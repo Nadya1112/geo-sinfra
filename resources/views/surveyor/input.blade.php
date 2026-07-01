@@ -687,7 +687,7 @@
                 if (response.ok || response.redirected) {
                     localStorage.removeItem('survey_draft');
                     Swal.fire('Berhasil!', 'Data survei berhasil diunggah ke server dan dianalisis AI.', 'success')
-                    .then(() => { window.location.href = "{{ route('surveyor.history') }}"; });
+                    .then(() => { window.location.href = "{{ route('surveyor.history', [], false) }}"; });
                 } else {
                     let errorMessage = 'Terjadi kesalahan pada server saat mengunggah data.';
                     try {

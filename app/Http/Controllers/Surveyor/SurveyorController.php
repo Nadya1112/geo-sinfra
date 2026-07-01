@@ -155,6 +155,10 @@ class SurveyorController extends Controller
             $this->processCnnAnalysis($infra->id_infrastruktur, 'infrastruktur/' . $namaFoto);
         }
 
+        if ($request->ajax()) {
+            return response()->json(['success' => true]);
+        }
+
         return redirect()->route('surveyor.history')->with('success', 'Data lapangan berhasil disimpan & dianalisis otomatis oleh AI!');
     }
 
