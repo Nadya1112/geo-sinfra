@@ -74,7 +74,7 @@
 
 
             <!-- Custom Zoom Controls Top Left -->
-            <div class="absolute top-4 left-4 z-[2000] flex flex-col gap-1.5 pointer-events-auto">
+            <div class="hidden md:flex absolute top-4 left-4 z-[2000] flex-col gap-1.5 pointer-events-auto">
                 <button onclick="map.zoomIn()" class="w-8 h-8 bg-[#1e1b4b]/80 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:bg-[#1e1b4b] transition-all group">
                     <i class="fas fa-plus text-xs group-hover:scale-110 transition-transform"></i>
                 </button>
