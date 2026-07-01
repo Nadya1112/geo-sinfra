@@ -42,7 +42,7 @@
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden text-left font-sans relative">
         <header class="bg-white/85  backdrop-blur-xl border-b border-slate-100  sticky top-0 px-4 pl-16 md:px-8 py-4 flex justify-between items-center z-40 text-left">
-            <div class="flex items-center gap-4 text-left ml-10 md:ml-0">
+            <div class="flex items-center gap-4">
                 <a href="{{ route('surveyor.dashboard') }}"
                    class="hidden md:flex w-10 h-10 bg-white  border border-slate-100  rounded-xl  items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/20 hover:shadow-lg hover:shadow-gold-500/5 transition-all group"
                    title="Kembali ke Dashboard Utama">
