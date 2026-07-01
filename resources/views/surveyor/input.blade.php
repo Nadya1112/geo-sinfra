@@ -68,7 +68,7 @@
                     <p class="text-sm font-black text-navy-900 " id="mini-clock">00:00 WITA</p>
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
-                <div class="h-8 w-[1px] bg-slate-100"></div>
+                <div class="h-8 w-[1px] bg-slate-100 hidden sm:block"></div>
                 <div class="flex items-center gap-3">
                     <div class="text-right">
                         <p class="text-xs font-black text-navy-900  leading-none uppercase">{{ auth()->user()->name }}</p>
