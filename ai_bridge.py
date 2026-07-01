@@ -178,6 +178,25 @@ def predict_image(image_path):
     prob_jenis = dt_jenis_model.predict_proba(features)[0]
     confidence_jenis = round(float(np.max(prob_jenis)) * 100, 2)
 
+    if confidence_jenis < 55.0:
+        jenis_result = "Bukan Infrastruktur"
+        kondisi_result = "Tidak Terdeteksi"
+        confidence_kondisi = 0.0
+        prioritas = "Tidak Ada"
+        detail_jenis = {}
+        detail_kondisi = {}
+        return {
+            "jenis": jenis_result,
+            "kondisi": kondisi_result,
+            "confidence_jenis": confidence_jenis,
+            "confidence_kondisi": confidence_kondisi,
+            "prioritas": prioritas,
+            "detail_jenis": detail_jenis,
+            "detail_kondisi": detail_kondisi,
+            "probability": 0.0,
+            "label": f"{jenis_result}",
+        }
+
     raw_jenis = infra_types[pred_jenis_idx]
     jenis_result = jenis_display.get(raw_jenis, raw_jenis.capitalize())
 

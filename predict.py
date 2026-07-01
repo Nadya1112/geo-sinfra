@@ -151,6 +151,24 @@ def predict(image_path):
     prob_jenis = dt_jenis.predict_proba(features_pca)[0]
     confidence_jenis = round(float(np.max(prob_jenis)) * 100, 2)
 
+    if confidence_jenis < 55.0:
+        return {
+            "success": True,
+            "jenis": "Bukan Infrastruktur",
+            "kondisi": "Tidak Terdeteksi",
+            "confidence_jenis": confidence_jenis,
+            "confidence_kondisi": 0.0,
+            "prioritas": "Tidak Ada",
+            "detail_jenis": {},
+            "detail_kondisi": {},
+            "model_info": {
+                "cnn_backend": config.get("cnn_backend", "pytorch"),
+                "training_date": config.get("training_date", "unknown"),
+                "accuracy_jenis": config.get("accuracy_jenis", 0),
+                "accuracy_kondisi": config.get("accuracy_kondisi", 0)
+            }
+        }
+
     raw_jenis = infra_types[pred_jenis_idx]
     jenis_result = jenis_display.get(raw_jenis, raw_jenis.capitalize())
 
