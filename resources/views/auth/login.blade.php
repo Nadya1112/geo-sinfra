@@ -137,7 +137,19 @@
                     </div>
                 @endif
 
-                <form action="{{ route('login') }}" method="POST" class="space-y-6">
+                            <!-- Flash Messages -->
+            @if(session('error'))
+                <div class="bg-rose-50 text-rose-500 border border-rose-200 text-sm p-4 rounded-xl mb-6 flex items-center font-bold">
+                    <i class="fas fa-exclamation-circle mr-2"></i>{{ session('error') }}
+                </div>
+            @endif
+            @if(session('success'))
+                <div class="bg-emerald-50 text-emerald-500 border border-emerald-200 text-sm p-4 rounded-xl mb-6 flex items-center font-bold">
+                    <i class="fas fa-check-circle mr-2"></i>{{ session('success') }}
+                </div>
+            @endif
+            <!-- End Flash Messages -->
+<form action="{{ route('login') }}" method="POST" class="space-y-6">
                     @csrf
                     
                     <div>

@@ -389,3 +389,46 @@ Route::middleware(['auth'])->group(function () {
     
 });
 
+Route::get('/debug-login', function () {
+    $email = 'teknisi@disperkim.go.id';
+    $password = 'teknisi123';
+    
+    $user = \App\Models\User::where('email', $email)->first();
+    if (!$user) {
+        return 'User not found in DB. DB Host: ' . config('database.connections.mysql.host') . ' DB Name: ' . config('database.connections.mysql.database');
+    }
+    
+    $hashCheck = \Illuminate\Support\Facades\Hash::check($password, $user->password) ? 'PASSED' : 'FAILED';
+    
+    return [
+        'db_host' => config('database.connections.mysql.host'),
+        'db_database' => config('database.connections.mysql.database'),
+        'user_id' => $user->id,
+        'user_email' => $user->email,
+        'user_role' => $user->role,
+        'db_hash' => $user->password,
+        'hash_check' => $hashCheck,
+    ];
+});
+
+Route::get('/fix-login-timteknis', function () {
+    try {
+        $u = \App\Models\User::where('email', 'teknisi@disperkim.go.id')->first();
+        if ($u) {
+            \Illuminate\Support\Facades\DB::table('users')
+                ->where('email', 'teknisi@disperkim.go.id')
+                ->update(['password' => \Illuminate\Support\Facades\Hash::make('teknisi123')]);
+        }
+        
+        $u2 = \App\Models\User::where('email', 'timteknis@disperkim.go.id')->first();
+        if ($u2) {
+            \Illuminate\Support\Facades\DB::table('users')
+                ->where('email', 'timteknis@disperkim.go.id')
+                ->update(['password' => \Illuminate\Support\Facades\Hash::make('timteknis123')]);
+        }
+        
+        return 'SUKSES! Password Tim Teknis di database PRODUCTION telah diperbaiki. Silakan kembali ke halaman login.';
+    } catch (\Exception $e) {
+        return 'Gagal memperbaiki: ' . $e->getMessage();
+    }
+});
