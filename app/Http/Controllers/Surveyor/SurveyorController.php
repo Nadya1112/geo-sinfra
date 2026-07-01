@@ -124,8 +124,8 @@ class SurveyorController extends Controller
                 mkdir($destinationPath, 0755, true);
             }
             
-            // Menggunakan fungsi native PHP untuk menghindari error php_fileinfo pada storeAs()
-            move_uploaded_file($_FILES['foto']['tmp_name'], $destinationPath . '/' . $namaFoto);
+            // Menggunakan fungsi native move milik Laravel untuk menghindari error php_fileinfo pada storeAs()
+            $file->move($destinationPath, $namaFoto);
         }
 
         // 🌟 DIUBAH KE ELOQUENT MODEL agar memicu fungsi saved() di InfrastrukturObserver otomatis
@@ -265,7 +265,7 @@ class SurveyorController extends Controller
             }
             
             // Native PHP upload bypasses php_fileinfo error
-            move_uploaded_file($_FILES['foto']['tmp_name'], $destinationPath . '/' . $namaFoto);
+            $file->move($destinationPath, $namaFoto);
 
             // Hapus foto lama jika ada
             if ($infrastruktur->foto_terbaru && file_exists(storage_path('app/public/' . $infrastruktur->foto_terbaru))) {
@@ -389,7 +389,7 @@ class SurveyorController extends Controller
                 mkdir($destinationPath, 0755, true);
             }
             
-            move_uploaded_file($_FILES['profile_photo']['tmp_name'], $destinationPath . '/' . $filename);
+            $file->move($destinationPath, $filename);
             $user->profile_photo = 'profile_photos/' . $filename;
         } 
         

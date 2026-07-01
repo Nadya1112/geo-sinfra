@@ -702,7 +702,7 @@
                     resetSubmitButton();
                 }
             } catch (error) {
-                Swal.fire('Koneksi Gagal', 'Gagal mengirim data. Coba cek sinyal atau simpan offline jika masih berlanjut.', 'error');
+                Swal.fire('Koneksi Gagal', 'Error: ' + (error.message || error) + '. Gagal mengirim data. Coba cek sinyal atau simpan offline jika masih berlanjut.', 'error');
                 resetSubmitButton();
             }
         });
