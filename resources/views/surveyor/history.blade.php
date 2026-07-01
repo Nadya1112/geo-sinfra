@@ -42,7 +42,7 @@
         {{-- ── Header ── --}}
         <header class="bg-white/80  backdrop-blur-xl border-b border-slate-100  sticky top-0 px-4 pl-16 md:px-8 py-4 flex justify-between items-center z-40 shrink-0">
             <div class="flex items-center gap-4">
-                <a href="{{ route('surveyor.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-white  text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 transition-all border border-slate-200  hover:border-gold-200">
+                <a href="{{ route('surveyor.dashboard') }}" class="hidden md:flex w-10 h-10  items-center justify-center bg-white  text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 transition-all border border-slate-200  hover:border-gold-200">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
