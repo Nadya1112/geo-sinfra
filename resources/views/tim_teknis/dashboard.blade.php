@@ -34,7 +34,7 @@
     @include('tim_teknis.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-y-auto">
-        <header class="bg-white dark:bg-[#1e1b4b] border-b border-slate-100 dark:border-white/10 px-8 py-5 flex justify-between items-center z-10 sticky top-0">
+        <header class="bg-white dark:bg-[#1e1b4b] border-b border-slate-100 dark:border-white/10 px-4 pl-16 md:px-8 py-4 flex justify-between items-center z-40 sticky top-0">
             <div>
                 <p class="text-xs font-extrabold text-gold-500 uppercase tracking-[0.2em] mb-1">Portal Tim Teknis</p>
                 <h2 class="text-xl font-black text-navy-900 dark:text-white">Panel Pengawasan</h2>
