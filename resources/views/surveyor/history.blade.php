@@ -52,15 +52,15 @@
             </div>
 
             <div class="flex items-center gap-6">
-                <div class="text-right hidden sm:block">
-                    <p class="text-sm font-black text-navy-900" id="mini-clock">00:00 WITA</p>
+                <div class="text-right">
+                    <p class="text-xs font-black text-navy-900" id="mini-clock">00:00 WITA</p>
                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter hidden sm:block">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
-                <div class="h-8 w-[1px] bg-slate-100 hidden sm:block"></div>
+                <div class="h-8 w-[1px] bg-slate-100"></div>
                 <div class="flex items-center gap-3">
                     <div class="text-right">
                         <p class="text-sm font-black text-navy-900  leading-none uppercase">{{ auth()->user()->name }}</p>
-                        <p class="text-xs font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
+                        <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5">ONLINE</p>
                     </div>
                     <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-navy-800 overflow-hidden shadow-md">
                         @if(auth()->user()->profile_photo)
