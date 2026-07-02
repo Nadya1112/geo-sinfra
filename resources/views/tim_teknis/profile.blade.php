@@ -35,6 +35,9 @@
     @include('tim_teknis.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden">
+        <style>
+            #mobile-menu-btn { display: none !important; }
+        </style>
         {{-- ── Header ── --}}
         <header class="bg-white/80 dark:bg-[#1e1b4b]/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 px-8 py-5 flex justify-between items-center z-40 shrink-0">
             <div class="flex items-center gap-4">

@@ -38,6 +38,9 @@
     @include('admin.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden">
+        <style>
+            #mobile-menu-btn { display: none !important; }
+        </style>
         {{-- ── Header ── --}}
         <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 px-4 md:px-8 py-4 flex justify-between items-center z-40 shrink-0">
             <div class="flex items-center gap-2 md:gap-4">
