@@ -26,8 +26,9 @@
     <style> body { font-family: 'Plus Jakarta Sans', sans-serif; }
     </style>
 <style>
-    @media (min-width: 768px) { html { zoom: 0.9 !important; } }
-    @media (max-width: 767px) { html { zoom: 0.5 !important; } }
+    
+    
+@media (max-width: 767px) { html { font-size: 12px; } }
 </style>
 </head>
 <body class="bg-slate-50 dark:bg-[#0f0e2c] flex h-screen overflow-hidden text-slate-800 dark:text-white text-left font-sans dark:bg-navy-950 transition-colors duration-300">
@@ -442,7 +443,7 @@
                             <h4 class="text-xs font-black text-navy-900 dark:text-white mb-1">${point.nama_objek || point.nama_infrastruktur || '-'}</h4>
                             <p class="text-xs text-slate-400 font-bold uppercase mb-3">Wilayah: ${point.kelurahan?.nama_kelurahan ?? '-'}</p>
                             
-                            <div class="flex items-center gap-2 mb-3">
+                            <div class="flex items-center gap-2 mb-2">
                                 <span class="px-2 py-1 rounded-full text-[7px] font-black uppercase tracking-widest" style="background-color: ${color}15; color: ${color}; border: 1px solid ${color}30;">
                                     ${isSelesai ? 'SUDAH DIPERBAIKI' : kondisiAktual}
                                 </span>
@@ -451,7 +452,12 @@
                                 </span>
                             </div>
 
-                            <a href="#" class="block w-full py-2 bg-navy-900 text-white rounded-xl text-xs font-black uppercase tracking-widest text-center hover:bg-gold-500 transition-all shadow-lg shadow-navy-900/10">Detail Laporan</a>
+                            <div class="mb-3 flex items-center gap-1.5 text-[8px] font-bold text-slate-400 uppercase">
+                                <i class="fas fa-clock"></i>
+                                Update: ${new Date(point.updated_at).toLocaleDateString('id-ID', {day: 'numeric', month: 'short', year: 'numeric'})}
+                            </div>
+
+                            <a href="/tim-teknis/infrastruktur/${point.id}" class="block w-full py-2 bg-navy-900 text-white rounded-xl text-xs font-black uppercase tracking-widest text-center hover:bg-gold-500 transition-all shadow-lg shadow-navy-900/10">Lihat Detail</a>
                         </div>
                     </div>
                 `;
