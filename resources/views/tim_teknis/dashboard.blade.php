@@ -25,7 +25,6 @@
     <style> body { font-family: 'Plus Jakarta Sans', sans-serif; }
     </style>
 <style>
-    @media (min-width: 768px) { html { font-size: 14px; } }
     @media (max-width: 767px) { html { font-size: 12px; } }
 </style>
 </head>
@@ -62,7 +61,7 @@
             </div>
         </header>
 
-        <div class="p-4 md:p-8 space-y-4 md:space-y-10">
+        <div class="p-4 md:p-6 space-y-4 md:space-y-6">
 
             @if(isset($totalRusakBerat) && $totalRusakBerat > 0)
             <!-- Critical Alert Banner -->
@@ -89,80 +88,89 @@
             @endif
 
             <!-- Welcome Section -->
-            <div class="relative bg-navy-900 rounded-2xl md:rounded-[3rem] p-5 md:p-10 overflow-hidden shadow-2xl shadow-navy-900/20">
+            <div class="relative bg-navy-900 rounded-2xl md:rounded-3xl p-5 md:p-8 overflow-hidden shadow-2xl shadow-navy-900/20">
                 <div class="absolute -right-20 -top-20 w-80 h-80 bg-gold-500/20 rounded-full blur-[100px]"></div>
                 <div class="absolute -left-10 -bottom-10 w-60 h-60 bg-white/5 rounded-full blur-[80px]"></div>
                 
-                <div class="relative z-10">
-                    <h1 class="text-lg md:text-3xl font-black text-white mb-1">Selamat Datang, {{ auth()->user()->name }}</h1>
-                    <p class="text-slate-300 text-xs md:text-sm font-medium tracking-wide">Berikut ringkasan kondisi infrastruktur Banjarmasin saat ini.</p>
+                <div class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+                    <div>
+                        <h1 class="text-lg md:text-2xl font-black text-white mb-1">Selamat Datang, {{ auth()->user()->name }}</h1>
+                        <p class="text-slate-300 text-xs md:text-sm font-medium tracking-wide">Berikut ringkasan kondisi infrastruktur Banjarmasin saat ini.</p>
+                    </div>
+                    <div class="hidden md:flex items-center gap-2">
+                        <span class="px-3 py-1.5 bg-emerald-500/20 text-emerald-400 text-xs font-black uppercase tracking-widest rounded-full border border-emerald-500/30">
+                            <i class="fas fa-circle text-[6px] mr-1 animate-pulse"></i> Sistem Aktif
+                        </span>
+                        <span class="px-3 py-1.5 bg-gold-500/20 text-gold-400 text-xs font-black uppercase tracking-widest rounded-full border border-gold-500/30">
+                            <i class="fas fa-robot text-[10px] mr-1"></i> AI Online
+                        </span>
+                    </div>
                 </div>
 
                 <!-- Stats Bar — sumber data: Analisis AI (bukan input manual) -->
-                <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-6 mt-5 md:mt-10">
+                <div class="relative z-10 grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
 
-                    {{-- Total Terdata --}}
-                    {{-- Total Terdata --}}
-                    <div class="bg-white/5 backdrop-blur-md rounded-2xl p-3 md:p-6 border border-white/10 hover:bg-white/10 transition-all border-l-gold-400/50 border-l-4">
-                        <div class="flex flex-col gap-2">
-                            <div class="w-8 h-8 md:w-12 md:h-12 bg-gold-400/20 rounded-xl flex items-center justify-center text-gold-400">
-                                <i class="fas fa-database text-sm md:text-lg"></i>
+                    <div class="bg-white/5 backdrop-blur-md rounded-2xl p-3 md:p-5 border border-white/10 hover:bg-white/10 transition-all border-l-gold-400/50 border-l-4">
+                        <div class="flex md:flex-col gap-3 md:gap-2">
+                            <div class="w-8 h-8 md:w-10 md:h-10 bg-gold-400/20 rounded-xl flex-shrink-0 flex items-center justify-center text-gold-400">
+                                <i class="fas fa-database text-sm"></i>
                             </div>
                             <div>
-                                <p class="text-[9px] md:text-xs font-black text-gold-400 uppercase tracking-wider">Total Terdata</p>
-                                <h3 class="text-xl md:text-2xl font-black text-white leading-none">{{ $totalInfrastruktur ?? 0 }} <span class="text-[9px] md:text-xs font-bold text-gold-400/50 italic">Objek</span></h3>
+                                <p class="text-[9px] md:text-[10px] font-black text-gold-400 uppercase tracking-wider">Total Terdata</p>
+                                <h3 class="text-xl md:text-3xl font-black text-white leading-none">{{ $totalInfrastruktur ?? 0 }}</h3>
+                                <span class="text-[9px] font-bold text-gold-400/60 italic">Objek</span>
                             </div>
                         </div>
                     </div>
 
-                    {{-- Kondisi Baik (AI) --}}
-                    <div class="bg-white/5 backdrop-blur-md rounded-2xl p-3 md:p-6 border border-white/10 hover:bg-white/10 transition-all border-l-emerald-400/50 border-l-4">
-                        <div class="flex flex-col gap-2">
-                            <div class="w-8 h-8 md:w-12 md:h-12 bg-emerald-400/20 rounded-xl flex items-center justify-center text-emerald-400">
-                                <i class="fas fa-check-circle text-sm md:text-lg"></i>
+                    <div class="bg-white/5 backdrop-blur-md rounded-2xl p-3 md:p-5 border border-white/10 hover:bg-white/10 transition-all border-l-emerald-400/50 border-l-4">
+                        <div class="flex md:flex-col gap-3 md:gap-2">
+                            <div class="w-8 h-8 md:w-10 md:h-10 bg-emerald-400/20 rounded-xl flex-shrink-0 flex items-center justify-center text-emerald-400">
+                                <i class="fas fa-check-circle text-sm"></i>
                             </div>
                             <div>
-                                <p class="text-[9px] md:text-xs font-black text-emerald-400 uppercase tracking-wider">Baik <span class="text-white/40 normal-case font-medium">(AI)</span></p>
-                                <h3 class="text-xl md:text-2xl font-black text-white leading-none">{{ $totalBaik ?? 0 }} <span class="text-[9px] md:text-xs font-bold text-emerald-400/50 italic">Lokasi</span></h3>
+                                <p class="text-[9px] md:text-[10px] font-black text-emerald-400 uppercase tracking-wider">Baik <span class="text-white/40 normal-case font-medium">(AI)</span></p>
+                                <h3 class="text-xl md:text-3xl font-black text-white leading-none">{{ $totalBaik ?? 0 }}</h3>
+                                <span class="text-[9px] font-bold text-emerald-400/60 italic">Lokasi</span>
                             </div>
                         </div>
                     </div>
 
-                    {{-- Rusak Sedang (AI) --}}
-                    <div class="bg-white/5 backdrop-blur-md rounded-2xl p-3 md:p-6 border border-white/10 hover:bg-white/10 transition-all border-l-amber-400/50 border-l-4">
-                        <div class="flex flex-col gap-2">
-                            <div class="w-8 h-8 md:w-12 md:h-12 bg-amber-400/20 rounded-xl flex items-center justify-center text-amber-400">
-                                <i class="fas fa-exclamation-circle text-sm md:text-lg"></i>
+                    <div class="bg-white/5 backdrop-blur-md rounded-2xl p-3 md:p-5 border border-white/10 hover:bg-white/10 transition-all border-l-amber-400/50 border-l-4">
+                        <div class="flex md:flex-col gap-3 md:gap-2">
+                            <div class="w-8 h-8 md:w-10 md:h-10 bg-amber-400/20 rounded-xl flex-shrink-0 flex items-center justify-center text-amber-400">
+                                <i class="fas fa-exclamation-circle text-sm"></i>
                             </div>
                             <div>
-                                <p class="text-[9px] md:text-xs font-black text-amber-400 uppercase tracking-wider">Rusak Sedang <span class="text-white/40 normal-case font-medium">(AI)</span></p>
-                                <h3 class="text-xl md:text-2xl font-black text-white leading-none">{{ $totalRusakSedang ?? 0 }} <span class="text-[9px] md:text-xs font-bold text-amber-400/50 italic">Lokasi</span></h3>
+                                <p class="text-[9px] md:text-[10px] font-black text-amber-400 uppercase tracking-wider">Rusak Sedang <span class="text-white/40 normal-case font-medium">(AI)</span></p>
+                                <h3 class="text-xl md:text-3xl font-black text-white leading-none">{{ $totalRusakSedang ?? 0 }}</h3>
+                                <span class="text-[9px] font-bold text-amber-400/60 italic">Lokasi</span>
                             </div>
                         </div>
                     </div>
 
-                    {{-- Rusak Berat (AI) --}}
-                    <div class="bg-white/5 backdrop-blur-md rounded-2xl p-3 md:p-6 border border-white/10 hover:bg-white/10 transition-all border-l-rose-400/50 border-l-4">
-                        <div class="flex flex-col gap-2">
-                            <div class="w-8 h-8 md:w-12 md:h-12 bg-rose-400/20 rounded-xl flex items-center justify-center text-rose-400">
-                                <i class="fas fa-triangle-exclamation text-sm md:text-lg"></i>
+                    <div class="bg-white/5 backdrop-blur-md rounded-2xl p-3 md:p-5 border border-white/10 hover:bg-white/10 transition-all border-l-rose-400/50 border-l-4">
+                        <div class="flex md:flex-col gap-3 md:gap-2">
+                            <div class="w-8 h-8 md:w-10 md:h-10 bg-rose-400/20 rounded-xl flex-shrink-0 flex items-center justify-center text-rose-400">
+                                <i class="fas fa-triangle-exclamation text-sm"></i>
                             </div>
                             <div>
-                                <p class="text-[9px] md:text-xs font-black text-rose-400 uppercase tracking-wider">Rusak Berat <span class="text-white/40 normal-case font-medium">(AI)</span></p>
-                                <h3 class="text-xl md:text-2xl font-black text-white leading-none">{{ $totalRusakBerat ?? 0 }} <span class="text-[9px] md:text-xs font-bold text-rose-400/50 italic">Lokasi</span></h3>
+                                <p class="text-[9px] md:text-[10px] font-black text-rose-400 uppercase tracking-wider">Rusak Berat <span class="text-white/40 normal-case font-medium">(AI)</span></p>
+                                <h3 class="text-xl md:text-3xl font-black text-white leading-none">{{ $totalRusakBerat ?? 0 }}</h3>
+                                <span class="text-[9px] font-bold text-rose-400/60 italic">Lokasi</span>
                             </div>
                         </div>
                     </div>
 
-                    {{-- Antrean Validasi --}}
-                    <div class="bg-white/5 backdrop-blur-md rounded-2xl p-3 md:p-6 border border-white/10 hover:bg-white/10 transition-all border-l-blue-300/50 border-l-4">
-                        <div class="flex flex-col gap-2">
-                            <div class="w-8 h-8 md:w-12 md:h-12 bg-blue-400/20 rounded-xl flex items-center justify-center text-blue-300">
-                                <i class="fas fa-clipboard-check text-sm md:text-lg"></i>
+                    <div class="bg-white/5 backdrop-blur-md rounded-2xl p-3 md:p-5 border border-white/10 hover:bg-white/10 transition-all border-l-blue-300/50 border-l-4">
+                        <div class="flex md:flex-col gap-3 md:gap-2">
+                            <div class="w-8 h-8 md:w-10 md:h-10 bg-blue-400/20 rounded-xl flex-shrink-0 flex items-center justify-center text-blue-300">
+                                <i class="fas fa-clipboard-check text-sm"></i>
                             </div>
                             <div>
-                                <p class="text-[9px] md:text-xs font-black text-blue-300 uppercase tracking-wider">Antrean Validasi</p>
-                                <h3 class="text-xl md:text-2xl font-black text-white leading-none">{{ $totalPending ?? 0 }} <span class="text-[9px] md:text-xs font-bold text-blue-300/50 italic">Laporan</span></h3>
+                                <p class="text-[9px] md:text-[10px] font-black text-blue-300 uppercase tracking-wider">Antrean Validasi</p>
+                                <h3 class="text-xl md:text-3xl font-black text-white leading-none">{{ $totalPending ?? 0 }}</h3>
+                                <span class="text-[9px] font-bold text-blue-300/60 italic">Laporan</span>
                             </div>
                         </div>
                     </div>
@@ -171,7 +179,7 @@
             </div>
 
             <!-- Main Menu Cards -->
-            <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
                 <a href="{{ route('tim_teknis.monitoring') }}" class="bg-white dark:bg-[#1e1b4b] p-4 md:p-8 rounded-2xl md:rounded-[2.5rem] border border-slate-100 dark:border-white/10 shadow-sm hover:shadow-xl hover:-translate-y-1 md:hover:-translate-y-2 transition-all group relative overflow-hidden">
                     <div class="absolute -right-6 -top-6 w-24 h-24 bg-navy-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
                     <div class="relative z-10 flex flex-col h-full justify-between gap-3 md:gap-6">
