@@ -25,8 +25,8 @@
     <style> body { font-family: 'Plus Jakarta Sans', sans-serif; }
     </style>
 <style>
-    @media (min-width: 768px) { html { zoom: 0.9 !important; } }
-    @media (max-width: 767px) { html { zoom: 0.5 !important; } }
+    @media (min-width: 768px) { html { font-size: 14px; } }
+    @media (max-width: 767px) { html { font-size: 12px; } }
 </style>
 </head>
 <body class="bg-slate-50 dark:bg-[#0f0e2c] flex h-screen overflow-hidden text-slate-800 dark:text-white text-left font-sans dark:bg-navy-950 transition-colors duration-300">
@@ -34,134 +34,135 @@
     @include('tim_teknis.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-y-auto">
-        <header class="bg-white dark:bg-[#1e1b4b] border-b border-slate-100 dark:border-white/10 px-4 pl-16 md:px-8 py-4 flex justify-between items-center z-40 sticky top-0">
+        <header class="bg-white dark:bg-[#1e1b4b] border-b border-slate-100 dark:border-white/10 px-4 pl-16 md:px-8 py-3 md:py-4 flex justify-between items-center z-40 sticky top-0">
             <div>
-                <p class="text-xs font-extrabold text-gold-500 uppercase tracking-[0.2em] mb-1">Portal Tim Teknis</p>
-                <h2 class="text-xl font-black text-navy-900 dark:text-white">Panel Pengawasan</h2>
+                <p class="text-[10px] md:text-xs font-extrabold text-gold-500 uppercase tracking-[0.2em] mb-0.5">Portal Tim Teknis</p>
+                <h2 class="text-base md:text-xl font-black text-navy-900 dark:text-white leading-tight">Panel Pengawasan</h2>
             </div>
             
-            <div class="flex items-center gap-6">
+            <div class="flex items-center gap-2 md:gap-6">
                 <div class="text-right hidden sm:block">
                     <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
-                <div class="h-8 w-[1px] bg-slate-100"></div>
-                <a href="{{ route('tim_teknis.profile') }}" class="flex items-center gap-3 group">
-                    <div class="text-right">
-                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-colors">{{ auth()->user()->name }}</p>
-                        <p class="text-xs font-bold text-emerald-500 uppercase mt-1">ONLINE</p>
+                <div class="h-8 w-[1px] bg-slate-100 hidden sm:block"></div>
+                <a href="{{ route('tim_teknis.profile') }}" class="flex items-center gap-2 group">
+                    <div class="text-right hidden xs:block">
+                        <p class="text-xs font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-colors max-w-[100px] truncate">{{ auth()->user()->name }}</p>
+                        <p class="text-[10px] font-bold text-emerald-500 uppercase mt-0.5">ONLINE</p>
                     </div>
-                    <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shadow-md group-hover:shadow-lg transition-all overflow-hidden">
+                    <div class="w-8 h-8 md:w-10 md:h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shadow-md group-hover:shadow-lg transition-all overflow-hidden flex-shrink-0">
                         @if(auth()->user()->profile_photo)
                             <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
                         @else
-                            <i class="fas fa-user-circle text-xl"></i>
+                            <i class="fas fa-user-circle text-base md:text-xl"></i>
                         @endif
                     </div>
                 </a>
             </div>
         </header>
 
-        <div class="p-8 space-y-10">
+        <div class="p-4 md:p-8 space-y-4 md:space-y-10">
 
             @if(isset($totalRusakBerat) && $totalRusakBerat > 0)
             <!-- Critical Alert Banner -->
-            <div class="relative bg-rose-500 rounded-[2.5rem] p-6 border border-rose-600 shadow-xl shadow-rose-500/30 flex items-center justify-between overflow-hidden group hover:scale-[1.01] transition-transform">
-                <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/20 dark:bg-[#1e1b4b]/20 rounded-full blur-2xl animate-pulse"></div>
-                <div class="relative z-10 flex items-center gap-6">
-                    <div class="w-16 h-16 bg-white dark:bg-[#1e1b4b] rounded-2xl flex items-center justify-center text-rose-500 shadow-inner">
-                        <i class="fas fa-exclamation-triangle text-3xl animate-bounce"></i>
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-3 mb-1">
-                            <h3 class="text-xl font-black text-white tracking-tight">PERINGATAN DARURAT</h3>
-                            <span class="px-3 py-1 bg-rose-900/50 text-white text-xs font-black uppercase tracking-widest rounded-full border border-white/20 animate-pulse">Action Required</span>
+            <div class="relative bg-rose-500 rounded-2xl md:rounded-[2.5rem] p-4 md:p-6 border border-rose-600 shadow-xl shadow-rose-500/30 overflow-hidden">
+                <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/20 rounded-full blur-2xl animate-pulse"></div>
+                <div class="relative z-10 flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 md:w-16 md:h-16 bg-white/20 rounded-xl md:rounded-2xl flex items-center justify-center text-white flex-shrink-0">
+                            <i class="fas fa-exclamation-triangle text-lg md:text-3xl animate-bounce"></i>
                         </div>
-                        <p class="text-rose-100 text-sm font-medium">Analisis AI mendeteksi <strong class="text-white text-lg">{{ $totalRusakBerat }} infrastruktur</strong> dalam kondisi kritis (Rusak Berat). Segera lakukan peninjauan dan alokasi anggaran perbaikan.</p>
+                        <div>
+                            <div class="flex flex-wrap items-center gap-2 mb-0.5">
+                                <h3 class="text-sm md:text-xl font-black text-white tracking-tight">PERINGATAN DARURAT</h3>
+                                <span class="px-2 py-0.5 bg-rose-900/50 text-white text-[9px] md:text-xs font-black uppercase tracking-widest rounded-full border border-white/20 animate-pulse">Action Required</span>
+                            </div>
+                            <p class="text-rose-100 text-xs md:text-sm font-medium">AI mendeteksi <strong class="text-white">{{ $totalRusakBerat }} infrastruktur</strong> kondisi kritis. Segera tinjau!</p>
+                        </div>
                     </div>
-                </div>
-                <div class="relative z-10 hidden md:block">
-                    <a href="{{ route('tim_teknis.laporan') }}?kondisi=Berat" class="px-6 py-4 bg-white dark:bg-[#1e1b4b] text-rose-600 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-rose-50 transition-colors shadow-lg flex items-center gap-3">
-                        Tinjau Sekarang <i class="fas fa-arrow-right"></i>
+                    <a href="{{ route('tim_teknis.laporan') }}?kondisi=Berat" class="flex-shrink-0 px-3 py-2 md:px-6 md:py-4 bg-white text-rose-600 rounded-xl md:rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-widest hover:bg-rose-50 transition-colors shadow-lg flex items-center gap-1.5">
+                        Tinjau <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
             @endif
 
             <!-- Welcome Section -->
-            <div class="relative bg-navy-900 rounded-[3rem] p-10 overflow-hidden shadow-2xl shadow-navy-900/20">
+            <div class="relative bg-navy-900 rounded-2xl md:rounded-[3rem] p-5 md:p-10 overflow-hidden shadow-2xl shadow-navy-900/20">
                 <div class="absolute -right-20 -top-20 w-80 h-80 bg-gold-500/20 rounded-full blur-[100px]"></div>
-                <div class="absolute -left-10 -bottom-10 w-60 h-60 bg-white/5 dark:bg-[#1e1b4b]/5 rounded-full blur-[80px]"></div>
+                <div class="absolute -left-10 -bottom-10 w-60 h-60 bg-white/5 rounded-full blur-[80px]"></div>
                 
                 <div class="relative z-10">
-                    <h1 class="text-3xl font-black text-white mb-2">Selamat Datang, HIZBULWATHONI, S.T.</h1>
-                    <p class="text-slate-300 text-sm font-medium tracking-wide">Berikut ringkasan kondisi infrastruktur Banjarmasin saat ini.</p>
+                    <h1 class="text-lg md:text-3xl font-black text-white mb-1">Selamat Datang, {{ auth()->user()->name }}</h1>
+                    <p class="text-slate-300 text-xs md:text-sm font-medium tracking-wide">Berikut ringkasan kondisi infrastruktur Banjarmasin saat ini.</p>
                 </div>
 
                 <!-- Stats Bar — sumber data: Analisis AI (bukan input manual) -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mt-10">
+                <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-6 mt-5 md:mt-10">
 
                     {{-- Total Terdata --}}
-                    <div class="bg-white/5 dark:bg-[#1e1b4b]/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 group hover:bg-white/10 dark:hover:bg-[#1e1b4b]/10 transition-all border-l-gold-400/50 border-l-4">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-gold-400/20 rounded-2xl flex items-center justify-center text-gold-400">
-                                <i class="fas fa-database text-lg"></i>
+                    {{-- Total Terdata --}}
+                    <div class="bg-white/5 backdrop-blur-md rounded-2xl p-3 md:p-6 border border-white/10 hover:bg-white/10 transition-all border-l-gold-400/50 border-l-4">
+                        <div class="flex flex-col gap-2">
+                            <div class="w-8 h-8 md:w-12 md:h-12 bg-gold-400/20 rounded-xl flex items-center justify-center text-gold-400">
+                                <i class="fas fa-database text-sm md:text-lg"></i>
                             </div>
                             <div>
-                                <p class="text-xs font-black text-gold-400 uppercase tracking-widest">Total Terdata</p>
-                                <h3 class="text-2xl font-black text-white">{{ $totalInfrastruktur ?? 0 }} <span class="text-xs font-bold text-gold-400/50 italic ml-1">Objek</span></h3>
+                                <p class="text-[9px] md:text-xs font-black text-gold-400 uppercase tracking-wider">Total Terdata</p>
+                                <h3 class="text-xl md:text-2xl font-black text-white leading-none">{{ $totalInfrastruktur ?? 0 }} <span class="text-[9px] md:text-xs font-bold text-gold-400/50 italic">Objek</span></h3>
                             </div>
                         </div>
                     </div>
 
                     {{-- Kondisi Baik (AI) --}}
-                    <div class="bg-white/5 dark:bg-[#1e1b4b]/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 group hover:bg-white/10 dark:hover:bg-[#1e1b4b]/10 transition-all border-l-emerald-400/50 border-l-4">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-emerald-400/20 rounded-2xl flex items-center justify-center text-emerald-400">
-                                <i class="fas fa-check-circle text-lg"></i>
+                    <div class="bg-white/5 backdrop-blur-md rounded-2xl p-3 md:p-6 border border-white/10 hover:bg-white/10 transition-all border-l-emerald-400/50 border-l-4">
+                        <div class="flex flex-col gap-2">
+                            <div class="w-8 h-8 md:w-12 md:h-12 bg-emerald-400/20 rounded-xl flex items-center justify-center text-emerald-400">
+                                <i class="fas fa-check-circle text-sm md:text-lg"></i>
                             </div>
                             <div>
-                                <p class="text-xs font-black text-emerald-400 uppercase tracking-widest">Baik <span class="text-xs text-white/40 normal-case font-medium">(AI)</span></p>
-                                <h3 class="text-2xl font-black text-white">{{ $totalBaik ?? 0 }} <span class="text-xs font-bold text-emerald-400/50 italic ml-1">Lokasi</span></h3>
+                                <p class="text-[9px] md:text-xs font-black text-emerald-400 uppercase tracking-wider">Baik <span class="text-white/40 normal-case font-medium">(AI)</span></p>
+                                <h3 class="text-xl md:text-2xl font-black text-white leading-none">{{ $totalBaik ?? 0 }} <span class="text-[9px] md:text-xs font-bold text-emerald-400/50 italic">Lokasi</span></h3>
                             </div>
                         </div>
                     </div>
 
                     {{-- Rusak Sedang (AI) --}}
-                    <div class="bg-white/5 dark:bg-[#1e1b4b]/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 group hover:bg-white/10 dark:hover:bg-[#1e1b4b]/10 transition-all border-l-amber-400/50 border-l-4">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-amber-400/20 rounded-2xl flex items-center justify-center text-amber-400">
-                                <i class="fas fa-exclamation-circle text-lg"></i>
+                    <div class="bg-white/5 backdrop-blur-md rounded-2xl p-3 md:p-6 border border-white/10 hover:bg-white/10 transition-all border-l-amber-400/50 border-l-4">
+                        <div class="flex flex-col gap-2">
+                            <div class="w-8 h-8 md:w-12 md:h-12 bg-amber-400/20 rounded-xl flex items-center justify-center text-amber-400">
+                                <i class="fas fa-exclamation-circle text-sm md:text-lg"></i>
                             </div>
                             <div>
-                                <p class="text-xs font-black text-amber-400 uppercase tracking-widest">Rusak Sedang <span class="text-xs text-white/40 normal-case font-medium">(AI)</span></p>
-                                <h3 class="text-2xl font-black text-white">{{ $totalRusakSedang ?? 0 }} <span class="text-xs font-bold text-amber-400/50 italic ml-1">Lokasi</span></h3>
+                                <p class="text-[9px] md:text-xs font-black text-amber-400 uppercase tracking-wider">Rusak Sedang <span class="text-white/40 normal-case font-medium">(AI)</span></p>
+                                <h3 class="text-xl md:text-2xl font-black text-white leading-none">{{ $totalRusakSedang ?? 0 }} <span class="text-[9px] md:text-xs font-bold text-amber-400/50 italic">Lokasi</span></h3>
                             </div>
                         </div>
                     </div>
 
                     {{-- Rusak Berat (AI) --}}
-                    <div class="bg-white/5 dark:bg-[#1e1b4b]/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 group hover:bg-white/10 dark:hover:bg-[#1e1b4b]/10 transition-all border-l-rose-400/50 border-l-4">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-rose-400/20 rounded-2xl flex items-center justify-center text-rose-400">
-                                <i class="fas fa-triangle-exclamation text-lg"></i>
+                    <div class="bg-white/5 backdrop-blur-md rounded-2xl p-3 md:p-6 border border-white/10 hover:bg-white/10 transition-all border-l-rose-400/50 border-l-4">
+                        <div class="flex flex-col gap-2">
+                            <div class="w-8 h-8 md:w-12 md:h-12 bg-rose-400/20 rounded-xl flex items-center justify-center text-rose-400">
+                                <i class="fas fa-triangle-exclamation text-sm md:text-lg"></i>
                             </div>
                             <div>
-                                <p class="text-xs font-black text-rose-400 uppercase tracking-widest">Rusak Berat <span class="text-xs text-white/40 normal-case font-medium">(AI)</span></p>
-                                <h3 class="text-2xl font-black text-white">{{ $totalRusakBerat ?? 0 }} <span class="text-xs font-bold text-rose-400/50 italic ml-1">Lokasi</span></h3>
+                                <p class="text-[9px] md:text-xs font-black text-rose-400 uppercase tracking-wider">Rusak Berat <span class="text-white/40 normal-case font-medium">(AI)</span></p>
+                                <h3 class="text-xl md:text-2xl font-black text-white leading-none">{{ $totalRusakBerat ?? 0 }} <span class="text-[9px] md:text-xs font-bold text-rose-400/50 italic">Lokasi</span></h3>
                             </div>
                         </div>
                     </div>
 
                     {{-- Antrean Validasi --}}
-                    <div class="bg-white/5 dark:bg-[#1e1b4b]/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 group hover:bg-white/10 dark:hover:bg-[#1e1b4b]/10 transition-all border-l-blue-300/50 border-l-4">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-blue-400/20 rounded-2xl flex items-center justify-center text-blue-300">
-                                <i class="fas fa-clipboard-check text-lg"></i>
+                    <div class="bg-white/5 backdrop-blur-md rounded-2xl p-3 md:p-6 border border-white/10 hover:bg-white/10 transition-all border-l-blue-300/50 border-l-4">
+                        <div class="flex flex-col gap-2">
+                            <div class="w-8 h-8 md:w-12 md:h-12 bg-blue-400/20 rounded-xl flex items-center justify-center text-blue-300">
+                                <i class="fas fa-clipboard-check text-sm md:text-lg"></i>
                             </div>
                             <div>
-                                <p class="text-xs font-black text-blue-300 uppercase tracking-widest">Antrean Validasi</p>
-                                <h3 class="text-2xl font-black text-white">{{ $totalPending ?? 0 }} <span class="text-xs font-bold text-blue-300/50 italic ml-1">Laporan</span></h3>
+                                <p class="text-[9px] md:text-xs font-black text-blue-300 uppercase tracking-wider">Antrean Validasi</p>
+                                <h3 class="text-xl md:text-2xl font-black text-white leading-none">{{ $totalPending ?? 0 }} <span class="text-[9px] md:text-xs font-bold text-blue-300/50 italic">Laporan</span></h3>
                             </div>
                         </div>
                     </div>
@@ -170,44 +171,55 @@
             </div>
 
             <!-- Main Menu Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <a href="{{ route('tim_teknis.monitoring') }}" class="bg-white dark:bg-[#1e1b4b] p-8 rounded-[2.5rem] border border-slate-100 dark:border-white/10 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group relative overflow-hidden">
+            <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
+                <a href="{{ route('tim_teknis.monitoring') }}" class="bg-white dark:bg-[#1e1b4b] p-4 md:p-8 rounded-2xl md:rounded-[2.5rem] border border-slate-100 dark:border-white/10 shadow-sm hover:shadow-xl hover:-translate-y-1 md:hover:-translate-y-2 transition-all group relative overflow-hidden">
                     <div class="absolute -right-6 -top-6 w-24 h-24 bg-navy-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
-                    <div class="relative z-10 flex flex-col h-full justify-between gap-6">
-                        <div class="w-14 h-14 bg-navy-900 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-navy-200">
-                            <i class="fas fa-map-location-dot text-xl"></i>
+                    <div class="relative z-10 flex flex-col h-full justify-between gap-3 md:gap-6">
+                        <div class="w-10 h-10 md:w-14 md:h-14 bg-navy-900 rounded-xl md:rounded-2xl flex items-center justify-center text-white shadow-lg">
+                            <i class="fas fa-map-location-dot text-base md:text-xl"></i>
                         </div>
                         <div>
-                            <h4 class="font-black text-navy-900 dark:text-white text-sm uppercase tracking-tight mb-2">Monitoring Peta Sebaran</h4>
-                            <p class="text-xs text-slate-500 font-bold leading-relaxed">Pantau persebaran infrastruktur di seluruh wilayah Banjarmasin secara real-time.</p>
+                            <h4 class="font-black text-navy-900 dark:text-white text-xs md:text-sm uppercase tracking-tight mb-1 md:mb-2">Monitoring Peta</h4>
+                            <p class="text-[10px] md:text-xs text-slate-500 font-bold leading-relaxed hidden md:block">Pantau persebaran infrastruktur di seluruh wilayah Banjarmasin secara real-time.</p>
                         </div>
                     </div>
                 </a>
 
-                <a href="{{ route('tim_teknis.validasi') }}" class="bg-white dark:bg-[#1e1b4b] p-8 rounded-[2.5rem] border border-slate-100 dark:border-white/10 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group relative overflow-hidden">
+                <a href="{{ route('tim_teknis.validasi') }}" class="bg-white dark:bg-[#1e1b4b] p-4 md:p-8 rounded-2xl md:rounded-[2.5rem] border border-slate-100 dark:border-white/10 shadow-sm hover:shadow-xl hover:-translate-y-1 md:hover:-translate-y-2 transition-all group relative overflow-hidden">
                     <div class="absolute -right-6 -top-6 w-24 h-24 bg-gold-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
-                    <div class="relative z-10 flex flex-col h-full justify-between gap-6">
-                        <div class="w-14 h-14 bg-gold-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-gold-200">
-                            <i class="fas fa-clipboard-check text-xl"></i>
+                    <div class="relative z-10 flex flex-col h-full justify-between gap-3 md:gap-6">
+                        <div class="w-10 h-10 md:w-14 md:h-14 bg-gold-500 rounded-xl md:rounded-2xl flex items-center justify-center text-white shadow-lg">
+                            <i class="fas fa-clipboard-check text-base md:text-xl"></i>
                         </div>
                         <div>
-                            <h4 class="font-black text-navy-900 dark:text-white text-sm uppercase tracking-tight mb-2">Validasi Usulan Perbaikan</h4>
-                            <p class="text-xs text-slate-500 font-bold leading-relaxed">Tinjau dan beri persetujuan pada laporan kerusakan dari surveyor lapangan.</p>
+                            <h4 class="font-black text-navy-900 dark:text-white text-xs md:text-sm uppercase tracking-tight mb-1 md:mb-2">Validasi Laporan</h4>
+                            <p class="text-[10px] md:text-xs text-slate-500 font-bold leading-relaxed hidden md:block">Tinjau dan beri persetujuan pada laporan kerusakan dari surveyor lapangan.</p>
                         </div>
                     </div>
                 </a>
 
-
-
-                <a href="{{ route('tim_teknis.laporan') }}" class="bg-white dark:bg-[#1e1b4b] p-8 rounded-[2.5rem] border border-slate-100 dark:border-white/10 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group relative overflow-hidden">
-                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-gold-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
-                    <div class="relative z-10 flex flex-col h-full justify-between gap-6">
-                        <div class="w-14 h-14 bg-gold-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-gold-200">
-                            <i class="fas fa-file-pdf text-xl"></i>
+                <a href="{{ route('tim_teknis.prioritas') }}" class="bg-white dark:bg-[#1e1b4b] p-4 md:p-8 rounded-2xl md:rounded-[2.5rem] border border-slate-100 dark:border-white/10 shadow-sm hover:shadow-xl hover:-translate-y-1 md:hover:-translate-y-2 transition-all group relative overflow-hidden">
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-amber-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
+                    <div class="relative z-10 flex flex-col h-full justify-between gap-3 md:gap-6">
+                        <div class="w-10 h-10 md:w-14 md:h-14 bg-amber-500 rounded-xl md:rounded-2xl flex items-center justify-center text-white shadow-lg">
+                            <i class="fas fa-trophy text-base md:text-xl"></i>
                         </div>
                         <div>
-                            <h4 class="font-black text-navy-900 dark:text-white text-sm uppercase tracking-tight mb-2">Cetak Laporan Resmi PDF</h4>
-                            <p class="text-xs text-slate-500 font-bold leading-relaxed">Ekspor ringkasan data pengawasan menjadi dokumen resmi siap cetak.</p>
+                            <h4 class="font-black text-navy-900 dark:text-white text-xs md:text-sm uppercase tracking-tight mb-1 md:mb-2">Prioritas</h4>
+                            <p class="text-[10px] md:text-xs text-slate-500 font-bold leading-relaxed hidden md:block">Tentukan urutan prioritas perbaikan berdasarkan tingkat kerusakan infrastruktur.</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="{{ route('tim_teknis.laporan') }}" class="bg-white dark:bg-[#1e1b4b] p-4 md:p-8 rounded-2xl md:rounded-[2.5rem] border border-slate-100 dark:border-white/10 shadow-sm hover:shadow-xl hover:-translate-y-1 md:hover:-translate-y-2 transition-all group relative overflow-hidden">
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-gold-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
+                    <div class="relative z-10 flex flex-col h-full justify-between gap-3 md:gap-6">
+                        <div class="w-10 h-10 md:w-14 md:h-14 bg-gold-600 rounded-xl md:rounded-2xl flex items-center justify-center text-white shadow-lg">
+                            <i class="fas fa-file-pdf text-base md:text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-black text-navy-900 dark:text-white text-xs md:text-sm uppercase tracking-tight mb-1 md:mb-2">Laporan PDF</h4>
+                            <p class="text-[10px] md:text-xs text-slate-500 font-bold leading-relaxed hidden md:block">Ekspor ringkasan data pengawasan menjadi dokumen resmi siap cetak.</p>
                         </div>
                     </div>
                 </a>
