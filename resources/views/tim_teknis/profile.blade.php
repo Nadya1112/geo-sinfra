@@ -48,8 +48,8 @@
             </div>
             
             <div class="flex items-center gap-6">
-                <div class="text-right hidden sm:block">
-                    <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                <div class="text-right">
+                    <p class="text-xs font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
             </div>
