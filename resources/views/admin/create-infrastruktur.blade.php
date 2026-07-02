@@ -68,9 +68,12 @@
     @include('admin.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden">
+        <style>
+            #mobile-menu-btn { display: none !important; }
+        </style>
 
         {{-- ── Header ── --}}
-        <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 px-4 pl-16 md:px-8 py-4 flex justify-between items-center z-40 shrink-0">
+        <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 px-4  md:px-8 py-4 flex justify-between items-center z-40 shrink-0">
             <div class="flex items-center gap-4">
                 <a href="{{ route('admin.infrastruktur') }}"
                    class="hidden md:flex w-10 h-10 bg-white border border-slate-100 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/30 hover:shadow-md transition-all group"

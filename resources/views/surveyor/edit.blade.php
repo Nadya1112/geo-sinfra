@@ -45,7 +45,7 @@
 
     <main class="flex-1 flex flex-col h-screen overflow-y-auto custom-scrollbar bg-slate-50 ">
         {{-- ── Header ── --}}
-        <header class="bg-white/80  backdrop-blur-xl border-b border-slate-100  sticky top-0 px-4 pl-16 md:px-8 py-4 flex justify-between items-center sticky top-0 z-[1000] shadow-sm">
+        <header class="bg-white/80  backdrop-blur-xl border-b border-slate-100  sticky top-0 px-4  md:px-8 py-4 flex justify-between items-center sticky top-0 z-[1000] shadow-sm">
             <div class="flex items-center gap-4">
                 <a href="{{ route('surveyor.history') }}" class="hidden md:flex w-10 h-10  items-center justify-center bg-white  text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 transition-all border border-slate-200  hover:border-gold-200">
                     <i class="fas fa-arrow-left text-sm"></i>
