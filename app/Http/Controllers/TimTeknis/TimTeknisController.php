@@ -140,30 +140,6 @@ class TimTeknisController extends Controller
         return redirect()->route('tim_teknis.validasi', ['status' => $request->status])->with('success', $message);
     }
 
-    public function bulkValidasi(Request $request)
-    {
-        $request->validate([
-            'ids' => 'required|array',
-            'ids.*' => 'exists:infrastruktur,id_infrastruktur',
-            'status' => 'required|in:Validated,Rejected',
-            'alasan_penolakan' => 'nullable|string'
-        ]);
-
-        $updateData = [
-            'status_validasi' => $request->status,
-            'alasan_penolakan' => $request->alasan_penolakan
-        ];
-
-        Infrastruktur::whereIn('id_infrastruktur', $request->ids)
-            ->update($updateData);
-
-        $message = $request->status == 'Validated' 
-            ? count($request->ids) . ' Data berhasil divalidasi dan dipindahkan ke tab Disetujui!' 
-            : count($request->ids) . ' Data telah ditolak dan dipindahkan ke tab Ditolak!';
-            
-        return redirect()->route('tim_teknis.validasi', ['status' => $request->status])->with('success', $message);
-    }
-
     public function updateStatusPerbaikan(Request $request, $id)
     {
         $request->validate([

@@ -376,8 +376,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/prioritas', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'prioritas'])->name('tim_teknis.prioritas');
 
         Route::get('/validasi', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'validasi'])->name('tim_teknis.validasi');
-        Route::post('/validasi/bulk', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'bulkValidasi'])->name('tim_teknis.validasi.bulk');
-        Route::post('/validasi/{id}', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'prosesValidasi'])->name('tim_teknis.validasi.proses');
+                Route::post('/validasi/{id}', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'prosesValidasi'])->name('tim_teknis.validasi.proses');
 
         Route::get('/laporan', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'laporan'])->name('tim_teknis.laporan');
         Route::get('/infrastruktur/{id}', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'show'])->name('tim_teknis.infrastruktur.show');

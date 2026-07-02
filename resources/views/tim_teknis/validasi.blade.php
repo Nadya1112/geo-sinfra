@@ -218,31 +218,14 @@
                 </div>
 
 
-                <form id="bulkForm" action="{{ route('tim_teknis.validasi.bulk') }}" method="POST">
-                    @csrf
+                @csrf
                     <input type="hidden" name="status" id="bulkStatus" value="">
                     
-                    <div id="bulkActionBar" class="px-8 py-3 bg-indigo-50 dark:bg-indigo-900/20 border-b border-indigo-100 dark:border-indigo-500/20 flex items-center gap-4 transition-all duration-300 hidden">
-                        <div class="flex items-center gap-2">
-                            <span class="w-6 h-6 rounded-full bg-indigo-500 text-white flex items-center justify-center text-xs font-black shadow-sm" id="selectedCount">0</span>
-                            <span class="text-xs font-black text-indigo-900 dark:text-indigo-400 uppercase tracking-widest">Data Terpilih</span>
-                        </div>
-                        <div class="h-4 w-[2px] bg-indigo-200 rounded-full"></div>
-                        <button type="button" onclick="submitBulk('Validated')" class="px-4 py-1.5 bg-emerald-500 text-white rounded-lg text-xs font-black uppercase tracking-widest hover:bg-emerald-600 transition-all shadow-sm shadow-emerald-500/30 border border-emerald-600 flex items-center gap-2 group">
-                            <i class="fas fa-check-double group-hover:scale-110 transition-transform"></i> Setujui Semua
-                        </button>
-                        <button type="button" onclick="submitBulk('Rejected')" class="px-4 py-1.5 bg-rose-500 text-white rounded-lg text-xs font-black uppercase tracking-widest hover:bg-rose-600 transition-all shadow-sm shadow-rose-500/30 border border-rose-600 flex items-center gap-2 group">
-                            <i class="fas fa-times group-hover:scale-110 transition-transform"></i> Tolak Semua
-                        </button>
-                    </div>
-
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
                             <thead>
                                 <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md text-xs font-black text-gold-500 uppercase tracking-widest">
-                                    <th class="px-6 py-4 w-10 border-b border-navy-800 text-center">
-                                        <input type="checkbox" id="selectAll" class="roun border-slate-300 text-gold-500 focus:ring-gold-500 cursor-pointer w-4 h-4">
-                                    </th>
+
                                     <th class="px-2 py-4 w-12 border-b border-navy-800">No</th>
                                 <th class="px-6 py-4 border-b border-navy-800">Infrastruktur</th>
                                 <th class="px-6 py-4 border-b border-navy-800">Wilayah</th>
@@ -255,13 +238,7 @@
                         <tbody class="divide-y divide-slate-50">
                             @forelse($allUsulan as $index => $item)
                             <tr class="hover:bg-slate-50 dark:bg-[#0f0e2c]/50 transition-colors group">
-                                <td class="px-6 py-5 text-center">
-                                    @if($item->status_validasi == 'Pending')
-                                        <input type="checkbox" name="ids[]" value="{{ $item->id_infrastruktur }}" class="row-checkbox roun border-slate-300 text-gold-500 focus:ring-gold-500 cursor-pointer w-4 h-4">
-                                    @else
-                                        <input type="checkbox" disabled class="roun border-slate-200 dark:border-white/20 bg-slate-50 dark:bg-[#0f0e2c] cursor-not-allowed opacity-50 w-4 h-4">
-                                    @endif
-                                </td>
+
                                 <td class="px-2 py-5 whitespace-nowrap text-xs font-black text-slate-300">
                                     {{ request('show') == 'all' ? sprintf('%02d', $index + 1) : sprintf('%02d', ($allUsulan->currentPage() - 1) * $allUsulan->perPage() + $index + 1) }}
                                 </td>
@@ -477,13 +454,9 @@
         // --- Modal Logic ---
         let pendingForm = null;
         let pendingStatus = '';
-        let isBulk = false;
-
-        function openValidasiModal(formOrStatus, statusParam, bulk = false) {
-            isBulk = bulk;
-            if (bulk) {
-                pendingStatus = statusParam;
-            } else {
+        function openValidasiModal(formOrStatus, statusParam) {
+            if (false) {
+} else {
                 pendingForm = formOrStatus;
                 pendingStatus = statusParam;
             }
@@ -541,15 +514,8 @@
                 return;
             }
 
-            if (isBulk) {
-                const inputAlasan = document.createElement('input');
-                inputAlasan.type = 'hidden';
-                inputAlasan.name = 'alasan_penolakan';
-                inputAlasan.value = input;
-                document.getElementById('bulkForm').appendChild(inputAlasan);
-                document.getElementById('bulkStatus').value = pendingStatus;
-                document.getElementById('bulkForm').submit();
-            } else {
+            if (false) {
+} else {
                 const inputAlasan = document.createElement('input');
                 inputAlasan.type = 'hidden';
                 inputAlasan.name = 'alasan_penolakan';
@@ -559,9 +525,7 @@
             }
         }
 
-        function submitBulk(status) {
-            openValidasiModal(null, status, true);
-        }
+        
 
         function promptCatatan(e, form, status) {
             e.preventDefault();
