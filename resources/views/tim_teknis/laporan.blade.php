@@ -425,14 +425,12 @@
         setInterval(updateClock, 1000); updateClock();
 
         function exportTableToExcel(filename) {
-            var kopHTML = document.getElementById("kopSurat").outerHTML;
-            var titleHTML = document.getElementById("docTitle").outerHTML;
-            var tableHTML = document.getElementById("laporanTable").outerHTML;
+            // Clone table agar kita bisa menghapus TTD (tfoot) tanpa mengubah tampilan di web
+            var tempTable = document.getElementById("laporanTable").cloneNode(true);
+            var tfoot = tempTable.querySelector('tfoot');
+            if (tfoot) tfoot.remove();
             
-            // Clean up 'hidden' class so it renders in Excel
-            kopHTML = kopHTML.replace(/hidden print-only/g, "");
-            titleHTML = titleHTML.replace(/hidden print-only/g, "");
-            tableHTML = tableHTML.replace(/hidden print-only/g, "");
+            var tableHTML = tempTable.outerHTML;
             
             // Bungkus tabel HTML dengan format meta khusus Excel agar bisa dibaca sebagai .xls
             var htmlTemplate = `
@@ -461,8 +459,6 @@
 </style>
 </head>
                 <body>
-                    ${kopHTML}
-                    ${titleHTML}
                     ${tableHTML}
                 </body>
                 </html>
