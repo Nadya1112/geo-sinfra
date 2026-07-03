@@ -54,22 +54,22 @@
                 </div>
             </div>
 
-            <div class="flex items-center gap-6">
+            <div class="flex items-center gap-3 md:gap-6">
                 <div class="text-right">
-                    <p class="text-sm font-black text-navy-900 " id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-[10px] md:text-sm font-black text-navy-900 mt-1" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter hidden md:block">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
-                <div class="h-8 w-[1px] bg-slate-100"></div>
-                <div class="flex items-center gap-3">
+                <div class="h-6 md:h-8 w-[1px] bg-slate-200"></div>
+                <div class="flex items-center gap-2 md:gap-3">
                     <a href="{{ route('surveyor.profile') }}" class="text-right group">
-                        <p class="text-xs md:text-sm font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-all ] sm:] md: max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
-                        <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5">Online</p>
+                        <p class="text-xs md:text-sm font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-all max-w-[200px] truncate hidden md:block">{{ auth()->user()->name }}</p>
+                        <p class="text-[8px] md:text-xs font-bold text-emerald-500 uppercase md:mt-0.5">Online</p>
                     </a>
-                    <a href="{{ route('surveyor.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md">
+                    <a href="{{ route('surveyor.profile') }}" class="w-8 h-8 md:w-10 md:h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md shrink-0">
                         @if(auth()->user()->profile_photo)
                             <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
                         @else
-                            <i class="fas fa-user-circle text-xl"></i>
+                            <i class="fas fa-user-circle text-lg md:text-xl"></i>
                         @endif
                     </a>
                 </div>
