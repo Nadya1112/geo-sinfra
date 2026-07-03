@@ -485,13 +485,9 @@
                 printInput.value = 'true';
                 form.appendChild(printInput);
 
-                const showInput = form.querySelector('input[name="show"]');
-                if (showInput) showInput.value = 'all';
-
                 form.submit();
             } else {
                 const url = new URL(window.location.href);
-                url.searchParams.set('show', 'all');
                 url.searchParams.set('print', 'true');
                 window.location.href = url.toString();
             }
@@ -509,13 +505,9 @@
                 exportInput.value = 'true';
                 form.appendChild(exportInput);
 
-                const showInput = form.querySelector('input[name="show"]');
-                if (showInput) showInput.value = 'all';
-
                 form.submit();
             } else {
                 const url = new URL(window.location.href);
-                url.searchParams.set('show', 'all');
                 url.searchParams.set('autoExportExcel', 'true');
                 window.location.href = url.toString();
             }
