@@ -122,40 +122,20 @@
                             <span id="stat-berat" class="text-[7px] font-black text-[#be123c] bg-[#be123c]/10 px-1.5 py-0.5 rounded border border-[#be123c]/20">0</span>
                         </div>
                     </div>
-                </div>
-
-                <!-- Legenda Warna Titik -->
-                <div class="mt-2 bg-navy-900/90 backdrop-blur-xl p-2 px-3 rounded-2xl border border-white/10 shadow-2xl min-w-[140px]">
-                    <p class="text-[7px] font-black text-slate-400 uppercase tracking-wider mb-1.5"><i class="fas fa-circle-info mr-1 text-gold-400"></i>Legenda</p>
-                    <div class="flex flex-col gap-1">
-                        <div class="flex items-center gap-1.5">
-                            <div class="w-2.5 h-2.5 rounded-full bg-[#059669] shadow-sm shadow-[#059669]/40"></div>
-                            <span class="text-[7px] font-bold text-gray-300 uppercase tracking-wider">Kondisi Baik</span>
-                        </div>
-                        <div class="flex items-center gap-1.5">
-                            <div class="w-2.5 h-2.5 rounded-full bg-[#d97706] shadow-sm shadow-[#d97706]/40"></div>
-                            <span class="text-[7px] font-bold text-gray-300 uppercase tracking-wider">Rusak Sedang</span>
-                        </div>
-                        <div class="flex items-center gap-1.5">
-                            <div class="w-2.5 h-2.5 rounded-full bg-[#be123c] shadow-sm shadow-[#be123c]/40"></div>
-                            <span class="text-[7px] font-bold text-gray-300 uppercase tracking-wider">Rusak Berat</span>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <!-- Floating Filters Right (Combined) -->
             <div class="absolute top-4 right-4 z-10">
-                <div class="bg-[#1e1b4b]/95 backdrop-blur-xl p-3 rounded-2xl border border-white/10 shadow-2xl w-48 flex flex-col gap-2">
+                <div class="bg-[#1e1b4b]/95 backdrop-blur-xl p-2 rounded-2xl border border-white/10 shadow-2xl w-40 flex flex-col gap-1.5">
                     
                     <!-- Kategori Section -->
                     <div id="category-card" class="w-full relative">
-                        <button onclick="toggleMenu('category-options')" class="w-full px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider bg-white/5 text-white flex items-center justify-between hover:bg-white/10 transition-all border border-white/5 shadow-inner">
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-layer-group text-sm opacity-90 text-gold-500"></i>
-                                <span id="current-cat-label" class="truncate max-w-[100px] text-[10px]">KATEGORI OBJEK</span>
+                        <button onclick="toggleMenu('category-options')" class="w-full px-3 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider bg-white/5 text-white flex items-center justify-between hover:bg-white/10 transition-all border border-white/5 shadow-inner">
+                            <div class="flex items-center gap-1.5">
+                                <i class="fas fa-layer-group text-xs opacity-90 text-gold-500"></i>
+                                <span id="current-cat-label" class="truncate max-w-[80px] text-[9px]">SEMUA KATEGORI</span>
                             </div>
-                            <i class="fas fa-chevron-down text-[10px] text-slate-400"></i>
+                            <i class="fas fa-chevron-down text-[8px] text-slate-400"></i>
                         </button>
                         <div id="category-options" class="hidden mt-2 p-1.5 bg-[#0f0e2c]/90 rounded-xl border border-white/5 flex flex-col gap-1 max-h-[40vh] overflow-y-auto custom-scrollbar">
                             <button onclick="toggleType('Semua')" class="type-btn w-full px-3 py-1.5 rounded-lg text-[7px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="Semua">
@@ -211,12 +191,12 @@
 
                     <!-- Kecamatan Section -->
                     <div id="territory-card" class="w-full relative">
-                        <button onclick="toggleMenu('territory-options')" class="w-full px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider bg-white/5 text-white flex items-center justify-between hover:bg-white/10 transition-all border border-white/5 shadow-inner">
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-map-location-dot text-sm opacity-90 text-gold-500"></i>
-                                <span id="current-kec-label" class="truncate max-w-[100px] text-[10px]">SEMUA WILAYAH</span>
+                        <button onclick="toggleMenu('territory-options')" class="w-full px-3 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider bg-white/5 text-white flex items-center justify-between hover:bg-white/10 transition-all border border-white/5 shadow-inner">
+                            <div class="flex items-center gap-1.5">
+                                <i class="fas fa-map-location-dot text-xs opacity-90 text-gold-500"></i>
+                                <span id="current-kec-label" class="truncate max-w-[80px] text-[9px]">SEMUA WILAYAH</span>
                             </div>
-                            <i class="fas fa-chevron-down text-[10px] text-slate-400"></i>
+                            <i class="fas fa-chevron-down text-[8px] text-slate-400"></i>
                         </button>
                         <div id="territory-options" class="hidden mt-0.5 p-0.5 flex-col overflow-y-auto custom-scrollbar" style="max-height: 20vh;">
                             <!-- Select All Territories -->
