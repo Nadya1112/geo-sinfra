@@ -75,7 +75,7 @@
         </header>
 
         <!-- MAIN CONTENT -->
-        <div class="p-8 space-y-8">
+        <div class="p-4 md:p-8 space-y-6 md:space-y-8">
             
             @if(session('success'))
                 <div class="p-4 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-500/20 rounded-2xl flex items-center gap-3 text-emerald-600 dark:text-emerald-400 shadow-sm animate-pulse">
@@ -148,8 +148,8 @@
             </div>
 
             <!-- TABLE SECTION -->
-            <div class="bg-white dark:bg-[#1e1b4b] rounded-[3rem] shadow-sm border border-slate-100 dark:border-white/10 overflow-hidden mb-10">
-                <div class="px-8 py-5 border-b border-slate-50 flex flex-col md:flex-row justify-between items-center bg-white dark:bg-[#1e1b4b] gap-4">
+            <div class="bg-white dark:bg-[#1e1b4b] rounded-[2rem] md:rounded-[3rem] shadow-sm border border-slate-100 dark:border-white/10 overflow-hidden mb-10">
+                <div class="px-4 md:px-8 py-4 md:py-5 border-b border-slate-50 flex flex-col md:flex-row justify-between items-center bg-white dark:bg-[#1e1b4b] gap-4">
                     <div class="flex items-center gap-4">
                         <div class="w-10 h-10 rounded-xl bg-gold-50 flex items-center justify-center text-gold-500 border border-gold-100">
                             <i class="fas fa-tasks"></i>
@@ -171,7 +171,7 @@
                 </div>
                 
                 <!-- FILTER TABS & ADVANCED FILTER -->
-                <div class="px-8 py-4 bg-white dark:bg-[#1e1b4b] border-b border-slate-100 dark:border-white/10">
+                <div class="px-4 md:px-8 py-4 bg-white dark:bg-[#1e1b4b] border-b border-slate-100 dark:border-white/10">
                     <form action="{{ route('tim_teknis.validasi') }}" method="GET" class="flex flex-col gap-4">
                         <input type="hidden" name="show" value="{{ request('show') }}">
                         @php $currentStatus = request('status', 'Pending'); @endphp
@@ -359,7 +359,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="7" class="px-8 py-20 text-center">
+                                <td colspan="7" class="px-4 md:px-8 py-12 md:py-20 text-center">
                                     <div class="flex flex-col items-center gap-3">
                                         <div class="w-16 h-16 bg-slate-50 dark:bg-[#0f0e2c] rounded-full flex items-center justify-center text-slate-300">
                                             <i class="fas fa-clipboard-check text-2xl"></i>
