@@ -243,7 +243,8 @@ class TimTeknisController extends Controller
         if ($request->get('show') == 'all') {
             $reports = $query->get();
         } else {
-            $reports = $query->paginate(10)->withQueryString();
+            $limit = $request->get('show') && is_numeric($request->get('show')) ? (int) $request->get('show') : 10;
+            $reports = $query->paginate($limit)->withQueryString();
         }
         
         $kecamatan = \App\Models\Kecamatan::all();

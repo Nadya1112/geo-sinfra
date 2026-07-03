@@ -292,8 +292,11 @@
                                 @endif
                             @endforeach
                             <label class="text-xs font-black text-slate-400 uppercase tracking-widest">Tampilan:</label>
-                            <select name="show" onchange="this.form.submit()" class="text-xs font-bold text-navy-900 dark:text-white bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 rounded-xl px-3 py-1.5 focus:outline-none focus:border-gold-500 transition-colors">
-                                <option value="10" {{ request('show') != 'all' ? 'selected' : '' }}>Per 10 Data</option>
+                            <select name="show" onchange="this.form.submit()" class="pl-4 pr-10 py-2 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 rounded-xl text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500 appearance-none shadow-sm cursor-pointer">
+                                <option value="10" {{ request('show') == '10' || !request('show') ? 'selected' : '' }}>Per 10 Data</option>
+                                <option value="25" {{ request('show') == '25' ? 'selected' : '' }}>Per 25 Data</option>
+                                <option value="50" {{ request('show') == '50' ? 'selected' : '' }}>Per 50 Data</option>
+                                <option value="100" {{ request('show') == '100' ? 'selected' : '' }}>Per 100 Data</option>
                                 <option value="all" {{ request('show') == 'all' ? 'selected' : '' }}>Semua Data</option>
                             </select>
                         </form>
