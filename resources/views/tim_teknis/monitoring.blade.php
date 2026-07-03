@@ -83,7 +83,7 @@
             </div>
 
             <!-- Stats UI Bottom Left -->
-            <div class="absolute bottom-24 md:bottom-6 left-4 z-[2000] pointer-events-auto">
+            <div class="absolute bottom-32 md:bottom-6 left-4 z-[2000] pointer-events-auto">
                 <div id="condition-card" class="bg-navy-900/90 backdrop-blur-xl p-1 rounded-2xl border border-white/10 shadow-2xl min-w-[140px] transition-all duration-300">
                     <button onclick="toggleMenu('condition-options')" class="w-full px-3 py-2 rounded-xl text-xs font-black uppercase tracking-wider bg-white/5 text-white flex items-center justify-between hover:bg-white/10 transition-all group border border-white/5">
                         <div class="flex items-center gap-1.5">
@@ -236,7 +236,7 @@
                 </div>
             </div>
             <!-- Layer Switcher -->
-            <div class="absolute bottom-24 md:bottom-6 right-4 z-[2000] pointer-events-auto">
+            <div class="absolute bottom-32 md:bottom-6 right-4 z-[2000] pointer-events-auto">
                 <div id="layer-card" class="bg-[#1e1b4b]/80 backdrop-blur-xl p-1.5 rounded-2xl border border-white/10 shadow-2xl transition-all duration-300">
                     <button onclick="toggleMenu('layer-options')" class="w-9 h-9 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-all group border border-white/5">
                         <i class="fas fa-layer-group text-xs group-hover:scale-110 transition-transform"></i>
