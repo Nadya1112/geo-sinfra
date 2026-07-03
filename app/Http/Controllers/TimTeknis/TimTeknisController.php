@@ -243,7 +243,7 @@ class TimTeknisController extends Controller
         if ($request->get('show') == 'all') {
             $reports = $query->get();
         } else {
-            $limit = $request->get('show') && is_numeric($request->get('show')) ? (int) $request->get('show') : 10;
+            $limit = $request->get('show') && is_numeric($request->get('show')) ? (int) $request->get('show') : 15;
             $reports = $query->paginate($limit)->withQueryString();
         }
         
