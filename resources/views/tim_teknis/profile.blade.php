@@ -34,26 +34,26 @@
 
     @include('tim_teknis.partials.sidebar')
 
-    <main class="flex-1 flex flex-col h-screen overflow-hidden">
+    <main class="flex-1 flex flex-col h-screen overflow-hidden text-left font-sans">
         <style>
             #mobile-menu-btn { display: none !important; }
         </style>
         {{-- ── Header ── --}}
-        <header class="bg-white/80 dark:bg-[#1e1b4b]/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 px-8 py-5 flex justify-between items-center z-40 shrink-0">
-            <div class="flex items-center gap-4">
-                <a href="{{ route('tim_teknis.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 hover:border-gold-200 transition-all shadow-sm">
+        <header class="bg-white/80 dark:bg-[#1e1b4b]/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 px-4 pl-20 md:px-8 py-4 flex justify-between items-center z-40 shrink-0 sticky top-0">
+            <div class="flex items-center gap-4 min-w-0">
+                <a href="{{ route('tim_teknis.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 hover:border-gold-200 transition-all shadow-sm hidden md:flex">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
-                <div>
-                    <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Pengaturan Akun</p>
-                    <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Profil Saya</h2>
+                <div class="min-w-0">
+                    <p class="text-[9px] md:text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-0.5 md:mb-1 truncate">Pengaturan Akun</p>
+                    <h2 class="text-sm md:text-xl font-black text-navy-900 dark:text-white leading-tight whitespace-normal">Profil Saya</h2>
                 </div>
             </div>
             
-            <div class="flex items-center gap-6">
+            <div class="flex items-center gap-3 md:gap-6 flex-shrink-0">
                 <div class="text-right">
-                    <p class="text-xs font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-[10px] md:text-xs font-black text-navy-900 dark:text-white mt-1" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter hidden md:block">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
             </div>
         </header>

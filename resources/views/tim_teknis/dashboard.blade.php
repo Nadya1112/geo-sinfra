@@ -33,28 +33,28 @@
     @include('tim_teknis.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-y-auto">
-        <header class="bg-white dark:bg-[#1e1b4b] border-b border-slate-100 dark:border-white/10 px-4 pl-16 md:px-8 py-3 md:py-4 flex justify-between items-center z-40 sticky top-0">
-            <div>
-                <p class="text-[10px] md:text-xs font-extrabold text-gold-500 uppercase tracking-[0.2em] mb-0.5">Portal Tim Teknis</p>
-                <h2 class="text-base md:text-xl font-black text-navy-900 dark:text-white leading-tight">Panel Pengawasan</h2>
+        <header class="bg-white dark:bg-[#1e1b4b] border-b border-slate-100 dark:border-white/10 px-4 pl-20 md:px-8 py-3 md:py-4 flex justify-between items-center z-40 sticky top-0">
+            <div class="min-w-0">
+                <p class="text-[9px] md:text-xs font-extrabold text-gold-500 uppercase tracking-[0.2em] mb-0.5 truncate">Portal Tim Teknis</p>
+                <h2 class="text-sm md:text-xl font-black text-navy-900 dark:text-white leading-tight whitespace-normal">Panel Pengawasan</h2>
             </div>
             
-            <div class="flex items-center gap-2 md:gap-6">
+            <div class="flex items-center gap-3 md:gap-6 flex-shrink-0">
                 <div class="text-right">
-                    <p class="text-xs font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-[10px] md:text-xs font-black text-navy-900 dark:text-white mt-1" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter hidden md:block">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
-                <div class="h-8 w-[1px] bg-slate-100"></div>
-                <a href="{{ route('tim_teknis.profile') }}" class="flex items-center gap-2 group">
+                <div class="h-6 md:h-8 w-[1px] bg-slate-200 dark:bg-white/10"></div>
+                <a href="{{ route('tim_teknis.profile') }}" class="flex items-center gap-2 md:gap-3 group">
                     <div class="text-right">
-                        <p class="text-xs font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-colors ] sm:] md: max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
-                        <p class="text-[10px] font-bold text-emerald-500 uppercase mt-0.5">ONLINE</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-colors max-w-[200px] truncate hidden md:block">{{ auth()->user()->name }}</p>
+                        <p class="text-[8px] md:text-xs font-bold text-emerald-500 uppercase md:mt-0.5">ONLINE</p>
                     </div>
                     <div class="w-8 h-8 md:w-10 md:h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shadow-md group-hover:shadow-lg transition-all overflow-hidden flex-shrink-0">
                         @if(auth()->user()->profile_photo)
                             <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
                         @else
-                            <i class="fas fa-user-circle text-base md:text-xl"></i>
+                            <i class="fas fa-user-circle text-lg md:text-xl"></i>
                         @endif
                     </div>
                 </a>

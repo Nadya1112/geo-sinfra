@@ -43,38 +43,38 @@
 
     <main class="flex-1 flex flex-col h-screen overflow-y-auto custom-scrollbar">
         <!-- HEADER -->
-        <header class="bg-white dark:bg-[#1e1b4b] border-b border-slate-100 dark:border-white/10 px-4  md:px-8 py-4 flex justify-between items-center z-40 sticky top-0">
-            <div class="flex items-center gap-4">
-                <a href="{{ route('tim_teknis.validasi') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100 dark:border-white/10">
+        <header class="bg-white dark:bg-[#1e1b4b] border-b border-slate-100 dark:border-white/10 px-4 pl-20 md:px-8 py-4 flex justify-between items-center z-40 sticky top-0">
+            <div class="flex items-center gap-4 min-w-0">
+                <a href="{{ route('tim_teknis.validasi') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100 dark:border-white/10 hidden md:flex">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
-                <div>
-                    <p class="text-xs font-extrabold text-gold-500 uppercase tracking-[0.2em] mb-1">Verifikasi Usulan</p>
-                    <div class="flex items-center gap-4">
-                        <h2 class="text-xl font-black text-navy-900 dark:text-white">Detail Infrastruktur</h2>
-                        <a href="{{ route('tim_teknis.infrastruktur.pdf', $infrastruktur->id_infrastruktur) }}" target="_blank" class="px-3 py-1.5 bg-rose-50 text-rose-600 rounded-lg text-xs font-black uppercase tracking-widest hover:bg-rose-500 hover:text-white transition-colors border border-rose-100 flex items-center gap-2 shadow-sm">
+                <div class="min-w-0">
+                    <p class="text-[9px] md:text-xs font-extrabold text-gold-500 uppercase tracking-[0.2em] mb-0.5 md:mb-1 truncate">Verifikasi Usulan</p>
+                    <div class="flex items-center gap-2 md:gap-4 flex-wrap">
+                        <h2 class="text-sm md:text-xl font-black text-navy-900 dark:text-white leading-tight whitespace-normal">Detail Infrastruktur</h2>
+                        <a href="{{ route('tim_teknis.infrastruktur.pdf', $infrastruktur->id_infrastruktur) }}" target="_blank" class="px-2 py-1 md:px-3 md:py-1.5 bg-rose-50 text-rose-600 rounded-lg text-[10px] md:text-xs font-black uppercase tracking-widest hover:bg-rose-500 hover:text-white transition-colors border border-rose-100 flex items-center gap-1 md:gap-2 shadow-sm whitespace-nowrap">
                             <i class="fas fa-file-pdf"></i> Cetak PDF
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div class="flex items-center gap-6">
+            <div class="flex items-center gap-3 md:gap-6 flex-shrink-0">
                 <div class="text-right">
-                    <p class="text-xs font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-[10px] md:text-xs font-black text-navy-900 dark:text-white mt-1" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter hidden md:block">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
-                <div class="h-8 w-[1px] bg-slate-100"></div>
-                <div class="flex items-center gap-3">
+                <div class="h-6 md:h-8 w-[1px] bg-slate-200 dark:bg-white/10"></div>
+                <div class="flex items-center gap-2 md:gap-3">
                     <div class="text-right">
-                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
-                        <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5 leading-none">ONLINE</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase max-w-[200px] truncate hidden md:block">{{ auth()->user()->name }}</p>
+                        <p class="text-[8px] md:text-xs font-bold text-emerald-500 uppercase md:mt-0.5 leading-none">ONLINE</p>
                     </div>
-                    <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shadow-md group-hover:shadow-lg transition-all overflow-hidden">
+                    <div class="w-8 h-8 md:w-10 md:h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shadow-md transition-all overflow-hidden shrink-0">
                         @if(auth()->user()->profile_photo)
                             <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
                         @else
-                            <i class="fas fa-user-circle text-xl"></i>
+                            <i class="fas fa-user-circle text-lg md:text-xl"></i>
                         @endif
                     </div>
                 </div>
