@@ -59,6 +59,9 @@
                 width: 260px;
                 line-height: 1.5;
             }
+            .print-tfoot-only {
+                display: table-row-group !important;
+            }
         }
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
@@ -389,6 +392,18 @@
                         @endforelse
 
                     </tbody>
+                    <tfoot class="print-tfoot-only" style="display: none;">
+                        <tr>
+                            <td colspan="5" style="border: none !important; padding-top: 40px !important;">
+                                <div style="float: right; text-align: center; width: 260px; font-family: 'Times New Roman', Times, serif; font-size: 11pt; page-break-inside: avoid;">
+                                    <p style="margin-bottom: 4px;">Banjarmasin, {{ now()->translatedFormat('d F Y') }}</p>
+                                    <p style="margin-bottom: 60px;">Mengetahui,<br><strong>Koordinator Tim Teknis</strong></p>
+                                    <p style="margin: 0; font-weight: bold; text-decoration: underline;">HIZBULWATHONI, S.T.</p>
+                                    <p style="margin: 0;">NIP. 19760814 200604 1 008</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </tfoot>
                 </table>
 
                 
@@ -399,15 +414,6 @@
                 @endif
             </div>
 
-            <!-- Tanda Tangan (Print Only) -->
-            <div id="ttdBox" class="hidden print-only ttd-box">
-                <div class="ttd-inner">
-                    <p style="margin-bottom: 4px;">Banjarmasin, {{ now()->translatedFormat('d F Y') }}</p>
-                    <p style="margin-bottom: 60px;">Mengetahui,<br><strong>Koordinator Tim Teknis</strong></p>
-                    <p style="margin: 0; font-weight: bold; text-decoration: underline;">HIZBULWATHONI, S.T.</p>
-                    <p style="margin: 0;">NIP. 19760814 200604 1 008</p>
-                </div>
-            </div>
         </div>
     </main>
 
@@ -422,12 +428,11 @@
             var kopHTML = document.getElementById("kopSurat").outerHTML;
             var titleHTML = document.getElementById("docTitle").outerHTML;
             var tableHTML = document.getElementById("laporanTable").outerHTML;
-            var ttdHTML = document.getElementById("ttdBox").outerHTML;
             
             // Clean up 'hidden' class so it renders in Excel
             kopHTML = kopHTML.replace(/hidden print-only/g, "");
             titleHTML = titleHTML.replace(/hidden print-only/g, "");
-            ttdHTML = ttdHTML.replace(/hidden print-only/g, "");
+            tableHTML = tableHTML.replace(/hidden print-only/g, "");
             
             // Bungkus tabel HTML dengan format meta khusus Excel agar bisa dibaca sebagai .xls
             var htmlTemplate = `
@@ -459,7 +464,6 @@
                     ${kopHTML}
                     ${titleHTML}
                     ${tableHTML}
-                    ${ttdHTML}
                 </body>
                 </html>
             `;
