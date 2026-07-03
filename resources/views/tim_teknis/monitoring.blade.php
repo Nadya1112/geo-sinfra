@@ -36,7 +36,7 @@
     @include('tim_teknis.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden">
-        <header class="bg-white dark:bg-[#1e1b4b] border-b border-slate-100 dark:border-white/10 px-4 pl-14 md:pl-4 md:px-8 py-3 md:py-4 flex justify-between items-center z-40 sticky top-0">
+        <header class="bg-white dark:bg-[#1e1b4b] border-b border-slate-100 dark:border-white/10 px-4 pl-20 md:pl-4 md:px-8 py-3 md:py-4 flex justify-between items-center z-40 sticky top-0">
             <div class="flex items-center gap-2 md:gap-4 min-w-0">
                 <a href="{{ route('tim_teknis.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100 dark:border-white/10 hidden md:flex flex-shrink-0">
                     <i class="fas fa-arrow-left text-sm"></i>

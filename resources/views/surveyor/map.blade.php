@@ -35,7 +35,7 @@
     @include('surveyor.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden">
-        <header class="bg-white  border-b border-navy-50 sticky top-0 px-4 pl-16 md:px-8 py-4 flex justify-between items-center z-10 shadow-sm relative">
+        <header class="bg-white  border-b border-navy-50 sticky top-0 px-4 pl-20 md:px-8 py-4 flex justify-between items-center z-10 shadow-sm relative">
             <div class="flex items-center gap-4">
                 <a href="{{ route('surveyor.dashboard') }}" class="hidden md:flex w-10 h-10  items-center justify-center bg-navy-50  text-navy-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 transition-all border border-navy-100">
                     <i class="fas fa-arrow-left text-sm"></i>
