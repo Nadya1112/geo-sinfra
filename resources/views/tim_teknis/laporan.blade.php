@@ -113,7 +113,7 @@
 
         <div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
             <!-- Summary Cards (No Print) -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8 no-print">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8 no-print">
                 <!-- Total Laporan -->
                 <div class="relative overflow-hidden rounded-[2rem] p-6 shadow-xl shadow-blue-500/20 hover:-translate-y-1 transition-transform bg-gradient-to-br from-blue-500 to-blue-700">
                     <i class="fas fa-layer-group absolute -right-4 -bottom-4 text-7xl text-white opacity-10"></i>
@@ -184,11 +184,11 @@
             </div>
 
             <!-- Filter Section (No Print) -->
-            <div class="bg-white dark:bg-[#1e1b4b] rounded-[2rem] p-8 border border-slate-100 dark:border-white/10 shadow-sm mb-8 no-print">
-                <form id="filterForm" action="{{ route('tim_teknis.laporan') }}" method="GET" class="flex flex-col gap-6">
+            <div class="bg-white dark:bg-[#1e1b4b] rounded-[2rem] p-5 md:p-8 border border-slate-100 dark:border-white/10 shadow-sm mb-8 no-print">
+                <form id="filterForm" action="{{ route('tim_teknis.laporan') }}" method="GET" class="flex flex-col gap-4 md:gap-6">
                     <input type="hidden" name="show" value="{{ request('show') }}">
                     
-                    <div class="flex flex-wrap md:flex-nowrap gap-6 items-end">
+                    <div class="flex flex-col md:flex-row md:flex-nowrap gap-4 md:gap-6 items-end">
                         <div class="w-full md:flex-1">
                             <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Cari Nama</label>
                             <input type="text" name="search" value="{{ request('search') }}" placeholder="Ketik infrastruktur..." class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
@@ -224,7 +224,7 @@
                         </div>
                     </div>
 
-                    <div class="flex flex-wrap md:flex-nowrap gap-6 items-end">
+                    <div class="flex flex-col md:flex-row md:flex-nowrap gap-4 md:gap-6 items-end">
                         <div class="w-full md:flex-1">
                             <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Mulai Tanggal</label>
                             <input type="date" name="start_date" value="{{ request('start_date') }}" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
@@ -233,8 +233,8 @@
                             <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Sampai Tanggal</label>
                             <input type="date" name="end_date" value="{{ request('end_date') }}" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
                         </div>
-                        <div class="w-full md:flex-1 flex gap-2 justify-end">
-                            <button type="submit" class="px-6 py-2.5 bg-navy-900 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-gold-500 transition-all shadow-lg shadow-navy-900/10">
+                        <div class="w-full md:flex-1 flex gap-2 justify-start md:justify-end mt-2 md:mt-0">
+                            <button type="submit" class="w-full md:w-auto px-6 py-2.5 bg-navy-900 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-gold-500 transition-all shadow-lg shadow-navy-900/10 text-center">
                                 Filter Data
                             </button>
                             <a href="{{ route('tim_teknis.laporan') }}" class="px-4 py-2.5 bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-100 hover:text-slate-600 transition-all flex items-center border border-slate-100 dark:border-white/10 shadow-sm" title="Reset Filter">
@@ -270,21 +270,21 @@
             <!-- TABLE SECTION -->
             <div class="print-no-style bg-white dark:bg-[#1e1b4b] rounded-[2rem] border border-slate-100 dark:border-white/10 shadow-sm overflow-hidden mt-6">
                 <!-- Header with Tampilan Dropdown -->
-                <div class="px-8 py-6 border-b border-slate-50 flex justify-between items-center bg-slate-50 dark:bg-[#0f0e2c]/30 no-print">
+                <div class="px-4 md:px-8 py-4 md:py-6 border-b border-slate-50 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-slate-50 dark:bg-[#0f0e2c]/30 no-print">
                     <div>
                         <h3 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-widest">Data Laporan</h3>
                         <p class="text-xs text-slate-400 font-bold uppercase mt-1">Hasil filter rekapitulasi data</p>
                     </div>
-                    <div class="flex items-center gap-4">
-                        <div class="flex items-center gap-2 mr-2 border-r border-slate-200 dark:border-white/20 pr-4">
-                            <button onclick="printAllData()" class="no-print px-4 py-2 bg-rose-50 text-rose-600 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-rose-100 hover:scale-[1.02] transition-all flex items-center gap-2 border border-rose-100 shadow-sm">
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full md:w-auto">
+                        <div class="flex items-center justify-between sm:justify-start gap-2 border-b sm:border-b-0 sm:border-r border-slate-200 dark:border-white/20 pb-3 sm:pb-0 pr-0 sm:pr-4">
+                            <button onclick="printAllData()" class="flex-1 sm:flex-none justify-center no-print px-4 py-2 bg-rose-50 text-rose-600 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-rose-100 hover:scale-[1.02] transition-all flex items-center gap-2 border border-rose-100 shadow-sm">
                                 <i class="fas fa-file-pdf"></i> Cetak PDF
                             </button>
-                            <button onclick="exportAllDataToExcel()" class="no-print px-4 py-2 bg-emerald-50 text-emerald-600 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-emerald-100 hover:scale-[1.02] transition-all flex items-center gap-2 border border-emerald-100 shadow-sm">
+                            <button onclick="exportAllDataToExcel()" class="flex-1 sm:flex-none justify-center no-print px-4 py-2 bg-emerald-50 text-emerald-600 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-emerald-100 hover:scale-[1.02] transition-all flex items-center gap-2 border border-emerald-100 shadow-sm">
                                 <i class="fas fa-file-excel"></i> Export Excel
                             </button>
                         </div>
-                        <form action="{{ route('tim_teknis.laporan') }}" method="GET" class="flex items-center gap-2">
+                        <form action="{{ route('tim_teknis.laporan') }}" method="GET" class="flex items-center gap-2 w-full sm:w-auto">
                             @foreach(request()->except('show') as $key => $value)
                                 @if(is_array($value))
                                     @foreach($value as $v)
@@ -294,8 +294,8 @@
                                     <input type="hidden" name="{{ $key }}" value="{{ $value }}">
                                 @endif
                             @endforeach
-                            <label class="text-xs font-black text-slate-400 uppercase tracking-widest">Tampilan Cetak:</label>
-                            <select name="show" onchange="this.form.submit()" class="pl-4 pr-10 py-2 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 rounded-xl text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500 appearance-none shadow-sm cursor-pointer">
+                            <label class="text-xs font-black text-slate-400 uppercase tracking-widest whitespace-nowrap">Tampilan Cetak:</label>
+                            <select name="show" onchange="this.form.submit()" class="w-full sm:w-auto pl-4 pr-10 py-2 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 rounded-xl text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500 appearance-none shadow-sm cursor-pointer">
                                 <option value="15" {{ request('show') == '15' || !request('show') ? 'selected' : '' }}>1 Halaman (±15 Baris)</option>
                                 <option value="30" {{ request('show') == '30' ? 'selected' : '' }}>2 Halaman (±30 Baris)</option>
                                 <option value="45" {{ request('show') == '45' ? 'selected' : '' }}>3 Halaman (±45 Baris)</option>
@@ -333,9 +333,11 @@
                         <i class="fas fa-times mr-1"></i> Hapus Filter
                     </a>
                 </div>
+                </div>
                 @endif
-                <table id="laporanTable" class="w-full text-left">
-                    <thead>
+                <div class="overflow-x-auto w-full custom-scrollbar">
+                    <table id="laporanTable" class="w-full text-left whitespace-nowrap md:whitespace-normal min-w-[800px] md:min-w-full">
+                        <thead>
                         <tr class="bg-slate-50 dark:bg-[#0f0e2c]/50 text-xs font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 dark:border-white/10">
                             <th class="px-6 py-4 text-center border-b border-slate-100 dark:border-white/10" style="width: 10%;">No</th>
                             <th class="px-6 py-4 text-center border-b border-slate-100 dark:border-white/10" style="width: 30%;">Infrastruktur</th>
@@ -405,6 +407,7 @@
                         </tr>
                     </tfoot>
                 </table>
+                </div>
 
                 
                 @if(request('show') != 'all' && isset($reports) && $reports instanceof \Illuminate\Pagination\LengthAwarePaginator)
