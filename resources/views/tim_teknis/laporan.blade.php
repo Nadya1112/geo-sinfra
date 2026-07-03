@@ -182,7 +182,7 @@
 
             <!-- Filter Section (No Print) -->
             <div class="bg-white dark:bg-[#1e1b4b] rounded-[2rem] p-8 border border-slate-100 dark:border-white/10 shadow-sm mb-8 no-print">
-                <form action="{{ route('tim_teknis.laporan') }}" method="GET" class="flex flex-col gap-6">
+                <form id="filterForm" action="{{ route('tim_teknis.laporan') }}" method="GET" class="flex flex-col gap-6">
                     <input type="hidden" name="show" value="{{ request('show') }}">
                     
                     <div class="flex flex-wrap md:flex-nowrap gap-6 items-end">
@@ -243,7 +243,7 @@
             </div>
 
             <!-- Print Header (Kop Surat Dinas) -->
-            <div class="hidden print-only mb-6 pb-4" style="border-bottom: 4px double black;">
+            <div id="kopSurat" class="hidden print-only mb-6 pb-4" style="border-bottom: 4px double black;">
                 <div class="flex items-center gap-6" style="display: flex; align-items: center; justify-content: center;">
                     <img src="{{ asset('logo_dinas.jpeg') }}" style="width: 80px; height: auto;" alt="Logo Instansi">
                     <div style="text-align: center;">
@@ -255,7 +255,7 @@
             </div>
 
             <!-- Print Document Title -->
-            <div class="hidden print-only mb-8" style="text-align: center;">
+            <div id="docTitle" class="hidden print-only mb-8" style="text-align: center;">
                 <h3 style="font-size: 14pt; font-weight: bold; text-transform: uppercase; text-decoration: underline; margin-bottom: 12px;">Laporan Rekapitulasi Kondisi Infrastruktur</h3>
                 <div style="font-size: 10pt; display: flex; justify-content: flex-start; gap: 60px; padding-top: 8px; margin-top: 8px;">
                     @if(request('start_date') && request('end_date'))
@@ -277,7 +277,7 @@
                             <button onclick="printAllData()" class="no-print px-4 py-2 bg-rose-50 text-rose-600 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-rose-100 hover:scale-[1.02] transition-all flex items-center gap-2 border border-rose-100 shadow-sm">
                                 <i class="fas fa-file-pdf"></i> Cetak PDF
                             </button>
-                            <button onclick="exportTableToExcel('Laporan-Infrastruktur-{{ date('Y-m-d') }}.xls')" class="no-print px-4 py-2 bg-emerald-50 text-emerald-600 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-emerald-100 hover:scale-[1.02] transition-all flex items-center gap-2 border border-emerald-100 shadow-sm">
+                            <button onclick="exportAllDataToExcel()" class="no-print px-4 py-2 bg-emerald-50 text-emerald-600 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-emerald-100 hover:scale-[1.02] transition-all flex items-center gap-2 border border-emerald-100 shadow-sm">
                                 <i class="fas fa-file-excel"></i> Export Excel
                             </button>
                         </div>
@@ -396,7 +396,7 @@
             </div>
 
             <!-- Tanda Tangan (Print Only) -->
-            <div class="hidden print-only ttd-box">
+            <div id="ttdBox" class="hidden print-only ttd-box">
                 <div class="ttd-inner">
                     <p style="margin-bottom: 4px;">Banjarmasin, {{ now()->translatedFormat('d F Y') }}</p>
                     <p style="margin-bottom: 60px;">Mengetahui,<br><strong>Koordinator Tim Teknis</strong></p>
@@ -415,7 +415,15 @@
         setInterval(updateClock, 1000); updateClock();
 
         function exportTableToExcel(filename) {
+            var kopHTML = document.getElementById("kopSurat").outerHTML;
+            var titleHTML = document.getElementById("docTitle").outerHTML;
             var tableHTML = document.getElementById("laporanTable").outerHTML;
+            var ttdHTML = document.getElementById("ttdBox").outerHTML;
+            
+            // Clean up 'hidden' class so it renders in Excel
+            kopHTML = kopHTML.replace(/hidden print-only/g, "");
+            titleHTML = titleHTML.replace(/hidden print-only/g, "");
+            ttdHTML = ttdHTML.replace(/hidden print-only/g, "");
             
             // Bungkus tabel HTML dengan format meta khusus Excel agar bisa dibaca sebagai .xls
             var htmlTemplate = `
@@ -444,7 +452,10 @@
 </style>
 </head>
                 <body>
+                    ${kopHTML}
+                    ${titleHTML}
                     ${tableHTML}
+                    ${ttdHTML}
                 </body>
                 </html>
             `;
@@ -462,11 +473,52 @@
         }
 
         function printAllData() {
-            const url = new URL(window.location.href);
-            // Paksa nampilkan semua data
-            url.searchParams.set('show', 'all');
-            url.searchParams.set('print', 'true');
-            window.location.href = url.toString();
+            const form = document.getElementById('filterForm');
+            if (form) {
+                // If there's an existing print param, remove it
+                const oldPrint = form.querySelector('input[name="print"]');
+                if (oldPrint) oldPrint.remove();
+                
+                const printInput = document.createElement('input');
+                printInput.type = 'hidden';
+                printInput.name = 'print';
+                printInput.value = 'true';
+                form.appendChild(printInput);
+
+                const showInput = form.querySelector('input[name="show"]');
+                if (showInput) showInput.value = 'all';
+
+                form.submit();
+            } else {
+                const url = new URL(window.location.href);
+                url.searchParams.set('show', 'all');
+                url.searchParams.set('print', 'true');
+                window.location.href = url.toString();
+            }
+        }
+
+        function exportAllDataToExcel() {
+            const form = document.getElementById('filterForm');
+            if (form) {
+                const oldExport = form.querySelector('input[name="autoExportExcel"]');
+                if (oldExport) oldExport.remove();
+                
+                const exportInput = document.createElement('input');
+                exportInput.type = 'hidden';
+                exportInput.name = 'autoExportExcel';
+                exportInput.value = 'true';
+                form.appendChild(exportInput);
+
+                const showInput = form.querySelector('input[name="show"]');
+                if (showInput) showInput.value = 'all';
+
+                form.submit();
+            } else {
+                const url = new URL(window.location.href);
+                url.searchParams.set('show', 'all');
+                url.searchParams.set('autoExportExcel', 'true');
+                window.location.href = url.toString();
+            }
         }
 
         // Jika URL punya parameter print=true, otomatis panggil window.print()
@@ -475,11 +527,23 @@
                 setTimeout(function() {
                     window.print();
                     
-                    // Opsional: hapus param print dari URL agar tidak print ulang saat di-refresh manual
                     const cleanUrl = new URL(window.location.href);
                     cleanUrl.searchParams.delete('print');
                     window.history.replaceState({}, document.title, cleanUrl.toString());
-                }, 500); // jeda sedikit agar semua style/font termuat sempurna
+                }, 500); 
+            });
+        @endif
+
+        // Jika URL punya parameter autoExportExcel=true
+        @if(request('autoExportExcel') == 'true')
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    exportTableToExcel('Laporan-Infrastruktur-{{ date("Y-m-d") }}.xls');
+                    
+                    const cleanUrl = new URL(window.location.href);
+                    cleanUrl.searchParams.delete('autoExportExcel');
+                    window.history.replaceState({}, document.title, cleanUrl.toString());
+                }, 500); 
             });
         @endif
     </script>
