@@ -184,7 +184,7 @@
             </div>
 
             <!-- Filter Section (No Print) -->
-            <div class="bg-white dark:bg-[#1e1b4b] rounded-[2rem] p-5 md:p-8 border border-slate-100 dark:border-white/10 shadow-sm mb-8 no-print">
+            <div class="bg-white dark:bg-[#1e1b4b] rounded-[2rem] p-5 md:p-8 border border-slate-100 dark:border-white/10 shadow-sm mb-4 no-print">
                 <form id="filterForm" action="{{ route('tim_teknis.laporan') }}" method="GET" class="flex flex-col gap-4 md:gap-6">
                     <input type="hidden" name="show" value="{{ request('show') }}">
                     
@@ -268,7 +268,7 @@
             </div>
 
             <!-- TABLE SECTION -->
-            <div class="print-no-style bg-white dark:bg-[#1e1b4b] rounded-[2rem] border border-slate-100 dark:border-white/10 shadow-sm overflow-hidden mt-6">
+            <div class="print-no-style bg-white dark:bg-[#1e1b4b] rounded-[2rem] border border-slate-100 dark:border-white/10 shadow-sm overflow-hidden mt-4">
                 <!-- Header with Tampilan Dropdown -->
                 <div class="px-4 md:px-8 py-4 md:py-6 border-b border-slate-50 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-slate-50 dark:bg-[#0f0e2c]/30 no-print">
                     <div>
@@ -336,7 +336,7 @@
                 </div>
                 @endif
                 <div class="overflow-x-auto w-full custom-scrollbar">
-                    <table id="laporanTable" class="w-full text-left whitespace-nowrap md:whitespace-normal min-w-[800px] md:min-w-full">
+                    <table id="laporanTable" class="w-full text-left min-w-[600px] md:min-w-full">
                         <thead>
                         <tr class="bg-slate-50 dark:bg-[#0f0e2c]/50 text-xs font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 dark:border-white/10">
                             <th class="px-6 py-4 text-center border-b border-slate-100 dark:border-white/10" style="width: 10%;">No</th>
