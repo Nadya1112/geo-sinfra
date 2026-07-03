@@ -43,7 +43,7 @@
                 </a>
                 <div class="min-w-0">
                     <p class="text-[9px] md:text-xs font-extrabold text-rose-500 uppercase tracking-[0.15em] md:tracking-[0.2em] mb-0.5 md:mb-1"><i class="fas fa-satellite-dish mr-1 animate-pulse"></i> Executive WebGIS</p>
-                    <h2 class="text-sm md:text-xl font-black text-navy-900 dark:text-white leading-tight truncate">Peta Sebaran</h2>
+                    <h2 class="text-sm md:text-xl font-black text-navy-900 dark:text-white leading-tight whitespace-normal">Peta Sebaran</h2>
                 </div>
             </div>
             
@@ -136,7 +136,7 @@
                         <button onclick="toggleMenu('category-options')" class="w-full px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider bg-white/5 text-white flex items-center justify-between hover:bg-white/10 transition-all border border-white/5 shadow-inner">
                             <div class="flex items-center gap-2">
                                 <i class="fas fa-layer-group text-sm opacity-90 text-gold-500"></i>
-                                <span id="current-cat-label" class="truncate max-w-[130px] text-[10px]">SEMUA KATEGORI</span>
+                                <span id="current-cat-label" class="whitespace-normal leading-tight text-[10px]">SEMUA KATEGORI</span>
                             </div>
                             <i class="fas fa-chevron-down text-[10px] text-slate-400"></i>
                         </button>
@@ -197,7 +197,7 @@
                         <button onclick="toggleMenu('territory-options')" class="w-full px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider bg-white/5 text-white flex items-center justify-between hover:bg-white/10 transition-all border border-white/5 shadow-inner">
                             <div class="flex items-center gap-2">
                                 <i class="fas fa-map-location-dot text-sm opacity-90 text-gold-500"></i>
-                                <span id="current-kec-label" class="truncate max-w-[130px] text-[10px]">SEMUA WILAYAH</span>
+                                <span id="current-kec-label" class="whitespace-normal leading-tight text-[10px]">SEMUA WILAYAH</span>
                             </div>
                             <i class="fas fa-chevron-down text-[10px] text-slate-400"></i>
                         </button>
@@ -223,12 +223,12 @@
                             @foreach($kecamatan as $kec)
                             <button onclick="toggleKecamatan('{{ $kec->id_kecamatan }}')" class="kec-btn w-full px-3 py-1.5 rounded-lg text-[7px] font-black uppercase tracking-wider text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="{{ $kec->id_kecamatan }}">
                                 <div class="flex items-center gap-1.5">
-                                    <div class="w-2.5 h-2.5 rounded border border-white/20 flex items-center justify-center group-hover:border-gold-400 transition-colors">
+                                    <div class="w-2.5 h-2.5 rounded border border-white/20 flex items-center justify-center group-hover:border-gold-400 transition-colors shrink-0">
                                         <i class="fas fa-check text-[5px] text-gold-400 check-icon" style="opacity:1"></i>
                                     </div>
-                                    <span class="truncate max-w-[75px] group-hover:text-white transition-colors text-left">{{ $kec->nama_kecamatan }}</span>
+                                    <span class="whitespace-normal leading-tight group-hover:text-white transition-colors text-left">{{ $kec->nama_kecamatan }}</span>
                                 </div>
-                                <div class="w-2.5 h-2.5 rounded border border-white/10" style="background-color: {{ $kec->warna ?? '#6366f1' }};"></div>
+                                <div class="w-2.5 h-2.5 rounded border border-white/10 shrink-0" style="background-color: {{ $kec->warna ?? '#6366f1' }};"></div>
                             </button>
                             @endforeach
                         </div>
@@ -236,7 +236,7 @@
                 </div>
             </div>
             <!-- Layer Switcher -->
-            <div class="absolute bottom-28 md:bottom-6 right-4 z-10">
+            <div class="absolute bottom-20 md:bottom-6 right-4 z-10">
                 <div id="layer-card" class="bg-[#1e1b4b]/80 backdrop-blur-xl p-1.5 rounded-2xl border border-white/10 shadow-2xl transition-all duration-300">
                     <button onclick="toggleMenu('layer-options')" class="w-9 h-9 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-all group border border-white/5">
                         <i class="fas fa-layer-group text-xs group-hover:scale-110 transition-transform"></i>
