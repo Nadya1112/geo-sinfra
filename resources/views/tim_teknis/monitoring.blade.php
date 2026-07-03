@@ -73,7 +73,7 @@
             <div id="main-map" class="absolute inset-0 z-0"></div>
 
             <!-- Custom Zoom Controls -->
-            <div class="absolute top-4 left-4 z-10 flex flex-col gap-1.5">
+            <div class="absolute top-4 left-4 z-[2000] pointer-events-auto flex flex-col gap-1.5">
                 <button onclick="map.zoomIn()" class="w-8 h-8 bg-navy-900/80 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:bg-gold-500 transition-all group">
                     <i class="fas fa-plus text-xs group-hover:scale-110 transition-transform"></i>
                 </button>
@@ -82,8 +82,8 @@
                 </button>
             </div>
 
-            <!-- Stats & Legend UI Bottom Left -->
-            <div class="absolute bottom-28 md:bottom-6 left-4 z-10">
+            <!-- Stats UI Bottom Left -->
+            <div class="absolute bottom-8 md:bottom-6 left-4 z-[2000] pointer-events-auto">
                 <div id="condition-card" class="bg-navy-900/90 backdrop-blur-xl p-1 rounded-2xl border border-white/10 shadow-2xl min-w-[140px] transition-all duration-300">
                     <button onclick="toggleMenu('condition-options')" class="w-full px-3 py-2 rounded-xl text-xs font-black uppercase tracking-wider bg-white/5 text-white flex items-center justify-between hover:bg-white/10 transition-all group border border-white/5">
                         <div class="flex items-center gap-1.5">
@@ -128,7 +128,7 @@
             </div>
 
             <!-- Floating Filters Right (Combined) -->
-            <div class="absolute top-4 right-4 z-10">
+            <div class="absolute top-4 right-4 z-[2000] pointer-events-auto">
                 <div class="bg-[#1e1b4b]/95 backdrop-blur-xl p-3 rounded-2xl border border-white/10 shadow-2xl w-48 flex flex-col gap-2">
                     
                     <!-- Kategori Section -->
@@ -236,7 +236,7 @@
                 </div>
             </div>
             <!-- Layer Switcher -->
-            <div class="absolute bottom-20 md:bottom-6 right-4 z-10">
+            <div class="absolute bottom-8 md:bottom-6 right-4 z-[2000] pointer-events-auto">
                 <div id="layer-card" class="bg-[#1e1b4b]/80 backdrop-blur-xl p-1.5 rounded-2xl border border-white/10 shadow-2xl transition-all duration-300">
                     <button onclick="toggleMenu('layer-options')" class="w-9 h-9 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-all group border border-white/5">
                         <i class="fas fa-layer-group text-xs group-hover:scale-110 transition-transform"></i>
