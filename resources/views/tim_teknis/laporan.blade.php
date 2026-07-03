@@ -340,8 +340,8 @@
                         <thead>
                         <tr class="bg-slate-50 dark:bg-[#0f0e2c]/50 text-xs font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 dark:border-white/10">
                             <th class="px-6 py-4 text-center border-b border-slate-100 dark:border-white/10" style="width: 10%;">No</th>
-                            <th class="px-6 py-4 text-center border-b border-slate-100 dark:border-white/10" style="width: 30%;">Infrastruktur</th>
-                            <th class="px-6 py-4 text-center border-b border-slate-100 dark:border-white/10" style="width: 20%;">Wilayah</th>
+                            <th class="px-6 py-4 text-left border-b border-slate-100 dark:border-white/10" style="width: 30%;">Infrastruktur</th>
+                            <th class="px-6 py-4 text-left border-b border-slate-100 dark:border-white/10" style="width: 20%;">Wilayah</th>
                             <th class="px-6 py-4 text-center border-b border-slate-100 dark:border-white/10" style="width: 20%;">Kondisi</th>
                             <th class="px-6 py-4 text-center border-b border-slate-100 dark:border-white/10" style="width: 20%;">Tanggal Data</th>
                         </tr>
