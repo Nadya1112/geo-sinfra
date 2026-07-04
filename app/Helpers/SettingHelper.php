@@ -10,8 +10,12 @@ class SettingHelper
     public static function get($key, $default = null)
     {
         return Cache::rememberForever('setting_' . $key, function () use ($key, $default) {
-            $setting = Setting::where('key', $key)->first();
-            return $setting ? $setting->value : $default;
+            try {
+                $setting = Setting::where('key', $key)->first();
+                return $setting ? $setting->value : $default;
+            } catch (\Exception $e) {
+                return $default;
+            }
         });
     }
 

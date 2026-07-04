@@ -874,7 +874,7 @@
                             <i class="fab fa-whatsapp text-gold-500 text-lg"></i>
                             <span class="text-sm text-slate-400">
                                 @php
-                                    $waNumber = \App\Helpers\SettingHelper::get('contact_wa', '+6281234567890');
+                                    $waNumber = \App\Helpers\SettingHelper::get('contact_wa', '+6289602781244');
                                     $waLink = preg_replace('/[^0-9]/', '', $waNumber);
                                 @endphp
                                 <a href="https://wa.me/{{ $waLink }}" target="_blank" class="hover:text-gold-500 transition-colors" title="Chat WhatsApp">

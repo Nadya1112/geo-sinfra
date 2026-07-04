@@ -28,11 +28,8 @@ class Infrastruktur extends Model
         'id_user',
         'id_kelurahan',
         'nama_objek',
-        'nama_infrastruktur',
         'foto_terbaru',
-        'foto',
         'jenis',
-        'jenis_infrastruktur',
         'material_eksisting',
         'alamat',
         'latitude',
@@ -45,6 +42,8 @@ class Infrastruktur extends Model
         'rencana_perbaikan',
         'status_verifikasi',
         'status_validasi',
+        'alasan_penolakan',
+        'status_perbaikan',
         'tgl_survey',
     ];
 
