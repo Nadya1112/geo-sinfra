@@ -116,6 +116,42 @@
                 </div>
             </div>
 
+            {{-- Alert Revisi / Ditolak (Hanya muncul jika ada data yang butuh perbaikan) --}}
+            @if($rejectedItems->isNotEmpty())
+            <div class="mb-8 space-y-4">
+                <h4 class="font-black text-lg text-red-600 flex items-center gap-2"><i class="fas fa-exclamation-triangle"></i> Perlu Revisi Segera!</h4>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    @foreach($rejectedItems as $rejected)
+                    <div class="bg-red-50 border border-red-200 rounded-3xl p-6 shadow-sm relative overflow-hidden flex flex-col justify-between">
+                        <div class="absolute -right-6 -top-6 w-24 h-24 bg-red-100/50 rounded-full blur-xl pointer-events-none"></div>
+                        
+                        <div class="relative z-10">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <p class="text-[10px] font-black text-red-400 uppercase tracking-widest mb-1">{{ $rejected->kelurahan->nama_kelurahan ?? '-' }}, KEC. {{ $rejected->kelurahan->kecamatan->nama_kecamatan ?? '-' }}</p>
+                                    <h5 class="text-base font-black text-red-900 leading-tight">{{ $rejected->nama_infrastruktur }}</h5>
+                                </div>
+                                <div class="px-2 py-1 bg-red-100 text-red-600 rounded-md text-[10px] font-black uppercase tracking-widest">Ditolak</div>
+                            </div>
+                            
+                            <div class="bg-white/60 p-3 rounded-xl border border-red-100 mb-4">
+                                <p class="text-xs font-bold text-red-800 uppercase tracking-wider mb-1"><i class="fas fa-comment-dots text-red-400"></i> Catatan Tim Teknis:</p>
+                                <p class="text-sm text-red-900 font-medium italic">"{{ $rejected->alasan_penolakan ?? 'Tidak ada alasan spesifik. Harap periksa kembali foto atau titik koordinat.' }}"</p>
+                            </div>
+                        </div>
+                        
+                        <div class="relative z-10 mt-auto">
+                            <a href="{{ route('surveyor.infrastruktur.edit', $rejected->id_infrastruktur) }}" class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-600 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-red-700 transition-colors shadow-md shadow-red-600/20 active:scale-[0.98]">
+                                <i class="fas fa-pen"></i> Revisi Sekarang
+                            </a>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+            @endif
+
             {{-- Stats Grid --}}
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
                 <div class="bg-blue-50  p-6 rounded-3xl border border-blue-100  shadow-sm hover:-translate-y-1 transition-transform">

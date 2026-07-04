@@ -47,7 +47,14 @@ class SurveyorController extends Controller
             ->limit(5)
             ->get();
 
-        return view('surveyor.dashboard', compact('totalSurvey', 'waitingValidation', 'verifiedAI', 'totalRejected', 'totalTugas', 'tugasMenunggu', 'tugasSelesai', 'recentUploads', 'semuaKecamatan', 'kecamatans'));
+        // Ambil data yang berstatus Ditolak (Rejected) agar tampil di kotak prioritas Revisi Dashboard
+        $rejectedItems = Infrastruktur::with(['kelurahan.kecamatan'])
+            ->where('id_user', $userId)
+            ->where('status_validasi', 'Rejected')
+            ->orderBy('updated_at', 'desc')
+            ->get();
+
+        return view('surveyor.dashboard', compact('totalSurvey', 'waitingValidation', 'verifiedAI', 'totalRejected', 'totalTugas', 'tugasMenunggu', 'tugasSelesai', 'recentUploads', 'semuaKecamatan', 'kecamatans', 'rejectedItems'));
     }
 
     public function updateTerritories(Request $request)
