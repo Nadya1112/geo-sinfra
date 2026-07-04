@@ -77,10 +77,7 @@
             transition: all 0.6s ease-in-out;
         }
     </style>
-<style>
-    @media (min-width: 768px) { html { zoom: 0.9 !important; } }
-    @media (max-width: 767px) { html { zoom: 0.5 !important; } }
-</style>
+
 </head>
 <body class="antialiased bg-slate-50 font-sans">
 
