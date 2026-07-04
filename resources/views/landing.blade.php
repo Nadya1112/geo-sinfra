@@ -864,7 +864,7 @@
                         </li>
                         <li class="flex items-center gap-4">
                             <i class="fas fa-envelope text-gold-500"></i>
-                            <span class="text-sm text-slate-400">{{ \App\Helpers\SettingHelper::get('contact_email', 'ampihkumuh@gmail.com') }}</span>
+                            <span class="text-sm text-slate-400">ampihkumuh@gmail.com</span>
                         </li>
                         <li class="flex items-center gap-4">
                             <i class="fas fa-phone-alt text-gold-500"></i>
