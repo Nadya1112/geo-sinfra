@@ -136,6 +136,14 @@ class TimTeknisController extends Controller
         $infra->alasan_penolakan = $request->alasan_penolakan; // Disimpan sebagai catatan (baik diterima/ditolak)
         $infra->save();
 
+        // Rekam Aktivitas Log
+        $logCatatan = $request->alasan_penolakan ? " dengan catatan: {$request->alasan_penolakan}" : "";
+        $logAction = $request->status == 'Validated' ? "menyetujui (Validasi)" : "menolak (Validasi)";
+        \App\Models\ActivityLog::record("Tim Teknis {$logAction} laporan infrastruktur{$logCatatan}", 'infrastruktur', $infra->id_infrastruktur);
+
+        // Kirim Notifikasi WA ke Surveyor
+        \App\Services\WhatsAppService::sendValidationResultNotification($infra);
+
         $message = $request->status == 'Validated' ? 'Data berhasil divalidasi dan dipindahkan ke tab Disetujui!' : 'Data telah ditolak dan dipindahkan ke tab Ditolak!';
         return redirect()->route('tim_teknis.validasi', ['status' => $request->status])->with('success', $message);
     }

@@ -110,5 +110,53 @@ class WhatsAppService
             Log::error('Error Fonnte (ACC) Exception: ' . $e->getMessage());
             return false;
         }
+    public static function sendValidationResultNotification(Infrastruktur $infra)
+    {
+        $token = env('FONNTE_TOKEN');
+        $targetNumber = $infra->user->no_hp ?? null; // Nomor HP Surveyor
+
+        if (empty($token) || empty($targetNumber)) {
+            Log::warning('Fonnte Token belum diset atau nomor HP Surveyor kosong.');
+            return false;
+        }
+
+        $namaObjek = $infra->nama_objek ?? '-';
+        $status = $infra->status_validasi === 'Validated' ? 'DISETUJUI (ACC)' : 'DITOLAK / PERLU PERBAIKAN';
+        $alasan = $infra->alasan_penolakan ?? 'Tidak ada catatan tambahan.';
+        
+        $message = "🔔 *HASIL VALIDASI LAPORAN SINFRA* 🔔\n\n";
+        $message .= "Yth. Bapak/Ibu Surveyor,\n";
+        $message .= "Berikut adalah hasil validasi Tim Teknis terhadap laporan Anda:\n\n";
+        $message .= "📋 *DETAIL LAPORAN:*\n";
+        $message .= "▪️ *Nama Objek:* $namaObjek\n";
+        $message .= "▪️ *Status Validasi:* *$status*\n";
+        $message .= "▪️ *Catatan/Alasan:* $alasan\n\n";
+        
+        if ($infra->status_validasi === 'Validated') {
+            $message .= "Laporan telah disetujui dan akan segera ditindaklanjuti untuk perbaikan fisik. Terima kasih atas partisipasi Anda.";
+        } else {
+            $message .= "Mohon periksa kembali laporan Anda dan sesuaikan dengan catatan yang diberikan.";
+        }
+
+        try {
+            $response = Http::withHeaders([
+                'Authorization' => $token
+            ])->post('https://api.fonnte.com/send', [
+                'target' => $targetNumber,
+                'message' => $message,
+                'countryCode' => '62',
+            ]);
+
+            if ($response->successful()) {
+                Log::info('WhatsApp Validation Result dikirim ke Surveyor ' . $targetNumber);
+                return true;
+            } else {
+                Log::error('Gagal mengirim WA Validation Result: ' . $response->body());
+                return false;
+            }
+        } catch (\Exception $e) {
+            Log::error('Error Fonnte Validation Result Exception: ' . $e->getMessage());
+            return false;
+        }
     }
 }

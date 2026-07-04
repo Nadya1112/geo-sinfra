@@ -166,7 +166,7 @@
                         <div class="flex flex-col gap-3">
                             <form action="{{ route('tim_teknis.validasi.proses', $infrastruktur->id_infrastruktur) }}" method="POST">
                                 @csrf
-                                <input type="hidden" name="status" value="Verified">
+                                <input type="hidden" name="status" value="Validated">
                                 <button type="submit" class="w-full flex items-center justify-center gap-2 py-3 bg-[#059669] text-white rounded-2xl hover:bg-[#047857] transition-all shadow-lg shadow-[#059669]/20 font-black text-sm uppercase tracking-widest">
                                     <i class="fas fa-check"></i> Terima Usulan
                                 </button>
@@ -174,7 +174,7 @@
                             <form action="{{ route('tim_teknis.validasi.proses', $infrastruktur->id_infrastruktur) }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="status" value="Rejected">
-                                <button type="submit" class="w-full flex items-center justify-center gap-2 py-3 bg-white dark:bg-[#1e1b4b] border border-rose-200 text-rose-500 rounded-2xl hover:bg-rose-50 hover:border-rose-300 transition-all font-black text-sm uppercase tracking-widest">
+                                <button type="button" onclick="const alasan = prompt('Masukkan alasan penolakan:'); if(alasan) { const input = document.createElement('input'); input.type = 'hidden'; input.name = 'alasan_penolakan'; input.value = alasan; this.form.appendChild(input); this.form.submit(); }" class="w-full flex items-center justify-center gap-2 py-3 bg-white dark:bg-[#1e1b4b] border border-rose-200 text-rose-500 rounded-2xl hover:bg-rose-50 hover:border-rose-300 transition-all font-black text-sm uppercase tracking-widest">
                                     <i class="fas fa-times"></i> Tolak Usulan
                                 </button>
                             </form>
@@ -352,8 +352,39 @@
                         </div>
 
                         <!-- Mini Map -->
-                        <div class="relative rounded-[2rem] border border-slate-100 dark:border-white/10 shadow-inner overflow-hidden">
+                        <div class="relative rounded-[2rem] border border-slate-100 dark:border-white/10 shadow-inner overflow-hidden mb-8">
                             <div id="map" class="h-[280px] w-full z-0"></div>
+                        </div>
+
+                        <!-- Activity Log / Riwayat -->
+                        @php
+                            $logs = \App\Models\ActivityLog::with('user')->where('reference_id', $infrastruktur->id_infrastruktur)->where('type', 'infrastruktur')->orderBy('created_at', 'desc')->get();
+                        @endphp
+                        <div class="border-t border-slate-100 dark:border-white/10 pt-6">
+                            <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-2">
+                                <i class="fas fa-history text-slate-300"></i> Riwayat Aktivitas & Validasi
+                            </p>
+                            @if($logs->count() > 0)
+                                <div class="relative border-l-2 border-slate-200 dark:border-white/10 ml-3 md:ml-4 space-y-6">
+                                    @foreach($logs as $log)
+                                    <div class="relative pl-6 md:pl-8">
+                                        <div class="absolute -left-[9px] md:-left-[11px] top-1 w-4 h-4 md:w-5 md:h-5 rounded-full bg-gold-500 border-4 border-white dark:border-[#1e1b4b] shadow-sm"></div>
+                                        <div class="bg-slate-50 dark:bg-[#0f0e2c] p-4 rounded-2xl border border-slate-100 dark:border-white/10">
+                                            <div class="flex justify-between items-start mb-2">
+                                                <p class="text-[10px] md:text-xs font-black text-navy-900 dark:text-white uppercase tracking-wider">{{ $log->user->name ?? 'Sistem / Anonim' }}</p>
+                                                <p class="text-[9px] md:text-[10px] font-bold text-slate-400">{{ $log->created_at->translatedFormat('d M Y, H:i') }}</p>
+                                            </div>
+                                            <p class="text-xs md:text-sm text-slate-600 dark:text-slate-300 font-medium">{{ $log->description }}</p>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            @else
+                                <div class="text-center py-6 bg-slate-50 dark:bg-[#0f0e2c] rounded-2xl border border-dashed border-slate-200 dark:border-white/10">
+                                    <i class="fas fa-history text-2xl text-slate-300 mb-2 block"></i>
+                                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Belum ada riwayat aktivitas</p>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
