@@ -207,7 +207,7 @@ class TimTeknisController extends Controller
 
     public function laporan(Request $request)
     {
-        $query = Infrastruktur::with(['kelurahan.kecamatan', 'user', 'analisis']);
+        $query = Infrastruktur::with(['kelurahan.kecamatan', 'user', 'analisis'])->where('status_verifikasi', 'Verified');
 
         // Search by Nama Infrastruktur
         if ($request->search) {
