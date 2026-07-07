@@ -14,24 +14,21 @@ class DatabaseSeeder extends Seeder
         User::updateOrCreate(['email' => 'admin@disperkim.go.id'], [
             'name'     => 'Administrator GEO-SINFRA',
             'password' => Hash::make('admin123'),
-            'role'     => 'admin',
-            'no_hp'    => '081234567800'
+            'role'     => 'admin'
         ]);
 
                 // Akun tambahan untuk tes
         User::updateOrCreate(['email' => 'surveyor@disperkim.go.id'], [
             'name'     => 'Surveyor Disperkim',
             'password' => Hash::make('surveyor123'),
-            'role'     => 'surveyor',
-            'no_hp'    => '081234567890'
+            'role'     => 'surveyor'
         ]);
         
         // Akun Tim Teknis
         User::updateOrCreate(['email' => 'timteknis@disperkim.go.id'], [
             'name'     => 'Tim Teknis Disperkim',
             'password' => Hash::make('timteknis123'),
-            'role'     => 'tim_teknis',
-            'no_hp'    => '081234567891'
+            'role'     => 'tim_teknis'
         ]);
     }
 }
