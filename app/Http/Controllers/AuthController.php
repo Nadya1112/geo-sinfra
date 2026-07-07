@@ -290,7 +290,7 @@ class AuthController extends Controller
 
         try {
             $response = \Illuminate\Support\Facades\Http::withHeaders([
-                'Authorization' => 'HBxoEKb5taLkAscTeh6b'
+                'Authorization' => 'xLU1pfsHFEazhMLvZrmRWRxfSK2BEBt3LSELqHVEjxpa'
             ])->post('https://api.fonnte.com/send', [
                 'target' => $target,
                 'message' => $message,
