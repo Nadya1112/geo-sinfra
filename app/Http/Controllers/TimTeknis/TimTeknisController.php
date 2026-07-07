@@ -48,6 +48,7 @@ class TimTeknisController extends Controller
     {
         // Tampilkan semua data di peta monitoring utama
         $infrastruktur = Infrastruktur::with(['kelurahan', 'user', 'analisis', 'cnn'])
+            ->where('status_verifikasi', 'Verified')
             ->get();
             
         $kecamatan = \App\Models\Kecamatan::all();
@@ -65,6 +66,7 @@ class TimTeknisController extends Controller
                       $sq->where('label_prioritas', 'LIKE', '%Berat%');
                   });
             })
+            ->where('status_verifikasi', 'Verified')
             ->where('status_perbaikan', '!=', 'Selesai')
             ->orderBy('created_at', 'desc')
             ->get();
