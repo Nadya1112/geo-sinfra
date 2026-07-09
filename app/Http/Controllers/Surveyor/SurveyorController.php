@@ -149,8 +149,8 @@ class SurveyorController extends Controller
             'material_eksisting' => $request->material_eksisting ?? '-',
             'panjang' => $request->panjang,
             'lebar' => $request->lebar,
-            'has_drainase' => $request->has('has_drainase') ? 'ya' : 'tidak',
-            'has_gorong_gorong' => $request->has('has_gorong_gorong') ? 'ya' : 'tidak',
+            'has_drainase' => $request->has('has_drainase') ? 1 : 0,
+            'has_gorong_gorong' => $request->has('has_gorong_gorong') ? 1 : 0,
             'rencana_perbaikan' => $request->rencana_perbaikan,
             'tgl_survey' => $request->tgl_survey ?? now()->toDateString(),
             'foto_terbaru' => 'infrastruktur/' . $namaFoto,
@@ -299,8 +299,8 @@ class SurveyorController extends Controller
         $infrastruktur->material_eksisting = $request->material_eksisting ?? '-';
         $infrastruktur->panjang = $request->panjang;
         $infrastruktur->lebar = $request->lebar;
-        $infrastruktur->has_drainase = $request->has('has_drainase') ? 'ya' : 'tidak';
-        $infrastruktur->has_gorong_gorong = $request->has('has_gorong_gorong') ? 'ya' : 'tidak';
+        $infrastruktur->has_drainase = $request->has('has_drainase') ? 1 : 0;
+        $infrastruktur->has_gorong_gorong = $request->has('has_gorong_gorong') ? 1 : 0;
         $infrastruktur->rencana_perbaikan = $request->rencana_perbaikan;
         $infrastruktur->tgl_survey = $request->tgl_survey;
         
