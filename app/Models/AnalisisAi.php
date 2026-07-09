@@ -85,11 +85,11 @@ class AnalisisAi extends Model
         
         // 4. Analisis Teks (NLP Decision Tree) — Penyesuaian dari laporan lapangan
         if (preg_match('/(hancur|putus|total|amblas|parah|longsor|roboh|hilang|berat)/', $kondisi)) {
-            $skor += 30;
+            $skor += 55;
         } elseif (preg_match('/(retak|lubang|goyang|rusak|tergenang|bolong|lapuk|sedang|lepas)/', $kondisi)) {
-            $skor += 15;
+            $skor += 25;
         } elseif (preg_match('/(ringan|kusam|minor|sedikit)/', $kondisi)) {
-            $skor += 5;
+            $skor += 10;
         }
 
         // 5. Analisis Parameter Lingkungan
