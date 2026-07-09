@@ -12,8 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('laporan_warga', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_surveyor')->nullable()->after('status');
-            $table->foreign('id_surveyor')->references('id_user')->on('users')->onDelete('set null');
+            // This adds the 'id_surveyor' column and correctly creates a foreign key
+            // constraint referencing the 'id' column on the 'users' table.
+            $table->unsignedBigInteger('id_surveyor')->nullable()->after('id_infrastruktur');
+            $table->foreign('id_surveyor')->references('id')->on('users')->onDelete('set null');
         });
     }
 
