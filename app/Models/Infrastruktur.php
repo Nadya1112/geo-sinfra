@@ -78,6 +78,26 @@ class Infrastruktur extends Model
         return $this->belongsTo(User::class, 'id_user', 'id');
     }
 
+    public function getHasDrainaseAttribute($value)
+    {
+        return ($value == 1 || $value === 'ya') ? 'ya' : 'tidak';
+    }
+
+    public function setHasDrainaseAttribute($value)
+    {
+        $this->attributes['has_drainase'] = ($value === 'ya' || $value == 1) ? 1 : 0;
+    }
+
+    public function getHasGorongGorongAttribute($value)
+    {
+        return ($value == 1 || $value === 'ya') ? 'ya' : 'tidak';
+    }
+
+    public function setHasGorongGorongAttribute($value)
+    {
+        $this->attributes['has_gorong_gorong'] = ($value === 'ya' || $value == 1) ? 1 : 0;
+    }
+
     /**
      * Hubungan: Infrastruktur memiliki satu hasil Analisis AI (Decision Tree)
      */
