@@ -77,6 +77,8 @@ class AnalisisAi extends Model
             $skor = 80;
         } elseif ($labelCnn == 'Rusak Sedang' || $labelCnn == 'Sedang') {
             $skor = 45;
+        } elseif ($labelCnn == 'Rusak Ringan' || $labelCnn == 'Ringan') {
+            $skor = 25;
         } else {
             $skor = 10; // Baik
         }
