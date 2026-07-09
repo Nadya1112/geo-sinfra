@@ -244,7 +244,7 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'no_hp' => 'nullable|string|max:20',
+            'no_hp' => 'nullable|string|max:20|unique:users,no_hp',
             'password' => 'required|string|min:8',
             'role' => 'required|in:admin,surveyor',
             'id_kecamatan' => 'nullable|exists:kecamatan,id_kecamatan',
