@@ -95,6 +95,11 @@
                     <div>
                         <h4 class="text-xs font-black text-red-900 uppercase tracking-tighter">Gagal Memproses Laporan!</h4>
                         <p class="text-xs text-red-700 font-medium mt-1">Harap periksa kembali semua isian yang wajib diisi (bertanda <span class="text-red-500">*</span>), termasuk foto dokumentasi.</p>
+                        <ul class="text-xs text-red-700 list-disc list-inside mt-2">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
                 </div>
                 @endif

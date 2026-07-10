@@ -110,6 +110,8 @@ class WhatsAppService
             Log::error('Error Fonnte (ACC) Exception: ' . $e->getMessage());
             return false;
         }
+    }
+
     public static function sendValidationResultNotification(Infrastruktur $infra)
     {
         $token = env('FONNTE_TOKEN');
