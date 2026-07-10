@@ -1,0 +1,25 @@
+{
+    "infra_types": [
+        "jalan",
+        "jembatan",
+        "titian"
+    ],
+    "kondisi_labels": [
+        "baik",
+        "berat",
+        "sedang"
+    ],
+    "jenis_display_map": {
+        "jalan": "Jalan",
+        "jembatan": "Jembatan",
+        "titian": "Titian"
+    },
+    "kondisi_display_map": {
+        "baik": "Baik",
+        "berat": "Berat",
+        "sedang": "Sedang"
+    },
+    "accuracy_jenis": 77.78,
+    "accuracy_kondisi": 64.87,
+    "training_date": "2026-07-09 19:33:44"
+}

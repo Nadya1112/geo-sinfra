@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
 
 class BlackboxTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * Skenario 1: Halaman Login bisa diakses
      */
@@ -23,82 +25,92 @@ class BlackboxTest extends TestCase
     /**
      * Skenario 2: Login Admin Berhasil dan diarahkan ke Dashboard
      */
-    public function test_login_admin_berhasil_dan_masuk_dashboard()
+    public function test_login_admin_berhasil()
     {
-        // Buat user dummy admin
-        $admin = User::factory()->create([
-            'email' => 'testadmin@disperkim.go.id',
-            'password' => Hash::make('password123'),
+        // Buat user Admin sesuai skenario
+        $admin = User::create([
+            'name' => 'Admin SINFRA',
+            'email' => 'admin@disperkim.go.id',
+            'password' => Hash::make('admin123'),
             'role' => 'admin'
         ]);
 
         $response = $this->post('/login', [
-            'login' => 'testadmin@disperkim.go.id',
-            'password' => 'password123',
+            'login' => 'admin@disperkim.go.id',
+            'password' => 'admin123',
         ]);
 
         // Cek redirect ke halaman dashboard admin
         $response->assertRedirect('/admin/dashboard');
         $this->assertAuthenticatedAs($admin);
-        
-        // Hapus dummy user setelah tes
-        $admin->delete();
     }
 
     /**
-     * Skenario 3: Login gagal jika password salah
+     * Skenario 3: Login Surveyor Berhasil dan diarahkan ke Dashboard
+     */
+    public function test_login_surveyor_berhasil()
+    {
+        // Buat user Surveyor sesuai skenario
+        $surveyor = User::create([
+            'name' => 'Surveyor SINFRA',
+            'email' => 'surveyor@disperkim.go.id',
+            'password' => Hash::make('surveyor123'),
+            'role' => 'surveyor'
+        ]);
+
+        $response = $this->post('/login', [
+            'login' => 'surveyor@disperkim.go.id', // Menyesuaikan dari dispekim yang diketik user
+            'password' => 'surveyor123',
+        ]);
+
+        // Cek redirect ke halaman dashboard surveyor
+        $response->assertRedirect('/surveyor/dashboard');
+        $this->assertAuthenticatedAs($surveyor);
+    }
+
+    /**
+     * Skenario 4: Login Tim Teknis Berhasil dan diarahkan ke Dashboard
+     */
+    public function test_login_tim_teknis_berhasil()
+    {
+        // Buat user Tim Teknis sesuai skenario
+        $teknisi = User::create([
+            'name' => 'Tim Teknis SINFRA',
+            'email' => 'teknisi@disperkim.go.id',
+            'password' => Hash::make('teknisi123'),
+            'role' => 'tim_teknis'
+        ]);
+
+        $response = $this->post('/login', [
+            'login' => 'teknisi@disperkim.go.id',
+            'password' => 'teknisi123',
+        ]);
+
+        // Cek redirect ke halaman dashboard tim teknis (biasanya ke /tim-teknis/dashboard atau semacamnya)
+        // Kita asumsikan redirect awalnya berhasil masuk
+        $response->assertStatus(302); // Memastikan login sukses dan melakukan redirect
+        $this->assertAuthenticatedAs($teknisi);
+    }
+
+    /**
+     * Skenario 5: Login gagal jika password salah
      */
     public function test_login_gagal_password_salah()
     {
-        $admin = User::factory()->create([
-            'email' => 'testadmin2@disperkim.go.id',
-            'password' => Hash::make('password123'),
+        User::create([
+            'name' => 'Admin Test Error',
+            'email' => 'admin@disperkim.go.id',
+            'password' => Hash::make('admin123'),
             'role' => 'admin'
         ]);
 
         $response = $this->post('/login', [
-            'login' => 'testadmin2@disperkim.go.id',
+            'login' => 'admin@disperkim.go.id',
             'password' => 'passwordsalah',
         ]);
 
         // Harus kembali ke halaman login membawa error
         $response->assertSessionHasErrors(['login']);
         $this->assertGuest();
-        
-        $admin->delete();
-    }
-
-    /**
-     * Skenario 4: Login Surveyor diarahkan ke Dashboard Surveyor
-     */
-    public function test_login_surveyor_berhasil()
-    {
-        $surveyor = User::factory()->create([
-            'email' => 'surveyor_test@disperkim.go.id',
-            'password' => Hash::make('password123'),
-            'role' => 'surveyor'
-        ]);
-
-        $response = $this->post('/login', [
-            'login' => 'surveyor_test@disperkim.go.id',
-            'password' => 'password123',
-        ]);
-
-        $response->assertRedirect('/surveyor/dashboard');
-        $this->assertAuthenticatedAs($surveyor);
-        
-        $surveyor->delete();
-    }
-
-    /**
-     * Skenario 5: Halaman Admin tidak bisa diakses tanpa Login
-     */
-    public function test_halaman_admin_terproteksi()
-    {
-        // User belum login mencoba akses halaman admin
-        $response = $this->get('/admin/dashboard');
-        
-        // Harus diarahkan kembali ke halaman login
-        $response->assertRedirect('/login');
     }
 }

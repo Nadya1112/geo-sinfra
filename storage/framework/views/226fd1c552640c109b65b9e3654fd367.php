@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengaturan | Admin SINFRA</title>
+    <link rel="icon" href="<?php echo e(asset('logo_geo-sinfra.png')); ?>" type="image/png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        navy: {
+                            50: '#f4f4fa',
+                            100: '#e9e9f3',
+                            200: '#c7c8e3',
+                            500: '#6366f1',
+                            800: '#1e1b4b',
+                            900: '#0f0e2c',
+                            950: '#070617',
+                        },
+                        gold: {
+                            50: '#fdfbf7',
+                            100: '#fbf7ed',
+                            500: '#c5a059',
+                            600: '#b38f4a',
+                            700: '#9d7c3d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        html { transition: background-color 0.3s ease, color 0.3s ease; }
+        @media (min-width: 768px) { html { font-size: 14px; } }
+        @media (max-width: 767px) { html { font-size: 12px; } }
+    </style>
+</head>
+<body class="bg-navy-50 dark:bg-navy-950 text-slate-800 dark:text-slate-200 antialiased selection:bg-gold-500 selection:text-white flex overflow-hidden h-screen transition-colors duration-300">
+
+    <?php echo $__env->make('admin.partials.sidebar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+
+    <main class="flex-1 overflow-y-auto custom-scrollbar flex flex-col h-screen relative">
+        <header class="sticky top-0 bg-white/80 dark:bg-navy-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/5 px-4 md:px-8 py-4 flex justify-between items-center z-40">
+            <div class="flex items-center gap-2 md:gap-4">
+                <a href="<?php echo e(route('admin.dashboard')); ?>" class="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white border border-slate-200 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 hover:border-gold-200 transition-all shadow-sm hidden md:flex">
+                    <i class="fas fa-arrow-left text-sm"></i>
+                </a>
+                <div class="text-left">
+                    <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Administrator Portal</p>
+                    <h2 class="text-lg md:text-xl font-black text-navy-900 dark:text-white leading-none">Pengaturan Sistem</h2>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-3 md:gap-6">
+                <div class="text-right">
+                    <p class="text-xs font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[10px] font-bold text-emerald-500 uppercase mt-0.5 sm:hidden">ONLINE</p>
+                    <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter hidden sm:block"><?php echo e(now()->translatedFormat('d M Y')); ?></p>
+                </div>
+            </div>
+        </header>
+
+        <div class="p-4 md:p-8 flex-1">
+            <div class="max-w-3xl mx-auto">
+                <?php if(session('success')): ?>
+                <div class="mb-6 px-4 py-3 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-2xl flex items-center gap-3 shadow-sm">
+                    <i class="fas fa-check-circle text-lg"></i>
+                    <p class="text-sm font-bold"><?php echo e(session('success')); ?></p>
+                </div>
+                <?php endif; ?>
+
+                <form action="<?php echo e(route('admin.settings.update')); ?>" method="POST" class="bg-white dark:bg-navy-900 border border-slate-100 dark:border-white/10 rounded-3xl p-6 shadow-sm text-left">
+                    <?php echo csrf_field(); ?>
+                    
+                    <h4 class="text-lg font-black text-navy-900 dark:text-white mb-6 border-b border-slate-100 dark:border-white/10 pb-4">Kontak & Informasi Publik</h4>
+                    
+                    <div class="space-y-5 mb-8">
+                        <div>
+                            <label class="block text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2 ml-1">Email Kontak Utama</label>
+                            <input type="email" name="contact_email" value="<?php echo e($settings['contact_email'] ?? 'admin@geo-sinfra.co.id'); ?>" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-navy-950 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold text-navy-900 dark:text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2 ml-1">Nomor WhatsApp Pelayanan</label>
+                            <input type="text" name="contact_wa" value="<?php echo e($settings['contact_wa'] ?? '+6289602781244'); ?>" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-navy-950 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold text-navy-900 dark:text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
+                        </div>
+
+                    </div>
+
+                    <h4 class="text-lg font-black text-navy-900 dark:text-white mb-6 border-b border-slate-100 dark:border-white/10 pb-4">Integrasi WhatsApp Bot (Fonnte)</h4>
+                    
+                    <div class="space-y-5 mb-8">
+                        <div class="p-4 bg-blue-500/10 border border-blue-500/20 rounded-2xl mb-4">
+                            <p class="text-xs text-blue-700 dark:text-blue-400 leading-relaxed font-medium"><strong>Fitur Baru:</strong> Masukkan Token Fonnte untuk mengaktifkan notifikasi otomatis ke WhatsApp Admin setiap kali ada laporan kerusakan masuk dari warga.</p>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2 ml-1">Fonnte API Token</label>
+                            <input type="password" name="fonnte_token" value="<?php echo e($settings['fonnte_token'] ?? ''); ?>" placeholder="Masukkan token Fonnte Anda..." class="w-full px-5 py-3.5 bg-slate-50 dark:bg-navy-950 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold text-navy-900 dark:text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
+                            <p class="text-[10px] text-slate-400 mt-2 ml-2">Dapatkan token di <a href="https://md.fonnte.com/device" target="_blank" class="text-gold-500 hover:underline">dashboard Fonnte</a>.</p>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2 ml-1">Nomor WhatsApp Admin (Penerima Notifikasi)</label>
+                            <input type="text" name="fonnte_target" value="<?php echo e($settings['fonnte_target'] ?? ''); ?>" placeholder="Contoh: 081234567890" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-navy-950 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold text-navy-900 dark:text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
+                        </div>
+                    </div>
+
+                    <h4 class="text-lg font-black text-navy-900 dark:text-white mb-6 border-b border-slate-100 dark:border-white/10 pb-4">Pengaturan Peta Dasar</h4>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+                        <div>
+                            <label class="block text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2 ml-1">Latitude Tengah (Titik Awal)</label>
+                            <input type="text" name="map_center_lat" value="<?php echo e($settings['map_center_lat'] ?? '-3.3276'); ?>" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-navy-950 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold text-navy-900 dark:text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2 ml-1">Longitude Tengah (Titik Awal)</label>
+                            <input type="text" name="map_center_lng" value="<?php echo e($settings['map_center_lng'] ?? '114.5901'); ?>" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-navy-950 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold text-navy-900 dark:text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
+                        </div>
+                    </div>
+
+                    <div class="pt-6 border-t border-slate-100 dark:border-white/10 flex justify-end">
+                        <button type="submit" class="px-8 py-3.5 bg-gold-500 hover:bg-gold-600 text-navy-950 font-black rounded-xl shadow-xl shadow-gold-500/20 hover:shadow-gold-500/40 transition-all flex items-center gap-2">
+                            <i class="fas fa-save"></i> Simpan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' WITA';
+            document.getElementById('mini-clock').textContent = timeString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
+<?php /**PATH C:\laragon1\laragon\www\geo-sinfra\resources\views\admin\settings.blade.php ENDPATH**/ ?>
