@@ -1110,6 +1110,27 @@
                 }
             });
 
+            // 1.8 Draw Titik Kelurahan
+            dataKelurahan.forEach(kel => {
+                if (kel.latitude && kel.longitude) {
+                    if (checkedDistricts.includes(kel.id_kecamatan?.toString())) {
+                        L.marker([kel.latitude, kel.longitude], {
+                            icon: L.divIcon({
+                                className: 'custom-div-icon',
+                                html: "<div class='w-6 h-6 bg-emerald-500 rounded-full border-2 border-white shadow-lg flex items-center justify-center text-white text-[10px]'><i class='fas fa-home'></i></div>",
+                                iconSize: [24, 24],
+                                iconAnchor: [12, 12]
+                            })
+                        }).bindPopup(`
+                            <div class="p-1 text-center">
+                                <p class="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">Titik Kelurahan</p>
+                                <h4 class="text-[11px] font-black text-[#1e1b4b] uppercase">${kel.nama_kelurahan}</h4>
+                            </div>
+                        `).addTo(polygonsLayer);
+                    }
+                }
+            });
+
             // 2. Draw Aset Markers (Semua marker akan di-cluster otomatis)
             let countTotal = filteredInfra.length;
             let countBaik = filteredInfra.filter(i => i.label_prioritas === 'Baik').length;
