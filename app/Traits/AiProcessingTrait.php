@@ -60,6 +60,11 @@ trait AiProcessingTrait
                 ];
                 $predictedJenisDb = $jenisMapping[$predictedJenisDisplay] ?? 'jalan';
 
+                // Update jenis pada tabel infrastruktur agar hasil prediksi diterapkan
+                DB::table('infrastruktur')->where('id_infrastruktur', $infrastrukturId)->update([
+                    'jenis' => $predictedJenisDb
+                ]);
+
                 // Simpan hasil ke tabel citra_cnn
                 // Catatan: Model predict.py mengembalikan persentase 0-100, kita ubah ke 0-1 untuk database
                 $skorKondisi = isset($result['confidence_kondisi']) ? ($result['confidence_kondisi'] / 100) : 0;
@@ -135,10 +140,10 @@ trait AiProcessingTrait
         ];
         $simJenisDb = $jenisMapping[$simJenis] ?? 'jalan';
 
-        // PENTING: Sama seperti di atas, jangan menimpa data manual.
-        // DB::table('infrastruktur')->where('id_infrastruktur', $infrastrukturId)->update([
-        //     'jenis' => $simJenisDb
-        // ]);
+        // PENTING: Update data manual agar hasil prediksi jenis diterapkan di sistem
+        DB::table('infrastruktur')->where('id_infrastruktur', $infrastrukturId)->update([
+            'jenis' => $simJenisDb
+        ]);
 
         DB::table('citra_cnn')->updateOrInsert(
             ['id_infrastruktur' => $infrastrukturId],

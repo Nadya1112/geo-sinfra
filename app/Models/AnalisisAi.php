@@ -84,20 +84,24 @@ class AnalisisAi extends Model
         }
         
         // 4. Analisis Teks (NLP Decision Tree) — Penyesuaian dari laporan lapangan
+        $skorTeks = 10;
         if (preg_match('/(hancur|putus|total|amblas|parah|longsor|roboh|hilang|berat)/', $kondisi)) {
-            $skor += 55;
+            $skorTeks = 85;
         } elseif (preg_match('/(retak|lubang|goyang|rusak|tergenang|bolong|lapuk|sedang|lepas)/', $kondisi)) {
-            $skor += 25;
+            $skorTeks = 50;
         } elseif (preg_match('/(ringan|kusam|minor|sedikit)/', $kondisi)) {
-            $skor += 10;
+            $skorTeks = 25;
         }
 
-        // 5. Analisis Parameter Lingkungan
-        if ($drainase == 'tidak') $skor += 5;
-        if (str_contains($material, 'tanah') || str_contains($material, 'kayu') || str_contains($material, 'ulin')) $skor += 5;
+        // 5. Kalkulasi Bobot Gabungan (CNN 60%, Teks/Laporan 40%)
+        $skorHybrid = ($skor * 0.6) + ($skorTeks * 0.4);
+
+        // 6. Analisis Parameter Lingkungan
+        if ($drainase == 'tidak') $skorHybrid += 5;
+        if (str_contains($material, 'tanah') || str_contains($material, 'kayu') || str_contains($material, 'ulin')) $skorHybrid += 5;
         
         // Pastikan skor berada dalam range 0 - 100
-        $skor = min(max(round($skor), 0), 100);
+        $skor = min(max(round($skorHybrid), 0), 100);
 
         // 6. Penentuan Label Akhir berdasarkan Total Skor Gabungan (Hybrid)
         if ($skor >= 65) {
