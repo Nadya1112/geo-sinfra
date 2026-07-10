@@ -2,10 +2,6 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Input Data Lapangan | GEO-SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
