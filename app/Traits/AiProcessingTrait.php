@@ -47,10 +47,22 @@ trait AiProcessingTrait
                 $materialRaw = strtolower($infra->material_eksisting ?? '');
                 $namaRaw = strtolower($infra->nama_objek ?? '');
 
-                if (str_contains($materialRaw, 'kayu') || str_contains($materialRaw, 'titian')) {
+                // Cek kata kunci di nama terlebih dahulu (Prioritas Utama)
+                if (str_contains($namaRaw, 'titian')) {
                     $predictedJenisDisplay = 'Titian';
                 } elseif (str_contains($namaRaw, 'jembatan')) {
                     $predictedJenisDisplay = 'Jembatan';
+                } elseif (preg_match('/\b(jalan|jl|gg|gang)\b/', $namaRaw)) {
+                    $predictedJenisDisplay = 'Jalan';
+                } else {
+                    // Jika dari nama kurang jelas, tebak dari material
+                    if (preg_match('/(kayu|ulin|papan)/', $materialRaw)) {
+                        $predictedJenisDisplay = 'Titian';
+                    } elseif (preg_match('/(baja|gantung)/', $materialRaw)) {
+                        $predictedJenisDisplay = 'Jembatan';
+                    } elseif (preg_match('/(aspal|paving|cor|tanah|makadam|rabat|beton)/', $materialRaw)) {
+                        $predictedJenisDisplay = 'Jalan';
+                    }
                 }
 
                 $jenisMapping = [
@@ -124,13 +136,22 @@ trait AiProcessingTrait
         $materialRaw = strtolower($infra->material_eksisting ?? '');
         $namaRaw = strtolower($infra->nama_objek ?? '');
 
-        // Deteksi kuat dari material
-        if (str_contains($materialRaw, 'kayu') || str_contains($materialRaw, 'titian')) {
+        // Cek kata kunci di nama terlebih dahulu (Prioritas Utama)
+        if (str_contains($namaRaw, 'titian')) {
             $simJenis = 'Titian';
-        } 
-        // Deteksi fallback jika ada kata kunci kuat di nama (hindari kata jalan jika ada jembatan)
-        elseif (str_contains($namaRaw, 'jembatan')) {
+        } elseif (str_contains($namaRaw, 'jembatan')) {
             $simJenis = 'Jembatan';
+        } elseif (preg_match('/\b(jalan|jl|gg|gang)\b/', $namaRaw)) {
+            $simJenis = 'Jalan';
+        } else {
+            // Jika dari nama kurang jelas, tebak dari material
+            if (preg_match('/(kayu|ulin|papan)/', $materialRaw)) {
+                $simJenis = 'Titian';
+            } elseif (preg_match('/(baja|gantung)/', $materialRaw)) {
+                $simJenis = 'Jembatan';
+            } elseif (preg_match('/(aspal|paving|cor|tanah|makadam|rabat|beton)/', $materialRaw)) {
+                $simJenis = 'Jalan';
+            }
         }
 
         $jenisMapping = [
