@@ -28,6 +28,18 @@ Route::get('/debug-schema', function () {
     ]);
 });
 
+Route::get('/debug-708', function () {
+    $total = \DB::table('infrastruktur')->whereNull('deleted_at')->count();
+    $validCoords = \DB::table('infrastruktur')->whereNull('deleted_at')->whereNotNull('latitude')->whereNotNull('longitude')->count();
+    $byCategory = \DB::table('infrastruktur')->whereNull('deleted_at')->select('jenis', \DB::raw('count(*) as count'))->groupBy('jenis')->get();
+    
+    return response()->json([
+        'total' => $total,
+        'valid_coords' => $validCoords,
+        'by_category' => $byCategory
+    ]);
+});
+
 Route::get('/', function () {
     // PROTEKSI: Jika tabel belum ada di database (misal belum migrate), jangan crash.
     if (!\Illuminate\Support\Facades\Schema::hasTable('kecamatan') || !\Illuminate\Support\Facades\Schema::hasTable('infrastruktur')) {

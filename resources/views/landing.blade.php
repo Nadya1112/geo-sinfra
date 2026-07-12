@@ -700,18 +700,15 @@
                                     <span class="text-xs font-black text-gold-500 uppercase tracking-wider">Pilih Semua</span>
                                     <input type="checkbox" id="check-all-categories" class="w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" checked>
                                 </label>
+                                @php
+                                    $kategoriUnik = $dataInfrastruktur->pluck('jenis')->filter()->unique();
+                                @endphp
+                                @foreach($kategoriUnik as $kategori)
                                 <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all">
-                                    <span class="text-xs font-bold text-slate-200 uppercase tracking-wider">Jalan</span>
-                                    <input type="checkbox" class="filter-category w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="jalan" checked>
+                                    <span class="text-xs font-bold text-slate-200 uppercase tracking-wider">{{ $kategori }}</span>
+                                    <input type="checkbox" class="filter-category w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="{{ strtolower($kategori) }}" checked>
                                 </label>
-                                <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all">
-                                    <span class="text-xs font-bold text-slate-200 uppercase tracking-wider">Titian</span>
-                                    <input type="checkbox" class="filter-category w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="titian" checked>
-                                </label>
-                                <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all">
-                                    <span class="text-xs font-bold text-slate-200 uppercase tracking-wider">Jembatan</span>
-                                    <input type="checkbox" class="filter-category w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="jembatan" checked>
-                                </label>
+                                @endforeach
                             </div>
 
                             <!-- SECTION: Pilih Kecamatan -->
