@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -58,7 +58,7 @@
                 </div>
             </div>
 
-            <p>Mohon segera menindaklanjuti dan memvalidasi laporan ini melalui portal Executive WebGIS atau menu Rekomendasi Prioritas.</p>
+            <p>Mohon segera menindaklanjuti dan memvalidasi laporan ini melalui portal WebGIS Eksekutif atau menu Rekomendasi Prioritas.</p>
 
             <div class="btn-container">
                 <a href="{{ route('tim_teknis.prioritas') }}" class="btn">Lihat Detail di Aplikasi</a>

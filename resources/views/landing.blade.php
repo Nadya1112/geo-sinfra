@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -389,7 +389,7 @@
                 <div class="nav-divider w-px h-5 mx-1 md:mx-2 hidden md:block transition-colors duration-300"></div>
                 
                 <a href="{{ url('/login') }}" class="bg-navy-900 text-gold-500 hover:bg-gold-500 hover:text-white px-3 md:px-4 py-2 rounded-lg text-[10px] md:text-xs font-bold transition-all shadow-sm hidden md:flex items-center gap-2 uppercase tracking-wider">
-                    <i class="fas fa-lock"></i> <span>Login</span>
+                    <i class="fas fa-lock"></i> <span>Masuk</span>
                 </a>
 
                 <!-- Mobile Hamburger Menu -->
@@ -406,7 +406,7 @@
                             <i class="fas fa-chart-pie w-6 text-gold-500 text-center"></i> Statistik
                         </a>
                         <a href="{{ url('/login') }}" class="flex items-center px-4 py-3 text-xs font-black text-navy-900 hover:bg-slate-50 uppercase tracking-widest">
-                            <i class="fas fa-lock w-6 text-gold-500 text-center"></i> Login
+                            <i class="fas fa-lock w-6 text-gold-500 text-center"></i> Masuk
                         </a>
                     </div>
                 </div>
@@ -685,8 +685,8 @@
                         <button onclick="toggleMenu('filter-utama')" class="w-full bg-[#0f0e2c]/90 backdrop-blur-xl border border-white/10 text-white px-2 py-2 md:px-3.5 md:py-3 rounded-xl flex justify-between items-center shadow-2xl hover:bg-[#1e1b4b] transition-all">
                             <div class="flex items-center gap-1 md:gap-2">
                                 <i class="fas fa-filter text-xs text-gold-500"></i>
-                                <span class="text-xs md:text-xs font-bold uppercase tracking-wider hidden md:inline">Filter Peta</span>
-                                <span class="text-xs font-bold uppercase tracking-wider md:hidden">Filter</span>
+                                <span class="text-xs md:text-xs font-bold uppercase tracking-wider hidden md:inline">Saring Peta</span>
+                                <span class="text-xs font-bold uppercase tracking-wider md:hidden">Saring</span>
                             </div>
                             <i class="fas fa-chevron-down text-xs md:text-xs text-slate-400"></i>
                         </button>
@@ -701,7 +701,7 @@
                                     <input type="checkbox" id="check-all-categories" class="w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" checked>
                                 </label>
                                 @php
-                                    $kategoriUnik = $dataInfrastruktur->pluck('jenis')->filter()->unique();
+                                    $kategoriUnik = $dataInfrastruktur->pluck('jenis')->map(function($j) { return $j ?: 'Lainnya'; })->unique();
                                 @endphp
                                 @foreach($kategoriUnik as $kategori)
                                 <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all">
@@ -728,6 +728,13 @@
                                     <div class="w-2 h-2 rounded-full" style="background: {{ $kecColors[$index % count($kecColors)] }}"></div>
                                 </label>
                                 @endforeach
+                                <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all group">
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" class="filter-district w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="" checked>
+                                        <span class="text-xs font-bold text-slate-200 uppercase tracking-wider">Tanpa Wilayah</span>
+                                    </div>
+                                    <div class="w-2 h-2 rounded-full" style="background: #94a3b8"></div>
+                                </label>
                             </div>
 
                             <!-- SECTION: Filter Tahun (Waktu) -->
@@ -1005,9 +1012,9 @@
             
             // Filter active data
             const filteredInfra = dataInfra.filter(item => {
-                const jenisLower = (item.jenis || '').toLowerCase().trim();
+                const jenisLower = (item.jenis || 'Lainnya').toLowerCase().trim();
                 const idKecamatanStr = (item.id_kecamatan || '').toString().trim();
-                return jenisLower && item.latitude && item.longitude && 
+                return item.latitude && item.longitude && 
                        checkedCategories.includes(jenisLower) && 
                        checkedDistricts.includes(idKecamatanStr);
             });

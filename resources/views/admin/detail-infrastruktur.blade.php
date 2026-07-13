@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -64,7 +64,7 @@
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
                 <div>
-                    <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Administrator Portal</p>
+                    <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Portal Administrator</p>
                     <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Detail {{ ucfirst($inf->jenis) ?? 'Infrastruktur' }}</h2>
                 </div>
             </div>
@@ -103,7 +103,7 @@
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin.profile') }}" class="text-right group hidden md:block">
                         <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
-                        <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5">Online</p>
+                        <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5">Aktif</p>
                     </a>
                     <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 overflow-hidden hover:shadow-lg transition-all shadow-md">
                         @if(auth()->user()->profile_photo)
@@ -292,13 +292,13 @@
 
                         <div class="grid grid-cols-2 gap-4 mb-5">
                             <div>
-                                <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Latitude</p>
+                                <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Garis Lintang</p>
                                 <div class="px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-sm font-mono font-bold text-navy-900">
                                     {{ $inf->latitude ?? '—' }}
                                 </div>
                             </div>
                             <div>
-                                <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Longitude</p>
+                                <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Garis Bujur</p>
                                 <div class="px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-sm font-mono font-bold text-navy-900">
                                     {{ $inf->longitude ?? '—' }}
                                 </div>
@@ -474,7 +474,7 @@
                                     ['label' => 'ID Aset',      'value' => 'INF-'.$inf->id_infrastruktur],
                                     ['label' => 'Status',       'value' => ($inf->status_verifikasi ?? 'Pending') == 'Verified' ? 'Terverifikasi' : 'Pending'],
                                     ['label' => 'Diverifikasi', 'value' => ($inf->status_verifikasi ?? 'Pending') == 'Verified' ? \Carbon\Carbon::parse($inf->updated_at)->translatedFormat('d M Y, H:i') . ' WITA' : '—'],
-                                    ['label' => 'Admin',        'value' => ($inf->status_verifikasi ?? 'Pending') == 'Verified' ? 'Admin Online' : '—'],
+                                    ['label' => 'Admin',        'value' => ($inf->status_verifikasi ?? 'Pending') == 'Verified' ? 'Admin Aktif' : '—'],
                                     ['label' => 'Tgl Survey',   'value' => $inf->tgl_survey ? \Carbon\Carbon::parse($inf->tgl_survey)->translatedFormat('d M Y') : '-'],
                                     ['label' => 'Dibuat',       'value' => $inf->created_at ? \Carbon\Carbon::parse($inf->created_at)->translatedFormat('d M Y') : '-'],
                                     ['label' => 'CNN Label',    'value' => $hasilCnn->label_kondisi ?? '—'],

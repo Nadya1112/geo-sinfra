@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -68,7 +68,7 @@
                 <div class="flex items-center gap-2 md:gap-3">
                     <div class="text-right">
                         <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase max-w-[200px] truncate hidden md:block">{{ auth()->user()->name }}</p>
-                        <p class="text-[8px] md:text-xs font-bold text-emerald-500 uppercase md:mt-0.5 leading-none">ONLINE</p>
+                        <p class="text-[8px] md:text-xs font-bold text-emerald-500 uppercase md:mt-0.5 leading-none">Aktif</p>
                     </div>
                     <div class="w-8 h-8 md:w-10 md:h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shadow-md transition-all overflow-hidden shrink-0">
                         @if(auth()->user()->profile_photo)
@@ -118,7 +118,7 @@
                     <div class="bg-navy-900 rounded-[2.5rem] p-8 text-white shadow-xl relative overflow-hidden">
                         <div class="absolute top-0 right-0 -mt-8 -mr-8 w-32 h-32 bg-white/5 dark:bg-[#1e1b4b]/5 rounded-full blur-2xl"></div>
                         <h4 class="text-xs font-black text-gold-300 uppercase tracking-[0.2em] mb-8 flex items-center gap-3">
-                            <i class="fas fa-microchip"></i> Hybrid AI Analysis
+                            <i class="fas fa-microchip"></i> Analisis AI Hibrida
                         </h4>
                         
                         <div class="space-y-8">

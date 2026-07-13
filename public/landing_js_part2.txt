@@ -1,0 +1,700 @@
+            const checkedDistricts = Array.from(document.querySelectorAll('.filter-district:checked')).map(el => el.value);
+            const showKelurahan = document.getElementById('toggle-kelurahan-lines').checked;
+            const toggleBanjir = document.getElementById('toggle-banjir-lines');
+            const showBanjir = toggleBanjir ? toggleBanjir.checked : false;
+            
+            // Filter active data
+            const filteredInfra = dataInfra.filter(item => {
+                const jenisLower = (item.jenis || '').toLowerCase().trim();
+                const idKecamatanStr = (item.id_kecamatan || '').toString().trim();
+                return jenisLower && item.latitude && item.longitude && 
+                       checkedCategories.includes(jenisLower) && 
+                       checkedDistricts.includes(idKecamatanStr);
+            });
+
+            // 1. Draw Kecamatan Polygons
+            let singleDistrictLayer = null;
+            dataWilayah.forEach((wil, index) => {
+                if (checkedDistricts.includes(wil.id_kecamatan.toString()) && wil.geometri) {
+                    try {
+                        const geoData = typeof wil.geometri === 'string' ? JSON.parse(wil.geometri) : wil.geometri;
+                        const color = wil.warna || kecColors[index % kecColors.length];
+                        
+                        const layer = L.geoJSON(geoData, {
+                            style: {
+                                color: color,
+                                weight: 2,
+                                fillOpacity: 0.08,
+                                dashArray: '4'
+                            }
+                        }).bindTooltip(wil.nama_kecamatan, { sticky: true }).addTo(polygonsLayer);
+
+                        if (checkedDistricts.length === 1 && !activeKelurahanId) {
+                            singleDistrictLayer = layer;
+                        }
+                    } catch (e) {
+                        console.error("Error parsing geometry for " + wil.nama_kecamatan, e);
+                    }
+                }
+            });
+
+            if (singleDistrictLayer) {
+                map.fitBounds(singleDistrictLayer.getBounds(), { padding: [40, 40], maxZoom: 15 });
+            }
+
+            // 1.5 Draw Kelurahan Polygons/Boundaries
+            dataKelurahan.forEach(kel => {
+                if (kel.geometri) {
+                    // Kelurahan boundaries are shown if check-box is checked OR if it's currently drilled down
+                    if (showKelurahan || showBanjir || activeKelurahanId == kel.id_kelurahan) {
+                        try {
+                            const geoData = typeof kel.geometri === 'string' ? JSON.parse(kel.geometri) : kel.geometri;
+                            
+                            let polygonColor = '#94a3b8'; // Abu-abu netral (Slate-400)
+                            let fillColor = '#94a3b8';
+                            let fillOpacity = 0.01;
+                            let weight = showKelurahan ? 1.2 : 0.0;
+
+                            if (showBanjir) {
+                                const riskLevel = kel.id_kelurahan % 3; 
+                                if (riskLevel === 0) { // Tinggi
+                                    polygonColor = '#ef4444'; fillColor = '#ef4444'; fillOpacity = 0.5;
+                                } else if (riskLevel === 1) { // Sedang
+                                    polygonColor = '#f59e0b'; fillColor = '#f59e0b'; fillOpacity = 0.4;
+                                } else { // Aman
+                                    polygonColor = '#3b82f6'; fillColor = '#3b82f6'; fillOpacity = 0.2;
+                                }
+                                weight = 1.0;
+                            }
+
+                            if (activeKelurahanId == kel.id_kelurahan) {
+                                polygonColor = '#c5a059'; fillColor = '#c5a059'; fillOpacity = 0.2; weight = 3.0;
+                            }
+                            
+                            const layer = L.geoJSON(geoData, {
+                                filter: function(feature) {
+                                    return feature.geometry.type !== 'Point';
+                                },
+                                style: {
+                                    color: polygonColor,
+                                    weight: weight,
+                                    opacity: 0.95,
+                                    fillOpacity: fillOpacity,
+                                    fillColor: fillColor,
+                                    dashArray: (activeKelurahanId == kel.id_kelurahan || showBanjir) ? '0' : '4, 4'
+                                }
+                            }).bindTooltip(`<div class="text-xs font-bold text-navy-900 leading-none">Kel. ${kel.nama_kelurahan}${showBanjir ? ' (Simulasi Banjir)' : ''}</div>`, { sticky: true }).addTo(polygonsLayer);
+
+                            // Event saat poligon kelurahan diklik
+                            layer.on('click', function(e) {
+                                // Jika sudah aktif, nonaktifkan (toggle)
+                                if (activeKelurahanId == kel.id_kelurahan) {
+                                    activeKelurahanId = null;
+                                } else {
+                                    activeKelurahanId = kel.id_kelurahan;
+                                }
+                                applyFilters();
+                                L.DomEvent.stopPropagation(e);
+                            });
+
+                            if (activeKelurahanId == kel.id_kelurahan) {
+                                map.fitBounds(layer.getBounds(), { padding: [50, 50], maxZoom: 16 });
+                            }
+                        } catch (e) {
+                            console.error("Error parsing geometry for kelurahan " + kel.nama_kelurahan, e);
+                        }
+                    }
+                }
+            });
+
+            // 1.8 Draw Titik Kelurahan
+            dataKelurahan.forEach(kel => {
+                if (kel.latitude && kel.longitude) {
+                    if (checkedDistricts.includes(kel.id_kecamatan?.toString())) {
+                        L.marker([kel.latitude, kel.longitude], {
+                            icon: L.divIcon({
+                                className: 'custom-div-icon',
+                                html: "<div class='w-6 h-6 bg-emerald-500 rounded-full border-2 border-white shadow-lg flex items-center justify-center text-white text-[10px]'><i class='fas fa-home'></i></div>",
+                                iconSize: [24, 24],
+                                iconAnchor: [12, 12]
+                            })
+                        }).bindPopup(`
+                            <div class="p-1 text-center">
+                                <p class="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">Titik Kelurahan</p>
+                                <h4 class="text-[11px] font-black text-[#1e1b4b] uppercase">${kel.nama_kelurahan}</h4>
+                            </div>
+                        `).addTo(polygonsLayer);
+                    }
+                }
+            });
+
+            // 2. Draw Aset Markers (Semua marker akan di-cluster otomatis)
+            let countTotal = filteredInfra.length;
+            let countBaik = filteredInfra.filter(i => i.label_prioritas === 'Baik').length;
+            let countSedang = filteredInfra.filter(i => i.label_prioritas === 'Rusak Sedang').length;
+            let countBerat = filteredInfra.filter(i => i.label_prioritas === 'Rusak Berat').length;
+
+            filteredInfra.forEach(item => {
+                const lat = parseFloat(item.latitude);
+                const lng = parseFloat(item.longitude);
+                if (isNaN(lat) || isNaN(lng)) return; // Skip invalid coords
+
+                const marker = L.marker([lat, lng], { 
+                    icon: createIcon(item.jenis || 'Infrastruktur', item.label_prioritas) 
+                });
+                
+                let imagePath = item.foto_terbaru || '';
+                if(imagePath && !imagePath.includes('infrastruktur/')) {
+                    imagePath = 'infrastruktur/' + imagePath;
+                }
+                imagePath = imagePath.replace(/\\/g, '/');
+                
+                let finalUrl = '';
+                if (imagePath) {
+                    finalUrl = `{{ asset('storage') }}/${imagePath}`;
+                } else {
+                    const type = item.jenis ? item.jenis.toLowerCase() : 'jalan';
+                    let typeStr = 'jalan';
+                    if (type.includes('titian')) typeStr = 'titian';
+                    else if (type.includes('jembatan')) typeStr = 'jembatan';
+                    
+                    let condStr = 'baik';
+                    const prioritas = item.label_prioritas ? item.label_prioritas.toLowerCase() : 'baik';
+                    if (prioritas.includes('berat')) condStr = 'rusak_berat';
+                    else if (prioritas.includes('sedang')) condStr = 'rusak_sedang';
+
+                    finalUrl = `{{ asset('') }}dummy_${typeStr}_${condStr}.jpg`;
+                }
+
+                const imgTag = `<img src="${finalUrl}" class="w-full h-36 object-cover rounded-xl shadow-md mb-3.5" onerror="this.style.display='none'">`;
+                
+                // Format the update date
+                let lastUpdateStr = '-';
+                if (item.updated_at || item.created_at) {
+                    const dateObj = new Date(item.updated_at || item.created_at);
+                    lastUpdateStr = dateObj.toLocaleDateString('id-ID', {day: '2-digit', month: 'long', year: 'numeric'});
+                }
+
+                // Determine condition color
+                let conditionColor = 'bg-emerald-500 text-white shadow-emerald-500/20';
+                if (item.label_prioritas === 'Rusak Sedang') conditionColor = 'bg-amber-500 text-white shadow-amber-500/20';
+                if (item.label_prioritas === 'Rusak Berat') conditionColor = 'bg-red-500 text-white shadow-red-500/20';
+
+                const popupContent = `
+                    <div class="p-3 min-w-[260px] font-sans">
+                        ${imgTag}
+                        
+                        <div class="mb-3">
+                            <h6 class="text-white font-extrabold text-base uppercase leading-tight truncate max-w-[250px] mb-1" title="${item.nama_objek || 'Aset Tanpa Nama'}">${item.nama_objek || 'Aset Tanpa Nama'}</h6>
+                            <p class="text-gold-500 text-sm font-bold uppercase tracking-widest">${item.jenis || 'Infrastruktur'}</p>
+                        </div>
+                        
+                        <div class="space-y-2 mb-3.5">
+                            <div class="flex items-start gap-2.5">
+                                <i class="fas fa-map-marker-alt text-slate-400 text-xs mt-0.5 w-4 text-center"></i>
+                                <span class="text-slate-300 text-sm leading-relaxed flex-1">${item.nama_kecamatan || 'Lokasi tidak diketahui'}</span>
+                            </div>
+                            <div class="flex items-start gap-2.5">
+                                <i class="fas fa-clock text-slate-400 text-xs mt-0.5 w-4 text-center"></i>
+                                <span class="text-slate-300 text-sm leading-relaxed flex-1">Update: ${lastUpdateStr}</span>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-white/10 pt-3.5 flex items-center justify-between gap-3 mt-3 mb-2.5">
+                            <span class="text-slate-400 text-xs font-bold uppercase tracking-widest">Kondisi:</span>
+                            <div class="px-3.5 py-1.5 ${conditionColor} text-xs font-black uppercase tracking-wider rounded-lg shadow-md">
+                                ${item.label_prioritas || 'N/A'}
+                            </div>
+                        </div>
+                        
+                        <button onclick="openDetailModal(${item.id_infrastruktur})" class="w-full bg-white/10 hover:bg-gold-500 text-white font-bold text-xs py-2.5 rounded-lg transition-all shadow-sm uppercase tracking-widest flex justify-center items-center gap-2">
+                            <i class="fas fa-expand-arrows-alt"></i> Lihat Detail
+                        </button>
+                    </div>
+                `;
+                
+                marker.bindPopup(popupContent, {
+                    className: 'custom-leaflet-popup'
+                });
+                
+                markersLayer.addLayer(marker);
+            });
+
+            // Dom updates
+            document.getElementById('stat-total').innerText = countTotal;
+            document.getElementById('stat-baik').innerText = countBaik;
+            document.getElementById('stat-sedang').innerText = countSedang;
+            document.getElementById('stat-berat').innerText = countBerat;
+            } catch (err) {
+                console.error("Critical error in applyFilters:", err);
+            }
+
+            // Update Select All Checkbox state
+            const checkAllCategories = document.getElementById('check-all-categories');
+            const allCats = document.querySelectorAll('.filter-category');
+            const allCatsChecked = document.querySelectorAll('.filter-category:checked');
+            if (checkAllCategories) {
+                checkAllCategories.checked = allCats.length === allCatsChecked.length;
+            }
+
+            // Update Select All Districts state
+            const checkAllDistricts = document.getElementById('check-all-districts');
+            const allDists = document.querySelectorAll('.filter-district');
+            const allDistsChecked = document.querySelectorAll('.filter-district:checked');
+            if (checkAllDistricts) {
+                checkAllDistricts.checked = allDists.length === allDistsChecked.length;
+            }
+        }
+
+        // Event listeners are registered below
+
+        // Select All Category Listener
+        const checkAllCategories = document.getElementById('check-all-categories');
+        if (checkAllCategories) {
+            checkAllCategories.addEventListener('change', function() {
+                const checked = this.checked;
+                document.querySelectorAll('.filter-category').forEach(el => {
+                    el.checked = checked;
+                });
+                applyFilters();
+            });
+        }
+
+        // Select All Districts Listener
+        const checkAllDistricts = document.getElementById('check-all-districts');
+        if (checkAllDistricts) {
+            checkAllDistricts.addEventListener('change', function() {
+                const checked = this.checked;
+                document.querySelectorAll('.filter-district').forEach(el => {
+                    el.checked = checked;
+                });
+                applyFilters();
+            });
+        }
+
+        // Listen for all input filters including the single Kelurahan toggle checkbox
+        document.querySelectorAll('.filter-category, .filter-district').forEach(el => el.addEventListener('change', applyFilters));
+        const toggleKelurahanLines = document.getElementById('toggle-kelurahan-lines');
+        if (toggleKelurahanLines) {
+            toggleKelurahanLines.addEventListener('change', applyFilters);
+        }
+        const toggleBanjirLines = document.getElementById('toggle-banjir-lines');
+        if (toggleBanjirLines) {
+            toggleBanjirLines.addEventListener('change', applyFilters);
+        }
+
+        const filterCategories = document.querySelectorAll('.filter-category');
+
+        function setBasemap(type) {
+            document.querySelectorAll('.basemap-btn').forEach(btn => {
+                btn.classList.remove('bg-white/10', 'text-white');
+                btn.classList.add('text-slate-400');
+            });
+            event.target.classList.add('bg-white/10', 'text-white');
+            event.target.classList.remove('text-slate-400');
+
+            map.removeLayer(googleStreets);
+            map.removeLayer(satelit);
+            map.removeLayer(darkMap);
+            map.removeLayer(greyMap);
+            map.removeLayer(osmMap);
+            map.removeLayer(petaBanjirMap);
+
+            if (type === 'satelit') { 
+                map.addLayer(satelit); 
+            } else if (type === 'dark') {
+                map.addLayer(darkMap);
+            } else if (type === 'greyscale') {
+                map.addLayer(greyMap);
+            } else if (type === 'osm') {
+                map.addLayer(osmMap);
+            } else if (type === 'banjir') {
+                map.addLayer(petaBanjirMap);
+            } else { 
+                map.addLayer(googleStreets); 
+            }
+        }
+
+        function toggleMenu(id) {
+            const menus = ['layer-options', 'filter-utama'];
+            
+            menus.forEach(menuId => {
+                const el = document.getElementById(menuId);
+                if (el && menuId !== id) {
+                    el.classList.add('hidden');
+                }
+            });
+            
+            const panel = document.getElementById(id);
+            if (panel) {
+                panel.classList.toggle('hidden');
+            }
+        }
+
+        // --- Detail Modal Functions ---
+        function openDetailModal(id) {
+            const item = dataInfra.find(i => i.id_infrastruktur == id);
+            if(!item) return;
+
+            // Isi Data Modal
+            document.getElementById('modal-title').innerText = item.nama_objek || 'Aset Tanpa Nama';
+            document.getElementById('modal-kecamatan').innerText = item.nama_kecamatan || '-';
+            document.getElementById('modal-kelurahan').innerText = item.nama_kelurahan || '-';
+            document.getElementById('modal-jenis').innerText = item.jenis || 'Infrastruktur';
+            // Hanya tampilkan Rute Navigasi
+            document.getElementById('modal-action-btn').innerHTML = `
+                <a href="https://www.google.com/maps/dir/?api=1&destination=${item.latitude},${item.longitude}" target="_blank" class="w-full bg-navy-900 border border-gold-500/50 text-gold-500 text-sm font-bold py-4 px-6 rounded-2xl hover:bg-gold-500 hover:text-navy-900 shadow-xl hover:shadow-gold-500/30 transition-all text-center flex items-center justify-center gap-3">
+                    <i class="fas fa-directions text-lg"></i> Rute Navigasi ke Lokasi
+                </a>
+            `;
+            
+            // Tentukan status badge
+            let conditionColor = 'bg-emerald-500 text-white';
+            if (item.label_prioritas === 'Rusak Sedang') conditionColor = 'bg-amber-500 text-white';
+            if (item.label_prioritas === 'Rusak Berat') conditionColor = 'bg-red-500 text-white';
+            
+            const badge = document.getElementById('modal-badge');
+            badge.className = `px-4 py-1.5 rounded-lg text-xs font-black uppercase tracking-wider shadow-md ${conditionColor}`;
+            badge.innerText = item.label_prioritas || 'N/A';
+
+            // Set Gambar Modal
+            let imagePath = item.foto_terbaru || '';
+            if(imagePath && !imagePath.includes('infrastruktur/')) imagePath = 'infrastruktur/' + imagePath;
+            imagePath = imagePath.replace(/\\/g, '/');
+            
+            let finalUrl = '';
+            if (imagePath) {
+                finalUrl = `{{ asset('storage') }}/${imagePath}`;
+            } else {
+                const type = item.jenis ? item.jenis.toLowerCase() : 'jalan';
+                let typeStr = 'jalan';
+                if (type.includes('titian')) typeStr = 'titian';
+                else if (type.includes('jembatan')) typeStr = 'jembatan';
+                let condStr = 'baik';
+                const prioritas = item.label_prioritas ? item.label_prioritas.toLowerCase() : 'baik';
+                if (prioritas.includes('berat')) condStr = 'rusak_berat';
+                else if (prioritas.includes('sedang')) condStr = 'rusak_sedang';
+                finalUrl = `{{ asset('') }}dummy_${typeStr}_${condStr}.jpg`;
+            }
+            document.getElementById('modal-img').src = finalUrl;
+
+            // Tampilkan Modal dengan Animasi Fade-In
+            const overlay = document.getElementById('detail-modal-overlay');
+            const content = document.getElementById('detail-modal-content');
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+            
+            setTimeout(() => {
+                overlay.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeDetailModal() {
+            const overlay = document.getElementById('detail-modal-overlay');
+            const content = document.getElementById('detail-modal-content');
+            
+            // Animasi Fade-Out
+            overlay.classList.add('opacity-0');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            
+            setTimeout(() => {
+                overlay.classList.remove('flex');
+                overlay.classList.add('hidden');
+            }, 300);
+        }
+
+        // Tutup semua modal jika klik di luar
+        window.onclick = function(event) {
+            const mod1 = document.getElementById('detail-modal-overlay');
+            if (event.target == mod1) {
+                closeDetailModal();
+            }
+            
+            // Close search results if clicked outside
+            if (!event.target.closest('#search-infra') && !event.target.closest('#search-results')) {
+                const results = document.getElementById('search-results');
+                if(results) results.classList.add('hidden');
+            }
+        }
+
+        // --- Fitur Peta Panas (Heatmap) ---
+        let heatmapLayer = null;
+        let isHeatmapActive = false;
+
+        function toggleHeatmap() {
+            isHeatmapActive = !isHeatmapActive;
+            const btn = document.getElementById('toggle-heatmap');
+            const indicator = document.getElementById('heatmap-indicator');
+            
+            if(isHeatmapActive) {
+                btn.classList.add('text-red-500');
+                btn.classList.remove('text-slate-400');
+                indicator.classList.remove('hidden');
+                
+                // Kumpulkan titik kerusakan
+                const heatPoints = [];
+                dataInfra.forEach(item => {
+                    const lat = parseFloat(item.latitude);
+                    const lng = parseFloat(item.longitude);
+                    if(isNaN(lat) || isNaN(lng)) return;
+                    
+                    let intensity = 0;
+                    if(item.label_prioritas === 'Rusak Berat') intensity = 1.0;
+                    else if(item.label_prioritas === 'Rusak Sedang') intensity = 0.5;
+                    
+                    if(intensity > 0) {
+                        heatPoints.push([lat, lng, intensity]);
+                    }
+                });
+                
+                if(heatmapLayer) {
+                    map.removeLayer(heatmapLayer);
+                }
+                
+                heatmapLayer = L.heatLayer(heatPoints, {
+                    radius: 35,
+                    blur: 35,
+                    maxZoom: 16,
+                    gradient: {0.4: 'blue', 0.6: 'cyan', 0.7: 'lime', 0.8: 'yellow', 1.0: 'red'}
+                }).addTo(map);
+                
+                // Sembunyikan marker biasa agar heatmap terlihat jelas
+                map.removeLayer(markersLayer);
+                
+            } else {
+                btn.classList.remove('text-red-500');
+                btn.classList.add('text-slate-400');
+                indicator.classList.add('hidden');
+                
+                if(heatmapLayer) {
+                    map.removeLayer(heatmapLayer);
+                }
+                
+                // Tampilkan marker kembali
+                map.addLayer(markersLayer);
+            }
+        }
+
+        // --- Fitur Pencarian (Search) ---
+        const searchInput = document.getElementById('search-infra');
+        const searchResults = document.getElementById('search-results');
+        
+        if(searchInput) {
+            searchInput.addEventListener('input', function() {
+                const query = this.value.toLowerCase();
+                searchResults.innerHTML = '';
+                
+                if (query.length < 2) {
+                    searchResults.classList.add('hidden');
+                    return;
+                }
+                
+                const results = dataInfra.filter(i => 
+                    (i.nama_objek && i.nama_objek.toLowerCase().includes(query)) ||
+                    (i.nama_kelurahan && i.nama_kelurahan.toLowerCase().includes(query))
+                ).slice(0, 5); // Batasi 5 hasil
+                
+                if (results.length > 0) {
+                    searchResults.classList.remove('hidden');
+                    results.forEach(i => {
+                        const div = document.createElement('div');
+                        div.className = 'p-3 border-b border-white/5 hover:bg-white/10 cursor-pointer transition-colors';
+                        div.innerHTML = `
+                            <p class="text-xs font-bold text-white mb-0.5">${i.nama_objek || 'Tanpa Nama'}</p>
+                            <p class="text-xs text-slate-400"><i class="fas fa-map-marker-alt text-gold-500 mr-1"></i>Kel. ${i.nama_kelurahan}</p>
+                        `;
+                        div.onclick = () => {
+                            map.setView([parseFloat(i.latitude), parseFloat(i.longitude)], 18);
+                            openDetailModal(i.id_infrastruktur);
+                            searchResults.classList.add('hidden');
+                            searchInput.value = i.nama_objek;
+                        };
+                        searchResults.appendChild(div);
+                    });
+                } else {
+                    searchResults.classList.remove('hidden');
+                    searchResults.innerHTML = '<div class="p-4 text-xs text-slate-400 text-center">Tidak ada hasil ditemukan</div>';
+                }
+            });
+        }
+
+        // --- Fitur GPS Lokasi Saya ---
+        let userMarker = null;
+        function locateUser() {
+            if (!navigator.geolocation) {
+                alert("Browser Anda tidak mendukung geolokasi.");
+                return;
+            }
+            // Ubah ikon tombol sementara
+            const btnIcon = document.querySelector('button[title="Lokasi Saya"] i');
+            if(btnIcon) {
+                btnIcon.className = 'fas fa-spinner fa-spin text-sm';
+            }
+            
+            map.locate({setView: true, maxZoom: 16});
+        }
+
+        map.on('locationfound', function(e) {
+            const btnIcon = document.querySelector('button[title="Lokasi Saya"] i');
+            if(btnIcon) btnIcon.className = 'fas fa-crosshairs text-sm';
+            
+            if (userMarker) {
+                userMarker.setLatLng(e.latlng);
+            } else {
+                userMarker = L.marker(e.latlng, {
+                    icon: L.divIcon({
+                        className: 'custom-user-marker',
+                        html: '<div class="w-4 h-4 bg-blue-500 border-2 border-white rounded-full shadow-[0_0_15px_rgba(59,130,246,0.8)] animate-pulse"></div>',
+                        iconSize: [16, 16],
+                        iconAnchor: [8, 8]
+                    })
+                }).addTo(map);
+            }
+            userMarker.bindPopup('<div class="text-xs font-bold text-center">Lokasi Anda Saat Ini</div>').openPopup();
+        });
+
+        map.on('locationerror', function(e) {
+            const btnIcon = document.querySelector('button[title="Lokasi Saya"] i');
+            if(btnIcon) btnIcon.className = 'fas fa-crosshairs text-sm text-red-500';
+            alert("Gagal menemukan lokasi Anda. Pastikan GPS aktif dan izin diberikan.");
+        });
+
+        // Scroll reveal animation triggers
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal-up");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+
+        // Back to Top trigger
+        window.addEventListener('scroll', () => {
+            const btt = document.getElementById('backToTop');
+            if (window.scrollY > 400) {
+                btt.classList.remove('opacity-0', 'invisible');
+                btt.classList.add('opacity-100', 'visible');
+            } else {
+                btt.classList.remove('opacity-100', 'visible');
+                btt.classList.add('opacity-0', 'invisible');
+            }
+        });
+
+        // Pastikan filter dan map dirender setelah DOM stabil
+        setTimeout(() => {
+            applyFilters();
+            reveal();
+            // Paksa Leaflet untuk me-render ulang ukuran container jika ada perubahan DOM
+            map.invalidateSize();
+        }, 100);
+    </script>
+    <!-- Detail Modal Overlay (Hidden by Default) -->
+    <div id="detail-modal-overlay" class="fixed inset-0 z-[100000] bg-[#0f0e2c]/80 backdrop-blur-md hidden items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div id="detail-modal-content" class="bg-white rounded-[2rem] w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl transform scale-95 transition-transform duration-300">
+            <!-- Header -->
+            <div class="sticky top-0 bg-white/95 backdrop-blur-xl z-20 px-4 md:px-8 py-4 md:py-5 border-b border-slate-100 flex flex-wrap gap-2 justify-between items-center">
+                <div class="flex items-center gap-2 md:gap-4">
+                    <div class="hidden md:flex w-10 h-10 rounded-full bg-navy-50 items-center justify-center text-gold-500">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-black text-navy-900 text-base md:text-lg uppercase tracking-tight leading-none mb-1" id="modal-title">Detail Aset</h3>
+                        <p class="text-xs md:text-xs font-bold text-slate-400 uppercase tracking-widest" id="modal-jenis">Infrastruktur</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 md:gap-4">
+                    <span id="modal-badge" class="px-3 py-1 md:px-4 md:py-1.5 rounded-lg text-xs md:text-xs font-black uppercase tracking-wider bg-emerald-500 text-white shadow-md">Baik</span>
+                    <button onclick="closeDetailModal()" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-red-50 hover:text-red-500 transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Body -->
+            <div class="p-4 md:p-6">
+                <img id="modal-img" src="" class="w-full h-48 md:h-80 object-cover rounded-2xl md:rounded-3xl shadow-md mb-6 md:mb-8 bg-slate-100">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-center bg-slate-50 p-4 md:p-6 rounded-2xl md:rounded-3xl border border-slate-100">
+                    <!-- Left Col: Lokasi -->
+                    <div class="space-y-6">
+                        <div>
+                            <span class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1"><i class="fas fa-map mr-1"></i> Kecamatan</span>
+                            <p id="modal-kecamatan" class="font-black text-navy-900 text-xl">Banjarmasin Tengah</p>
+                        </div>
+                        
+                        <div>
+                            <span class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1"><i class="fas fa-map-pin mr-1"></i> Kelurahan</span>
+                            <p id="modal-kelurahan" class="font-black text-navy-900 text-xl">Kertak Baru</p>
+                        </div>
+                    </div>
+
+                    <!-- Right Col: Aksi -->
+                    <div id="modal-action-btn" class="flex justify-end">
+                        <!-- Tombol Rute Navigasi akan di-inject lewat JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Lapor Warga -->
+    <div id="modal-lapor" class="hidden fixed inset-0 z-[10000] flex items-center justify-center p-4 sm:p-6 backdrop-blur-xl bg-[#0a091d]/80 transition-all duration-300">
+        <div class="bg-[#0f0e2c]/95 backdrop-blur-3xl w-full max-w-2xl rounded-[2.5rem] shadow-2xl border border-white/10 overflow-hidden flex flex-col max-h-[90vh]">
+            <!-- Header -->
+            <div class="p-6 flex justify-between items-center text-white shrink-0 border-b border-white/10">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-gold-500/10 rounded-2xl flex items-center justify-center border border-gold-500/20">
+                        <i class="fas fa-bullhorn text-xl text-gold-500"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-black text-xl tracking-tight leading-none mb-1">Lapor Kerusakan</h3>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Partisipasi Warga Banjarmasin</p>
+                    </div>
+                </div>
+                <button onclick="document.getElementById('modal-lapor').classList.add('hidden')" class="w-10 h-10 bg-white/5 hover:bg-red-500 hover:text-white text-slate-400 rounded-xl flex items-center justify-center transition-all border border-white/10 hover:border-red-500">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Body -->
+            <div class="p-6 overflow-y-auto custom-scrollbar flex-1">
+                <form action="{{ route('lapor.warga') }}" method="POST" enctype="multipart/form-data" id="form-lapor-warga">
+                    @csrf
+                    
+                    <div class="space-y-6">
+                        <!-- Nama & HP -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-xs font-black text-slate-300 uppercase tracking-widest mb-2 ml-1">Nama Pelapor <span class="text-red-500">*</span></label>
+                                <input type="text" name="nama_pelapor" required placeholder="Nama Anda" class="w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-sm font-semibold text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all placeholder-slate-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-black text-slate-300 uppercase tracking-widest mb-2 ml-1">No. WhatsApp <span class="text-red-500">*</span></label>
+                                <input type="text" name="no_hp" required placeholder="Nomor WhatsApp (Agar tim bisa menghubungi)" class="w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-sm font-semibold text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all placeholder-slate-500">
+                            </div>
+                        </div>
+
+                        <!-- Deskripsi -->
+                        <div>
+                            <label class="block text-xs font-black text-slate-300 uppercase tracking-widest mb-2 ml-1">Deskripsi Kerusakan <span class="text-red-500">*</span></label>
+                            <textarea name="deskripsi" required rows="3" placeholder="Contoh: Jalan berlubang cukup dalam dan sering digenangi air saat hujan..." class="w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-sm font-semibold text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all resize-none placeholder-slate-500"></textarea>
+                        </div>
+
+                        <!-- Lokasi GPS & Map Picker -->
+                        <div class="p-5 bg-white/5 rounded-2xl border border-white/10">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <h4 class="font-black text-white text-sm">Titik Lokasi <span class="text-red-500">*</span></h4>
+                                    <p class="text-xs text-slate-400 font-medium">Geser pin pada peta atau klik tombol GPS.</p>
+                                </div>
+                                <button type="button" onclick="getWargaLocation(this)" class="px-4 py-2 bg-blue-500/20 hover:bg-blue-500 border border-blue-500/50 hover:border-blue-500 text-blue-400 hover:text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2">
+                                    <i class="fas fa-crosshairs"></i> Ambil GPS
+                                </button>
+                            </div>

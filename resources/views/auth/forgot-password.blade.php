@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lupa Password | GEO-SINFRA</title>
+    <title>Lupa Kata Sandi | GEO-SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -115,7 +115,7 @@
             <div class="w-full max-w-md">
                 
                 <div class="mb-10 text-center">
-                    <h2 class="text-4xl font-black text-navy-900 mb-2 tracking-tight">Lupa Password</h2>
+                    <h2 class="text-4xl font-black text-navy-900 mb-2 tracking-tight">Lupa Kata Sandi</h2>
                     <p class="text-slate-400 font-semibold text-xs uppercase tracking-widest leading-relaxed">
                         Masukkan email Anda untuk menerima link pemulihan kata sandi
                     </p>

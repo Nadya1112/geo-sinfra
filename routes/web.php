@@ -30,15 +30,183 @@ Route::get('/debug-schema', function () {
 
 Route::get('/debug-708', function () {
     $total = \DB::table('infrastruktur')->whereNull('deleted_at')->count();
-    $validCoords = \DB::table('infrastruktur')->whereNull('deleted_at')->whereNotNull('latitude')->whereNotNull('longitude')->count();
-    $byCategory = \DB::table('infrastruktur')->whereNull('deleted_at')->select('jenis', \DB::raw('count(*) as count'))->groupBy('jenis')->get();
+    $validCoords = \DB::table('infrastruktur')->whereNull('deleted_at')->whereNotNull('latitude')->whereNotNull('longitude')->where('latitude', '!=', '')->where('longitude', '!=', '')->count();
+    $nullLat = \DB::table('infrastruktur')->whereNull('deleted_at')->where(function($q){ $q->whereNull('latitude')->orWhere('latitude', ''); })->count();
+    $commaLat = \DB::table('infrastruktur')->whereNull('deleted_at')->where('latitude', 'like', '%,%')->count();
+    
+    // Ambil 5 sample data yang bermasalah (latitude NULL atau kosong)
+    $sampleNull = \DB::table('infrastruktur')
+        ->whereNull('deleted_at')
+        ->where(function($q){ $q->whereNull('latitude')->orWhere('latitude', ''); })
+        ->select('id_infrastruktur', 'nama_objek', 'nama_infrastruktur', 'latitude', 'longitude', 'id_kelurahan', 'jenis', 'alamat')
+        ->limit(5)->get();
+    
+    // Ambil 5 sample data yang koordinatnya ada koma
+    $sampleComma = \DB::table('infrastruktur')
+        ->whereNull('deleted_at')
+        ->where('latitude', 'like', '%,%')
+        ->select('id_infrastruktur', 'nama_objek', 'latitude', 'longitude')
+        ->limit(5)->get();
+    
+    // Ambil 5 sample data yang VALID (untuk perbandingan)
+    $sampleValid = \DB::table('infrastruktur')
+        ->whereNull('deleted_at')
+        ->whereNotNull('latitude')->where('latitude', '!=', '')->where('latitude', 'not like', '%,%')
+        ->select('id_infrastruktur', 'nama_objek', 'latitude', 'longitude', 'id_kelurahan')
+        ->limit(5)->get();
+    
+    // Cek semua kolom dari 1 record bermasalah
+    $fullSample = \DB::table('infrastruktur')
+        ->whereNull('deleted_at')
+        ->where(function($q){ $q->whereNull('latitude')->orWhere('latitude', ''); })
+        ->first();
     
     return response()->json([
         'total' => $total,
         'valid_coords' => $validCoords,
-        'by_category' => $byCategory
+        'null_atau_kosong_latitude' => $nullLat,
+        'latitude_pakai_koma' => $commaLat,
+        'sample_null' => $sampleNull,
+        'sample_koma' => $sampleComma,
+        'sample_valid' => $sampleValid,
+        'full_record_bermasalah' => $fullSample,
     ]);
 });
+
+Route::get('/debug-data', function () {
+    $data = \DB::table('infrastruktur')
+        ->whereNull('deleted_at')
+        ->where(function($q) {
+            $q->whereNull('latitude')
+              ->orWhereNull('id_kelurahan')
+              ->orWhere('latitude', 'like', '%,%');
+        })
+        ->limit(10)
+        ->get();
+    
+    return response()->json([
+        'message' => 'Ini adalah 10 data yang latitude/longitude-nya bermasalah atau id_kelurahan-nya kosong/bermasalah:',
+        'data' => $data
+    ]);
+});
+
+// Route untuk Import Data DED ke Database
+Route::get('/import-ded-data', function () {
+    require_once base_path('import_csv.php');
+    $result = importDedData();
+    return response()->json($result, isset($result['error']) ? 422 : 200);
+});
+
+// Route untuk MEMPERBAIKI 698 data yang latitude/longitude-nya NULL
+// Membaca ulang file CSV dan mengupdate record berdasarkan urutan
+Route::get('/fix-data-ded', function () {
+    $csvPath = storage_path('app/import_infra.csv');
+    
+    if (!file_exists($csvPath)) {
+        return response()->json(['error' => 'File CSV tidak ditemukan di server: ' . $csvPath], 404);
+    }
+    
+    // Ambil semua ID record yang latitude-nya NULL, urut berdasarkan id
+    $nullRecords = DB::table('infrastruktur')
+        ->whereNull('deleted_at')
+        ->where(function($q) {
+            $q->whereNull('latitude')->orWhere('latitude', '');
+        })
+        ->orderBy('id_infrastruktur', 'asc')
+        ->pluck('id_infrastruktur')
+        ->toArray();
+    
+    if (count($nullRecords) === 0) {
+        return response()->json(['message' => 'Tidak ada data dengan latitude NULL. Semua data sudah lengkap!', 'updated' => 0]);
+    }
+    
+    // Baca CSV
+    $lines = file($csvPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    $headerLine = array_shift($lines); // Buang header
+    
+    // Kolom CSV (posisi tetap, sudah diketahui dari export):
+    // 0=id_kelurahan, 1=id_user, 2=nama_objek, 3=foto_terbaru, 4=jenis,
+    // 5=material_eksisting, 6=alamat, 7=latitude, 8=longitude, 9=kondisi,
+    // 10=panjang, 11=lebar, 12=has_drainase, 13=has_gorong_gorong, 14=status_verifikasi, 15=tgl_survey
+    
+    $updated = 0;
+    $errors = [];
+    
+    foreach ($lines as $index => $line) {
+        if ($index >= count($nullRecords)) break;
+        
+        $row = str_getcsv($line, '|', '"');
+        $targetId = $nullRecords[$index];
+        
+        // Ambil data dari CSV berdasarkan posisi kolom tetap
+        $idKelurahan = isset($row[0]) ? trim($row[0]) : '';
+        $namaObjek   = isset($row[2]) ? trim($row[2]) : '';
+        $alamat      = isset($row[6]) ? trim($row[6]) : '';
+        $latitude    = isset($row[7]) ? trim($row[7]) : '';
+        $longitude   = isset($row[8]) ? trim($row[8]) : '';
+        $kondisi     = isset($row[9]) ? trim($row[9]) : '';
+        
+        // Perbaiki format: koma → titik untuk koordinat
+        $latitude  = str_replace(',', '.', $latitude);
+        $longitude = str_replace(',', '.', $longitude);
+        
+        if (empty($latitude) || empty($longitude)) {
+            $errors[] = "CSV baris " . ($index + 2) . ": koordinat kosong, skip";
+            continue;
+        }
+        
+        try {
+            $updateData = [
+                'latitude'   => $latitude,
+                'longitude'  => $longitude,
+                'alamat'     => $alamat ?: null,
+                'updated_at' => now(),
+            ];
+            
+            if (!empty($idKelurahan) && is_numeric($idKelurahan) && (int)$idKelurahan > 0) {
+                $updateData['id_kelurahan'] = (int)$idKelurahan;
+            }
+            if (!empty($namaObjek)) {
+                $updateData['nama_infrastruktur'] = $namaObjek;
+            }
+            if (!empty($kondisi)) {
+                $updateData['kondisi'] = $kondisi;
+            }
+            
+            DB::table('infrastruktur')
+                ->where('id_infrastruktur', $targetId)
+                ->update($updateData);
+            
+            $updated++;
+        } catch (\Exception $e) {
+            $errors[] = "ID $targetId: " . $e->getMessage();
+        }
+    }
+    
+    // Verifikasi
+    $totalValid = DB::table('infrastruktur')
+        ->whereNull('deleted_at')
+        ->whereNotNull('latitude')->where('latitude', '!=', '')
+        ->whereNotNull('longitude')->where('longitude', '!=', '')
+        ->count();
+    $total = DB::table('infrastruktur')->whereNull('deleted_at')->count();
+    $stillNull = DB::table('infrastruktur')
+        ->whereNull('deleted_at')
+        ->where(function($q){ $q->whereNull('latitude')->orWhere('latitude', ''); })
+        ->count();
+    
+    return response()->json([
+        'message' => "Selesai! $updated dari " . count($nullRecords) . " record berhasil diupdate.",
+        'records_null_sebelumnya' => count($nullRecords),
+        'baris_csv' => count($lines),
+        'updated' => $updated,
+        'masih_null' => $stillNull,
+        'total_data' => $total,
+        'total_koordinat_valid' => $totalValid,
+        'errors' => array_slice($errors, 0, 10),
+    ]);
+});
+
 
 Route::get('/', function () {
     // PROTEKSI: Jika tabel belum ada di database (misal belum migrate), jangan crash.
@@ -102,10 +270,10 @@ Route::get('/', function () {
 
     // Kategori Terbanyak
     $topKategori = $dataInfrastruktur->count() > 0 
-        ? $dataInfrastruktur->groupBy('jenis')->map->count()->sortDesc()->keys()->first() 
+        ? $dataInfrastruktur->groupBy(function($item) { return $item->jenis ?: 'Lainnya'; })->map->count()->sortDesc()->keys()->first() 
         : '-';
     $topKategoriCount = $dataInfrastruktur->count() > 0 
-        ? $dataInfrastruktur->groupBy('jenis')->map->count()->max() 
+        ? $dataInfrastruktur->groupBy(function($item) { return $item->jenis ?: 'Lainnya'; })->map->count()->max() 
         : 0;
 
     // Ringkasan Kondisi Wilayah (Data Tabel)
@@ -119,6 +287,18 @@ Route::get('/', function () {
             'total' => $infraKec->count()
         ];
     })->sortByDesc('total');
+
+    // Tambahkan baris untuk data tanpa wilayah (jika ada)
+    $infraTanpaWilayah = $dataInfrastruktur->whereNull('id_kecamatan');
+    if ($infraTanpaWilayah->count() > 0) {
+        $kondisiWilayah->push([
+            'nama' => 'Tanpa Wilayah',
+            'baik' => $infraTanpaWilayah->where('label_prioritas', 'Baik')->count(),
+            'rusak_sedang' => $infraTanpaWilayah->where('label_prioritas', 'Rusak Sedang')->count(),
+            'rusak_berat' => $infraTanpaWilayah->where('label_prioritas', 'Rusak Berat')->count(),
+            'total' => $infraTanpaWilayah->count()
+        ]);
+    }
 
     return view('landing', compact(
         'semuaWilayah', 

@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surveyor Dashboard | GEO-SINFRA</title>
+    <title>Beranda Surveyor | GEO-SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -50,8 +50,8 @@
         {{-- ── Header ── --}}
         <header class="bg-white/80  backdrop-blur-xl border-b border-slate-100  sticky top-0 px-4 pl-16 md:px-8 py-4 flex justify-between items-center z-40 shrink-0">
             <div>
-                <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Surveyor Portal</p>
-                <h2 class="text-xl font-black text-navy-900  leading-none">Dashboard Utama</h2>
+                <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Portal Surveyor</p>
+                <h2 class="text-xl font-black text-navy-900  leading-none">Beranda Utama</h2>
             </div>
             
             <div class="flex items-center gap-6">
@@ -63,7 +63,7 @@
                 <a href="{{ route('surveyor.profile') }}" class="flex items-center gap-3 group">
                     <div class="text-right">
                         <p class="text-sm font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-colors max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
-                        <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5">ONLINE</p>
+                        <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5">Aktif</p>
                     </div>
                     <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shadow-md group-hover:shadow-lg transition-all overflow-hidden">
                         @if(auth()->user()->profile_photo)
@@ -324,10 +324,10 @@
                         </div>
                     </div>
 
-                    {{-- Upload Terbaru --}}
+                    {{-- Unggahan Terbaru --}}
                     <div class="bg-white  rounded-[2.5rem] p-8 border border-slate-100  shadow-sm">
                         <div class="flex justify-between items-center mb-6">
-                            <h4 class="font-black text-lg text-navy-900 ">Upload Terbaru</h4>
+                            <h4 class="font-black text-lg text-navy-900 ">Unggahan Terbaru</h4>
                             <a href="{{ route('surveyor.history') }}" class="text-xs font-black text-gold-500 uppercase tracking-widest hover:text-gold-600 transition-colors">Semua Riwayat</a>
                         </div>
                         <div class="space-y-4">
@@ -342,9 +342,9 @@
                                     <p class="text-xs text-slate-400 font-bold uppercase">{{ $upload->created_at->diffForHumans() }}</p>
                                 </div>
                                 @if($upload->status_verifikasi == 'Verified')
-                                    <div class="px-2 py-1 bg-emerald-50  text-emerald-600  border border-emerald-100  rounded-lg text-xs font-black uppercase tracking-wider">Verified</div>
+                                    <div class="px-2 py-1 bg-emerald-50  text-emerald-600  border border-emerald-100  rounded-lg text-xs font-black uppercase tracking-wider">Terverifikasi</div>
                                 @else
-                                    <div class="px-2 py-1 bg-orange-50  text-orange-600  border border-orange-100  rounded-lg text-xs font-black uppercase tracking-wider">Pending</div>
+                                    <div class="px-2 py-1 bg-orange-50  text-orange-600  border border-orange-100  rounded-lg text-xs font-black uppercase tracking-wider">Menunggu</div>
                                 @endif
                             </div>
                             @empty

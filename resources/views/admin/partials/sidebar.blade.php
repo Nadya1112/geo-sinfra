@@ -22,7 +22,7 @@
             <a href="{{ route('admin.dashboard') }}" 
                class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.dashboard') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
                 <i class="fas fa-home {{ request()->routeIs('admin.dashboard') ? '' : 'group-hover:text-gold-500' }}"></i> 
-                Dashboard
+                Beranda
             </a>
 
             <a href="{{ route('admin.users') }}" 
@@ -96,7 +96,7 @@
             @csrf
             <button type="submit" class="flex items-center gap-3 px-4 py-3 text-red-400 hover:text-red-300 w-full text-left text-sm font-bold transition group hover:bg-red-500/10 rounded-xl">
                 <i class="fas fa-sign-out-alt group-hover:-translate-x-1 transition-transform"></i> 
-                Log Out
+                Keluar
             </button>
         </form>
     </div>
@@ -124,7 +124,7 @@
             <a href="{{ route('admin.dashboard') }}" 
                class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.dashboard') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
                 <i class="fas fa-home {{ request()->routeIs('admin.dashboard') ? '' : 'group-hover:text-gold-500' }}"></i> 
-                Dashboard
+                Beranda
             </a>
 
             <a href="{{ route('admin.users') }}" 
@@ -198,7 +198,7 @@
             @csrf
             <button type="submit" class="flex items-center gap-3 px-4 py-3.5 text-red-400 hover:text-red-300 w-full text-left text-sm font-bold transition group rounded-xl hover:bg-red-500/10">
                 <i class="fas fa-sign-out-alt group-hover:-translate-x-1 transition-transform"></i> 
-                Log Out
+                Keluar
             </button>
         </form>
     </div>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -84,7 +84,7 @@
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div class="min-w-0">
-                    <p class="text-[9px] md:text-xs font-extrabold text-gold-500 uppercase tracking-[0.2em] mb-0.5 md:mb-1 truncate">Reporting Center</p>
+                    <p class="text-[9px] md:text-xs font-extrabold text-gold-500 uppercase tracking-[0.2em] mb-0.5 md:mb-1 truncate">Pusat Pelaporan</p>
                     <h2 class="text-sm md:text-xl font-black text-navy-900 dark:text-white leading-tight whitespace-normal">Laporan & Rekapitulasi</h2>
                 </div>
             </div>
@@ -98,7 +98,7 @@
                 <a href="{{ route('tim_teknis.profile') }}" class="flex items-center gap-2 md:gap-3 group">
                     <div class="text-right">
                         <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-colors max-w-[200px] truncate hidden md:block">{{ auth()->user()->name }}</p>
-                        <p class="text-[8px] md:text-xs font-bold text-emerald-500 uppercase md:mt-0.5">ONLINE</p>
+                        <p class="text-[8px] md:text-xs font-bold text-emerald-500 uppercase md:mt-0.5">Aktif</p>
                     </div>
                     <div class="w-8 h-8 md:w-10 md:h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shadow-md group-hover:shadow-lg transition-all overflow-hidden shrink-0">
                         @if(auth()->user()->profile_photo)
@@ -235,9 +235,9 @@
                         </div>
                         <div class="w-full md:flex-1 flex gap-2 justify-start md:justify-end mt-2 md:mt-0">
                             <button type="submit" class="w-full md:w-auto px-6 py-2.5 bg-navy-900 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-gold-500 transition-all shadow-lg shadow-navy-900/10 text-center">
-                                Filter Data
+                                Saring Data
                             </button>
-                            <a href="{{ route('tim_teknis.laporan') }}" class="px-4 py-2.5 bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-100 hover:text-slate-600 transition-all flex items-center border border-slate-100 dark:border-white/10 shadow-sm" title="Reset Filter">
+                            <a href="{{ route('tim_teknis.laporan') }}" class="px-4 py-2.5 bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-100 hover:text-slate-600 transition-all flex items-center border border-slate-100 dark:border-white/10 shadow-sm" title="Atur Ulang Filter">
                                 <i class="fas fa-sync-alt"></i>
                             </a>
                         </div>
@@ -281,7 +281,7 @@
                                 <i class="fas fa-file-pdf"></i> Cetak PDF
                             </button>
                             <button onclick="exportAllDataToExcel()" class="flex-1 sm:flex-none justify-center no-print px-4 py-2 bg-emerald-50 text-emerald-600 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-emerald-100 hover:scale-[1.02] transition-all flex items-center gap-2 border border-emerald-100 shadow-sm">
-                                <i class="fas fa-file-excel"></i> Export Excel
+                                <i class="fas fa-file-excel"></i> Ekspor Excel
                             </button>
                         </div>
                         <form action="{{ route('tim_teknis.laporan') }}" method="GET" class="flex items-center gap-2 w-full sm:w-auto">
@@ -308,7 +308,7 @@
                 </div>
                 @if(request('search') || request('kecamatan') || request('kondisi') || request('jenis'))
                 <div class="bg-navy-50/50 px-6 py-4 border-b border-navy-100/50 flex flex-wrap items-center gap-3 no-print">
-                    <span class="text-xs font-black text-navy-400 uppercase tracking-widest mr-2">Filter Aktif:</span>
+                    <span class="text-xs font-black text-navy-400 uppercase tracking-widest mr-2">Penyaringan Aktif:</span>
                     @if(request('search'))
                         <span class="px-3 py-1 bg-white dark:bg-[#1e1b4b] text-navy-600 rounded-full text-xs font-bold shadow-sm border border-navy-100">
                             <i class="fas fa-search mr-1"></i> "{{ request('search') }}"
@@ -330,7 +330,7 @@
                         </span>
                     @endif
                     <a href="{{ route('tim_teknis.laporan') }}" class="ml-auto text-xs font-bold text-red-400 hover:text-red-600 transition-all">
-                        <i class="fas fa-times mr-1"></i> Hapus Filter
+                        <i class="fas fa-times mr-1"></i> Hapus Penyaringan
                     </a>
                 </div>
                 </div>

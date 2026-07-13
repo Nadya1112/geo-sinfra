@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -60,7 +60,7 @@
                 <div class="flex items-center gap-3">
                     <div class="text-right">
                         <p class="text-sm font-black text-navy-900  leading-none uppercase max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
-                        <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5">ONLINE</p>
+                        <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5">Aktif</p>
                     </div>
                     <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-navy-800 overflow-hidden shadow-md">
                         @if(auth()->user()->profile_photo)
@@ -181,9 +181,9 @@
                                         @elseif($item->status_validasi == 'Validated')
                                             <span class="inline-flex px-2 py-1 bg-emerald-100  text-emerald-600  border border-emerald-200  rounded-lg text-xs font-black uppercase tracking-widest shadow-sm">Di-ACC</span>
                                         @elseif($item->status_verifikasi == 'Verified')
-                                            <span class="inline-flex px-2 py-1 bg-blue-100  text-blue-600  border border-blue-200  rounded-lg text-xs font-black uppercase tracking-widest shadow-sm">Verified</span>
+                                            <span class="inline-flex px-2 py-1 bg-blue-100  text-blue-600  border border-blue-200  rounded-lg text-xs font-black uppercase tracking-widest shadow-sm">Terverifikasi</span>
                                         @else
-                                            <span class="inline-flex px-2 py-1 bg-slate-100  text-slate-500  border border-slate-200  rounded-lg text-xs font-black uppercase tracking-widest shadow-sm">Pending</span>
+                                            <span class="inline-flex px-2 py-1 bg-slate-100  text-slate-500  border border-slate-200  rounded-lg text-xs font-black uppercase tracking-widest shadow-sm">Menunggu</span>
                                         @endif
                                     </td>
 
@@ -220,7 +220,7 @@
                                     {{-- AKSI --}}
                                     <td class="px-4 py-2 text-center">
                                         <div class="flex items-center justify-center gap-1.5">
-                                            <a href="{{ route('surveyor.infrastruktur.edit', $item->id_infrastruktur) }}" class="w-7 h-7 flex items-center justify-center bg-white  border border-slate-200  text-slate-400 rounded-md hover:bg-gold-500 hover:text-white hover:border-gold-500 hover:shadow-sm transition-all cursor-pointer" title="Edit Data">
+                                            <a href="{{ route('surveyor.infrastruktur.edit', $item->id_infrastruktur) }}" class="w-7 h-7 flex items-center justify-center bg-white  border border-slate-200  text-slate-400 rounded-md hover:bg-gold-500 hover:text-white hover:border-gold-500 hover:shadow-sm transition-all cursor-pointer" title="Ubah Data">
                                                 <i class="fas fa-pen text-xs"></i>
                                             </a>
                                             <a href="{{ route('surveyor.infrastruktur.show', $item->id_infrastruktur) }}" class="w-7 h-7 flex items-center justify-center bg-navy-900 text-gold-500 rounded-md hover:bg-navy-950 hover:text-white transition-all shadow-sm cursor-pointer" title="Lihat Detail">

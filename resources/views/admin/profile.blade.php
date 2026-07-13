@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -48,7 +48,7 @@
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
-                    <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Administrator Portal</p>
+                    <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Portal Administrator</p>
                     <h2 class="text-lg md:text-xl font-black text-navy-900 dark:text-white leading-none">Profil Saya</h2>
                 </div>
             </div>

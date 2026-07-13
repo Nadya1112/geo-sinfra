@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -190,7 +190,7 @@
                             <input type="checkbox" name="remember" class="w-4 h-4 rounded border-slate-300 text-gold-500 focus:ring-0 cursor-pointer">
                             <span>Ingat Saya</span>
                         </label>
-                        <a href="{{ route('password.request') }}" class="text-gold-500 hover:text-gold-600 transition-colors">Lupa Password?</a>
+                        <a href="{{ route('password.request') }}" class="text-gold-500 hover:text-gold-600 transition-colors">Lupa Kata Sandi?</a>
                     </div>
                 </form>
 

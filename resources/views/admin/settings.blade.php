@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -61,7 +61,7 @@
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div class="text-left">
-                    <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Administrator Portal</p>
+                    <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Portal Administrator</p>
                     <h2 class="text-lg md:text-xl font-black text-navy-900 dark:text-white leading-none">Pengaturan Sistem</h2>
                 </div>
             </div>
@@ -69,7 +69,7 @@
             <div class="flex items-center gap-3 md:gap-6">
                 <div class="text-right">
                     <p class="text-xs font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[10px] font-bold text-emerald-500 uppercase mt-0.5 sm:hidden">ONLINE</p>
+                    <p class="text-[10px] font-bold text-emerald-500 uppercase mt-0.5 sm:hidden">Aktif</p>
                     <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter hidden sm:block">{{ now()->translatedFormat('d M Y') }}</p>
                 </div>
             </div>

@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tim Teknis Dashboard | GEO-SINFRA</title>
+    <title>Beranda Tim Teknis | GEO-SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
             <script>
@@ -48,7 +48,7 @@
                 <a href="{{ route('tim_teknis.profile') }}" class="flex items-center gap-2 md:gap-3 group">
                     <div class="text-right">
                         <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-colors max-w-[200px] truncate hidden md:block">{{ auth()->user()->name }}</p>
-                        <p class="text-[8px] md:text-xs font-bold text-emerald-500 uppercase md:mt-0.5">ONLINE</p>
+                        <p class="text-[8px] md:text-xs font-bold text-emerald-500 uppercase md:mt-0.5">Aktif</p>
                     </div>
                     <div class="w-8 h-8 md:w-10 md:h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shadow-md group-hover:shadow-lg transition-all overflow-hidden flex-shrink-0">
                         @if(auth()->user()->profile_photo)
@@ -75,7 +75,7 @@
                         <div>
                             <div class="flex flex-wrap items-center gap-2 mb-0.5">
                                 <h3 class="text-sm md:text-xl font-black text-white tracking-tight">PERINGATAN DARURAT</h3>
-                                <span class="px-2 py-0.5 bg-rose-900/50 text-white text-[9px] md:text-xs font-black uppercase tracking-widest rounded-full border border-white/20 animate-pulse">Action Required</span>
+                                <span class="px-2 py-0.5 bg-rose-900/50 text-white text-[9px] md:text-xs font-black uppercase tracking-widest rounded-full border border-white/20 animate-pulse">Perlu Tindakan</span>
                             </div>
                             <p class="text-rose-100 text-xs md:text-sm font-medium">AI mendeteksi <strong class="text-white">{{ $totalRusakBerat }} infrastruktur</strong> kondisi kritis. Segera tinjau!</p>
                         </div>
@@ -102,7 +102,7 @@
                             <i class="fas fa-circle text-[6px] mr-1 animate-pulse"></i> Sistem Aktif
                         </span>
                         <span class="px-3 py-1.5 bg-gold-500/20 text-gold-400 text-xs font-black uppercase tracking-widest rounded-full border border-gold-500/30">
-                            <i class="fas fa-robot text-[10px] mr-1"></i> AI Online
+                            <i class="fas fa-robot text-[10px] mr-1"></i> AI Aktif
                         </span>
                     </div>
                 </div>

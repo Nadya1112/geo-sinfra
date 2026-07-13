@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -55,7 +55,7 @@
                 <a href="{{ route('surveyor.profile') }}" class="flex items-center gap-2 md:gap-3 group">
                     <div class="text-right">
                         <p class="text-sm font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-all max-w-[200px] truncate hidden md:block">{{ auth()->user()->name }}</p>
-                        <p class="text-[8px] md:text-xs font-bold text-emerald-500 uppercase md:mt-0.5">ONLINE</p>
+                        <p class="text-[8px] md:text-xs font-bold text-emerald-500 uppercase md:mt-0.5">Aktif</p>
                     </div>
                     <div class="w-8 h-8 md:w-10 md:h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md shrink-0">
                         @if(auth()->user()->profile_photo)
@@ -467,7 +467,7 @@
                             </div>
                             <div class="flex items-start gap-2.5">
                                 <i class="fas fa-robot text-slate-400 text-xs mt-0.5 w-4 text-center"></i>
-                                <span class="text-slate-300 text-sm leading-relaxed flex-1">CNN Score: ${point.cnn ? (point.cnn.skor_cnn * 100).toFixed(1) + '%' : 'N/A'}</span>
+                                <span class="text-slate-300 text-sm leading-relaxed flex-1">Skor CNN: ${point.cnn ? (point.cnn.skor_cnn * 100).toFixed(1) + '%' : 'N/A'}</span>
                             </div>
                         </div>
 

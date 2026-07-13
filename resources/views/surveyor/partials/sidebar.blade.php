@@ -20,7 +20,7 @@
             <a href="{{ route('surveyor.dashboard') }}" 
                class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('surveyor.dashboard') ? 'bg-gold-500 text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
                 <i class="fas fa-th-large {{ request()->routeIs('surveyor.dashboard') ? '' : 'group-hover:text-gold-400' }}"></i> 
-                Dashboard
+                Beranda
             </a>
 
             <a href="{{ route('surveyor.laporan') }}" 
@@ -56,7 +56,7 @@
             @csrf
             <button type="submit" class="flex items-center gap-3 px-4 py-3.5 text-red-400 hover:text-red-300 w-full text-left text-sm font-bold transition group rounded-xl hover:bg-red-500/10">
                 <i class="fas fa-sign-out-alt group-hover:-translate-x-1 transition-transform"></i> 
-                Log Out
+                Keluar
             </button>
         </form>
     </div>
@@ -84,7 +84,7 @@
             <a href="{{ route('surveyor.dashboard') }}" 
                class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('surveyor.dashboard') ? 'bg-gold-500 text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
                 <i class="fas fa-th-large text-sm {{ request()->routeIs('surveyor.dashboard') ? '' : 'group-hover:text-gold-400' }}"></i> 
-                Dashboard
+                Beranda
             </a>
 
             <a href="{{ route('surveyor.laporan') }}" 
@@ -118,7 +118,7 @@
             @csrf
             <button type="submit" class="flex items-center gap-3 px-4 py-3.5 text-red-400 hover:text-red-300 w-full text-left text-sm font-bold transition group rounded-xl hover:bg-red-500/10">
                 <i class="fas fa-sign-out-alt group-hover:-translate-x-1 transition-transform"></i> 
-                Log Out
+                Keluar
             </button>
         </form>
     </div>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -65,7 +65,7 @@
                 <a href="{{ route('surveyor.profile') }}" class="flex items-center gap-3">
                     <div class="text-right">
                         <p class="text-xs font-black text-navy-900  leading-none uppercase max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
-                        <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5">Online</p>
+                        <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5">Aktif</p>
                     </div>
                     <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-navy-800 overflow-hidden shadow-md">
                         @if(auth()->user()->profile_photo)
@@ -290,7 +290,7 @@
                                 </div>
                                 <button type="button" onclick="getLocation()" class="px-4 py-3 bg-navy-900 hover:bg-gold-500 hover:text-navy-900  text-white rounded-xl text-xs font-black uppercase tracking-widest flex items-center gap-2 transition-all shadow-md active:scale-95 border border-white/10">
                                     <i class="fas fa-crosshairs"></i>
-                                    Sync GPS
+                                    Sinkronkan GPS
                                 </button>
                             </div>
 
@@ -306,11 +306,11 @@
 
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="bg-slate-50  p-4 rounded-2xl border border-slate-200 ">
-                                    <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Latitude</label>
+                                    <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Garis Lintang</label>
                                     <input type="text" id="lat-input" name="latitude" value="{{ old('latitude', $infrastruktur->latitude) }}" class="w-full bg-transparent border-none p-0 text-xs font-black text-navy-900  outline-none focus:ring-0">
                                 </div>
                                 <div class="bg-slate-50  p-4 rounded-2xl border border-slate-200 ">
-                                    <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Longitude</label>
+                                    <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Garis Bujur</label>
                                     <input type="text" id="lng-input" name="longitude" value="{{ old('longitude', $infrastruktur->longitude) }}" class="w-full bg-transparent border-none p-0 text-xs font-black text-navy-900  outline-none focus:ring-0">
                                 </div>
                             </div>

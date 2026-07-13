@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -45,11 +45,11 @@
             <div class="flex items-center gap-4">
                 <a href="{{ route('surveyor.dashboard') }}"
                    class="hidden md:flex w-10 h-10 bg-white  border border-slate-100  rounded-xl  items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/20 hover:shadow-lg hover:shadow-gold-500/5 transition-all group"
-                   title="Kembali ke Dashboard Utama">
+                   title="Kembali ke Beranda Utama">
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
                 <div class="text-left">
-                    <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Surveyor Portal</p>
+                    <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Portal Surveyor</p>
                     <h2 class="text-xl font-black text-navy-900  leading-none">Penugasan Laporan Warga</h2>
                 </div>
             </div>
@@ -63,7 +63,7 @@
                 <div class="flex items-center gap-2 md:gap-3">
                     <a href="{{ route('surveyor.profile') }}" class="text-right group">
                         <p class="text-xs md:text-sm font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-all max-w-[200px] truncate hidden md:block">{{ auth()->user()->name }}</p>
-                        <p class="text-[8px] md:text-xs font-bold text-emerald-500 uppercase md:mt-0.5">Online</p>
+                        <p class="text-[8px] md:text-xs font-bold text-emerald-500 uppercase md:mt-0.5">Aktif</p>
                     </a>
                     <a href="{{ route('surveyor.profile') }}" class="w-8 h-8 md:w-10 md:h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md shrink-0">
                         @if(auth()->user()->profile_photo)

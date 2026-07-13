@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -44,11 +44,11 @@
             <div class="flex items-center gap-4 text-left">
                 <a href="{{ route('admin.dashboard') }}"
                    class="hidden md:flex w-10 h-10 bg-white border border-slate-100 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/20 hover:shadow-lg hover:shadow-gold-500/5 transition-all group"
-                   title="Kembali ke Dashboard Utama">
+                   title="Kembali ke Beranda Utama">
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
                 <div class="text-left">
-                    <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Administrator Portal</p>
+                    <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Portal Administrator</p>
                     <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Manajemen Infrastruktur</h2>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin.profile') }}" class="text-right group hidden md:block">
                         <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
-                        <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5">Online</p>
+                        <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5">Aktif</p>
                     </a>
                     <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md">
                         @if(auth()->user()->profile_photo)
@@ -107,7 +107,7 @@
                         <i class="fas fa-plus text-xs"></i> Tambah Data
                     </a>
                     
-                    {{-- Export Excel --}}
+                    {{-- Ekspor Excel --}}
                     <a href="{{ route('admin.infrastruktur.export') }}"
                         class="px-5 py-2.5 bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white border border-emerald-100 hover:border-emerald-500 rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2 w-full lg:w-auto">
                         <i class="fas fa-file-excel"></i> Excel
@@ -265,7 +265,7 @@
                                         </a>
 
                                         {{-- Edit --}}
-                                        <a href="{{ route('admin.infrastruktur.edit', $inf->id_infrastruktur) }}" title="Edit Data"
+                                        <a href="{{ route('admin.infrastruktur.edit', $inf->id_infrastruktur) }}" title="Ubah Data"
                                             class="w-8 h-8 flex items-center justify-center bg-gold-500 hover:bg-gold-600 text-white rounded-lg text-xs font-black transition shadow-sm hover:scale-105">
                                             <i class="fas fa-edit"></i>
                                         </a>

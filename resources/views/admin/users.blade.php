@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -60,12 +60,12 @@
             <div class="flex items-center gap-4 text-left">
                 <a href="{{ route('admin.dashboard') }}" 
                    class="hidden md:flex w-10 h-10 bg-white border border-slate-100 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/20 hover:shadow-lg hover:shadow-gold-500/5 transition-all group"
-                   title="Kembali ke Dashboard Utama">
+                   title="Kembali ke Beranda Utama">
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
 
                 <div class="text-left">
-                    <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Administrator Portal</p>
+                    <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Portal Administrator</p>
                     <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Manajemen Pengguna</h2>
                 </div>
             </div>
@@ -79,7 +79,7 @@
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin.profile') }}" class="text-right group hidden md:block">
                         <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
-                        <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5">Online</p>
+                        <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5">Aktif</p>
                     </a>
                     <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md">
                         @if(auth()->user()->profile_photo)
@@ -142,7 +142,7 @@
                         <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
                             <th class="px-4 md:px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest w-12 text-center">No.</th>
                             <th class="px-4 md:px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Nama User</th>
-                            <th class="px-4 md:px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Email Address</th>
+                            <th class="px-4 md:px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Alamat Email</th>
                             <th class="px-4 md:px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Role / Jabatan</th>
                             <th class="px-4 md:px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest text-center">Aksi</th>
                         </tr>
@@ -175,7 +175,7 @@
                                 <div class="flex justify-center gap-2">
                                     @if($user->role !== 'tim_teknis')
                                     
-                                    <a href="{{ route('admin.users.edit', $user->id) }}" title="Edit User" class="w-8 h-8 flex items-center justify-center bg-gold-500 hover:bg-gold-600 text-white rounded-lg text-xs font-black transition shadow-sm hover:scale-105">
+                                    <a href="{{ route('admin.users.edit', $user->id) }}" title="Ubah User" class="w-8 h-8 flex items-center justify-center bg-gold-500 hover:bg-gold-600 text-white rounded-lg text-xs font-black transition shadow-sm hover:scale-105">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -67,7 +67,7 @@
                 <a href="{{ route('surveyor.profile') }}" class="flex items-center gap-3">
                     <div class="text-right">
                         <p class="text-xs font-black text-navy-900  leading-none uppercase max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
-                        <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5">Online</p>
+                        <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5">Aktif</p>
                     </div>
                     <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-navy-800 overflow-hidden shadow-md">
                         @if(auth()->user()->profile_photo)
@@ -175,7 +175,7 @@
                                     @elseif($infrastruktur->status_verifikasi == 'Verified')
                                         <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-lg text-xs font-black uppercase tracking-widest text-blue-400">Terverifikasi Admin</span>
                                     @else
-                                        <span class="px-3 py-1 bg-white/5  border border-white/10 rounded-lg text-xs font-black uppercase tracking-widest text-slate-400">Pending</span>
+                                        <span class="px-3 py-1 bg-white/5  border border-white/10 rounded-lg text-xs font-black uppercase tracking-widest text-slate-400">Menunggu</span>
                                     @endif
                                 </div>
                             </div>

@@ -1,0 +1,232 @@
+                            
+                            <!-- Mini Map for Picking Location -->
+                            <div id="warga-map" class="w-full h-48 rounded-xl z-10 mb-3 border border-white/20"></div>
+
+                            <div class="grid grid-cols-2 gap-3">
+                                <input type="text" id="warga-lat" name="latitude" required readonly placeholder="Latitude" class="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs font-bold text-slate-400 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all cursor-not-allowed">
+                                <input type="text" id="warga-lng" name="longitude" required readonly placeholder="Longitude" class="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs font-bold text-slate-400 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all cursor-not-allowed">
+                            </div>
+                        </div>
+
+                        <!-- Foto Bukti -->
+                        <div>
+                            <label class="block text-xs font-black text-slate-300 uppercase tracking-widest mb-2 ml-1">Foto Bukti Lapangan <span class="text-red-500">*</span></label>
+                            <div class="relative w-full h-40 border-2 border-dashed border-white/20 rounded-2xl bg-white/5 hover:bg-gold-500/5 hover:border-gold-500/50 transition-all cursor-pointer flex flex-col items-center justify-center overflow-hidden group">
+                                <input type="file" name="foto" required accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="previewWargaFoto(this)">
+                                <div id="warga-foto-placeholder" class="text-center px-4">
+                                    <div class="w-12 h-12 bg-white/10 border border-white/10 rounded-full flex items-center justify-center mx-auto mb-2 text-slate-400 group-hover:text-gold-500 group-hover:border-gold-500/50 group-hover:bg-gold-500/10 transition-colors">
+                                        <i class="fas fa-camera text-xl"></i>
+                                    </div>
+                                    <p class="text-xs font-bold text-slate-400">Ketuk untuk mengambil foto</p>
+                                </div>
+                                <img id="warga-foto-preview" class="hidden absolute inset-0 w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Footer -->
+            <div class="p-6 border-t border-white/10 flex justify-end gap-3 shrink-0 bg-[#0f0e2c]">
+                <button type="button" onclick="document.getElementById('modal-lapor').classList.add('hidden')" class="px-6 py-3.5 bg-white/5 border border-white/10 hover:bg-white/10 text-slate-300 rounded-xl font-black text-xs uppercase tracking-widest transition-all">
+                    Batal
+                </button>
+                <button type="submit" form="form-lapor-warga" class="px-8 py-3.5 bg-gold-500 hover:bg-gold-600 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-gold-500/30 flex items-center gap-2 border border-gold-400">
+                    Kirim Laporan <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script for Warga Report -->
+    <script>
+        let mapWarga;
+        let markerWarga;
+
+        // Initialize map when modal is opened
+        document.querySelector('button[onclick*="modal-lapor\').classList.remove(\'hidden\')"]').addEventListener('click', function() {
+            setTimeout(() => {
+                if (!mapWarga) {
+                    // Default coordinate Banjarmasin
+                    let defaultLat = -3.316694;
+                    let defaultLng = 114.590111;
+
+                    mapWarga = L.map('warga-map').setView([defaultLat, defaultLng], 13);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '© OpenStreetMap'
+                    }).addTo(mapWarga);
+
+                    markerWarga = L.marker([defaultLat, defaultLng], { draggable: true }).addTo(mapWarga);
+                    
+                    // Update input when marker dragged
+                    markerWarga.on('dragend', function (e) {
+                        const latlng = markerWarga.getLatLng();
+                        document.getElementById('warga-lat').value = latlng.lat.toFixed(6);
+                        document.getElementById('warga-lng').value = latlng.lng.toFixed(6);
+                    });
+
+                    // Update marker and input when map clicked
+                    mapWarga.on('click', function(e) {
+                        markerWarga.setLatLng(e.latlng);
+                        document.getElementById('warga-lat').value = e.latlng.lat.toFixed(6);
+                        document.getElementById('warga-lng').value = e.latlng.lng.toFixed(6);
+                    });
+                } else {
+                    mapWarga.invalidateSize(); // Ensure map renders correctly if already initialized
+                }
+            }, 300); // give time for modal to transition
+        });
+
+        function getWargaLocation(btn) {
+            const oriText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mencari...';
+            
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(pos) {
+                    const lat = pos.coords.latitude;
+                    const lng = pos.coords.longitude;
+                    
+                    document.getElementById('warga-lat').value = lat.toFixed(6);
+                    document.getElementById('warga-lng').value = lng.toFixed(6);
+                    
+                    if (mapWarga && markerWarga) {
+                        mapWarga.setView([lat, lng], 16);
+                        markerWarga.setLatLng([lat, lng]);
+                    }
+
+                    btn.innerHTML = '<i class="fas fa-check"></i> Sukses';
+                    btn.classList.add('bg-emerald-500', 'text-white');
+                    setTimeout(() => { btn.innerHTML = oriText; btn.classList.remove('bg-emerald-500'); }, 3000);
+                }, function(err) {
+                    alert('Gagal mengambil lokasi. Pastikan GPS diizinkan di browser Anda. Anda juga bisa menggeser pin pada peta.');
+                    btn.innerHTML = oriText;
+                }, { enableHighAccuracy: true, timeout: 10000 });
+            } else {
+                alert('Browser tidak mendukung GPS. Silakan klik/geser pin pada peta.');
+                btn.innerHTML = oriText;
+            }
+        }
+
+        function previewWargaFoto(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('warga-foto-placeholder').classList.add('hidden');
+                    const preview = document.getElementById('warga-foto-preview');
+                    preview.src = e.target.result;
+                    preview.classList.remove('hidden');
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+    
+    @if(session('success_laporan'))
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'Laporan Berhasil!',
+                text: "{{ session('success_laporan') }}",
+                icon: 'success',
+                confirmButtonColor: '#1e1b4b',
+                confirmButtonText: 'Terima Kasih'
+            });
+        });
+    </script>
+    @endif
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Navbar Scroll Logic
+            const navbar = document.getElementById('navbar');
+            
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.remove('nav-transparent');
+                    navbar.classList.add('nav-scrolled');
+                } else {
+                    navbar.classList.remove('nav-scrolled');
+                    navbar.classList.add('nav-transparent');
+                }
+            });
+
+            // Intersection Observer for Reveal Animations
+            const revealElements = document.querySelectorAll('.reveal-up');
+            
+            const revealOptions = {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    } else {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
+
+            revealElements.forEach(el => {
+                revealOnScroll.observe(el);
+            });
+            
+            // Initial render
+            applyFilters();
+
+            // Custom Icon untuk heatmap & cluster
+            const customClusterIcon = function (cluster) {
+                const childCount = cluster.getChildCount();
+                let c = ' bg-navy-900/90 text-gold-500 border border-gold-500/50';
+                return new L.DivIcon({ 
+                    html: `<div class="flex items-center justify-center w-full h-full rounded-full ${c} shadow-[0_0_15px_rgba(197,160,89,0.3)]"><span class="font-black text-xs">${childCount}</span></div>`, 
+                    className: 'custom-cluster-icon', 
+                    iconSize: new L.Point(40, 40) 
+                });
+            };
+
+            function getSelectedTahun() {
+                const select = document.getElementById('filter-tahun');
+                return select ? select.value : 'all';
+            }
+
+            function fetchMapData() {
+                // Show loading state if needed
+                document.querySelectorAll('.stat-val').forEach(el => el.innerHTML = '<i class="fas fa-spinner fa-spin text-xs"></i>');
+                
+                const tahun = getSelectedTahun();
+                fetch('/api/map-data?tahun=' + tahun)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data && data.infrastruktur) {
+                            dataInfra = data.infrastruktur;
+                            
+                            // Re-render map
+                            applyFilters();
+                            
+                            // Update the DOM stats if available
+                            if (data.stats) {
+                                const statTotal = document.querySelector('#stat-total');
+                                const statKecamatan = document.querySelector('#stat-kecamatan');
+                                const statRusak = document.querySelector('#stat-rusak-berat');
+                                const statAkurasi = document.querySelector('#stat-akurasi');
+                                
+                                if (statTotal) statTotal.innerText = data.stats.total.toLocaleString('id-ID');
+                                if (statKecamatan) statKecamatan.innerText = data.stats.kecamatan.toLocaleString('id-ID');
+                                if (statRusak) statRusak.innerText = data.stats.rusak_berat.toLocaleString('id-ID');
+                                if (statAkurasi) statAkurasi.innerText = data.stats.akurasi_ai + '%';
+                            }
+                        }
+                    })
+                    .catch(err => console.error("Error fetching map data:", err));
+            }
+
+            // Jalankan polling setiap 30 detik
+            setInterval(fetchMapData, 30000);
+        });
+    </script>
+</body>
+</html>
