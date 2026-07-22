@@ -1847,7 +1847,7 @@
                 revealOnScroll.observe(el);
             });
             
-            // Initial fetch map data instead of relying on inline @json
+            // Initial fetch map data instead of relying on inline json
             fetchMapData();
 
             // Custom Icon untuk heatmap & cluster
