@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -7,51 +7,20 @@
     <meta name="description" content="GEO-SINFRA adalah Sistem Pemetaan Infrastruktur Permukiman Kota Banjarmasin berbasis Web GIS dan Kecerdasan Buatan (AI) untuk monitoring, pelaporan, dan klasifikasi kerusakan infrastruktur.">
     <meta name="keywords" content="GIS, Pemetaan, Infrastruktur, Banjarmasin, Artificial Intelligence, SINFRA, Dinas PUPR, Jalan, Jembatan">
     <meta name="author" content="Pemerintah Kota Banjarmasin">
-    <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
+    <link rel="icon" href="{{ secure_asset('logo_geo-sinfra.png') }}" type="image/png">
     
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/css/app.css'])
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
-    <!-- MarkerCluster CSS & JS -->
+    <!-- Leaflet & Plugins -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
-    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-
-    <!-- Leaflet Heatmap -->
-    <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                    },
-                    colors: {
-                        navy: {
-                            50: '#f4f4fa',
-                            100: '#e9e9f3',
-                            200: '#c7c8e3',
-                            500: '#6366f1',
-                            800: '#1e1b4b',
-                            900: '#0f0e2c',
-                            950: '#070617',
-                        },
-                        gold: {
-                            50: '#fdfbf7',
-                            100: '#fbf7ed',
-                            500: '#c5a059',
-                            600: '#b38f4a',
-                            700: '#9d7c3d',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    
+    <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script defer src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+    <script defer src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
 
     <style>
         *, *::before, *::after { box-sizing: border-box; }
@@ -60,15 +29,13 @@
             font-family: 'Plus Jakarta Sans', sans-serif; 
             background-color: #f8fafc; 
             color: #0f172a; 
-            opacity: 0; 
-            transition: opacity 0.8s ease-in;
+            opacity: 1; 
             overflow-x: hidden;
             width: 100%;
             min-height: 100vh;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-        body.loaded { opacity: 1; }
 
         /* Preloader Styles */
         #preloader {
@@ -115,7 +82,7 @@
         /* Hero Section Premium Mesh */
         .hero-premium {
             position: relative;
-            background-image: url('{{ asset('gambar_landing_page.jpeg') }}');
+            background-image: url('{{ secure_asset('gambar_landing_page.jpeg') }}');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -923,7 +890,6 @@
             if(preloader) {
                 setTimeout(() => {
                     preloader.classList.add('fade-out');
-                    document.body.classList.add('loaded');
                 }, 500);
             }
         });
@@ -936,7 +902,7 @@
 
         let activeKelurahanId = null;
 
-        let dataInfra = @json($dataInfrastruktur);
+        let dataInfra = []; // Loaded dynamically via fetchMapData
         const dataWilayah = @json($semuaWilayah);
         const dataKelurahan = @json($dataKelurahan);
         const map = L.map('map', { zoomControl: false }).setView([-3.316694, 114.590111], 13);
@@ -1881,8 +1847,8 @@
                 revealOnScroll.observe(el);
             });
             
-            // Initial render
-            applyFilters();
+            // Initial fetch map data instead of relying on inline @json
+            fetchMapData();
 
             // Custom Icon untuk heatmap & cluster
             const customClusterIcon = function (cluster) {
