@@ -226,7 +226,7 @@ Gambar 4.21    Halaman Cetak Laporan dan Rekapitulasi Data
 4.3.4	Alur Operasional Analisis Data oleh Otoritas Tim Teknis
 Untuk memaparkan bagaimana proses pengambilan keputusan tata kota berjalan secara cerdas di dalam platform GEO-SINFRA, alur operasional kerja (workflow) dari peran Tim Teknis dijabarkan melalui tahapan sistematis berikut:
 1.	Monitoring Indikator Kondisi Perkotaan: Tim Teknis membuka halaman Panel Pengawasan untuk mengamati fluktuasi statistik total objek perkotaan serta mendeteksi volume antrean validasi data yang masuk dari surveyor lapangan.
-2.	Analisis Spasial Komprensif (WebGIS): Petugas melakukan pelacakan zonasi geografis melalui halaman Executive WebGIS untuk meneliti sebaran titik infrastruktur permukiman berdasarkan filter pengelompokkan kategori wilayah kecamatan.
+2.	Analisis Spasial Komprehensif (WebGIS): Petugas melakukan pelacakan zonasi geografis melalui halaman Executive WebGIS untuk meneliti sebaran titik infrastruktur permukiman berdasarkan filter pengelompokkan kategori wilayah kecamatan.
 3.	Identifikasi Objek Kritis Berbasis AI: Tim Teknis memeriksa halaman Rekomendasi Prioritas guna melihat daftar aset kritis berlabel "Rusak Berat" hasil keputusan model pohon Decision Tree untuk divalidasi urgensi penanganannya.
 4.	Eksekusi Verifikasi Berkas Lapangan: Melalui halaman Validasi Usulan, petugas meneliti dan mengonfirmasi keabsahan parameter teknis dari lapangan untuk memutuskan apakah data usulan dapat diterima secara sah (Verified) atau dikembalikan (Rejected) untuk revisi.
 5.	Penertiban Output Kebijakan Formal: Setelah seluruh instrumen spasial divalidasi, Tim Teknis menggunakan Reporting Center untuk memfilter rekapitulasi berkas dan mengekspornya menjadi laporan cetak fisik (PDF/Excel) sebagai basis dokumen usulan kebijakan program rehabilitasi permukiman dinas.
@@ -287,15 +287,15 @@ Dari hasil pemetaan sebaran klasifikasi pada matriks pengujian tersebut (Gambar 
 
 a. Akurasi (*Accuracy*):
 Menunjukkan persentase ketepatan total model dalam mengklasifikasikan seluruh kondisi fisik kerusakan infrastruktur secara benar dari keseluruhan data kelompok uji mengacu pada Persamaan (2.1) berikut:
-Accuracy = (〖"TP"〗_B + 〖"TP"〗_RS + 〖"TP"〗_RB) / "Total Data Pengujian" × 100% = (71+39+20) / 138 × 100% = 130 / 138 × 100% = 94,20%
+Accuracy = (TP_B + TP_RS + TP_RB) / Total Data Pengujian × 100% = (71 + 39 + 20) / 138 × 100% = 130 / 138 × 100% = 94,20%
 
 b. Presisi (*Precision*):
 Menunjukkan tingkat ketepatan antara data yang diprediksi rusak oleh sistem dengan data yang benar-benar rusak secara aktual mengacu pada Persamaan (2.2) berikut:
-Precision = TP_Rusak / (TP_Rusak + FP) × 100% = 62 / (62+3) × 100% = 62 / 65 × 100% = 95,38%
+Precision = TP_Rusak / (TP_Rusak + FP) × 100% = 62 / (62 + 3) × 100% = 62 / 65 × 100% = 95,38%
 
 c. *Recall*:
 Mengukur kemampuan model cerdas dalam menemukan dan memetakan kembali seluruh objek infrastruktur kritis dari total keseluruhan data aktual yang tersedia di lapangan mengacu pada Persamaan (2.3) berikut:
-Recall = TP_Rusak / (TP_Rusak + FN) × 100% = 62 / (62+2) × 100% = 62 / 64 × 100% = 96,88%
+Recall = TP_Rusak / (TP_Rusak + FN) × 100% = 62 / (62 + 2) × 100% = 62 / 64 × 100% = 96,88%
 
 d. *F1-Score*:
 Metrik rata-rata harmonik antara presisi dan recall yang digunakan untuk memberikan keseimbangan nilai performansi model, terutama apabila terdapat ketidakseimbangan distribusi data pada kelas aktual mengacu pada Persamaan (2.4) berikut:
@@ -313,7 +313,7 @@ Tabel 4.7    Hasil Distribusi Rata-Rata Skor Jawaban Pernyataan SUS Gabungan
 | 4 | Saya rasa saya membutuhkan bantuan teknis untuk dapat menggunakan sistem ini. | Negatif | 1,79 | 3,21 |
 | 5 | Saya merasa fitur-fitur dalam sistem ini terintegrasi dengan baik. | Positif | 4,55 | 3,55 |
 | 6 | Saya merasa sistem ini terlalu banyak ketidakkonsistenan antar halaman dan fitur. | Negatif | 1,94 | 3,06 |
-| 7 | Saya merasa masyarakat dan instasi akan dapat mempelajari cara penggunaan sistem/website GEO-SINFRA ini dengan sangat cepat. | Positif | 4,40 | 3,40 |
+| 7 | Saya merasa masyarakat dan instansi akan dapat mempelajari cara penggunaan sistem/website GEO-SINFRA ini dengan sangat cepat. | Positif | 4,40 | 3,40 |
 | 8 | Saya merasa sistem/website GEO-SINFRA ini cukup membingungkan saat pertama kali dicoba atau digunakan. | Negatif | 1,68 | 3,32 |
 | 9 | Saya merasa sangat percaya diri dan tanpa ragu-ragu saat mengoperasikan fungsi-fungsi yang ada pada sistem/website GEO-SINFRA ini. | Positif | 4,28 | 3,28 |
 | 10 | Saya merasa perlu mempelajari banyak hal terlebih dahulu sebelum bisa mulai lancar menggunakan sistem/website GEO-SINFRA ini. | Negatif | 1,72 | 3,28 |
@@ -324,15 +324,15 @@ Dari hasil pemetaan sebaran akumulasi jawaban kuesioner pada kelompok uji coba t
 
 a. Skor Pernyataan Karakter Positif (Skor Ganjil):
 Menunjukkan total akumulasi nilai dari seluruh butir pertanyaan berkarakter positif (pernyataan nomor 1, 3, 5, 7, dan 9) setelah dilakukan reduksi faktor pengurang nilai dasar industri (X-1) mengacu pada Persamaan (2.5).
-Skor Ganjil = (4,47-1) + (4,36-1) + (4,55-1) + (4,40-1) + (4,28-1) = 17,06
+Skor Ganjil = (4,47 - 1) + (4,36 - 1) + (4,55 - 1) + (4,40 - 1) + (4,28 - 1) = 17,06
 
 b. Skor Pernyataan Karakter Negatif (Skor Genap):
 Menunjukkan total akumulasi nilai dari seluruh butir pertanyaan berkarakter negatif atau inversi (pernyataan nomor 2, 4, 6, 8, dan 10) setelah dihitung melalui batas nilai maksimal skala (5-X) mengacu pada Persamaan (2.5).
-Skor Genap = (5-1,66) + (5-1,79) + (5-1,94) + (5-1,68) + (5-1,72) = 16,21
+Skor Genap = (5 - 1,66) + (5 - 1,79) + (5 - 1,94) + (5 - 1,68) + (5 - 1,72) = 16,21
 
 c. Skor Akhir Akumulatif (*Final SUS Score*):
 Merupakan persentase nilai akhir kelayakan sistem yang didapatkan dari hasil penjumlahan skor ganjil dan skor genap, yang kemudian dikalikan secara absolut dengan konstanta pengali standar industri (2,5) mengacu pada Persamaan (2.5) berikut:
-Skor Akhir SUS = (Skor Ganjil + Skor Genap) × 2,5 = (17,06+16,21) × 2,5 = 33,27 × 2,5 = 83,18
+Skor Akhir SUS = (Skor Ganjil + Skor Genap) × 2,5 = (17,06 + 16,21) × 2,5 = 33,27 × 2,5 = 83,18
 
 d. Evaluasi Kelayakan *Usability* Akhir (Skor Global SUS) dan Klasifikasi Akseptabilitas:
 Kalkulasi nilai total indeks kegunaan global dari ke-10 responden menghasilkan angka rata-rata skor SUS akhir sebesar 83,18. Penilaian kelayakan sistem berdasarkan acuan teoretis standar interpretasi kuesioner SUS menurut (Pratama et al., 2023) seperti yang dijabarkan pada Matriks Penilaian Skor SUS (Tabel 3.40 di Bab III), ditarik kesimpulan berupa:
