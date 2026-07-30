@@ -5,200 +5,278 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Akun | GEO-SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                    },
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
                     colors: {
-                        navy: {
-                            50: '#f4f4fa',
-                            100: '#e9e9f3',
-                            200: '#c7c8e3',
-                            500: '#6366f1',
-                            800: '#1e1b4b',
-                            900: '#0f0e2c',
-                            950: '#070617',
-                        },
-                        gold: {
-                            50: '#fdfbf7',
-                            100: '#fbf7ed',
-                            500: '#c5a059',
-                            600: '#b38f4a',
-                            700: '#9d7c3d',
-                        }
+                        navy: { 50:'#f4f4fa', 100:'#e9e9f3', 200:'#c7c8e3', 500:'#6366f1', 800:'#1e1b4b', 900:'#0f0e2c', 950:'#070617' },
+                        gold: { 50:'#fdfbf7', 100:'#fbf7ed', 500:'#c5a059', 600:'#b38f4a', 700:'#9d7c3d' }
                     }
                 }
             }
         }
     </script>
-    
+
     <style>
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
+        *, *::before, *::after { box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        .auth-left {
+            background:
+                radial-gradient(ellipse at 70% 10%, rgba(197,160,89,0.18) 0%, transparent 55%),
+                radial-gradient(ellipse at 20% 90%, rgba(99,102,241,0.20) 0%, transparent 55%),
+                #070617;
         }
-        .bg-premium-mesh {
-            background: radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.12) 0%, transparent 50%),
-                        radial-gradient(circle at 20% 80%, rgba(197, 160, 89, 0.1) 0%, transparent 50%),
-                        #070617;
+        .grid-bg {
+            position: absolute; inset: 0; pointer-events: none;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+            background-size: 44px 44px;
+            mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+            animation: gridDrift 20s linear infinite;
         }
-        /* Grid background pattern */
-        .grid-pattern {
-            position: absolute;
-            inset: 0;
-            background-image: linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
-            background-size: 40px 40px;
-            mask-image: radial-gradient(ellipse at center, black, transparent 80%);
-            pointer-events: none;
+        @keyframes gridDrift { 0% { background-position: 0 0; } 100% { background-position: 44px 44px; } }
+
+        .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35; animation: orbFloat 8s ease-in-out infinite; }
+        .orb-1 { width: 300px; height: 300px; background: #c5a059; top: -80px; right: -60px; animation-delay: 0s; }
+        .orb-2 { width: 250px; height: 250px; background: #6366f1; bottom: -60px; left: -40px; animation-delay: -4s; }
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50%       { transform: translate(20px, -20px) scale(1.05); }
         }
-        /* Shine effect for button */
-        .btn-shine {
-            position: relative;
-            overflow: hidden;
+
+        /* Step progress */
+        .step-badge {
+            width: 72px; height: 72px; border-radius: 50%;
+            background: linear-gradient(135deg, rgba(197,160,89,0.15) 0%, rgba(99,102,241,0.15) 100%);
+            border: 1.5px solid rgba(197,160,89,0.3);
+            display: flex; align-items: center; justify-content: center;
+            color: #c5a059; font-size: 26px;
         }
-        .btn-shine::after {
-            content: '';
-            position: absolute;
+
+        .input-field {
+            width: 100%; padding: 11px 16px;
+            background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px;
+            font-size: 13px; font-weight: 600; color: #0f0e2c;
+            outline: none; transition: all 0.25s ease;
+        }
+        .input-field:focus {
+            background: #fff; border-color: #c5a059;
+            box-shadow: 0 0 0 3px rgba(197,160,89,0.12);
+        }
+        .input-field::placeholder { color: #94a3b8; font-weight: 500; }
+
+        .label-field {
+            display: block; font-size: 10px; font-weight: 800;
+            color: #94a3b8; text-transform: uppercase; letter-spacing: 0.18em; margin-bottom: 6px;
+        }
+
+        .btn-gold {
+            position: relative; overflow: hidden; width: 100%; padding: 13px 24px;
+            background: linear-gradient(135deg, #c5a059 0%, #b38f4a 100%);
+            border: none; border-radius: 12px; cursor: pointer;
+            font-size: 11px; font-weight: 900; color: #fff;
+            text-transform: uppercase; letter-spacing: 0.2em;
+            box-shadow: 0 8px 32px rgba(197,160,89,0.28); transition: all 0.25s ease;
+        }
+        .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 12px 40px rgba(197,160,89,0.40); }
+        .btn-gold::after {
+            content: ''; position: absolute;
             top: -50%; left: -60%; width: 30%; height: 200%;
-            background: rgba(255, 255, 255, 0.25);
-            transform: rotate(30deg);
-            transition: none;
+            background: rgba(255,255,255,0.3); transform: rotate(30deg); transition: none;
         }
-        .btn-shine:hover::after {
-            left: 120%;
-            transition: all 0.6s ease-in-out;
+        .btn-gold:hover::after { left: 120%; transition: all 0.55s ease-in-out; }
+
+        .alert-error {
+            padding: 12px 16px; border-radius: 12px;
+            background: #fef2f2; border: 1px solid #fecaca;
+            color: #dc2626; font-size: 13px; font-weight: 600;
+            display: flex; align-items: center; gap: 8px;
         }
+        .fade-in-up { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.5s ease forwards; }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        .d1{animation-delay:.05s} .d2{animation-delay:.1s} .d3{animation-delay:.15s}
+        .d4{animation-delay:.2s} .d5{animation-delay:.25s} .d6{animation-delay:.3s}
+        .d7{animation-delay:.35s} .d8{animation-delay:.4s}
     </style>
-
 </head>
-<body class="antialiased bg-slate-50 font-sans">
+<body class="antialiased bg-slate-50">
 
-    <div class="flex flex-col md:flex-row min-h-screen">
-        
-        <!-- Left Banner (Premium Dark UI) -->
-        <div class="w-full md:w-1/2 bg-premium-mesh flex flex-col items-center justify-center p-12 text-center relative overflow-hidden">
-            <div class="grid-pattern"></div>
-            
-            <!-- Floating Back Button -->
-            <a href="{{ route('login') }}" class="absolute top-6 left-6 z-50 w-12 h-12 bg-white/5 hover:bg-white/15 backdrop-blur-md rounded-2xl border border-white/10 flex items-center justify-center text-white hover:text-gold-500 hover:scale-105 transition-all shadow-xl">
-                <i class="fas fa-arrow-left text-sm"></i>
-            </a>
-            
-            <div class="relative z-10 max-w-md">
-                <div class="w-20 h-20 bg-navy-900 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-2xl shadow-navy-950/50 border border-white/10 text-gold-500">
-                    <i class="fas fa-user-plus text-3xl"></i>
+<div class="flex min-h-screen">
+
+    {{-- ═══ LEFT PANEL ═══ --}}
+    <div class="hidden lg:flex lg:w-[42%] xl:w-5/12 auth-left flex-col items-center justify-center relative overflow-hidden p-12">
+        <div class="grid-bg"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+
+        <a href="{{ route('login') }}" class="absolute top-6 left-6 z-20 flex items-center gap-2 text-white/50 hover:text-white transition-all text-xs font-bold uppercase tracking-widest group">
+            <span class="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-white/10 transition-all">
+                <i class="fas fa-arrow-left text-[10px]"></i>
+            </span>
+            Kembali
+        </a>
+
+        <div class="relative z-10 flex flex-col items-center text-center max-w-sm">
+            <div class="step-badge mb-8">
+                <i class="fas fa-user-plus"></i>
+            </div>
+            <span class="text-[11px] font-black text-gold-500 uppercase tracking-[0.35em] mb-2 block">Bergabung Sekarang</span>
+            <h1 class="text-4xl xl:text-5xl font-black text-white tracking-tight mb-4 leading-none">
+                GEO<span class="text-gold-500">-</span>SINFRA
+            </h1>
+            <p class="text-slate-400 text-sm leading-relaxed font-medium max-w-[240px]">
+                Daftarkan akun Anda untuk mulai berkontribusi dalam pemetaan infrastruktur Kota Banjarmasin.
+            </p>
+            <div class="w-12 h-0.5 bg-gradient-to-r from-gold-500 to-indigo-500 rounded-full mx-auto mt-8 opacity-70"></div>
+
+            <div class="mt-8 flex flex-col gap-3 w-full text-left">
+                @foreach([['fas fa-check-circle','text-emerald-400','Akun terverifikasi via WhatsApp OTP'],['fas fa-shield-alt','text-gold-500','Data tersimpan aman & terenkripsi'],['fas fa-map-marked-alt','text-indigo-400','Akses peta GIS & dashboard real-time']] as [$icon, $color, $text])
+                <div class="flex items-center gap-3 bg-white/5 border border-white/8 rounded-xl p-3">
+                    <i class="{{ $icon }} {{ $color }} text-sm flex-shrink-0"></i>
+                    <span class="text-white/70 text-xs font-semibold">{{ $text }}</span>
                 </div>
-                
-                <h1 class="text-4xl md:text-5xl font-black text-white tracking-tight mb-4 text-center uppercase">
-                    GEO-SINFRA
-                </h1>
-                <p class="text-slate-300 font-medium text-base md:text-lg leading-relaxed max-w-sm mx-auto">
-                    Sistem Pemetaan Infrastruktur Permukiman Kota Banjarmasin
-                </p>
-                <div class="mt-16 w-16 h-1.5 bg-gold-500 rounded-full mx-auto opacity-75"></div>
+                @endforeach
             </div>
         </div>
-
-        <!-- Right Register Form -->
-        <div class="w-full md:w-1/2 bg-white p-8 md:p-12  flex items-start justify-center">
-            <div class="w-full max-w-md my-auto py-8">
-                
-                <div class="mb-8 text-center">
-                    <h2 class="text-4xl font-black text-navy-900 mb-2 tracking-tight">Buat Akun</h2>
-                    <p class="text-slate-400 font-semibold text-xs uppercase tracking-widest leading-relaxed">
-                        Lengkapi data untuk akses sistem pemetaan
-                    </p>
-                </div>
-
-                @if($errors->any())
-                    <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 text-sm font-semibold rounded-r-xl">
-                        <i class="fas fa-exclamation-circle mr-2"></i>{{ $errors->first() }}
-                    </div>
-                @endif
-
-                <form action="{{ route('register') }}" method="POST" class="space-y-5">
-                    @csrf
-                    
-                    <div>
-                        <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
-                            Nama Lengkap <span class="text-gold-500">*</span>
-                        </label>
-                        <input type="text" name="name" placeholder="Masukkan nama lengkap" value="{{ old('name') }}" required 
-                            class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 focus:bg-white outline-none transition-all text-sm font-semibold text-navy-900">
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
-                            Email / NIP <span class="text-gold-500">*</span>
-                        </label>
-                        <input type="text" name="email" placeholder="nama@disperkim.go.id atau NIP" value="{{ old('email') }}" required 
-                            class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 focus:bg-white outline-none transition-all text-sm font-semibold text-navy-900">
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
-                            Nomor WhatsApp <span class="text-gold-500">*</span>
-                        </label>
-                        <input type="text" name="no_hp" placeholder="Contoh: 08123456789" value="{{ old('no_hp') }}" required 
-                            class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 focus:bg-white outline-none transition-all text-sm font-semibold text-navy-900">
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
-                            Role Akses <span class="text-gold-500">*</span>
-                        </label>
-                        <div class="relative">
-                            <select name="role" required 
-                                class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 focus:bg-white outline-none transition-all text-sm font-semibold text-navy-900 appearance-none cursor-pointer">
-                                <option value="surveyor" selected>Surveyor</option>
-                                <option value="admin">Admin</option>
-                            </select>
-                            <div class="absolute inset-y-0 right-0 flex items-center pr-5 pointer-events-none text-slate-400">
-                                <i class="fas fa-chevron-down text-xs"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
-                            Buat Sandi <span class="text-gold-500">*</span>
-                        </label>
-                        <input type="password" name="password" placeholder="Minimal 8 karakter" required 
-                            class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 focus:bg-white outline-none transition-all text-sm font-semibold text-navy-900">
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-2.5 ml-1">
-                            Konfirmasi Kata Sandi <span class="text-gold-500">*</span>
-                        </label>
-                        <input type="password" name="password_confirmation" placeholder="Ulangi kata sandi" required 
-                            class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 focus:bg-white outline-none transition-all text-sm font-semibold text-navy-900">
-                    </div>
-
-                    <button type="submit" 
-                        class="btn-shine w-full py-4.5 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-white text-xs font-black rounded-2xl shadow-xl shadow-gold-500/10 hover:shadow-gold-500/20 hover:scale-[1.01] transition-all active:scale-[0.98] uppercase tracking-[0.2em] text-center block">
-                        DAFTAR SEKARANG
-                    </button>
-                </form>
-
-                <div class="mt-8 pt-6 border-t border-slate-100 text-center font-bold text-xs uppercase tracking-wider">
-                    <p class="text-slate-400 text-xs">
-                        Sudah punya akun? 
-                        <a href="{{ route('login') }}" class="text-gold-500 font-extrabold hover:text-gold-600 transition-colors ml-1">Masuk di sini</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-
+        <p class="absolute bottom-6 text-white/20 text-[10px] font-bold uppercase tracking-widest">
+            &copy; 2026 Disperkim Banjarmasin
+        </p>
     </div>
 
+    {{-- ═══ RIGHT PANEL ═══ --}}
+    <div class="flex-1 flex flex-col items-center justify-center bg-white px-6 py-10 overflow-y-auto">
+
+        <div class="w-full max-w-[420px] my-auto py-8">
+
+            <div class="mb-7 fade-in-up d1">
+                <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.3em] mb-2">Buat Akun Baru</p>
+                <h2 class="text-2xl font-black text-navy-900 tracking-tight">Lengkapi Data Diri</h2>
+                <p class="text-slate-400 text-sm font-medium mt-1">Isi semua field di bawah untuk mendaftar</p>
+            </div>
+
+            @if($errors->any())
+                <div class="alert-error mb-5 fade-in-up d1">
+                    <i class="fas fa-exclamation-circle flex-shrink-0"></i>
+                    <span>{{ $errors->first() }}</span>
+                </div>
+            @endif
+
+            <form action="{{ route('register') }}" method="POST" class="space-y-4">
+                @csrf
+
+                {{-- Nama --}}
+                <div class="fade-in-up d2">
+                    <label class="label-field">Nama Lengkap <span class="text-gold-500">*</span></label>
+                    <div class="relative">
+                        <input type="text" name="name" placeholder="Masukkan nama lengkap" value="{{ old('name') }}" required
+                            class="input-field pl-10">
+                        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"><i class="fas fa-id-card"></i></span>
+                    </div>
+                </div>
+
+                {{-- Email --}}
+                <div class="fade-in-up d3">
+                    <label class="label-field">Email / NIP <span class="text-gold-500">*</span></label>
+                    <div class="relative">
+                        <input type="text" name="email" placeholder="nama@disperkim.go.id" value="{{ old('email') }}" required
+                            class="input-field pl-10">
+                        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"><i class="fas fa-envelope"></i></span>
+                    </div>
+                </div>
+
+                {{-- WhatsApp --}}
+                <div class="fade-in-up d4">
+                    <label class="label-field">Nomor WhatsApp <span class="text-gold-500">*</span></label>
+                    <div class="relative">
+                        <input type="text" name="no_hp" placeholder="08123456789" value="{{ old('no_hp') }}" required
+                            class="input-field pl-10">
+                        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"><i class="fab fa-whatsapp"></i></span>
+                    </div>
+                </div>
+
+                {{-- Role --}}
+                <div class="fade-in-up d5">
+                    <label class="label-field">Role Akses <span class="text-gold-500">*</span></label>
+                    <div class="relative">
+                        <select name="role" required class="input-field pl-10 appearance-none cursor-pointer">
+                            <option value="surveyor" @selected(old('role','surveyor')==='surveyor')>Surveyor</option>
+                            <option value="admin" @selected(old('role')==='admin')>Admin</option>
+                        </select>
+                        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"><i class="fas fa-user-tag"></i></span>
+                        <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                </div>
+
+                {{-- Password --}}
+                <div class="fade-in-up d6">
+                    <label class="label-field">Buat Kata Sandi <span class="text-gold-500">*</span></label>
+                    <div class="relative">
+                        <input type="password" name="password" id="password" placeholder="Minimal 8 karakter" required
+                            class="input-field pl-10 pr-11">
+                        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"><i class="fas fa-lock"></i></span>
+                        <button type="button" onclick="togglePass('password','eye1')" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-gold-500 transition text-xs">
+                            <i id="eye1" class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                {{-- Confirm Password --}}
+                <div class="fade-in-up d7">
+                    <label class="label-field">Konfirmasi Kata Sandi <span class="text-gold-500">*</span></label>
+                    <div class="relative">
+                        <input type="password" name="password_confirmation" id="password_confirm" placeholder="Ulangi kata sandi" required
+                            class="input-field pl-10 pr-11">
+                        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"><i class="fas fa-lock"></i></span>
+                        <button type="button" onclick="togglePass('password_confirm','eye2')" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-gold-500 transition text-xs">
+                            <i id="eye2" class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                {{-- Submit --}}
+                <div class="fade-in-up d8 pt-2">
+                    <button type="submit" class="btn-gold" id="reg-btn">
+                        <i class="fas fa-user-plus mr-2"></i> Daftar Sekarang
+                    </button>
+                </div>
+            </form>
+
+            <div class="mt-6 pt-5 border-t border-slate-100 text-center fade-in-up d8">
+                <p class="text-sm text-slate-400 font-medium">
+                    Sudah punya akun?
+                    <a href="{{ route('login') }}" class="text-gold-500 font-extrabold hover:text-gold-600 transition ml-1 hover:underline">
+                        Masuk di sini
+                    </a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function togglePass(id, eyeId) {
+        const inp = document.getElementById(id);
+        const eye = document.getElementById(eyeId);
+        inp.type = inp.type === 'password' ? 'text' : 'password';
+        eye.classList.toggle('fa-eye');
+        eye.classList.toggle('fa-eye-slash');
+    }
+    document.querySelector('form').addEventListener('submit', function() {
+        const btn = document.getElementById('reg-btn');
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Memproses...';
+        btn.disabled = true; btn.style.opacity = '0.8';
+    });
+</script>
 </body>
 </html>

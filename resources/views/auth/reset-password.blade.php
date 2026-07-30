@@ -5,155 +5,274 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atur Ulang Sandi | GEO-SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .bg-government-gradient {
-            background: radial-gradient(circle at center, #1e40af 0%, #1e1b4b 100%);
-        }
-    </style>
-<style>
-    @media (min-width: 768px) { html { zoom: 0.9 !important; } }
-    @media (max-width: 767px) { html { zoom: 0.5 !important; } }
-</style>
-</head>
-<body class="antialiased bg-gray-50">
-
-    <div class="flex flex-col md:flex-row min-h-screen">
-        
-        <div class="w-full md:w-1/2 bg-government-gradient flex flex-col items-center justify-center p-12 text-center relative text-white">
-            <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
-            
-            <div class="relative z-10">
-                <div class="w-20 h-20 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-2xl border border-white/20">
-                    <i class="fas fa-shield-alt text-3xl text-white"></i>
-                </div>
-                
-                <h1 class="text-5xl font-extrabold tracking-tight mb-4 text-center">GEO-SINFRA</h1>
-                <p class="text-xl font-light text-blue-100 max-w-sm mx-auto leading-relaxed">
-                    Perbarui kata sandi Anda untuk melanjutkan akses sistem.
-                </p>
-                <div class="mt-16 w-12 h-1.5 bg-blue-400 rounded-full mx-auto opacity-30"></div>
-            </div>
-        </div>
-
-        <div class="w-full md:w-1/2 bg-white flex flex-col items-center justify-center p-8 md:p-20 relative">
-            
-            <div class="absolute top-10 left-10 md:left-20">
-                <a href="{{ route('login') }}" class="text-gray-300 hover:text-blue-600 transition-all text-2xl">
-                    <i class="fas fa-arrow-left"></i>
-                </a>
-            </div>
-
-            <div class="w-full max-w-md">
-                
-                <div class="mb-6 text-center">
-                    <h2 class="text-4xl font-extrabold text-[#1e1b4b] mb-2 tracking-tight">Sandi Baru</h2>
-                    
-                    <div class="inline-flex items-center gap-2 mt-4 px-3 py-1 bg-red-50 rounded-full border border-red-100">
-                        <span class="relative flex h-2 w-2">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                        </span>
-                        <span class="text-xs font-bold text-red-600 uppercase tracking-widest">
-                            Sesi Berakhir: <span id="countdown" class="font-black">05:00</span>
-                        </span>
-                    </div>
-                </div>
-
-                @if($errors->any())
-                    <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 text-xs font-bold rounded-r-lg shadow-sm">
-                        <ul class="list-disc list-inside">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
-                <form id="resetForm" action="{{ route('password.update') }}" method="POST" class="space-y-4">
-                    @csrf
-                    <input type="hidden" name="token" value="{{ $token }}">
-
-                    <div>
-                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 ml-1">Email Konfirmasi</label>
-                        <input type="email" name="email" value="{{ old('email') }}" placeholder="admin@disperkim.go.id" required 
-                            class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm font-medium">
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 ml-1">Sandi Baru</label>
-                        <div class="relative">
-                            <input type="password" name="password" id="password" placeholder="Minimal 8 karakter" required 
-                                class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm font-medium pr-12">
-                            <button type="button" onclick="togglePass('password', 'eye1')" class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400">
-                                <i id="eye1" class="fas fa-eye text-xs"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 ml-1">Ulangi Sandi</label>
-                        <div class="relative">
-                            <input type="password" name="password_confirmation" id="password_confirm" placeholder="Ulangi sandi baru" required 
-                                class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm font-medium pr-12">
-                            <button type="button" onclick="togglePass('password_confirm', 'eye2')" class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400">
-                                <i id="eye2" class="fas fa-eye text-xs"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <button type="submit" id="submitBtn"
-                        class="w-full py-4 bg-[#5c56e1] text-white text-xs font-bold rounded-xl shadow-lg shadow-blue-100 hover:bg-blue-800 transition-all active:scale-[0.98] uppercase tracking-[0.2em]">
-                        SIMPAN PERUBAHAN
-                    </button>
-                </form>
-
-            </div>
-        </div>
-    </div>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script>
-        // SCRIPT TIMER
-        let timeLeft = Math.min(300, Math.floor({{ $sisaWaktu ?? 300 }})); 
-        const display = document.querySelector('#countdown');
-        const submitBtn = document.querySelector('#submitBtn');
-
-        const timer = setInterval(function() {
-            if (timeLeft <= 0) {
-                clearInterval(timer);
-                display.innerHTML = "00:00";
-                if(submitBtn) {
-                    submitBtn.disabled = true;
-                    submitBtn.innerHTML = "WAKTU HABIS";
-                    submitBtn.classList.replace('bg-[#5c56e1]', 'bg-gray-400');
-                    submitBtn.classList.add('cursor-not-allowed');
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+                    colors: {
+                        navy: { 900:'#0f0e2c', 950:'#070617' },
+                        gold: { 500:'#c5a059', 600:'#b38f4a' }
+                    }
                 }
-                setTimeout(() => { window.location.href = "{{ route('login') }}"; }, 1500);
-            } else {
-                let minutes = Math.floor(timeLeft / 60);
-                let seconds = Math.floor(timeLeft % 60);
-                display.innerHTML = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-            }
-            timeLeft -= 1;
-        }, 1000);
-
-        // SCRIPT INTIP PASSWORD
-        function togglePass(id, eyeId) {
-            const input = document.getElementById(id);
-            const eye = document.getElementById(eyeId);
-            if (input.type === "password") {
-                input.type = "text";
-                eye.classList.replace('fa-eye', 'fa-eye-slash');
-            } else {
-                input.type = "password";
-                eye.classList.replace('fa-eye-slash', 'fa-eye');
             }
         }
     </script>
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        .auth-left {
+            background:
+                radial-gradient(ellipse at 30% 20%, rgba(16,185,129,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(197,160,89,0.18) 0%, transparent 55%),
+                radial-gradient(ellipse at 50% 50%, rgba(99,102,241,0.1) 0%, transparent 60%),
+                #070617;
+        }
+        .grid-bg {
+            position: absolute; inset: 0; pointer-events: none;
+            background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 44px 44px;
+            mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+            animation: gridDrift 20s linear infinite;
+        }
+        @keyframes gridDrift { 0% { background-position: 0 0; } 100% { background-position: 44px 44px; } }
+
+        .input-field { width: 100%; padding: 13px 46px 13px 18px; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 14px; font-size: 14px; font-weight: 600; color: #0f0e2c; outline: none; transition: all 0.25s ease; }
+        .input-field:focus { background: #fff; border-color: #c5a059; box-shadow: 0 0 0 3px rgba(197,160,89,0.12); }
+        .input-field::placeholder { color: #94a3b8; font-weight: 500; }
+
+        /* Password strength bar */
+        .strength-bar { height: 4px; border-radius: 4px; background: #e2e8f0; overflow: hidden; transition: all 0.3s ease; }
+        .strength-fill { height: 100%; border-radius: 4px; width: 0%; transition: all 0.4s ease; }
+
+        .btn-gold { position: relative; overflow: hidden; width: 100%; padding: 14px 24px; background: linear-gradient(135deg, #c5a059 0%, #b38f4a 100%); border: none; border-radius: 14px; cursor: pointer; font-size: 11px; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 0.2em; box-shadow: 0 8px 32px rgba(197,160,89,0.28); transition: all 0.25s ease; }
+        .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 12px 40px rgba(197,160,89,0.40); }
+        .btn-gold:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .btn-gold::after { content: ''; position: absolute; top: -50%; left: -60%; width: 30%; height: 200%; background: rgba(255,255,255,0.3); transform: rotate(30deg); transition: none; }
+        .btn-gold:hover::after { left: 120%; transition: all 0.55s ease-in-out; }
+
+        .alert-error { padding: 12px 16px; border-radius: 12px; background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; font-size: 13px; font-weight: 600; display: flex; align-items: flex-start; gap: 8px; }
+
+        /* Session timer badge */
+        .timer-badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 100px; font-size: 11px; font-weight: 800; background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); color: #dc2626; }
+
+        .fade-in-up { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.5s ease forwards; }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        .d1{animation-delay:.1s} .d2{animation-delay:.2s} .d3{animation-delay:.3s} .d4{animation-delay:.4s} .d5{animation-delay:.5s}
+
+        .pass-toggle { position: absolute; right: 0; top: 0; bottom: 0; display: flex; align-items: center; padding: 0 16px; background: none; border: none; cursor: pointer; color: #94a3b8; transition: color 0.2s; }
+        .pass-toggle:hover { color: #c5a059; }
+    </style>
+</head>
+<body class="antialiased bg-slate-50">
+
+<div class="flex min-h-screen">
+
+    {{-- ═══ LEFT PANEL ═══ --}}
+    <div class="hidden lg:flex lg:w-[44%] auth-left flex-col items-center justify-center relative overflow-hidden p-12">
+        <div class="grid-bg"></div>
+
+        <a href="{{ route('login') }}" class="absolute top-6 left-6 z-20 flex items-center gap-2 text-white/50 hover:text-white transition-all text-xs font-bold uppercase tracking-widest group">
+            <span class="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-white/10 transition-all">
+                <i class="fas fa-arrow-left text-[10px]"></i>
+            </span>
+            Login
+        </a>
+
+        <div class="relative z-10 flex flex-col items-center text-center max-w-sm">
+            <div class="w-20 h-20 rounded-2xl bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center mx-auto mb-8">
+                <i class="fas fa-lock-open text-emerald-400 text-3xl"></i>
+            </div>
+            <span class="text-[11px] font-black text-gold-500 uppercase tracking-[0.35em] mb-3 block">Keamanan Akun</span>
+            <h1 class="text-4xl font-black text-white tracking-tight mb-4 leading-none">Buat Sandi<br><span class="text-emerald-400">Baru</span></h1>
+            <p class="text-slate-400 text-sm leading-relaxed font-medium max-w-[240px]">
+                Buat kata sandi baru yang kuat untuk mengamankan akun GEO-SINFRA Anda.
+            </p>
+            <div class="w-12 h-0.5 bg-gradient-to-r from-emerald-500 to-gold-500 rounded-full mx-auto my-8 opacity-70"></div>
+
+            {{-- Tips --}}
+            <div class="flex flex-col gap-3 w-full text-left">
+                <p class="text-white/40 text-[10px] font-black uppercase tracking-widest px-1 mb-1">Tips Sandi Kuat</p>
+                @foreach([
+                    ['fas fa-check','text-emerald-400','Minimal 8 karakter'],
+                    ['fas fa-check','text-emerald-400','Kombinasi huruf besar & kecil'],
+                    ['fas fa-check','text-emerald-400','Sertakan angka & simbol'],
+                    ['fas fa-times','text-red-400','Jangan gunakan tanggal lahir'],
+                ] as [$icon, $color, $tip])
+                <div class="flex items-center gap-3 bg-white/4 border border-white/6 rounded-xl px-3.5 py-2.5">
+                    <i class="{{ $icon }} {{ $color }} text-xs flex-shrink-0"></i>
+                    <span class="text-white/60 text-xs font-semibold">{{ $tip }}</span>
+                </div>
+                @endforeach
+            </div>
+        </div>
+
+        <p class="absolute bottom-6 text-white/20 text-[10px] font-bold uppercase tracking-widest">
+            &copy; 2026 Disperkim Banjarmasin
+        </p>
+    </div>
+
+    {{-- ═══ RIGHT PANEL ═══ --}}
+    <div class="flex-1 flex flex-col items-center justify-center bg-white px-6 py-10 relative">
+
+        <a href="{{ route('login') }}" class="lg:hidden absolute top-6 left-6 w-10 h-10 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl flex items-center justify-center text-slate-500 transition shadow-sm">
+            <i class="fas fa-arrow-left text-xs"></i>
+        </a>
+
+        <div class="w-full max-w-[400px]">
+
+            {{-- Header --}}
+            <div class="mb-7 fade-in-up d1">
+                <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.3em] mb-2">Atur Ulang Password</p>
+                <h2 class="text-2xl font-black text-navy-900 tracking-tight">Buat Kata Sandi Baru</h2>
+                <p class="text-slate-400 text-sm font-medium mt-1">Sandi baru harus berbeda dari sandi sebelumnya</p>
+            </div>
+
+            {{-- Session Timer --}}
+            <div class="mb-6 fade-in-up d1">
+                <div class="timer-badge">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                    </span>
+                    <span>Sesi berakhir: <strong id="countdown">05:00</strong></span>
+                </div>
+            </div>
+
+            {{-- Errors --}}
+            @if($errors->any())
+                <div class="alert-error mb-5 fade-in-up d1">
+                    <i class="fas fa-exclamation-circle flex-shrink-0 mt-0.5"></i>
+                    <ul class="list-none space-y-1">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form id="resetForm" action="{{ route('password.update') }}" method="POST" class="space-y-5">
+                @csrf
+                <input type="hidden" name="token" value="{{ $token }}">
+
+                {{-- Email --}}
+                <div class="fade-in-up d2">
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.18em] mb-2">
+                        Email Konfirmasi <span class="text-gold-500">*</span>
+                    </label>
+                    <div class="relative">
+                        <input type="email" name="email" value="{{ old('email') }}" placeholder="nama@disperkim.go.id" required class="input-field" style="padding-left:44px">
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"><i class="fas fa-envelope"></i></span>
+                    </div>
+                </div>
+
+                {{-- New Password --}}
+                <div class="fade-in-up d3">
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.18em] mb-2">
+                        Kata Sandi Baru <span class="text-gold-500">*</span>
+                    </label>
+                    <div class="relative mb-2">
+                        <input type="password" name="password" id="password" placeholder="Minimal 8 karakter" required class="input-field" oninput="checkStrength(this.value)">
+                        <button type="button" class="pass-toggle" onclick="togglePass('password','eye1')">
+                            <i id="eye1" class="fas fa-eye text-sm"></i>
+                        </button>
+                    </div>
+                    {{-- Strength bar --}}
+                    <div class="strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
+                    <p id="strength-text" class="text-[10px] font-bold mt-1 text-slate-400"></p>
+                </div>
+
+                {{-- Confirm Password --}}
+                <div class="fade-in-up d4">
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.18em] mb-2">
+                        Konfirmasi Sandi <span class="text-gold-500">*</span>
+                    </label>
+                    <div class="relative">
+                        <input type="password" name="password_confirmation" id="password_confirm" placeholder="Ulangi kata sandi" required class="input-field">
+                        <button type="button" class="pass-toggle" onclick="togglePass('password_confirm','eye2')">
+                            <i id="eye2" class="fas fa-eye text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+
+                {{-- Submit --}}
+                <div class="fade-in-up d5 pt-1">
+                    <button type="submit" class="btn-gold" id="submitBtn">
+                        <i class="fas fa-save mr-2"></i> Simpan Kata Sandi Baru
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // ── Countdown Timer ──
+    let timeLeft = Math.min(300, Math.floor({{ $sisaWaktu ?? 300 }}));
+    const display = document.getElementById('countdown');
+    const submitBtn = document.getElementById('submitBtn');
+
+    const timer = setInterval(() => {
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            display.textContent = '00:00';
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'WAKTU HABIS';
+            setTimeout(() => { window.location.href = "{{ route('login') }}"; }, 2000);
+        } else {
+            const m = Math.floor(timeLeft / 60);
+            const s = Math.floor(timeLeft % 60);
+            display.textContent = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+        timeLeft--;
+    }, 1000);
+
+    // ── Toggle Password Visibility ──
+    function togglePass(id, eyeId) {
+        const inp = document.getElementById(id);
+        const eye = document.getElementById(eyeId);
+        inp.type = inp.type === 'password' ? 'text' : 'password';
+        eye.classList.toggle('fa-eye');
+        eye.classList.toggle('fa-eye-slash');
+    }
+
+    // ── Password Strength ──
+    function checkStrength(val) {
+        const fill = document.getElementById('strength-fill');
+        const text = document.getElementById('strength-text');
+        let score = 0;
+        if (val.length >= 8) score++;
+        if (/[A-Z]/.test(val)) score++;
+        if (/[0-9]/.test(val)) score++;
+        if (/[^A-Za-z0-9]/.test(val)) score++;
+
+        const levels = [
+            { pct: '0%',   color: '', label: '' },
+            { pct: '25%',  color: '#ef4444', label: 'Sangat Lemah' },
+            { pct: '50%',  color: '#f59e0b', label: 'Cukup' },
+            { pct: '75%',  color: '#3b82f6', label: 'Kuat' },
+            { pct: '100%', color: '#10b981', label: 'Sangat Kuat' },
+        ];
+        fill.style.width  = levels[score].pct;
+        fill.style.background = levels[score].color;
+        text.textContent  = levels[score].label;
+        text.style.color  = levels[score].color;
+    }
+
+    // Loading state
+    document.getElementById('resetForm').addEventListener('submit', () => {
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Menyimpan...';
+        submitBtn.disabled = true; submitBtn.style.opacity = '0.8';
+    });
+</script>
 </body>
 </html>
