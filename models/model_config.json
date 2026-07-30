@@ -19,7 +19,7 @@
         "berat": "Berat",
         "sedang": "Sedang"
     },
-    "accuracy_jenis": 77.78,
-    "accuracy_kondisi": 64.87,
-    "training_date": "2026-07-09 19:33:44"
+    "accuracy_jenis": 83.57,
+    "accuracy_kondisi": 66.43,
+    "training_date": "2026-07-18 21:47:34"
 }

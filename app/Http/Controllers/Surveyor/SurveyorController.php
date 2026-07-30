@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Surveyor;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreInfrastrukturRequest;
 use App\Models\Infrastruktur;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -42,7 +43,8 @@ class SurveyorController extends Controller
         }
 
         $semuaKecamatan = \App\Models\Kecamatan::all();
-        $recentUploads = Infrastruktur::where('id_user', $userId)
+        $recentUploads = Infrastruktur::with(['kelurahan.kecamatan'])
+            ->where('id_user', $userId)
             ->orderBy('created_at', 'desc')
             ->limit(5)
             ->get();
@@ -102,24 +104,8 @@ class SurveyorController extends Controller
     /**
      * PROSES SIMPAN DATA LAPANGAN BARU (Eloquent Model Terintegrasi Observer AI)
      */
-    public function store(Request $request)
+    public function store(StoreInfrastrukturRequest $request)
     {
-        $request->validate([
-            'nama_infrastruktur' => 'required|string|max:255',
-            'id_kecamatan' => 'required|exists:kecamatan,id_kecamatan',
-            'id_kelurahan' => 'required|exists:kelurahan,id_kelurahan',
-            'latitude' => 'required',
-            'longitude' => 'required',
-            'foto' => 'required|max:20480',
-            'kondisi' => 'nullable|string', // 🌟 Menangkap input deskripsi kerusakan teks untuk Decision Tree
-            'material_eksisting' => 'nullable|string',
-            'panjang' => 'required|numeric',
-            'lebar' => 'required|numeric',
-            'has_drainase' => 'nullable|boolean',
-            'has_gorong_gorong' => 'nullable|boolean',
-            'rencana_perbaikan' => 'nullable|string',
-            'tgl_survey' => 'nullable|date',
-        ]);
 
         $namaFoto = 'default.jpg';
         if ($request->hasFile('foto')) {

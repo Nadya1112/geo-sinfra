@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\PredictImageRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
@@ -13,34 +14,10 @@ class AIPredictController extends Controller
     /**
      * Menerima request upload gambar dan meneruskannya ke Flask API AI (ai_bridge.py)
      */
-    public function predict(Request $request)
+    public function predict(PredictImageRequest $request)
     {
-        if (!$request->hasFile('image') || !$request->file('image')->isValid()) {
-            return response()->json([
-                'success' => false,
-                'error' => 'Gambar gagal diunggah! Mungkin ukuran file terlalu besar (melebihi limit server PHP) atau format tidak didukung.'
-            ], 400);
-        }
-
-        // 1. Validasi Input Manual Total (Bypass Laravel Validator yang mungkin butuh finfo)
-        if (!$request->hasFile('image') || !$request->file('image')->isValid()) {
-            return response()->json([
-                'success' => false,
-                'error' => 'Gambar gagal diunggah! Pastikan ukuran file tidak melebihi batas.'
-            ], 400);
-        }
-
-        // Cek ekstensi manual tanpa fileinfo
         $file = $request->file('image');
         $extension = strtolower($file->getClientOriginalExtension());
-        $allowedExtensions = ['jpeg', 'jpg', 'png', 'webp'];
-
-        if (!in_array($extension, $allowedExtensions)) {
-            return response()->json([
-                'success' => false,
-                'error' => 'Format file tidak didukung! Gunakan JPG atau PNG.'
-            ], 400);
-        }
 
         $filename = time() . '_' . $file->getClientOriginalName();
         $absolutePath = storage_path('app/temp_predict/' . $filename);

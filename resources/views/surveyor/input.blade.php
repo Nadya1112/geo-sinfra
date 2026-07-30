@@ -1,86 +1,15 @@
-﻿<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Data Lapangan | GEO-SINFRA</title>
-    <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="manifest" href="{{ asset('manifest.json') }}">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/compressorjs/1.2.1/compressor.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/localforage/1.10.0/localforage.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
-                    colors: {
-                        navy: { 50:'#f4f4fa', 100:'#e9e9f3', 500:'#6366f1', 800:'#1e1b4b', 900:'#0f0e2c', 950:'#070617' },
-                        gold: { 50:'#fdfbf7', 100:'#fbf7ed', 500:'#c5a059', 600:'#b38f4a', 700:'#9d7c3d' }
-                    }
-                }
-            }
-        }
-    </script>
-    <style> 
-        body { font-family: 'Plus Jakarta Sans', sans-serif; } 
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        .leaflet-container { font-family: inherit; }
-    </style>
+@extends('layouts.app')
+@section('title', 'Input Data Lapangan | GEO-SINFRA')
+@section('subtitle', 'Sistem Input Geospasial')
+@section('page_title', 'Input Data Lapangan')
+@section('back_url', route('surveyor.dashboard'))
 
-<style>
-    @media (min-width: 768px) { html { font-size: 14px; } }
-    @media (max-width: 767px) { html { font-size: 12px; } }
-</style>
-</head>
-<body class="bg-slate-50  flex h-screen overflow-hidden text-slate-800 text-left font-sans   transition-colors duration-300">
+@push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/compressorjs/1.2.1/compressor.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/localforage/1.10.0/localforage.min.js"></script>
+@endpush
 
-    @include('surveyor.partials.sidebar')
-
-    <main class="flex-1 flex flex-col h-screen overflow-y-auto custom-scrollbar bg-slate-50 ">
-        {{-- ── Header ── --}}
-        <header class="bg-white/80  backdrop-blur-xl border-b border-slate-100  sticky top-0 px-4 pl-16 md:px-8 py-4 flex justify-between items-center sticky top-0 z-[1000] shadow-sm">
-            <div class="flex items-center gap-4">
-                <a href="{{ route('surveyor.dashboard') }}" class="hidden md:flex w-10 h-10  items-center justify-center bg-white  text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 transition-all border border-slate-200  hover:border-gold-200">
-                    <i class="fas fa-arrow-left text-sm"></i>
-                </a>
-                <div>
-                    <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-0.5">Sistem Input Geospasial</p>
-                    <h2 class="text-xl font-black text-navy-900  tracking-tight">Input Data Lapangan</h2>
-                </div>
-            </div>
-            
-            <div class="flex items-center gap-6">
-                <div class="text-right">
-                    <p class="text-sm font-black text-navy-900 " id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
-                </div>
-                <div class="h-8 w-[1px] bg-slate-100"></div>
-                <div class="flex items-center gap-3">
-                    <div class="text-right">
-                        <p class="text-xs font-black text-navy-900  leading-none uppercase max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
-                        <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5">Aktif</p>
-                    </div>
-                    <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-navy-800 overflow-hidden shadow-md">
-                        @if(auth()->user()->profile_photo)
-                            <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
-                        @else
-                            <i class="fas fa-user-circle text-xl text-gold-500"></i>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </header>
-
+@section('content')
         <div class="p-8">
             <div class="max-w-7xl mx-auto">
                 @if($errors->any())
@@ -378,18 +307,10 @@
                 </form>
             </div>
         </div>
-    </main>
+@endsection
 
+@push('scripts')
     <script>
-        function updateClock() {
-            const now = new Date();
-            const options = { timeZone: 'Asia/Makassar', hour: '2-digit', minute: '2-digit', hour12: false };
-            const timeString = new Intl.DateTimeFormat('id-ID', options).format(now);
-            const el = document.getElementById('mini-clock');
-            if (el) el.textContent = timeString.replace('.', ':') + ' WITA';
-        }
-        setInterval(updateClock, 1000); updateClock();
-
         let compressedImageBlob = null;
 
         function previewImage(event) {
@@ -788,5 +709,4 @@
             loadDraft();
         });
     </script>
-</body>
-</html>
+@endpush

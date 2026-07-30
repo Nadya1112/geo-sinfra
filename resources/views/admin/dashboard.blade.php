@@ -1,110 +1,9 @@
-﻿<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Admin SINFRA</title>
-    <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                    },
-                    colors: {
-                        navy: {
-                            50: '#f4f4fa',
-                            100: '#e9e9f3',
-                            200: '#c7c8e3',
-                            500: '#6366f1',
-                            800: '#1e1b4b',
-                            900: '#0f0e2c',
-                            950: '#070617',
-                        },
-                        gold: {
-                            50: '#fdfbf7',
-                            100: '#fbf7ed',
-                            500: '#c5a059',
-                            600: '#b38f4a',
-                            700: '#9d7c3d',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+@extends('layouts.app')
+@section('title', 'Dashboard | Admin SINFRA')
+@section('subtitle', 'Portal Administrator')
+@section('page_title', 'Beranda Utama')
 
-    <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        
-        /* Animasi Latar Belakang Banner */
-        .bg-pattern {
-            background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.06) 1px, transparent 0);
-            background-size: 24px 24px;
-        }
-        .bg-premium-mesh {
-            background: radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 20% 80%, rgba(197, 160, 89, 0.12) 0%, transparent 50%),
-                        #070617;
-        }
-        /* Global Transitions */
-        html { transition: background-color 0.3s ease, color 0.3s ease; }
-    </style>
-<style>
-    @media (min-width: 768px) { html { font-size: 14px; } }
-    @media (max-width: 767px) { html { font-size: 12px; } }
-</style>
-</head>
-<body class="bg-navy-50 dark:bg-navy-950 text-slate-800 dark:text-slate-200 antialiased selection:bg-gold-500 selection:text-white flex overflow-hidden h-screen transition-colors duration-300">
-
-    @include('admin.partials.sidebar')
-
-    <main class="flex-1 overflow-y-auto custom-scrollbar text-left">
-        <header class="sticky top-0 bg-white/80 dark:bg-navy-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/5 px-4 pl-16 md:px-8 py-4 flex justify-between items-center z-40 text-left transition-colors duration-300">
-            <div class="text-left">
-                <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Portal Administrator</p>
-                <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Beranda Utama</h2>
-            </div>
-
-            <div class="flex items-center gap-3 md:gap-6">
-                <div class="text-right">
-                    <p class="text-xs font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[10px] font-bold text-emerald-500 uppercase mt-0.5 sm:hidden">Aktif</p>
-                    <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter hidden sm:block">{{ now()->translatedFormat('d M Y') }}</p>
-                </div>
-                <div class="h-8 w-[1px] bg-slate-100 dark:bg-white/10"></div>
-                <div class="flex items-center gap-3">
-                    <a href="{{ route('admin.profile') }}" class="text-right group hidden md:block">
-                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
-                        <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5">Aktif</p>
-                    </a>
-                    <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md">
-                        @if(auth()->user()->profile_photo)
-                            <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
-                        @else
-                            <i class="fas fa-user-circle text-xl"></i>
-                        @endif
-                    </a>
-                </div>
-            </div>
-        </header>
-
-        <div class="p-4 md:p-8 text-left">
-            @if(session('success'))
-            <div class="mb-6 px-4 py-3 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-2xl flex items-center gap-3 shadow-sm">
-                <i class="fas fa-check-circle"></i>
-                <p class="text-xs font-bold">{{ session('success') }}</p>
-            </div>
-            @endif
+@section('content')
             
             <!-- Welcome Banner (Premium Dark Mesh UI) -->
             <div class="relative bg-premium-mesh rounded-[2.5rem] p-10 mb-8 overflow-hidden shadow-2xl shadow-navy-950/20 border border-white/5 text-left">
@@ -322,20 +221,10 @@
             </div>
         </div>
     </div>
+@endsection
 
-    <!-- SweetAlert2 — dipindahkan ke sini, SETELAH semua HTML modal selesai -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+@push('scripts')
     <script>
-        function updateClock() {
-            const now = new Date();
-            const options = { timeZone: 'Asia/Makassar', hour: '2-digit', minute: '2-digit', hour12: false };
-            const timeString = new Intl.DateTimeFormat('id-ID', options).format(now);
-            const el = document.getElementById('mini-clock');
-            if (el) el.textContent = timeString.replace('.', ':') + ' WITA';
-        }
-        setInterval(updateClock, 1000); updateClock();
-
         function startBackup() {
             Swal.fire({
                 title: 'Mempersiapkan Backup',
@@ -346,7 +235,6 @@
                     Swal.showLoading()
                 }
             }).then((result) => {
-                // Buat form tersembunyi untuk trigger download file
                 const form = document.createElement('form');
                 form.method = 'POST';
                 form.action = '{{ route("admin.backup") }}';
@@ -363,11 +251,11 @@
 
                 Swal.fire({
                     icon: 'success',
-                    title: 'Backup Dimulai!',
-                    text: 'Proses pengunduhan file SQL sedang berjalan di browser Anda.',
-                    confirmButtonColor: '#6366f1'
+                    title: 'Backup Berhasil!',
+                    text: 'File SQL sedang diunduh ke perangkat Anda.',
+                    confirmButtonColor: '#0f0e2c'
                 });
-            })
+            });
         }
 
         function openQuickModal(title, desc, url, icon, colorClass) {
@@ -381,7 +269,6 @@
             const content = document.getElementById('quickModalContent');
             modal.classList.remove('hidden');
             
-            // Add slight delay for animation
             requestAnimationFrame(() => {
                 setTimeout(() => {
                     content.classList.remove('scale-95', 'opacity-0');
@@ -400,5 +287,4 @@
             }, 300);
         }
     </script>
-</body>
-</html>
+@endpush

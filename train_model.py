@@ -150,12 +150,24 @@ print(f"-> Disimpan: {pca_path}")
 # ========================
 # 4. DECISION TREE TRAINING
 # ========================
-print("\n[4/5] Melatih Model Decision Tree (SPK)...")
+print("\n[4/5] Melatih Model Decision Tree (SPK) dengan SMOTE...")
 
 # Split dataset 80% train, 20% test
 X_train, X_test, yj_train, yj_test, yk_train, yk_test = train_test_split(
     X_pca, y_jenis, y_kondisi, test_size=0.2, random_state=42
 )
+
+try:
+    from imblearn.over_sampling import SMOTE
+    from collections import Counter
+    print(f"  Distribusi Kondisi sebelum SMOTE: {Counter(yk_train)}")
+
+    smote = SMOTE(random_state=42)
+    X_train_res_k, yk_train_res = smote.fit_resample(X_train, yk_train)
+    print(f"  Distribusi Kondisi setelah SMOTE: {Counter(yk_train_res)}")
+except ImportError:
+    print("  [ERROR] imblearn tidak ditemukan, jalankan pip install imbalanced-learn")
+    X_train_res_k, yk_train_res = X_train, yk_train
 
 # Train DT for Jenis
 dt_jenis = DecisionTreeClassifier(max_depth=10, random_state=42)
@@ -165,7 +177,7 @@ print(f"  Akurasi DT Jenis  : {acc_jenis:.2f}%")
 
 # Train DT for Kondisi
 dt_kondisi = DecisionTreeClassifier(max_depth=10, random_state=42)
-dt_kondisi.fit(X_train, yk_train)
+dt_kondisi.fit(X_train_res_k, yk_train_res)
 acc_kondisi = accuracy_score(yk_test, dt_kondisi.predict(X_test)) * 100
 print(f"  Akurasi DT Kondisi: {acc_kondisi:.2f}%")
 

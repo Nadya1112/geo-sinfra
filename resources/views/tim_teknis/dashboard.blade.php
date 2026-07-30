@@ -1,67 +1,9 @@
-﻿<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beranda Tim Teknis | GEO-SINFRA</title>
-    <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
-    <script src="https://cdn.tailwindcss.com"></script>
-            <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
-                    colors: {
-                        navy: { 50:'#f4f4fa', 100:'#e9e9f3', 200:'#c7c8e3', 300:'#9fb3c8', 400:'#829ab1', 500:'#6366f1', 600:'#486581', 700:'#334e68', 800:'#1e1b4b', 900:'#0f0e2c', 950:'#070617' },
-                        gold: { 50:'#fdfbf7', 100:'#fbf7ed', 200:'#eed9b9', 300:'#e5c292', 400:'#dba665', 500:'#c5a059', 600:'#b38f4a', 700:'#9d7c3d', 800:'#7c5327', 900:'#644422', 950:'#382310' }
-                    }
-                }
-            }
-        }
-    </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style> body { font-family: 'Plus Jakarta Sans', sans-serif; }
-    </style>
-<style>
-    @media (max-width: 767px) { html { font-size: 12px; } }
-</style>
-</head>
-<body class="bg-slate-50 dark:bg-[#0f0e2c] flex h-screen overflow-hidden text-slate-800 dark:text-white text-left font-sans dark:bg-navy-950 transition-colors duration-300">
+@extends('layouts.app')
+@section('title', 'Beranda Tim Teknis | GEO-SINFRA')
+@section('subtitle', 'Portal Tim Teknis')
+@section('page_title', 'Panel Pengawasan')
 
-    @include('tim_teknis.partials.sidebar')
-
-    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
-        <header class="bg-white dark:bg-[#1e1b4b] border-b border-slate-100 dark:border-white/10 px-4 pl-20 md:px-8 py-3 md:py-4 flex justify-between items-center z-40 sticky top-0">
-            <div class="min-w-0">
-                <p class="text-[9px] md:text-xs font-extrabold text-gold-500 uppercase tracking-[0.2em] mb-0.5 truncate">Portal Tim Teknis</p>
-                <h2 class="text-sm md:text-xl font-black text-navy-900 dark:text-white leading-tight whitespace-normal">Panel Pengawasan</h2>
-            </div>
-            
-            <div class="flex items-center gap-3 md:gap-6 flex-shrink-0">
-                <div class="text-right">
-                    <p class="text-[10px] md:text-xs font-black text-navy-900 dark:text-white mt-1" id="mini-clock">00:00 WITA</p>
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter hidden md:block">{{ now()->translatedFormat('l, d F Y') }}</p>
-                </div>
-                <div class="h-6 md:h-8 w-[1px] bg-slate-200 dark:bg-white/10"></div>
-                <a href="{{ route('tim_teknis.profile') }}" class="flex items-center gap-2 md:gap-3 group">
-                    <div class="text-right">
-                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-colors max-w-[200px] truncate hidden md:block">{{ auth()->user()->name }}</p>
-                        <p class="text-[8px] md:text-xs font-bold text-emerald-500 uppercase md:mt-0.5">Aktif</p>
-                    </div>
-                    <div class="w-8 h-8 md:w-10 md:h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shadow-md group-hover:shadow-lg transition-all overflow-hidden flex-shrink-0">
-                        @if(auth()->user()->profile_photo)
-                            <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
-                        @else
-                            <i class="fas fa-user-circle text-lg md:text-xl"></i>
-                        @endif
-                    </div>
-                </a>
-            </div>
-        </header>
-
-        <div class="p-4 md:p-6 space-y-4 md:space-y-6">
+@section('content')
 
             @if(isset($totalRusakBerat) && $totalRusakBerat > 0)
             <!-- Critical Alert Banner -->
@@ -233,18 +175,4 @@
                 </a>
             </div>
 
-        </div>
-    </main>
-
-    <script>
-        function updateClock() {
-            const now = new Date();
-            const options = { timeZone: 'Asia/Makassar', hour: '2-digit', minute: '2-digit', hour12: false };
-            const timeString = new Intl.DateTimeFormat('id-ID', options).format(now);
-            const el = document.getElementById('mini-clock');
-            if (el) el.textContent = timeString.replace('.', ':') + ' WITA';
-        }
-        setInterval(updateClock, 1000); updateClock();
-    </script>
-</body>
-</html>
+@endsection
