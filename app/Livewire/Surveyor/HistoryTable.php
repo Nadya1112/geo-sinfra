@@ -18,6 +18,11 @@ class HistoryTable extends Component
         $this->resetPage();
     }
 
+    public function updatingShow()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
         $query = Infrastruktur::with(['kelurahan.kecamatan', 'analisis', 'cnn'])
@@ -25,7 +30,19 @@ class HistoryTable extends Component
             ->orderBy('created_at', 'desc');
             
         if ($this->status != '') {
-            $query->where('status_verifikasi', $this->status);
+            if ($this->status == 'Menunggu') {
+                $query->where(function($q) {
+                    $q->where('status_verifikasi', 'Pending')
+                      ->where('status_validasi', 'Pending');
+                });
+            } elseif ($this->status == 'Terverifikasi') {
+                $query->where('status_verifikasi', 'Verified')
+                      ->where('status_validasi', '!=', 'Rejected');
+            } elseif ($this->status == 'Ditolak') {
+                $query->where('status_validasi', 'Rejected');
+            } elseif ($this->status == 'Di-ACC') {
+                $query->where('status_validasi', 'Validated');
+            }
         }
             
         if ($this->show == 'all') {

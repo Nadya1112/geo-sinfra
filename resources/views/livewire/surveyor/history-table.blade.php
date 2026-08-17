@@ -7,8 +7,9 @@
         <div class="flex gap-2 w-full md:w-auto mt-3 md:mt-0">
             <select wire:model.live="status" class="w-full md:w-40 bg-white border border-slate-200 rounded-xl px-4 py-3 text-xs font-black text-navy-900 shadow-sm focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all cursor-pointer">
                 <option value="">Semua Status</option>
-                <option value="Menunggu Validasi">Menunggu Validasi</option>
-                <option value="Terverifikasi AI">Terverifikasi AI</option>
+                <option value="Menunggu">Menunggu</option>
+                <option value="Terverifikasi">Terverifikasi AI</option>
+                <option value="Di-ACC">Di-ACC</option>
                 <option value="Ditolak">Ditolak</option>
             </select>
             <select wire:model.live="show" class="w-full md:w-48 bg-white border border-slate-200 rounded-xl px-4 py-3 text-xs font-black text-navy-900 shadow-sm focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all cursor-pointer">
