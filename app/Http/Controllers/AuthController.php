@@ -47,11 +47,7 @@ class AuthController extends Controller
             Auth::login($user, $request->has('remember'));
             $request->session()->regenerate();
 
-            if ($user->role == 'admin') return redirect()->intended('/admin/dashboard');
-            if ($user->role == 'surveyor') return redirect()->intended('/surveyor/dashboard');
-            if ($user->role == 'tim_teknis') return redirect()->intended('/tim-teknis/dashboard');
-
-            return redirect()->intended('/');
+            return $this->redirectByRole($user->role);
         }
 
         // Jika Gagal
@@ -96,11 +92,7 @@ class AuthController extends Controller
         session()->forget(['register_otp_user_id', 'demo_otp']);
         $request->session()->regenerate();
 
-        if ($user->role == 'admin') return redirect()->intended('/admin/dashboard');
-        if ($user->role == 'surveyor') return redirect()->intended('/surveyor/dashboard');
-        if ($user->role == 'tim_teknis') return redirect()->intended('/tim-teknis/dashboard');
-
-        return redirect()->intended('/');
+        return $this->redirectByRole($user->role);
     }
 
     /**
@@ -305,5 +297,19 @@ class AuthController extends Controller
             \Illuminate\Support\Facades\Log::error('Fonnte API Error: ' . $e->getMessage());
             return false;
         }
+    }
+
+    /**
+     * Redirect user berdasarkan role setelah berhasil login.
+     * Menghindari duplikasi logika redirect di setiap method.
+     */
+    private function redirectByRole(string $role)
+    {
+        return match ($role) {
+            'admin'      => redirect()->intended('/admin/dashboard'),
+            'surveyor'   => redirect()->intended('/surveyor/dashboard'),
+            'tim_teknis' => redirect()->intended('/tim-teknis/dashboard'),
+            default      => redirect()->intended('/'),
+        };
     }
 }
