@@ -39,46 +39,38 @@ class HistoryTable extends Component
     {
         $query = Infrastruktur::with(['kelurahan.kecamatan', 'analisis', 'cnn'])
             ->where('id_user', auth()->id())
-            ->orderBy('created_at', 'desc');
+            ->orderByDesc('created_at');
 
-        if ($this->search != '') {
-            $query->where(function($q) {
-                $q->where('nama_objek', 'like', '%' . $this->search . '%')
-                  ->orWhere('nama_infrastruktur', 'like', '%' . $this->search . '%')
-                  ->orWhere('jenis', 'like', '%' . $this->search . '%')
-                  ->orWhere('kondisi', 'like', '%' . $this->search . '%')
-                  ->orWhere('status_validasi', 'like', '%' . $this->search . '%')
-                  ->orWhere('status_verifikasi', 'like', '%' . $this->search . '%')
-                  ->orWhereHas('kelurahan', function($k) {
-                      $k->where('nama_kelurahan', 'like', '%' . $this->search . '%')
-                        ->orWhereHas('kecamatan', function($kec) {
-                            $kec->where('nama_kecamatan', 'like', '%' . $this->search . '%');
-                        });
-                  });
+        $query->when($this->search, function ($q, $search) {
+            $q->where(function ($sub) use ($search) {
+                $sub->where('nama_objek', 'like', "%{$search}%")
+                    ->orWhere('nama_infrastruktur', 'like', "%{$search}%")
+                    ->orWhere('jenis', 'like', "%{$search}%")
+                    ->orWhere('kondisi', 'like', "%{$search}%")
+                    ->orWhere('status_validasi', 'like', "%{$search}%")
+                    ->orWhere('status_verifikasi', 'like', "%{$search}%")
+                    ->orWhereHas('kelurahan', function ($k) use ($search) {
+                        $k->where('nama_kelurahan', 'like', "%{$search}%")
+                          ->orWhereHas('kecamatan', function ($kec) use ($search) {
+                              $kec->where('nama_kecamatan', 'like', "%{$search}%");
+                          });
+                    });
             });
-        }
-            
-        if ($this->status != '') {
-            if ($this->status == 'Menunggu') {
-                $query->where(function($q) {
-                    $q->where('status_verifikasi', 'Pending')
-                      ->where('status_validasi', 'Pending');
-                });
-            } elseif ($this->status == 'Terverifikasi') {
-                $query->where('status_verifikasi', 'Verified')
-                      ->where('status_validasi', '!=', 'Rejected');
-            } elseif ($this->status == 'Ditolak') {
-                $query->where('status_validasi', 'Rejected');
-            } elseif ($this->status == 'Di-ACC') {
-                $query->where('status_validasi', 'Validated');
-            }
-        }
-            
-        if ($this->show == 'all') {
-            $riwayat = collect($query->get()); 
-        } else {
-            $riwayat = $query->paginate(10);
-        }
+        });
+
+        $query->when($this->status, function ($q, $status) {
+            match ($status) {
+                'Menunggu' => $q->where('status_verifikasi', 'Pending')->where('status_validasi', 'Pending'),
+                'Terverifikasi' => $q->where('status_verifikasi', 'Verified')->where('status_validasi', '!=', 'Rejected'),
+                'Ditolak' => $q->where('status_validasi', 'Rejected'),
+                'Di-ACC' => $q->where('status_validasi', 'Validated'),
+                default => $q
+            };
+        });
+
+        $riwayat = $this->show === 'all' 
+            ? $query->get() 
+            : $query->paginate(10);
 
         return view('livewire.surveyor.history-table', compact('riwayat'));
     }
