@@ -821,7 +821,7 @@
                 <!-- Brand -->
                 <div class="flex justify-center md:justify-start items-center">
                     <div class="mb-6 animate-pulse transform hover:scale-105 transition-transform duration-500 cursor-default">
-                        <h2 class="text-4xl md:text-5xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-gold-500 to-indigo-400 drop-shadow-xl uppercase">
+                        <h2 class="text-4xl md:text-5xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-[#DFA72A] via-[#C4AE7D] to-[#7574D8] drop-shadow-xl uppercase">
                             GEO-SINFRA
                         </h2>
                     </div>
