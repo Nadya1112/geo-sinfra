@@ -48,7 +48,7 @@
                 </thead>
                 <tbody class="divide-y divide-slate-50">
                     @forelse($riwayat as $index => $item)
-                    <tr class="hover:bg-slate-50 transition-colors">
+                    <tr wire:key="history-row-{{ $item->id }}" class="hover:bg-slate-50 transition-colors">
                         <td class="px-4 py-2 text-center">
                             <span class="text-xs font-black text-slate-400">{{ $show == 'all' ? $index + 1 : ($riwayat->currentPage() - 1) * $riwayat->perPage() + $index + 1 }}</span>
                         </td>
