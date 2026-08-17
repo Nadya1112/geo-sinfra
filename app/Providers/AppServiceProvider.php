@@ -19,8 +19,12 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot(\Illuminate\Http\Request $request): void
     {
+        if (!app()->runningInConsole()) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
+
         \App\Models\Infrastruktur::observe(\App\Observers\InfrastrukturObserver::class);
 
         // Share jumlah laporan menunggu ke semua view admin

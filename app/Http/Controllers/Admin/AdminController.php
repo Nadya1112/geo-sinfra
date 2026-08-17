@@ -334,27 +334,7 @@ class AdminController extends Controller
 
     public function wilayah(Request $request)
     {
-        $search = $request->query('search');
-        $query = DB::table('kelurahan')
-            ->join('kecamatan', 'kelurahan.id_kecamatan', '=', 'kecamatan.id_kecamatan')
-            ->leftJoin('infrastruktur', 'kelurahan.id_kelurahan', '=', 'infrastruktur.id_kelurahan')
-            ->select('kelurahan.*', 'kecamatan.nama_kecamatan', DB::raw('COUNT(infrastruktur.id_infrastruktur) as total_aset'))
-            ->groupBy('kelurahan.id_kelurahan', 'kecamatan.nama_kecamatan', 'kelurahan.id_kecamatan', 'kelurahan.nama_kelurahan', 'kelurahan.geometri', 'kelurahan.created_at', 'kelurahan.updated_at');
-
-        if ($search) {
-            $query->where('kelurahan.nama_kelurahan', 'LIKE', "%{$search}%")
-                  ->orWhere('kecamatan.nama_kecamatan', 'LIKE', "%{$search}%");
-        }
-
-        $query = $query->orderBy('kelurahan.id_kelurahan', 'asc');
-        
-        if ($request->get('show') == 'all') {
-            $wilayah = $query->get();
-        } else {
-            $wilayah = $query->paginate(10)->withQueryString();
-        }
-
-        return view('admin.wilayah', compact('wilayah'));
+        return view('admin.wilayah');
     }
 
     public function createWilayah()
@@ -428,50 +408,9 @@ class AdminController extends Controller
     // MODUL MANAJEMEN INFRASTRUKTUR (SINFRA)
     // ==========================================================
 
-    public function infrastruktur(Request $request)
+    public function infrastruktur(\Illuminate\Http\Request $request)
     {
-        $search = $request->query('search');
-        
-        $query = DB::table('infrastruktur')
-            ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
-            ->leftJoin('kecamatan', 'kelurahan.id_kecamatan', '=', 'kecamatan.id_kecamatan')
-            ->leftJoin('analisis_ai', 'infrastruktur.id_infrastruktur', '=', 'analisis_ai.id_infrastruktur')
-            ->leftJoin('citra_cnn', 'infrastruktur.id_infrastruktur', '=', 'citra_cnn.id_infrastruktur')
-            ->whereNull('infrastruktur.deleted_at');
-
-        if ($search) {
-            $query->where(function($q) use ($search) {
-                $q->where('infrastruktur.nama_objek', 'LIKE', "%{$search}%")
-                  ->orWhere('infrastruktur.jenis', 'LIKE', "%{$search}%")
-                  ->orWhere('infrastruktur.id_infrastruktur', 'LIKE', "%{$search}%")
-                  ->orWhere('kelurahan.nama_kelurahan', 'LIKE', "%{$search}%")
-                  ->orWhere('kecamatan.nama_kecamatan', 'LIKE', "%{$search}%");
-            });
-        }
-
-        $query = $query->orderBy('infrastruktur.id_infrastruktur', 'asc')
-                               ->select(
-                                   'infrastruktur.*', 
-                                   'kelurahan.nama_kelurahan', 
-                                   'kecamatan.nama_kecamatan', 
-                                   'kelurahan.id_kecamatan',
-                                   'analisis_ai.label_prioritas as dt_label_prioritas',
-                                   'analisis_ai.skor_dt as dt_skor_dt',
-                                   'analisis_ai.rekomendasi as dt_rekomendasi',
-                                   'citra_cnn.label_kondisi as cnn_label_kondisi',
-                                   'citra_cnn.skor_cnn as cnn_skor_cnn'
-                               );
-
-        if ($request->get('show') == 'all') {
-            $infrastruktur = $query->get();
-        } else {
-            $infrastruktur = $query->paginate(10)->withQueryString();
-        }
-
-        $semuaKecamatan = DB::table('kecamatan')->get();
-        $semuaKelurahan = DB::table('kelurahan')->get(); 
-        
-        return view('admin.infrastruktur', compact('infrastruktur', 'semuaKecamatan', 'semuaKelurahan'));
+        return view('admin.infrastruktur');
     }
 
     public function createInfrastruktur()
@@ -791,30 +730,9 @@ class AdminController extends Controller
     // MODUL MANAJEMEN LAPORAN WARGA
     // ==========================================================
 
-    public function laporanWarga(Request $request)
+    public function laporanWarga(\Illuminate\Http\Request $request)
     {
-        $search = $request->query('search');
-        $status = $request->query('status');
-
-        $query = LaporanWarga::query();
-
-        if ($search) {
-            $query->where(function($q) use ($search) {
-                $q->where('nama_pelapor', 'LIKE', "%{$search}%")
-                  ->orWhere('deskripsi', 'LIKE', "%{$search}%")
-                  ->orWhere('no_hp', 'LIKE', "%{$search}%");
-            });
-        }
-
-        if ($status && $status !== 'all') {
-            $query->where('status', $status);
-        }
-
-        $laporanWarga = $query->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
-        
-        $surveyors = User::where('role', 'Surveyor')->get();
-
-        return view('admin.laporan-warga', compact('laporanWarga', 'status', 'search', 'surveyors'));
+        return view('admin.laporan-warga');
     }
 
     public function updateStatusLaporanWarga(Request $request, $id)
@@ -1105,12 +1023,7 @@ class AdminController extends Controller
 
     public function activity(Request $request)
     {
-        $activities = ActivityLog::with('user')
-            ->orderBy('created_at', 'desc')
-            ->paginate(15)
-            ->withQueryString();
-
-        return view('admin.activity', compact('activities'));
+        return view('admin.activity');
     }
 
     public function exportActivityExcel()

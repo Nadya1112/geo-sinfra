@@ -157,21 +157,7 @@ class SurveyorController extends Controller
 
     public function history(\Illuminate\Http\Request $request)
     {
-        $query = Infrastruktur::with(['kelurahan.kecamatan', 'analisis', 'cnn'])
-            ->where('id_user', auth()->id())
-            ->orderBy('created_at', 'desc');
-            
-        if ($request->has('status') && $request->get('status') != '') {
-            $query->where('status_verifikasi', $request->get('status'));
-        }
-            
-        if ($request->get('show') == 'all') {
-            $riwayat = $query->get();
-        } else {
-            $riwayat = $query->paginate(10)->withQueryString();
-        }
-
-        return view('surveyor.history', compact('riwayat'));
+        return view('surveyor.history');
     }
 
     public function show($id)
@@ -399,31 +385,39 @@ class SurveyorController extends Controller
     // MODUL PENUGASAN LAPORAN WARGA
     // ==========================================
 
-    public function laporan(Request $request)
+    public function laporan(\Illuminate\Http\Request $request)
     {
-        $idSurveyor = auth()->id();
-        $search = $request->query('search');
-        $status = $request->query('status');
-
-        $query = \App\Models\LaporanWarga::where('id_surveyor', $idSurveyor);
-
-        if ($search) {
-            $query->where(function($q) use ($search) {
-                $q->where('nama_pelapor', 'LIKE', "%{$search}%")
-                  ->orWhere('deskripsi', 'LIKE', "%{$search}%");
-            });
-        }
-
-        if ($status && $status !== 'all') {
-            $query->where('status', $status);
-        }
-
-        $laporanWarga = $query->latest()->paginate(10)->withQueryString();
-        
-        return view('surveyor.laporan', compact('laporanWarga', 'search', 'status'));
+        return view('surveyor.laporan');
     }
 
     public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:Menunggu,Ditinjau,Diproses,Selesai,Ditolak',
+        ]);
+
+        $laporan = \App\Models\LaporanWarga::where('id', $id)->where('id_surveyor', auth()->id())->firstOrFail();
+        
+        $laporan->update([
+            'status' => $request->status,
+        ]);
+
+        return redirect()->route('surveyor.laporan')->with('success', 'STATUS PENUGASAN BERHASIL DIPERBARUI!');
+    }
+
+    public function showLaporan($id)
+    {
+        $laporan = \App\Models\LaporanWarga::where('id', $id)->where('id_surveyor', auth()->id())->firstOrFail();
+        return view('surveyor.laporan-show', compact('laporan'));
+    }
+
+    public function editLaporan($id)
+    {
+        $laporan = \App\Models\LaporanWarga::where('id', $id)->where('id_surveyor', auth()->id())->firstOrFail();
+        return view('surveyor.laporan-edit', compact('laporan'));
+    }
+
+    public function updateLaporan(Request $request, $id)
     {
         $request->validate([
             'status' => 'required|in:Menunggu,Ditinjau,Diproses,Selesai,Ditolak',
