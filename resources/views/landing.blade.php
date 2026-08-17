@@ -820,8 +820,9 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
                 <!-- Brand -->
                 <div class="flex justify-center md:justify-start items-center">
-                    <div class="mb-6 animate-pulse transform hover:scale-105 transition-transform duration-500 cursor-default">
-                        <h2 class="text-4xl md:text-5xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-[#DFA72A] via-[#C4AE7D] to-[#7574D8] drop-shadow-xl uppercase">
+                    <div class="mb-6 cursor-default" id="footer-brand-logo">
+                        <h2 id="footer-geo-sinfra-text" class="text-4xl md:text-5xl font-black tracking-widest uppercase"
+                            style="background: linear-gradient(to right, #DFA72A, #C4AE7D, #7574D8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: inline-block;">
                             GEO-SINFRA
                         </h2>
                     </div>
