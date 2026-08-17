@@ -46,6 +46,9 @@ class HistoryTable extends Component
                 $q->where('nama_objek', 'like', '%' . $this->search . '%')
                   ->orWhere('nama_infrastruktur', 'like', '%' . $this->search . '%')
                   ->orWhere('jenis', 'like', '%' . $this->search . '%')
+                  ->orWhere('kondisi', 'like', '%' . $this->search . '%')
+                  ->orWhere('status_validasi', 'like', '%' . $this->search . '%')
+                  ->orWhere('status_verifikasi', 'like', '%' . $this->search . '%')
                   ->orWhereHas('kelurahan', function($k) {
                       $k->where('nama_kelurahan', 'like', '%' . $this->search . '%')
                         ->orWhereHas('kecamatan', function($kec) {
