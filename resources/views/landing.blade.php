@@ -815,14 +815,35 @@
     </section>
 
     <!-- Footer -->
+    <style>
+        @keyframes shimmerFlow {
+            0%   { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        @keyframes glowPulse {
+            0%, 100% { filter: drop-shadow(0 0 6px rgba(223,167,42,0.4)) drop-shadow(0 0 12px rgba(117,116,216,0.3)); }
+            50%       { filter: drop-shadow(0 0 14px rgba(223,167,42,0.8)) drop-shadow(0 0 28px rgba(117,116,216,0.7)); }
+        }
+        #footer-geo-sinfra-text {
+            background: linear-gradient(to right, #DFA72A, #C4AE7D, #7574D8, #DFA72A, #C4AE7D);
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+            animation: shimmerFlow 4s linear infinite, glowPulse 2.5s ease-in-out infinite;
+        }
+        #footer-geo-sinfra-text:hover {
+            animation-duration: 1.5s, 1s;
+        }
+    </style>
     <footer class="bg-navy-950 pt-20 pb-10 text-white relative border-t border-white/5">
         <div class="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
                 <!-- Brand -->
                 <div class="flex justify-center md:justify-start items-center">
                     <div class="mb-6 cursor-default" id="footer-brand-logo">
-                        <h2 id="footer-geo-sinfra-text" class="text-4xl md:text-5xl font-black tracking-widest uppercase"
-                            style="background: linear-gradient(to right, #DFA72A, #C4AE7D, #7574D8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: inline-block;">
+                        <h2 id="footer-geo-sinfra-text" class="text-4xl md:text-5xl font-black tracking-widest uppercase">
                             GEO-SINFRA
                         </h2>
                     </div>
