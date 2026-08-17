@@ -22,9 +22,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(\Illuminate\Http\Request $request): void
     {
         if (!app()->runningInConsole()) {
-            $appUrl = $request->getSchemeAndHttpHost();
-            \Illuminate\Support\Facades\URL::forceRootUrl($appUrl);
-            config(['app.url' => $appUrl]);
+            \Illuminate\Support\Facades\URL::forceScheme('https');
         }
 
         \App\Models\Infrastruktur::observe(\App\Observers\InfrastrukturObserver::class);
