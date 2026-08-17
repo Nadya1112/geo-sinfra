@@ -4,7 +4,11 @@
             <h3 class="text-lg font-black text-navy-900">Daftar Data Lapangan</h3>
             <p class="text-xs text-slate-400 font-medium mt-1">Seluruh laporan infrastruktur yang telah Anda kumpulkan.</p>
         </div>
-        <div class="flex gap-2 w-full md:w-auto mt-3 md:mt-0">
+        <div class="flex flex-col md:flex-row gap-2 w-full md:w-auto mt-3 md:mt-0">
+            <div class="relative w-full md:w-64">
+                <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                <input type="text" wire:model.live.debounce.300ms="search" placeholder="Cari infrastruktur..." class="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-xs font-bold text-navy-900 shadow-sm focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all">
+            </div>
             <select wire:model.live="status" class="w-full md:w-40 bg-white border border-slate-200 rounded-xl px-4 py-3 text-xs font-black text-navy-900 shadow-sm focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all cursor-pointer">
                 <option value="">Semua Status</option>
                 <option value="Menunggu">Menunggu</option>
@@ -16,6 +20,12 @@
                 <option value="">Tampilkan 10 Data</option>
                 <option value="all">Tampilkan Semua</option>
             </select>
+            
+            @if($search || $status || $show)
+            <button wire:click="$set('search', ''); $set('status', ''); $set('show', '')" class="px-4 py-3 bg-red-50 text-red-600 font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-red-100 transition-all text-center flex items-center justify-center shrink-0" title="Reset Filter">
+                <i class="fas fa-times"></i>
+            </button>
+            @endif
         </div>
     </div>
 

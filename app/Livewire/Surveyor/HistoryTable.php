@@ -4,14 +4,26 @@ namespace App\Livewire\Surveyor;
 
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Attributes\Url;
 use App\Models\Infrastruktur;
 
 class HistoryTable extends Component
 {
     use WithPagination;
 
+    #[Url]
+    public $search = '';
+
+    #[Url]
     public $status = '';
+
+    #[Url]
     public $show = '';
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
 
     public function updatingStatus()
     {
@@ -28,6 +40,20 @@ class HistoryTable extends Component
         $query = Infrastruktur::with(['kelurahan.kecamatan', 'analisis', 'cnn'])
             ->where('id_user', auth()->id())
             ->orderBy('created_at', 'desc');
+
+        if ($this->search != '') {
+            $query->where(function($q) {
+                $q->where('nama_objek', 'like', '%' . $this->search . '%')
+                  ->orWhere('nama_infrastruktur', 'like', '%' . $this->search . '%')
+                  ->orWhere('jenis', 'like', '%' . $this->search . '%')
+                  ->orWhereHas('kelurahan', function($k) {
+                      $k->where('nama_kelurahan', 'like', '%' . $this->search . '%')
+                        ->orWhereHas('kecamatan', function($kec) {
+                            $kec->where('nama_kecamatan', 'like', '%' . $this->search . '%');
+                        });
+                  });
+            });
+        }
             
         if ($this->status != '') {
             if ($this->status == 'Menunggu') {
@@ -46,7 +72,7 @@ class HistoryTable extends Component
         }
             
         if ($this->show == 'all') {
-            $riwayat = collect($query->get()); // Return collection to avoid pagination links error
+            $riwayat = collect($query->get()); 
         } else {
             $riwayat = $query->paginate(10);
         }
