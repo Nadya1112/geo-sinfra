@@ -821,7 +821,7 @@
                 <!-- Brand -->
                 <div>
                     <div class="mb-6">
-                        <img src="{{ asset('logo_dinas.jpeg') }}" alt="Logo Banjarmasin" class="w-40 md:w-56 h-auto drop-shadow-xl rounded-xl" onerror="this.style.display='none'">
+                        <h2 class="text-3xl font-black text-white tracking-wider"><span class="text-gold-500">GEO-</span>SINFRA</h2>
                     </div>
                 </div>
                 
@@ -831,7 +831,7 @@
                     <ul class="space-y-4">
                         <li class="flex items-start gap-4">
                             <i class="fas fa-map-marker-alt text-gold-500 mt-1"></i>
-                            <span class="text-sm text-slate-400 leading-relaxed"><strong class="text-white">Dinas Perumahan Rakyat dan Kawasan Permukiman Kota Banjarmasin</strong><br>Jalan R.E Martadinata No. 1 Blok B Lantai 2 Kec. Banjarmasin Tengah, Kota Banjarmasin Kalimantan Selatan - 70111</span>
+                            <span class="text-sm text-slate-400 leading-relaxed"><strong class="text-white">Geo-Sinfra</strong><br>Platform Pemetaan dan Monitoring Infrastruktur Berbasis Web GIS.</span>
                         </li>
                         <li class="flex items-center gap-4">
                             <i class="fas fa-envelope text-gold-500"></i>
@@ -870,7 +870,7 @@
             <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center gap-6 relative">
                 <p class="text-xs font-bold text-slate-500 uppercase tracking-widest md:absolute md:left-1/2 md:-translate-x-1/2 text-center">&copy; 2026 GEO-SINFRA. Hak Cipta Dilindungi.</p>
                 <div class="flex gap-4 md:ml-auto">
-                    <a href="https://www.instagram.com/disperkim.banjarmasin?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:bg-gold-500 hover:text-white transition-all shadow-sm hover:shadow-gold-500/50" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:bg-gold-500 hover:text-white transition-all shadow-sm hover:shadow-gold-500/50" title="Instagram"><i class="fab fa-instagram"></i></a>
                     <span class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-500 cursor-default" title="YouTube (Belum Tersedia)"><i class="fab fa-youtube"></i></span>
                 </div>
             </div>
