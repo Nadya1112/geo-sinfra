@@ -418,4 +418,31 @@ class SurveyorController extends Controller
 
         return redirect()->route('surveyor.laporan')->with('success', 'STATUS PENUGASAN BERHASIL DIPERBARUI!');
     }
+
+    public function showLaporan($id)
+    {
+        $laporan = \App\Models\LaporanWarga::where('id', $id)->where('id_surveyor', auth()->id())->firstOrFail();
+        return view('surveyor.laporan-show', compact('laporan'));
+    }
+
+    public function editLaporan($id)
+    {
+        $laporan = \App\Models\LaporanWarga::where('id', $id)->where('id_surveyor', auth()->id())->firstOrFail();
+        return view('surveyor.laporan-edit', compact('laporan'));
+    }
+
+    public function updateLaporan(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:Menunggu,Ditinjau,Diproses,Selesai,Ditolak',
+        ]);
+
+        $laporan = \App\Models\LaporanWarga::where('id', $id)->where('id_surveyor', auth()->id())->firstOrFail();
+        
+        $laporan->update([
+            'status' => $request->status,
+        ]);
+
+        return redirect()->route('surveyor.laporan')->with('success', 'STATUS PENUGASAN BERHASIL DIPERBARUI!');
+    }
 }

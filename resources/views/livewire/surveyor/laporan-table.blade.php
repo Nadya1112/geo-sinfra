@@ -50,6 +50,7 @@
                         <th class="px-6 py-4 font-extrabold uppercase tracking-widest text-xs text-gold-500">Pelapor</th>
                         <th class="px-6 py-4 font-extrabold uppercase tracking-widest text-xs text-gold-500">Laporan Kerusakan</th>
                         <th class="px-5 py-4 font-extrabold uppercase tracking-widest text-xs text-gold-500 text-center">Status</th>
+                        <th class="px-5 py-4 font-extrabold uppercase tracking-widest text-xs text-gold-500 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
@@ -113,24 +114,27 @@
                                 if($laporan->status == 'Diproses') $statusColor = 'bg-indigo-50 text-indigo-700 border-indigo-200';
                                 if($laporan->status == 'Selesai') $statusColor = 'bg-emerald-50 text-emerald-700 border-emerald-200';
                                 if($laporan->status == 'Ditolak') $statusColor = 'bg-red-50 text-red-700 border-red-200';
+                                
+                                $statusIcon = 'fa-clock';
+                                if($laporan->status == 'Menunggu') $statusIcon = 'fa-hourglass-half';
+                                if($laporan->status == 'Ditinjau') $statusIcon = 'fa-eye';
+                                if($laporan->status == 'Diproses') $statusIcon = 'fa-cog fa-spin';
+                                if($laporan->status == 'Selesai') $statusIcon = 'fa-check-circle';
+                                if($laporan->status == 'Ditolak') $statusIcon = 'fa-times-circle';
                             @endphp
                             
-                            <div class="flex flex-col items-center gap-2" x-data="{ status: '{{ $laporan->status }}' }">
-                                <div class="relative w-36 text-left">
-                                    <select x-model="status" class="w-full appearance-none pl-3 pr-8 py-1.5 rounded-lg text-xs font-bold border {{ $statusColor }} focus:outline-none focus:ring-2 focus:ring-navy-500 cursor-pointer shadow-sm">
-                                        <option value="Menunggu">⏳ Menunggu</option>
-                                        <option value="Ditinjau">👀 Ditinjau</option>
-                                        <option value="Diproses">⚙️ Diproses</option>
-                                        <option value="Selesai">✅ Selesai</option>
-                                        <option value="Ditolak">❌ Ditolak</option>
-                                    </select>
-                                    <i class="fas fa-chevron-down absolute right-2.5 top-1/2 -translate-y-1/2 text-xs opacity-60 pointer-events-none"></i>
-                                </div>
-                                <button x-show="status !== '{{ $laporan->status }}'" 
-                                        @click="confirmUpdate({{ $laporan->id }}, status)"
-                                        class="w-36 px-3 py-1.5 bg-emerald-500 text-white rounded-lg text-xs font-bold shadow hover:bg-emerald-600 transition-all">
-                                    <i class="fas fa-save mr-1"></i> Simpan
-                                </button>
+                            <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border {{ $statusColor }} text-xs font-bold tracking-wider shadow-sm">
+                                <i class="fas {{ $statusIcon }}"></i> {{ $laporan->status }}
+                            </div>
+                        </td>
+                        <td class="px-4 py-2 text-center">
+                            <div class="flex items-center justify-center gap-1.5">
+                                <a href="{{ route('surveyor.laporan.edit', $laporan->id) }}" class="w-7 h-7 flex items-center justify-center bg-white border border-slate-200 text-slate-400 rounded-md hover:bg-gold-500 hover:text-white hover:border-gold-500 hover:shadow-sm transition-all cursor-pointer" title="Ubah Data">
+                                    <i class="fas fa-pen text-xs"></i>
+                                </a>
+                                <a href="{{ route('surveyor.laporan.show', $laporan->id) }}" class="w-7 h-7 flex items-center justify-center bg-navy-900 text-gold-500 rounded-md hover:bg-navy-950 hover:text-white transition-all shadow-sm cursor-pointer" title="Lihat Detail">
+                                    <i class="fas fa-eye text-xs"></i>
+                                </a>
                             </div>
                         </td>
                     </tr>

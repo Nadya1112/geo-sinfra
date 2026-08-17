@@ -545,6 +545,9 @@ Route::middleware(['auth'])->group(function () {
         
         // Penugasan Laporan Warga
         Route::get('/laporan', [App\Http\Controllers\Surveyor\SurveyorController::class, 'laporan'])->name('surveyor.laporan');
+        Route::get('/laporan/{id}', [App\Http\Controllers\Surveyor\SurveyorController::class, 'showLaporan'])->name('surveyor.laporan.show');
+        Route::get('/laporan/{id}/edit', [App\Http\Controllers\Surveyor\SurveyorController::class, 'editLaporan'])->name('surveyor.laporan.edit');
+        Route::put('/laporan/{id}', [App\Http\Controllers\Surveyor\SurveyorController::class, 'updateLaporan'])->name('surveyor.laporan.update');
         Route::put('/laporan/{id}/status', [App\Http\Controllers\Surveyor\SurveyorController::class, 'updateStatus'])->name('surveyor.laporan.status');
         
         Route::get('/input', [App\Http\Controllers\Surveyor\SurveyorController::class, 'create'])->name('surveyor.input');
