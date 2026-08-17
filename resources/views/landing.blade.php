@@ -819,10 +819,11 @@
         <div class="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
                 <!-- Brand -->
-                <div>
-                    <div class="mb-6">
-                        <img src="{{ asset('logo_geosinfra.png') }}" alt="Logo Geo-Sinfra" class="w-48 h-auto drop-shadow-xl rounded-xl" onerror="this.style.display='none'">
-                        <p class="mt-4 text-sm text-slate-400 leading-relaxed">Platform Pemetaan dan Monitoring Infrastruktur Berbasis Web GIS.</p>
+                <div class="flex justify-center md:justify-start items-center">
+                    <div class="mb-6 animate-pulse transform hover:scale-105 transition-transform duration-500 cursor-default">
+                        <h2 class="text-4xl md:text-5xl font-black tracking-widest text-gold-500 drop-shadow-xl uppercase">
+                            GEO-SINFRA
+                        </h2>
                     </div>
                 </div>
                 
