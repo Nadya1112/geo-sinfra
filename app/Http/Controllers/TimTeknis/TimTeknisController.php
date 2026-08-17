@@ -84,46 +84,12 @@ class TimTeknisController extends Controller
 
     public function validasi(Request $request)
     {
-        // Hanya ambil data yang sudah di-Verified oleh Admin
-        $query = Infrastruktur::with(['kelurahan.kecamatan', 'user', 'analisis', 'cnn'])
-            ->where('status_verifikasi', 'Verified')
-            ->orderBy('created_at', 'desc');
-            
-        // Default to Pending if no status filter is explicitly selected
-        $statusFilter = $request->get('status', 'Pending');
-        
-        if ($statusFilter !== 'All') {
-            $query->where('status_validasi', $statusFilter);
-        }
-
-        if ($request->kecamatan) {
-            $query->whereHas('kelurahan', function($q) use ($request) {
-                $q->where('id_kecamatan', $request->kecamatan);
-            });
-        }
-
-        if ($request->start_date && $request->end_date) {
-            $query->whereBetween('infrastruktur.created_at', [
-                $request->start_date . ' 00:00:00',
-                $request->end_date . ' 23:59:59'
-            ]);
-        }
-
-        if ($request->get('show') == 'all') {
-            $allUsulan = $query->get();
-        } else {
-            $allUsulan = $query->paginate(10)->withQueryString();
-        }
-
         $counts = [
-            'pending' => Infrastruktur::where('status_verifikasi', 'Verified')->where('status_validasi', 'Pending')->count(),
-            'verified' => Infrastruktur::where('status_verifikasi', 'Verified')->where('status_validasi', 'Validated')->count(),
-            'rejected' => Infrastruktur::where('status_verifikasi', 'Verified')->where('status_validasi', 'Rejected')->count(),
+            'pending' => \App\Models\Infrastruktur::where('status_verifikasi', 'Verified')->where('status_validasi', 'Pending')->count(),
+            'verified' => \App\Models\Infrastruktur::where('status_verifikasi', 'Verified')->where('status_validasi', 'Validated')->count(),
+            'rejected' => \App\Models\Infrastruktur::where('status_verifikasi', 'Verified')->where('status_validasi', 'Rejected')->count(),
         ];
-
-        $kecamatan = \App\Models\Kecamatan::all();
-
-        return view('tim_teknis.validasi', compact('allUsulan', 'counts', 'kecamatan'));
+        return view('tim_teknis.validasi', compact('counts'));
     }
 
     public function prosesValidasi(Request $request, $id)
@@ -207,59 +173,7 @@ class TimTeknisController extends Controller
 
     public function laporan(Request $request)
     {
-        $query = Infrastruktur::with(['kelurahan.kecamatan', 'user', 'analisis'])->where('status_verifikasi', 'Verified');
-
-        // Search by Nama Infrastruktur
-        if ($request->search) {
-            $query->where('nama_objek', 'LIKE', '%' . $request->search . '%');
-        }
-
-        // Filter
-        if ($request->kecamatan) {
-            $query->whereHas('kelurahan', function($q) use ($request) {
-                $q->where('id_kecamatan', $request->kecamatan);
-            });
-        }
-        // Filter Kondisi — gunakan exact match karena nilai sudah sesuai label AI
-        // ('Baik', 'Rusak Sedang', 'Rusak Berat')
-        if ($request->kondisi) {
-            $query->whereHas('analisis', function($q) use ($request) {
-                $q->where('label_prioritas', $request->kondisi);
-            });
-        }
-        if ($request->jenis) {
-            $query->where('jenis', strtolower($request->jenis));
-        }
-        if ($request->start_date && $request->end_date) {
-            $query->whereBetween('infrastruktur.created_at', [
-                $request->start_date . ' 00:00:00',
-                $request->end_date . ' 23:59:59'
-            ]);
-        }
-
-        $query = $query->orderBy('created_at', 'desc');
-        
-        $totalLaporan = $query->count();
-        $totalBaik = (clone $query)->whereHas('analisis', function($q) {
-            $q->where('label_prioritas', 'Baik');
-        })->count();
-        $totalSedang = (clone $query)->whereHas('analisis', function($q) {
-            $q->where('label_prioritas', 'Rusak Sedang');
-        })->count();
-        $totalBerat = (clone $query)->whereHas('analisis', function($q) {
-            $q->where('label_prioritas', 'Rusak Berat');
-        })->count();
-        
-        if ($request->get('show') == 'all') {
-            $reports = $query->get();
-        } else {
-            $limit = $request->get('show') && is_numeric($request->get('show')) ? (int) $request->get('show') : 15;
-            $reports = $query->paginate($limit)->withQueryString();
-        }
-        
-        $kecamatan = \App\Models\Kecamatan::all();
-
-        return view('tim_teknis.laporan', compact('reports', 'kecamatan', 'totalLaporan', 'totalBaik', 'totalSedang', 'totalBerat'));
+        return view('tim_teknis.laporan');
     }
 
     public function exportPdf($id)

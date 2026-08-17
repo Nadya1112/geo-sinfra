@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -22,6 +22,8 @@
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    @livewireStyles
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
@@ -147,239 +149,7 @@
                 </div>
             </div>
 
-            <!-- TABLE SECTION -->
-            <div class="bg-white dark:bg-[#1e1b4b] rounded-[2rem] md:rounded-[3rem] shadow-sm border border-slate-100 dark:border-white/10 overflow-hidden mb-10">
-                <div class="px-4 md:px-8 py-4 md:py-5 border-b border-slate-50 flex flex-col md:flex-row justify-between items-center bg-white dark:bg-[#1e1b4b] gap-4">
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-xl bg-gold-50 flex items-center justify-center text-gold-500 border border-gold-100">
-                            <i class="fas fa-tasks"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-widest">Antrean Validasi</h3>
-                            <p class="text-xs text-slate-400 font-bold uppercase mt-1">Daftar laporan surveyor yang menunggu keputusan</p>
-                        </div>
-                    </div>
-                    <div>
-                        <form action="{{ route('tim_teknis.validasi') }}" method="GET" class="flex items-center gap-2">
-                            <label class="text-xs font-black text-slate-400 uppercase tracking-widest">Tampilan:</label>
-                            <select name="show" onchange="this.form.submit()" class="text-xs font-bold text-navy-900 dark:text-white bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-xl px-3 py-2 focus:outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all shadow-sm">
-                                <option value="10" {{ request('show') != 'all' ? 'selected' : '' }}>10 Baris</option>
-                                <option value="all" {{ request('show') == 'all' ? 'selected' : '' }}>Semua Data</option>
-                            </select>
-                        </form>
-                    </div>
-                </div>
-                
-                <!-- FILTER TABS & ADVANCED FILTER -->
-                <div class="px-4 md:px-8 py-4 bg-white dark:bg-[#1e1b4b] border-b border-slate-100 dark:border-white/10">
-                    <form action="{{ route('tim_teknis.validasi') }}" method="GET" class="flex flex-col gap-4">
-                        <input type="hidden" name="show" value="{{ request('show') }}">
-                        @php $currentStatus = request('status', 'Pending'); @endphp
-                        <input type="hidden" name="status" value="{{ $currentStatus }}">
-
-                        <!-- Filter Status -->
-                        <div class="flex flex-wrap gap-2 mb-2">
-                            <a href="{{ route('tim_teknis.validasi', array_merge(request()->query(), ['status' => 'All'])) }}" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all {{ $currentStatus == 'All' ? 'bg-navy-900 text-white shadow-md' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Semua Antrean</a>
-                            <a href="{{ route('tim_teknis.validasi', array_merge(request()->query(), ['status' => 'Pending'])) }}" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all {{ $currentStatus == 'Pending' ? 'bg-amber-500 text-white shadow-md shadow-amber-500/20' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Menunggu</a>
-                            <a href="{{ route('tim_teknis.validasi', array_merge(request()->query(), ['status' => 'Validated'])) }}" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all {{ $currentStatus == 'Validated' ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Disetujui (Validated)</a>
-                            <a href="{{ route('tim_teknis.validasi', array_merge(request()->query(), ['status' => 'Rejected'])) }}" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all {{ $currentStatus == 'Rejected' ? 'bg-rose-500 text-white shadow-md shadow-rose-500/20' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Ditolak / Perbaikan</a>
-                        </div>
-
-                        <!-- Advanced Filter -->
-                        <div class="flex flex-wrap md:flex-nowrap gap-4 items-end bg-slate-50 dark:bg-[#0f0e2c]/50 p-4 rounded-2xl border border-slate-100 dark:border-white/10">
-                            <div class="w-full md:flex-1">
-                                <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Wilayah Kecamatan</label>
-                                <select name="kecamatan" class="w-full bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:border-gold-500 transition-all shadow-sm">
-                                    <option value="">Semua Kecamatan</option>
-                                    @foreach($kecamatan as $kec)
-                                        <option value="{{ $kec->id_kecamatan }}" {{ request('kecamatan') == $kec->id_kecamatan ? 'selected' : '' }}>
-                                            {{ $kec->nama_kecamatan }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="w-full md:flex-1">
-                                <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Mulai Tanggal</label>
-                                <input type="date" name="start_date" value="{{ request('start_date') }}" class="w-full bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:border-gold-500 transition-all shadow-sm">
-                            </div>
-                            <div class="w-full md:flex-1">
-                                <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Sampai Tanggal</label>
-                                <input type="date" name="end_date" value="{{ request('end_date') }}" class="w-full bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:border-gold-500 transition-all shadow-sm">
-                            </div>
-                            <div class="w-full md:flex-[0.5] flex gap-2 justify-end">
-                                <button type="submit" class="px-6 py-2.5 bg-navy-900 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-gold-500 transition-all shadow-md w-full md:w-auto">
-                                    Filter
-                                </button>
-                                <a href="{{ route('tim_teknis.validasi', ['status' => $currentStatus]) }}" class="px-4 py-2.5 bg-white dark:bg-[#1e1b4b] text-slate-400 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-100 hover:text-slate-600 transition-all border border-slate-200 dark:border-white/20 shadow-sm flex items-center justify-center">
-                                    <i class="fas fa-sync-alt"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-
-                @csrf
-                    <input type="hidden" name="status" id="bulkStatus" value="">
-                    
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md text-xs font-black text-gold-500 uppercase tracking-widest">
-
-                                    <th class="px-2 py-4 w-12 border-b border-navy-800">No</th>
-                                <th class="px-6 py-4 border-b border-navy-800">Infrastruktur</th>
-                                <th class="px-6 py-4 border-b border-navy-800">Wilayah</th>
-                                <th class="px-6 py-4 border-b border-navy-800">Surveyor</th>
-                                <th class="px-6 py-4 border-b border-navy-800">Status Kondisi</th>
-                                <th class="px-6 py-4 border-b border-navy-800">Status Validasi</th>
-                                <th class="px-6 py-4 text-center border-b border-navy-800">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-50">
-                            @forelse($allUsulan as $index => $item)
-                            <tr class="hover:bg-slate-50 dark:bg-[#0f0e2c]/50 transition-colors group">
-
-                                <td class="px-2 py-5 whitespace-nowrap text-xs font-black text-slate-300">
-                                    {{ request('show') == 'all' ? sprintf('%02d', $index + 1) : sprintf('%02d', ($allUsulan->currentPage() - 1) * $allUsulan->perPage() + $index + 1) }}
-                                </td>
-                                <td class="px-6 py-5 min-w-[280px]">
-                                    <div class="flex items-center gap-4">
-                                        <div class="w-12 h-12 rounded-2xl bg-slate-100 overflow-hidden shadow-inner border border-white flex-shrink-0 flex items-center justify-center relative">
-                                            @if($item->foto_terbaru)
-                                                <img src="{{ asset('storage/' . $item->foto_terbaru) }}" class="w-full h-full object-cover">
-                                            @else
-                                                <i class="fas fa-image text-slate-300"></i>
-                                            @endif
-                                        </div>
-                                        <div>
-                                            <h4 class="text-[13px] font-black text-navy-900 dark:text-white leading-tight mb-0.5">{{ $item->nama_objek }}</h4>
-                                            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">{{ $item->jenis }}</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-5 min-w-[150px]">
-                                    <p class="text-xs font-bold text-navy-900 dark:text-white mb-0.5">{{ $item->kelurahan->nama_kelurahan ?? '-' }}</p>
-                                    <p class="text-xs text-slate-400 font-bold uppercase tracking-widest">{{ $item->kelurahan->kecamatan->nama_kecamatan ?? '-' }}</p>
-                                </td>
-                                <td class="px-6 py-5 min-w-[150px]">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-8 h-8 rounded-full bg-gold-50 border border-gold-100 flex items-center justify-center text-gold-500 font-bold text-xs uppercase shadow-sm">
-                                            {{ substr($item->user->name ?? 'A', 0, 1) }}
-                                        </div>
-                                        <p class="text-xs font-black text-navy-900 dark:text-white">{{ $item->user->name ?? 'Anonim' }}</p>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-5 min-w-[150px]">
-                                    <div class="flex flex-col gap-2 items-start">
-                                        @php
-                                            $aiLabel = $item->analisis->label_prioritas ?? '';
-                                            $aiLabelLower = strtolower($aiLabel);
-                                            $aiScore = $item->analisis->skor_dt ?? null;
-                                            
-                                            $aiClass = 'bg-slate-50 dark:bg-[#0f0e2c] text-slate-600 border-slate-200 dark:border-white/20';
-                                            if (str_contains($aiLabelLower, 'berat')) {
-                                                $aiClass = 'bg-[#be123c]/10 text-[#be123c] border-[#be123c]/30';
-                                            } elseif (str_contains($aiLabelLower, 'sedang') || str_contains($aiLabelLower, 'ringan')) {
-                                                $aiClass = 'bg-[#d97706]/10 text-[#d97706] border-[#d97706]/30';
-                                            } elseif (str_contains($aiLabelLower, 'baik')) {
-                                                $aiClass = 'bg-[#059669]/10 text-[#059669] border-[#059669]/30';
-                                            }
-                                        @endphp
-                                        <span class="px-2.5 py-1 rounded-md border text-xs font-black uppercase tracking-widest whitespace-nowrap {{ $aiClass }}">
-                                            {{ $aiLabel ?: 'Belum Dianalisis' }}
-                                        </span>
-                                        @if($aiScore !== null)
-                                            <span class="text-xs font-bold text-slate-400 uppercase flex items-center gap-1.5 tracking-widest mt-1">
-                                                <i class="fas fa-chart-bar text-gold-500"></i> Skor Prioritas: {{ number_format($aiScore, 1) }}%
-                                            </span>
-                                        @endif
-                                    </div>
-                                </td>
-                                <td class="px-6 py-5 min-w-[140px]">
-                                    <div class="flex flex-col gap-2">
-                                        @php
-                                            $statusClass = match($item->status_validasi) {
-                                                'Validated' => 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border-emerald-100 dark:border-emerald-500/20',
-                                                'Rejected' => 'bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 border-rose-100 dark:border-rose-500/20',
-                                                default => 'bg-slate-50 dark:bg-[#0f0e2c] text-slate-600 border-slate-200 dark:border-white/20'
-                                            };
-                                            $statusIcon = match($item->status_validasi) {
-                                                'Validated' => 'fa-check-double',
-                                                'Rejected' => 'fa-times-circle',
-                                                default => 'fa-clock'
-                                            };
-                                        @endphp
-                                        <span class="px-3 py-1.5 rounded-xl text-xs font-black uppercase tracking-widest border flex items-center gap-2 w-fit {{ $statusClass }}">
-                                            <i class="fas {{ $statusIcon }} text-xs"></i>
-                                            {{ $item->status_validasi == 'Validated' ? 'Diterima' : ($item->status_validasi == 'Rejected' ? 'Ditolak' : 'Menunggu') }}
-                                        </span>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-5 min-w-[260px]">
-                                    <div class="flex items-center justify-center gap-2">
-                                        {{-- Detail --}}
-                                        <a href="{{ route('tim_teknis.infrastruktur.show', $item->id_infrastruktur) }}" class="flex items-center justify-center gap-2 px-3 py-2.5 bg-navy-50 text-navy-900 dark:text-white rounded-xl hover:bg-gold-500 hover:text-white transition-all border border-navy-100 shadow-sm group" title="Lihat Detail">
-                                            <i class="fas fa-eye text-xs group-hover:scale-110 transition-transform"></i>
-                                            <span class="text-xs font-black uppercase tracking-widest hidden 2xl:block">Detail</span>
-                                        </a>
-
-                                        {{-- ACC --}}
-                                        @if($item->status_validasi == 'Pending')
-                                            <form action="{{ route('tim_teknis.validasi.proses', $item->id_infrastruktur) }}" method="POST" class="flex-1" onsubmit="return promptCatatan(event, this, 'Validated')">
-                                                @csrf
-                                                <input type="hidden" name="status" value="Validated">
-                                                <button type="submit" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-[#059669] text-white rounded-xl hover:bg-[#047857] transition-all shadow-lg shadow-[#059669]/20 group border border-[#059669]" title="Setujui Validasi">
-                                                    <i class="fas fa-check text-xs group-hover:scale-110 transition-transform"></i>
-                                                    <span class="text-xs font-black uppercase tracking-widest">ACC</span>
-                                                </button>
-                                            </form>
-                                            
-                                            {{-- Tolak --}}
-                                            <form action="{{ route('tim_teknis.validasi.proses', $item->id_infrastruktur) }}" method="POST" class="flex-1" onsubmit="return promptCatatan(event, this, 'Rejected')">
-                                                @csrf
-                                                <input type="hidden" name="status" value="Rejected">
-                                                <button type="submit" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-500 hover:text-white transition-all border border-rose-200 shadow-sm group" title="Tolak Validasi">
-                                                    <i class="fas fa-times text-xs group-hover:scale-110 transition-transform"></i>
-                                                    <span class="text-xs font-black uppercase tracking-widest">Tolak</span>
-                                                </button>
-                                            </form>
-                                        @else
-                                            <button disabled class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 bg-slate-50 dark:bg-[#0f0e2c] text-slate-300 rounded-xl border border-slate-100 dark:border-white/10 cursor-not-allowed">
-                                                <i class="fas fa-check text-xs"></i>
-                                                <span class="text-xs font-black uppercase tracking-widest">ACC</span>
-                                            </button>
-                                            <button disabled class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 bg-slate-50 dark:bg-[#0f0e2c] text-slate-300 rounded-xl border border-slate-100 dark:border-white/10 cursor-not-allowed">
-                                                <i class="fas fa-times text-xs"></i>
-                                                <span class="text-xs font-black uppercase tracking-widest">Tolak</span>
-                                            </button>
-                                        @endif
-                                    </div>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="7" class="px-4 md:px-8 py-12 md:py-20 text-center">
-                                    <div class="flex flex-col items-center gap-3">
-                                        <div class="w-16 h-16 bg-slate-50 dark:bg-[#0f0e2c] rounded-full flex items-center justify-center text-slate-300">
-                                            <i class="fas fa-clipboard-check text-2xl"></i>
-                                        </div>
-                                        <p class="text-sm font-bold text-slate-400 uppercase tracking-widest">Tidak ada data untuk divalidasi</p>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-                </form>
-
-                @if(request('show') != 'all')
-                    <div class="px-8 py-4 border-t border-slate-50 bg-slate-50 dark:bg-[#0f0e2c]/10">
-                        {{ $allUsulan->links() }}
-                    </div>
-                @endif
-            </div>
+            @livewire('tim-teknis.validasi-table')
         </div>
 
         <!-- Validation Modal -->
@@ -534,5 +304,6 @@
             return false;
         }
     </script>
+    @livewireScripts
 </body>
 </html>
