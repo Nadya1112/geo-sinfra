@@ -817,44 +817,13 @@
     <!-- Footer -->
     <footer class="bg-navy-950 pt-20 pb-10 text-white relative border-t border-white/5">
         <div class="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
                 <!-- Brand -->
                 <div>
                     <div class="mb-6">
-                        <h2 class="text-3xl font-black text-white tracking-wider"><span class="text-gold-500">GEO-</span>SINFRA</h2>
+                        <img src="{{ asset('logo_geosinfra.png') }}" alt="Logo Geo-Sinfra" class="w-48 h-auto drop-shadow-xl rounded-xl" onerror="this.style.display='none'">
+                        <p class="mt-4 text-sm text-slate-400 leading-relaxed">Platform Pemetaan dan Monitoring Infrastruktur Berbasis Web GIS.</p>
                     </div>
-                </div>
-                
-                <!-- Contact -->
-                <div>
-                    <h5 class="text-base font-black text-white uppercase tracking-wider mb-6">Hubungi Kami</h5>
-                    <ul class="space-y-4">
-                        <li class="flex items-start gap-4">
-                            <i class="fas fa-map-marker-alt text-gold-500 mt-1"></i>
-                            <span class="text-sm text-slate-400 leading-relaxed"><strong class="text-white">Geo-Sinfra</strong><br>Platform Pemetaan dan Monitoring Infrastruktur Berbasis Web GIS.</span>
-                        </li>
-                        <li class="flex items-center gap-4">
-                            <i class="fas fa-envelope text-gold-500"></i>
-                            <span class="text-sm text-slate-400">ampihkumuh@gmail.com</span>
-                        </li>
-                        <li class="flex items-center gap-4">
-                            <i class="fas fa-phone-alt text-gold-500"></i>
-                            <span class="text-sm text-slate-400">{{ \App\Helpers\SettingHelper::get('instansi_phone', '(0511) 3365592') }}</span>
-                        </li>
-                        <li class="flex items-center gap-4">
-                            <i class="fab fa-whatsapp text-gold-500 text-lg"></i>
-                            <span class="text-sm text-slate-400">
-                                @php
-                                    $waNumber = \App\Helpers\SettingHelper::get('contact_wa', '+6289602781244');
-                                    $waLink = preg_replace('/[^0-9]/', '', $waNumber);
-                                @endphp
-                                <a href="https://wa.me/{{ $waLink }}" target="_blank" class="hover:text-gold-500 transition-colors" title="Chat WhatsApp">
-                                    {{ $waNumber }}
-                                </a>
-                            </span>
-                        </li>
-
-                    </ul>
                 </div>
                 
                 <!-- Links -->
