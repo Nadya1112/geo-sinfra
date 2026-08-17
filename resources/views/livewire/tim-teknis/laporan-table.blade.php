@@ -119,9 +119,11 @@
                     <input type="date" wire:model.live="end_date" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all cursor-pointer">
                 </div>
                 <div class="w-full md:flex-1 flex gap-2 justify-start md:justify-end mt-2 md:mt-0">
-                    <button wire:click="resetFilters" class="px-4 py-2.5 bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-100 hover:text-slate-600 transition-all flex items-center border border-slate-100 dark:border-white/10 shadow-sm cursor-pointer" title="Atur Ulang Filter">
-                        <i class="fas fa-sync-alt mr-2"></i> Reset
+                    @if($search || $kecamatan || $kondisi || $jenis || $start_date || $end_date)
+                    <button wire:click="resetFilters" class="px-4 py-3 bg-red-50 text-red-600 font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-red-100 transition-all text-center flex items-center justify-center shrink-0" title="Reset Filter">
+                        <i class="fas fa-times"></i>
                     </button>
+                    @endif
                 </div>
             </div>
         </div>

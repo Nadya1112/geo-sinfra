@@ -18,6 +18,11 @@
                 </select>
                 <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
             </div>
+            @if($search || ($status !== 'all'))
+            <button wire:click="$set('search', ''); $set('status', 'all')" class="px-4 py-3 bg-red-50 text-red-600 font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-red-100 transition-all text-center flex items-center justify-center shrink-0" title="Reset Filter">
+                <i class="fas fa-times"></i>
+            </button>
+            @endif
         </div>
     </div>
 
