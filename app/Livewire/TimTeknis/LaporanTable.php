@@ -20,14 +20,28 @@ class LaporanTable extends Component
     public $show = '15';
 
     protected $queryString = [
-        'search' => ['except' => ''],
-        'kecamatan' => ['except' => ''],
-        'kondisi' => ['except' => ''],
-        'jenis' => ['except' => ''],
+        'search'     => ['except' => ''],
+        'kecamatan'  => ['except' => ''],
+        'kondisi'    => ['except' => ''],
+        'jenis'      => ['except' => ''],
         'start_date' => ['except' => ''],
-        'end_date' => ['except' => ''],
-        'show' => ['except' => '15'],
+        'end_date'   => ['except' => ''],
+        'show'       => ['except' => '15'],
     ];
+
+    /**
+     * Inisialisasi filter dari URL query string saat component pertama kali dimuat.
+     * Contoh: ?kondisi=Berat dari banner Peringatan Darurat di dashboard.
+     */
+    public function mount()
+    {
+        $this->kondisi    = request()->query('kondisi', '');
+        $this->kecamatan  = request()->query('kecamatan', '');
+        $this->jenis      = request()->query('jenis', '');
+        $this->search     = request()->query('search', '');
+        $this->start_date = request()->query('start_date', '');
+        $this->end_date   = request()->query('end_date', '');
+    }
 
     public function updating($field)
     {
