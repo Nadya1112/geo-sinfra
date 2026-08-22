@@ -133,21 +133,23 @@
 
             var tableHTML = tempTable.outerHTML;
 
-            // FIX: Bangun Excel XML header dengan string biasa (bukan template literal)
-            // agar browser HTML parser tidak salah mengira '-->' sebagai akhir HTML comment
-            // yang ada di dalam <script> block, yang menyebabkan sisa kode bocor jadi teks biasa.
+            // FIX 1: Pecah '-->' agar browser HTML parser tidak salah menutup <script> tag.
+            // FIX 2: Pecah '<x:' agar Laravel Blade compiler tidak mengira tag XML ini
+            //        adalah Blade component (contoh error 500 karena tag x:DisplayGridlines).
+            var x_      = '<' + 'x:';
+            var x_close = '</' + 'x:';
             var msoOpen  = '<' + '!--[if gte mso 9]>';
             var msoClose = '<' + '![endif]--' + '>';
             var xmlBlock = msoOpen +
                 '<xml>' +
-                    '<x:ExcelWorkbook xmlns:x="urn:schemas-microsoft-com:office:excel">' +
-                        '<x:ExcelWorksheets>' +
-                            '<x:ExcelWorksheet>' +
-                                '<x:Name>Data Laporan</x:Name>' +
-                                '<x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions>' +
-                            '</x:ExcelWorksheet>' +
-                        '</x:ExcelWorksheets>' +
-                    '</x:ExcelWorkbook>' +
+                    x_ + 'ExcelWorkbook xmlns:x="urn:schemas-microsoft-com:office:excel">' +
+                        x_ + 'ExcelWorksheets>' +
+                            x_ + 'ExcelWorksheet>' +
+                                x_ + 'Name>Data Laporan' + x_close + 'Name>' +
+                                x_ + 'WorksheetOptions>' + x_ + 'DisplayGridlines/>' + x_close + 'WorksheetOptions>' +
+                            x_close + 'ExcelWorksheet>' +
+                        x_close + 'ExcelWorksheets>' +
+                    x_close + 'ExcelWorkbook>' +
                 '</xml>' +
                 msoClose;
 
