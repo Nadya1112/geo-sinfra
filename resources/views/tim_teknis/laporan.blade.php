@@ -154,15 +154,15 @@
                 msoClose;
 
             var htmlTemplate =
-                '<html xmlns:o="urn:schemas-microsoft-com:office:office"' +
+                '<' + 'html xmlns:o="urn:schemas-microsoft-com:office:office"' +
                      ' xmlns:x="urn:schemas-microsoft-com:office:excel"' +
                      ' xmlns="http://www.w3.org/TR/REC-html40">' +
-                '<head><meta charset="UTF-8">' +
+                '<' + 'head><' + 'meta charset="UTF-8">' +
                 xmlBlock +
-                '<style>table{border-collapse:collapse;}td,th{border:1px solid black;padding:6px;}</style>' +
-                '</head>' +
-                '<body>' + tableHTML + '</body>' +
-                '</html>';
+                '<' + 'style>table{border-collapse:collapse;}td,th{border:1px solid black;padding:6px;}<' + '/style>' +
+                '<' + '/head>' +
+                '<' + 'body>' + tableHTML + '<' + '/body>' +
+                '<' + '/html>';
 
             var blob = new Blob([htmlTemplate], {
                 type: "application/vnd.ms-excel;charset=utf-8"
