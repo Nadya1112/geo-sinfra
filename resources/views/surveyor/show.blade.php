@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -94,20 +94,51 @@
                             
                             {{-- Overlay Deteksi AI --}}
                             @php 
-                                $hasilAi = $infrastruktur->analisis;
+                                $hasilAi  = $infrastruktur->analisis;
                                 $hasilCnn = $infrastruktur->cnn;
+
+                                // Gunakan label AI (bukan teks bebas kondisi surveyor)
+                                $labelCnnRaw       = strtolower($hasilCnn->label_kondisi ?? '');
+                                $confidencePercent = round(($hasilCnn->skor_cnn ?? 0) * 100);
+                                $labelCnnDisplay   = $hasilCnn->label_kondisi ?? 'Tidak Diketahui';
+
+                                // Tentukan warna & ikon berdasarkan hasil AI
+                                if (in_array($labelCnnRaw, ['berat', 'rusak berat'])) {
+                                    $overlayBorder = 'border-red-500/50';
+                                    $overlayBg     = 'bg-red-500/5';
+                                    $cornerBorder  = 'border-red-500';
+                                    $badgeBg       = 'bg-red-600';
+                                    $badgeIcon     = 'fa-exclamation-triangle';
+                                    $showOverlay   = true;
+                                } elseif (in_array($labelCnnRaw, ['sedang', 'rusak sedang'])) {
+                                    $overlayBorder = 'border-amber-400/50';
+                                    $overlayBg     = 'bg-amber-400/5';
+                                    $cornerBorder  = 'border-amber-400';
+                                    $badgeBg       = 'bg-amber-500';
+                                    $badgeIcon     = 'fa-exclamation-circle';
+                                    $showOverlay   = true;
+                                } else {
+                                    // Kondisi Baik — overlay hijau
+                                    $overlayBorder = 'border-emerald-500/50';
+                                    $overlayBg     = 'bg-emerald-500/5';
+                                    $cornerBorder  = 'border-emerald-500';
+                                    $badgeBg       = 'bg-emerald-600';
+                                    $badgeIcon     = 'fa-check-circle';
+                                    $showOverlay   = $hasilCnn ? true : false;
+                                }
                             @endphp
 
-                            @if(strtolower($infrastruktur->kondisi) != 'baik' && strtolower($infrastruktur->kondisi) != 'menunggu ai')
+                            @if($hasilCnn && $showOverlay)
                                 <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-6">
-                                    <div class="relative w-[50%] h-[50%] border-2 border-red-500/50 bg-red-500/5 animate-pulse">
-                                        <div class="absolute -top-1 -left-1 w-3 h-3 border-t-[3px] border-l-[3px] border-red-500"></div>
-                                        <div class="absolute -top-1 -right-1 w-3 h-3 border-t-[3px] border-r-[3px] border-red-500"></div>
-                                        <div class="absolute -bottom-1 -left-1 w-3 h-3 border-b-[3px] border-l-[3px] border-red-500"></div>
-                                        <div class="absolute -bottom-1 -right-1 w-3 h-3 border-b-[3px] border-r-[3px] border-red-500"></div>
-                                        
-                                        <div class="absolute -top-6 left-0 bg-red-500 text-white text-xs font-black px-2 py-0.5 rounded-md shadow-lg tracking-widest">
-                                            KERUSAKAN TERDETEKSI ({{ round(($hasilCnn->skor_cnn ?? 0) * 100) }}%)
+                                    <div class="relative w-[50%] h-[50%] border-2 {{ $overlayBorder }} {{ $overlayBg }} animate-pulse">
+                                        <div class="absolute -top-1 -left-1 w-3 h-3 border-t-[3px] border-l-[3px] {{ $cornerBorder }}"></div>
+                                        <div class="absolute -top-1 -right-1 w-3 h-3 border-t-[3px] border-r-[3px] {{ $cornerBorder }}"></div>
+                                        <div class="absolute -bottom-1 -left-1 w-3 h-3 border-b-[3px] border-l-[3px] {{ $cornerBorder }}"></div>
+                                        <div class="absolute -bottom-1 -right-1 w-3 h-3 border-b-[3px] border-r-[3px] {{ $cornerBorder }}"></div>
+
+                                        <div class="absolute -top-6 left-0 {{ $badgeBg }} text-white text-[10px] font-black px-2 py-0.5 rounded-md shadow-lg flex items-center gap-1">
+                                            <i class="fas {{ $badgeIcon }}"></i>
+                                            AI Yakin {{ $confidencePercent }}% &rarr; {{ $labelCnnDisplay }}
                                         </div>
                                     </div>
                                 </div>

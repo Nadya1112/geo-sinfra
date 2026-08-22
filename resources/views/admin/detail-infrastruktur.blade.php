@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -425,19 +425,47 @@
                                 <img src="{{ $fotoUrl }}" alt="Foto Infrastruktur"
                                      class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
 
-                                {{-- Detection overlay --}}
-                                @if(!in_array(strtolower($inf->kondisi ?? ''), ['baik','menunggu ai']))
+                                {{-- Detection overlay — berbasis label AI, bukan teks kondisi surveyor --}}
+                                @php
+                                    $labelCnnRaw2       = strtolower($hasilCnn->label_kondisi ?? '');
+                                    $confidencePercent2 = round(($hasilCnn->skor_cnn ?? 0) * 100);
+                                    $labelCnnDisplay2   = $hasilCnn->label_kondisi ?? 'Tidak Diketahui';
+
+                                    if (in_array($labelCnnRaw2, ['berat', 'rusak berat'])) {
+                                        $ov2Border = 'border-red-500/60';
+                                        $ov2Bg     = 'bg-red-500/5';
+                                        $ov2Corner = 'border-red-500';
+                                        $ov2Badge  = 'bg-red-600';
+                                        $ov2Icon   = 'fa-exclamation-triangle';
+                                        $ov2Show   = true;
+                                    } elseif (in_array($labelCnnRaw2, ['sedang', 'rusak sedang'])) {
+                                        $ov2Border = 'border-amber-400/60';
+                                        $ov2Bg     = 'bg-amber-400/5';
+                                        $ov2Corner = 'border-amber-400';
+                                        $ov2Badge  = 'bg-amber-500';
+                                        $ov2Icon   = 'fa-exclamation-circle';
+                                        $ov2Show   = true;
+                                    } else {
+                                        $ov2Border = 'border-emerald-500/60';
+                                        $ov2Bg     = 'bg-emerald-500/5';
+                                        $ov2Corner = 'border-emerald-500';
+                                        $ov2Badge  = 'bg-emerald-600';
+                                        $ov2Icon   = 'fa-check-circle';
+                                        $ov2Show   = $hasilCnn ? true : false;
+                                    }
+                                @endphp
+                                @if($hasilCnn && $ov2Show)
                                 <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-6">
-                                    <div class="relative w-[50%] h-[50%] border-2 border-red-500/60 bg-red-500/5 animate-pulse">
-                                        <div class="absolute -top-1 -left-1 w-4 h-4 border-t-4 border-l-4 border-red-500"></div>
-                                        <div class="absolute -top-1 -right-1 w-4 h-4 border-t-4 border-r-4 border-red-500"></div>
-                                        <div class="absolute -bottom-1 -left-1 w-4 h-4 border-b-4 border-l-4 border-red-500"></div>
-                                        <div class="absolute -bottom-1 -right-1 w-4 h-4 border-b-4 border-r-4 border-red-500"></div>
-                                        <div class="absolute -top-7 left-0 bg-red-600 text-white text-xs font-black px-2 py-1 rounded flex items-center gap-1">
-                                            <i class="fas fa-exclamation-triangle"></i>
-                                            KERUSAKAN {{ round(($hasilCnn->skor_cnn ?? 0) * 100) }}%
+                                    <div class="relative w-[50%] h-[50%] border-2 {{ $ov2Border }} {{ $ov2Bg }} animate-pulse">
+                                        <div class="absolute -top-1 -left-1 w-4 h-4 border-t-4 border-l-4 {{ $ov2Corner }}"></div>
+                                        <div class="absolute -top-1 -right-1 w-4 h-4 border-t-4 border-r-4 {{ $ov2Corner }}"></div>
+                                        <div class="absolute -bottom-1 -left-1 w-4 h-4 border-b-4 border-l-4 {{ $ov2Corner }}"></div>
+                                        <div class="absolute -bottom-1 -right-1 w-4 h-4 border-b-4 border-r-4 {{ $ov2Corner }}"></div>
+                                        <div class="absolute -top-7 left-0 {{ $ov2Badge }} text-white text-[10px] font-black px-2 py-1 rounded flex items-center gap-1">
+                                            <i class="fas {{ $ov2Icon }}"></i>
+                                            AI Yakin {{ $confidencePercent2 }}% &rarr; {{ $labelCnnDisplay2 }}
                                         </div>
-                                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-red-500/20 to-transparent h-1/4 w-full" style="animation: scan 2s linear infinite;"></div>
+                                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent h-1/4 w-full" style="animation: scan 2s linear infinite;"></div>
                                     </div>
                                 </div>
                                 @endif
