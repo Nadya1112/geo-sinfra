@@ -138,7 +138,7 @@
 
                                         <div class="absolute -top-6 left-0 {{ $badgeBg }} text-white text-[10px] font-black px-2 py-0.5 rounded-md shadow-lg flex items-center gap-1">
                                             <i class="fas {{ $badgeIcon }}"></i>
-                                            AI Yakin {{ $confidencePercent }}% &rarr; {{ $labelCnnDisplay }}
+                                            Confidence {{ $confidencePercent }}% &rarr; {{ $labelCnnDisplay }}
                                         </div>
                                     </div>
                                 </div>

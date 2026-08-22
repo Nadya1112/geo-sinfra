@@ -463,7 +463,7 @@
                                         <div class="absolute -bottom-1 -right-1 w-4 h-4 border-b-4 border-r-4 {{ $ov2Corner }}"></div>
                                         <div class="absolute -top-7 left-0 {{ $ov2Badge }} text-white text-[10px] font-black px-2 py-1 rounded flex items-center gap-1">
                                             <i class="fas {{ $ov2Icon }}"></i>
-                                            AI Yakin {{ $confidencePercent2 }}% &rarr; {{ $labelCnnDisplay2 }}
+                                            Confidence {{ $confidencePercent2 }}% &rarr; {{ $labelCnnDisplay2 }}
                                         </div>
                                         <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent h-1/4 w-full" style="animation: scan 2s linear infinite;"></div>
                                     </div>
