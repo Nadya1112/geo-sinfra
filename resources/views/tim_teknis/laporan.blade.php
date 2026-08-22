@@ -130,45 +130,42 @@
             var tempTable = document.getElementById("laporanTable").cloneNode(true);
             var tfoot = tempTable.querySelector('tfoot');
             if (tfoot) tfoot.remove();
-            
+
             var tableHTML = tempTable.outerHTML;
-            
-            // Bungkus tabel HTML dengan format meta khusus Excel agar bisa dibaca sebagai .xls
-            var htmlTemplate = `
-                <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
-                <head>
-                    <meta charset="UTF-8">
-                    <!--[if gte mso 9]>
-                    @verbatim
-                    <xml>
-                        <x:ExcelWorkbook>
-                            <x:ExcelWorksheets>
-                                <x:ExcelWorksheet>
-                                    <x:Name>Data Laporan</x:Name>
-                                    <x:WorksheetOptions>
-                                        <x:DisplayGridlines/>
-                                    </x:WorksheetOptions>
-                                </x:ExcelWorksheet>
-                            </x:ExcelWorksheets>
-                        </x:ExcelWorkbook>
-                    </xml>
-                    @endverbatim
-                    <![endif]-->
-                <style>
-    
-    
-</style>
-</head>
-                <body>
-                    ${tableHTML}
-                </body>
-                </html>
-            `;
-            
+
+            // FIX: Bangun Excel XML header dengan string biasa (bukan template literal)
+            // agar browser HTML parser tidak salah mengira '-->' sebagai akhir HTML comment
+            // yang ada di dalam <script> block, yang menyebabkan sisa kode bocor jadi teks biasa.
+            var msoOpen  = '<' + '!--[if gte mso 9]>';
+            var msoClose = '<' + '![endif]--' + '>';
+            var xmlBlock = msoOpen +
+                '<xml>' +
+                    '<x:ExcelWorkbook xmlns:x="urn:schemas-microsoft-com:office:excel">' +
+                        '<x:ExcelWorksheets>' +
+                            '<x:ExcelWorksheet>' +
+                                '<x:Name>Data Laporan</x:Name>' +
+                                '<x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions>' +
+                            '</x:ExcelWorksheet>' +
+                        '</x:ExcelWorksheets>' +
+                    '</x:ExcelWorkbook>' +
+                '</xml>' +
+                msoClose;
+
+            var htmlTemplate =
+                '<html xmlns:o="urn:schemas-microsoft-com:office:office"' +
+                     ' xmlns:x="urn:schemas-microsoft-com:office:excel"' +
+                     ' xmlns="http://www.w3.org/TR/REC-html40">' +
+                '<head><meta charset="UTF-8">' +
+                xmlBlock +
+                '<style>table{border-collapse:collapse;}td,th{border:1px solid black;padding:6px;}</style>' +
+                '</head>' +
+                '<body>' + tableHTML + '</body>' +
+                '</html>';
+
             var blob = new Blob([htmlTemplate], {
                 type: "application/vnd.ms-excel;charset=utf-8"
             });
-            
+
             var downloadLink = document.createElement("a");
             downloadLink.href = window.URL.createObjectURL(blob);
             downloadLink.download = filename;
