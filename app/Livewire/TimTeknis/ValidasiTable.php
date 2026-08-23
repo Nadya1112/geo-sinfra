@@ -49,7 +49,7 @@ class ValidasiTable extends Component
         $this->modalAction = $action;
         $this->alasan = '';
         $this->showModal = true;
-        $this->resetErrorBag('alasan');
+        $this->resetValidation('alasan');
     }
 
     public function closeModal()
