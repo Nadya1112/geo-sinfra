@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -24,6 +24,23 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style> body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .leaflet-tooltip.premium-tooltip {
+        background: rgba(15, 14, 44, 0.85) !important;
+        backdrop-filter: blur(8px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        color: white !important;
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+        font-weight: 900 !important;
+        font-size: 8px !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.1em !important;
+        padding: 4px 8px !important;
+        border-radius: 8px !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1) !important;
+    }
+    .leaflet-tooltip.premium-tooltip::before {
+        border-right-color: rgba(15, 14, 44, 0.85) !important;
+    }
     </style>
 <style>
     
@@ -95,32 +112,12 @@
                         <i class="fas fa-chevron-up text-[6px]"></i>
                     </button>
                     
-                    <div id="condition-options" class="mt-0.5 p-0.5 flex flex-col">
+                    <div id="condition-options" class="mt-0.5 p-0.5 flex flex-col max-h-[40vh] overflow-y-auto custom-scrollbar">
                         <div class="w-full px-3 py-1.5 rounded-lg text-[7px] font-black uppercase tracking-wider text-gray-300 flex items-center justify-between">
                             <span>Total</span>
                             <span id="stat-total" class="text-[7px] font-black text-blue-400 bg-blue-500/10 px-1.5 py-0.5 rounded border border-blue-400/20">0</span>
                         </div>
-                        <div class="w-full px-3 py-1.5 rounded-lg text-[7px] font-black uppercase tracking-wider text-gray-400 flex items-center justify-between">
-                            <div class="flex items-center gap-1.5">
-                                <div class="w-1.5 h-1.5 bg-[#059669] rounded-full"></div>
-                                <span>Baik</span>
-                            </div>
-                            <span id="stat-baik" class="text-[7px] font-black text-[#059669] bg-[#059669]/10 px-1.5 py-0.5 rounded border border-[#059669]/20">0</span>
-                        </div>
-                        <div class="w-full px-3 py-1.5 rounded-lg text-[7px] font-black uppercase tracking-wider text-gray-400 flex items-center justify-between">
-                            <div class="flex items-center gap-1.5">
-                                <div class="w-1.5 h-1.5 bg-[#d97706] rounded-full"></div>
-                                <span>Sedang</span>
-                            </div>
-                            <span id="stat-sedang" class="text-[7px] font-black text-[#d97706] bg-[#d97706]/10 px-1.5 py-0.5 rounded border border-[#d97706]/20">0</span>
-                        </div>
-                        <div class="w-full px-3 py-1.5 rounded-lg text-[7px] font-black uppercase tracking-wider text-gray-400 flex items-center justify-between">
-                            <div class="flex items-center gap-1.5">
-                                <div class="w-1.5 h-1.5 bg-[#be123c] rounded-full"></div>
-                                <span>Berat</span>
-                            </div>
-                            <span id="stat-berat" class="text-[7px] font-black text-[#be123c] bg-[#be123c]/10 px-1.5 py-0.5 rounded border border-[#be123c]/20">0</span>
-                        </div>
+                        <div id="dynamic-stats-container" class="flex flex-col w-full"></div>
                     </div>
                 </div>
 
@@ -465,10 +462,16 @@
                     </div>
                 `;
 
+                let specificLabel = point.cnn?.label_kondisi || point.analisis?.label_prioritas || point.kondisi || 'TIDAK DIKETAHUI';
+                if (isSelesai) specificLabel = 'SUDAH DIPERBAIKI';
+
                 const marker = L.marker([point.latitude, point.longitude], {
                     icon: icon,
                     pane: 'markersPane'
-                }).addTo(map).bindPopup(popupContent, { className: 'premium-popup', maxWidth: 300 });
+                }).addTo(map)
+                .bindPopup(popupContent, { className: 'premium-popup', maxWidth: 300 })
+                .bindTooltip(specificLabel.toUpperCase(), { permanent: true, direction: 'right', className: 'premium-tooltip', offset: [10, 0] });
+                
                 activeMarkers.push(marker);
             });
         }
@@ -563,17 +566,46 @@
         }
 
         function updateStats(points) {
-            const stats = {
-                total: points.length,
-                baik: points.filter(p => { const k = (p.analisis?.label_prioritas || p.kondisi || '').toLowerCase(); return k.includes('baik'); }).length,
-                sedang: points.filter(p => { const k = (p.analisis?.label_prioritas || p.kondisi || '').toLowerCase(); return k.includes('ringan') || k.includes('sedang'); }).length,
-                berat: points.filter(p => { const k = (p.analisis?.label_prioritas || p.kondisi || '').toLowerCase(); return k.includes('berat'); }).length
-            };
+            document.getElementById('stat-total').textContent = points.length;
+            
+            const labelCounts = {};
+            points.forEach(p => {
+                let label = p.cnn?.label_kondisi || p.analisis?.label_prioritas || p.kondisi || 'Tidak Diketahui';
+                if (p.status_perbaikan === 'Selesai') {
+                    label = 'Sudah Diperbaiki';
+                }
+                
+                label = label.charAt(0).toUpperCase() + label.slice(1).toLowerCase();
+                labelCounts[label] = (labelCounts[label] || 0) + 1;
+            });
 
-            document.getElementById('stat-total').textContent = stats.total;
-            document.getElementById('stat-baik').textContent = stats.baik;
-            document.getElementById('stat-sedang').textContent = stats.sedang;
-            document.getElementById('stat-berat').textContent = stats.berat;
+            const container = document.getElementById('dynamic-stats-container');
+            if(container) {
+                container.innerHTML = '';
+                
+                const sortedLabels = Object.entries(labelCounts).sort((a, b) => b[1] - a[1]);
+                
+                sortedLabels.forEach(([label, count]) => {
+                    const isBaik = label.toLowerCase().includes('baik') || label.toLowerCase().includes('selesai');
+                    const isSedang = label.toLowerCase().includes('sedang') || label.toLowerCase().includes('ringan');
+                    const isBerat = !isBaik && !isSedang;
+                    
+                    let colorClass = isBaik ? 'text-[#059669]' : (isSedang ? 'text-[#d97706]' : 'text-[#be123c]');
+                    let bgClass = isBaik ? 'bg-[#059669]/10 border-[#059669]/20' : (isSedang ? 'bg-[#d97706]/10 border-[#d97706]/20' : 'bg-[#be123c]/10 border-[#be123c]/20');
+                    let dotColor = isBaik ? 'bg-[#059669]' : (isSedang ? 'bg-[#d97706]' : 'bg-[#be123c]');
+
+                    const html = `
+                        <div class="w-full px-3 py-1.5 rounded-lg text-[7px] font-black uppercase tracking-wider text-gray-400 flex items-center justify-between">
+                            <div class="flex items-center gap-1.5 truncate pr-2">
+                                <div class="w-1.5 h-1.5 rounded-full shrink-0 ${dotColor}"></div>
+                                <span class="truncate" title="${label}">${label}</span>
+                            </div>
+                            <span class="text-[7px] font-black px-1.5 py-0.5 rounded border shrink-0 ${colorClass} ${bgClass}">${count}</span>
+                        </div>
+                    `;
+                    container.insertAdjacentHTML('beforeend', html);
+                });
+            }
         }
 
         function toggleType(type) {
