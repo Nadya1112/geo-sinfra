@@ -305,89 +305,60 @@
                             </div>
                         </div>
 
-                        <div id="mini-map" class="w-full rounded-2xl overflow-hidden" style="height:260px;"></div>
+                        <div class="pt-2 mb-2">
+                            <div class="relative rounded-[2rem] border border-slate-100 shadow-inner overflow-hidden mb-2">
+                                <div id="mini-map" class="w-full z-0 h-[260px]"></div>
+                            </div>
+                            <p class="text-xs font-black text-slate-400 text-center tracking-widest mt-3">
+                                LAT: <span class="text-navy-900">{{ $inf->latitude }}</span> &nbsp;|&nbsp; LNG: <span class="text-navy-900">{{ $inf->longitude }}</span>
+                            </p>
+                        </div>
                     </div>
 
-                    {{-- Section 4: Hybrid AI Analytics --}}
-                    <div class="bg-navy-900 rounded-3xl p-8 relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-64 h-64 bg-gold-500/5 rounded-full -mr-20 -mt-20 blur-3xl pointer-events-none"></div>
-                        <div class="absolute bottom-0 left-0 w-48 h-48 bg-navy-500/10 rounded-full -ml-10 -mb-10 blur-2xl pointer-events-none"></div>
-
-                        <div class="flex items-center gap-3 mb-6 relative">
-                            <div class="w-10 h-10 bg-gold-500/20 rounded-xl flex items-center justify-center">
-                                <i class="fas fa-brain text-gold-500"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-sm font-black text-white uppercase tracking-wider">Hybrid AI Analytics</h4>
-                                <p class="text-xs text-slate-400 font-semibold mt-0.5">Decision Tree + CNN Vision Integration</p>
-                            </div>
-                            <span class="ml-auto px-3 py-1.5 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-xl text-xs font-black uppercase tracking-wider">
-                                <i class="fas fa-shield-alt mr-1"></i> Terverifikasi
-                            </span>
-                        </div>
-
-                        @if($hasilAi || $hasilCnn)
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5 relative">
-                            {{-- CNN Panel --}}
-                            <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
-                                <div class="flex justify-between items-center mb-3">
-                                    <span class="px-2 py-1 bg-navy-500/30 text-navy-100 rounded-lg text-[7px] font-black tracking-wider uppercase">Visual CNN</span>
-                                    <i class="fas fa-eye text-slate-500 text-sm"></i>
+                    <!-- HYBRID AI RESULTS -->
+                    <div class="bg-navy-900 rounded-[2.5rem] p-8 text-white shadow-xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 -mt-8 -mr-8 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
+                        <h4 class="text-xs font-black text-gold-300 uppercase tracking-[0.2em] mb-8 flex items-center gap-3">
+                            <i class="fas fa-microchip"></i> Analisis AI Hibrida
+                        </h4>
+                        
+                        <div class="space-y-8 relative z-10">
+                            <!-- Visual CNN -->
+                            <div class="relative">
+                                <div class="flex justify-between items-end mb-2">
+                                    <p class="text-xs font-black text-slate-300 uppercase tracking-widest">Vision (CNN)</p>
+                                    <p class="text-xl font-black text-white">{{ $hasilCnn ? round($hasilCnn->skor_cnn * 100) : '0' }}%</p>
                                 </div>
-                                <p class="text-4xl font-black text-white mb-1">
-                                    {{ $hasilCnn ? round($hasilCnn->skor_cnn * 100) : 0 }}<span class="text-sm font-bold text-slate-400 ml-1">%</span>
-                                </p>
-                                <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-3">{{ $hasilCnn->label_kondisi ?? 'Scanning...' }}</p>
                                 <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-                                    <div class="bg-gradient-to-r from-navy-500 to-gold-500 h-full rounded-full transition-all duration-1000"
-                                         style="width: {{ $hasilCnn ? ($hasilCnn->skor_cnn * 100) : 0 }}%"></div>
+                                    <div class="bg-gradient-to-r from-gold-500 to-gold-300 h-full shadow-[0_0_10px_rgba(197,160,89,0.5)]" style="width: {{ $hasilCnn ? ($hasilCnn->skor_cnn * 100) : '0' }}%"></div>
                                 </div>
+                                <p class="text-xs font-bold text-slate-400 mt-2 italic text-right">{{ $hasilCnn->label_kondisi ?? 'Scanning visual...' }}</p>
                             </div>
-
-                            {{-- DT Panel --}}
-                            <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
-                                <div class="flex justify-between items-center mb-3">
-                                    <span class="px-2 py-1 bg-gold-500/20 text-gold-400 rounded-lg text-[7px] font-black tracking-wider uppercase">Decision Tree</span>
-                                    <i class="fas fa-project-diagram text-slate-500 text-sm"></i>
+                            
+                            <!-- Logic DT -->
+                            <div class="relative">
+                                <div class="flex justify-between items-end mb-2">
+                                    <p class="text-xs font-black text-slate-300 uppercase tracking-widest">Logic (DT)</p>
+                                    <p class="text-xl font-black text-white">{{ $hasilAi->skor_dt ?? '0' }}<span class="text-xs text-slate-400 ml-0.5">/100</span></p>
                                 </div>
-                                <p class="text-4xl font-black text-white mb-1">
-                                    {{ $hasilAi->skor_dt ?? 0 }}<span class="text-sm font-bold text-slate-400 ml-1">/100</span>
-                                </p>
-                                @php
-                                    $labelPrio = $hasilAi->label_prioritas ?? 'Pending';
-                                    $prioColor = str_contains(strtolower($labelPrio), 'berat') ? 'text-red-400' :
-                                         (str_contains(strtolower($labelPrio), 'sedang') ? 'text-orange-400' : 'text-emerald-400');
-                                @endphp
-                                <p class="text-xs font-black {{ $prioColor }} uppercase tracking-wider mb-3">{{ $labelPrio }}</p>
                                 <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-                                    <div class="bg-gradient-to-r from-gold-500 to-gold-600 h-full rounded-full transition-all duration-1000"
-                                         style="width: {{ $hasilAi->skor_dt ?? 0 }}%"></div>
+                                    @php $dtColor = ($hasilAi->label_prioritas ?? '') == 'Rusak Berat' ? 'from-rose-500 to-rose-400' : (($hasilAi->label_prioritas ?? '') == 'Rusak Sedang' ? 'from-amber-500 to-amber-400' : 'from-[#059669] to-emerald-400'); @endphp
+                                    <div class="bg-gradient-to-r {{ $dtColor }} h-full" style="width: {{ $hasilAi->skor_dt ?? '0' }}%"></div>
+                                </div>
+                                <p class="text-xs font-bold {{ ($hasilAi->label_prioritas ?? '') == 'Rusak Berat' ? 'text-rose-400' : (($hasilAi->label_prioritas ?? '') == 'Rusak Sedang' ? 'text-amber-400' : 'text-[#059669]') }} mt-2 italic text-right">
+                                    {{ $hasilAi->label_prioritas ?? 'Calculating logic...' }}
+                                </p>
+                            </div>
+
+                            <div class="pt-6 border-t border-white/10">
+                                <div class="flex items-center justify-between mb-4">
+                                    <p class="text-xs font-black text-slate-300 uppercase tracking-widest">Verification</p>
+                                    <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-xs font-black uppercase tracking-widest {{ ($inf->status_verifikasi ?? 'Pending') == 'Verified' ? 'text-[#059669]' : 'text-amber-400' }}">
+                                        {{ $inf->status_verifikasi ?? 'Pending' }}
+                                    </span>
                                 </div>
                             </div>
                         </div>
-
-                        {{-- Rekomendasi --}}
-                        <div class="bg-gold-500/10 border border-gold-500/20 rounded-2xl p-5 relative">
-                            <div class="flex items-start gap-4">
-                                <div class="w-9 h-9 bg-gold-500/20 rounded-xl flex items-center justify-center shrink-0">
-                                    <i class="fas fa-lightbulb text-gold-500"></i>
-                                </div>
-                                <div>
-                                    <p class="text-xs font-black text-gold-500 uppercase tracking-widest mb-1.5">Rekomendasi AI</p>
-                                    <p class="text-sm font-semibold text-slate-300 italic leading-relaxed">
-                                        "{{ $hasilAi->rekomendasi ?? 'Melakukan kalkulasi aturan Decision Tree...' }}"
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        @else
-                        <div class="bg-white/5 border border-dashed border-white/20 rounded-2xl p-10 text-center">
-                            <i class="fas fa-microchip text-4xl text-slate-500 mb-3 block animate-pulse"></i>
-                            <h4 class="font-black text-white text-sm mb-1">Sedang Sinkronisasi AI...</h4>
-                            <p class="text-xs text-slate-400 max-w-xs mx-auto leading-relaxed">Sistem sedang melakukan analisis. Muat ulang halaman dalam beberapa saat.</p>
-                        </div>
-                        @endif
                     </div>
 
                     {{-- Catatan Eksekutif --}}
@@ -558,15 +529,22 @@
             maxZoom: 20, subdomains: ['mt0','mt1','mt2','mt3']
         }).addTo(map);
 
-        @php $prioritas = $hasilAi->label_prioritas ?? $inf->kondisi ?? 'Baik'; @endphp
-        const prioritas = '{{ strtolower($prioritas) }}';
-        let markerColor = '#10b981';
-        if (prioritas.includes('berat'))  markerColor = '#ef4444';
-        else if (prioritas.includes('sedang')) markerColor = '#f97316';
+        // Marker indikator kondisi
+        const condLower = "{{ strtolower($inf->kondisi ?? '') }}";
+        let markerColor = '#059669'; // default Baik
+        if (condLower.includes('berat')) {
+            markerColor = '#be123c';
+        } else if (condLower.includes('sedang') || condLower.includes('ringan')) {
+            markerColor = '#d97706';
+        }
+
+        const markerHtml = `<div style="background-color:${markerColor};width:18px;height:18px;border-radius:50%;border:4px solid white;box-shadow:0 0 15px rgba(0,0,0,0.25);"></div>`;
 
         const icon = L.divIcon({
-            html: `<div style="background:${markerColor};width:16px;height:16px;border-radius:50%;border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.3);"></div>`,
-            className: '', iconSize: [16,16], iconAnchor: [8,8]
+            html: markerHtml,
+            className: '',
+            iconSize: [18, 18],
+            iconAnchor: [9, 9]
         });
 
         L.marker([lat, lng], { icon }).addTo(map)

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -96,6 +96,54 @@
                         <div class="relative aspect-[3/4] w-full rounded-[2rem] overflow-hidden group bg-navy-950 flex items-center justify-center">
                             @if($fotoUrl)
                                 <img src="{{ $fotoUrl }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                
+                                {{-- Overlay Deteksi AI --}}
+                                @php 
+                                    $hasilCnn = $infrastruktur->cnn ?? null;
+                                    $labelCnnRaw       = strtolower($hasilCnn->label_kondisi ?? '');
+                                    $confidencePercent = round(($hasilCnn->skor_cnn ?? 0) * 100);
+                                    $labelCnnDisplay   = $hasilCnn->label_kondisi ?? 'Tidak Diketahui';
+
+                                    if (in_array($labelCnnRaw, ['berat', 'rusak berat'])) {
+                                        $overlayBorder = 'border-red-500/50';
+                                        $overlayBg     = 'bg-red-500/5';
+                                        $cornerBorder  = 'border-red-500';
+                                        $badgeBg       = 'bg-red-600';
+                                        $badgeIcon     = 'fa-exclamation-triangle';
+                                        $showOverlay   = true;
+                                    } elseif (in_array($labelCnnRaw, ['sedang', 'rusak sedang'])) {
+                                        $overlayBorder = 'border-amber-400/50';
+                                        $overlayBg     = 'bg-amber-400/5';
+                                        $cornerBorder  = 'border-amber-400';
+                                        $badgeBg       = 'bg-amber-500';
+                                        $badgeIcon     = 'fa-exclamation-circle';
+                                        $showOverlay   = true;
+                                    } else {
+                                        $overlayBorder = 'border-emerald-500/50';
+                                        $overlayBg     = 'bg-emerald-500/5';
+                                        $cornerBorder  = 'border-emerald-500';
+                                        $badgeBg       = 'bg-emerald-600';
+                                        $badgeIcon     = 'fa-check-circle';
+                                        $showOverlay   = $hasilCnn ? true : false;
+                                    }
+                                @endphp
+
+                                @if($hasilCnn && $showOverlay)
+                                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-6">
+                                        <div class="relative w-[50%] h-[50%] border-2 {{ $overlayBorder }} {{ $overlayBg }} animate-pulse">
+                                            <div class="absolute -top-1 -left-1 w-3 h-3 border-t-[3px] border-l-[3px] {{ $cornerBorder }}"></div>
+                                            <div class="absolute -top-1 -right-1 w-3 h-3 border-t-[3px] border-r-[3px] {{ $cornerBorder }}"></div>
+                                            <div class="absolute -bottom-1 -left-1 w-3 h-3 border-b-[3px] border-l-[3px] {{ $cornerBorder }}"></div>
+                                            <div class="absolute -bottom-1 -right-1 w-3 h-3 border-b-[3px] border-r-[3px] {{ $cornerBorder }}"></div>
+
+                                            <div class="absolute -top-6 left-0 {{ $badgeBg }} text-white text-[10px] font-black px-2 py-0.5 rounded-md shadow-lg flex items-center gap-1">
+                                                <i class="fas {{ $badgeIcon }}"></i>
+                                                Confidence {{ $confidencePercent }}% &rarr; {{ $labelCnnDisplay }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all flex items-end p-6">
                                     <p class="text-white text-xs font-bold uppercase tracking-widest">Foto Dokumentasi</p>
                                 </div>
@@ -352,8 +400,13 @@
                         </div>
 
                         <!-- Mini Map -->
-                        <div class="relative rounded-[2rem] border border-slate-100 dark:border-white/10 shadow-inner overflow-hidden mb-8">
-                            <div id="map" class="h-[280px] w-full z-0"></div>
+                        <div class="pt-2 mb-8">
+                            <div class="relative rounded-[2rem] border border-slate-100 dark:border-white/10 shadow-inner overflow-hidden mb-2">
+                                <div id="map" class="h-[280px] w-full z-0"></div>
+                            </div>
+                            <p class="text-xs font-black text-slate-400 text-center tracking-widest mt-3">
+                                LAT: <span class="text-navy-900 dark:text-white">{{ $infrastruktur->latitude }}</span> &nbsp;|&nbsp; LNG: <span class="text-navy-900 dark:text-white">{{ $infrastruktur->longitude }}</span>
+                            </p>
                         </div>
 
                         <!-- Activity Log / Riwayat -->

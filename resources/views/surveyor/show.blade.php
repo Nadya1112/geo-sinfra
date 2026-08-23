@@ -152,62 +152,47 @@
                         </div>
                     </div>
 
-                    {{-- Panel Hybrid AI --}}
+                    <!-- HYBRID AI RESULTS -->
                     <div class="bg-navy-900 rounded-[2.5rem] p-8 text-white shadow-xl relative overflow-hidden border border-navy-800">
-                        <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-gold-500/10 rounded-full blur-3xl"></div>
-                        <h4 class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-8 flex items-center gap-3">
-                            <i class="fas fa-clipboard-check text-sm"></i> Status Kondisi
+                        <div class="absolute top-0 right-0 -mt-8 -mr-8 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
+                        <h4 class="text-xs font-black text-gold-300 uppercase tracking-[0.2em] mb-8 flex items-center gap-3">
+                            <i class="fas fa-microchip"></i> Analisis AI Hibrida
                         </h4>
                         
                         <div class="space-y-8 relative z-10">
-                            {{-- CNN --}}
+                            <!-- Visual CNN -->
                             <div class="relative">
                                 <div class="flex justify-between items-end mb-2">
-                                    <div class="flex items-center gap-2">
-                                        <p class="text-xs font-black text-slate-400 uppercase tracking-widest">Analisis Visual Foto</p>
-                                    </div>
-                                    <p class="text-xl font-black text-gold-500">{{ $hasilCnn ? round($hasilCnn->skor_cnn * 100) : '0' }}%</p>
+                                    <p class="text-xs font-black text-slate-300 uppercase tracking-widest">Vision (CNN)</p>
+                                    <p class="text-xl font-black text-white">{{ $infrastruktur->cnn ? round($infrastruktur->cnn->skor_cnn * 100) : '0' }}%</p>
                                 </div>
-                                <div class="w-full bg-white/5  h-2 rounded-full overflow-hidden border border-white/5">
-                                    <div class="bg-gold-500 h-full shadow-[0_0_10px_rgba(197,160,89,0.5)]" style="width: {{ $hasilCnn ? ($hasilCnn->skor_cnn * 100) : '0' }}%"></div>
+                                <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+                                    <div class="bg-gradient-to-r from-gold-500 to-gold-300 h-full shadow-[0_0_10px_rgba(197,160,89,0.5)]" style="width: {{ $infrastruktur->cnn ? ($infrastruktur->cnn->skor_cnn * 100) : '0' }}%"></div>
                                 </div>
-                                <p class="text-xs font-bold text-slate-400 mt-2 italic text-right">{{ $hasilCnn->label_kondisi ?? 'Memeriksa visual lapangan...' }}</p>
+                                <p class="text-xs font-bold text-slate-400 mt-2 italic text-right">{{ $infrastruktur->cnn->label_kondisi ?? 'Scanning visual...' }}</p>
                             </div>
                             
-                            {{-- D-Tree --}}
+                            <!-- Logic DT -->
                             <div class="relative">
                                 <div class="flex justify-between items-end mb-2">
-                                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest">Skor Prioritas Teknis</p>
-                                    <p class="text-xl font-black text-white">{{ $infrastruktur->analisis->skor_dt ?? '0' }}<span class="text-xs text-slate-500 ml-0.5">/100</span></p>
+                                    <p class="text-xs font-black text-slate-300 uppercase tracking-widest">Logic (DT)</p>
+                                    <p class="text-xl font-black text-white">{{ $infrastruktur->analisis->skor_dt ?? '0' }}<span class="text-xs text-slate-400 ml-0.5">/100</span></p>
                                 </div>
-                                <div class="w-full bg-white/5  h-2 rounded-full overflow-hidden border border-white/5">
-                                    @php $dtColor = ($infrastruktur->analisis->label_prioritas ?? '') == 'Rusak Berat' ? 'bg-red-500' : (($infrastruktur->analisis->label_prioritas ?? '') == 'Rusak Sedang' ? 'bg-amber-500' : 'bg-emerald-500'); @endphp
-                                    <div class="{{ $dtColor }} h-full" style="width: {{ $infrastruktur->analisis->skor_dt ?? '0' }}%"></div>
+                                <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+                                    @php $dtColor = ($infrastruktur->analisis->label_prioritas ?? '') == 'Rusak Berat' ? 'from-rose-500 to-rose-400' : (($infrastruktur->analisis->label_prioritas ?? '') == 'Rusak Sedang' ? 'from-amber-500 to-amber-400' : 'from-[#059669] to-emerald-400'); @endphp
+                                    <div class="bg-gradient-to-r {{ $dtColor }} h-full" style="width: {{ $infrastruktur->analisis->skor_dt ?? '0' }}%"></div>
                                 </div>
-                                <p class="text-xs font-bold mt-2 italic text-right {{ ($infrastruktur->analisis->label_prioritas ?? '') == 'Rusak Berat' ? 'text-red-400' : (($infrastruktur->analisis->label_prioritas ?? '') == 'Rusak Sedang' ? 'text-amber-400' : 'text-emerald-400') }}">
-                                    Label: {{ $infrastruktur->analisis->label_prioritas ?? 'Menunggu Status...' }}
+                                <p class="text-xs font-bold {{ ($infrastruktur->analisis->label_prioritas ?? '') == 'Rusak Berat' ? 'text-rose-400' : (($infrastruktur->analisis->label_prioritas ?? '') == 'Rusak Sedang' ? 'text-amber-400' : 'text-[#059669]') }} mt-2 italic text-right">
+                                    {{ $infrastruktur->analisis->label_prioritas ?? 'Calculating logic...' }}
                                 </p>
                             </div>
 
-                            <div class="pt-4 border-t border-white/10 space-y-2">
-                                <p class="text-xs font-black text-gold-500 uppercase tracking-widest">Rekomendasi Penanganan</p>
-                                <p class="text-sm font-medium text-slate-300 leading-relaxed bg-white/5  p-4 rounded-2xl border border-white/5">
-                                    {{ $infrastruktur->analisis->rekomendasi ?? 'Tindakan rekomendasi belum tersedia.' }}
-                                </p>
-                            </div>
-
-                            <div class="pt-4 border-t border-white/5">
-                                <div class="flex items-center justify-between mb-1">
-                                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest">Status Laporan</p>
-                                    @if($infrastruktur->status_validasi == 'Rejected')
-                                        <span class="px-3 py-1 bg-red-500/10 border border-red-500/20 rounded-lg text-xs font-black uppercase tracking-widest text-red-400">Ditolak</span>
-                                    @elseif($infrastruktur->status_validasi == 'Validated')
-                                        <span class="px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-xs font-black uppercase tracking-widest text-emerald-400">Di-ACC Tim Teknis</span>
-                                    @elseif($infrastruktur->status_verifikasi == 'Verified')
-                                        <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-lg text-xs font-black uppercase tracking-widest text-blue-400">Terverifikasi Admin</span>
-                                    @else
-                                        <span class="px-3 py-1 bg-white/5  border border-white/10 rounded-lg text-xs font-black uppercase tracking-widest text-slate-400">Menunggu</span>
-                                    @endif
+                            <div class="pt-6 border-t border-white/10">
+                                <div class="flex items-center justify-between mb-4">
+                                    <p class="text-xs font-black text-slate-300 uppercase tracking-widest">Verification</p>
+                                    <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-xs font-black uppercase tracking-widest {{ $infrastruktur->status_verifikasi == 'Verified' ? 'text-[#059669]' : 'text-amber-400' }}">
+                                        {{ $infrastruktur->status_verifikasi ?? 'Pending' }}
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -353,19 +338,22 @@
             attribution: ''
         }).addTo(map);
 
-        // Marker elegan (Gold) untuk titik lokasi Surveyor
-        const markerHtml = `
-            <div class="w-8 h-8 bg-gold-500 rounded-full border-[3px] border-white shadow-lg flex items-center justify-center text-white relative">
-                <div class="absolute inset-0 rounded-full border border-gold-200 animate-ping"></div>
-                <i class="fas fa-location-dot text-sm drop-shadow-md"></i>
-            </div>
-        `;
+        // Marker indikator kondisi
+        const condLower = "{{ strtolower($infrastruktur->kondisi ?? '') }}";
+        let markerColor = '#059669'; // default Baik
+        if (condLower.includes('berat')) {
+            markerColor = '#be123c';
+        } else if (condLower.includes('sedang') || condLower.includes('ringan')) {
+            markerColor = '#d97706';
+        }
+
+        const markerHtml = `<div style="background-color:${markerColor};width:18px;height:18px;border-radius:50%;border:4px solid white;box-shadow:0 0 15px rgba(0,0,0,0.25);"></div>`;
 
         const icon = L.divIcon({
             html: markerHtml,
             className: '',
-            iconSize: [32, 32],
-            iconAnchor: [16, 32]
+            iconSize: [18, 18],
+            iconAnchor: [9, 9]
         });
 
         L.marker([lat, lng], {icon: icon}).addTo(map);
