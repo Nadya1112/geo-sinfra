@@ -175,10 +175,10 @@
                                 <div class="w-2.5 h-2.5 rounded bg-amber-500"></div>
                             </button>
                             <div class="h-[1px] bg-white/5 my-0.5"></div>
-                            <button onclick="toggleKelurahanPoints()" class="w-full px-3 py-1.5 rounded-lg text-[7px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" id="kel-toggle-btn">
+                            <button onclick="toggleKelurahanPoints()" class="w-full px-3 py-1.5 rounded-lg text-[7px] font-black uppercase tracking-wider text-white hover:bg-white/10 transition-all flex items-center justify-between group" id="kel-toggle-btn">
                                 <div class="flex items-center gap-1.5">
                                     <div class="w-2.5 h-2.5 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
-                                        <i class="fas fa-check text-[5px] text-emerald-400" id="kel-check-icon" style="opacity:0"></i>
+                                        <i class="fas fa-check text-[5px] text-emerald-400" id="kel-check-icon" style="opacity:1"></i>
                                     </div>
                                     <span class="group-hover:text-white transition-colors">Kelurahan</span>
                                 </div>
@@ -309,7 +309,7 @@
         let activeMarkers = [];
         let kelurahanMarkers = [];
         let kelurahanPolygons = [];
-        let showKelurahan = false;
+        let showKelurahan = true;
         const geoLayers = {};
         
         // --- Layer Rawan Banjir (Mock) ---
@@ -457,7 +457,7 @@
                                 Update: ${new Date(point.updated_at).toLocaleDateString('id-ID', {day: 'numeric', month: 'short', year: 'numeric'})}
                             </div>
 
-                            <a href="/tim-teknis/infrastruktur/${point.id}" class="block w-full py-2 bg-navy-900 text-white rounded-xl text-xs font-black uppercase tracking-widest text-center hover:bg-gold-500 transition-all shadow-lg shadow-navy-900/10">Lihat Detail</a>
+                            <a href="/tim-teknis/infrastruktur/${point.id_infrastruktur}" class="block w-full py-2 bg-navy-900 text-white rounded-xl text-xs font-black uppercase tracking-widest text-center hover:bg-gold-500 transition-all shadow-lg shadow-navy-900/10">Lihat Detail</a>
                         </div>
                     </div>
                 `;
