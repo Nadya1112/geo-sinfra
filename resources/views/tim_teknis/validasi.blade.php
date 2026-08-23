@@ -152,31 +152,6 @@
             @livewire('tim-teknis.validasi-table')
         </div>
 
-        <!-- Validation Modal -->
-        <div id="validasiModal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-slate-900/50 backdrop-blur-sm transition-all duration-300">
-            <div class="bg-white dark:bg-[#1e1b4b] rounded-[2rem] shadow-2xl w-full max-w-md p-8 transform scale-95 opacity-0 transition-all duration-300" id="validasiModalContent">
-                <div class="flex items-center justify-between mb-6">
-                    <h3 class="text-xl font-black text-navy-900 dark:text-white" id="validasiModalTitle">Validasi Data</h3>
-                    <button type="button" onclick="closeValidasiModal()" class="w-8 h-8 flex items-center justify-center bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 rounded-xl hover:bg-rose-50 hover:text-rose-500 transition-colors border border-slate-100 dark:border-white/10">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <p class="text-sm text-slate-500 mb-6 font-medium" id="validasiModalDesc">Silakan masukkan catatan.</p>
-                
-                <div class="mb-8">
-                    <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Catatan / Alasan</label>
-                    <textarea id="validasiCatatanInput" rows="4" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl p-4 text-sm font-medium text-navy-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-4 focus:ring-gold-500/20 transition-all placeholder:text-slate-300" placeholder="Ketik catatan di sini..."></textarea>
-                    <p id="validasiError" class="text-xs text-rose-500 mt-2 font-bold hidden flex items-center gap-1.5">
-                        <i class="fas fa-exclamation-circle"></i> Catatan/Alasan wajib diisi untuk penolakan!
-                    </p>
-                </div>
-                
-                <div class="flex items-center justify-end gap-3">
-                    <button type="button" onclick="closeValidasiModal()" class="px-5 py-2.5 bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 text-slate-500 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-50 dark:bg-[#0f0e2c] transition-colors">Batal</button>
-                    <button type="button" onclick="confirmValidasiModal()" class="px-5 py-2.5 bg-navy-900 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-gold-500 transition-colors shadow-lg shadow-navy-900/20" id="validasiSubmitBtn">Konfirmasi</button>
-                </div>
-            </div>
-        </div>
 
     </main>
 
@@ -222,87 +197,6 @@
             cb.addEventListener('change', updateBulkState);
         });
 
-        // --- Modal Logic ---
-        let pendingForm = null;
-        let pendingStatus = '';
-        function openValidasiModal(formOrStatus, statusParam) {
-            if (false) {
-} else {
-                pendingForm = formOrStatus;
-                pendingStatus = statusParam;
-            }
-
-            const modal = document.getElementById('validasiModal');
-            const content = document.getElementById('validasiModalContent');
-            const title = document.getElementById('validasiModalTitle');
-            const desc = document.getElementById('validasiModalDesc');
-            const input = document.getElementById('validasiCatatanInput');
-            const btn = document.getElementById('validasiSubmitBtn');
-            const error = document.getElementById('validasiError');
-
-            input.value = '';
-            error.classList.add('hidden');
-
-            if (pendingStatus === 'Rejected') {
-                title.textContent = 'Tolak Validasi';
-                title.className = 'text-xl font-black text-rose-600';
-                desc.innerHTML = 'Silakan masukkan <strong>alasan penolakan</strong> (Wajib diisi).';
-                btn.className = 'px-5 py-2.5 bg-rose-500 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-rose-600 transition-colors shadow-lg shadow-rose-500/20';
-                btn.innerHTML = '<i class="fas fa-times mr-2"></i> Tolak Data';
-            } else {
-                title.textContent = 'Setujui Validasi';
-                title.className = 'text-xl font-black text-emerald-600';
-                desc.innerHTML = 'Silakan masukkan <strong>catatan persetujuan</strong> (Opsional).';
-                btn.className = 'px-5 py-2.5 bg-emerald-500 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-emerald-600 transition-colors shadow-lg shadow-emerald-500/20';
-                btn.innerHTML = '<i class="fas fa-check mr-2"></i> Setujui Data';
-            }
-
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                content.classList.remove('scale-95', 'opacity-0');
-                content.classList.add('scale-100', 'opacity-100');
-                input.focus();
-            }, 10);
-        }
-
-        function closeValidasiModal() {
-            const modal = document.getElementById('validasiModal');
-            const content = document.getElementById('validasiModalContent');
-            content.classList.remove('scale-100', 'opacity-100');
-            content.classList.add('scale-95', 'opacity-0');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
-        }
-
-        function confirmValidasiModal() {
-            const input = document.getElementById('validasiCatatanInput').value.trim();
-            const error = document.getElementById('validasiError');
-
-            if (pendingStatus === 'Rejected' && input === '') {
-                error.classList.remove('hidden');
-                document.getElementById('validasiCatatanInput').focus();
-                return;
-            }
-
-            if (false) {
-} else {
-                const inputAlasan = document.createElement('input');
-                inputAlasan.type = 'hidden';
-                inputAlasan.name = 'alasan_penolakan';
-                inputAlasan.value = input;
-                pendingForm.appendChild(inputAlasan);
-                pendingForm.submit();
-            }
-        }
-
-        
-
-        function promptCatatan(e, form, status) {
-            e.preventDefault();
-            openValidasiModal(form, status, false);
-            return false;
-        }
     </script>
 </body>
 </html>

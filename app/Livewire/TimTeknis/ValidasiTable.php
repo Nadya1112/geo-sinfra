@@ -6,6 +6,8 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Infrastruktur;
 use Illuminate\Support\Facades\DB;
+use App\Models\ActivityLog;
+use App\Services\WhatsAppService;
 
 class ValidasiTable extends Component
 {
@@ -16,6 +18,11 @@ class ValidasiTable extends Component
     public $start_date = '';
     public $end_date = '';
     public $show = '10';
+
+    public $showModal = false;
+    public $modalAction = '';
+    public $modalId = null;
+    public $alasan = '';
 
     protected $queryString = [
         'statusFilter' => ['except' => 'Pending', 'as' => 'status'],
@@ -34,6 +41,48 @@ class ValidasiTable extends Component
     {
         $this->statusFilter = $status;
         $this->resetPage();
+    }
+
+    public function openModal($id, $action)
+    {
+        $this->modalId = $id;
+        $this->modalAction = $action;
+        $this->alasan = '';
+        $this->showModal = true;
+        $this->resetErrorBag('alasan');
+    }
+
+    public function closeModal()
+    {
+        $this->showModal = false;
+        $this->modalId = null;
+        $this->modalAction = '';
+        $this->alasan = '';
+    }
+
+    public function prosesValidasi()
+    {
+        if ($this->modalAction === 'Rejected' && empty(trim($this->alasan))) {
+            $this->addError('alasan', 'Catatan/Alasan wajib diisi untuk penolakan!');
+            return;
+        }
+
+        $infra = Infrastruktur::findOrFail($this->modalId);
+        $infra->status_validasi = $this->modalAction;
+        $infra->alasan_penolakan = trim($this->alasan) ?: null;
+        $infra->save();
+
+        // Rekam Aktivitas Log
+        $logCatatan = $infra->alasan_penolakan ? " dengan catatan: {$infra->alasan_penolakan}" : "";
+        $logAction = $this->modalAction == 'Validated' ? "menyetujui (Validasi)" : "menolak (Validasi)";
+        ActivityLog::record("Tim Teknis {$logAction} laporan infrastruktur{$logCatatan}", 'infrastruktur', $infra->id_infrastruktur);
+
+        // Kirim Notifikasi WA ke Surveyor
+        WhatsAppService::sendValidationResultNotification($infra);
+
+        $this->closeModal();
+        $this->statusFilter = $this->modalAction;
+        session()->flash('success', $this->modalAction == 'Validated' ? 'Data berhasil divalidasi!' : 'Data telah ditolak!');
     }
 
     public function render()

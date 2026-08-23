@@ -164,25 +164,18 @@
                             </a>
 
                             {{-- ACC --}}
+                            {{-- ACC --}}
                             @if($item->status_validasi == 'Pending')
-                                <form action="{{ route('tim_teknis.validasi.proses', $item->id_infrastruktur) }}" method="POST" class="flex-1" onsubmit="return promptCatatan(event, this, 'Validated')">
-                                    @csrf
-                                    <input type="hidden" name="status" value="Validated">
-                                    <button type="submit" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-[#059669] text-white rounded-xl hover:bg-[#047857] transition-all shadow-lg shadow-[#059669]/20 group border border-[#059669]" title="Setujui Validasi">
-                                        <i class="fas fa-check text-xs group-hover:scale-110 transition-transform"></i>
-                                        <span class="text-xs font-black uppercase tracking-widest">ACC</span>
-                                    </button>
-                                </form>
+                                <button type="button" wire:click="openModal({{ $item->id_infrastruktur }}, 'Validated')" class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 bg-[#059669] text-white rounded-xl hover:bg-[#047857] transition-all shadow-lg shadow-[#059669]/20 group border border-[#059669]" title="Setujui Validasi">
+                                    <i class="fas fa-check text-xs group-hover:scale-110 transition-transform"></i>
+                                    <span class="text-xs font-black uppercase tracking-widest">ACC</span>
+                                </button>
                                 
                                 {{-- Tolak --}}
-                                <form action="{{ route('tim_teknis.validasi.proses', $item->id_infrastruktur) }}" method="POST" class="flex-1" onsubmit="return promptCatatan(event, this, 'Rejected')">
-                                    @csrf
-                                    <input type="hidden" name="status" value="Rejected">
-                                    <button type="submit" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-500 hover:text-white transition-all border border-rose-200 shadow-sm group" title="Tolak Validasi">
-                                        <i class="fas fa-times text-xs group-hover:scale-110 transition-transform"></i>
-                                        <span class="text-xs font-black uppercase tracking-widest">Tolak</span>
-                                    </button>
-                                </form>
+                                <button type="button" wire:click="openModal({{ $item->id_infrastruktur }}, 'Rejected')" class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-500 hover:text-white transition-all border border-rose-200 shadow-sm group" title="Tolak Validasi">
+                                    <i class="fas fa-times text-xs group-hover:scale-110 transition-transform"></i>
+                                    <span class="text-xs font-black uppercase tracking-widest">Tolak</span>
+                                </button>
                             @else
                                 <button disabled class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 bg-slate-50 dark:bg-[#0f0e2c] text-slate-300 rounded-xl border border-slate-100 dark:border-white/10 cursor-not-allowed">
                                     <i class="fas fa-check text-xs"></i>
@@ -218,4 +211,52 @@
             </div>
         @endif
     </div>
+</div>
+
+    <!-- Livewire Validation Modal -->
+    @if($showModal)
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm transition-all duration-300">
+        <div class="bg-white dark:bg-[#1e1b4b] rounded-[2rem] shadow-2xl w-full max-w-md p-8 transform scale-100 opacity-100 transition-all duration-300">
+            <div class="flex items-center justify-between mb-6">
+                @if($modalAction === 'Rejected')
+                    <h3 class="text-xl font-black text-rose-600">Tolak Validasi</h3>
+                @else
+                    <h3 class="text-xl font-black text-emerald-600">Setujui Validasi</h3>
+                @endif
+                <button type="button" wire:click="closeModal" class="w-8 h-8 flex items-center justify-center bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 rounded-xl hover:bg-rose-50 hover:text-rose-500 transition-colors border border-slate-100 dark:border-white/10">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <p class="text-sm text-slate-500 mb-6 font-medium">
+                @if($modalAction === 'Rejected')
+                    Silakan masukkan <strong>alasan penolakan</strong> (Wajib diisi).
+                @else
+                    Silakan masukkan <strong>catatan persetujuan</strong> (Opsional).
+                @endif
+            </p>
+            
+            <div class="mb-8">
+                <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Catatan / Alasan</label>
+                <textarea wire:model="alasan" rows="4" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl p-4 text-sm font-medium text-navy-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-4 focus:ring-gold-500/20 transition-all placeholder:text-slate-300" placeholder="Ketik catatan di sini..."></textarea>
+                @error('alasan')
+                <p class="text-xs text-rose-500 mt-2 font-bold flex items-center gap-1.5">
+                    <i class="fas fa-exclamation-circle"></i> {{ $message }}
+                </p>
+                @enderror
+            </div>
+            
+            <div class="flex items-center justify-end gap-3">
+                <button type="button" wire:click="closeModal" class="px-5 py-2.5 bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 text-slate-500 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-50 dark:bg-[#0f0e2c] transition-colors">Batal</button>
+                <button type="button" wire:click="prosesValidasi" class="px-5 py-2.5 {{ $modalAction === 'Rejected' ? 'bg-rose-500 hover:bg-rose-600 shadow-rose-500/20' : 'bg-emerald-500 hover:bg-emerald-600 shadow-emerald-500/20' }} text-white rounded-xl text-xs font-black uppercase tracking-widest transition-colors shadow-lg">
+                    @if($modalAction === 'Rejected')
+                        <i class="fas fa-times mr-2"></i> Konfirmasi Tolak
+                    @else
+                        <i class="fas fa-check mr-2"></i> Konfirmasi Setuju
+                    @endif
+                </button>
+            </div>
+        </div>
+    </div>
+    @endif
 </div>
