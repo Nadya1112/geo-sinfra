@@ -18,12 +18,12 @@ class UserTable extends Component
         'show' => ['except' => '10'],
     ];
 
-    public function updatingSearch()
+    public function updatedSearch()
     {
         $this->resetPage();
     }
 
-    public function updatingShow()
+    public function updatedShow()
     {
         $this->resetPage();
     }
