@@ -163,53 +163,16 @@
 
                     <!-- AI Analysis Panel -->
                     <!-- HYBRID AI RESULTS -->
-                    <div class="bg-navy-900 rounded-[2.5rem] p-8 text-white shadow-xl relative overflow-hidden">
-                        <div class="absolute top-0 right-0 -mt-8 -mr-8 w-32 h-32 bg-white/5 dark:bg-[#1e1b4b]/5 rounded-full blur-2xl"></div>
-                        <h4 class="text-xs font-black text-gold-300 uppercase tracking-[0.2em] mb-8 flex items-center gap-3">
-                            <i class="fas fa-microchip"></i> Status Kondisi
-                        </h4>
-                        
-                        <div class="space-y-8">
-                            <!-- Visual CNN -->
-                            <div class="relative">
-                                <div class="flex justify-between items-end mb-2">
-                                    <p class="text-xs font-black text-slate-300 uppercase tracking-widest">Analisis Visual Foto</p>
-                                    <p class="text-xl font-black text-white">{{ $infrastruktur->cnn ? round($infrastruktur->cnn->skor_cnn * 100) : '0' }}%</p>
-                                </div>
-                                <div class="w-full bg-white/10 dark:bg-[#1e1b4b]/10 h-1.5 rounded-full overflow-hidden">
-                                    <div class="bg-gradient-to-r from-gold-500 to-gold-300 h-full" style="width: {{ $infrastruktur->cnn ? ($infrastruktur->cnn->skor_cnn * 100) : '0' }}%"></div>
-                                </div>
-                                <p class="text-xs font-bold text-slate-400 mt-2 italic text-right">{{ $infrastruktur->cnn->label_kondisi ?? 'Scanning visual...' }}</p>
-                            </div>
-                            
-                            <!-- Logic DT -->
-                            <div class="relative">
-                                <div class="flex justify-between items-end mb-2">
-                                    <p class="text-xs font-black text-slate-300 uppercase tracking-widest">Skor Prioritas Teknis</p>
-                                    <p class="text-xl font-black text-white">{{ $infrastruktur->analisis->skor_dt ?? '0' }}<span class="text-xs text-slate-400 ml-0.5">/100</span></p>
-                                </div>
-                                <div class="w-full bg-white/10 dark:bg-[#1e1b4b]/10 h-1.5 rounded-full overflow-hidden">
-                                    <div class="bg-gradient-to-r from-[#059669] to-emerald-400 h-full" style="width: {{ $infrastruktur->analisis->skor_dt ?? '0' }}%"></div>
-                                </div>
-                                <p class="text-xs font-bold {{ ($infrastruktur->analisis->label_prioritas ?? '') == 'Rusak Berat' ? 'text-rose-400' : 'text-[#059669]' }} mt-2 italic text-right">
-                                    Label: {{ $infrastruktur->analisis->label_prioritas ?? 'Calculating logic...' }}
-                                </p>
-                            </div>
-
-                            <div class="pt-6 border-t border-white/10">
-                                <p class="text-xs font-black text-slate-300 uppercase tracking-widest mb-3">Rekomendasi Penanganan</p>
-                                <div class="bg-white/5 rounded-2xl p-4 border border-white/10">
-                                    <p class="text-xs font-bold text-slate-300 leading-relaxed">
-                                        @if($infrastruktur->rekomendasi_manual)
-                                            <span class="text-gold-400 font-black"><i class="fas fa-user-edit mr-1"></i> (Tim Teknis):</span> {{ $infrastruktur->rekomendasi_manual }}
-                                        @else
-                                            <span class="text-emerald-400 font-black"><i class="fas fa-robot mr-1"></i> (AI):</span> {{ $infrastruktur->analisis->rekomendasi ?? 'Belum ada rekomendasi penanganan.' }}
-                                        @endif
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- HYBRID AI RESULTS -->
+                    <x-hybrid-ai-analytics 
+                        :cnnScore="$infrastruktur->cnn ? round($infrastruktur->cnn->skor_cnn * 100) : 0"
+                        :cnnLabel="$infrastruktur->cnn->label_kondisi ?? 'Tidak Diketahui'"
+                        :dtScore="$infrastruktur->analisis->skor_dt ?? 0"
+                        :dtLabel="$infrastruktur->analisis->label_prioritas ?? 'Tidak Diketahui'"
+                        :rekomendasiAi="$infrastruktur->analisis->rekomendasi ?? 'Belum ada rekomendasi penanganan.'"
+                        :rekomendasiManual="$infrastruktur->rekomendasi_manual ?? null"
+                        :status="$infrastruktur->status_verifikasi ?? 'Pending'"
+                    />
 
                     <!-- Aksi Verifikasi -->
                     @if($infrastruktur->status_verifikasi == 'Pending')
