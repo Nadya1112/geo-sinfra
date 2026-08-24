@@ -34,11 +34,7 @@
 
     <!-- Table Container -->
     <div class="bg-white rounded-[2rem] shadow-xl shadow-slate-200/40 border border-slate-100 overflow-hidden relative">
-        <!-- Loading Overlay for Table -->
-        <div wire:loading class="absolute inset-0 bg-white/60 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
-            <div class="w-12 h-12 border-4 border-slate-200 border-t-gold-500 rounded-full animate-spin"></div>
-            <p class="mt-3 text-xs font-bold text-navy-900">Memuat Data...</p>
-        </div>
+
         <div class="overflow-x-auto custom-scrollbar">
             <table class="w-full text-left text-sm whitespace-nowrap md:whitespace-normal">
                 <thead class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">

@@ -16,7 +16,7 @@ class ActivityTable extends Component
         'search' => ['except' => ''],
     ];
 
-    public function updatingSearch()
+    public function updatedSearch()
     {
         $this->resetPage();
     }

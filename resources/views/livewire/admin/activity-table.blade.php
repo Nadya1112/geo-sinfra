@@ -28,11 +28,7 @@
     </div>
 
     <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden mb-10 relative">
-        <!-- Loading Overlay for Table -->
-        <div wire:loading class="absolute inset-0 bg-white/60 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
-            <div class="w-12 h-12 border-4 border-slate-200 border-t-gold-500 rounded-full animate-spin"></div>
-            <p class="mt-3 text-xs font-bold text-navy-900">Memuat Data...</p>
-        </div>
+
 
         <div class="overflow-x-auto w-full custom-scrollbar">
         <table class="w-full text-left border-collapse min-w-full">

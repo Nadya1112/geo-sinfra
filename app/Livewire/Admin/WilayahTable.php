@@ -18,7 +18,7 @@ class WilayahTable extends Component
         'show' => ['except' => '10'],
     ];
 
-    public function updatingSearch()
+    public function updatedSearch()
     {
         $this->resetPage();
     }

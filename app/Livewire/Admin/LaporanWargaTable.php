@@ -14,12 +14,12 @@ class LaporanWargaTable extends Component
     public $search = '';
     public $status = 'all';
 
-    public function updatingSearch()
+    public function updatedSearch()
     {
         $this->resetPage();
     }
 
-    public function updatingStatus()
+    public function updatedStatus()
     {
         $this->resetPage();
     }
