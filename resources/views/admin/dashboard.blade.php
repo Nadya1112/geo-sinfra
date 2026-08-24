@@ -44,10 +44,15 @@
                         </div>
                     </div>
                     
-                    <div class="flex sm:flex-col justify-between sm:justify-center gap-6 sm:gap-3 relative z-10 shrink-0 bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-sm w-full sm:w-auto">
+                    <div class="flex sm:flex-col justify-between sm:justify-center gap-4 sm:gap-3 relative z-10 shrink-0 bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-sm w-full sm:w-auto">
                         <div class="text-center sm:text-right">
                             <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-0.5">Rusak Berat</p>
                             <p class="text-xl font-black text-red-500">{{ number_format($rusakBerat) }} <span class="text-sm text-red-400"><i class="fas fa-exclamation-triangle"></i></span></p>
+                        </div>
+                        <div class="w-px sm:w-full h-10 sm:h-px bg-white/10 my-auto"></div>
+                        <div class="text-center sm:text-right">
+                            <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-0.5">Rusak Sedang</p>
+                            <p class="text-xl font-black text-amber-400">{{ number_format($rusakSedang) }} <span class="text-sm text-amber-300"><i class="fas fa-exclamation-circle"></i></span></p>
                         </div>
                         <div class="w-px sm:w-full h-10 sm:h-px bg-white/10 my-auto"></div>
                         <div class="text-center sm:text-right">
