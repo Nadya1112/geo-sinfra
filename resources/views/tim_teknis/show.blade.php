@@ -200,7 +200,11 @@
                                 <p class="text-xs font-black text-slate-300 uppercase tracking-widest mb-3">Rekomendasi Penanganan</p>
                                 <div class="bg-white/5 rounded-2xl p-4 border border-white/10">
                                     <p class="text-xs font-bold text-slate-300 leading-relaxed">
-                                        {{ $infrastruktur->analisis->rekomendasi ?? 'Belum ada rekomendasi penanganan.' }}
+                                        @if($infrastruktur->rekomendasi_manual)
+                                            <span class="text-gold-400 font-black"><i class="fas fa-user-edit mr-1"></i> (Tim Teknis):</span> {{ $infrastruktur->rekomendasi_manual }}
+                                        @else
+                                            <span class="text-emerald-400 font-black"><i class="fas fa-robot mr-1"></i> (AI):</span> {{ $infrastruktur->analisis->rekomendasi ?? 'Belum ada rekomendasi penanganan.' }}
+                                        @endif
                                     </p>
                                 </div>
                             </div>
@@ -237,7 +241,7 @@
                         
                         <form action="{{ route('tim_teknis.perbaikan.update', $infrastruktur->id_infrastruktur) }}" method="POST">
                             @csrf
-                            <div class="space-y-3">
+                            <div class="space-y-3 mb-4">
                                 <label class="flex items-center justify-between p-3 rounded-2xl border cursor-pointer transition-all {{ $infrastruktur->status_perbaikan == 'Menunggu' ? 'border-amber-500 bg-amber-50' : 'border-slate-200 dark:border-white/20 hover:bg-slate-50 dark:bg-[#0f0e2c]' }}">
                                     <div class="flex items-center gap-3">
                                         <div class="w-8 h-8 rounded-xl {{ $infrastruktur->status_perbaikan == 'Menunggu' ? 'bg-amber-500 text-white' : 'bg-slate-100 text-slate-400' }} flex items-center justify-center text-xs shadow-sm">
@@ -248,7 +252,7 @@
                                             <p class="text-xs font-bold text-slate-400">Belum ditindaklanjuti</p>
                                         </div>
                                     </div>
-                                    <input type="radio" name="status_perbaikan" value="Menunggu" class="w-4 h-4 text-amber-500 border-slate-300 focus:ring-amber-500" {{ $infrastruktur->status_perbaikan == 'Menunggu' ? 'checked' : '' }} onchange="this.form.submit()">
+                                    <input type="radio" name="status_perbaikan" value="Menunggu" class="w-4 h-4 text-amber-500 border-slate-300 focus:ring-amber-500" {{ $infrastruktur->status_perbaikan == 'Menunggu' ? 'checked' : '' }}>
                                 </label>
 
                                 <label class="flex items-center justify-between p-3 rounded-2xl border cursor-pointer transition-all {{ $infrastruktur->status_perbaikan == 'Proses Perbaikan' ? 'border-blue-500 bg-blue-50' : 'border-slate-200 dark:border-white/20 hover:bg-slate-50 dark:bg-[#0f0e2c]' }}">
@@ -261,7 +265,7 @@
                                             <p class="text-xs font-bold text-slate-400">Sedang dikerjakan tim</p>
                                         </div>
                                     </div>
-                                    <input type="radio" name="status_perbaikan" value="Proses Perbaikan" class="w-4 h-4 text-blue-500 border-slate-300 focus:ring-blue-500" {{ $infrastruktur->status_perbaikan == 'Proses Perbaikan' ? 'checked' : '' }} onchange="this.form.submit()">
+                                    <input type="radio" name="status_perbaikan" value="Proses Perbaikan" class="w-4 h-4 text-blue-500 border-slate-300 focus:ring-blue-500" {{ $infrastruktur->status_perbaikan == 'Proses Perbaikan' ? 'checked' : '' }}>
                                 </label>
 
                                 <label class="flex items-center justify-between p-3 rounded-2xl border cursor-pointer transition-all {{ $infrastruktur->status_perbaikan == 'Selesai' ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20' : 'border-slate-200 dark:border-white/20 hover:bg-slate-50 dark:bg-[#0f0e2c]' }}">
@@ -274,9 +278,24 @@
                                             <p class="text-xs font-bold text-slate-400">Infrastruktur telah tuntas</p>
                                         </div>
                                     </div>
-                                    <input type="radio" name="status_perbaikan" value="Selesai" class="w-4 h-4 text-emerald-500 border-slate-300 focus:ring-emerald-500" {{ $infrastruktur->status_perbaikan == 'Selesai' ? 'checked' : '' }} onchange="this.form.submit()">
+                                    <input type="radio" name="status_perbaikan" value="Selesai" class="w-4 h-4 text-emerald-500 border-slate-300 focus:ring-emerald-500" {{ $infrastruktur->status_perbaikan == 'Selesai' ? 'checked' : '' }}>
                                 </label>
                             </div>
+
+                            <div class="space-y-4 mb-6 border-t border-slate-100 dark:border-white/10 pt-4">
+                                <div>
+                                    <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Nama Vendor / Pelaksana</label>
+                                    <input type="text" name="pelaksana_perbaikan" value="{{ $infrastruktur->pelaksana_perbaikan }}" placeholder="Masukkan nama kontraktor/tim..." class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all text-navy-900 dark:text-white">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Estimasi Selesai</label>
+                                    <input type="date" name="estimasi_selesai" value="{{ $infrastruktur->estimasi_selesai }}" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all text-navy-900 dark:text-white">
+                                </div>
+                            </div>
+
+                            <button type="submit" class="w-full flex items-center justify-center gap-2 py-3 bg-blue-600 text-white rounded-2xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20 font-black text-xs uppercase tracking-widest">
+                                <i class="fas fa-save"></i> Simpan Status Pengerjaan
+                            </button>
                         </form>
                     </div>
                     @endif

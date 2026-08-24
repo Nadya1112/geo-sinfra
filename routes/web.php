@@ -574,6 +574,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::post('/validasi/{id}', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'prosesValidasi'])->name('tim_teknis.validasi.proses');
 
         Route::get('/laporan', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'laporan'])->name('tim_teknis.laporan');
+        Route::get('/laporan/pdf', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'exportPdfRekap'])->name('tim_teknis.laporan.pdf');
         Route::get('/infrastruktur/{id}', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'show'])->name('tim_teknis.infrastruktur.show');
         Route::post('/infrastruktur/{id}/status-perbaikan', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'updateStatusPerbaikan'])->name('tim_teknis.perbaikan.update');
         Route::get('/infrastruktur/{id}/pdf', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'exportPdf'])->name('tim_teknis.infrastruktur.pdf');

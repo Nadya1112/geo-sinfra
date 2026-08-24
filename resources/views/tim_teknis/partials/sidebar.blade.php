@@ -57,6 +57,20 @@
                 <i class="fas fa-print {{ request()->routeIs('tim_teknis.laporan') ? '' : 'group-hover:text-gold-400' }}"></i> 
                 Cetak Laporan
             </a>
+
+            <!-- NOTIFIKASI BELL -->
+            <button type="button" onclick="alert('Ada {{ auth()->user()->unreadNotifications->count() ?? 0 }} notifikasi usulan baru. Silakan cek menu Validasi Usulan!')"
+               class="flex items-center justify-between px-4 py-3 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition group text-left w-full mt-4 border border-white/5">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-bell group-hover:text-gold-400 {{ (auth()->user()->unreadNotifications->count() ?? 0) > 0 ? 'text-gold-500 animate-wiggle' : '' }}"></i> 
+                    Notifikasi
+                </div>
+                @if((auth()->user()->unreadNotifications->count() ?? 0) > 0)
+                    <span class="bg-rose-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full shadow-sm animate-pulse">
+                        {{ auth()->user()->unreadNotifications->count() }}
+                    </span>
+                @endif
+            </button>
         </nav>
     </div>
 

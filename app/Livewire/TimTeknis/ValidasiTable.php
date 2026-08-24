@@ -23,6 +23,7 @@ class ValidasiTable extends Component
     public $modalAction = '';
     public $modalId = null;
     public $alasan = '';
+    public $rekomendasi_manual = '';
 
     protected $queryString = [
         'statusFilter' => ['except' => 'Pending', 'as' => 'status'],
@@ -48,8 +49,9 @@ class ValidasiTable extends Component
         $this->modalId = $id;
         $this->modalAction = $action;
         $this->alasan = '';
+        $this->rekomendasi_manual = '';
         $this->showModal = true;
-        $this->resetValidation('alasan');
+        $this->resetValidation();
     }
 
     public function closeModal()
@@ -58,6 +60,7 @@ class ValidasiTable extends Component
         $this->modalId = null;
         $this->modalAction = '';
         $this->alasan = '';
+        $this->rekomendasi_manual = '';
     }
 
     public function prosesValidasi()
@@ -69,7 +72,15 @@ class ValidasiTable extends Component
 
         $infra = Infrastruktur::findOrFail($this->modalId);
         $infra->status_validasi = $this->modalAction;
-        $infra->alasan_penolakan = trim($this->alasan) ?: null;
+        
+        if ($this->modalAction === 'Rejected') {
+            $infra->alasan_penolakan = trim($this->alasan) ?: null;
+        } elseif ($this->modalAction === 'Validated') {
+            $infra->rekomendasi_manual = trim($this->rekomendasi_manual) ?: null;
+            // Bersihkan alasan penolakan sebelumnya (jika ada)
+            $infra->alasan_penolakan = null;
+        }
+        
         $infra->save();
 
         // Rekam Aktivitas Log

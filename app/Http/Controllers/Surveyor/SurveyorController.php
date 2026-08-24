@@ -160,6 +160,10 @@ class SurveyorController extends Controller
             $this->processCnnAnalysis($infra->id_infrastruktur, 'infrastruktur/' . $namaFoto);
         }
 
+        // Kirim Notifikasi Internal ke Tim Teknis
+        $timTeknisUsers = \App\Models\User::where('role', 'tim_teknis')->get();
+        \Illuminate\Support\Facades\Notification::send($timTeknisUsers, new \App\Notifications\NewUsulanNotification($infra));
+
         if ($request->ajax()) {
             return response()->json(['success' => true]);
         }

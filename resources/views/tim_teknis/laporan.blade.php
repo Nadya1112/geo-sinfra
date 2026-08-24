@@ -112,52 +112,7 @@
             </div>
         </header>
 
-        <div class="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar">
-
-            {{-- Statistik Label Kondisi AI --}}
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                <div class="bg-white dark:bg-[#1e1b4b] rounded-2xl p-5 border border-slate-100 dark:border-white/10 shadow-sm flex items-center gap-4">
-                    <div class="w-11 h-11 bg-gold-50 dark:bg-gold-500/10 rounded-xl flex items-center justify-center text-gold-500 shrink-0">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <div>
-                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Data</p>
-                        <h3 class="text-2xl font-black text-navy-900 dark:text-white leading-none">{{ $totalData ?? 0 }}</h3>
-                        <span class="text-[9px] font-bold text-slate-400 italic">Teranalisis AI</span>
-                    </div>
-                </div>
-                <div class="bg-white dark:bg-[#1e1b4b] rounded-2xl p-5 border border-emerald-100 dark:border-emerald-500/20 shadow-sm flex items-center gap-4">
-                    <div class="w-11 h-11 bg-emerald-50 dark:bg-emerald-500/10 rounded-xl flex items-center justify-center text-emerald-500 shrink-0">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div>
-                        <p class="text-[10px] font-black text-emerald-500 uppercase tracking-widest">Kondisi Baik</p>
-                        <h3 class="text-2xl font-black text-navy-900 dark:text-white leading-none">{{ $totalBaik ?? 0 }}</h3>
-                        <span class="text-[9px] font-bold text-slate-400 italic">Lokasi</span>
-                    </div>
-                </div>
-                <div class="bg-white dark:bg-[#1e1b4b] rounded-2xl p-5 border border-amber-100 dark:border-amber-500/20 shadow-sm flex items-center gap-4">
-                    <div class="w-11 h-11 bg-amber-50 dark:bg-amber-500/10 rounded-xl flex items-center justify-center text-amber-500 shrink-0">
-                        <i class="fas fa-exclamation-circle"></i>
-                    </div>
-                    <div>
-                        <p class="text-[10px] font-black text-amber-500 uppercase tracking-widest">Rusak Sedang</p>
-                        <h3 class="text-2xl font-black text-navy-900 dark:text-white leading-none">{{ $totalRusakSedang ?? 0 }}</h3>
-                        <span class="text-[9px] font-bold text-slate-400 italic">Lokasi</span>
-                    </div>
-                </div>
-                <div class="bg-white dark:bg-[#1e1b4b] rounded-2xl p-5 border border-rose-100 dark:border-rose-500/20 shadow-sm flex items-center gap-4">
-                    <div class="w-11 h-11 bg-rose-50 dark:bg-rose-500/10 rounded-xl flex items-center justify-center text-rose-500 shrink-0">
-                        <i class="fas fa-exclamation-triangle"></i>
-                    </div>
-                    <div>
-                        <p class="text-[10px] font-black text-rose-500 uppercase tracking-widest">Rusak Berat</p>
-                        <h3 class="text-2xl font-black text-navy-900 dark:text-white leading-none">{{ $totalRusakBerat ?? 0 }}</h3>
-                        <span class="text-[9px] font-bold text-slate-400 italic">Lokasi</span>
-                    </div>
-                </div>
-            </div>
-
+        <div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
             @livewire('tim-teknis.laporan-table')
 
         </div>

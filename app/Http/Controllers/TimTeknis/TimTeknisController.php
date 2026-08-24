@@ -119,7 +119,9 @@ class TimTeknisController extends Controller
     public function updateStatusPerbaikan(Request $request, $id)
     {
         $request->validate([
-            'status_perbaikan' => 'required|in:Menunggu,Proses Perbaikan,Selesai'
+            'status_perbaikan' => 'required|in:Menunggu,Proses Perbaikan,Selesai',
+            'pelaksana_perbaikan' => 'nullable|string|max:255',
+            'estimasi_selesai' => 'nullable|date'
         ]);
 
         $infra = Infrastruktur::findOrFail($id);
@@ -130,6 +132,12 @@ class TimTeknisController extends Controller
         }
 
         $infra->status_perbaikan = $request->status_perbaikan;
+        if ($request->has('pelaksana_perbaikan')) {
+            $infra->pelaksana_perbaikan = $request->pelaksana_perbaikan;
+        }
+        if ($request->has('estimasi_selesai')) {
+            $infra->estimasi_selesai = $request->estimasi_selesai;
+        }
         $infra->save();
 
         return redirect()->back()->with('success', 'Status pengerjaan fisik berhasil diperbarui menjadi: ' . $request->status_perbaikan);
@@ -173,20 +181,7 @@ class TimTeknisController extends Controller
 
     public function laporan(Request $request)
     {
-        $aiData = DB::table('analisis_ai')
-            ->join('infrastruktur', 'analisis_ai.id_infrastruktur', '=', 'infrastruktur.id_infrastruktur')
-            ->whereNull('infrastruktur.deleted_at')
-            ->select('analisis_ai.label_prioritas')
-            ->get();
-
-        $totalBaik        = $aiData->where('label_prioritas', 'Baik')->count();
-        $totalRusakSedang = $aiData->where('label_prioritas', 'Rusak Sedang')->count();
-        $totalRusakBerat  = $aiData->where('label_prioritas', 'Rusak Berat')->count();
-        $totalData        = $aiData->count();
-
-        return view('tim_teknis.laporan', compact(
-            'totalBaik', 'totalRusakSedang', 'totalRusakBerat', 'totalData'
-        ));
+        return view('tim_teknis.laporan');
     }
 
     public function exportPdf($id)
@@ -212,5 +207,46 @@ class TimTeknisController extends Controller
             ->setPaper('A4', 'portrait');
 
         return $pdf->stream('Laporan_Infrastruktur_' . str_replace(' ', '_', $inf->nama_objek ?? 'Aset') . '.pdf');
+    }
+
+    public function exportPdfRekap(Request $request)
+    {
+        $query = Infrastruktur::with(['kelurahan.kecamatan', 'user', 'analisis', 'cnn'])
+            ->where('status_verifikasi', 'Verified')
+            ->orderBy('created_at', 'desc');
+            
+        if ($request->status && $request->status !== 'All') {
+            $query->where('status_validasi', $request->status);
+        }
+
+        if ($request->kecamatan) {
+            $query->whereHas('kelurahan', function($q) use ($request) {
+                $q->where('id_kecamatan', $request->kecamatan);
+            });
+        }
+
+        if ($request->start && $request->end) {
+            $query->whereBetween('created_at', [
+                $request->start . ' 00:00:00',
+                $request->end . ' 23:59:59'
+            ]);
+        }
+
+        $allUsulan = $query->get();
+        $kecamatanName = 'Semua Wilayah';
+        if ($request->kecamatan) {
+            $kec = \App\Models\Kecamatan::find($request->kecamatan);
+            $kecamatanName = $kec ? $kec->nama_kecamatan : 'Semua Wilayah';
+        }
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('tim_teknis.pdf-rekap', compact('allUsulan', 'kecamatanName', 'request'))
+            ->setOptions([
+                'isPhpEnabled'    => true,
+                'dpi'             => 150,
+                'defaultFont'     => 'Helvetica',
+            ])
+            ->setPaper('A4', 'landscape');
+
+        return $pdf->stream('Rekapitulasi_Validasi_Infrastruktur_' . date('Ymd_His') . '.pdf');
     }
 }

@@ -30,11 +30,18 @@
         <div class="px-4 md:px-8 py-4 bg-white dark:bg-[#1e1b4b] border-b border-slate-100 dark:border-white/10 relative z-20">
             <div class="flex flex-col gap-4">
                 <!-- Filter Status -->
-                <div class="flex flex-wrap gap-2 mb-2">
-                    <button wire:click="setStatusFilter('All')" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all cursor-pointer {{ $statusFilter == 'All' ? 'bg-navy-900 text-white shadow-md' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Semua Antrean</button>
-                    <button wire:click="setStatusFilter('Pending')" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all cursor-pointer {{ $statusFilter == 'Pending' ? 'bg-amber-500 text-white shadow-md shadow-amber-500/20' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Menunggu</button>
-                    <button wire:click="setStatusFilter('Validated')" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all cursor-pointer {{ $statusFilter == 'Validated' ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Disetujui (Validated)</button>
-                    <button wire:click="setStatusFilter('Rejected')" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all cursor-pointer {{ $statusFilter == 'Rejected' ? 'bg-rose-500 text-white shadow-md shadow-rose-500/20' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Ditolak / Perbaikan</button>
+                <div class="flex flex-wrap gap-2 mb-2 items-center justify-between w-full">
+                    <div class="flex flex-wrap gap-2">
+                        <button wire:click="setStatusFilter('All')" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all cursor-pointer {{ $statusFilter == 'All' ? 'bg-navy-900 text-white shadow-md' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Semua Antrean</button>
+                        <button wire:click="setStatusFilter('Pending')" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all cursor-pointer {{ $statusFilter == 'Pending' ? 'bg-amber-500 text-white shadow-md shadow-amber-500/20' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Menunggu</button>
+                        <button wire:click="setStatusFilter('Validated')" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all cursor-pointer {{ $statusFilter == 'Validated' ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Disetujui (Validated)</button>
+                        <button wire:click="setStatusFilter('Rejected')" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all cursor-pointer {{ $statusFilter == 'Rejected' ? 'bg-rose-500 text-white shadow-md shadow-rose-500/20' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Ditolak / Perbaikan</button>
+                    </div>
+                    <div>
+                        <a href="{{ route('tim_teknis.laporan.pdf') }}?status={{ $statusFilter }}&kecamatan={{ $kecamatan }}&start={{ $start_date }}&end={{ $end_date }}" target="_blank" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all cursor-pointer bg-red-600 hover:bg-red-700 text-white shadow-md shadow-red-500/20 flex items-center gap-2">
+                            <i class="fas fa-file-pdf"></i> Cetak Rekap (PDF)
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Advanced Filter -->
@@ -237,13 +244,18 @@
             </p>
             
             <div class="mb-8">
-                <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Catatan / Alasan</label>
-                <textarea wire:model="alasan" rows="4" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl p-4 text-sm font-medium text-navy-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-4 focus:ring-gold-500/20 transition-all placeholder:text-slate-300" placeholder="Ketik catatan di sini..."></textarea>
-                @error('alasan')
-                <p class="text-xs text-rose-500 mt-2 font-bold flex items-center gap-1.5">
-                    <i class="fas fa-exclamation-circle"></i> {{ $message }}
-                </p>
-                @enderror
+                @if($modalAction === 'Rejected')
+                    <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Catatan / Alasan Penolakan</label>
+                    <textarea wire:model="alasan" rows="4" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl p-4 text-sm font-medium text-navy-900 dark:text-white focus:outline-none focus:border-rose-500 focus:ring-4 focus:ring-rose-500/20 transition-all placeholder:text-slate-300" placeholder="Ketik alasan penolakan di sini..."></textarea>
+                    @error('alasan')
+                    <p class="text-xs text-rose-500 mt-2 font-bold flex items-center gap-1.5">
+                        <i class="fas fa-exclamation-circle"></i> {{ $message }}
+                    </p>
+                    @enderror
+                @else
+                    <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Rekomendasi Penanganan (Manual)</label>
+                    <textarea wire:model="rekomendasi_manual" rows="4" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl p-4 text-sm font-medium text-navy-900 dark:text-white focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 transition-all placeholder:text-slate-300" placeholder="Ketik rekomendasi teknis di sini (opsional)..."></textarea>
+                @endif
             </div>
             
             <div class="flex items-center justify-end gap-3">
