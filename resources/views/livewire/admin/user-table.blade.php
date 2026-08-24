@@ -33,10 +33,7 @@
     </div>
 
     <div class="bg-white rounded-3xl md:rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden mb-10 relative">
-        <!-- Loading Overlay for Table -->
-        <div wire:loading class="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
-            <i class="fas fa-circle-notch fa-spin text-gold-500 text-3xl drop-shadow-md"></i>
-        </div>
+
 
         <div class="overflow-x-auto w-full custom-scrollbar">
             <table class="w-full text-left border-collapse">
