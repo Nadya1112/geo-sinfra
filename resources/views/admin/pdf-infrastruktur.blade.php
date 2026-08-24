@@ -6,7 +6,7 @@
     <style>
         @page {
             size: A4 portrait;
-            margin: 20mm 20mm 20mm 25mm;
+            margin: 30mm 30mm 30mm 40mm;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Arial', sans-serif; color: #111; font-size: 14px; line-height: 1.5; }
