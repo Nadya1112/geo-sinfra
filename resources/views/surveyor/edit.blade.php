@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -92,12 +92,12 @@
                 </div>
                 @endif
 
-                <form id="survey-form" action="{{ route('surveyor.infrastruktur.update', $infrastruktur->id_infrastruktur) }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 lg:grid-cols-12 gap-8" onsubmit="disableSubmitButton()">
+                <form id="survey-form" action="{{ route('surveyor.infrastruktur.update', $infrastruktur->id_infrastruktur) }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 gap-8" onsubmit="disableSubmitButton()">
                     @csrf
                     @method('PUT')
                     
                     {{-- KOLOM KIRI --}}
-                    <div class="lg:col-span-7 space-y-8">
+                    <div class="space-y-8">
                         
                         {{-- Section: Identitas Laporan --}}
                         <div class="bg-white  rounded-[2.5rem] p-8 border border-slate-100  shadow-sm hover:shadow-md transition-shadow">
@@ -274,7 +274,7 @@
                     </div>
 
                     {{-- KOLOM KANAN --}}
-                    <div class="lg:col-span-5 space-y-8">
+                    <div class="space-y-8">
                         
                         {{-- Section: Peta --}}
                         <div class="bg-white  rounded-[2.5rem] p-8 border border-slate-100  shadow-sm hover:shadow-md transition-shadow">
