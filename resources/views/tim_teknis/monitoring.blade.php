@@ -384,18 +384,20 @@
             points.forEach(point => {
                 const kondisiAktual = point.analisis?.label_prioritas || point.kondisi;
                 let isBaik = kondisiAktual.toLowerCase().includes('baik');
-                let isRingan = kondisiAktual.toLowerCase().includes('ringan') || kondisiAktual.toLowerCase().includes('sedang');
-                let isBerat = !isBaik && !isRingan;
+                let isRingan = kondisiAktual.toLowerCase().includes('ringan');
+                let isSedang = kondisiAktual.toLowerCase().includes('sedang');
+                let isBerat = !isBaik && !isRingan && !isSedang;
                 
                 // Override jika sudah selesai diperbaiki
                 const isSelesai = point.status_perbaikan === 'Selesai';
                 if (isSelesai) {
                     isBaik = true;
                     isRingan = false;
+                    isSedang = false;
                     isBerat = false;
                 }
 
-                const color = isBaik ? '#10b981' : (isRingan ? '#f59e0b' : '#ef4444');
+                const color = isBaik ? '#10b981' : (isRingan ? '#facc15' : (isSedang ? '#f59e0b' : '#ef4444'));
                 const pulseHtml = isBerat ? `<div class="absolute inset-0 rounded-full animate-ping bg-rose-500 opacity-75"></div>` : '';
                 
                 const icon = L.divIcon({
@@ -462,15 +464,12 @@
                     </div>
                 `;
 
-                let specificLabel = point.cnn?.label_kondisi || point.analisis?.label_prioritas || point.kondisi || 'TIDAK DIKETAHUI';
-                if (isSelesai) specificLabel = 'SUDAH DIPERBAIKI';
-
                 const marker = L.marker([point.latitude, point.longitude], {
                     icon: icon,
                     pane: 'markersPane'
                 }).addTo(map)
-                .bindPopup(popupContent, { className: 'premium-popup', maxWidth: 300 })
-                .bindTooltip(specificLabel.toUpperCase(), { permanent: true, direction: 'right', className: 'premium-tooltip', offset: [10, 0] });
+                .bindPopup(popupContent, { className: 'premium-popup', maxWidth: 300 });
+                // PENGHAPUSAN TOOLTIP KONDISI SESUAI PERMINTAAN USER
                 
                 activeMarkers.push(marker);
             });
@@ -587,12 +586,13 @@
                 
                 sortedLabels.forEach(([label, count]) => {
                     const isBaik = label.toLowerCase().includes('baik') || label.toLowerCase().includes('selesai');
-                    const isSedang = label.toLowerCase().includes('sedang') || label.toLowerCase().includes('ringan');
-                    const isBerat = !isBaik && !isSedang;
+                    const isRingan = label.toLowerCase().includes('ringan');
+                    const isSedang = label.toLowerCase().includes('sedang');
+                    const isBerat = !isBaik && !isSedang && !isRingan;
                     
-                    let colorClass = isBaik ? 'text-[#059669]' : (isSedang ? 'text-[#d97706]' : 'text-[#be123c]');
-                    let bgClass = isBaik ? 'bg-[#059669]/10 border-[#059669]/20' : (isSedang ? 'bg-[#d97706]/10 border-[#d97706]/20' : 'bg-[#be123c]/10 border-[#be123c]/20');
-                    let dotColor = isBaik ? 'bg-[#059669]' : (isSedang ? 'bg-[#d97706]' : 'bg-[#be123c]');
+                    let colorClass = isBaik ? 'text-[#059669]' : (isRingan ? 'text-[#ca8a04]' : (isSedang ? 'text-[#d97706]' : 'text-[#be123c]'));
+                    let bgClass = isBaik ? 'bg-[#059669]/10 border-[#059669]/20' : (isRingan ? 'bg-[#ca8a04]/10 border-[#ca8a04]/20' : (isSedang ? 'bg-[#d97706]/10 border-[#d97706]/20' : 'bg-[#be123c]/10 border-[#be123c]/20'));
+                    let dotColor = isBaik ? 'bg-[#059669]' : (isRingan ? 'bg-[#ca8a04]' : (isSedang ? 'bg-[#d97706]' : 'bg-[#be123c]'));
 
                     const html = `
                         <div class="w-full px-3 py-1.5 rounded-lg text-[7px] font-black uppercase tracking-wider text-gray-400 flex items-center justify-between">

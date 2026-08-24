@@ -19,7 +19,7 @@
                 <div class="flex items-center gap-2 relative z-20">
                     <label class="text-xs font-black text-slate-400 uppercase tracking-widest">Tampilan:</label>
                     <select wire:model.live="show" class="text-xs font-bold text-navy-900 dark:text-white bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-xl px-3 py-2 focus:outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all shadow-sm cursor-pointer">
-                        <option value="10">10 Baris</option>
+                        <option value="10">10 Data</option>
                         <option value="all">Semua Data</option>
                     </select>
                 </div>
@@ -45,8 +45,18 @@
                 </div>
 
                 <!-- Advanced Filter -->
-                <div class="flex flex-wrap md:flex-nowrap gap-4 items-end bg-slate-50 dark:bg-[#0f0e2c]/50 p-4 rounded-2xl border border-slate-100 dark:border-white/10">
-                    <div class="w-full md:flex-1">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end bg-slate-50 dark:bg-[#0f0e2c]/50 p-4 rounded-2xl border border-slate-100 dark:border-white/10">
+                    <div class="w-full">
+                        <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Pencarian</label>
+                        <div class="relative w-full">
+                            <input type="text" wire:model.live.debounce.300ms="search" placeholder="Cari infrastruktur..." class="w-full pl-11 pr-4 py-2.5 bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 rounded-xl text-xs font-bold text-navy-900 dark:text-white shadow-sm focus:outline-none focus:border-gold-500 transition-all">
+                            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs" wire:loading.remove wire:target="search"></i>
+                            <div wire:loading wire:target="search" class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center">
+                                <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full">
                         <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Wilayah Kecamatan</label>
                         <select wire:model.live="kecamatan" class="w-full bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:border-gold-500 transition-all shadow-sm cursor-pointer">
                             <option value="">Semua Kecamatan</option>
@@ -57,11 +67,11 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="w-full md:flex-1">
+                    <div class="w-full">
                         <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Mulai Tanggal</label>
                         <input type="date" wire:model.live="start_date" class="w-full bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:border-gold-500 transition-all shadow-sm cursor-pointer">
                     </div>
-                    <div class="w-full md:flex-1">
+                    <div class="w-full">
                         <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Sampai Tanggal</label>
                         <input type="date" wire:model.live="end_date" class="w-full bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:border-gold-500 transition-all shadow-sm cursor-pointer">
                     </div>

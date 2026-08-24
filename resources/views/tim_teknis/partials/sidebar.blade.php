@@ -37,7 +37,11 @@
             </a>
 
             @php
-                $pendingValidasiCount = \App\Models\Infrastruktur::where('status_verifikasi', 'Verified')->where('status_validasi', 'Pending')->count();
+                $lastReadValidasiAt = auth()->user()->last_read_validasi_at;
+                $pendingValidasiQuery = \App\Models\Infrastruktur::where('status_verifikasi', 'Verified')->where('status_validasi', 'Pending');
+                $pendingValidasiCount = $lastReadValidasiAt 
+                    ? $pendingValidasiQuery->where('created_at', '>', $lastReadValidasiAt)->count()
+                    : $pendingValidasiQuery->count();
             @endphp
             <a href="{{ route('tim_teknis.validasi') }}" 
                class="flex items-center justify-between px-4 py-3 {{ request()->routeIs('tim_teknis.validasi') ? 'bg-gold-500 text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group">
@@ -58,19 +62,7 @@
                 Cetak Laporan
             </a>
 
-            <!-- NOTIFIKASI BELL -->
-            <button type="button" onclick="alert('Ada {{ auth()->user()->unreadNotifications->count() ?? 0 }} notifikasi usulan baru. Silakan cek menu Validasi Usulan!')"
-               class="flex items-center justify-between px-4 py-3 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl text-sm font-semibold transition group text-left w-full mt-4 border border-white/5">
-                <div class="flex items-center gap-3">
-                    <i class="fas fa-bell group-hover:text-gold-400 {{ (auth()->user()->unreadNotifications->count() ?? 0) > 0 ? 'text-gold-500 animate-wiggle' : '' }}"></i> 
-                    Notifikasi
-                </div>
-                @if((auth()->user()->unreadNotifications->count() ?? 0) > 0)
-                    <span class="bg-rose-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full shadow-sm animate-pulse">
-                        {{ auth()->user()->unreadNotifications->count() }}
-                    </span>
-                @endif
-            </button>
+
         </nav>
     </div>
 
@@ -147,7 +139,7 @@
                     Validasi Usulan
                 </div>
                 @if($pendingValidasiCount > 0)
-                    <span class="bg-rose-500 text-white text-xs font-black px-2 py-0.5 rounded-full shadow-sm animate-pulse">
+                    <span class="bg-rose-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full shadow-sm animate-pulse">
                         {{ $pendingValidasiCount }}
                     </span>
                 @endif

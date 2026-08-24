@@ -17,7 +17,7 @@ class LaporanTable extends Component
     public $jenis = '';
     public $start_date = '';
     public $end_date = '';
-    public $show = '15';
+    public $show = '10';
 
     protected $queryString = [
         'search'     => ['except' => ''],
@@ -26,7 +26,7 @@ class LaporanTable extends Component
         'jenis'      => ['except' => ''],
         'start_date' => ['except' => ''],
         'end_date'   => ['except' => ''],
-        'show'       => ['except' => '15'],
+        'show'       => ['except' => '10'],
     ];
 
     /**

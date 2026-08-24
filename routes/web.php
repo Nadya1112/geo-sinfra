@@ -580,6 +580,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/infrastruktur/{id}/pdf', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'exportPdf'])->name('tim_teknis.infrastruktur.pdf');
         Route::get('/profile', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'profile'])->name('tim_teknis.profile');
         Route::put('/profile', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'updateProfile'])->name('tim_teknis.profile.update');
+        Route::get('/notifikasi', [App\Http\Controllers\TimTeknis\TimTeknisController::class, 'notifikasi'])->name('tim_teknis.notifikasi');
     });
     
 });

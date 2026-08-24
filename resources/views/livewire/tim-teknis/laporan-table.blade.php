@@ -72,59 +72,60 @@
 
     <!-- Filter Section (No Print) -->
     <div class="bg-white dark:bg-[#1e1b4b] rounded-[2rem] p-5 md:p-8 border border-slate-100 dark:border-white/10 shadow-sm mb-4 no-print relative z-20">
-        <div class="flex flex-col gap-4 md:gap-6">
-            <div class="flex flex-col md:flex-row md:flex-nowrap gap-4 md:gap-6 items-end">
-                <div class="w-full md:flex-1">
-                    <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Cari Nama</label>
-                    <input type="text" wire:model.live.debounce.300ms="search" placeholder="Ketik infrastruktur..." class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
-                </div>
-                <div class="w-full md:flex-1">
-                    <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Wilayah</label>
-                    <select wire:model.live="kecamatan" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all cursor-pointer">
-                        <option value="">Semua Kecamatan</option>
-                        @foreach($allKecamatan as $kec)
-                            <option value="{{ $kec->id_kecamatan }}">
-                                {{ $kec->nama_kecamatan }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="w-full md:flex-1">
-                    <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Kondisi</label>
-                    <select wire:model.live="kondisi" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all cursor-pointer">
-                        <option value="">Semua Kondisi</option>
-                        <option value="Baik">Baik</option>
-                        <option value="Rusak Sedang">Rusak Sedang</option>
-                        <option value="Rusak Berat">Rusak Berat</option>
-                    </select>
-                </div>
-                <div class="w-full md:flex-1">
-                    <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Infrastruktur</label>
-                    <select wire:model.live="jenis" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all cursor-pointer">
-                        <option value="">Semua Infrastruktur</option>
-                        <option value="Jalan">Jalan</option>
-                        <option value="Titian">Titian</option>
-                        <option value="Jembatan">Jembatan</option>
-                    </select>
+        <div class="grid grid-cols-1 gap-4 md:gap-6">
+            <div class="w-full">
+                <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Cari Nama</label>
+                <div class="relative w-full">
+                    <input type="text" wire:model.live.debounce.300ms="search" placeholder="Ketik infrastruktur..." class="w-full pl-11 pr-4 py-2.5 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs" wire:loading.remove wire:target="search"></i>
+                    <div wire:loading wire:target="search" class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center">
+                        <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs"></i>
+                    </div>
                 </div>
             </div>
-
-            <div class="flex flex-col md:flex-row md:flex-nowrap gap-4 md:gap-6 items-end">
-                <div class="w-full md:flex-1">
-                    <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Mulai Tanggal</label>
-                    <input type="date" wire:model.live="start_date" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all cursor-pointer">
-                </div>
-                <div class="w-full md:flex-1">
-                    <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Sampai Tanggal</label>
-                    <input type="date" wire:model.live="end_date" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all cursor-pointer">
-                </div>
-                <div class="w-full md:flex-1 flex gap-2 justify-start md:justify-end mt-2 md:mt-0">
-                    @if($search || $kecamatan || $kondisi || $jenis || $start_date || $end_date)
-                    <button wire:click="resetFilters" class="px-4 py-3 bg-red-50 text-red-600 font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-red-100 transition-all text-center flex items-center justify-center shrink-0" title="Reset Filter">
-                        <i class="fas fa-times"></i>
-                    </button>
-                    @endif
-                </div>
+            <div class="w-full">
+                <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Wilayah</label>
+                <select wire:model.live="kecamatan" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all cursor-pointer">
+                    <option value="">Semua Kecamatan</option>
+                    @foreach($allKecamatan as $kec)
+                        <option value="{{ $kec->id_kecamatan }}">
+                            {{ $kec->nama_kecamatan }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="w-full">
+                <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Kondisi</label>
+                <select wire:model.live="kondisi" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all cursor-pointer">
+                    <option value="">Semua Kondisi</option>
+                    <option value="Baik">Baik</option>
+                    <option value="Rusak Sedang">Rusak Sedang</option>
+                    <option value="Rusak Berat">Rusak Berat</option>
+                </select>
+            </div>
+            <div class="w-full">
+                <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Infrastruktur</label>
+                <select wire:model.live="jenis" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all cursor-pointer">
+                    <option value="">Semua Infrastruktur</option>
+                    <option value="Jalan">Jalan</option>
+                    <option value="Titian">Titian</option>
+                    <option value="Jembatan">Jembatan</option>
+                </select>
+            </div>
+            <div class="w-full">
+                <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Mulai Tanggal</label>
+                <input type="date" wire:model.live="start_date" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all cursor-pointer">
+            </div>
+            <div class="w-full">
+                <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Sampai Tanggal</label>
+                <input type="date" wire:model.live="end_date" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all cursor-pointer">
+            </div>
+            <div class="w-full flex justify-end">
+                @if($search || $kecamatan || $kondisi || $jenis || $start_date || $end_date)
+                <button wire:click="resetFilters" class="px-4 py-3 bg-red-50 text-red-600 font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-red-100 transition-all text-center flex items-center justify-center shrink-0" title="Reset Filter">
+                    <i class="fas fa-times mr-2"></i> Reset
+                </button>
+                @endif
             </div>
         </div>
     </div>
@@ -173,14 +174,10 @@
                     </button>
                 </div>
                 <div class="flex items-center gap-2 w-full sm:w-auto">
-                    <label class="text-xs font-black text-slate-400 uppercase tracking-widest whitespace-nowrap">Tampilan Cetak:</label>
-                    <select wire:model.live="show" class="w-full sm:w-auto pl-4 pr-10 py-2 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 rounded-xl text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500 appearance-none shadow-sm cursor-pointer relative z-10">
-                        <option value="15">1 Halaman (±15 Baris)</option>
-                        <option value="30">2 Halaman (±30 Baris)</option>
-                        <option value="45">3 Halaman (±45 Baris)</option>
-                        <option value="75">5 Halaman (±75 Baris)</option>
-                        <option value="150">10 Halaman (±150 Baris)</option>
-                        <option value="all">Semua Halaman</option>
+                    <label class="text-xs font-black text-slate-400 uppercase tracking-widest whitespace-nowrap">Tampilan:</label>
+                    <select wire:model.live="show" class="text-xs font-bold text-navy-900 dark:text-white bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-xl px-3 py-2 focus:outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all shadow-sm cursor-pointer">
+                        <option value="10">10 Data</option>
+                        <option value="all">Semua Data</option>
                     </select>
                 </div>
             </div>

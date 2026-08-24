@@ -18,6 +18,7 @@ class ValidasiTable extends Component
     public $start_date = '';
     public $end_date = '';
     public $show = '10';
+    public $search = '';
 
     public $showModal = false;
     public $modalAction = '';
@@ -31,6 +32,7 @@ class ValidasiTable extends Component
         'start_date' => ['except' => ''],
         'end_date' => ['except' => ''],
         'show' => ['except' => '10'],
+        'search' => ['except' => ''],
     ];
 
     public function updating($field)
@@ -104,6 +106,16 @@ class ValidasiTable extends Component
             
         if ($this->statusFilter !== 'All') {
             $query->where('status_validasi', $this->statusFilter);
+        }
+
+        if (!empty($this->search)) {
+            $query->where(function($q) {
+                $q->where('nama_objek', 'like', '%' . $this->search . '%')
+                  ->orWhere('nama_infrastruktur', 'like', '%' . $this->search . '%')
+                  ->orWhereHas('user', function($uq) {
+                      $uq->where('name', 'like', '%' . $this->search . '%');
+                  });
+            });
         }
 
         if ($this->kecamatan) {

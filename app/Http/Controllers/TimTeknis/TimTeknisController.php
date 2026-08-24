@@ -89,6 +89,11 @@ class TimTeknisController extends Controller
             'verified' => \App\Models\Infrastruktur::where('status_verifikasi', 'Verified')->where('status_validasi', 'Validated')->count(),
             'rejected' => \App\Models\Infrastruktur::where('status_verifikasi', 'Verified')->where('status_validasi', 'Rejected')->count(),
         ];
+
+        $user = auth()->user();
+        $user->last_read_validasi_at = now();
+        $user->save();
+
         return view('tim_teknis.validasi', compact('counts'));
     }
 
@@ -141,6 +146,21 @@ class TimTeknisController extends Controller
         $infra->save();
 
         return redirect()->back()->with('success', 'Status pengerjaan fisik berhasil diperbarui menjadi: ' . $request->status_perbaikan);
+    }
+
+    public function notifikasi()
+    {
+        $user = auth()->user();
+        
+        // Mark all as read when visited
+        $user->unreadNotifications->markAsRead();
+        
+        // Update last read validasi to remove validasi badge as well just in case they click notif
+        $user->update([
+            'last_read_validasi_at' => now()
+        ]);
+        
+        return view('tim_teknis.notifikasi');
     }
 
     public function profile()
