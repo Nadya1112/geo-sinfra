@@ -92,6 +92,51 @@
                     <p class="text-sm font-bold">{{ session('error') }}</p>
                 </div>
                 @endif
+
+                {{-- Statistik Label Kondisi AI (Data Milik Saya) --}}
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm flex items-center gap-4">
+                        <div class="w-11 h-11 bg-navy-50 rounded-xl flex items-center justify-center text-gold-500 shrink-0">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Survey</p>
+                            <h3 class="text-2xl font-black text-navy-900 leading-none">{{ $totalSurvey ?? 0 }}</h3>
+                            <span class="text-[9px] font-bold text-slate-400 italic">Laporan Saya</span>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-5 border border-emerald-100 shadow-sm flex items-center gap-4">
+                        <div class="w-11 h-11 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-500 shrink-0">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-black text-emerald-500 uppercase tracking-widest">Kondisi Baik</p>
+                            <h3 class="text-2xl font-black text-navy-900 leading-none">{{ $totalBaik ?? 0 }}</h3>
+                            <span class="text-[9px] font-bold text-slate-400 italic">Lokasi</span>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-5 border border-amber-100 shadow-sm flex items-center gap-4">
+                        <div class="w-11 h-11 bg-amber-50 rounded-xl flex items-center justify-center text-amber-500 shrink-0">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-black text-amber-500 uppercase tracking-widest">Rusak Sedang</p>
+                            <h3 class="text-2xl font-black text-navy-900 leading-none">{{ $totalRusakSedang ?? 0 }}</h3>
+                            <span class="text-[9px] font-bold text-slate-400 italic">Lokasi</span>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-5 border border-rose-100 shadow-sm flex items-center gap-4">
+                        <div class="w-11 h-11 bg-rose-50 rounded-xl flex items-center justify-center text-rose-500 shrink-0">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-black text-rose-500 uppercase tracking-widest">Rusak Berat</p>
+                            <h3 class="text-2xl font-black text-navy-900 leading-none">{{ $totalRusakBerat ?? 0 }}</h3>
+                            <span class="text-[9px] font-bold text-slate-400 italic">Lokasi</span>
+                        </div>
+                    </div>
+                </div>
+
                 @livewire('surveyor.history-table')
             </div>
         </div>

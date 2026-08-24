@@ -173,7 +173,20 @@ class TimTeknisController extends Controller
 
     public function laporan(Request $request)
     {
-        return view('tim_teknis.laporan');
+        $aiData = DB::table('analisis_ai')
+            ->join('infrastruktur', 'analisis_ai.id_infrastruktur', '=', 'infrastruktur.id_infrastruktur')
+            ->whereNull('infrastruktur.deleted_at')
+            ->select('analisis_ai.label_prioritas')
+            ->get();
+
+        $totalBaik        = $aiData->where('label_prioritas', 'Baik')->count();
+        $totalRusakSedang = $aiData->where('label_prioritas', 'Rusak Sedang')->count();
+        $totalRusakBerat  = $aiData->where('label_prioritas', 'Rusak Berat')->count();
+        $totalData        = $aiData->count();
+
+        return view('tim_teknis.laporan', compact(
+            'totalBaik', 'totalRusakSedang', 'totalRusakBerat', 'totalData'
+        ));
     }
 
     public function exportPdf($id)

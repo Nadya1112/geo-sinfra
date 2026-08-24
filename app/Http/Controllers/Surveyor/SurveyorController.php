@@ -157,7 +157,24 @@ class SurveyorController extends Controller
 
     public function history(\Illuminate\Http\Request $request)
     {
-        return view('surveyor.history');
+        $userId = auth()->id();
+
+        // Statistik label kondisi AI untuk data milik surveyor ini
+        $myAiData = DB::table('analisis_ai')
+            ->join('infrastruktur', 'analisis_ai.id_infrastruktur', '=', 'infrastruktur.id_infrastruktur')
+            ->whereNull('infrastruktur.deleted_at')
+            ->where('infrastruktur.id_user', $userId)
+            ->select('analisis_ai.label_prioritas')
+            ->get();
+
+        $totalBaik        = $myAiData->where('label_prioritas', 'Baik')->count();
+        $totalRusakSedang = $myAiData->where('label_prioritas', 'Rusak Sedang')->count();
+        $totalRusakBerat  = $myAiData->where('label_prioritas', 'Rusak Berat')->count();
+        $totalSurvey      = Infrastruktur::where('id_user', $userId)->count();
+
+        return view('surveyor.history', compact(
+            'totalBaik', 'totalRusakSedang', 'totalRusakBerat', 'totalSurvey'
+        ));
     }
 
     public function show($id)
