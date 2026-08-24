@@ -218,7 +218,6 @@
             </div>
         @endif
     </div>
-</div>
 
     <!-- Livewire Validation Modal -->
     @if($showModal)
