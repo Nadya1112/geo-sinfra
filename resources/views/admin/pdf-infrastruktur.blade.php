@@ -9,7 +9,7 @@
             margin: 20mm 20mm 20mm 25mm;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Times New Roman, serif; color: #111; font-size: 14px; line-height: 1.5; }
+        body { font-family: 'Arial', sans-serif; color: #111; font-size: 14px; line-height: 1.5; }
 
         /* ── KOP DINAS ── */
         .kop-wrapper {
@@ -379,10 +379,10 @@
                 {{-- Kolom kanan: TTD --}}
                 <td style="width:50%; text-align:center;">
                     <div class="ttd-kota-tgl">Banjarmasin, {{ now()->translatedFormat('d F Y') }}</div>
-                    <div class="ttd-jabatan">Koordinator Tim Teknis</div>
+                    <div class="ttd-jabatan">{{ auth()->user()->role === 'tim_teknis' ? 'Koordinator Tim Teknis' : 'Administrator' }}</div>
                     <div class="ttd-ruang"></div>
-                    <div class="ttd-nama">HIZBULWATHONI, S.T.</div>
-                    <div class="ttd-nip">NIP. 19760814 200604 1 008</div>
+                    <div class="ttd-nama" style="text-decoration: underline;">{{ strtoupper(auth()->user()->name ?? 'Administrator') }}</div>
+                    <div class="ttd-nip">NIP. {{ auth()->user()->nip ?? '-' }}</div>
                 </td>
             </tr>
         </table>
