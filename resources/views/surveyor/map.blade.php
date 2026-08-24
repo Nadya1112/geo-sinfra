@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -106,21 +106,21 @@
                                 <div class="w-1.5 h-1.5 bg-[#059669] rounded-full"></div>
                                 <span class="group-hover:text-[#059669] transition-colors">Baik</span>
                             </div>
-                            <span class="text-[7px] font-black text-[#059669] bg-white/5 px-1.5 py-0.5 rounded border border-[#059669]/20">{{ $dataMap->where('kondisi', 'Baik')->count() }}</span>
+                            <span class="text-[7px] font-black text-[#059669] bg-white/5 px-1.5 py-0.5 rounded border border-[#059669]/20">{{ $dataMap->filter(fn($i) => optional($i->analisis)->label_prioritas == 'Baik')->count() }}</span>
                         </button>
                         <button onclick="handleConditionSelect('Rusak Sedang')" class="w-full px-3 py-1.5 rounded-lg text-[7px] font-black uppercase tracking-wider text-gray-400 hover:bg-[#d97706]/10 hover:text-[#d97706] transition-all flex items-center justify-between group">
                             <div class="flex items-center gap-1.5">
                                 <div class="w-1.5 h-1.5 bg-[#d97706] rounded-full"></div>
                                 <span class="group-hover:text-[#d97706] transition-colors">Sedang</span>
                             </div>
-                            <span class="text-[7px] font-black text-[#d97706] bg-white/5 px-1.5 py-0.5 rounded border border-[#d97706]/20">{{ $dataMap->where('kondisi', 'Rusak Sedang')->count() }}</span>
+                            <span class="text-[7px] font-black text-[#d97706] bg-white/5 px-1.5 py-0.5 rounded border border-[#d97706]/20">{{ $dataMap->filter(fn($i) => optional($i->analisis)->label_prioritas == 'Rusak Sedang')->count() }}</span>
                         </button>
                         <button onclick="handleConditionSelect('Rusak Berat')" class="w-full px-3 py-1.5 rounded-lg text-[7px] font-black uppercase tracking-wider text-gray-400 hover:bg-[#be123c]/10 hover:text-[#be123c] transition-all flex items-center justify-between group">
                             <div class="flex items-center gap-1.5">
                                 <div class="w-1.5 h-1.5 bg-[#be123c] rounded-full"></div>
                                 <span class="group-hover:text-[#be123c] transition-colors">Berat</span>
                             </div>
-                            <span class="text-[7px] font-black text-[#be123c] bg-white/5 px-1.5 py-0.5 rounded border border-[#be123c]/20">{{ $dataMap->where('kondisi', 'Rusak Berat')->count() }}</span>
+                            <span class="text-[7px] font-black text-[#be123c] bg-white/5 px-1.5 py-0.5 rounded border border-[#be123c]/20">{{ $dataMap->filter(fn($i) => optional($i->analisis)->label_prioritas == 'Rusak Berat')->count() }}</span>
                         </button>
                     </div>
                 </div>
