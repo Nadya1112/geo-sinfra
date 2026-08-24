@@ -6,11 +6,11 @@
     <style>
         @page {
             size: A4 portrait;
-            margin: 30mm 30mm 30mm 40mm;
+            margin: 1.5cm;
         }
         body {
-            font-family: 'Arial', sans-serif;
-            font-size: 10pt;
+            font-family: 'DejaVu Sans', Arial, sans-serif;
+            font-size: 11px;
             color: #333;
         }
         .header {
