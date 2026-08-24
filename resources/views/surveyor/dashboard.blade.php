@@ -37,9 +37,30 @@
                             Siap untuk mendata infrastruktur hari ini? Pastikan GPS aktif dan foto yang diambil jelas untuk hasil pemantauan status kondisi yang akurat di lapangan.
                         </p>
                     </div>
-                    <a href="{{ route('surveyor.input') }}" class="shrink-0 px-8 py-4 bg-gold-500 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-gold-600 transition-all shadow-lg shadow-gold-500/20 flex items-center gap-3 group">
-                        Mulai Survey <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
-                    </a>
+                    
+                    <div class="flex flex-col md:flex-row items-center gap-6 md:gap-8">
+                        {{-- Mini Stats Box sama seperti Admin --}}
+                        <div class="flex sm:flex-col justify-between sm:justify-center gap-4 sm:gap-3 shrink-0 bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-sm w-full sm:w-auto">
+                            <div class="text-center sm:text-right">
+                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Rusak Berat</p>
+                                <p class="text-lg font-black text-red-500">{{ number_format($rusakBerat ?? 0) }} <span class="text-xs text-red-400"><i class="fas fa-exclamation-triangle"></i></span></p>
+                            </div>
+                            <div class="w-px sm:w-full h-8 sm:h-px bg-white/10 my-auto"></div>
+                            <div class="text-center sm:text-right">
+                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Rusak Sedang</p>
+                                <p class="text-lg font-black text-amber-400">{{ number_format($rusakSedang ?? 0) }} <span class="text-xs text-amber-300"><i class="fas fa-exclamation-circle"></i></span></p>
+                            </div>
+                            <div class="w-px sm:w-full h-8 sm:h-px bg-white/10 my-auto"></div>
+                            <div class="text-center sm:text-right">
+                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Kondisi Baik</p>
+                                <p class="text-lg font-black text-emerald-400">{{ number_format($kondisiBaik ?? 0) }} <span class="text-xs text-emerald-300"><i class="fas fa-check-circle"></i></span></p>
+                            </div>
+                        </div>
+
+                        <a href="{{ route('surveyor.input') }}" class="shrink-0 px-8 py-4 bg-gold-500 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-gold-600 transition-all shadow-lg shadow-gold-500/20 flex items-center gap-3 group">
+                            Mulai Survey <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
 

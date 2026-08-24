@@ -34,18 +34,39 @@
                 <div class="absolute -right-20 -top-20 w-80 h-80 bg-gold-500/20 rounded-full blur-[100px]"></div>
                 <div class="absolute -left-10 -bottom-10 w-60 h-60 bg-white/5 rounded-full blur-[80px]"></div>
                 
-                <div class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+                <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                     <div>
                         <h1 class="text-lg md:text-2xl font-black text-white mb-1">Selamat Datang, {{ auth()->user()->name }}</h1>
                         <p class="text-slate-300 text-xs md:text-sm font-medium tracking-wide">Berikut ringkasan kondisi infrastruktur Banjarmasin saat ini.</p>
                     </div>
-                    <div class="hidden md:flex items-center gap-2">
-                        <span class="px-3 py-1.5 bg-emerald-500/20 text-emerald-400 text-xs font-black uppercase tracking-widest rounded-full border border-emerald-500/30">
-                            <i class="fas fa-circle text-[6px] mr-1 animate-pulse"></i> Sistem Aktif
-                        </span>
-                        <span class="px-3 py-1.5 bg-gold-500/20 text-gold-400 text-xs font-black uppercase tracking-widest rounded-full border border-gold-500/30">
-                            <i class="fas fa-robot text-[10px] mr-1"></i> AI Aktif
-                        </span>
+
+                    <div class="flex flex-col md:flex-row items-center gap-6">
+                        {{-- Mini Stats Box --}}
+                        <div class="flex sm:flex-col justify-between sm:justify-center gap-4 sm:gap-3 shrink-0 bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-sm w-full sm:w-auto">
+                            <div class="text-center sm:text-right">
+                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Rusak Berat</p>
+                                <p class="text-lg font-black text-red-500">{{ number_format($totalRusakBerat ?? 0) }} <span class="text-xs text-red-400"><i class="fas fa-exclamation-triangle"></i></span></p>
+                            </div>
+                            <div class="w-px sm:w-full h-8 sm:h-px bg-white/10 my-auto"></div>
+                            <div class="text-center sm:text-right">
+                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Rusak Sedang</p>
+                                <p class="text-lg font-black text-amber-400">{{ number_format($totalRusakSedang ?? 0) }} <span class="text-xs text-amber-300"><i class="fas fa-exclamation-circle"></i></span></p>
+                            </div>
+                            <div class="w-px sm:w-full h-8 sm:h-px bg-white/10 my-auto"></div>
+                            <div class="text-center sm:text-right">
+                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Kondisi Baik</p>
+                                <p class="text-lg font-black text-emerald-400">{{ number_format($totalBaik ?? 0) }} <span class="text-xs text-emerald-300"><i class="fas fa-check-circle"></i></span></p>
+                            </div>
+                        </div>
+
+                        <div class="hidden md:flex flex-col gap-2">
+                            <span class="px-3 py-1.5 bg-emerald-500/20 text-emerald-400 text-xs font-black uppercase tracking-widest rounded-full border border-emerald-500/30">
+                                <i class="fas fa-circle text-[6px] mr-1 animate-pulse"></i> Sistem Aktif
+                            </span>
+                            <span class="px-3 py-1.5 bg-gold-500/20 text-gold-400 text-xs font-black uppercase tracking-widest rounded-full border border-gold-500/30">
+                                <i class="fas fa-robot text-[10px] mr-1"></i> AI Aktif
+                            </span>
+                        </div>
                     </div>
                 </div>
 

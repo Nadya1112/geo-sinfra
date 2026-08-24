@@ -56,7 +56,19 @@ class SurveyorController extends Controller
             ->orderBy('updated_at', 'desc')
             ->get();
 
-        return view('surveyor.dashboard', compact('totalSurvey', 'waitingValidation', 'verifiedAI', 'totalRejected', 'totalTugas', 'tugasMenunggu', 'tugasSelesai', 'recentUploads', 'semuaKecamatan', 'kecamatans', 'rejectedItems'));
+        // Data Kondisi Aset Surveyor (Berdasarkan Label Prioritas AI)
+        $aiData = \Illuminate\Support\Facades\DB::table('analisis_ai')
+            ->join('infrastruktur', 'analisis_ai.id_infrastruktur', '=', 'infrastruktur.id_infrastruktur')
+            ->where('infrastruktur.id_user', $userId)
+            ->whereNull('infrastruktur.deleted_at')
+            ->select('analisis_ai.label_prioritas')
+            ->get();
+
+        $rusakBerat = $aiData->where('label_prioritas', 'Rusak Berat')->count();
+        $rusakSedang = $aiData->where('label_prioritas', 'Rusak Sedang')->count();
+        $kondisiBaik = $aiData->where('label_prioritas', 'Baik')->count();
+
+        return view('surveyor.dashboard', compact('totalSurvey', 'waitingValidation', 'verifiedAI', 'totalRejected', 'totalTugas', 'tugasMenunggu', 'tugasSelesai', 'recentUploads', 'semuaKecamatan', 'kecamatans', 'rejectedItems', 'rusakBerat', 'rusakSedang', 'kondisiBaik'));
     }
 
     public function updateTerritories(Request $request)
@@ -157,24 +169,7 @@ class SurveyorController extends Controller
 
     public function history(\Illuminate\Http\Request $request)
     {
-        $userId = auth()->id();
-
-        // Statistik label kondisi AI untuk data milik surveyor ini
-        $myAiData = DB::table('analisis_ai')
-            ->join('infrastruktur', 'analisis_ai.id_infrastruktur', '=', 'infrastruktur.id_infrastruktur')
-            ->whereNull('infrastruktur.deleted_at')
-            ->where('infrastruktur.id_user', $userId)
-            ->select('analisis_ai.label_prioritas')
-            ->get();
-
-        $totalBaik        = $myAiData->where('label_prioritas', 'Baik')->count();
-        $totalRusakSedang = $myAiData->where('label_prioritas', 'Rusak Sedang')->count();
-        $totalRusakBerat  = $myAiData->where('label_prioritas', 'Rusak Berat')->count();
-        $totalSurvey      = Infrastruktur::where('id_user', $userId)->count();
-
-        return view('surveyor.history', compact(
-            'totalBaik', 'totalRusakSedang', 'totalRusakBerat', 'totalSurvey'
-        ));
+        return view('surveyor.history');
     }
 
     public function show($id)
