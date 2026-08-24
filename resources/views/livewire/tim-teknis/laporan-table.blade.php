@@ -133,7 +133,6 @@
     <!-- Print Header (Kop Surat Dinas) -->
     <div id="kopSurat" class="hidden print-only mb-6 pb-4" style="border-bottom: 4px double black;">
         <div class="flex items-center gap-6" style="display: flex; align-items: center; justify-content: center;">
-            <img src="{{ asset('logo_dinas.jpeg') }}" style="width: 80px; height: auto;" alt="Logo Instansi">
             <div style="text-align: center;">
                 <h2 style="font-size: 14pt; font-weight: bold; text-transform: uppercase; margin: 0; line-height: 1.3;">Dinas Perumahan Rakyat dan Kawasan Permukiman Kota Banjarmasin</h2>
                 <p style="font-size: 10pt; margin: 0; line-height: 1.5;">Jalan R.E Martadinata No. 1 Blok B Lantai 2 Kec. Banjarmasin Tengah, Kota Banjarmasin Kalimantan Selatan - 70111</p>

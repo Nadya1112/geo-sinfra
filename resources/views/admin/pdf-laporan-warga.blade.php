@@ -61,7 +61,7 @@
 
     <div class="kop-wrapper">
         <div class="kop-inner">
-            <div class="kop-logo-kiri">@if($logoKiriB64)<img src="{{ $logoKiriB64 }}" alt="Logo Dinas">@endif</div>
+            <div class="kop-logo-kiri"></div>
             <div class="kop-teks">
                 <div class="nama-dinas">Dinas Perumahan Rakyat dan Kawasan Permukiman</div>
                 <div class="nama-dinas">Kota Banjarmasin</div>

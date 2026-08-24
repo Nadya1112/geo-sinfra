@@ -219,9 +219,7 @@
         <div class="kop-inner">
             {{-- Logo Dinas (kiri) --}}
             <div class="kop-logo-kiri">
-                @if($logoKiriB64)
-                    <img src="{{ $logoKiriB64 }}" alt="Logo Dinas">
-                @endif
+                {{-- Logo removed per user request --}}
             </div>
 
             {{-- Teks Kop --}}

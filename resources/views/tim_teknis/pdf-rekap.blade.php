@@ -71,7 +71,7 @@
         .signature {
             display: inline-block;
             text-align: center;
-            width: 200px;
+            width: 350px;
         }
         .signature-name {
             margin-top: 60px;
