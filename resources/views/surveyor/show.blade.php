@@ -225,9 +225,28 @@
                                 </div>
                                 <h3 class="text-2xl lg:text-3xl font-black text-navy-900  leading-tight">{{ $infrastruktur->nama_objek ?? $infrastruktur->nama_infrastruktur }}</h3>
                             </div>
-                            <div class="sm:text-right shrink-0">
-                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Diinput Pada</p>
-                                <p class="text-xs font-black text-navy-900  mt-1">{{ $infrastruktur->created_at->translatedFormat('d M Y, H:i') }}</p>
+                            <div class="sm:text-right shrink-0 space-y-2">
+                                <div>
+                                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Diinput Pada</p>
+                                    <p class="text-xs font-black text-navy-900  mt-1">{{ $infrastruktur->created_at->translatedFormat('d M Y, H:i') }}</p>
+                                </div>
+                                {{-- Badge Status Verifikasi Tim Teknis --}}
+                                @php
+                                    $statusVerif = $infrastruktur->status_verifikasi ?? 'Pending';
+                                @endphp
+                                @if($statusVerif == 'Verified')
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 border border-emerald-200 rounded-xl text-[10px] font-black text-emerald-700 uppercase tracking-widest">
+                                        <i class="fas fa-check-circle text-emerald-500"></i> Terverifikasi
+                                    </span>
+                                @elseif($statusVerif == 'Rejected')
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-rose-50 border border-rose-200 rounded-xl text-[10px] font-black text-rose-700 uppercase tracking-widest">
+                                        <i class="fas fa-times-circle text-rose-500"></i> Ditolak
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 border border-amber-200 rounded-xl text-[10px] font-black text-amber-700 uppercase tracking-widest">
+                                        <i class="fas fa-clock text-amber-500"></i> Menunggu Verifikasi
+                                    </span>
+                                @endif
                             </div>
                         </div>
 
