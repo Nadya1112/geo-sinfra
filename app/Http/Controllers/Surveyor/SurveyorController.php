@@ -120,6 +120,8 @@ class SurveyorController extends Controller
     {
 
         $namaFoto = 'default.jpg';
+        $aiResult = null;
+
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             $namaFoto = time() . '_' . $file->getClientOriginalName();
@@ -131,6 +133,29 @@ class SurveyorController extends Controller
             
             // Menggunakan fungsi native move milik Laravel untuk menghindari error php_fileinfo pada storeAs()
             $file->move($destinationPath, $namaFoto);
+
+            // Validasi AI terlebih dahulu
+            $aiResult = $this->analyzeImageOnly('infrastruktur/' . $namaFoto);
+            
+            // Jika AI offline atau error, cegah upload
+            if (!$aiResult || (isset($aiResult['success']) && $aiResult['success'] == false)) {
+                if (file_exists($destinationPath . '/' . $namaFoto)) {
+                    unlink($destinationPath . '/' . $namaFoto);
+                }
+                return response()->json([
+                    'message' => 'Sistem AI Validasi sedang offline atau terjadi gangguan. Data tidak dapat disimpan tanpa divalidasi oleh AI. Harap coba beberapa saat lagi.'
+                ], 422);
+            }
+
+            if (isset($aiResult['jenis']) && $aiResult['jenis'] == 'Bukan Infrastruktur') {
+                // Hapus foto jika terdeteksi bukan infrastruktur
+                if (file_exists($destinationPath . '/' . $namaFoto)) {
+                    unlink($destinationPath . '/' . $namaFoto);
+                }
+                return response()->json([
+                    'message' => 'Foto tidak valid! AI mendeteksi foto tersebut bukan merupakan Jalan, Jembatan, atau Titian.'
+                ], 422);
+            }
         }
 
         // 🌟 DIUBAH KE ELOQUENT MODEL agar memicu fungsi saved() di InfrastrukturObserver otomatis
@@ -155,13 +180,17 @@ class SurveyorController extends Controller
             'status_verifikasi' => 'Pending',
         ]);
 
-        // Memicu Analisis Visual CNN via API Python
+        // Memicu Analisis Visual CNN via API Python, bypass HTTP jika aiResult sudah ada
         if ($request->hasFile('foto')) {
-            $this->processCnnAnalysis($infra->id_infrastruktur, 'infrastruktur/' . $namaFoto);
+            $this->processCnnAnalysis($infra->id_infrastruktur, 'infrastruktur/' . $namaFoto, $aiResult);
         }
 
         if ($request->ajax()) {
-            return response()->json(['success' => true]);
+            return response()->json([
+                'success' => true,
+                'message' => 'Data lapangan berhasil disimpan & dianalisis otomatis oleh AI!',
+                'ai_data' => $aiResult
+            ]);
         }
 
         return redirect()->route('surveyor.history')->with('success', 'Data lapangan berhasil disimpan & dianalisis otomatis oleh AI!');

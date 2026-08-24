@@ -10,32 +10,68 @@ use Illuminate\Support\Facades\Storage;
 trait AiProcessingTrait
 {
     /**
-     * Mengirimkan gambar ke API Python CNN dan menyimpan hasilnya.
+     * Mengirimkan gambar ke API Python CNN dan mengembalikan hasilnya tanpa menyimpan ke DB.
      */
-    public function processCnnAnalysis($infrastrukturId, $imagePath)
+    public function analyzeImageOnly($imagePath)
     {
         try {
-            // URL API Python (Sesuaikan dengan alamat server Flask/FastAPI Anda)
             $apiUrl = env('CNN_API_URL', 'http://127.0.0.1:5000/predict');
-            
-            // Ambil file fisik
             $filePath = storage_path('app/public/' . $imagePath);
             
             if (!file_exists($filePath)) {
-                Log::error("File gambar tidak ditemukan untuk analisis CNN: " . $filePath);
-                return false;
+                return ['success' => false, 'error' => 'File gambar tidak ditemukan'];
             }
-            // Kirim ke Flask API via HTTP POST (Lebih Cepat & Efisien)
+            
             $response = Http::timeout(30)->attach(
                 'image', file_get_contents($filePath), basename($filePath)
             )->post($apiUrl);
             
             if ($response->failed()) {
-                Log::error("API CNN Error: " . $response->body());
-                return $this->simulateCnnAnalysis($infrastrukturId);
+                return ['success' => false, 'error' => 'API CNN Error: ' . $response->body()];
             }
             
             $result = $response->json();
+            if ($result && isset($result['success']) && $result['success'] == true) {
+                return $result;
+            }
+            
+            return ['success' => false, 'error' => 'Format response tidak sesuai'];
+        } catch (\Exception $e) {
+            return ['success' => false, 'error' => 'Gagal menghubungi API CNN: ' . $e->getMessage()];
+        }
+    }
+
+    /**
+     * Mengirimkan gambar ke API Python CNN dan menyimpan hasilnya.
+     */
+    public function processCnnAnalysis($infrastrukturId, $imagePath, $precalculatedResult = null)
+    {
+        try {
+            $result = $precalculatedResult;
+
+            if (!$result) {
+                // URL API Python (Sesuaikan dengan alamat server Flask/FastAPI Anda)
+                $apiUrl = env('CNN_API_URL', 'http://127.0.0.1:5000/predict');
+                
+                // Ambil file fisik
+                $filePath = storage_path('app/public/' . $imagePath);
+                
+                if (!file_exists($filePath)) {
+                    Log::error("File gambar tidak ditemukan untuk analisis CNN: " . $filePath);
+                    return false;
+                }
+                // Kirim ke Flask API via HTTP POST (Lebih Cepat & Efisien)
+                $response = Http::timeout(30)->attach(
+                    'image', file_get_contents($filePath), basename($filePath)
+                )->post($apiUrl);
+                
+                if ($response->failed()) {
+                    Log::error("API CNN Error: " . $response->body());
+                    return $this->simulateCnnAnalysis($infrastrukturId);
+                }
+                
+                $result = $response->json();
+            }
 
             if ($result && isset($result['success']) && $result['success'] == true) {
                 

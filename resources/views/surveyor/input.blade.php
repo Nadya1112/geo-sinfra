@@ -47,10 +47,10 @@
                 <form id="survey-form" action="{{ route('surveyor.store', [], false) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div class="grid grid-cols-1 gap-8">
                         
-                        {{-- KOLOM KIRI --}}
-                        <div class="lg:col-span-7 space-y-8">
+                        {{-- KOLOM PERTAMA --}}
+                        <div class="space-y-8">
                             
                             {{-- Section: Identitas Laporan --}}
                             <div class="bg-white  rounded-[2.5rem] p-8 border border-slate-100  shadow-sm hover:shadow-md transition-shadow">
@@ -196,8 +196,8 @@
                             </div>
                         </div>
 
-                        {{-- KOLOM KANAN --}}
-                        <div class="lg:col-span-5 space-y-8">
+                        {{-- KOLOM KEDUA --}}
+                        <div class="space-y-8">
                             
                             {{-- Section: Peta --}}
                             <div class="bg-white  rounded-[2.5rem] p-8 border border-slate-100  shadow-sm hover:shadow-md transition-shadow">
@@ -580,6 +580,15 @@
                 formData.set('foto', compressedImageBlob, 'survey_photo.jpg');
             }
 
+            Swal.fire({
+                title: 'Menganalisis Foto...',
+                html: 'Sistem sedang memproses foto dan menyimpan data.<br>Mohon tunggu sebentar.',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
             if (!navigator.onLine) {
                 const draftId = 'draft_' + new Date().getTime();
                 await localforage.setItem(draftId, formData);
@@ -608,8 +617,23 @@
                 
                 if (response.ok || response.redirected) {
                     localStorage.removeItem('survey_draft');
-                    Swal.fire('Berhasil!', 'Data survei berhasil diunggah ke server dan dianalisis AI.', 'success')
-                    .then(() => { window.location.href = "{{ route('surveyor.history', [], false) }}"; });
+                    
+                    const responseData = await response.json();
+                    
+                    Swal.fire('Berhasil!', responseData.message || 'Data survei berhasil diunggah ke server dan dianalisis AI.', 'success')
+                    .then(() => { 
+                        // Reset form dan tetap di halaman
+                        form.reset();
+                        document.getElementById('image-preview').classList.add('hidden');
+                        document.getElementById('placeholder-elements').classList.remove('hidden');
+                        compressedImageBlob = null;
+                        
+                        // Kembalikan tombol submit
+                        resetSubmitButton();
+                        
+                        // Refresh data offline jika ada
+                        checkOfflineData();
+                    });
                 } else {
                     let errorMessage = 'Terjadi kesalahan pada server saat mengunggah data.';
                     try {

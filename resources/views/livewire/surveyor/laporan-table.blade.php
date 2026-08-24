@@ -14,7 +14,8 @@
     <div class="bg-white p-5 rounded-[2rem] shadow-sm border border-slate-100 flex flex-col md:flex-row gap-4 items-center justify-between mb-4">
         <div class="flex flex-col md:flex-row gap-3 w-full">
             <div class="flex-1 relative">
-                <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs" wire:loading.remove wire:target="search"></i>
+                <i class="fas fa-circle-notch fa-spin absolute left-4 top-1/2 -translate-y-1/2 text-gold-500 text-xs hidden" wire:loading.inline-block wire:target="search"></i>
                 <input type="text" wire:model.live.debounce.300ms="search" placeholder="Cari nama pelapor, deskripsi, atau no HP..." 
                        class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all font-medium">
             </div>
@@ -39,9 +40,7 @@
 
     <!-- Table Container -->
     <div class="bg-white rounded-[2rem] shadow-xl shadow-slate-200/40 border border-slate-100 overflow-hidden relative">
-        <div wire:loading.delay class="absolute inset-0 bg-white/50 backdrop-blur-sm z-10 flex items-center justify-center">
-            <i class="fas fa-circle-notch fa-spin text-4xl text-gold-500"></i>
-        </div>
+
         <div class="overflow-x-auto custom-scrollbar">
             <table class="w-full text-left text-sm whitespace-nowrap md:whitespace-normal">
                 <thead class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
