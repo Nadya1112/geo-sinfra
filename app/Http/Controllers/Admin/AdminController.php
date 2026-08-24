@@ -116,8 +116,9 @@ class AdminController extends Controller
         $hasilAi = DB::table('analisis_ai')->get();
         $jumlahRusakBerat = $hasilAi->where('label_prioritas', 'Rusak Berat')->count();
         $jumlahRusakSedang = $hasilAi->where('label_prioritas', 'Rusak Sedang')->count(); 
+        $jumlahRusakRingan = $hasilAi->where('label_prioritas', 'Rusak Ringan')->count();
         $jumlahBaik = $hasilAi->where('label_prioritas', 'Baik')->count();
-        $jumlahBelumDianalisis = $jumlahInfrastruktur - ($jumlahRusakBerat + $jumlahRusakSedang + $jumlahBaik);
+        $jumlahBelumDianalisis = $jumlahInfrastruktur - ($jumlahRusakBerat + $jumlahRusakSedang + $jumlahRusakRingan + $jumlahBaik);
 
         $recentActivities = ActivityLog::with('user')
             ->orderBy('created_at', 'desc')
@@ -126,7 +127,7 @@ class AdminController extends Controller
 
         return view('admin.statistik', compact(
             'jumlahSurveyor', 'jumlahTimTeknis', 'jumlahWilayah', 'jumlahInfrastruktur', 
-            'jumlahAnalisis', 'jumlahRusakBerat', 'jumlahRusakSedang', 'jumlahBaik', 'jumlahBelumDianalisis',
+            'jumlahAnalisis', 'jumlahRusakBerat', 'jumlahRusakSedang', 'jumlahRusakRingan', 'jumlahBaik', 'jumlahBelumDianalisis',
             'recentActivities'
         ));
     }
