@@ -7,18 +7,24 @@
 
         <div class="flex flex-col lg:flex-row items-center gap-3 w-full lg:w-auto">
             {{-- Filter & Search --}}
-            <div class="flex items-center w-full lg:w-[280px] xl:w-[350px]">
-                <select wire:model.live="show" class="pl-4 pr-8 py-2.5 bg-white border border-slate-100 border-r-0 rounded-l-2xl text-xs font-bold text-navy-900 focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm shrink-0 appearance-none cursor-pointer relative z-10">
+            <div class="flex items-center flex-1 min-w-0 w-full lg:w-[280px] xl:w-[400px]">
+                <select wire:model.live="show" class="pl-3 pr-7 py-2.5 bg-white border border-slate-100 border-r-0 rounded-l-2xl text-[10px] md:text-xs font-bold text-navy-900 focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm shrink-0">
                     <option value="10">10 Data</option>
                     <option value="all">Semua Data</option>
                 </select>
-                <input type="text" 
-                    wire:model.live.debounce.300ms="search"
-                    placeholder="Cari infrastruktur..." 
-                    class="flex-1 pl-4 pr-4 py-2.5 bg-white border border-slate-100 text-xs font-semibold focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm relative z-0">
-                <div class="bg-white border-y border-r border-slate-100 px-5 py-2.5 rounded-r-2xl flex items-center shadow-sm shrink-0">
-                    <i class="fas fa-search text-slate-400 text-xs"></i>
+                <div class="relative flex-1 min-w-[80px]">
+                    <input type="text" 
+                        wire:model.live.debounce.300ms="search"
+                        placeholder="Cari infrastruktur..." 
+                        class="w-full pl-3 pr-10 py-2.5 bg-white border border-slate-100 text-[10px] md:text-xs font-semibold focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm">
+                    <div wire:loading wire:target="search" class="absolute right-3 top-1/2 -translate-y-1/2">
+                        <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs"></i>
+                    </div>
                 </div>
+                <button type="button" class="bg-white border-y border-r border-slate-100 px-4 md:px-5 py-2.5 rounded-r-2xl hover:bg-slate-50 transition-all shadow-sm group shrink-0 relative">
+                    <i class="fas fa-search text-slate-400 group-hover:text-gold-500 transition-colors text-xs" wire:loading.remove wire:target="search"></i>
+                    <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs hidden" wire:loading.inline-block wire:target="search"></i>
+                </button>
             </div>
 
             {{-- Tambah --}}
@@ -49,8 +55,10 @@
 
     {{-- ── Tabel ── --}}
     <div class="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden mb-10 relative">
-        <div wire:loading.delay class="absolute inset-0 bg-white/50 backdrop-blur-sm z-10 flex items-center justify-center">
-            <i class="fas fa-circle-notch fa-spin text-4xl text-gold-500"></i>
+        <!-- Loading Overlay for Table -->
+        <div wire:loading class="absolute inset-0 bg-white/60 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
+            <div class="w-12 h-12 border-4 border-slate-200 border-t-gold-500 rounded-full animate-spin"></div>
+            <p class="mt-3 text-xs font-bold text-navy-900">Memuat Data...</p>
         </div>
         <div class="overflow-x-auto custom-scrollbar">
             <table class="w-full text-left border-collapse">

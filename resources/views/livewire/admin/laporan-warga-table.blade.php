@@ -1,14 +1,13 @@
 <div>
-    <!-- Filters & Search -->
-    <div class="bg-white p-5 rounded-[2rem] shadow-sm border border-slate-100 flex flex-col md:flex-row gap-4 items-center justify-between mb-4">
-        <div class="flex flex-col md:flex-row gap-3 w-full">
-            <div class="flex-1 relative">
-                <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                <input wire:model.live.debounce.300ms="search" type="text" placeholder="Cari nama pelapor, deskripsi, atau no HP..." 
-                       class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all font-medium">
-            </div>
-            <div class="w-full md:w-48 relative">
-                <select wire:model.live="status" class="w-full pl-4 pr-10 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-navy-900 focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 appearance-none">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+        <div>
+            <h4 class="font-extrabold text-lg text-navy-900">Daftar Laporan Warga</h4>
+            <p class="text-xs text-slate-400 font-medium text-left font-sans">Pantau dan kelola laporan kerusakan dari warga</p>
+        </div>
+        
+        <div class="flex flex-row flex-nowrap items-center gap-2 w-full md:w-auto">
+            <div class="flex items-center flex-1 min-w-0 md:w-[500px]">
+                <select wire:model.live="status" class="pl-3 pr-7 py-2.5 bg-white border border-slate-100 border-r-0 rounded-l-2xl text-[10px] md:text-xs font-bold text-navy-900 focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm shrink-0">
                     <option value="all">Semua Status</option>
                     <option value="Menunggu">Menunggu</option>
                     <option value="Ditinjau">Ditinjau</option>
@@ -16,20 +15,29 @@
                     <option value="Selesai">Selesai</option>
                     <option value="Ditolak">Ditolak</option>
                 </select>
-                <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
+                <div class="relative flex-1 min-w-[80px]">
+                    <input type="text" 
+                        wire:model.live.debounce.300ms="search"
+                        placeholder="Cari nama, deskripsi, atau no HP..." 
+                        class="w-full pl-3 pr-10 py-2.5 bg-white border border-slate-100 text-[10px] md:text-xs font-semibold focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm">
+                    <div wire:loading wire:target="search" class="absolute right-3 top-1/2 -translate-y-1/2">
+                        <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs"></i>
+                    </div>
+                </div>
+                <button type="button" wire:click="$set('search', ''); $set('status', 'all')" class="bg-white border-y border-r border-slate-100 px-4 md:px-5 py-2.5 rounded-r-2xl hover:bg-slate-50 transition-all shadow-sm group shrink-0 relative" title="Reset Filter">
+                    <i class="fas fa-times text-slate-400 group-hover:text-gold-500 transition-colors text-xs" wire:loading.remove wire:target="search"></i>
+                    <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs hidden" wire:loading.inline-block wire:target="search"></i>
+                </button>
             </div>
-            @if($search || ($status !== 'all'))
-            <button wire:click="$set('search', ''); $set('status', 'all')" class="px-4 py-3 bg-red-50 text-red-600 font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-red-100 transition-all text-center flex items-center justify-center shrink-0" title="Reset Filter">
-                <i class="fas fa-times"></i>
-            </button>
-            @endif
         </div>
     </div>
 
     <!-- Table Container -->
     <div class="bg-white rounded-[2rem] shadow-xl shadow-slate-200/40 border border-slate-100 overflow-hidden relative">
-        <div wire:loading.delay class="absolute inset-0 bg-white/50 backdrop-blur-sm z-10 flex items-center justify-center">
-            <i class="fas fa-circle-notch fa-spin text-4xl text-gold-500"></i>
+        <!-- Loading Overlay for Table -->
+        <div wire:loading class="absolute inset-0 bg-white/60 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
+            <div class="w-12 h-12 border-4 border-slate-200 border-t-gold-500 rounded-full animate-spin"></div>
+            <p class="mt-3 text-xs font-bold text-navy-900">Memuat Data...</p>
         </div>
         <div class="overflow-x-auto custom-scrollbar">
             <table class="w-full text-left text-sm whitespace-nowrap md:whitespace-normal">

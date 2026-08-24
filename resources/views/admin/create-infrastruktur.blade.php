@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -139,10 +139,10 @@
             <form action="{{ route('admin.infrastruktur.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
-                <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                <div class="max-w-4xl mx-auto space-y-6">
 
-                    {{-- ── Kolom Kiri (2/3) ── --}}
-                    <div class="xl:col-span-2 space-y-6">
+                    {{-- ── Form Bagian 1 ── --}}
+                    <div class="space-y-6">
 
                         {{-- Section 1: Identitas & Wilayah --}}
                         <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-8">

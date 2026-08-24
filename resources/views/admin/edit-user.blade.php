@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -89,65 +89,61 @@
         </header>
 
         <div class="flex-1 p-8 overflow-y-auto custom-scrollbar">
-            <div class="max-w-4xl bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm mx-auto text-left">
-                <form action="{{ route('admin.users.update', $user->id) }}" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="max-w-2xl bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm mx-auto text-left">
+                <form action="{{ route('admin.users.update', $user->id) }}" method="POST" class="space-y-6">
                     @csrf
                     @method('PUT')
                     
-                    <div class="space-y-6">
-                        <div>
-                            <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Nama Pengguna <span class="text-red-500">*</span></label>
-                            <input type="text" name="name" value="{{ $user->name }}" class="w-full px-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all" required>
-                        </div>
+                    <div>
+                        <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Nama Pengguna <span class="text-red-500">*</span></label>
+                        <input type="text" name="name" value="{{ $user->name }}" class="w-full px-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all" required>
+                    </div>
 
-                        <div>
-                            <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Email <span class="text-red-500">*</span></label>
-                            <input type="email" name="email" value="{{ $user->email }}" class="w-full px-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all" required>
-                        </div>
+                    <div>
+                        <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Email <span class="text-red-500">*</span></label>
+                        <input type="email" name="email" value="{{ $user->email }}" class="w-full px-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all" required>
+                    </div>
 
-                        <div>
-                            <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Nomor WhatsApp / HP <span class="text-red-500">*</span></label>
-                            <input type="text" name="no_hp" value="{{ $user->no_hp }}" class="w-full px-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all" required>
-                        </div>
+                    <div>
+                        <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Nomor WhatsApp / HP <span class="text-red-500">*</span></label>
+                        <input type="text" name="no_hp" value="{{ $user->no_hp }}" class="w-full px-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all" required>
+                    </div>
 
-                        <div>
-                            <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Ganti Password (Kosongkan jika tetap)</label>
-                            <div class="relative">
-                                <input type="password" name="password" placeholder="••••••••" class="w-full px-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
-                                <i class="fas fa-lock absolute right-5 top-1/2 -translate-y-1/2 text-slate-300"></i>
-                            </div>
+                    <div>
+                        <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Ganti Password (Kosongkan jika tetap)</label>
+                        <div class="relative">
+                            <input type="password" name="password" placeholder="••••••••" class="w-full px-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
+                            <i class="fas fa-lock absolute right-5 top-1/2 -translate-y-1/2 text-slate-300"></i>
                         </div>
                     </div>
 
-                    <div class="space-y-6">
-                        <div>
-                            <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Role Akses <span class="text-red-500">*</span></label>
-                            <select id="role-select" name="role" class="w-full px-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all" onchange="toggleWilayah()">
-                                <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>ADMIN</option>
-                                <option value="surveyor" {{ $user->role == 'surveyor' ? 'selected' : '' }}>SURVEYOR</option>
-                            </select>
-                        </div>
+                    <div>
+                        <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Role Akses <span class="text-red-500">*</span></label>
+                        <select id="role-select" name="role" class="w-full px-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all" onchange="toggleWilayah()">
+                            <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>ADMIN</option>
+                            <option value="surveyor" {{ $user->role == 'surveyor' ? 'selected' : '' }}>SURVEYOR</option>
+                        </select>
+                    </div>
 
-                        <div id="wilayah-container" class="{{ $user->role == 'admin' ? 'hidden' : '' }}">
-                            <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">
-                                Wilayah Tugas <span class="text-slate-400 font-medium">(Opsional)</span>
-                            </label>
-                            <select name="id_kecamatan" class="w-full px-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
-                                <option value="">Pilih Wilayah (Boleh Dikosongkan)...</option>
-                                @foreach($semuaWilayah as $wilayah)
-                                    <option value="{{ $wilayah->id_kecamatan }}" {{ $user->id_kecamatan == $wilayah->id_kecamatan ? 'selected' : '' }}>
-                                        Kec. {{ $wilayah->nama_kecamatan }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                    <div id="wilayah-container" class="{{ $user->role == 'admin' ? 'hidden' : '' }}">
+                        <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">
+                            Wilayah Tugas <span class="text-slate-400 font-medium">(Opsional)</span>
+                        </label>
+                        <select name="id_kecamatan" class="w-full px-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
+                            <option value="">Pilih Wilayah (Boleh Dikosongkan)...</option>
+                            @foreach($semuaWilayah as $wilayah)
+                                <option value="{{ $wilayah->id_kecamatan }}" {{ $user->id_kecamatan == $wilayah->id_kecamatan ? 'selected' : '' }}>
+                                    Kec. {{ $wilayah->nama_kecamatan }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
 
-                        <div class="pt-10 flex gap-3">
-                            <button type="submit" class="flex-1 bg-gold-500 text-white text-xs px-4 py-3 rounded-2xl font-bold shadow-lg shadow-gold-500/10 hover:bg-gold-600 transition tracking-widest uppercase">Simpan Perubahan</button>
-                            <a href="{{ route('admin.users') }}" class="flex-1 bg-slate-100 text-slate-500 text-xs px-4 py-3 rounded-2xl font-bold hover:bg-slate-200 transition text-center flex items-center justify-center gap-2 tracking-widest uppercase">
-                                <i class="fas fa-times-circle text-xs"></i> Batal
-                            </a>
-                        </div>
+                    <div class="pt-6 flex gap-3">
+                        <button type="submit" class="flex-1 bg-gold-500 text-white text-xs px-4 py-3 rounded-2xl font-bold shadow-lg shadow-gold-500/10 hover:bg-gold-600 transition tracking-widest uppercase">Simpan Perubahan</button>
+                        <a href="{{ route('admin.users') }}" class="flex-1 bg-slate-100 text-slate-500 text-xs px-4 py-3 rounded-2xl font-bold hover:bg-slate-200 transition text-center flex items-center justify-center gap-2 tracking-widest uppercase">
+                            <i class="fas fa-times-circle text-xs"></i> Batal
+                        </a>
                     </div>
                 </form>
             </div>

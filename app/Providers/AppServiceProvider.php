@@ -29,7 +29,14 @@ class AppServiceProvider extends ServiceProvider
 
         // Share jumlah laporan menunggu ke semua view admin
         View::composer(['admin.*'], function ($view) {
-            $laporanMenungguCount = LaporanWarga::where('status', 'Menunggu')->count();
+            $user = auth()->user();
+            $query = LaporanWarga::where('status', 'Menunggu');
+            
+            if ($user && $user->last_read_laporan_at) {
+                $query->where('created_at', '>', $user->last_read_laporan_at);
+            }
+            
+            $laporanMenungguCount = $query->count();
             $view->with('laporanMenungguCount', $laporanMenungguCount);
         });
     }

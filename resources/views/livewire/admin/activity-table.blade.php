@@ -6,7 +6,19 @@
         </div>
         <div class="flex flex-row flex-nowrap items-center gap-2 w-full md:w-auto relative z-20">
             <div class="flex items-center flex-1 min-w-0 md:w-[400px]">
-                <input type="text" wire:model.live.debounce.500ms="search" placeholder="Cari log aktivitas..." class="flex-1 min-w-[80px] pl-4 pr-3 py-2.5 bg-white border border-slate-100 rounded-2xl text-[10px] md:text-xs font-semibold focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm">
+                <div class="relative flex-1 min-w-[80px]">
+                    <input type="text" 
+                        wire:model.live.debounce.300ms="search"
+                        placeholder="Cari log aktivitas..." 
+                        class="w-full pl-3 pr-10 py-2.5 bg-white border border-slate-100 text-[10px] md:text-xs font-semibold focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm rounded-l-2xl">
+                    <div wire:loading wire:target="search" class="absolute right-3 top-1/2 -translate-y-1/2">
+                        <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs"></i>
+                    </div>
+                </div>
+                <button type="button" class="bg-white border-y border-r border-slate-100 px-4 md:px-5 py-2.5 hover:bg-slate-50 transition-all shadow-sm group shrink-0 relative" title="Cari">
+                    <i class="fas fa-search text-slate-400 group-hover:text-gold-500 transition-colors text-xs" wire:loading.remove wire:target="search"></i>
+                    <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs hidden" wire:loading.inline-block wire:target="search"></i>
+                </button>
             </div>
 
             <a href="{{ route('admin.activity.export') }}" class="bg-emerald-500 text-white text-xs px-4 md:px-6 py-2.5 rounded-2xl font-bold shadow-lg shadow-emerald-500/10 hover:bg-emerald-600 hover:shadow-emerald-500/20 transition flex items-center justify-center gap-2 whitespace-nowrap shrink-0">
@@ -16,8 +28,10 @@
     </div>
 
     <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden mb-10 relative">
-        <div wire:loading.delay class="absolute inset-0 bg-white/50 backdrop-blur-sm z-10 flex items-center justify-center no-print">
-            <i class="fas fa-circle-notch fa-spin text-4xl text-gold-500"></i>
+        <!-- Loading Overlay for Table -->
+        <div wire:loading class="absolute inset-0 bg-white/60 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
+            <div class="w-12 h-12 border-4 border-slate-200 border-t-gold-500 rounded-full animate-spin"></div>
+            <p class="mt-3 text-xs font-bold text-navy-900">Memuat Data...</p>
         </div>
 
         <div class="overflow-x-auto w-full custom-scrollbar">

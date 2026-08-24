@@ -218,23 +218,7 @@ class AdminController extends Controller
 
     public function users(Request $request)
     {
-        $search = $request->query('search');
-        $query = User::query();
-
-        if ($search) {
-            $query->where(function($q) use ($search) {
-                $q->where('name', 'LIKE', "%{$search}%")
-                  ->orWhere('email', 'LIKE', "%{$search}%");
-            });
-        }
-
-        if ($request->get('show') == 'all') {
-            $users = $query->get();
-        } else {
-            $users = $query->paginate(10)->withQueryString();
-        }
-
-        return view('admin.users', compact('users'));
+        return view('admin.users');
     }
 
     public function createUser()
@@ -736,6 +720,10 @@ class AdminController extends Controller
 
     public function laporanWarga(\Illuminate\Http\Request $request)
     {
+        $user = auth()->user();
+        if ($user) {
+            $user->update(['last_read_laporan_at' => now()]);
+        }
         return view('admin.laporan-warga');
     }
 

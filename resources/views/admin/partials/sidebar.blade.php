@@ -49,7 +49,7 @@
                     <i class="fas fa-bullhorn {{ request()->routeIs('admin.laporan-warga*') ? '' : 'group-hover:text-gold-500' }}"></i> 
                     <span>Laporan Warga</span>
                 </div>
-                @if(isset($laporanMenungguCount) && $laporanMenungguCount > 0)
+                @if(!request()->routeIs('admin.laporan-warga*') && isset($laporanMenungguCount) && $laporanMenungguCount > 0)
                 <span class="bg-red-500 text-white text-xs font-black px-1.5 py-0.5 rounded-md min-w-[20px] text-center shadow-lg">{{ $laporanMenungguCount }}</span>
                 @endif
             </a>
@@ -151,7 +151,7 @@
                     <i class="fas fa-bullhorn {{ request()->routeIs('admin.laporan-warga*') ? '' : 'group-hover:text-gold-500' }}"></i> 
                     <span>Laporan Warga</span>
                 </div>
-                @if(isset($laporanMenungguCount) && $laporanMenungguCount > 0)
+                @if(!request()->routeIs('admin.laporan-warga*') && isset($laporanMenungguCount) && $laporanMenungguCount > 0)
                 <span class="bg-red-500 text-white text-xs font-black px-1.5 py-0.5 rounded-md min-w-[20px] text-center shadow-lg">{{ $laporanMenungguCount }}</span>
                 @endif
             </a>
