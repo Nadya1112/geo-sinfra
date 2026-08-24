@@ -567,24 +567,43 @@
         function updateStats(points) {
             document.getElementById('stat-total').textContent = points.length;
             
-            const labelCounts = {};
+            const fixedCounts = {
+                'Baik': 0,
+                'Rusak Ringan': 0,
+                'Rusak Sedang': 0,
+                'Rusak Berat': 0,
+                'Sudah Diperbaiki': 0
+            };
+
             points.forEach(p => {
                 let label = p.cnn?.label_kondisi || p.analisis?.label_prioritas || p.kondisi || 'Tidak Diketahui';
-                if (p.status_perbaikan === 'Selesai') {
-                    label = 'Sudah Diperbaiki';
-                }
+                let lowerLabel = label.toLowerCase();
                 
-                label = label.charAt(0).toUpperCase() + label.slice(1).toLowerCase();
-                labelCounts[label] = (labelCounts[label] || 0) + 1;
+                if (p.status_perbaikan === 'Selesai') {
+                    fixedCounts['Sudah Diperbaiki']++;
+                } else if (lowerLabel.includes('baik')) {
+                    fixedCounts['Baik']++;
+                } else if (lowerLabel.includes('ringan')) {
+                    fixedCounts['Rusak Ringan']++;
+                } else if (lowerLabel.includes('sedang')) {
+                    fixedCounts['Rusak Sedang']++;
+                } else if (lowerLabel.includes('berat')) {
+                    fixedCounts['Rusak Berat']++;
+                }
             });
 
             const container = document.getElementById('dynamic-stats-container');
             if(container) {
                 container.innerHTML = '';
                 
-                const sortedLabels = Object.entries(labelCounts).sort((a, b) => b[1] - a[1]);
+                const displayOrder = ['Baik', 'Rusak Ringan', 'Rusak Sedang', 'Rusak Berat'];
+                if (fixedCounts['Sudah Diperbaiki'] > 0) {
+                    displayOrder.push('Sudah Diperbaiki');
+                }
                 
-                sortedLabels.forEach(([label, count]) => {
+                displayOrder.forEach(label => {
+                    const count = fixedCounts[label];
+                    
                     const isBaik = label.toLowerCase().includes('baik') || label.toLowerCase().includes('selesai');
                     const isRingan = label.toLowerCase().includes('ringan');
                     const isSedang = label.toLowerCase().includes('sedang');
