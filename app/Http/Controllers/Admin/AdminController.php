@@ -81,6 +81,10 @@ class AdminController extends Controller
         $infra->load(['kelurahan.kecamatan', 'user']);
         \App\Services\WhatsAppService::sendApprovalNotification($infra);
 
+        // Kirim Notifikasi Aplikasi (Bell) ke Tim Teknis
+        $timTeknisUsers = \App\Models\User::where('role', 'tim_teknis')->get();
+        \Illuminate\Support\Facades\Notification::send($timTeknisUsers, new \App\Notifications\NewUsulanNotification($infra));
+
         return redirect()->back()->with('success', "Aset {$infra->nama_objek} berhasil diverifikasi. Notifikasi dikirim ke Tim Teknis.");
     }
 
