@@ -36,6 +36,7 @@
     
 @media (max-width: 767px) { html { font-size: 12px; } }
 </style>
+    @livewireStyles
 </head>
 <body class="bg-slate-50 dark:bg-[#0f0e2c] flex h-screen overflow-hidden text-slate-800 dark:text-white text-left font-sans dark:bg-navy-950 transition-colors duration-300">
 
@@ -198,5 +199,6 @@
         });
 
     </script>
+    @livewireScripts
 </body>
 </html>
