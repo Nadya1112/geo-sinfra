@@ -7,9 +7,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class LaporanWarga extends Model
 {
+    protected static function booted()
+    {
+        static::creating(function ($model) {
+            if (empty($model->uuid)) {
+                $model->uuid = (string) \Illuminate\Support\Str::uuid();
+            }
+        });
+    }
+
     protected $table = 'laporan_warga';
 
     protected $fillable = [
+        'uuid',
         'id_infrastruktur',
         'nama_pelapor',
         'no_hp',
