@@ -8,7 +8,7 @@
         <div class="flex flex-row flex-nowrap items-center gap-2 w-full md:w-auto">
             <div class="flex items-center flex-1 min-w-0 md:w-[400px]">
                 <select wire:model.live="show" class="pl-3 pr-7 py-2.5 bg-white border border-slate-100 border-r-0 rounded-l-2xl text-[10px] md:text-xs font-bold text-navy-900 focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm shrink-0">
-                    <option value="10">Per 10 Data</option>
+                    <option value="10">10 Data</option>
                     <option value="all">Semua Data</option>
                 </select>
                 <div class="relative flex-1 min-w-[80px]">
@@ -34,9 +34,8 @@
 
     <div class="bg-white rounded-3xl md:rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden mb-10 relative">
         <!-- Loading Overlay for Table -->
-        <div wire:loading class="absolute inset-0 bg-white/60 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
-            <div class="w-12 h-12 border-4 border-slate-200 border-t-gold-500 rounded-full animate-spin"></div>
-            <p class="mt-3 text-xs font-bold text-navy-900">Memuat Data...</p>
+        <div wire:loading class="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
+            <i class="fas fa-circle-notch fa-spin text-gold-500 text-3xl drop-shadow-md"></i>
         </div>
 
         <div class="overflow-x-auto w-full custom-scrollbar">
