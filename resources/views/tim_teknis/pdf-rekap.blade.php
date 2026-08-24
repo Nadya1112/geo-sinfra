@@ -188,11 +188,14 @@
     </table>
 
     <div class="footer">
+        @php
+            $timTeknis = \App\Models\User::where('role', 'tim_teknis')->first();
+        @endphp
         <div class="signature">
             <p>Banjarmasin, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</p>
             <p><strong>Koordinator Tim Teknis</strong></p>
-            <div class="signature-name" style="text-decoration: underline; margin-bottom: 2px;">{{ strtoupper(auth()->user()->name ?? 'Administrator') }}</div>
-            <div style="font-size: 11px;">NIP. {{ auth()->user()->nip ?? '-' }}</div>
+            <div class="signature-name" style="text-decoration: underline; margin-bottom: 2px;">{{ strtoupper($timTeknis->name ?? 'HIZBULWATHONI, S.T.') }}</div>
+            <div style="font-size: 11px;">NIP. {{ $timTeknis->nip ?? '19760814 200604 1 008' }}</div>
         </div>
     </div>
 

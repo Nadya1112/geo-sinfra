@@ -273,11 +273,14 @@
             <tfoot class="print-tfoot-only" style="display: none;">
                 <tr>
                     <td colspan="5" style="border: none !important; padding-top: 40px !important;">
+                        @php
+                            $timTeknis = \App\Models\User::where('role', 'tim_teknis')->first();
+                        @endphp
                         <div style="float: right; text-align: center; width: 260px; font-size: 10pt; page-break-inside: avoid;">
                             <p style="margin-bottom: 4px;">Banjarmasin, {{ now()->translatedFormat('d F Y') }}</p>
                             <p style="margin-bottom: 60px;">Mengetahui,<br><strong>Koordinator Tim Teknis</strong></p>
-                            <p style="margin: 0; font-weight: bold; text-decoration: underline;">{{ strtoupper(auth()->user()->name ?? 'Administrator') }}</p>
-                            <p style="margin: 0;">NIP. {{ auth()->user()->nip ?? '-' }}</p>
+                            <p style="margin: 0; font-weight: bold; text-decoration: underline;">{{ strtoupper($timTeknis->name ?? 'HIZBULWATHONI, S.T.') }}</p>
+                            <p style="margin: 0;">NIP. {{ $timTeknis->nip ?? '19760814 200604 1 008' }}</p>
                         </div>
                     </td>
                 </tr>

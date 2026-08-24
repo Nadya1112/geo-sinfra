@@ -127,12 +127,15 @@
         <table class="ttd-table">
             <tr>
                 <td style="width:60%;"></td>
+                @php
+                    $timTeknis = \App\Models\User::where('role', 'tim_teknis')->first();
+                @endphp
                 <td style="width:40%; text-align:center;">
                     <div class="ttd-kota-tgl">Banjarmasin, {{ now()->translatedFormat('d F Y') }}</div>
-                    <div class="ttd-jabatan">{{ auth()->user()->role === 'tim_teknis' ? 'Koordinator Tim Teknis' : 'Administrator' }}</div>
+                    <div class="ttd-jabatan">Koordinator Tim Teknis</div>
                     <div class="ttd-ruang"></div>
-                    <div class="ttd-nama" style="text-decoration: underline;">{{ strtoupper(auth()->user()->name ?? 'Administrator') }}</div>
-                    <div class="ttd-nip">NIP. {{ auth()->user()->nip ?? '-' }}</div>
+                    <div class="ttd-nama" style="text-decoration: underline;">{{ strtoupper($timTeknis->name ?? 'HIZBULWATHONI, S.T.') }}</div>
+                    <div class="ttd-nip">NIP. {{ $timTeknis->nip ?? '19760814 200604 1 008' }}</div>
                 </td>
             </tr>
         </table>
