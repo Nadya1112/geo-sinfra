@@ -173,7 +173,7 @@
                             <!-- Visual CNN -->
                             <div class="relative">
                                 <div class="flex justify-between items-end mb-2">
-                                    <p class="text-xs font-black text-slate-300 uppercase tracking-widest">Vision (CNN)</p>
+                                    <p class="text-xs font-black text-slate-300 uppercase tracking-widest">Analisis Visual Foto</p>
                                     <p class="text-xl font-black text-white">{{ $infrastruktur->cnn ? round($infrastruktur->cnn->skor_cnn * 100) : '0' }}%</p>
                                 </div>
                                 <div class="w-full bg-white/10 dark:bg-[#1e1b4b]/10 h-1.5 rounded-full overflow-hidden">
@@ -185,23 +185,23 @@
                             <!-- Logic DT -->
                             <div class="relative">
                                 <div class="flex justify-between items-end mb-2">
-                                    <p class="text-xs font-black text-slate-300 uppercase tracking-widest">Logic (DT)</p>
+                                    <p class="text-xs font-black text-slate-300 uppercase tracking-widest">Skor Prioritas Teknis</p>
                                     <p class="text-xl font-black text-white">{{ $infrastruktur->analisis->skor_dt ?? '0' }}<span class="text-xs text-slate-400 ml-0.5">/100</span></p>
                                 </div>
                                 <div class="w-full bg-white/10 dark:bg-[#1e1b4b]/10 h-1.5 rounded-full overflow-hidden">
                                     <div class="bg-gradient-to-r from-[#059669] to-emerald-400 h-full" style="width: {{ $infrastruktur->analisis->skor_dt ?? '0' }}%"></div>
                                 </div>
                                 <p class="text-xs font-bold {{ ($infrastruktur->analisis->label_prioritas ?? '') == 'Rusak Berat' ? 'text-rose-400' : 'text-[#059669]' }} mt-2 italic text-right">
-                                    {{ $infrastruktur->analisis->label_prioritas ?? 'Calculating logic...' }}
+                                    Label: {{ $infrastruktur->analisis->label_prioritas ?? 'Calculating logic...' }}
                                 </p>
                             </div>
 
                             <div class="pt-6 border-t border-white/10">
-                                <div class="flex items-center justify-between mb-4">
-                                    <p class="text-xs font-black text-slate-300 uppercase tracking-widest">Verification</p>
-                                    <span class="px-3 py-1 bg-white/5 dark:bg-[#1e1b4b]/5 border border-white/10 rounded-lg text-xs font-black uppercase tracking-widest {{ $infrastruktur->status_verifikasi == 'Verified' ? 'text-[#059669]' : 'text-amber-400' }}">
-                                        {{ $infrastruktur->status_verifikasi ?? 'Pending' }}
-                                    </span>
+                                <p class="text-xs font-black text-slate-300 uppercase tracking-widest mb-3">Rekomendasi Penanganan</p>
+                                <div class="bg-white/5 rounded-2xl p-4 border border-white/10">
+                                    <p class="text-xs font-bold text-slate-300 leading-relaxed">
+                                        {{ $infrastruktur->analisis->rekomendasi ?? 'Belum ada rekomendasi penanganan.' }}
+                                    </p>
                                 </div>
                             </div>
                         </div>

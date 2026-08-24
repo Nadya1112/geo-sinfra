@@ -326,7 +326,7 @@
                             <!-- Visual CNN -->
                             <div class="relative">
                                 <div class="flex justify-between items-end mb-2">
-                                    <p class="text-xs font-black text-slate-300 uppercase tracking-widest">Vision (CNN)</p>
+                                    <p class="text-xs font-black text-slate-300 uppercase tracking-widest">Analisis Visual Foto</p>
                                     <p class="text-xl font-black text-white">{{ $hasilCnn ? round($hasilCnn->skor_cnn * 100) : '0' }}%</p>
                                 </div>
                                 <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
@@ -338,7 +338,7 @@
                             <!-- Logic DT -->
                             <div class="relative">
                                 <div class="flex justify-between items-end mb-2">
-                                    <p class="text-xs font-black text-slate-300 uppercase tracking-widest">Logic (DT)</p>
+                                    <p class="text-xs font-black text-slate-300 uppercase tracking-widest">Skor Prioritas Teknis</p>
                                     <p class="text-xl font-black text-white">{{ $hasilAi->skor_dt ?? '0' }}<span class="text-xs text-slate-400 ml-0.5">/100</span></p>
                                 </div>
                                 <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
@@ -346,16 +346,16 @@
                                     <div class="bg-gradient-to-r {{ $dtColor }} h-full" style="width: {{ $hasilAi->skor_dt ?? '0' }}%"></div>
                                 </div>
                                 <p class="text-xs font-bold {{ ($hasilAi->label_prioritas ?? '') == 'Rusak Berat' ? 'text-rose-400' : (($hasilAi->label_prioritas ?? '') == 'Rusak Sedang' ? 'text-amber-400' : 'text-[#059669]') }} mt-2 italic text-right">
-                                    {{ $hasilAi->label_prioritas ?? 'Calculating logic...' }}
+                                    Label: {{ $hasilAi->label_prioritas ?? 'Calculating logic...' }}
                                 </p>
                             </div>
 
                             <div class="pt-6 border-t border-white/10">
-                                <div class="flex items-center justify-between mb-4">
-                                    <p class="text-xs font-black text-slate-300 uppercase tracking-widest">Verification</p>
-                                    <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-xs font-black uppercase tracking-widest {{ ($inf->status_verifikasi ?? 'Pending') == 'Verified' ? 'text-[#059669]' : 'text-amber-400' }}">
-                                        {{ $inf->status_verifikasi ?? 'Pending' }}
-                                    </span>
+                                <p class="text-xs font-black text-slate-300 uppercase tracking-widest mb-3">Rekomendasi Penanganan</p>
+                                <div class="bg-white/5 rounded-2xl p-4 border border-white/10">
+                                    <p class="text-xs font-bold text-slate-300 leading-relaxed">
+                                        {{ $hasilAi->rekomendasi ?? 'Belum ada rekomendasi penanganan.' }}
+                                    </p>
                                 </div>
                             </div>
                         </div>
