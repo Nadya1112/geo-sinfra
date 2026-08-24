@@ -319,7 +319,7 @@
                     <div class="bg-navy-900 rounded-[2.5rem] p-8 text-white shadow-xl relative overflow-hidden">
                         <div class="absolute top-0 right-0 -mt-8 -mr-8 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
                         <h4 class="text-xs font-black text-gold-300 uppercase tracking-[0.2em] mb-8 flex items-center gap-3">
-                            <i class="fas fa-microchip"></i> Analisis AI Hibrida
+                            <i class="fas fa-microchip"></i> Status Kondisi
                         </h4>
                         
                         <div class="space-y-8 relative z-10">
