@@ -15,7 +15,9 @@
         <div class="flex flex-col md:flex-row gap-3 w-full">
             <div class="flex-1 relative">
                 <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs" wire:loading.remove wire:target="search"></i>
-                <i class="fas fa-circle-notch fa-spin absolute left-4 top-1/2 -translate-y-1/2 text-gold-500 text-xs hidden" wire:loading.inline-block wire:target="search"></i>
+                <div wire:loading wire:target="search" class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center">
+                    <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs"></i>
+                </div>
                 <input type="text" wire:model.live.debounce.300ms="search" placeholder="Cari nama pelapor, deskripsi, atau no HP..." 
                        class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all font-medium">
             </div>
