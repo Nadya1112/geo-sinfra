@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <title>Rekapitulasi Validasi Infrastruktur SINFRA</title>
     <style>
+        @page {
+            size: A4 portrait;
+            margin: 30mm 30mm 30mm 40mm;
+        }
         body {
-            font-family: 'Helvetica', 'Arial', sans-serif;
+            font-family: 'Arial', sans-serif;
             font-size: 10pt;
             color: #333;
-            margin: 0;
-            padding: 0;
         }
         .header {
             text-align: center;

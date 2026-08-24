@@ -8,7 +8,7 @@
             size: A4 portrait;
             margin: 30mm 30mm 30mm 40mm;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        div, span, h1, h2, h3, p, table, tbody, tr, th, td { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Arial', sans-serif; color: #111; font-size: 14px; line-height: 1.5; }
 
         /* ── KOP DINAS ── */

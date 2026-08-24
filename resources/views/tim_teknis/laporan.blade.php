@@ -26,8 +26,8 @@
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         @media print {
-            @page { margin: 0; size: A4 portrait; }
-            html, body { height: auto !important; overflow: visible !important; background: white; color: black; font-family: 'Times New Roman', Times, serif; font-size: 11pt; padding: 0.5cm 1cm 1cm 1cm !important; margin: 0 !important; }
+            @page { margin: 30mm 30mm 30mm 40mm; size: A4 portrait; }
+            html, body { height: auto !important; overflow: visible !important; background: white; color: black; font-family: 'Arial', sans-serif; font-size: 11pt; padding: 0 !important; margin: 0 !important; }
             .no-print { display: none !important; }
             .print-only { display: block !important; }
             .print\:grid { display: grid !important; }
