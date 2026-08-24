@@ -2,7 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiClient {
-  static const String baseUrl = 'http://10.0.2.2:8000/api/v1'; // 10.0.2.2 for Android Emulator, use actual IP for real device
+  // Ganti dari localhost ke domain asli server (Production)
+  static const String baseUrl = 'https://geo-sinfra.co.id/api/v1';
 
   final Dio _dio = Dio(
     BaseOptions(
