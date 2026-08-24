@@ -130,6 +130,12 @@
                                         <input type="email" name="email" value="{{ auth()->user()->email }}" 
                                                class="w-full px-5 py-3.5 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl text-sm font-semibold outline-none focus:border-gold-500 focus:ring-4 focus:ring-gold-500/10 transition-all text-navy-900 dark:text-white" required>
                                     </div>
+
+                                    <div class="col-span-2">
+                                        <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Nomor Induk Pegawai (NIP)</label>
+                                        <input type="text" name="nip" value="{{ auth()->user()->nip }}" placeholder="Opsional (misal: 19760814 200604 1 008)" 
+                                               class="w-full px-5 py-3.5 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl text-sm font-semibold outline-none focus:border-gold-500 focus:ring-4 focus:ring-gold-500/10 transition-all text-navy-900 dark:text-white">
+                                    </div>
                                 </div>
 
                                 <div class="pt-6 border-t border-slate-100 dark:border-white/10">

@@ -34,7 +34,8 @@ class User extends Authenticatable
         'password', 
         'role', 
         'id_kecamatan',
-        'profile_photo'
+        'profile_photo',
+        'nip'
     ];
 
     /**

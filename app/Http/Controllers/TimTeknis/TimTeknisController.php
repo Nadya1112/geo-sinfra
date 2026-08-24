@@ -176,12 +176,14 @@ class TimTeknisController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
+            'nip' => 'nullable|string|max:50',
             'password' => 'nullable|min:8|confirmed',
             'profile_photo' => 'nullable|max:2048'
         ]);
 
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->nip = $request->nip;
 
         if ($request->password) {
             $user->password = \Illuminate\Support\Facades\Hash::make($request->password);

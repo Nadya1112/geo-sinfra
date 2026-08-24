@@ -72,7 +72,7 @@
 
     <!-- Filter Section (No Print) -->
     <div class="bg-white dark:bg-[#1e1b4b] rounded-[2rem] p-5 md:p-8 border border-slate-100 dark:border-white/10 shadow-sm mb-4 no-print relative z-20">
-        <div class="grid grid-cols-1 gap-4 md:gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             <div class="w-full">
                 <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Cari Nama</label>
                 <div class="relative w-full">
@@ -274,11 +274,11 @@
             <tfoot class="print-tfoot-only" style="display: none;">
                 <tr>
                     <td colspan="5" style="border: none !important; padding-top: 40px !important;">
-                        <div style="float: right; text-align: center; width: 260px; font-family: 'Times New Roman', Times, serif; font-size: 11pt; page-break-inside: avoid;">
+                        <div style="float: right; text-align: center; width: 260px; font-size: 10pt; page-break-inside: avoid;">
                             <p style="margin-bottom: 4px;">Banjarmasin, {{ now()->translatedFormat('d F Y') }}</p>
                             <p style="margin-bottom: 60px;">Mengetahui,<br><strong>Koordinator Tim Teknis</strong></p>
-                            <p style="margin: 0; font-weight: bold; text-decoration: underline;">HIZBULWATHONI, S.T.</p>
-                            <p style="margin: 0;">NIP. 19760814 200604 1 008</p>
+                            <p style="margin: 0; font-weight: bold; text-decoration: underline;">{{ strtoupper(auth()->user()->name ?? 'Administrator') }}</p>
+                            <p style="margin: 0;">NIP. {{ auth()->user()->nip ?? '-' }}</p>
                         </div>
                     </td>
                 </tr>

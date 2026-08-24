@@ -190,8 +190,9 @@
     <div class="footer">
         <div class="signature">
             <p>Banjarmasin, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</p>
-            <p><strong>Tim Teknis (Pengawas)</strong></p>
-            <div class="signature-name">{{ auth()->user()->name ?? 'Administrator' }}</div>
+            <p><strong>Koordinator Tim Teknis</strong></p>
+            <div class="signature-name" style="text-decoration: underline; margin-bottom: 2px;">{{ strtoupper(auth()->user()->name ?? 'Administrator') }}</div>
+            <div style="font-size: 11px;">NIP. {{ auth()->user()->nip ?? '-' }}</div>
         </div>
     </div>
 
