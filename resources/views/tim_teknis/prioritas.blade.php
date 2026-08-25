@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -134,7 +134,7 @@
                                     <div class="flex items-center gap-2 px-3 py-2 bg-rose-50 border border-rose-100 rounded-xl">
                                         <div class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></div>
                                         <span class="text-xs font-black text-rose-600 uppercase tracking-widest whitespace-nowrap">
-                                            {{ $item->analisis->label_prioritas ?? 'Rusak Berat' }}
+                                            {{ $item->analisis->label_prioritas ?? 'Kondisi Rusak Berat' }}
                                         </span>
                                     </div>
                                 </div>

@@ -107,9 +107,10 @@
                                 <h4 class="font-black text-navy-900  text-xs uppercase tracking-widest">Status Terkini</h4>
                                 <div class="flex items-center gap-3">
                                     <span class="px-4 py-1.5 rounded-xl text-xs font-black tracking-widest border uppercase shadow-sm
-                                        {{ $infrastruktur->kondisi == 'Baik' ? 'bg-emerald-50 text-emerald-600 border-emerald-200' : 
-                                        ($infrastruktur->kondisi == 'Rusak Sedang' ? 'bg-amber-50 text-amber-600 border-amber-200' : 
-                                        ($infrastruktur->kondisi == 'Rusak Berat' ? 'bg-red-50 text-red-600 border-red-200' : 'bg-white  text-slate-500 border-slate-200 ')) }}">
+                                        {{ str_contains(strtolower($infrastruktur->kondisi), 'baik') ? 'bg-emerald-50 text-emerald-600 border-emerald-200' : 
+                                        (str_contains(strtolower($infrastruktur->kondisi), 'rusak ringan') ? 'bg-yellow-50 text-yellow-600 border-yellow-200' :
+                                        (str_contains(strtolower($infrastruktur->kondisi), 'rusak sedang') ? 'bg-amber-50 text-amber-600 border-amber-200' : 
+                                        (str_contains(strtolower($infrastruktur->kondisi), 'rusak berat') ? 'bg-red-50 text-red-600 border-red-200' : 'bg-white  text-slate-500 border-slate-200 '))) }}">
                                         {{ $infrastruktur->kondisi }}
                                     </span>
                                     @if($infrastruktur->cnn || $infrastruktur->analisis)

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -313,18 +313,26 @@
                     let conf = data.confidence_kondisi || 0;
                     
                     // Format ulang label agar seragam dengan UI
-                    if(label === 'Berat') label = 'Rusak Berat';
-                    if(label === 'Sedang') label = 'Rusak Sedang';
+                    if(label === 'Berat') label = 'Kondisi Rusak Berat';
+                    else if(label === 'Rusak Berat') label = 'Kondisi Rusak Berat';
+                    if(label === 'Sedang') label = 'Kondisi Rusak Sedang';
+                    else if(label === 'Rusak Sedang') label = 'Kondisi Rusak Sedang';
+                    if(label === 'Ringan') label = 'Kondisi Rusak Ringan';
+                    else if(label === 'Rusak Ringan') label = 'Kondisi Rusak Ringan';
+                    if(label === 'Baik') label = 'Kondisi Baik';
                     
                     let bgColor = 'bg-emerald-500 shadow-emerald-500/30';
                     let rekom = "Tidak ditemukan kerusakan berarti secara visual. Kondisi aman.";
                     
-                    if(label === 'Rusak Berat' || label === 'Berat') {
+                    if(label.toLowerCase().includes('rusak berat')) {
                         bgColor = 'bg-red-500 shadow-red-500/30';
                         rekom = "TERDETEKSI KERUSAKAN KRITIS! Diperlukan intervensi perbaikan segera.";
-                    } else if(label === 'Rusak Sedang' || label === 'Sedang') {
+                    } else if(label.toLowerCase().includes('rusak sedang')) {
                         bgColor = 'bg-amber-500 shadow-amber-500/30';
                         rekom = "Terdeteksi kerusakan tingkat menengah. Perlu dijadwalkan pemeliharaan rutin.";
+                    } else if(label.toLowerCase().includes('rusak ringan')) {
+                        bgColor = 'bg-yellow-500 shadow-yellow-500/30';
+                        rekom = "Terdeteksi kerusakan ringan. Jadwalkan pemeliharaan berkala.";
                     }
 
                     // Update UI

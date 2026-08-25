@@ -64,11 +64,12 @@ class SurveyorController extends Controller
             ->select('analisis_ai.label_prioritas')
             ->get();
 
-        $rusakBerat = $aiData->where('label_prioritas', 'Rusak Berat')->count();
-        $rusakSedang = $aiData->where('label_prioritas', 'Rusak Sedang')->count();
-        $kondisiBaik = $aiData->where('label_prioritas', 'Baik')->count();
+        $rusakBerat = $aiData->where('label_prioritas', 'Kondisi Rusak Berat')->count();
+        $rusakSedang = $aiData->where('label_prioritas', 'Kondisi Rusak Sedang')->count();
+        $rusakRingan = $aiData->where('label_prioritas', 'Kondisi Rusak Ringan')->count();
+        $kondisiBaik = $aiData->where('label_prioritas', 'Kondisi Baik')->count();
 
-        return view('surveyor.dashboard', compact('totalSurvey', 'waitingValidation', 'verifiedAI', 'totalRejected', 'totalTugas', 'tugasMenunggu', 'tugasSelesai', 'recentUploads', 'semuaKecamatan', 'kecamatans', 'rejectedItems', 'rusakBerat', 'rusakSedang', 'kondisiBaik'));
+        return view('surveyor.dashboard', compact('totalSurvey', 'waitingValidation', 'verifiedAI', 'totalRejected', 'totalTugas', 'tugasMenunggu', 'tugasSelesai', 'recentUploads', 'semuaKecamatan', 'kecamatans', 'rejectedItems', 'rusakBerat', 'rusakSedang', 'rusakRingan', 'kondisiBaik'));
     }
 
     public function updateTerritories(Request $request)

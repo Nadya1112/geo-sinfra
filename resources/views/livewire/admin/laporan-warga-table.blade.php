@@ -71,12 +71,14 @@
                                     $aiColor = 'bg-[#0f0e2c] text-white border-gold-500/50 shadow-gold-500/20';
                                     $aiIcon = 'fa-robot text-gold-500';
                                     $statusText = '';
-                                    if(str_contains(strtolower($laporan->label_ai), 'berat')) {
-                                        $statusText = '<span class="text-red-400 font-black">RUSAK BERAT</span>';
-                                    } elseif(str_contains(strtolower($laporan->label_ai), 'sedang')) {
-                                        $statusText = '<span class="text-orange-400 font-black">RUSAK SEDANG</span>';
+                                    if(str_contains(strtolower($laporan->label_ai), 'rusak berat')) {
+                                        $statusText = '<span class="text-red-400 font-black">KONDISI RUSAK BERAT</span>';
+                                    } elseif(str_contains(strtolower($laporan->label_ai), 'rusak sedang')) {
+                                        $statusText = '<span class="text-orange-400 font-black">KONDISI RUSAK SEDANG</span>';
+                                    } elseif(str_contains(strtolower($laporan->label_ai), 'rusak ringan')) {
+                                        $statusText = '<span class="text-yellow-400 font-black">KONDISI RUSAK RINGAN</span>';
                                     } elseif(str_contains(strtolower($laporan->label_ai), 'baik')) {
-                                        $statusText = '<span class="text-emerald-400 font-black">BAIK</span>';
+                                        $statusText = '<span class="text-emerald-400 font-black">KONDISI BAIK</span>';
                                     } else {
                                         $statusText = '<span class="text-slate-300 font-black">' . strtoupper($laporan->label_ai) . '</span>';
                                     }

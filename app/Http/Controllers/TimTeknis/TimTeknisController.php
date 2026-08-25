@@ -22,9 +22,10 @@ class TimTeknisController extends Controller
             ->select('analisis_ai.label_prioritas')
             ->get();
 
-        $totalRusakBerat  = $aiData->where('label_prioritas', 'Rusak Berat')->count();
-        $totalRusakSedang = $aiData->where('label_prioritas', 'Rusak Sedang')->count();
-        $totalBaik        = $aiData->where('label_prioritas', 'Baik')->count();
+        $totalRusakBerat  = $aiData->where('label_prioritas', 'Kondisi Rusak Berat')->count();
+        $totalRusakSedang = $aiData->where('label_prioritas', 'Kondisi Rusak Sedang')->count();
+        $totalRusakRingan = $aiData->where('label_prioritas', 'Kondisi Rusak Ringan')->count();
+        $totalBaik        = $aiData->where('label_prioritas', 'Kondisi Baik')->count();
 
         $totalPending   = Infrastruktur::where('status_verifikasi', 'Verified')->where('status_validasi', 'Pending')->count();
         $totalPerbaikan = Infrastruktur::where('status_perbaikan', 'Proses Perbaikan')->count();
@@ -38,6 +39,7 @@ class TimTeknisController extends Controller
             'totalInfrastruktur',
             'totalRusakBerat',
             'totalRusakSedang',
+            'totalRusakRingan',
             'totalBaik',
             'totalPending',
             'totalPerbaikan',

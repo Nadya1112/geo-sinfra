@@ -54,13 +54,13 @@ class AnalisisAiController extends Controller
             // Fallback ringan jika API Python mati untuk SPK
             \Illuminate\Support\Facades\Log::error("API SPK Error: " . $spkResponse->body());
             $skor = 0;
-            $label_kondisi = 'Baik';
+            $label_kondisi = 'Kondisi Baik';
             $rekomendasi = "Menunggu analisis lebih lanjut.";
             
             // Fallback manual sederhana jika sangat terdesak
             if (str_contains($kondisi, 'berat') || $skorCnn >= 0.65) {
                 $skor = 80;
-                $label_kondisi = 'Rusak Berat';
+                $label_kondisi = 'Kondisi Rusak Berat';
             }
         }
 

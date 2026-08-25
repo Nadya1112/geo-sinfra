@@ -568,10 +568,10 @@
             document.getElementById('stat-total').textContent = points.length;
             
             const fixedCounts = {
-                'Baik': 0,
-                'Rusak Ringan': 0,
-                'Rusak Sedang': 0,
-                'Rusak Berat': 0,
+                'Kondisi Baik': 0,
+                'Kondisi Rusak Ringan': 0,
+                'Kondisi Rusak Sedang': 0,
+                'Kondisi Rusak Berat': 0,
                 'Sudah Diperbaiki': 0
             };
 
@@ -582,13 +582,13 @@
                 if (p.status_perbaikan === 'Selesai') {
                     fixedCounts['Sudah Diperbaiki']++;
                 } else if (lowerLabel.includes('baik')) {
-                    fixedCounts['Baik']++;
+                    fixedCounts['Kondisi Baik']++;
                 } else if (lowerLabel.includes('ringan')) {
-                    fixedCounts['Rusak Ringan']++;
+                    fixedCounts['Kondisi Rusak Ringan']++;
                 } else if (lowerLabel.includes('sedang')) {
-                    fixedCounts['Rusak Sedang']++;
+                    fixedCounts['Kondisi Rusak Sedang']++;
                 } else if (lowerLabel.includes('berat')) {
-                    fixedCounts['Rusak Berat']++;
+                    fixedCounts['Kondisi Rusak Berat']++;
                 }
             });
 
@@ -596,7 +596,7 @@
             if(container) {
                 container.innerHTML = '';
                 
-                const displayOrder = ['Baik', 'Rusak Ringan', 'Rusak Sedang', 'Rusak Berat'];
+                const displayOrder = ['Kondisi Baik', 'Kondisi Rusak Ringan', 'Kondisi Rusak Sedang', 'Kondisi Rusak Berat'];
                 if (fixedCounts['Sudah Diperbaiki'] > 0) {
                     displayOrder.push('Sudah Diperbaiki');
                 }

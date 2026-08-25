@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -157,11 +157,12 @@
                         </div>
 
                         @php
-                            $total = max(1, $jumlahRusakBerat + $jumlahRusakSedang + $jumlahBaik + $jumlahBelumDianalisis);
+                            $total = max(1, $jumlahRusakBerat + $jumlahRusakSedang + $jumlahRusakRingan + $jumlahBaik + $jumlahBelumDianalisis);
                             $priorities = [
-                                ['label'=>'Rusak Berat',  'count'=>$jumlahRusakBerat,  'icon'=>'fa-exclamation-triangle', 'bg'=>'bg-red-500',    'light'=>'bg-red-50 border-red-100',    'text'=>'text-red-600',    'bar'=>'bg-red-500',    'desc'=>'Butuh penanganan segera'],
-                                ['label'=>'Rusak Sedang', 'count'=>$jumlahRusakSedang, 'icon'=>'fa-hammer',              'bg'=>'bg-orange-500', 'light'=>'bg-orange-50 border-orange-100','text'=>'text-orange-600', 'bar'=>'bg-orange-500', 'desc'=>'Perbaikan dalam waktu dekat'],
-                                ['label'=>'Baik',         'count'=>$jumlahBaik,         'icon'=>'fa-check-circle',        'bg'=>'bg-emerald-500','light'=>'bg-emerald-50 border-emerald-100','text'=>'text-emerald-600','bar'=>'bg-emerald-500','desc'=>'Kondisi layak dan stabil'],
+                                ['label'=>'Kondisi Rusak Berat',  'count'=>$jumlahRusakBerat,  'icon'=>'fa-exclamation-triangle', 'bg'=>'bg-red-500',    'light'=>'bg-red-50 border-red-100',    'text'=>'text-red-600',    'bar'=>'bg-red-500',    'desc'=>'Butuh penanganan segera'],
+                                ['label'=>'Kondisi Rusak Sedang', 'count'=>$jumlahRusakSedang, 'icon'=>'fa-hammer',              'bg'=>'bg-orange-500', 'light'=>'bg-orange-50 border-orange-100','text'=>'text-orange-600', 'bar'=>'bg-orange-500', 'desc'=>'Perbaikan dalam waktu dekat'],
+                                ['label'=>'Kondisi Rusak Ringan', 'count'=>$jumlahRusakRingan, 'icon'=>'fa-wrench',              'bg'=>'bg-yellow-500', 'light'=>'bg-yellow-50 border-yellow-100','text'=>'text-yellow-600', 'bar'=>'bg-yellow-500', 'desc'=>'Perbaikan minor diperlukan'],
+                                ['label'=>'Kondisi Baik',         'count'=>$jumlahBaik,         'icon'=>'fa-check-circle',        'bg'=>'bg-emerald-500','light'=>'bg-emerald-50 border-emerald-100','text'=>'text-emerald-600','bar'=>'bg-emerald-500','desc'=>'Kondisi layak dan stabil'],
                             ];
                         @endphp
 
@@ -215,9 +216,10 @@
                             </div>
                             <div class="grid grid-cols-2 gap-3 w-full">
                                 @foreach([
-                                    ['label'=>'Baik',         'count'=>$jumlahBaik,         'color'=>'bg-emerald-500', 'text'=>'text-emerald-400'],
-                                    ['label'=>'Rusak Sedang', 'count'=>$jumlahRusakSedang,   'color'=>'bg-orange-500',  'text'=>'text-orange-400'],
-                                    ['label'=>'Rusak Berat',  'count'=>$jumlahRusakBerat,    'color'=>'bg-red-500',     'text'=>'text-red-400'],
+                                    ['label'=>'Kondisi Baik',         'count'=>$jumlahBaik,         'color'=>'bg-emerald-500', 'text'=>'text-emerald-400'],
+                                    ['label'=>'Kondisi Rusak Ringan', 'count'=>$jumlahRusakRingan,  'color'=>'bg-yellow-500',  'text'=>'text-yellow-400'],
+                                    ['label'=>'Kondisi Rusak Sedang', 'count'=>$jumlahRusakSedang,  'color'=>'bg-orange-500',  'text'=>'text-orange-400'],
+                                    ['label'=>'Kondisi Rusak Berat',  'count'=>$jumlahRusakBerat,   'color'=>'bg-red-500',     'text'=>'text-red-400'],
                                 ] as $item)
                                 <div class="bg-white/5 border border-white/10 rounded-2xl p-3">
                                     <div class="flex items-center gap-2 mb-1">
@@ -255,10 +257,10 @@
         new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Baik', 'Rusak Sedang', 'Rusak Berat'],
+                labels: ['Kondisi Baik', 'Kondisi Rusak Ringan', 'Kondisi Rusak Sedang', 'Kondisi Rusak Berat'],
                 datasets: [{
-                    data: [{{ $jumlahBaik }}, {{ $jumlahRusakSedang }}, {{ $jumlahRusakBerat }}],
-                    backgroundColor: ['#10b981', '#f97316', '#ef4444'],
+                    data: [{{ $jumlahBaik }}, {{ $jumlahRusakRingan }}, {{ $jumlahRusakSedang }}, {{ $jumlahRusakBerat }}],
+                    backgroundColor: ['#10b981', '#eab308', '#f97316', '#ef4444'],
                     borderColor: '#0f0e2c',
                     borderWidth: 3,
                     hoverOffset: 8,

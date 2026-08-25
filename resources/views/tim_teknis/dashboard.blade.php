@@ -44,13 +44,18 @@
                         {{-- Mini Stats Box --}}
                         <div class="flex sm:flex-col justify-between sm:justify-center gap-4 sm:gap-3 shrink-0 bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-sm w-full sm:w-auto">
                             <div class="text-center sm:text-right">
-                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Rusak Berat</p>
+                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Kondisi Rusak Berat</p>
                                 <p class="text-lg font-black text-red-500">{{ number_format($totalRusakBerat ?? 0) }} <span class="text-xs text-red-400"><i class="fas fa-exclamation-triangle"></i></span></p>
                             </div>
                             <div class="w-px sm:w-full h-8 sm:h-px bg-white/10 my-auto"></div>
                             <div class="text-center sm:text-right">
-                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Rusak Sedang</p>
+                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Kondisi Rusak Sedang</p>
                                 <p class="text-lg font-black text-amber-400">{{ number_format($totalRusakSedang ?? 0) }} <span class="text-xs text-amber-300"><i class="fas fa-exclamation-circle"></i></span></p>
+                            </div>
+                            <div class="w-px sm:w-full h-8 sm:h-px bg-white/10 my-auto"></div>
+                            <div class="text-center sm:text-right">
+                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Kondisi Rusak Ringan</p>
+                                <p class="text-lg font-black text-yellow-400">{{ number_format($totalRusakRingan ?? 0) }} <span class="text-xs text-yellow-300"><i class="fas fa-wrench"></i></span></p>
                             </div>
                             <div class="w-px sm:w-full h-8 sm:h-px bg-white/10 my-auto"></div>
                             <div class="text-center sm:text-right">
@@ -71,7 +76,7 @@
                 </div>
 
                 <!-- Stats Bar — sumber data: Analisis AI (bukan input manual) -->
-                <div class="relative z-10 grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
+                <div class="relative z-10 grid grid-cols-2 md:grid-cols-6 gap-3 md:gap-4">
 
                     <div class="bg-white/5 backdrop-blur-md rounded-2xl p-3 md:p-5 border border-white/10 hover:bg-white/10 transition-all border-l-gold-400/50 border-l-4">
                         <div class="flex md:flex-col gap-3 md:gap-2">
@@ -92,9 +97,22 @@
                                 <i class="fas fa-check-circle text-sm"></i>
                             </div>
                             <div>
-                                <p class="text-[9px] md:text-[10px] font-black text-emerald-400 uppercase tracking-wider">Baik <span class="text-white/40 normal-case font-medium">(AI)</span></p>
+                                <p class="text-[9px] md:text-[10px] font-black text-emerald-400 uppercase tracking-wider">Kondisi Baik <span class="text-white/40 normal-case font-medium">(AI)</span></p>
                                 <h3 class="text-xl md:text-3xl font-black text-white leading-none">{{ $totalBaik ?? 0 }}</h3>
                                 <span class="text-[9px] font-bold text-emerald-400/60 italic">Lokasi</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/5 backdrop-blur-md rounded-2xl p-3 md:p-5 border border-white/10 hover:bg-white/10 transition-all border-l-yellow-400/50 border-l-4">
+                        <div class="flex md:flex-col gap-3 md:gap-2">
+                            <div class="w-8 h-8 md:w-10 md:h-10 bg-yellow-400/20 rounded-xl flex-shrink-0 flex items-center justify-center text-yellow-400">
+                                <i class="fas fa-wrench text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-[9px] md:text-[10px] font-black text-yellow-400 uppercase tracking-wider">Kondisi Rusak Ringan <span class="text-white/40 normal-case font-medium">(AI)</span></p>
+                                <h3 class="text-xl md:text-3xl font-black text-white leading-none">{{ $totalRusakRingan ?? 0 }}</h3>
+                                <span class="text-[9px] font-bold text-yellow-400/60 italic">Lokasi</span>
                             </div>
                         </div>
                     </div>
@@ -105,7 +123,7 @@
                                 <i class="fas fa-exclamation-circle text-sm"></i>
                             </div>
                             <div>
-                                <p class="text-[9px] md:text-[10px] font-black text-amber-400 uppercase tracking-wider">Rusak Sedang <span class="text-white/40 normal-case font-medium">(AI)</span></p>
+                                <p class="text-[9px] md:text-[10px] font-black text-amber-400 uppercase tracking-wider">Kondisi Rusak Sedang <span class="text-white/40 normal-case font-medium">(AI)</span></p>
                                 <h3 class="text-xl md:text-3xl font-black text-white leading-none">{{ $totalRusakSedang ?? 0 }}</h3>
                                 <span class="text-[9px] font-bold text-amber-400/60 italic">Lokasi</span>
                             </div>
@@ -118,7 +136,7 @@
                                 <i class="fas fa-triangle-exclamation text-sm"></i>
                             </div>
                             <div>
-                                <p class="text-[9px] md:text-[10px] font-black text-rose-400 uppercase tracking-wider">Rusak Berat <span class="text-white/40 normal-case font-medium">(AI)</span></p>
+                                <p class="text-[9px] md:text-[10px] font-black text-rose-400 uppercase tracking-wider">Kondisi Rusak Berat <span class="text-white/40 normal-case font-medium">(AI)</span></p>
                                 <h3 class="text-xl md:text-3xl font-black text-white leading-none">{{ $totalRusakBerat ?? 0 }}</h3>
                                 <span class="text-[9px] font-bold text-rose-400/60 italic">Lokasi</span>
                             </div>

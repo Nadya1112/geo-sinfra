@@ -102,9 +102,10 @@
                         @if($laporan->label_ai)
                             @php
                                 $badgeClass = match($laporan->label_ai) {
-                                    'Rusak Berat'  => 'background-color: #fef2f2; color: #b91c1c; border-color: #fca5a5;',
-                                    'Rusak Sedang' => 'background-color: #fff7ed; color: #c2410c; border-color: #fdba74;',
-                                    default        => 'background-color: #ecfdf5; color: #047857; border-color: #6ee7b7;'
+                                    'Kondisi Rusak Berat'  => 'background-color: #fef2f2; color: #b91c1c; border-color: #fca5a5;',
+                                    'Kondisi Rusak Sedang' => 'background-color: #fff7ed; color: #c2410c; border-color: #fdba74;',
+                                    'Kondisi Rusak Ringan' => 'background-color: #fefce8; color: #a16207; border-color: #fde047;',
+                                    default                => 'background-color: #ecfdf5; color: #047857; border-color: #6ee7b7;'
                                 };
                             @endphp
                             <span style="display: inline-block; padding: 3px 8px; font-size: 10px; font-weight: bold; text-transform: uppercase; border-radius: 3px; border: 1px solid; {{ $badgeClass }}">{{ strtoupper($laporan->label_ai) }}</span><br>
