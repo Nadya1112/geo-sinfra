@@ -581,7 +581,7 @@
                                 <th class="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-widest">Kecamatan</th>
                                 <th class="px-6 py-5 text-xs font-black text-slate-300 uppercase tracking-widest text-center">Total Aset</th>
                                 <th class="px-6 py-5 text-xs font-black text-emerald-500 uppercase tracking-widest text-center">Kondisi Baik</th>
-                                <th class="px-6 py-5 text-xs font-black text-yellow-400 uppercase tracking-widest text-center">Rusak Ringan</th>
+                                <th class="px-6 py-5 text-xs font-black uppercase tracking-widest text-center" style="color: #facc15;">Rusak Ringan</th>
                                 <th class="px-6 py-5 text-xs font-black text-amber-500 uppercase tracking-widest text-center">Rusak Sedang</th>
                                 <th class="px-6 py-5 text-xs font-black text-red-500 uppercase tracking-widest text-center">Rusak Berat</th>
                             </tr>
@@ -592,7 +592,7 @@
                                     <td class="px-6 py-5 text-sm font-bold text-slate-200 group-hover:text-white group-hover:translate-x-1 transition-transform">{{ $item['nama'] ?: 'Lainnya' }}</td>
                                     <td class="px-6 py-5 text-center text-sm font-black text-white">{{ $item['total'] }}</td>
                                     <td class="px-6 py-5 text-center text-sm font-semibold text-emerald-400">{{ $item['baik'] }}</td>
-                                    <td class="px-6 py-5 text-center text-sm font-semibold text-yellow-400">{{ $item['rusak_ringan'] }}</td>
+                                    <td class="px-6 py-5 text-center text-sm font-semibold" style="color: #facc15;">{{ $item['rusak_ringan'] }}</td>
                                     <td class="px-6 py-5 text-center text-sm font-semibold text-amber-400">{{ $item['rusak_sedang'] }}</td>
                                     <td class="px-6 py-5 text-center">
                                         <span class="inline-block px-3.5 py-1.5 bg-red-500/20 text-red-400 rounded-full text-xs font-black tracking-wide group-hover:bg-red-500 group-hover:text-white transition-all shadow-sm">{{ $item['rusak_berat'] }}</span>
@@ -781,10 +781,10 @@
                         </div>
                         <div class="flex justify-between items-center">
                             <div class="flex items-center gap-2">
-                                <div class="w-2 h-2 rounded-full bg-yellow-500 shadow-md shadow-yellow-500/20"></div>
+                                <div class="w-2 h-2 rounded-full shadow-md" style="background-color: #eab308; box-shadow: 0 4px 6px -1px rgba(234, 179, 8, 0.2);"></div>
                                 <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Rusak Ringan</span>
                             </div>
-                            <span id="stat-ringan" class="bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded-lg text-xs font-black min-w-[45px] text-center border border-yellow-500/20">0</span>
+                            <span id="stat-ringan" class="px-2 py-0.5 rounded-lg text-xs font-black min-w-[45px] text-center border" style="background-color: rgba(234, 179, 8, 0.2); color: #facc15; border-color: rgba(234, 179, 8, 0.2);">0</span>
                         </div>
                         <div class="flex justify-between items-center">
                             <div class="flex items-center gap-2">
