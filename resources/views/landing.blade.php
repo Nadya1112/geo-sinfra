@@ -709,6 +709,7 @@
                                 <th class="px-8 py-5 text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">Kecamatan</th>
                                 <th class="px-8 py-5 text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest text-center">Total Aset</th>
                                 <th class="px-8 py-5 text-xs font-black text-emerald-500 uppercase tracking-widest text-center">Kondisi Baik</th>
+                                <th class="px-8 py-5 text-xs font-black text-yellow-500 uppercase tracking-widest text-center">Rusak Ringan</th>
                                 <th class="px-8 py-5 text-xs font-black text-amber-500 uppercase tracking-widest text-center">Kondisi Sedang</th>
                                 <th class="px-8 py-5 text-xs font-black text-red-500 uppercase tracking-widest text-center">Rusak Berat</th>
                             </tr>
@@ -719,6 +720,7 @@
                                     <td class="px-8 py-5 text-sm font-bold text-slate-600 dark:text-slate-200 group-hover:text-navy-900 dark:group-hover:text-white group-hover:translate-x-1 transition-transform">{{ $item['nama'] ?: 'Lainnya' }}</td>
                                     <td class="px-8 py-5 text-center text-sm font-black text-navy-900 dark:text-white">{{ $item['total'] }}</td>
                                     <td class="px-8 py-5 text-center text-sm font-semibold text-emerald-500 dark:text-emerald-400">{{ $item['baik'] }}</td>
+                                    <td class="px-8 py-5 text-center text-sm font-semibold text-yellow-500 dark:text-yellow-400">{{ $item['rusak_ringan'] }}</td>
                                     <td class="px-8 py-5 text-center text-sm font-semibold text-amber-500 dark:text-amber-400">{{ $item['rusak_sedang'] }}</td>
                                     <td class="px-8 py-5 text-center">
                                         <span class="inline-block px-3.5 py-1.5 bg-red-500/20 text-red-400 rounded-full text-xs font-black tracking-wide group-hover:bg-red-500 group-hover:text-white transition-all shadow-sm">{{ $item['rusak_berat'] }}</span>
