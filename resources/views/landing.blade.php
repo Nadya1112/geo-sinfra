@@ -555,13 +555,13 @@
                     <div class="grid-pattern"></div>
                     <div class="relative z-10">
                         <span class="text-gold-500 font-extrabold text-xs uppercase tracking-[0.3em] mb-2 block">KATEGORI DOMINAN</span>
-                        <h5 class="text-4xl font-black uppercase tracking-tight mb-4">{{ $topKategori }}</h5>
+                        <h5 class="text-2xl md:text-4xl font-black uppercase tracking-tight mb-4">{{ $topKategori }}</h5>
                         <p class="text-slate-400 text-sm leading-relaxed max-w-sm mb-6">
                             Kategori infrastruktur ini memiliki jumlah laporan tertinggi di sistem GIS dan menjadi perhatian utama dalam proses monitoring pemeliharaan.
                         </p>
                     </div>
                     <div class="relative z-10 flex items-baseline gap-2">
-                        <span class="text-4xl lg:text-5xl font-black text-gold-500">{{ number_format($topKategoriCount) }}</span>
+                        <span class="text-3xl md:text-4xl lg:text-5xl font-black text-gold-500">{{ number_format($topKategoriCount) }}</span>
                         <span class="text-slate-300 font-extrabold text-sm uppercase tracking-wider">Aset Teridentifikasi</span>
                     </div>
                     <i class="fas fa-chart-pie absolute -right-6 -bottom-6 text-white/5 text-[150px]"></i>
@@ -612,7 +612,7 @@
             <div class="max-w-7xl mx-auto mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4 px-2">
                 <div>
                     <span class="text-gold-500 font-extrabold text-sm uppercase tracking-[0.3em] mb-2 block">PETA INTERAKTIF</span>
-                    <h4 class="text-navy-900 font-black text-3xl lg:text-4xl tracking-tight">Peta Sebaran</h4>
+                    <h4 class="text-navy-900 font-black text-2xl md:text-3xl lg:text-4xl tracking-tight">Peta Sebaran</h4>
                 </div>
                 <p class="text-slate-500 text-sm lg:text-base max-w-md">
                     Gunakan peta GIS interaktif di bawah ini untuk melihat titik lokasi dan tingkat kerusakan infrastruktur permukiman secara real-time.

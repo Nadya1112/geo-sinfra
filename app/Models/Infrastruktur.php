@@ -11,6 +11,15 @@ class Infrastruktur extends Model
 {
     use SoftDeletes;
 
+    protected static function booted()
+    {
+        static::creating(function ($model) {
+            if (empty($model->uuid)) {
+                $model->uuid = (string) \Illuminate\Support\Str::uuid();
+            }
+        });
+    }
+
     // 1. Nama tabel
     protected $table = 'infrastruktur';
 
@@ -25,6 +34,7 @@ class Infrastruktur extends Model
      * Disesuaikan dengan controller: nama_infrastruktur, jenis_infrastruktur, id_kelurahan, kondisi
      */
     protected $fillable = [
+        'uuid',
         'id_user',
         'id_kelurahan',
         'nama_objek',
