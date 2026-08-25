@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+    <script>
+        if (localStorage.getItem('geo-theme') === 'dark' || (!('geo-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+
     <style>
         .button {
             background-color: #5c56e1;
