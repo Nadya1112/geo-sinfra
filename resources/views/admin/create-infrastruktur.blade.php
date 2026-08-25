@@ -109,7 +109,7 @@
         </header>
 
         {{-- ── Content ── --}}
-        <div class="flex-1 overflow-y-auto custom-scrollbar p-8 pb-16">
+        <div class="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-8 pb-24 md:pb-16">
 
             {{-- Badge --}}
             <div class="flex items-center gap-3 mb-6">
@@ -145,7 +145,7 @@
                     <div class="space-y-6">
 
                         {{-- Section 1: Identitas & Wilayah --}}
-                        <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-8">
+                        <div class="bg-white rounded-[2rem] border border-slate-100 shadow-sm p-5 md:p-8">
                             <div class="flex items-center gap-3 mb-6">
                                 <div class="w-8 h-8 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shrink-0">
                                     <i class="fas fa-info-circle text-xs"></i>
@@ -209,7 +209,7 @@
                         </div>
 
                         {{-- Section 2: Detail Teknis & Parameter AI --}}
-                        <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-8">
+                        <div class="bg-white rounded-[2rem] border border-slate-100 shadow-sm p-5 md:p-8">
                             <div class="flex items-center gap-3 mb-6">
                                 <div class="w-8 h-8 bg-gold-500 rounded-xl flex items-center justify-center text-white shrink-0">
                                     <i class="fas fa-brain text-xs"></i>
@@ -304,7 +304,7 @@
                         </div>
 
                         {{-- Section 3: Lokasi Geografis --}}
-                        <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-8">
+                        <div class="bg-white rounded-[2rem] border border-slate-100 shadow-sm p-5 md:p-8">
                             <div class="flex items-center gap-3 mb-6">
                                 <div class="w-8 h-8 bg-navy-500 rounded-xl flex items-center justify-center text-white shrink-0">
                                     <i class="fas fa-map-marker-alt text-xs"></i>
@@ -344,7 +344,7 @@
                     <div class="space-y-6">
 
                         {{-- Upload Foto --}}
-                        <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6">
+                        <div class="bg-white rounded-[2rem] border border-slate-100 shadow-sm p-5 md:p-6">
                             <div class="flex items-center gap-3 mb-4">
                                 <div class="w-8 h-8 bg-emerald-500 rounded-xl flex items-center justify-center text-white shrink-0">
                                     <i class="fas fa-camera text-xs"></i>
@@ -373,7 +373,7 @@
                         </div>
 
                         {{-- Info Panel --}}
-                        <div class="bg-navy-900 rounded-3xl p-6 text-white">
+                        <div class="bg-navy-900 rounded-[2rem] p-5 md:p-6 text-white">
                             <h5 class="text-xs font-black text-gold-500 uppercase tracking-widest mb-4">
                                 <i class="fas fa-robot mr-1"></i> Proses Setelah Simpan
                             </h5>
@@ -409,7 +409,7 @@
                         </div>
 
                         {{-- Tombol Aksi --}}
-                        <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6 space-y-3">
+                        <div class="bg-white rounded-[2rem] border border-slate-100 shadow-sm p-5 md:p-6 space-y-3">
                             <button type="submit"
                                 class="w-full flex items-center justify-center gap-2 bg-navy-900 hover:bg-navy-950 text-white py-3.5 rounded-2xl font-black text-sm tracking-widest transition-all shadow-lg shadow-navy-900/20 uppercase">
                                 <i class="fas fa-save"></i> Simpan & Jalankan AI

@@ -75,11 +75,11 @@
 
             <!-- Custom Zoom Controls Top Left -->
             <div class="absolute top-4 left-4 z-[2000] flex flex-col gap-1.5 pointer-events-auto">
-                <button onclick="map.zoomIn()" class="w-8 h-8 bg-[#1e1b4b]/80 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:bg-[#1e1b4b] transition-all group">
-                    <i class="fas fa-plus text-xs group-hover:scale-110 transition-transform"></i>
+                <button onclick="map.zoomIn()" class="w-12 h-12 md:w-8 md:h-8 bg-[#1e1b4b]/80 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:bg-[#1e1b4b] transition-all group">
+                    <i class="fas fa-plus text-sm md:text-xs group-hover:scale-110 transition-transform"></i>
                 </button>
-                <button onclick="map.zoomOut()" class="w-8 h-8 bg-[#1e1b4b]/80 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:bg-[#1e1b4b] transition-all group">
-                    <i class="fas fa-minus text-xs group-hover:scale-110 transition-transform"></i>
+                <button onclick="map.zoomOut()" class="w-12 h-12 md:w-8 md:h-8 bg-[#1e1b4b]/80 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:bg-[#1e1b4b] transition-all group">
+                    <i class="fas fa-minus text-sm md:text-xs group-hover:scale-110 transition-transform"></i>
                 </button>
             </div>
 
@@ -133,9 +133,23 @@
                 </div>
             </div>
 
+            <!-- Mobile Filter FAB (Only on Mobile) -->
+            <button onclick="document.getElementById('mobile-filter-sheet').classList.remove('hidden'); setTimeout(() => document.getElementById('mobile-filter-sheet').classList.remove('translate-y-full'), 10);" class="md:hidden absolute bottom-24 right-4 z-[2000] w-12 h-12 bg-[#0f0e2c]/95 backdrop-blur-xl border border-white/10 rounded-xl flex items-center justify-center text-gold-500 shadow-2xl pointer-events-auto">
+                <i class="fas fa-filter text-lg"></i>
+            </button>
+
             <!-- Floating Filters Right (Combined) -->
-            <div class="absolute top-4 right-4 z-[2000] pointer-events-auto">
-                <div class="bg-[#1e1b4b]/95 backdrop-blur-xl p-3 rounded-2xl border border-white/10 shadow-2xl w-48 flex flex-col gap-2">
+            <div id="mobile-filter-sheet" class="hidden md:!flex md:!translate-y-0 translate-y-full fixed inset-x-0 bottom-0 md:absolute md:top-4 md:bottom-auto md:right-4 z-[2000] pointer-events-auto transition-transform duration-300">
+                <div class="bg-[#1e1b4b]/95 backdrop-blur-xl p-6 md:p-3 rounded-t-[2.5rem] md:rounded-2xl border-t md:border border-white/10 shadow-2xl w-full md:w-48 flex flex-col gap-2 max-h-[85vh] overflow-y-auto">
+                    
+                    <!-- Mobile Close Button & Handle -->
+                    <div class="w-12 h-1.5 bg-white/20 rounded-full mx-auto mb-2 md:hidden"></div>
+                    <div class="flex justify-between items-center mb-4 md:hidden">
+                        <h4 class="text-white font-black text-lg uppercase tracking-wider">Filter Peta</h4>
+                        <button onclick="document.getElementById('mobile-filter-sheet').classList.add('translate-y-full'); setTimeout(() => document.getElementById('mobile-filter-sheet').classList.add('hidden'), 300);" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-all">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
                     <!-- Category Section -->
                     <div id="category-card" class="w-full relative">
                         <button onclick="toggleCategoryMenu()" class="w-full px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider bg-white/5 text-white flex items-center justify-between hover:bg-white/10 transition-all border border-white/5 shadow-inner">

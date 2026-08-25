@@ -36,7 +36,8 @@
 
 
         <div class="overflow-x-auto w-full custom-scrollbar">
-            <table class="w-full text-left border-collapse">
+            <!-- Table Layout (Desktop & Tablet) -->
+            <table class="w-full text-left border-collapse hidden md:table">
             <thead>
                 <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
                     <th class="px-4 md:px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest w-12 text-center">No.</th>
@@ -102,7 +103,55 @@
                 </tr>
                 @endforelse
             </tbody>
-        </table>
+            </table>
+
+            <!-- Card Layout (Mobile) -->
+            <div class="flex flex-col md:hidden divide-y divide-slate-100">
+                @forelse($users as $index => $user)
+                <div class="p-4 hover:bg-slate-50 transition">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 {{ $user->role == 'admin' ? 'bg-gold-500/10 text-gold-500 border-gold-500/20' : ($user->role == 'tim_teknis' ? 'bg-navy-900/10 text-navy-900 border-navy-900/20' : 'bg-slate-100 text-slate-600 border-slate-200') }} rounded-xl flex items-center justify-center font-bold text-sm border shrink-0">
+                            {{ substr($user->name, 0, 1) }}
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h5 class="text-sm font-black text-navy-900 uppercase leading-none truncate mb-1">{{ $user->name }}</h5>
+                            <p class="text-xs text-slate-500 truncate mb-2">{{ $user->email }}</p>
+                            
+                            <div class="flex items-center justify-between mt-2">
+                                <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter inline-block
+                                    {{ $user->role == 'admin' ? 'bg-gold-500/10 text-gold-500 border border-gold-500/20' : ($user->role == 'tim_teknis' ? 'bg-navy-900/10 text-navy-900 border border-navy-900/20' : 'bg-slate-100 text-slate-600 border border-slate-200') }}">
+                                    {{ str_replace('_', ' ', $user->role) }}
+                                </span>
+                                
+                                <div class="flex justify-end gap-2">
+                                    @if($user->role !== 'tim_teknis')
+                                    <a href="{{ route('admin.users.edit', $user->id) }}" title="Ubah User" class="w-8 h-8 flex items-center justify-center bg-gold-500 hover:bg-gold-600 text-white rounded-lg text-xs font-black transition shadow-sm active:scale-95">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    
+                                    <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="inline-block m-0 p-0" onsubmit="return confirm('PERINGATAN!\n\nApakah Anda yakin ingin menghapus akun milik {{ $user->name }}?\nTindakan ini tidak dapat dibatalkan.');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" title="Hapus User" class="w-8 h-8 flex items-center justify-center bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-xs font-black transition shadow-sm active:scale-95">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                    @else
+                                    <span class="px-2 h-8 bg-slate-100 text-slate-400 text-[10px] font-bold rounded-lg flex items-center justify-center cursor-not-allowed gap-1 whitespace-nowrap" title="Akun Tim Teknis dilindungi sistem">
+                                        <i class="fas fa-lock"></i>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @empty
+                <div class="p-8 text-center text-slate-500 text-xs font-medium">
+                    Tidak ada data pengguna yang ditemukan.
+                </div>
+                @endforelse
+            </div>
         </div>
         
         @if($show != 'all' && $users->hasPages())

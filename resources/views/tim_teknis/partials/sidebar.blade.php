@@ -1,39 +1,35 @@
-
-{{-- Tombol Hamburger (Hanya muncul di mobile) --}}
-<button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="fixed top-4 left-4 z-[9999] w-10 h-10 bg-navy-900 text-gold-500 rounded-xl flex items-center justify-center shadow-lg md:hidden border border-white/10 hover:bg-navy-800 transition-all active:scale-95">
-    <i class="fas fa-bars text-sm" id="menu-icon"></i>
-</button>
+{{-- Hamburger button dihapus, diganti Bottom Nav --}}
 
 {{-- Overlay Background (muncul saat menu terbuka) --}}
 <div id="mobile-overlay" onclick="toggleMobileMenu()" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9998] hidden md:hidden transition-opacity duration-300 opacity-0"></div>
 
-{{-- Sidebar Desktop --}}
-<aside class="w-64 bg-navy-900 text-white flex-col hidden md:flex shadow-2xl z-20 text-left shrink-0 border-r border-navy-800">
-    <div class="p-6 flex-1 text-left">
-        <a href="{{ route('tim_teknis.dashboard') }}" class="flex items-center gap-3 mb-10 hover:opacity-80 transition-opacity group">
-            <div class="w-8 h-8 bg-white dark:bg-[#1e1b4b] rounded-lg overflow-hidden shadow-lg shadow-gold-500/20 group-hover:scale-110 transition-transform">
+{{-- Sidebar Desktop & Tablet --}}
+<aside class="w-20 lg:w-64 bg-navy-900 text-white flex-col hidden md:flex shadow-2xl z-20 text-left shrink-0 border-r border-navy-800 transition-all duration-300">
+    <div class="p-4 lg:p-6 flex-1 text-left overflow-y-auto custom-scrollbar">
+        <a href="{{ route('tim_teknis.dashboard') }}" class="flex items-center justify-center lg:justify-start gap-3 mb-10 hover:opacity-80 transition-opacity group">
+            <div class="w-8 h-8 bg-white dark:bg-[#1e1b4b] rounded-lg overflow-hidden shadow-lg shadow-gold-500/20 group-hover:scale-110 transition-transform shrink-0">
                 <img src="{{ asset('logo_geo-sinfra.png') }}" class="w-full h-full object-contain" alt="Logo">
             </div>
-            <span class="font-extrabold text-xl tracking-tighter uppercase text-white">GEO-SINFRA</span>
+            <span class="font-extrabold text-xl tracking-tighter uppercase text-white hidden lg:block">GEO-SINFRA</span>
         </a>
         
         <nav class="space-y-1">
             <a href="{{ route('tim_teknis.dashboard') }}" 
-               class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('tim_teknis.dashboard') ? 'bg-gold-500 text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-th-large {{ request()->routeIs('tim_teknis.dashboard') ? '' : 'group-hover:text-gold-400' }}"></i> 
-                Beranda
+               class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 {{ request()->routeIs('tim_teknis.dashboard') ? 'bg-gold-500 text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="Beranda">
+                <i class="fas fa-th-large text-lg lg:text-base {{ request()->routeIs('tim_teknis.dashboard') ? '' : 'group-hover:text-gold-400' }}"></i> 
+                <span class="hidden lg:inline">Beranda</span>
             </a>
 
             <a href="{{ route('tim_teknis.monitoring') }}" 
-               class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('tim_teknis.monitoring') ? 'bg-gold-500 text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-satellite-dish {{ request()->routeIs('tim_teknis.monitoring') ? '' : 'group-hover:text-gold-400' }}"></i> 
-                WebGIS Eksekutif
+               class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 {{ request()->routeIs('tim_teknis.monitoring') ? 'bg-gold-500 text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="WebGIS Eksekutif">
+                <i class="fas fa-satellite-dish text-lg lg:text-base {{ request()->routeIs('tim_teknis.monitoring') ? '' : 'group-hover:text-gold-400' }}"></i> 
+                <span class="hidden lg:inline">WebGIS Eksekutif</span>
             </a>
 
             <a href="{{ route('tim_teknis.prioritas') }}" 
-               class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('tim_teknis.prioritas') ? 'bg-rose-500 text-white font-bold shadow-lg shadow-rose-500/20' : 'text-slate-400 hover:text-rose-400 hover:bg-rose-500/10' }} rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-bolt {{ request()->routeIs('tim_teknis.prioritas') ? 'animate-pulse' : 'text-rose-500 group-hover:text-rose-400' }}"></i> 
-                Rekomendasi Prioritas
+               class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 {{ request()->routeIs('tim_teknis.prioritas') ? 'bg-rose-500 text-white font-bold shadow-lg shadow-rose-500/20' : 'text-slate-400 hover:text-rose-400 hover:bg-rose-500/10' }} rounded-xl text-sm font-semibold transition group text-left" title="Rekomendasi Prioritas">
+                <i class="fas fa-bolt text-lg lg:text-base {{ request()->routeIs('tim_teknis.prioritas') ? 'animate-pulse' : 'text-rose-500 group-hover:text-rose-400' }}"></i> 
+                <span class="hidden lg:inline">Rekomendasi Prioritas</span>
             </a>
 
             @php
@@ -44,36 +40,34 @@
                     : $pendingValidasiQuery->count();
             @endphp
             <a href="{{ route('tim_teknis.validasi') }}" 
-               class="flex items-center justify-between px-4 py-3 {{ request()->routeIs('tim_teknis.validasi') ? 'bg-gold-500 text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group">
+               class="flex items-center justify-center lg:justify-between px-0 lg:px-4 py-3 {{ request()->routeIs('tim_teknis.validasi') ? 'bg-gold-500 text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group relative w-full" title="Validasi Usulan">
                 <div class="flex items-center gap-3">
-                    <i class="fas fa-clipboard-check {{ request()->routeIs('tim_teknis.validasi') ? '' : 'group-hover:text-gold-400' }}"></i> 
-                    Validasi Usulan
+                    <i class="fas fa-clipboard-check text-lg lg:text-base {{ request()->routeIs('tim_teknis.validasi') ? '' : 'group-hover:text-gold-400' }}"></i> 
+                    <span class="hidden lg:inline">Validasi Usulan</span>
                 </div>
                 @if($pendingValidasiCount > 0)
-                    <span class="bg-rose-500 text-white text-xs font-black px-2 py-0.5 rounded-full shadow-sm animate-pulse">
+                    <span class="absolute top-1 right-1 lg:relative lg:top-auto lg:right-auto bg-rose-500 text-white text-[10px] lg:text-xs font-black px-1.5 py-0.5 rounded-full shadow-sm animate-pulse min-w-[16px] lg:min-w-[20px] text-center">
                         {{ $pendingValidasiCount }}
                     </span>
                 @endif
             </a>
 
             <a href="{{ route('tim_teknis.laporan')  }}" 
-               class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('tim_teknis.laporan') ? 'bg-gold-500 text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-print {{ request()->routeIs('tim_teknis.laporan') ? '' : 'group-hover:text-gold-400' }}"></i> 
-                Cetak Laporan
+               class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 {{ request()->routeIs('tim_teknis.laporan') ? 'bg-gold-500 text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="Cetak Laporan">
+                <i class="fas fa-print text-lg lg:text-base {{ request()->routeIs('tim_teknis.laporan') ? '' : 'group-hover:text-gold-400' }}"></i> 
+                <span class="hidden lg:inline">Cetak Laporan</span>
             </a>
 
 
         </nav>
     </div>
 
-    <div class="p-6 border-t border-white/5 text-left bg-navy-950/20 relative">
-        
-
-        <form method="POST" action="{{ route('logout') }}">
+    <div class="p-4 lg:p-6 border-t border-white/5 text-center lg:text-left bg-navy-950/20 relative flex flex-col items-center lg:items-stretch">
+        <form method="POST" action="{{ route('logout') }}" class="w-full">
             @csrf
-            <button type="submit" class="flex items-center gap-3 px-4 py-3.5 text-red-400 hover:text-red-300 w-full text-left text-sm font-bold transition group rounded-xl hover:bg-red-500/10">
-                <i class="fas fa-sign-out-alt group-hover:-translate-x-1 transition-transform"></i> 
-                Keluar
+            <button type="submit" class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3.5 text-red-400 hover:text-red-300 w-full text-left text-sm font-bold transition group rounded-xl hover:bg-red-500/10" title="Keluar">
+                <i class="fas fa-sign-out-alt text-lg lg:text-base group-hover:-translate-x-1 transition-transform"></i> 
+                <span class="hidden lg:inline">Keluar</span>
             </button>
         </form>
     </div>
@@ -166,6 +160,32 @@
     </div>
 </aside>
 
+<!-- Bottom Navigation Bar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-navy-900 border-t border-white/10 z-[9990] flex justify-around items-center px-2 py-3 pb-safe shadow-[0_-10px_30px_rgba(0,0,0,0.3)]">
+    <a href="{{ route('tim_teknis.dashboard') }}" class="flex flex-col items-center gap-1.5 p-2 {{ request()->routeIs('tim_teknis.dashboard') ? 'text-gold-500' : 'text-slate-400 hover:text-white' }} transition-colors">
+        <i class="fas fa-th-large text-xl {{ request()->routeIs('tim_teknis.dashboard') ? '-translate-y-1' : '' }} transition-transform"></i>
+        <span class="text-[10px] font-bold uppercase tracking-wider">Beranda</span>
+    </a>
+    
+    <a href="{{ route('tim_teknis.monitoring') }}" class="flex flex-col items-center gap-1.5 p-2 {{ request()->routeIs('tim_teknis.monitoring') ? 'text-gold-500' : 'text-slate-400 hover:text-white' }} transition-colors">
+        <i class="fas fa-satellite-dish text-xl {{ request()->routeIs('tim_teknis.monitoring') ? '-translate-y-1' : '' }} transition-transform"></i>
+        <span class="text-[10px] font-bold uppercase tracking-wider">Peta GIS</span>
+    </a>
+    
+    <a href="{{ route('tim_teknis.validasi') }}" class="flex flex-col items-center gap-1.5 p-2 {{ request()->routeIs('tim_teknis.validasi') ? 'text-gold-500' : 'text-slate-400 hover:text-white' }} transition-colors relative">
+        <i class="fas fa-clipboard-check text-xl {{ request()->routeIs('tim_teknis.validasi') ? '-translate-y-1' : '' }} transition-transform"></i>
+        <span class="text-[10px] font-bold uppercase tracking-wider">Validasi</span>
+        @if(isset($pendingValidasiCount) && $pendingValidasiCount > 0)
+        <span class="absolute top-0 right-0 bg-rose-500 text-white text-[9px] font-black px-1.5 rounded-full border border-[#0f0e2c]">{{ $pendingValidasiCount }}</span>
+        @endif
+    </a>
+    
+    <button onclick="toggleMobileMenu()" class="flex flex-col items-center gap-1.5 p-2 text-slate-400 hover:text-white transition-colors relative" id="mobile-menu-btn">
+        <i class="fas fa-bars text-xl transition-transform" id="menu-icon"></i>
+        <span class="text-[10px] font-bold uppercase tracking-wider">Lainnya</span>
+    </button>
+</nav>
+
 {{-- Script toggle mobile menu --}}
 <script>
     function toggleMobileMenu() {
@@ -181,6 +201,7 @@
             setTimeout(() => overlay.classList.add('hidden'), 300);
             icon.classList.remove('fa-times');
             icon.classList.add('fa-bars');
+            if(icon.parentElement.tagName === 'BUTTON') icon.parentElement.classList.remove('text-gold-500');
             document.body.style.overflow = '';
         } else {
             overlay.classList.remove('hidden');
@@ -190,6 +211,7 @@
             });
             icon.classList.remove('fa-bars');
             icon.classList.add('fa-times');
+            if(icon.parentElement.tagName === 'BUTTON') icon.parentElement.classList.add('text-gold-500');
             document.body.style.overflow = 'hidden';
         }
     }

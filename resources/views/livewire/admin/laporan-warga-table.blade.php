@@ -36,7 +36,8 @@
     <div class="bg-white rounded-[2rem] shadow-xl shadow-slate-200/40 border border-slate-100 overflow-hidden relative">
 
         <div class="overflow-x-auto custom-scrollbar">
-            <table class="w-full text-left text-sm whitespace-nowrap md:whitespace-normal">
+            <!-- Table Layout (Desktop & Tablet) -->
+            <table class="w-full text-left text-sm whitespace-nowrap md:whitespace-normal hidden md:table">
                 <thead class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
                     <tr>
                         <th class="px-4 py-3 font-extrabold uppercase tracking-widest text-xs text-gold-500">Waktu Lapor</th>
@@ -169,6 +170,127 @@
                     @endforelse
                 </tbody>
             </table>
+
+            <!-- Card Layout (Mobile) -->
+            <div class="flex flex-col md:hidden divide-y divide-slate-100">
+                @forelse($laporanWarga as $laporan)
+                <div class="p-4 hover:bg-slate-50/80 transition-colors">
+                    <div class="flex justify-between items-start mb-3">
+                        <div class="flex items-center gap-2">
+                            <i class="far fa-clock text-slate-400"></i>
+                            <div>
+                                <p class="font-bold text-navy-900 text-xs">{{ \Carbon\Carbon::parse($laporan->created_at)->format('d M Y') }}</p>
+                                <p class="text-[10px] text-slate-500 font-medium">{{ \Carbon\Carbon::parse($laporan->created_at)->format('H:i') }}</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-bold text-navy-900 text-xs">{{ $laporan->nama_pelapor }}</p>
+                            <p class="text-[10px] font-semibold text-slate-500 mt-0.5"><i class="fas fa-phone-alt text-[10px] text-slate-400 mr-1"></i> {{ $laporan->no_hp }}</p>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <p class="text-xs font-medium text-slate-700 line-clamp-3 leading-relaxed mb-2">{{ $laporan->deskripsi }}</p>
+                        
+                        @if($laporan->label_ai)
+                            @php
+                                $aiColor = 'bg-[#0f0e2c] text-white border-gold-500/50 shadow-gold-500/20';
+                                $aiIcon = 'fa-robot text-gold-500';
+                                $statusText = '';
+                                if(str_contains(strtolower($laporan->label_ai), 'rusak berat')) {
+                                    $statusText = '<span class="text-red-400 font-black">KONDISI RUSAK BERAT</span>';
+                                } elseif(str_contains(strtolower($laporan->label_ai), 'rusak sedang')) {
+                                    $statusText = '<span class="text-orange-400 font-black">KONDISI RUSAK SEDANG</span>';
+                                } elseif(str_contains(strtolower($laporan->label_ai), 'rusak ringan')) {
+                                    $statusText = '<span class="text-yellow-400 font-black">KONDISI RUSAK RINGAN</span>';
+                                } elseif(str_contains(strtolower($laporan->label_ai), 'baik')) {
+                                    $statusText = '<span class="text-emerald-400 font-black">KONDISI BAIK</span>';
+                                } else {
+                                    $statusText = '<span class="text-slate-300 font-black">' . strtoupper($laporan->label_ai) . '</span>';
+                                }
+                                $skorPercent = $laporan->skor_ai ? round($laporan->skor_ai * 100) . '%' : '';
+                            @endphp
+                            <div class="inline-flex items-center gap-1.5 px-2 py-1 mb-2 rounded-lg border {{ $aiColor }} text-[10px] uppercase tracking-wider shadow-sm w-full">
+                                <i class="fas {{ $aiIcon }} animate-pulse"></i> 
+                                <span class="truncate">Dianalisis AI: {!! $statusText !!} {!! $skorPercent ? "<span class='text-gold-500 font-black ml-1'>($skorPercent)</span>" : '' !!}</span>
+                            </div>
+                        @endif
+                        
+                        <div class="flex gap-2">
+                            @if($laporan->foto)
+                                <button type="button" onclick="showPhotoModal('{{ asset('storage/' . $laporan->foto) }}')" class="flex-1 items-center justify-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-colors">
+                                    <i class="fas fa-image"></i> Lihat Foto
+                                </button>
+                            @endif
+                            
+                            <a href="https://www.google.com/maps/search/?api=1&query={{ $laporan->latitude }},{{ $laporan->longitude }}" target="_blank" 
+                               class="flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-colors">
+                                <i class="fas fa-map-marker-alt"></i> Cek Lokasi
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-2 pt-3 border-t border-slate-100">
+                        <div class="flex gap-2">
+                            @php
+                                $statusColor = 'bg-slate-100 text-slate-700 border-slate-200';
+                                if($laporan->status == 'Menunggu') $statusColor = 'bg-yellow-50 text-yellow-700 border-yellow-200';
+                                if($laporan->status == 'Ditinjau') $statusColor = 'bg-blue-50 text-blue-700 border-blue-200';
+                                if($laporan->status == 'Diproses') $statusColor = 'bg-indigo-50 text-indigo-700 border-indigo-200';
+                                if($laporan->status == 'Selesai') $statusColor = 'bg-emerald-50 text-emerald-700 border-emerald-200';
+                                if($laporan->status == 'Ditolak') $statusColor = 'bg-red-50 text-red-700 border-red-200';
+                            @endphp
+                            <div class="relative flex-1">
+                                <select wire:change="updateStatus({{ $laporan->id }}, $event.target.value)" class="w-full appearance-none pl-2 pr-6 py-1.5 rounded-lg text-[10px] font-bold border {{ $statusColor }} focus:outline-none focus:ring-2 focus:ring-navy-500 cursor-pointer shadow-sm">
+                                    <option value="Menunggu" {{ $laporan->status == 'Menunggu' ? 'selected' : '' }}>⏳ Menunggu</option>
+                                    <option value="Ditinjau" {{ $laporan->status == 'Ditinjau' ? 'selected' : '' }}>👀 Ditinjau</option>
+                                    <option value="Diproses" {{ $laporan->status == 'Diproses' ? 'selected' : '' }}>⚙️ Diproses</option>
+                                    <option value="Selesai" {{ $laporan->status == 'Selesai' ? 'selected' : '' }}>✅ Selesai</option>
+                                    <option value="Ditolak" {{ $laporan->status == 'Ditolak' ? 'selected' : '' }}>❌ Ditolak</option>
+                                </select>
+                                <i class="fas fa-chevron-down absolute right-2 top-1/2 -translate-y-1/2 text-[10px] opacity-60 pointer-events-none"></i>
+                            </div>
+
+                            @php
+                                $assignColor = $laporan->id_surveyor ? 'bg-indigo-50 text-indigo-700 border-indigo-200' : 'bg-slate-100 text-slate-500 border-slate-200';
+                            @endphp
+                            <div class="relative flex-1">
+                                <select wire:change="assignSurveyor({{ $laporan->id }}, $event.target.value)" class="w-full appearance-none pl-2 pr-6 py-1.5 rounded-lg text-[10px] font-bold border {{ $assignColor }} focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer shadow-sm">
+                                    <option value="" {{ !$laporan->id_surveyor ? 'selected' : '' }}>Pilih Surveyor</option>
+                                    @foreach($surveyors as $surveyor)
+                                        <option value="{{ $surveyor->id }}" {{ $laporan->id_surveyor == $surveyor->id ? 'selected' : '' }}>
+                                            👷‍♂️ {{ substr($surveyor->name, 0, 10) }}...
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <i class="fas fa-chevron-down absolute right-2 top-1/2 -translate-y-1/2 text-[10px] opacity-60 pointer-events-none"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-2 mt-1">
+                            @if(!$laporan->id_infrastruktur)
+                            <a href="{{ route('admin.laporan-warga.convert', $laporan->id) }}" class="flex-1 flex items-center justify-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-lg text-[10px] font-black transition shadow-sm active:scale-95">
+                                <i class="fas fa-check-double"></i> Tindak Lanjuti
+                            </a>
+                            @else
+                            <a href="{{ route('admin.infrastruktur.show', $laporan->id_infrastruktur) }}" class="flex-1 flex items-center justify-center gap-1.5 bg-navy-900 hover:bg-navy-950 text-white py-1.5 rounded-lg text-[10px] font-black transition shadow-sm active:scale-95">
+                                <i class="fas fa-eye"></i> Lihat Infrastruktur
+                            </a>
+                            @endif
+                            
+                            <button type="button" wire:click="deleteLaporan({{ $laporan->id }})" wire:confirm="Apakah Anda yakin ingin menghapus laporan ini secara permanen?" class="w-10 flex items-center justify-center bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-xs font-black transition shadow-sm active:scale-95" title="Hapus Laporan">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                @empty
+                <div class="px-8 py-16 text-center">
+                    <i class="fas fa-file-alt text-4xl text-slate-200 mb-4 block"></i>
+                    <p class="text-slate-400 font-bold text-sm">Belum Ada Laporan Warga.</p>
+                </div>
+                @endforelse
+            </div>
         </div>
         
         @if($laporanWarga->hasPages())

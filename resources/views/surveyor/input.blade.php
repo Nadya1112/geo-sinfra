@@ -53,7 +53,7 @@
                         <div class="space-y-8">
                             
                             {{-- Section: Identitas Laporan --}}
-                            <div class="bg-white  rounded-[2.5rem] p-8 border border-slate-100  shadow-sm hover:shadow-md transition-shadow">
+                            <div class="bg-white rounded-[2.5rem] p-5 md:p-8 border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
                                 <div class="flex items-center gap-4 mb-8 pb-6 border-b border-slate-50">
                                     <div class="w-12 h-12 rounded-2xl bg-navy-50  flex items-center justify-center text-gold-500 border border-navy-100">
                                         <i class="fas fa-file-signature text-xl"></i>
@@ -112,7 +112,7 @@
                             </div>
 
                             {{-- Section: Spesifikasi Teknis --}}
-                            <div class="bg-white  rounded-[2.5rem] p-8 border border-slate-100  shadow-sm hover:shadow-md transition-shadow">
+                            <div class="bg-white rounded-[2.5rem] p-5 md:p-8 border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
                                 <div class="flex items-center gap-4 mb-8 pb-6 border-b border-slate-50">
                                     <div class="w-12 h-12 rounded-2xl bg-navy-50  flex items-center justify-center text-gold-500 border border-navy-100">
                                         <i class="fas fa-ruler-combined text-xl"></i>
@@ -200,7 +200,7 @@
                         <div class="space-y-8">
                             
                             {{-- Section: Peta --}}
-                            <div class="bg-white  rounded-[2.5rem] p-8 border border-slate-100  shadow-sm hover:shadow-md transition-shadow">
+                            <div class="bg-white rounded-[2.5rem] p-5 md:p-8 border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
                                 <div class="flex items-center justify-between mb-8 pb-4 border-b border-slate-50">
                                     <div class="flex items-center gap-4">
                                         <div class="w-12 h-12 rounded-2xl bg-navy-50  flex items-center justify-center text-gold-500 border border-navy-100">
@@ -255,7 +255,7 @@
                             </div>
 
                             {{-- Section: Dokumentasi & Submit --}}
-                            <div class="bg-white  rounded-[2.5rem] p-8 border border-slate-100  shadow-sm hover:shadow-md transition-shadow">
+                            <div class="bg-white rounded-[2.5rem] p-5 md:p-8 border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
                                 <div class="flex items-center gap-4 mb-8 pb-4 border-b border-slate-50">
                                     <div class="w-12 h-12 rounded-2xl bg-navy-50  flex items-center justify-center text-gold-500 border border-navy-100">
                                         <i class="fas fa-camera text-xl"></i>

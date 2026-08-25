@@ -307,10 +307,10 @@
 
     {{-- Modal Kelola Wilayah --}}
     <div id="territoryModal" class="fixed inset-0 z-[60] hidden overflow-y-auto">
-        <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="flex items-end md:items-center justify-center min-h-screen p-0 md:p-4">
             <div class="fixed inset-0 bg-navy-900/60 backdrop-blur-sm transition-opacity" onclick="toggleModal('territoryModal')"></div>
             
-            <div class="relative bg-white  rounded-[2.5rem] w-full max-w-2xl p-8 shadow-2xl transition-all scale-95 opacity-0 duration-300" id="modalContent">
+            <div class="relative bg-white rounded-t-[2.5rem] md:rounded-[2.5rem] w-full max-w-2xl p-6 md:p-8 shadow-2xl transition-all translate-y-full md:translate-y-0 md:scale-95 opacity-0 duration-300 max-h-[90vh] md:max-h-none overflow-y-auto" id="modalContent">
                 <div class="flex justify-between items-center mb-8 pb-4 border-b border-slate-100 ">
                     <div>
                         <h3 class="text-xl font-black text-navy-900 ">Kelola Wilayah Tugas</h3>
@@ -356,12 +356,12 @@
             if (modal.classList.contains('hidden')) {
                 modal.classList.remove('hidden');
                 setTimeout(() => {
-                    content.classList.remove('scale-95', 'opacity-0');
-                    content.classList.add('scale-100', 'opacity-100');
+                    content.classList.remove('translate-y-full', 'md:scale-95', 'opacity-0');
+                    content.classList.add('translate-y-0', 'md:scale-100', 'opacity-100');
                 }, 10);
             } else {
-                content.classList.remove('scale-100', 'opacity-100');
-                content.classList.add('scale-95', 'opacity-0');
+                content.classList.remove('translate-y-0', 'md:scale-100', 'opacity-100');
+                content.classList.add('translate-y-full', 'md:scale-95', 'opacity-0');
                 setTimeout(() => {
                     modal.classList.add('hidden');
                 }, 300);

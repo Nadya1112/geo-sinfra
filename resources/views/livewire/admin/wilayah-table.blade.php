@@ -35,7 +35,9 @@
     <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden mb-10 relative">
 
 
-        <div class="overflow-x-auto w-full custom-scrollbar"><table class="w-full text-left border-collapse">
+        <div class="overflow-x-auto w-full custom-scrollbar">
+            <!-- Table Layout (Desktop & Tablet) -->
+            <table class="w-full text-left border-collapse hidden md:table">
             <thead>
                 <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
                     <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest w-24 text-center">No.</th>
@@ -91,8 +93,44 @@
                 </tr>
                 @endforelse
             </tbody>
-        </table></div>
-        
+            </table>
+
+            <!-- Card Layout (Mobile) -->
+            <div class="flex flex-col md:hidden divide-y divide-slate-100">
+                @forelse($wilayah as $index => $wly)
+                <div class="p-4 hover:bg-slate-50 transition">
+                    <div class="flex items-start justify-between gap-3 mb-2">
+                        <div class="flex-1 min-w-0">
+                            <h5 class="text-sm font-black text-navy-900 uppercase leading-none truncate mb-1">{{ $wly->nama_kecamatan }}</h5>
+                            <p class="text-xs font-bold text-navy-900 leading-relaxed truncate">{{ $wly->nama_kelurahan ?? '-' }}</p>
+                        </div>
+                        <span class="px-3 py-1 bg-emerald-50 border border-emerald-100 text-emerald-600 rounded-xl text-[10px] font-black whitespace-nowrap shrink-0">
+                            {{ $wly->total_aset ?? 0 }} Titik
+                        </span>
+                    </div>
+                    
+                    <div class="flex items-center justify-end gap-2 mt-3 pt-3 border-t border-slate-100">
+                        <a href="{{ route('admin.wilayah.edit', $wly->id_kelurahan) }}" title="Ubah Wilayah" class="w-8 h-8 flex items-center justify-center bg-gold-500 hover:bg-gold-600 text-white rounded-lg text-xs font-black transition shadow-sm active:scale-95">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        
+                        <form action="{{ route('admin.wilayah.destroy', $wly->id_kelurahan) }}" method="POST" class="inline-block m-0 p-0" onsubmit="return confirm('PERINGATAN!\n\nApakah Anda yakin ingin menghapus data kelurahan {{ $wly->nama_kelurahan }}?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" title="Hapus Wilayah" class="w-8 h-8 flex items-center justify-center bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-xs font-black transition shadow-sm active:scale-95">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                @empty
+                <div class="p-8 text-center text-xs font-semibold text-gray-400">
+                    <i class="fas fa-folder-open text-2xl mb-2 block text-gray-300"></i>
+                    Belum ada data Master Wilayah yang ditambahkan.
+                </div>
+                @endforelse
+            </div>
+        </div>
         @if($show != 'all' && isset($wilayah) && $wilayah instanceof \Illuminate\Pagination\LengthAwarePaginator)
             <div class="px-8 py-4 border-t border-gray-50 bg-gray-50/10">
                 {{ $wilayah->links() }}

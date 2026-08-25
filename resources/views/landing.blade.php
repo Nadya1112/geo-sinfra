@@ -644,18 +644,18 @@
 
                 <!-- Custom Zoom Controls & GPS -->
                 <div class="absolute top-20 md:top-6 left-2 md:left-6 z-[9999] flex flex-col gap-2 pointer-events-auto">
-                    <button onclick="map.zoomIn()" class="w-10 h-10 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-gold-500 hover:bg-[#1e1b4b] transition-all group" title="Zoom In" aria-label="Zoom In Peta">
-                        <i class="fas fa-plus text-xs group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+                    <button onclick="map.zoomIn()" class="w-12 h-12 md:w-10 md:h-10 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-gold-500 hover:bg-[#1e1b4b] transition-all group" title="Zoom In" aria-label="Zoom In Peta">
+                        <i class="fas fa-plus text-sm md:text-xs group-hover:scale-110 transition-transform" aria-hidden="true"></i>
                     </button>
-                    <button onclick="map.zoomOut()" class="w-10 h-10 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-gold-500 hover:bg-[#1e1b4b] transition-all group" title="Zoom Out" aria-label="Zoom Out Peta">
-                        <i class="fas fa-minus text-xs group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+                    <button onclick="map.zoomOut()" class="w-12 h-12 md:w-10 md:h-10 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-gold-500 hover:bg-[#1e1b4b] transition-all group" title="Zoom Out" aria-label="Zoom Out Peta">
+                        <i class="fas fa-minus text-sm md:text-xs group-hover:scale-110 transition-transform" aria-hidden="true"></i>
                     </button>
-                    <button onclick="locateUser()" class="w-10 h-10 mt-2 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-blue-400 hover:bg-[#1e1b4b] transition-all group" title="Lokasi Saya" aria-label="Gunakan Lokasi Saat Ini">
-                        <i class="fas fa-crosshairs text-xs group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+                    <button onclick="locateUser()" class="w-12 h-12 md:w-10 md:h-10 mt-2 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-blue-400 hover:bg-[#1e1b4b] transition-all group" title="Lokasi Saya" aria-label="Gunakan Lokasi Saat Ini">
+                        <i class="fas fa-crosshairs text-sm md:text-xs group-hover:scale-110 transition-transform" aria-hidden="true"></i>
                     </button>
                     <!-- Heatmap Toggle Button -->
-                    <button id="toggle-heatmap" onclick="toggleHeatmap()" class="w-10 h-10 mt-2 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-[#1e1b4b] transition-all group relative" title="Aktifkan Heatmap Kerusakan" aria-label="Toggle Heatmap Kerusakan">
-                        <i class="fas fa-fire text-xs group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+                    <button id="toggle-heatmap" onclick="toggleHeatmap()" class="w-12 h-12 md:w-10 md:h-10 mt-2 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-[#1e1b4b] transition-all group relative" title="Aktifkan Heatmap Kerusakan" aria-label="Toggle Heatmap Kerusakan">
+                        <i class="fas fa-fire text-sm md:text-xs group-hover:scale-110 transition-transform" aria-hidden="true"></i>
                         <span id="heatmap-indicator" class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-[#0f0e2c] hidden"></span>
                     </button>
                 </div>
@@ -666,20 +666,34 @@
 
                 <!-- FLOATING UI WIDGETS -->
 
+                <!-- Mobile Filter FAB (Only on Mobile) -->
+                <button onclick="toggleMenu('filter-utama')" class="md:hidden absolute bottom-24 right-4 z-[9999] w-12 h-12 bg-[#0f0e2c]/95 backdrop-blur-xl border border-white/10 rounded-xl flex items-center justify-center text-gold-500 shadow-2xl pointer-events-auto">
+                    <i class="fas fa-filter text-lg"></i>
+                </button>
+
                 <!-- Top Right Dropdowns (Unified Filter) -->
-                <div class="absolute top-4 right-2 md:top-6 md:right-6 z-[9999] flex flex-col gap-2 w-[30%] md:w-48 pointer-events-auto">
-                    <!-- Main Filter Button -->
-                    <div class="relative w-full z-50">
-                        <button onclick="toggleMenu('filter-utama')" class="w-full bg-[#0f0e2c]/90 backdrop-blur-xl border border-white/10 text-white px-2 py-2 md:px-3.5 md:py-3 rounded-xl flex justify-between items-center shadow-2xl hover:bg-[#1e1b4b] transition-all">
-                            <div class="flex items-center gap-1 md:gap-2">
+                <div class="absolute top-0 right-0 md:top-6 md:right-6 z-[9999] flex flex-col gap-2 w-full md:w-48 pointer-events-none md:pointer-events-auto h-0 md:h-auto">
+                    <!-- Main Filter Button (Desktop) -->
+                    <div class="relative w-full z-50 hidden md:block">
+                        <button onclick="toggleMenu('filter-utama')" class="w-full bg-[#0f0e2c]/90 backdrop-blur-xl border border-white/10 text-white px-3.5 py-3 rounded-xl flex justify-between items-center shadow-2xl hover:bg-[#1e1b4b] transition-all">
+                            <div class="flex items-center gap-2">
                                 <i class="fas fa-filter text-xs text-gold-500"></i>
-                                <span class="text-xs md:text-xs font-bold uppercase tracking-wider hidden md:inline">Filter Peta</span>
-                                <span class="text-xs font-bold uppercase tracking-wider md:hidden">Filter</span>
+                                <span class="text-xs font-bold uppercase tracking-wider">Filter Peta</span>
                             </div>
-                            <i class="fas fa-chevron-down text-xs md:text-xs text-slate-400"></i>
+                            <i class="fas fa-chevron-down text-xs text-slate-400"></i>
                         </button>
+                    </div>
                         
-                        <div id="filter-utama" class="hidden absolute top-full mt-2 right-0 w-56 bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-xl p-3 shadow-2xl border border-white/10 max-h-[60vh] overflow-y-auto custom-scrollbar flex flex-col gap-3">
+                    <div id="filter-utama" class="hidden fixed inset-x-0 bottom-0 md:absolute md:top-full md:bottom-auto md:mt-2 md:right-0 w-full md:w-56 bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-t-[2.5rem] md:rounded-xl p-6 md:p-3 shadow-2xl border-t md:border border-white/10 max-h-[85vh] md:max-h-[60vh] overflow-y-auto custom-scrollbar flex-col gap-3 pointer-events-auto">
+                        
+                        <!-- Mobile Close Button & Handle -->
+                        <div class="w-12 h-1.5 bg-white/20 rounded-full mx-auto mb-4 md:hidden"></div>
+                        <div class="flex justify-between items-center mb-4 md:hidden">
+                            <h4 class="text-white font-black text-lg uppercase tracking-wider">Filter Peta</h4>
+                            <button onclick="toggleMenu('filter-utama')" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-all">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
                             
                             <!-- SECTION: Kategori Objek -->
                             <div>

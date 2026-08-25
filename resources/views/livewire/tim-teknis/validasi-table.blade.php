@@ -231,8 +231,8 @@
 
     <!-- Livewire Validation Modal -->
     @if($showModal)
-    <div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm transition-all duration-300">
-        <div class="bg-white dark:bg-[#1e1b4b] rounded-[2rem] shadow-2xl w-full max-w-md p-8 transform scale-100 opacity-100 transition-all duration-300">
+    <div class="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-slate-900/50 backdrop-blur-sm transition-all duration-300 p-0 md:p-4">
+        <div class="bg-white dark:bg-[#1e1b4b] rounded-t-[2rem] md:rounded-[2rem] shadow-2xl w-full max-w-md p-6 md:p-8 transform scale-100 opacity-100 transition-all duration-300">
             <div class="flex items-center justify-between mb-6">
                 @if($modalAction === 'Rejected')
                     <h3 class="text-xl font-black text-rose-600">Tolak Validasi</h3>

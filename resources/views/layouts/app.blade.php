@@ -103,7 +103,7 @@
         @endif
     @endif
 
-    <main class="flex-1 overflow-y-auto custom-scrollbar text-left flex flex-col h-screen">
+    <main class="flex-1 overflow-y-auto custom-scrollbar text-left flex flex-col h-screen pb-20 md:pb-0 relative z-10">
         @include('partials.header')
 
         <div class="p-4 md:p-8 flex-1">
