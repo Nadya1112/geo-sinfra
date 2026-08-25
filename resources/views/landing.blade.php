@@ -656,18 +656,12 @@
 
                 <!-- Custom Zoom Controls & GPS -->
                 <div class="absolute top-20 md:top-6 left-2 md:left-6 z-[9999] flex flex-col gap-2 pointer-events-auto">
-                    <button onclick="map.zoomIn()" class="w-12 h-12 md:w-10 md:h-10 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-gold-500 hover:bg-[#1e1b4b] transition-all group" title="Zoom In" aria-label="Zoom In Peta">
-                        <i class="fas fa-plus text-sm md:text-xs group-hover:scale-110 transition-transform" aria-hidden="true"></i>
-                    </button>
-                    <button onclick="map.zoomOut()" class="w-12 h-12 md:w-10 md:h-10 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-gold-500 hover:bg-[#1e1b4b] transition-all group" title="Zoom Out" aria-label="Zoom Out Peta">
-                        <i class="fas fa-minus text-sm md:text-xs group-hover:scale-110 transition-transform" aria-hidden="true"></i>
-                    </button>
-                    <button onclick="locateUser()" class="w-12 h-12 md:w-10 md:h-10 mt-2 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-blue-400 hover:bg-[#1e1b4b] transition-all group" title="Lokasi Saya" aria-label="Gunakan Lokasi Saat Ini">
-                        <i class="fas fa-crosshairs text-sm md:text-xs group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+                    <button onclick="locateUser()" class="w-9 h-9 mt-2 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-blue-400 hover:bg-[#1e1b4b] transition-all group" title="Lokasi Saya" aria-label="Gunakan Lokasi Saat Ini">
+                        <i class="fas fa-crosshairs text-[10px] group-hover:scale-110 transition-transform" aria-hidden="true"></i>
                     </button>
                     <!-- Heatmap Toggle Button -->
-                    <button id="toggle-heatmap" onclick="toggleHeatmap()" class="w-12 h-12 md:w-10 md:h-10 mt-2 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-[#1e1b4b] transition-all group relative" title="Aktifkan Heatmap Kerusakan" aria-label="Toggle Heatmap Kerusakan">
-                        <i class="fas fa-fire text-sm md:text-xs group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+                    <button id="toggle-heatmap" onclick="toggleHeatmap()" class="w-9 h-9 mt-2 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-[#1e1b4b] transition-all group relative" title="Aktifkan Heatmap Kerusakan" aria-label="Toggle Heatmap Kerusakan">
+                        <i class="fas fa-fire text-[10px] group-hover:scale-110 transition-transform" aria-hidden="true"></i>
                         <span id="heatmap-indicator" class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-[#0f0e2c] hidden"></span>
                     </button>
                 </div>
@@ -794,76 +788,63 @@
                                 </label>
                             </div>
 
+                            <!-- SECTION: Statistik Filter -->
+                            <div class="border-t border-white/10 pt-2 flex flex-col gap-1.5">
+                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest px-1 mb-1 block">Statistik Filter</span>
+                                <div class="bg-white/5 rounded-xl p-3 space-y-3">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Titik</span>
+                                        <span id="stat-total" class="bg-indigo-500/20 text-[#6366f1] px-2 py-0.5 rounded-lg text-xs font-black min-w-[45px] text-center border border-indigo-500/20">0</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-md shadow-emerald-500/20"></div>
+                                            <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Baik</span>
+                                        </div>
+                                        <span id="stat-baik" class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-lg text-xs font-black min-w-[45px] text-center border border-emerald-500/20">0</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-2 h-2 rounded-full shadow-md" style="background-color: #eab308; box-shadow: 0 4px 6px -1px rgba(234, 179, 8, 0.2);"></div>
+                                            <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Rusak Ringan</span>
+                                        </div>
+                                        <span id="stat-ringan" class="px-2 py-0.5 rounded-lg text-xs font-black min-w-[45px] text-center border" style="background-color: rgba(234, 179, 8, 0.2); color: #facc15; border-color: rgba(234, 179, 8, 0.2);">0</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-2 h-2 rounded-full bg-amber-500 shadow-md shadow-amber-500/20"></div>
+                                            <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Rusak Sedang</span>
+                                        </div>
+                                        <span id="stat-sedang" class="bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-lg text-xs font-black min-w-[45px] text-center border border-amber-500/20">0</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-2 h-2 rounded-full bg-red-500 shadow-md shadow-red-500/20"></div>
+                                            <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Rusak Berat</span>
+                                        </div>
+                                        <span id="stat-berat" class="bg-red-500/20 text-red-400 px-2 py-0.5 rounded-lg text-xs font-black min-w-[45px] text-center border border-red-500/20">0</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- SECTION: Gaya Basemap -->
+                            <div class="border-t border-white/10 pt-2 flex flex-col gap-1.5 pb-2">
+                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest px-1 mb-1 block">Gaya Basemap</span>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <button onclick="setBasemap('google')" class="basemap-btn bg-white/10 text-white px-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider hover:bg-white/20 transition-all text-center">Default</button>
+                                    <button onclick="setBasemap('satelit')" class="basemap-btn bg-[#0f0e2c] border border-white/5 text-slate-400 px-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-center">Satelit</button>
+                                    <button onclick="setBasemap('dark')" class="basemap-btn bg-[#0f0e2c] border border-white/5 text-slate-400 px-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-center">Gelap</button>
+                                    <button onclick="setBasemap('greyscale')" class="basemap-btn bg-[#0f0e2c] border border-white/5 text-slate-400 px-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-center">Abu-abu</button>
+                                    <button onclick="setBasemap('osm')" class="basemap-btn bg-[#0f0e2c] border border-white/5 text-slate-400 px-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-center">OSM</button>
+                                    <button onclick="setBasemap('banjir')" class="basemap-btn bg-[#0f0e2c] border border-white/5 text-blue-400 px-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-center">Banjir</button>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
-
-
 
                 <!-- Floating Lapor Button has been moved to header -->
-
-                <!-- Bottom Left Stats Box Widget (Glassmorphic Dark UI) -->
-                <div class="absolute bottom-8 left-2 md:bottom-6 md:left-6 z-[9999] bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl md:rounded-2xl p-1.5 text-white w-32 md:w-48 shadow-2xl border border-white/10 pointer-events-auto transition-all duration-300">
-                    <div class="flex justify-between items-center bg-white/5 p-1.5 md:p-2 rounded-lg md:rounded-xl cursor-pointer hover:bg-white/10 transition-all" onclick="document.getElementById('stats-body').classList.toggle('hidden'); document.getElementById('stats-chevron').classList.toggle('rotate-180');">
-                        <div class="flex items-center gap-2">
-                            <i class="fas fa-chart-pie text-gold-500 text-xs"></i>
-                            <span class="text-xs font-extrabold uppercase tracking-widest text-slate-200">Statistik Filter</span>
-                        </div>
-                        <i id="stats-chevron" class="fas fa-chevron-down text-slate-400 text-xs transition-transform duration-300"></i>
-                    </div>
-                    
-                    <div id="stats-body" class="space-y-3 pt-3 pb-2 px-2 hidden transition-all duration-300">
-                        <div class="flex justify-between items-center">
-                            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Titik</span>
-                            <span id="stat-total" class="bg-indigo-500/20 text-[#6366f1] px-2 py-0.5 rounded-lg text-xs font-black min-w-[45px] text-center border border-indigo-500/20">0</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center gap-2">
-                                <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-md shadow-emerald-500/20"></div>
-                                <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Baik</span>
-                            </div>
-                            <span id="stat-baik" class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-lg text-xs font-black min-w-[45px] text-center border border-emerald-500/20">0</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center gap-2">
-                                <div class="w-2 h-2 rounded-full shadow-md" style="background-color: #eab308; box-shadow: 0 4px 6px -1px rgba(234, 179, 8, 0.2);"></div>
-                                <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Rusak Ringan</span>
-                            </div>
-                            <span id="stat-ringan" class="px-2 py-0.5 rounded-lg text-xs font-black min-w-[45px] text-center border" style="background-color: rgba(234, 179, 8, 0.2); color: #facc15; border-color: rgba(234, 179, 8, 0.2);">0</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center gap-2">
-                                <div class="w-2 h-2 rounded-full bg-amber-500 shadow-md shadow-amber-500/20"></div>
-                                <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Rusak Sedang</span>
-                            </div>
-                            <span id="stat-sedang" class="bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-lg text-xs font-black min-w-[45px] text-center border border-amber-500/20">0</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center gap-2">
-                                <div class="w-2 h-2 rounded-full bg-red-500 shadow-md shadow-red-500/20"></div>
-                                <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Rusak Berat</span>
-                            </div>
-                            <span id="stat-berat" class="bg-red-500/20 text-red-400 px-2 py-0.5 rounded-lg text-xs font-black min-w-[45px] text-center border border-red-500/20">0</span>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- Bottom Right Basemap Selector (Circular Glassmorphic UI) -->
-                <div class="absolute bottom-6 right-6 z-[9999] pointer-events-auto">
-                    <button onclick="toggleMenu('layer-options')" class="w-14 h-14 bg-[#0f0e2c]/95 backdrop-blur-xl rounded-full flex items-center justify-center text-white/80 hover:text-gold-500 shadow-2xl border border-white/10 hover:scale-105 transition-all">
-                        <i class="fas fa-layer-group text-xl"></i>
-                    </button>
-                    <div id="layer-options" class="hidden absolute bottom-[4.5rem] right-0 w-48 bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-2xl p-2.5 shadow-2xl border border-white/10 flex flex-col gap-1.5">
-                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest px-3.5 mb-1">Gaya Basemap</span>
-                        <button onclick="setBasemap('google')" class="basemap-btn bg-white/10 text-white w-full px-4 py-3 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-white/20 transition-all text-left">Default</button>
-                        <button onclick="setBasemap('satelit')" class="basemap-btn text-slate-400 w-full px-4 py-3 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-left">Satelit</button>
-                        <button onclick="setBasemap('dark')" class="basemap-btn text-slate-400 w-full px-4 py-3 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-left">Gelap</button>
-                        <button onclick="setBasemap('greyscale')" class="basemap-btn text-slate-400 w-full px-4 py-3 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-left">Abu-abu</button>
-                        <button onclick="setBasemap('osm')" class="basemap-btn text-slate-400 w-full px-4 py-3 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-left">OSM</button>
-                        <button onclick="setBasemap('banjir')" class="basemap-btn text-slate-400 w-full px-4 py-3 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-left text-blue-400">Peta Banjir</button>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -961,28 +942,8 @@
         const osmMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' });
         const petaBanjirMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', { maxZoom: 17, attribution: 'Simulasi Peta Banjir &copy; <a href="https://opentopomap.org">OpenTopoMap</a>' });
         
-        // Inisialisasi MarkerCluster Group
-        const markersLayer = L.markerClusterGroup({
-            spiderfyOnMaxZoom: true,
-            showCoverageOnHover: false,
-            zoomToBoundsOnClick: true,
-            maxClusterRadius: 50,
-            iconCreateFunction: function(cluster) {
-                var count = cluster.getChildCount();
-                return L.divIcon({
-                    className: 'custom-kelurahan-summary-marker',
-                    html: `
-                        <div class="flex flex-col items-center justify-center cursor-pointer group">
-                            <div class="h-12 w-12 rounded-full bg-[#0f0e2c]/90 backdrop-blur-md border-2 border-gold-500 text-gold-500 font-black text-sm flex items-center justify-center shadow-2xl hover:scale-110 hover:bg-[#1e1b4b] hover:border-white transition-all">
-                                ${count}
-                            </div>
-                        </div>
-                    `,
-                    iconSize: [48, 48],
-                    iconAnchor: [24, 24]
-                });
-            }
-        }).addTo(map);
+        // Gunakan LayerGroup biasa agar tidak menampilkan summary/cluster angka
+        const markersLayer = L.layerGroup().addTo(map);
 
         const polygonsLayer = L.layerGroup().addTo(map);
 
