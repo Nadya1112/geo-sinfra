@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script>
         if (localStorage.getItem('geo-theme') === 'dark' || (!('geo-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -10,9 +13,6 @@
         }
     </script>
 
-    <meta charset="UTF-8">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cetak Laporan & Rekapitulasi | Tim Teknis SINFRA</title>
     <script src="https://cdn.tailwindcss.com"></script>
         <script>

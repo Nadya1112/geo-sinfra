@@ -15,19 +15,19 @@
         
         <nav class="space-y-1">
             <a href="{{ route('tim_teknis.dashboard') }}" 
-               class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 {{ request()->routeIs('tim_teknis.dashboard') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="Beranda">
+               class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 {{ request()->routeIs('tim_teknis.dashboard') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left whitespace-nowrap" title="Beranda">
                 <i class="fas fa-th-large text-lg lg:text-base {{ request()->routeIs('tim_teknis.dashboard') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 <span class="hidden lg:inline">Beranda</span>
             </a>
 
             <a href="{{ route('tim_teknis.monitoring') }}" 
-               class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 {{ request()->routeIs('tim_teknis.monitoring') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="WebGIS Eksekutif">
+               class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 {{ request()->routeIs('tim_teknis.monitoring') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left whitespace-nowrap" title="WebGIS Eksekutif">
                 <i class="fas fa-satellite-dish text-lg lg:text-base {{ request()->routeIs('tim_teknis.monitoring') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 <span class="hidden lg:inline">WebGIS Eksekutif</span>
             </a>
 
             <a href="{{ route('tim_teknis.prioritas') }}" 
-               class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 {{ request()->routeIs('tim_teknis.prioritas') ? 'bg-rose-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-rose-500/20' : 'text-slate-400 hover:text-rose-400 hover:bg-rose-500/10' }} rounded-xl text-sm font-semibold transition group text-left" title="Rekomendasi Prioritas">
+               class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 {{ request()->routeIs('tim_teknis.prioritas') ? 'bg-rose-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-rose-500/20' : 'text-slate-400 hover:text-rose-400 hover:bg-rose-500/10' }} rounded-xl text-sm font-semibold transition group text-left whitespace-nowrap" title="Rekomendasi Prioritas">
                 <i class="fas fa-bolt text-lg lg:text-base {{ request()->routeIs('tim_teknis.prioritas') ? 'animate-pulse' : 'text-rose-500 group-hover:text-rose-400' }}"></i> 
                 <span class="hidden lg:inline">Rekomendasi Prioritas</span>
             </a>
@@ -53,7 +53,7 @@
             </a>
 
             <a href="{{ route('tim_teknis.laporan')  }}" 
-               class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 {{ request()->routeIs('tim_teknis.laporan') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="Cetak Laporan">
+               class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 {{ request()->routeIs('tim_teknis.laporan') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left whitespace-nowrap" title="Cetak Laporan">
                 <i class="fas fa-print text-lg lg:text-base {{ request()->routeIs('tim_teknis.laporan') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 <span class="hidden lg:inline">Cetak Laporan</span>
             </a>
@@ -109,19 +109,19 @@
         <p class="text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-3 px-2">Menu Utama</p>
         <nav class="space-y-1">
             <a href="{{ route('tim_teknis.dashboard') }}" 
-               class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('tim_teknis.dashboard') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
+               class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('tim_teknis.dashboard') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left whitespace-nowrap">
                 <i class="fas fa-th-large text-sm {{ request()->routeIs('tim_teknis.dashboard') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 Beranda
             </a>
 
             <a href="{{ route('tim_teknis.monitoring') }}" 
-               class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('tim_teknis.monitoring') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
+               class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('tim_teknis.monitoring') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left whitespace-nowrap">
                 <i class="fas fa-satellite-dish text-sm {{ request()->routeIs('tim_teknis.monitoring') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 WebGIS Eksekutif
             </a>
 
             <a href="{{ route('tim_teknis.prioritas') }}" 
-               class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('tim_teknis.prioritas') ? 'bg-rose-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-rose-500/20' : 'text-slate-400 hover:text-rose-400 hover:bg-rose-500/10' }} rounded-xl text-sm font-semibold transition group text-left">
+               class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('tim_teknis.prioritas') ? 'bg-rose-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-rose-500/20' : 'text-slate-400 hover:text-rose-400 hover:bg-rose-500/10' }} rounded-xl text-sm font-semibold transition group text-left whitespace-nowrap">
                 <i class="fas fa-bolt text-sm {{ request()->routeIs('tim_teknis.prioritas') ? 'animate-pulse' : 'text-rose-500 group-hover:text-rose-400' }}"></i> 
                 Rekomendasi Prioritas
             </a>
@@ -140,7 +140,7 @@
             </a>
 
             <a href="{{ route('tim_teknis.laporan')  }}" 
-               class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('tim_teknis.laporan') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
+               class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('tim_teknis.laporan') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left whitespace-nowrap">
                 <i class="fas fa-print text-sm {{ request()->routeIs('tim_teknis.laporan') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 Cetak Laporan
             </a>

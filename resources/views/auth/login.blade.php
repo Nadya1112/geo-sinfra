@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script>
         if (localStorage.getItem('geo-theme') === 'dark' || (!('geo-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -10,8 +12,6 @@
         }
     </script>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Masuk | GEO-SINFRA</title>
     <meta name="description" content="Login ke sistem GEO-SINFRA - Sistem Pemetaan Infrastruktur Permukiman Kota Banjarmasin">
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">

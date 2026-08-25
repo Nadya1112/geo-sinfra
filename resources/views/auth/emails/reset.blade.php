@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-    <script>
-        if (localStorage.getItem('geo-theme') === 'dark' || (!('geo-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-    </script>
-
     <style>
         .button {
             background-color: #5c56e1;
@@ -30,6 +21,15 @@
     @media (min-width: 768px) { html { zoom: 0.9 !important; } }
     @media (max-width: 767px) { html { zoom: 0.5 !important; } }
 </style>
+
+    <script>
+        if (localStorage.getItem('geo-theme') === 'dark' || (!('geo-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+
 </head>
 <body style="font-family: 'Inter', sans-serif; line-height: 1.6; color: #333;">
     <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">

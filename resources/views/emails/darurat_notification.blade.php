@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-    <script>
-        if (localStorage.getItem('geo-theme') === 'dark' || (!('geo-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-    </script>
-
     <meta charset="utf-8">
     <title>Pemberitahuan Darurat Infrastruktur</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
@@ -33,6 +24,15 @@
     @media (min-width: 768px) { html { zoom: 0.9 !important; } }
     @media (max-width: 767px) { html { zoom: 0.5 !important; } }
 </style>
+
+    <script>
+        if (localStorage.getItem('geo-theme') === 'dark' || (!('geo-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+
 </head>
 <body>
     <div class="container">
