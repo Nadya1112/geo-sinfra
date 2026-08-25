@@ -157,14 +157,17 @@ trait AiProcessingTrait
 
         // 🌟 Smart Simulation: Tebak berdasarkan teks kondisi (NLP) dan sesuaikan skor keparahan
         if (preg_match('/(hancur|putus|total|amblas|parah|longsor|roboh|hilang)/', $kondisiRaw)) {
-            $simLabel = 'Rusak Berat';
+            $simLabel = 'Kondisi Rusak Berat';
             $simSkor = rand(65, 98) / 100; // 65% - 98% kerusakan
-        } elseif (preg_match('/(retak|lubang|goyang|rusak|tergenang|bolong|lapuk|ringan|sedikit)/', $kondisiRaw)) {
-            $simLabel = 'Rusak Sedang';
-            $simSkor = rand(35, 60) / 100; // 35% - 60% kerusakan
+        } elseif (preg_match('/(retak|lubang|goyang|rusak|tergenang|bolong|lapuk)/', $kondisiRaw)) {
+            $simLabel = 'Kondisi Rusak Sedang';
+            $simSkor = rand(40, 60) / 100; // 40% - 60% kerusakan
+        } elseif (preg_match('/(ringan|sedikit|minor|kusam)/', $kondisiRaw)) {
+            $simLabel = 'Kondisi Rusak Ringan';
+            $simSkor = rand(20, 39) / 100; // 20% - 39% kerusakan
         } else {
-            $simLabel = 'Baik';
-            $simSkor = rand(0, 30) / 100; // 0% - 30% kerusakan
+            $simLabel = 'Kondisi Baik';
+            $simSkor = rand(0, 19) / 100; // 0% - 19% kerusakan
         }
 
         // 🌟 Simulasikan Klasifikasi Jenis oleh AI secara pintar berdasarkan Material

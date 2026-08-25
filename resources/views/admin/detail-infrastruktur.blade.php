@@ -367,19 +367,26 @@
                                     $confidencePercent2 = round(($hasilCnn->skor_cnn ?? 0) * 100);
                                     $labelCnnDisplay2   = $hasilCnn->label_kondisi ?? 'Tidak Diketahui';
 
-                                    if (in_array($labelCnnRaw2, ['berat', 'rusak berat'])) {
+                                    if (in_array($labelCnnRaw2, ['kondisi rusak berat', 'rusak berat', 'berat'])) {
                                         $ov2Border = 'border-red-500/60';
                                         $ov2Bg     = 'bg-red-500/5';
                                         $ov2Corner = 'border-red-500';
                                         $ov2Badge  = 'bg-red-600';
                                         $ov2Icon   = 'fa-exclamation-triangle';
                                         $ov2Show   = true;
-                                    } elseif (in_array($labelCnnRaw2, ['sedang', 'rusak sedang'])) {
-                                        $ov2Border = 'border-amber-400/60';
-                                        $ov2Bg     = 'bg-amber-400/5';
-                                        $ov2Corner = 'border-amber-400';
-                                        $ov2Badge  = 'bg-amber-500';
+                                    } elseif (in_array($labelCnnRaw2, ['kondisi rusak sedang', 'rusak sedang', 'sedang'])) {
+                                        $ov2Border = 'border-orange-400/60';
+                                        $ov2Bg     = 'bg-orange-400/5';
+                                        $ov2Corner = 'border-orange-400';
+                                        $ov2Badge  = 'bg-orange-500';
                                         $ov2Icon   = 'fa-exclamation-circle';
+                                        $ov2Show   = true;
+                                    } elseif (in_array($labelCnnRaw2, ['kondisi rusak ringan', 'rusak ringan', 'ringan'])) {
+                                        $ov2Border = 'border-yellow-400/60';
+                                        $ov2Bg     = 'bg-yellow-400/5';
+                                        $ov2Corner = 'border-yellow-400';
+                                        $ov2Badge  = 'bg-yellow-500';
+                                        $ov2Icon   = 'fa-wrench';
                                         $ov2Show   = true;
                                     } else {
                                         $ov2Border = 'border-emerald-500/60';

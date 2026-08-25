@@ -89,9 +89,10 @@
                                   : 'text-emerald-500');
 
                         $kondisiMap = [
-                            'baik'         => 'bg-emerald-50 text-emerald-600 border border-emerald-200',
-                            'rusak sedang' => 'bg-orange-50  text-orange-600  border border-orange-200',
-                            'rusak berat'  => 'bg-red-50     text-red-600     border border-red-200',
+                            'kondisi baik'         => 'bg-emerald-50 text-emerald-600 border border-emerald-200',
+                            'kondisi rusak ringan' => 'bg-yellow-50  text-yellow-600  border border-yellow-200',
+                            'kondisi rusak sedang' => 'bg-orange-50  text-orange-600  border border-orange-200',
+                            'kondisi rusak berat'  => 'bg-red-50     text-red-600     border border-red-200',
                         ];
                         $labelColor = $kondisiMap[strtolower($labelAkhir ?? '')] ?? 'bg-slate-50 text-slate-500 border border-slate-200';
 

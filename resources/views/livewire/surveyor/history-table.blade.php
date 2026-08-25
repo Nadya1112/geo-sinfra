@@ -118,9 +118,10 @@
                                         @if($item->analisis)
                                             @php
                                                 $labelMap = [
-                                                    'Baik'        => ['bg' => 'bg-emerald-50', 'text' => 'text-emerald-600', 'icon' => 'fa-check-circle'],
-                                                    'Rusak Sedang'=> ['bg' => 'bg-orange-50',  'text' => 'text-orange-600',  'icon' => 'fa-hammer'],
-                                                    'Rusak Berat' => ['bg' => 'bg-red-50',     'text' => 'text-red-600',     'icon' => 'fa-exclamation-triangle'],
+                                                    'Kondisi Baik'         => ['bg' => 'bg-emerald-50', 'text' => 'text-emerald-600', 'icon' => 'fa-check-circle'],
+                                                    'Kondisi Rusak Ringan' => ['bg' => 'bg-yellow-50',  'text' => 'text-yellow-600',  'icon' => 'fa-wrench'],
+                                                    'Kondisi Rusak Sedang' => ['bg' => 'bg-orange-50',  'text' => 'text-orange-600',  'icon' => 'fa-hammer'],
+                                                    'Kondisi Rusak Berat'  => ['bg' => 'bg-red-50',     'text' => 'text-red-600',     'icon' => 'fa-exclamation-triangle'],
                                                 ];
                                                 $style = $labelMap[$item->analisis->label_prioritas] ?? ['bg' => 'bg-slate-50', 'text' => 'text-slate-600', 'icon' => 'fa-info-circle'];
                                             @endphp

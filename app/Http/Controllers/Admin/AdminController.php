@@ -35,9 +35,10 @@ class AdminController extends Controller
             ->select('analisis_ai.label_prioritas')
             ->get();
 
-        $rusakBerat = $aiData->where('label_prioritas', 'Rusak Berat')->count();
-        $rusakSedang = $aiData->where('label_prioritas', 'Rusak Sedang')->count();
-        $kondisiBaik = $aiData->where('label_prioritas', 'Baik')->count();
+        $rusakBerat = $aiData->where('label_prioritas', 'Kondisi Rusak Berat')->count();
+        $rusakSedang = $aiData->where('label_prioritas', 'Kondisi Rusak Sedang')->count();
+        $rusakRingan = $aiData->where('label_prioritas', 'Kondisi Rusak Ringan')->count();
+        $kondisiBaik = $aiData->where('label_prioritas', 'Kondisi Baik')->count();
         $totalDianalisis = $aiData->count();
         
         $persenDianalisis = $totalInfrastruktur > 0 ? round(($totalDianalisis / $totalInfrastruktur) * 100) : 0;
@@ -47,7 +48,7 @@ class AdminController extends Controller
             ->join('analisis_ai', 'infrastruktur.id_infrastruktur', '=', 'analisis_ai.id_infrastruktur')
             ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
             ->whereNull('infrastruktur.deleted_at')
-            ->where('analisis_ai.label_prioritas', 'Rusak Berat')
+            ->where('analisis_ai.label_prioritas', 'Kondisi Rusak Berat')
             ->orderBy('analisis_ai.skor_dt', 'desc')
             ->select('infrastruktur.id_infrastruktur', 'infrastruktur.nama_objek', 'kelurahan.nama_kelurahan')
             ->first();
@@ -58,7 +59,7 @@ class AdminController extends Controller
         $totalLaporanWarga = \App\Models\LaporanWarga::count();
 
         return view('admin.dashboard', compact(
-            'totalInfrastruktur', 'rusakBerat', 'rusakSedang', 'kondisiBaik', 
+            'totalInfrastruktur', 'rusakBerat', 'rusakSedang', 'rusakRingan', 'kondisiBaik', 
             'persenDianalisis', 'rekomendasi', 'totalUser', 'totalWilayah', 'totalLaporanWarga'
         ));
     }
@@ -114,10 +115,10 @@ class AdminController extends Controller
 
         // Data Kondisi BERDASARKAN HASIL AI (Agar lebih akurat untuk laporan TA)
         $hasilAi = DB::table('analisis_ai')->get();
-        $jumlahRusakBerat = $hasilAi->where('label_prioritas', 'Rusak Berat')->count();
-        $jumlahRusakSedang = $hasilAi->where('label_prioritas', 'Rusak Sedang')->count(); 
-        $jumlahRusakRingan = $hasilAi->where('label_prioritas', 'Rusak Ringan')->count();
-        $jumlahBaik = $hasilAi->where('label_prioritas', 'Baik')->count();
+        $jumlahRusakBerat = $hasilAi->where('label_prioritas', 'Kondisi Rusak Berat')->count();
+        $jumlahRusakSedang = $hasilAi->where('label_prioritas', 'Kondisi Rusak Sedang')->count(); 
+        $jumlahRusakRingan = $hasilAi->where('label_prioritas', 'Kondisi Rusak Ringan')->count();
+        $jumlahBaik = $hasilAi->where('label_prioritas', 'Kondisi Baik')->count();
         $jumlahBelumDianalisis = $jumlahInfrastruktur - ($jumlahRusakBerat + $jumlahRusakSedang + $jumlahRusakRingan + $jumlahBaik);
 
         $recentActivities = ActivityLog::with('user')

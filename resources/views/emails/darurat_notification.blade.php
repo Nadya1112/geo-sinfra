@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -54,7 +54,7 @@
                 </div>
                 <div class="row">
                     <div class="label">Status AI:</div>
-                    <div class="value" style="color: #be123c;">{{ $infrastruktur->analisis->label_prioritas ?? 'Rusak Berat' }}</div>
+                    <div class="value" style="color: #be123c;">{{ $infrastruktur->analisis->label_prioritas ?? 'Kondisi Rusak Berat' }}</div>
                 </div>
             </div>
 

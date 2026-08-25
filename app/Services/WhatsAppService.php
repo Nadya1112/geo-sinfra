@@ -25,7 +25,7 @@ class WhatsAppService
         $jenis = strtoupper($infra->jenis ?? '-');
         $lokasi = ($infra->kelurahan->nama_kelurahan ?? '-') . ', Kec. ' . ($infra->kelurahan->kecamatan->nama_kecamatan ?? '-');
         $pelapor = $infra->user->name ?? 'Sistem';
-        $statusAI = $infra->analisis->label_prioritas ?? 'Rusak Berat';
+        $statusAI = $infra->analisis->label_prioritas ?? 'Kondisi Rusak Berat';
         $link = route('tim_teknis.prioritas');
 
         $message = "🚨 *URGENT: PERINGATAN DARURAT INFRASTRUKTUR* 🚨\n\n";

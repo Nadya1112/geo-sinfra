@@ -101,26 +101,33 @@
                             <span class="group-hover:text-white transition-colors">Semua</span>
                             <span class="text-[7px] font-black text-blue-400 bg-blue-500/10 px-1.5 py-0.5 rounded border border-blue-400/20">{{ $dataMap->count() }}</span>
                         </button>
-                        <button onclick="handleConditionSelect('Baik')" class="w-full px-3 py-1.5 rounded-lg text-[7px] font-black uppercase tracking-wider text-gray-400 hover:bg-[#059669]/10 hover:text-[#059669] transition-all flex items-center justify-between group">
+                        <button onclick="handleConditionSelect('Kondisi Baik')" class="w-full px-3 py-1.5 rounded-lg text-[7px] font-black uppercase tracking-wider text-gray-400 hover:bg-[#059669]/10 hover:text-[#059669] transition-all flex items-center justify-between group">
                             <div class="flex items-center gap-1.5">
                                 <div class="w-1.5 h-1.5 bg-[#059669] rounded-full"></div>
-                                <span class="group-hover:text-[#059669] transition-colors">Baik</span>
+                                <span class="group-hover:text-[#059669] transition-colors">Kondisi Baik</span>
                             </div>
-                            <span class="text-[7px] font-black text-[#059669] bg-white/5 px-1.5 py-0.5 rounded border border-[#059669]/20">{{ $dataMap->filter(fn($i) => optional($i->analisis)->label_prioritas == 'Baik')->count() }}</span>
+                            <span class="text-[7px] font-black text-[#059669] bg-white/5 px-1.5 py-0.5 rounded border border-[#059669]/20">{{ $dataMap->filter(fn($i) => optional($i->analisis)->label_prioritas == 'Kondisi Baik')->count() }}</span>
                         </button>
-                        <button onclick="handleConditionSelect('Rusak Sedang')" class="w-full px-3 py-1.5 rounded-lg text-[7px] font-black uppercase tracking-wider text-gray-400 hover:bg-[#d97706]/10 hover:text-[#d97706] transition-all flex items-center justify-between group">
+                        <button onclick="handleConditionSelect('Kondisi Rusak Ringan')" class="w-full px-3 py-1.5 rounded-lg text-[7px] font-black uppercase tracking-wider text-gray-400 hover:bg-[#ca8a04]/10 hover:text-[#ca8a04] transition-all flex items-center justify-between group">
+                            <div class="flex items-center gap-1.5">
+                                <div class="w-1.5 h-1.5 bg-[#ca8a04] rounded-full"></div>
+                                <span class="group-hover:text-[#ca8a04] transition-colors">Kondisi Rusak Ringan</span>
+                            </div>
+                            <span class="text-[7px] font-black text-[#ca8a04] bg-white/5 px-1.5 py-0.5 rounded border border-[#ca8a04]/20">{{ $dataMap->filter(fn($i) => optional($i->analisis)->label_prioritas == 'Kondisi Rusak Ringan')->count() }}</span>
+                        </button>
+                        <button onclick="handleConditionSelect('Kondisi Rusak Sedang')" class="w-full px-3 py-1.5 rounded-lg text-[7px] font-black uppercase tracking-wider text-gray-400 hover:bg-[#d97706]/10 hover:text-[#d97706] transition-all flex items-center justify-between group">
                             <div class="flex items-center gap-1.5">
                                 <div class="w-1.5 h-1.5 bg-[#d97706] rounded-full"></div>
-                                <span class="group-hover:text-[#d97706] transition-colors">Sedang</span>
+                                <span class="group-hover:text-[#d97706] transition-colors">Kondisi Rusak Sedang</span>
                             </div>
-                            <span class="text-[7px] font-black text-[#d97706] bg-white/5 px-1.5 py-0.5 rounded border border-[#d97706]/20">{{ $dataMap->filter(fn($i) => optional($i->analisis)->label_prioritas == 'Rusak Sedang')->count() }}</span>
+                            <span class="text-[7px] font-black text-[#d97706] bg-white/5 px-1.5 py-0.5 rounded border border-[#d97706]/20">{{ $dataMap->filter(fn($i) => optional($i->analisis)->label_prioritas == 'Kondisi Rusak Sedang')->count() }}</span>
                         </button>
-                        <button onclick="handleConditionSelect('Rusak Berat')" class="w-full px-3 py-1.5 rounded-lg text-[7px] font-black uppercase tracking-wider text-gray-400 hover:bg-[#be123c]/10 hover:text-[#be123c] transition-all flex items-center justify-between group">
+                        <button onclick="handleConditionSelect('Kondisi Rusak Berat')" class="w-full px-3 py-1.5 rounded-lg text-[7px] font-black uppercase tracking-wider text-gray-400 hover:bg-[#be123c]/10 hover:text-[#be123c] transition-all flex items-center justify-between group">
                             <div class="flex items-center gap-1.5">
                                 <div class="w-1.5 h-1.5 bg-[#be123c] rounded-full"></div>
-                                <span class="group-hover:text-[#be123c] transition-colors">Berat</span>
+                                <span class="group-hover:text-[#be123c] transition-colors">Kondisi Rusak Berat</span>
                             </div>
-                            <span class="text-[7px] font-black text-[#be123c] bg-white/5 px-1.5 py-0.5 rounded border border-[#be123c]/20">{{ $dataMap->filter(fn($i) => optional($i->analisis)->label_prioritas == 'Rusak Berat')->count() }}</span>
+                            <span class="text-[7px] font-black text-[#be123c] bg-white/5 px-1.5 py-0.5 rounded border border-[#be123c]/20">{{ $dataMap->filter(fn($i) => optional($i->analisis)->label_prioritas == 'Kondisi Rusak Berat')->count() }}</span>
                         </button>
                     </div>
                 </div>
@@ -404,9 +411,11 @@
                 const prioritas = point.analisis && point.analisis.label_prioritas ? point.analisis.label_prioritas : (point.kondisi || 'Baik');
                 
                 let color = '#3b82f6';
-                if (prioritas === 'Baik') color = '#059669';
-                else if (prioritas === 'Rusak Sedang') color = '#d97706';
-                else if (prioritas === 'Rusak Berat') color = '#be123c';
+                if (prioritas === 'Kondisi Baik') color = '#059669';
+                else if (prioritas.includes('baik')) color = '#059669';
+                else if (prioritas === 'Kondisi Rusak Ringan' || prioritas.includes('ringan')) color = '#ca8a04';
+                else if (prioritas === 'Kondisi Rusak Sedang' || prioritas.includes('sedang')) color = '#d97706';
+                else if (prioritas === 'Kondisi Rusak Berat' || prioritas.includes('berat')) color = '#be123c';
                 
                 const icon = L.divIcon({
                     html: `
@@ -444,8 +453,9 @@
                 }
 
                 let conditionColor = 'bg-emerald-500 text-white shadow-emerald-500/20';
-                if (prioritas === 'Rusak Sedang') conditionColor = 'bg-amber-500 text-white shadow-amber-500/20';
-                if (prioritas === 'Rusak Berat') conditionColor = 'bg-red-500 text-white shadow-red-500/20';
+                if (prioritas.includes('rusak ringan')) conditionColor = 'bg-yellow-500 text-white shadow-yellow-500/20';
+                if (prioritas.includes('rusak sedang')) conditionColor = 'bg-amber-500 text-white shadow-amber-500/20';
+                if (prioritas.includes('rusak berat')) conditionColor = 'bg-red-500 text-white shadow-red-500/20';
 
                 const popupContent = `
                     <div class="p-1.5 min-w-[260px] font-sans">

@@ -281,9 +281,10 @@ Route::get('/', function () {
         $infraKec = $dataInfrastruktur->where('id_kecamatan', $kec->id_kecamatan);
         return [
             'nama' => $kec->nama_kecamatan,
-            'baik' => $infraKec->where('label_prioritas', 'Baik')->count(),
-            'rusak_sedang' => $infraKec->where('label_prioritas', 'Rusak Sedang')->count(),
-            'rusak_berat' => $infraKec->where('label_prioritas', 'Rusak Berat')->count(),
+            'baik' => $infraKec->where('label_prioritas', 'Kondisi Baik')->count(),
+            'rusak_ringan' => $infraKec->where('label_prioritas', 'Kondisi Rusak Ringan')->count(),
+            'rusak_sedang' => $infraKec->where('label_prioritas', 'Kondisi Rusak Sedang')->count(),
+            'rusak_berat' => $infraKec->where('label_prioritas', 'Kondisi Rusak Berat')->count(),
             'total' => $infraKec->count()
         ];
     })->sortByDesc('total');
@@ -293,9 +294,10 @@ Route::get('/', function () {
     if ($infraTanpaWilayah->count() > 0) {
         $kondisiWilayah->push([
             'nama' => 'Tanpa Wilayah',
-            'baik' => $infraTanpaWilayah->where('label_prioritas', 'Baik')->count(),
-            'rusak_sedang' => $infraTanpaWilayah->where('label_prioritas', 'Rusak Sedang')->count(),
-            'rusak_berat' => $infraTanpaWilayah->where('label_prioritas', 'Rusak Berat')->count(),
+            'baik' => $infraTanpaWilayah->where('label_prioritas', 'Kondisi Baik')->count(),
+            'rusak_ringan' => $infraTanpaWilayah->where('label_prioritas', 'Kondisi Rusak Ringan')->count(),
+            'rusak_sedang' => $infraTanpaWilayah->where('label_prioritas', 'Kondisi Rusak Sedang')->count(),
+            'rusak_berat' => $infraTanpaWilayah->where('label_prioritas', 'Kondisi Rusak Berat')->count(),
             'total' => $infraTanpaWilayah->count()
         ]);
     }

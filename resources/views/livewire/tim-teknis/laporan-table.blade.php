@@ -35,7 +35,24 @@
             </div>
         </div>
 
-        <!-- Kondisi Sedang -->
+        <!-- Kondisi Rusak Ringan -->
+        <div class="relative overflow-hidden rounded-[2rem] p-6 shadow-xl shadow-yellow-500/20 hover:-translate-y-1 transition-transform bg-gradient-to-br from-yellow-400 to-yellow-600">
+            <i class="fas fa-wrench absolute -right-4 -bottom-4 text-7xl text-white opacity-10"></i>
+            <div class="relative z-10 flex flex-col justify-between h-full">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-[0.8rem] bg-white/20 dark:bg-[#1e1b4b]/20 backdrop-blur-sm flex items-center justify-center text-white border border-white/10 shadow-inner">
+                        <i class="fas fa-wrench text-sm"></i>
+                    </div>
+                    <p class="text-xs font-black text-white uppercase tracking-widest mt-1">Kondisi Rusak Ringan</p>
+                </div>
+                <div class="flex items-end gap-2">
+                    <h3 class="text-4xl font-black text-white leading-none">{{ $totalRingan }}</h3>
+                    <span class="text-xs font-bold text-white/80 uppercase mb-1">Lokasi</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kondisi Rusak Sedang -->
         <div class="relative overflow-hidden rounded-[2rem] p-6 shadow-xl shadow-amber-500/20 hover:-translate-y-1 transition-transform bg-gradient-to-br from-amber-400 to-orange-500">
             <i class="fas fa-exclamation-triangle absolute -right-4 -bottom-4 text-7xl text-white opacity-10"></i>
             <div class="relative z-10 flex flex-col justify-between h-full">
@@ -43,7 +60,7 @@
                     <div class="w-10 h-10 rounded-[0.8rem] bg-white/20 dark:bg-[#1e1b4b]/20 backdrop-blur-sm flex items-center justify-center text-white border border-white/10 shadow-inner">
                         <i class="fas fa-exclamation text-sm"></i>
                     </div>
-                    <p class="text-xs font-black text-white uppercase tracking-widest mt-1">Kondisi Sedang</p>
+                    <p class="text-xs font-black text-white uppercase tracking-widest mt-1">Kondisi Rusak Sedang</p>
                 </div>
                 <div class="flex items-end gap-2">
                     <h3 class="text-4xl font-black text-white leading-none">{{ $totalSedang }}</h3>
@@ -52,7 +69,7 @@
             </div>
         </div>
 
-        <!-- Kondisi Berat -->
+        <!-- Kondisi Rusak Berat -->
         <div class="relative overflow-hidden rounded-[2rem] p-6 shadow-xl shadow-rose-500/20 hover:-translate-y-1 transition-transform bg-gradient-to-br from-rose-500 to-rose-600">
             <i class="fas fa-times-circle absolute -right-4 -bottom-4 text-7xl text-white opacity-10"></i>
             <div class="relative z-10 flex flex-col justify-between h-full">
@@ -60,7 +77,7 @@
                     <div class="w-10 h-10 rounded-[0.8rem] bg-white/20 dark:bg-[#1e1b4b]/20 backdrop-blur-sm flex items-center justify-center text-white border border-white/10 shadow-inner">
                         <i class="fas fa-times text-sm"></i>
                     </div>
-                    <p class="text-xs font-black text-white uppercase tracking-widest mt-1">Kondisi Berat</p>
+                    <p class="text-xs font-black text-white uppercase tracking-widest mt-1">Kondisi Rusak Berat</p>
                 </div>
                 <div class="flex items-end gap-2">
                     <h3 class="text-4xl font-black text-white leading-none">{{ $totalBerat }}</h3>
@@ -98,9 +115,10 @@
                 <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Kondisi</label>
                 <select wire:model.live="kondisi" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all cursor-pointer">
                     <option value="">Semua Kondisi</option>
-                    <option value="Baik">Baik</option>
-                    <option value="Rusak Sedang">Rusak Sedang</option>
-                    <option value="Rusak Berat">Rusak Berat</option>
+                    <option value="Kondisi Baik">Kondisi Baik</option>
+                    <option value="Kondisi Rusak Ringan">Kondisi Rusak Ringan</option>
+                    <option value="Kondisi Rusak Sedang">Kondisi Rusak Sedang</option>
+                    <option value="Kondisi Rusak Berat">Kondisi Rusak Berat</option>
                 </select>
             </div>
             <div class="w-full">
@@ -241,10 +259,12 @@
                                 $aiLabelLower = strtolower($aiLabel);
                                 
                                 $condClass = 'bg-slate-50 dark:bg-[#0f0e2c] text-slate-600 border-slate-200 dark:border-white/20';
-                                if (str_contains($aiLabelLower, 'berat')) {
+                                if (str_contains($aiLabelLower, 'rusak berat')) {
                                     $condClass = 'bg-[#be123c]/10 text-[#be123c] border-[#be123c]/30';
-                                } elseif (str_contains($aiLabelLower, 'sedang') || str_contains($aiLabelLower, 'ringan')) {
+                                } elseif (str_contains($aiLabelLower, 'rusak sedang')) {
                                     $condClass = 'bg-[#d97706]/10 text-[#d97706] border-[#d97706]/30';
+                                } elseif (str_contains($aiLabelLower, 'rusak ringan')) {
+                                    $condClass = 'bg-[#ca8a04]/10 text-[#ca8a04] border-[#ca8a04]/30';
                                 } elseif (str_contains($aiLabelLower, 'baik')) {
                                     $condClass = 'bg-[#059669]/10 text-[#059669] border-[#059669]/30';
                                 }

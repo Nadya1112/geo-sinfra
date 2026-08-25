@@ -138,6 +138,7 @@
             border: 1px solid;
         }
         .badge-baik   { background-color: #ecfdf5; color: #047857; border-color: #6ee7b7; }
+        .badge-ringan { background-color: #fefce8; color: #a16207; border-color: #fde047; }
         .badge-sedang { background-color: #fff7ed; color: #c2410c; border-color: #fdba74; }
         .badge-berat  { background-color: #fef2f2; color: #b91c1c; border-color: #fca5a5; }
 
@@ -294,9 +295,10 @@
     <div class="section-title purple">2. Hasil Analisis Hybrid AI (Visual CNN &amp; Decision Tree)</div>
     @php
         $badgeClass = match($inf->label_prioritas) {
-            'Rusak Berat'  => 'badge-berat',
-            'Rusak Sedang' => 'badge-sedang',
-            default        => 'badge-baik'
+            'Kondisi Rusak Berat'  => 'badge-berat',
+            'Kondisi Rusak Sedang' => 'badge-sedang',
+            'Kondisi Rusak Ringan' => 'badge-ringan',
+            default                => 'badge-baik'
         };
     @endphp
     <table>

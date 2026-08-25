@@ -105,13 +105,16 @@ class AnalisisAi extends Model
 
         // 6. Penentuan Label Akhir berdasarkan Total Skor Gabungan (Hybrid)
         if ($skor >= 65) {
-            $label = 'Rusak Berat';
+            $label = 'Kondisi Rusak Berat';
             $rekom = "PRIORITAS UTAMA: Deteksi gabungan visual & laporan lapangan menunjukkan kerusakan kritis. Segera rehabilitasi.";
-        } elseif ($skor >= 35) {
-            $label = 'Rusak Sedang';
+        } elseif ($skor >= 40) {
+            $label = 'Kondisi Rusak Sedang';
             $rekom = "Perlu pemeliharaan rutin dan perbaikan pada area terdampak visual.";
+        } elseif ($skor >= 20) {
+            $label = 'Kondisi Rusak Ringan';
+            $rekom = "Kerusakan minor, jadwalkan perbaikan ringan.";
         } else {
-            $label = 'Baik';
+            $label = 'Kondisi Baik';
             $rekom = "Kondisi terkendali, lakukan pemantauan berkala.";
         }
 

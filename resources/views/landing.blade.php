@@ -938,9 +938,11 @@
         // Custom Dot Marker styles
         const createIcon = (type, prioritas) => {
             let color = '#3b82f6';
-            if (prioritas === 'Baik') color = '#10b981';
-            else if (prioritas === 'Rusak Sedang') color = '#f59e0b';
-            else if (prioritas === 'Rusak Berat') color = '#ef4444';
+            const p = (prioritas || '').toLowerCase();
+            if (p.includes('baik')) color = '#10b981';
+            else if (p.includes('ringan')) color = '#ca8a04';
+            else if (p.includes('sedang')) color = '#f59e0b';
+            else if (p.includes('berat')) color = '#ef4444';
             
             return L.divIcon({
                 className: 'custom-dot-marker',
@@ -1095,9 +1097,10 @@
 
             // 2. Draw Aset Markers (Semua marker akan di-cluster otomatis)
             let countTotal = filteredInfra.length;
-            let countBaik = filteredInfra.filter(i => i.label_prioritas === 'Baik').length;
-            let countSedang = filteredInfra.filter(i => i.label_prioritas === 'Rusak Sedang').length;
-            let countBerat = filteredInfra.filter(i => i.label_prioritas === 'Rusak Berat').length;
+            let countBaik = filteredInfra.filter(i => (i.label_prioritas || '').toLowerCase().includes('baik')).length;
+            let countRingan = filteredInfra.filter(i => (i.label_prioritas || '').toLowerCase().includes('ringan')).length;
+            let countSedang = filteredInfra.filter(i => (i.label_prioritas || '').toLowerCase().includes('sedang')).length;
+            let countBerat = filteredInfra.filter(i => (i.label_prioritas || '').toLowerCase().includes('berat')).length;
 
             filteredInfra.forEach(item => {
                 const lat = parseFloat(item.latitude);
@@ -1140,10 +1143,11 @@
                     lastUpdateStr = dateObj.toLocaleDateString('id-ID', {day: '2-digit', month: 'long', year: 'numeric'});
                 }
 
-                // Determine condition color
                 let conditionColor = 'bg-emerald-500 text-white shadow-emerald-500/20';
-                if (item.label_prioritas === 'Rusak Sedang') conditionColor = 'bg-amber-500 text-white shadow-amber-500/20';
-                if (item.label_prioritas === 'Rusak Berat') conditionColor = 'bg-red-500 text-white shadow-red-500/20';
+                const lp = (item.label_prioritas || '').toLowerCase();
+                if (lp.includes('rusak ringan')) conditionColor = 'bg-yellow-500 text-white shadow-yellow-500/20';
+                if (lp.includes('rusak sedang')) conditionColor = 'bg-amber-500 text-white shadow-amber-500/20';
+                if (lp.includes('rusak berat')) conditionColor = 'bg-red-500 text-white shadow-red-500/20';
 
                 const popupContent = `
                     <div class="p-3 min-w-[260px] font-sans">
@@ -1315,8 +1319,10 @@
             
             // Tentukan status badge
             let conditionColor = 'bg-emerald-500 text-white';
-            if (item.label_prioritas === 'Rusak Sedang') conditionColor = 'bg-amber-500 text-white';
-            if (item.label_prioritas === 'Rusak Berat') conditionColor = 'bg-red-500 text-white';
+            const lp2 = (item.label_prioritas || '').toLowerCase();
+            if (lp2.includes('rusak ringan')) conditionColor = 'bg-yellow-500 text-white';
+            if (lp2.includes('rusak sedang')) conditionColor = 'bg-amber-500 text-white';
+            if (lp2.includes('rusak berat')) conditionColor = 'bg-red-500 text-white';
             
             const badge = document.getElementById('modal-badge');
             badge.className = `px-4 py-1.5 rounded-lg text-xs font-black uppercase tracking-wider shadow-md ${conditionColor}`;
@@ -1407,8 +1413,10 @@
                     if(isNaN(lat) || isNaN(lng)) return;
                     
                     let intensity = 0;
-                    if(item.label_prioritas === 'Rusak Berat') intensity = 1.0;
-                    else if(item.label_prioritas === 'Rusak Sedang') intensity = 0.5;
+                    const lp3 = (item.label_prioritas || '').toLowerCase();
+                    if(lp3.includes('rusak berat')) intensity = 1.0;
+                    else if(lp3.includes('rusak sedang')) intensity = 0.5;
+                    else if(lp3.includes('rusak ringan')) intensity = 0.25;
                     
                     if(intensity > 0) {
                         heatPoints.push([lat, lng, intensity]);

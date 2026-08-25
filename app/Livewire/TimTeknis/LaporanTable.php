@@ -93,10 +93,11 @@ class LaporanTable extends Component
         $allKecamatan = DB::table('kecamatan')->get();
         
         $totalLaporan = Infrastruktur::where('status_verifikasi', 'Verified')->count();
-        $totalBaik = Infrastruktur::whereHas('analisis', function($q) { $q->where('label_prioritas', 'Baik'); })->where('status_verifikasi', 'Verified')->count();
-        $totalSedang = Infrastruktur::whereHas('analisis', function($q) { $q->where('label_prioritas', 'Rusak Sedang'); })->where('status_verifikasi', 'Verified')->count();
-        $totalBerat = Infrastruktur::whereHas('analisis', function($q) { $q->where('label_prioritas', 'Rusak Berat'); })->where('status_verifikasi', 'Verified')->count();
+        $totalBaik = Infrastruktur::whereHas('analisis', function($q) { $q->where('label_prioritas', 'Kondisi Baik'); })->where('status_verifikasi', 'Verified')->count();
+        $totalRingan = Infrastruktur::whereHas('analisis', function($q) { $q->where('label_prioritas', 'Kondisi Rusak Ringan'); })->where('status_verifikasi', 'Verified')->count();
+        $totalSedang = Infrastruktur::whereHas('analisis', function($q) { $q->where('label_prioritas', 'Kondisi Rusak Sedang'); })->where('status_verifikasi', 'Verified')->count();
+        $totalBerat = Infrastruktur::whereHas('analisis', function($q) { $q->where('label_prioritas', 'Kondisi Rusak Berat'); })->where('status_verifikasi', 'Verified')->count();
 
-        return view('livewire.tim-teknis.laporan-table', compact('reports', 'allKecamatan', 'totalLaporan', 'totalBaik', 'totalSedang', 'totalBerat'));
+        return view('livewire.tim-teknis.laporan-table', compact('reports', 'allKecamatan', 'totalLaporan', 'totalBaik', 'totalRingan', 'totalSedang', 'totalBerat'));
     }
 }
