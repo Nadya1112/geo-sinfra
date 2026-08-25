@@ -4,42 +4,42 @@
 <div id="mobile-overlay" onclick="toggleMobileMenu()" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9998] hidden md:hidden transition-opacity duration-300 opacity-0"></div>
 
 {{-- Sidebar Desktop & Tablet --}}
-<aside class="w-20 lg:w-64 bg-[#0f0e2c] text-white flex-col hidden md:flex shadow-2xl z-20 text-left border-r border-white/5 shrink-0 h-screen transition-all duration-300">
+<aside-navy-900 dark:text-white flex-col hidden md:flex shadow-2xl z-20 text-left border-r border-slate-200 dark:border-white/5 shrink-0 h-screen transition-all duration-300">
     <div class="p-4 lg:p-6 flex-1 text-left overflow-y-auto custom-scrollbar">
         <a href="{{ route('admin.dashboard') }}" class="flex items-center justify-center lg:justify-start gap-3 mb-10 hover:opacity-85 transition-opacity group">
-            <div class="w-9 h-9 bg-white rounded-xl overflow-hidden shadow-lg shadow-navy-950/40 group-hover:scale-105 transition-all shrink-0">
+            <div class="w-9 h-9 bg-white rounded-xl overflow-hidden shadow-lg shadow-navy-950/10 dark:shadow-navy-950/40 group-hover:scale-105 transition-all shrink-0">
                 <img src="{{ asset('logo_geo-sinfra.png') }}" class="w-full h-full object-contain" alt="Logo">
             </div>
-            <span class="font-extrabold text-lg tracking-tighter uppercase text-white hidden lg:block">GEO-SINFRA</span>
+            <span class="font-extrabold text-lg tracking-tighter uppercase text-navy-900 dark:text-white hidden lg:block">GEO-SINFRA</span>
         </a>
         
         <nav class="space-y-1.5">
             <a href="{{ route('admin.dashboard') }}" 
-               class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3.5 {{ request()->routeIs('admin.dashboard') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="Beranda">
+               class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3.5 {{ request()->routeIs('admin.dashboard') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="Beranda">
                 <i class="fas fa-home text-lg lg:text-base {{ request()->routeIs('admin.dashboard') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 <span class="hidden lg:inline">Beranda</span>
             </a>
 
             <a href="{{ route('admin.users') }}" 
-               class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3.5 {{ request()->routeIs('admin.users*') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="Manajemen Pengguna">
+               class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3.5 {{ request()->routeIs('admin.users*') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="Manajemen Pengguna">
                 <i class="fas fa-users-cog text-lg lg:text-base {{ request()->routeIs('admin.users*') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 <span class="hidden lg:inline">Manajemen Pengguna</span>
             </a>
 
             <a href="{{ route('admin.wilayah') }}" 
-               class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3.5 {{ request()->routeIs('admin.wilayah*') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="Manajemen Wilayah">
+               class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3.5 {{ request()->routeIs('admin.wilayah*') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="Manajemen Wilayah">
                 <i class="fas fa-sitemap text-lg lg:text-base {{ request()->routeIs('admin.wilayah*') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 <span class="hidden lg:inline">Manajemen Wilayah</span>
             </a>
 
             <a href="{{ route('admin.infrastruktur') }}" 
-               class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3.5 {{ request()->routeIs('admin.infrastruktur*') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="Manajemen Infrastruktur">
+               class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3.5 {{ request()->routeIs('admin.infrastruktur*') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="Manajemen Infrastruktur">
                 <i class="fas fa-database text-lg lg:text-base {{ request()->routeIs('admin.infrastruktur*') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 <span class="hidden lg:inline">Manajemen Infrastruktur</span>
             </a>
 
             <a href="{{ route('admin.laporan-warga') }}" 
-               class="flex items-center justify-center lg:justify-between px-0 lg:px-4 py-3.5 {{ request()->routeIs('admin.laporan-warga*') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left relative w-full" title="Laporan Warga">
+               class="flex items-center justify-center lg:justify-between px-0 lg:px-4 py-3.5 {{ request()->routeIs('admin.laporan-warga*') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left relative w-full" title="Laporan Warga">
                 <div class="flex items-center gap-3">
                     <i class="fas fa-bullhorn text-lg lg:text-base {{ request()->routeIs('admin.laporan-warga*') ? '' : 'group-hover:text-gold-500' }}"></i> 
                     <span class="hidden lg:inline">Laporan Warga</span>
@@ -50,29 +50,29 @@
             </a>
 
             <a href="{{ route('admin.statistik') }}" 
-               class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3.5 {{ request()->routeIs('admin.statistik') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="Ringkasan Statistik">
+               class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3.5 {{ request()->routeIs('admin.statistik') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="Ringkasan Statistik">
                 <i class="fas fa-chart-bar text-lg lg:text-base {{ request()->routeIs('admin.statistik') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 <span class="hidden lg:inline">Ringkasan Statistik</span>
             </a>
 
             <a href="{{ route('admin.statistik.tahunan') }}" 
-               class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3.5 {{ request()->routeIs('admin.statistik.tahunan') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="Statistik Tahunan">
+               class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3.5 {{ request()->routeIs('admin.statistik.tahunan') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="Statistik Tahunan">
                 <i class="fas fa-calendar-alt text-lg lg:text-base {{ request()->routeIs('admin.statistik.tahunan') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 <span class="hidden lg:inline">Statistik Tahunan</span>
             </a>
 
-            <div class="pt-4 mt-2 border-t border-white/5 flex flex-col items-center lg:items-stretch">
-                <p class="text-xs font-black text-slate-500 uppercase tracking-[0.2em] mb-3 px-2 hidden lg:block">Sistem & Keamanan</p>
+            <div class="pt-4 mt-2 border-t border-slate-200 dark:border-white/5 flex flex-col items-center lg:items-stretch">
+                <p class="text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-3 px-2 hidden lg:block">Sistem & Keamanan</p>
                 <i class="fas fa-ellipsis-h text-slate-600 mb-3 block lg:hidden" title="Sistem & Keamanan"></i>
                 <a href="{{ route('admin.activity') }}" 
-                   class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3.5 {{ request()->routeIs('admin.activity') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left w-full" title="Log Aktivitas">
+                   class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3.5 {{ request()->routeIs('admin.activity') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left w-full" title="Log Aktivitas">
                     <i class="fas fa-shield-alt text-lg lg:text-base {{ request()->routeIs('admin.activity') ? '' : 'group-hover:text-gold-500' }}"></i> 
                     <span class="hidden lg:inline">Log Aktivitas</span>
                 </a>
                 
                 <!-- Simulasi AI -->
                 <a href="{{ route('admin.simulasi-ai') }}" 
-                   class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3.5 {{ request()->routeIs('admin.simulasi-ai') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left mt-1 w-full" title="Simulasi Model AI">
+                   class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3.5 {{ request()->routeIs('admin.simulasi-ai') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left mt-1 w-full" title="Simulasi Model AI">
                     <i class="fas fa-robot text-lg lg:text-base {{ request()->routeIs('admin.simulasi-ai') ? '' : 'group-hover:text-gold-500' }}"></i> 
                     <span class="hidden lg:inline">Simulasi Model AI</span>
                 </a>
@@ -80,15 +80,15 @@
         </nav>
     </div>
 
-    <div class="p-4 lg:p-6 border-t border-white/5 text-center lg:text-left bg-navy-950/20 relative flex flex-col items-center lg:items-stretch">
-        <a href="{{ route('admin.settings') }}" class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 mb-2 {{ request()->routeIs('admin.settings') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-bold transition group w-full" title="Pengaturan">
+    <div class="p-4 lg:p-6 border-t border-slate-200 dark:border-white/5 text-center lg:text-left bg-slate-50 dark:bg-navy-950/20 relative flex flex-col items-center lg:items-stretch">
+        <a href="{{ route('admin.settings') }}" class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 mb-2 {{ request()->routeIs('admin.settings') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-bold transition group w-full" title="Pengaturan">
             <i class="fas fa-cog text-lg lg:text-base group-hover:text-gold-500 transition-colors"></i>
             <span class="hidden lg:inline">Pengaturan</span>
         </a>
 
         <form method="POST" action="{{ route('logout') }}" class="w-full">
             @csrf
-            <button type="submit" class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 text-red-400 hover:text-red-300 w-full text-left text-sm font-bold transition group hover:bg-red-500/10 rounded-xl" title="Keluar">
+            <button type="submit" class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300-red-50 dark:hover:bg-red-500/10 rounded-xl" title="Keluar">
                 <i class="fas fa-sign-out-alt text-lg lg:text-base group-hover:-translate-x-1 transition-transform"></i> 
                 <span class="hidden lg:inline">Keluar</span>
             </button>
@@ -97,50 +97,50 @@
 </aside>
 
 {{-- Sidebar Mobile (Slide Drawer) --}}
-<aside id="mobile-sidebar" class="fixed top-0 left-0 w-72 h-full bg-[#0f0e2c] text-white flex flex-col z-[9999] shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+<aside-navy-900 dark:text-white flex flex-col z-[9999] shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden">
     <div class="p-6 flex-1 text-left overflow-y-auto">
         <div class="flex items-center justify-between mb-8">
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 hover:opacity-85 transition-opacity group">
-                <div class="w-9 h-9 bg-white rounded-xl overflow-hidden shadow-lg shadow-navy-950/40">
+                <div class="w-9 h-9 bg-white rounded-xl overflow-hidden shadow-lg shadow-navy-950/10 dark:shadow-navy-950/40">
                     <img src="{{ asset('logo_geo-sinfra.png') }}" class="w-full h-full object-contain" alt="Logo">
                 </div>
                 <span class="font-extrabold text-lg tracking-tighter uppercase text-white">GEO-SINFRA</span>
             </a>
-            <button onclick="toggleMobileMenu()" class="w-8 h-8 text-slate-400 hover:text-white rounded-lg flex items-center justify-center hover:bg-white/10 transition-all">
+            <button onclick="toggleMobileMenu()" class="w-8 h-8 text-slate-500 hover:text-navy-900 dark:text-slate-400 dark:hover:text-white rounded-lg flex items-center justify-center hover:bg-white/10 transition-all">
                 <i class="fas fa-times text-sm"></i>
             </button>
         </div>
 
 
         
-        <p class="text-xs font-black text-slate-500 uppercase tracking-[0.2em] mb-3 px-2">Menu Utama</p>
+        <p class="text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-3 px-2">Menu Utama</p>
         <nav class="space-y-1.5">
             <a href="{{ route('admin.dashboard') }}" 
-               class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.dashboard') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
+               class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.dashboard') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
                 <i class="fas fa-home {{ request()->routeIs('admin.dashboard') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 Beranda
             </a>
 
             <a href="{{ route('admin.users') }}" 
-               class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.users*') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
+               class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.users*') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
                 <i class="fas fa-users-cog {{ request()->routeIs('admin.users*') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 Manajemen Pengguna
             </a>
 
             <a href="{{ route('admin.wilayah') }}" 
-               class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.wilayah*') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
+               class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.wilayah*') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
                 <i class="fas fa-sitemap {{ request()->routeIs('admin.wilayah*') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 Manajemen Wilayah
             </a>
 
             <a href="{{ route('admin.infrastruktur') }}" 
-               class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.infrastruktur*') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
+               class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.infrastruktur*') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
                 <i class="fas fa-database {{ request()->routeIs('admin.infrastruktur*') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 Manajemen Infrastruktur
             </a>
 
             <a href="{{ route('admin.laporan-warga') }}" 
-               class="flex items-center justify-between px-4 py-3.5 {{ request()->routeIs('admin.laporan-warga*') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left relative w-full">
+               class="flex items-center justify-between px-4 py-3.5 {{ request()->routeIs('admin.laporan-warga*') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left relative w-full">
                 <div class="flex items-center gap-3">
                     <i class="fas fa-bullhorn {{ request()->routeIs('admin.laporan-warga*') ? '' : 'group-hover:text-gold-500' }}"></i> 
                     <span>Laporan Warga</span>
@@ -151,28 +151,28 @@
             </a>
 
             <a href="{{ route('admin.statistik') }}" 
-               class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.statistik') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
+               class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.statistik') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
                 <i class="fas fa-chart-bar {{ request()->routeIs('admin.statistik') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 Ringkasan Statistik
             </a>
 
             <a href="{{ route('admin.statistik.tahunan') }}" 
-               class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.statistik.tahunan') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
+               class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.statistik.tahunan') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
                 <i class="fas fa-calendar-alt {{ request()->routeIs('admin.statistik.tahunan') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 Statistik Tahunan
             </a>
 
-            <div class="pt-4 mt-2 border-t border-white/5">
-                <p class="text-xs font-black text-slate-500 uppercase tracking-[0.2em] mb-3 px-2">Sistem & Keamanan</p>
+            <div class="pt-4 mt-2 border-t border-slate-200 dark:border-white/5">
+                <p class="text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-3 px-2">Sistem & Keamanan</p>
                 <a href="{{ route('admin.activity') }}" 
-                   class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.activity') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
+                   class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.activity') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
                     <i class="fas fa-shield-alt {{ request()->routeIs('admin.activity') ? '' : 'group-hover:text-gold-500' }}"></i> 
                     Log Aktivitas
                 </a>
                 
                 <!-- Simulasi AI -->
                 <a href="{{ route('admin.simulasi-ai') }}" 
-                   class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.simulasi-ai') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left mt-1">
+                   class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('admin.simulasi-ai') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left mt-1">
                     <i class="fas fa-robot {{ request()->routeIs('admin.simulasi-ai') ? '' : 'group-hover:text-gold-500' }}"></i> 
                     Simulasi Model AI
                 </a>
@@ -180,17 +180,17 @@
         </nav>
     </div>
 
-    <div class="p-6 border-t border-white/5 text-left bg-navy-950/20 relative">
+    <div class="p-6 border-t border-slate-200 dark:border-white/5 text-left bg-slate-50 dark:bg-navy-950/20 relative">
 
 
-        <a href="{{ route('admin.settings') }}" class="flex items-center gap-3 px-4 py-3.5 mb-2 {{ request()->routeIs('admin.settings') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} rounded-xl text-sm font-bold transition group">
+        <a href="{{ route('admin.settings') }}" class="flex items-center gap-3 px-4 py-3.5 mb-2 {{ request()->routeIs('admin.settings') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-bold transition group">
             <i class="fas fa-cog group-hover:text-gold-500 transition-colors"></i>
             <span>Pengaturan</span>
         </a>
 
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button type="submit" class="flex items-center gap-3 px-4 py-3.5 text-red-400 hover:text-red-300 w-full text-left text-sm font-bold transition group rounded-xl hover:bg-red-500/10">
+            <button type="submit" class="flex items-center gap-3 px-4 py-3.5 text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300-red-50 dark:hover:bg-red-500/10">
                 <i class="fas fa-sign-out-alt group-hover:-translate-x-1 transition-transform"></i> 
                 Keluar
             </button>
@@ -199,18 +199,18 @@
 </aside>
 
 <!-- Bottom Navigation Bar (Mobile Only) -->
-<nav class="md:hidden fixed bottom-0 left-0 w-full bg-[#0f0e2c] border-t border-white/10 z-[9990] flex justify-around items-center px-2 py-3 pb-safe shadow-[0_-10px_30px_rgba(0,0,0,0.3)]">
-    <a href="{{ route('admin.dashboard') }}" class="flex flex-col items-center gap-1.5 p-2 {{ request()->routeIs('admin.dashboard') ? 'text-gold-500' : 'text-slate-400 hover:text-white' }} transition-colors">
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white dark:bg-white dark:bg-[#0f0e2c] border-t border-slate-200 dark:border-white/10 z-[9990] flex justify-around items-center px-2 py-3 pb-safe shadow-[0_-10px_30px_rgba(0,0,0,0.3)]">
+    <a href="{{ route('admin.dashboard') }}" class="flex flex-col items-center gap-1.5 p-2 {{ request()->routeIs('admin.dashboard') ? 'text-gold-500' : 'text-slate-500 hover:text-navy-900 dark:text-slate-400 dark:hover:text-white' }} transition-colors">
         <i class="fas fa-home text-xl {{ request()->routeIs('admin.dashboard') ? '-translate-y-1' : '' }} transition-transform"></i>
         <span class="text-[10px] font-bold uppercase tracking-wider">Beranda</span>
     </a>
     
-    <a href="{{ route('admin.infrastruktur') }}" class="flex flex-col items-center gap-1.5 p-2 {{ request()->routeIs('admin.infrastruktur*') ? 'text-gold-500' : 'text-slate-400 hover:text-white' }} transition-colors">
+    <a href="{{ route('admin.infrastruktur') }}" class="flex flex-col items-center gap-1.5 p-2 {{ request()->routeIs('admin.infrastruktur*') ? 'text-gold-500' : 'text-slate-500 hover:text-navy-900 dark:text-slate-400 dark:hover:text-white' }} transition-colors">
         <i class="fas fa-database text-xl {{ request()->routeIs('admin.infrastruktur*') ? '-translate-y-1' : '' }} transition-transform"></i>
         <span class="text-[10px] font-bold uppercase tracking-wider">Aset</span>
     </a>
     
-    <a href="{{ route('admin.laporan-warga') }}" class="flex flex-col items-center gap-1.5 p-2 {{ request()->routeIs('admin.laporan-warga*') ? 'text-gold-500' : 'text-slate-400 hover:text-white' }} transition-colors relative">
+    <a href="{{ route('admin.laporan-warga') }}" class="flex flex-col items-center gap-1.5 p-2 {{ request()->routeIs('admin.laporan-warga*') ? 'text-gold-500' : 'text-slate-500 hover:text-navy-900 dark:text-slate-400 dark:hover:text-white' }} transition-colors relative">
         <i class="fas fa-bullhorn text-xl {{ request()->routeIs('admin.laporan-warga*') ? '-translate-y-1' : '' }} transition-transform"></i>
         <span class="text-[10px] font-bold uppercase tracking-wider">Laporan</span>
         @if(isset($laporanMenungguCount) && $laporanMenungguCount > 0)
@@ -218,7 +218,7 @@
         @endif
     </a>
     
-    <button onclick="toggleMobileMenu()" class="flex flex-col items-center gap-1.5 p-2 text-slate-400 hover:text-white transition-colors relative" id="mobile-menu-btn">
+    <button onclick="toggleMobileMenu()" class="flex flex-col items-center gap-1.5 p-2 text-slate-500 hover:text-navy-900 dark:text-slate-400 dark:hover:text-white transition-colors relative" id="mobile-menu-btn">
         <i class="fas fa-bars text-xl transition-transform" id="menu-icon"></i>
         <span class="text-[10px] font-bold uppercase tracking-wider">Lainnya</span>
     </button>
