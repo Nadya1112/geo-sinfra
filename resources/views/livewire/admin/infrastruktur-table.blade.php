@@ -1,14 +1,14 @@
 <div>
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
         <div>
-            <h4 class="font-extrabold text-lg text-navy-900">Data Manajemen Infrastruktur</h4>
+            <h4 class="font-extrabold text-lg text-navy-900 dark:text-white">Data Manajemen Infrastruktur</h4>
             <p class="text-xs text-slate-400 font-semibold mt-0.5">Kelola seluruh aset infrastruktur permukiman</p>
         </div>
 
         <div class="flex flex-col lg:flex-row items-center gap-3 w-full lg:w-auto">
             {{-- Filter & Search --}}
             <div class="flex items-center flex-1 min-w-0 w-full lg:w-[280px] xl:w-[400px]">
-                <select wire:model.live="show" class="pl-3 pr-7 py-2.5 bg-white border border-slate-100 border-r-0 rounded-l-2xl text-[10px] md:text-xs font-bold text-navy-900 focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm shrink-0">
+                <select wire:model.live="show" class="pl-3 pr-7 py-2.5 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 border-r-0 rounded-l-2xl text-[10px] md:text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm shrink-0">
                     <option value="10">10 Data</option>
                     <option value="all">Semua Data</option>
                 </select>
@@ -16,12 +16,12 @@
                     <input type="text" 
                         wire:model.live.debounce.300ms="search"
                         placeholder="Cari infrastruktur..." 
-                        class="w-full pl-3 pr-10 py-2.5 bg-white border border-slate-100 text-[10px] md:text-xs font-semibold focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm">
+                        class="w-full pl-3 pr-10 py-2.5 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 text-[10px] md:text-xs font-semibold focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm">
                     <div wire:loading wire:target="search" class="absolute right-3 top-1/2 -translate-y-1/2">
                         <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs"></i>
                     </div>
                 </div>
-                <button type="button" class="bg-white border-y border-r border-slate-100 px-4 md:px-5 py-2.5 rounded-r-2xl hover:bg-slate-50 transition-all shadow-sm group shrink-0 relative">
+                <button type="button" class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border-y border-r border-slate-100 dark:border-white/10 px-4 md:px-5 py-2.5 rounded-r-2xl hover:bg-slate-50 dark:hover:bg-white/5 dark:bg-navy-950/50 transition-all shadow-sm group shrink-0 relative">
                     <i class="fas fa-search text-slate-400 group-hover:text-gold-500 transition-colors text-xs" wire:loading.remove wire:target="search"></i>
                     <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs hidden" wire:loading.inline-block wire:target="search"></i>
                 </button>
@@ -54,7 +54,7 @@
     @endif
 
     {{-- ── Tabel ── --}}
-    <div class="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden mb-10 relative">
+    <div class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl rounded-3xl border border-slate-100 dark:border-white/10 shadow-sm overflow-hidden mb-10 relative">
 
         <div class="overflow-x-auto custom-scrollbar">
             <!-- Table Layout (Desktop & Tablet) -->
@@ -70,7 +70,7 @@
                         <th class="px-4 py-3 text-xs font-black text-gold-500 tracking-widest text-center">AKSI</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-50">
+                <tbody class="divide-y divide-slate-50 dark:divide-white/5">
                     @forelse($infrastruktur as $index => $inf)
                     @php
                         $dt = (object) [
@@ -95,7 +95,7 @@
                             'kondisi rusak sedang' => 'bg-orange-50  text-orange-600  border border-orange-200',
                             'kondisi rusak berat'  => 'bg-red-50     text-red-600     border border-red-200',
                         ];
-                        $labelColor = $kondisiMap[strtolower($labelAkhir ?? '')] ?? 'bg-slate-50 text-slate-500 border border-slate-200';
+                        $labelColor = $kondisiMap[strtolower($labelAkhir ?? '')] ?? 'bg-slate-50 dark:bg-navy-950/50 text-slate-500 dark:text-slate-400 border border-slate-200';
 
                         $nomor = $show == 'all'
                             ? $index + 1
@@ -111,7 +111,7 @@
 
                         {{-- Foto --}}
                         <td class="hidden md:table-cell px-4 py-3 text-center">
-                            <div class="w-14 h-14 rounded-2xl overflow-hidden border-2 border-slate-100 shadow-sm mx-auto bg-slate-100 flex items-center justify-center">
+                            <div class="w-14 h-14 rounded-2xl overflow-hidden border-2 border-slate-100 dark:border-white/10 shadow-sm mx-auto bg-slate-100 dark:bg-navy-950/50 flex items-center justify-center">
                                 @if($inf->foto_terbaru)
                                     @php $cleanPath = str_replace('\\', '/', $inf->foto_terbaru); @endphp
                                     <img src="{{ asset('storage/' . (str_contains($cleanPath, 'infrastruktur/') ? $cleanPath : 'infrastruktur/' . $cleanPath)) }}"
@@ -124,7 +124,7 @@
 
                         {{-- Nama & Jenis --}}
                         <td class="px-4 py-3 max-w-[200px]">
-                            <p class="text-sm font-black text-navy-900 leading-snug truncate">{{ $inf->nama_objek ?? $inf->nama_infrastruktur }}</p>
+                            <p class="text-sm font-black text-navy-900 dark:text-white leading-snug truncate">{{ $inf->nama_objek ?? $inf->nama_infrastruktur }}</p>
                             <span class="inline-block mt-1 px-2 py-0.5 bg-gold-500/10 text-gold-600 text-xs font-black rounded-md tracking-wider uppercase">
                                 {{ ucfirst($inf->jenis) }}
                             </span>
@@ -136,8 +136,8 @@
                             <div class="flex items-start gap-2">
                                 <i class="fas fa-map-marker-alt text-gold-500 text-xs mt-0.5 shrink-0"></i>
                                 <div>
-                                    <p class="text-xs font-black text-navy-900 leading-snug">{{ $inf->nama_kecamatan ?? '-' }}</p>
-                                    <p class="text-xs text-slate-500 font-semibold mt-0.5">Kel. {{ $inf->nama_kelurahan ?? '-' }}</p>
+                                    <p class="text-xs font-black text-navy-900 dark:text-white leading-snug">{{ $inf->nama_kecamatan ?? '-' }}</p>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold mt-0.5">Kel. {{ $inf->nama_kelurahan ?? '-' }}</p>
                                 </div>
                             </div>
                         </td>
@@ -154,8 +154,8 @@
                                 </div>
                                 <div class="flex items-center gap-2 w-full">
                                     <span class="shrink-0 px-1.5 py-0.5 bg-gold-500 text-white rounded text-[7px] font-black tracking-wider">DT</span>
-                                    <span class="text-xs font-bold text-slate-500 leading-none">
-                                        Skor: <span class="text-navy-900 font-black">{{ $dt->skor_dt ?? '0' }}</span>/100
+                                    <span class="text-xs font-bold text-slate-500 dark:text-slate-400 leading-none">
+                                        Skor: <span class="text-navy-900 dark:text-white font-black">{{ $dt->skor_dt ?? '0' }}</span>/100
                                     </span>
                                 </div>
                             </div>
@@ -174,7 +174,7 @@
 
                                 {{-- Verifikasi --}}
                                 @if(($inf->status_verifikasi ?? 'Pending') == 'Verified')
-                                    <span title="Terverifikasi" class="w-8 h-8 flex items-center justify-center bg-slate-100 text-slate-400 rounded-lg text-xs font-black border border-slate-200 cursor-not-allowed">
+                                    <span title="Terverifikasi" class="w-8 h-8 flex items-center justify-center bg-slate-100 dark:bg-navy-950/50 text-slate-400 rounded-lg text-xs font-black border border-slate-200 dark:border-white/10 cursor-not-allowed">
                                         <i class="fas fa-check-double"></i>
                                     </span>
                                 @else
@@ -230,7 +230,7 @@
             </table>
 
             <!-- Card Layout (Mobile) -->
-            <div class="flex flex-col md:hidden divide-y divide-slate-100">
+            <div class="flex flex-col md:hidden divide-y divide-slate-100 dark:divide-white/10">
                 @forelse($infrastruktur as $index => $inf)
                 @php
                     $dt = (object) [
@@ -255,13 +255,13 @@
                         'kondisi rusak sedang' => 'bg-orange-50  text-orange-600  border border-orange-200',
                         'kondisi rusak berat'  => 'bg-red-50     text-red-600     border border-red-200',
                     ];
-                    $labelColor = $kondisiMap[strtolower($labelAkhir ?? '')] ?? 'bg-slate-50 text-slate-500 border border-slate-200';
+                    $labelColor = $kondisiMap[strtolower($labelAkhir ?? '')] ?? 'bg-slate-50 dark:bg-navy-950/50 text-slate-500 dark:text-slate-400 border border-slate-200';
                 @endphp
 
                 <div class="p-4 hover:bg-slate-50/60 transition-colors">
                     <div class="flex gap-3 mb-3">
                         {{-- Foto --}}
-                        <div class="w-20 h-20 rounded-2xl overflow-hidden border-2 border-slate-100 shadow-sm bg-slate-100 flex items-center justify-center shrink-0">
+                        <div class="w-20 h-20 rounded-2xl overflow-hidden border-2 border-slate-100 dark:border-white/10 shadow-sm bg-slate-100 dark:bg-navy-950/50 flex items-center justify-center shrink-0">
                             @if($inf->foto_terbaru)
                                 @php $cleanPath = str_replace('\\', '/', $inf->foto_terbaru); @endphp
                                 <img src="{{ asset('storage/' . (str_contains($cleanPath, 'infrastruktur/') ? $cleanPath : 'infrastruktur/' . $cleanPath)) }}"
@@ -274,7 +274,7 @@
                         {{-- Info Utama --}}
                         <div class="flex-1 min-w-0">
                             <div class="flex justify-between items-start gap-2 mb-1">
-                                <p class="text-sm font-black text-navy-900 leading-snug truncate">{{ $inf->nama_objek ?? $inf->nama_infrastruktur }}</p>
+                                <p class="text-sm font-black text-navy-900 dark:text-white leading-snug truncate">{{ $inf->nama_objek ?? $inf->nama_infrastruktur }}</p>
                                 <span class="inline-block px-2 py-0.5 rounded-xl text-[9px] font-black tracking-wider uppercase whitespace-nowrap {{ $labelColor }}">
                                     {{ $labelAkhir }}
                                 </span>
@@ -282,7 +282,7 @@
                             <span class="inline-block mb-1 px-2 py-0.5 bg-gold-500/10 text-gold-600 text-[10px] font-black rounded-md tracking-wider uppercase">
                                 {{ ucfirst($inf->jenis) }}
                             </span>
-                            <div class="flex items-center gap-1.5 text-[10px] text-slate-500 mt-1 truncate">
+                            <div class="flex items-center gap-1.5 text-[10px] text-slate-500 dark:text-slate-400 mt-1 truncate">
                                 <i class="fas fa-map-marker-alt text-gold-500"></i>
                                 <span class="truncate">{{ $inf->nama_kecamatan ?? '-' }}, Kel. {{ $inf->nama_kelurahan ?? '-' }}</span>
                             </div>
@@ -290,8 +290,8 @@
                     </div>
 
                     {{-- Analisis AI --}}
-                    <div class="flex gap-2 mb-3 bg-slate-50 rounded-xl p-2 border border-slate-100">
-                        <div class="flex-1 flex items-center gap-2 border-r border-slate-200 pr-2">
+                    <div class="flex gap-2 mb-3 bg-slate-50 dark:bg-navy-950/50 rounded-xl p-2 border border-slate-100 dark:border-white/10">
+                        <div class="flex-1 flex items-center gap-2 border-r border-slate-200 dark:border-white/10 pr-2">
                             <span class="shrink-0 px-1.5 py-0.5 bg-navy-900 text-white rounded text-[7px] font-black tracking-wider">CNN</span>
                             <span class="text-[10px] font-bold {{ $cnnLabel ? $cnnColor : 'text-slate-400' }} leading-none truncate">
                                 {{ $cnn ? round($cnn->skor_cnn * 100).'%' : '—' }}
@@ -300,17 +300,17 @@
                         </div>
                         <div class="flex-1 flex items-center gap-2 pl-1">
                             <span class="shrink-0 px-1.5 py-0.5 bg-gold-500 text-white rounded text-[7px] font-black tracking-wider">DT</span>
-                            <span class="text-[10px] font-bold text-slate-500 leading-none truncate">
-                                Skor: <span class="text-navy-900 font-black">{{ $dt->skor_dt ?? '0' }}</span>/100
+                            <span class="text-[10px] font-bold text-slate-500 dark:text-slate-400 leading-none truncate">
+                                Skor: <span class="text-navy-900 dark:text-white font-black">{{ $dt->skor_dt ?? '0' }}</span>/100
                             </span>
                         </div>
                     </div>
 
                     {{-- Aksi --}}
-                    <div class="flex items-center gap-2 pt-2 border-t border-slate-100">
+                    <div class="flex items-center gap-2 pt-2 border-t border-slate-100 dark:border-white/10">
                         {{-- Verifikasi --}}
                         @if(($inf->status_verifikasi ?? 'Pending') == 'Verified')
-                            <span title="Terverifikasi" class="flex-1 h-8 flex items-center justify-center bg-slate-100 text-slate-400 rounded-lg text-[10px] uppercase font-black border border-slate-200 cursor-not-allowed">
+                            <span title="Terverifikasi" class="flex-1 h-8 flex items-center justify-center bg-slate-100 dark:bg-navy-950/50 text-slate-400 rounded-lg text-[10px] uppercase font-black border border-slate-200 dark:border-white/10 cursor-not-allowed">
                                 <i class="fas fa-check-double mr-1.5"></i> Terverifikasi
                             </span>
                         @else

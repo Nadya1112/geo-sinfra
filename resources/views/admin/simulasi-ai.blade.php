@@ -39,31 +39,31 @@
     @media (max-width: 767px) { html { font-size: 12px; } }
 </style>
 </head>
-<body class="bg-navy-50 dark:bg-navy-950 text-slate-800 dark:text-slate-200 antialiased flex overflow-hidden h-screen transition-colors duration-300">
+<body class="bg-navy-50 dark:bg-navy-950 text-slate-800 dark:text-slate-200 dark:text-slate-200 antialiased flex overflow-hidden h-screen transition-colors duration-300">
 
     @include('admin.partials.sidebar')
 
     <main class="flex-1 overflow-y-auto custom-scrollbar text-left relative">
-        <header class="sticky top-0 bg-white/80 backdrop-blur-xl border-b border-slate-100 px-4 pl-16 md:px-8 py-4 flex justify-between items-center z-40 text-left shadow-sm">
+        <header class="sticky top-0 bg-white/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 px-4 pl-16 md:px-8 py-4 flex justify-between items-center z-40 text-left shadow-sm">
             <div class="flex items-center gap-2 md:gap-4">
-                <a href="{{ route('admin.dashboard') }}" class="hidden md:flex w-8 h-8 md:w-10 md:h-10 items-center justify-center bg-white text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 transition-all border border-slate-200 hover:border-gold-200">
+                <a href="{{ route('admin.dashboard') }}" class="hidden md:flex w-8 h-8 md:w-10 md:h-10 items-center justify-center bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 transition-all border border-slate-200 dark:border-white/10 hover:border-gold-200">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div class="text-left">
                     <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Playground</p>
-                    <h2 class="text-lg md:text-xl font-black text-navy-900 dark:text-white leading-none">Simulasi Model AI</h2>
+                    <h2 class="text-lg md:text-xl font-black text-navy-900 dark:text-white dark:text-white leading-none">Simulasi Model AI</h2>
                 </div>
             </div>
 
             <div class="flex items-center gap-3 md:gap-6">
                 <div class="text-right">
-                    <p class="text-xs font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-black text-navy-900 dark:text-white dark:text-white" id="mini-clock">00:00 WITA</p>
                     <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('d M Y') }}</p>
                 </div>
-                <div class="h-8 w-[1px] bg-slate-100"></div>
+                <div class="h-8 w-[1px] bg-slate-100 dark:bg-navy-950/50"></div>
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin.profile') }}" class="text-right group hidden md:block">
-                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
                         <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5">Aktif</p>
                     </a>
                     <a href="{{ route('admin.profile') }}" class="w-8 h-8 md:w-10 md:h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden shadow-md">
@@ -93,13 +93,13 @@
                 </div>
 
                 <!-- Playground Area -->
-                <div class="bg-white rounded-[2rem] p-8 border border-slate-100 shadow-xl shadow-slate-900/5">
+                <div class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl rounded-[2rem] p-8 border border-slate-100 dark:border-white/10 shadow-xl shadow-slate-900/5">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         
                         <!-- Left: Upload Section -->
                         <div class="space-y-4">
                             <div class="flex items-center justify-between mb-2">
-                                <h3 class="text-sm font-black text-navy-900 uppercase tracking-widest"><i class="fas fa-image text-gold-500 mr-2"></i> Input Citra</h3>
+                                <h3 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-widest"><i class="fas fa-image text-gold-500 mr-2"></i> Input Citra</h3>
                                 <button onclick="document.getElementById('image-input').click()" class="text-xs bg-navy-50 text-navy-600 hover:bg-navy-900 hover:text-white px-3 py-1.5 rounded-lg font-bold transition-colors">
                                     Pilih File
                                 </button>
@@ -111,11 +111,11 @@
                                 
                                 <!-- Default State -->
                                 <div id="upload-prompt" class="space-y-4">
-                                    <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto group-hover:bg-white group-hover:shadow-md transition-all">
+                                    <div class="w-20 h-20 bg-slate-50 dark:bg-navy-950/50 rounded-full flex items-center justify-center mx-auto group-hover:bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl group-hover:shadow-md transition-all">
                                         <i class="fas fa-cloud-upload-alt text-3xl text-slate-400 group-hover:text-gold-500 transition-colors"></i>
                                     </div>
                                     <div>
-                                        <p class="font-bold text-navy-900">Seret & lepas foto di sini</p>
+                                        <p class="font-bold text-navy-900 dark:text-white">Seret & lepas foto di sini</p>
                                         <p class="text-xs text-slate-400 mt-1">atau klik untuk memilih file (JPG/PNG)</p>
                                     </div>
                                 </div>
@@ -133,8 +133,8 @@
                         </div>
 
                         <!-- Right: Result Section -->
-                        <div class="bg-slate-50 rounded-[2rem] p-6 border border-slate-100 flex flex-col min-h-[400px]">
-                            <h3 class="text-sm font-black text-navy-900 uppercase tracking-widest mb-6"><i class="fas fa-poll-h text-gold-500 mr-2"></i> Hasil Analisis</h3>
+                        <div class="bg-slate-50 dark:bg-navy-950/50 rounded-[2rem] p-6 border border-slate-100 dark:border-white/10 flex flex-col min-h-[400px]">
+                            <h3 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-widest mb-6"><i class="fas fa-poll-h text-gold-500 mr-2"></i> Hasil Analisis</h3>
                             
                             <!-- Waiting State -->
                             <div id="result-waiting" class="flex-1 flex flex-col items-center justify-center text-slate-400 text-center">
@@ -144,8 +144,8 @@
                             </div>
 
                             <!-- Loading State -->
-                            <div id="result-loading" class="flex-1 flex flex-col items-center justify-center text-navy-900 text-center hidden">
-                                <div class="w-16 h-16 border-4 border-slate-200 border-t-gold-500 rounded-full animate-spin mb-4"></div>
+                            <div id="result-loading" class="flex-1 flex flex-col items-center justify-center text-navy-900 dark:text-white text-center hidden">
+                                <div class="w-16 h-16 border-4 border-slate-200 dark:border-white/10 border-t-gold-500 rounded-full animate-spin mb-4"></div>
                                 <p class="text-sm font-bold animate-pulse">Menghitung matriks probabilitas...</p>
                             </div>
 
@@ -166,12 +166,12 @@
                                 </div>
 
                                 <!-- Confidence Meter -->
-                                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
+                                <div class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl p-5 rounded-2xl border border-slate-100 dark:border-white/10 shadow-sm">
                                     <div class="flex justify-between items-end mb-2">
-                                        <span class="text-xs font-black text-navy-900 uppercase tracking-widest">Tingkat Keyakinan (Confidence)</span>
-                                        <span id="pred-conf-text" class="text-lg md:text-xl font-black text-navy-900 dark:text-white leading-none">0%</span>
+                                        <span class="text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest">Tingkat Keyakinan (Confidence)</span>
+                                        <span id="pred-conf-text" class="text-lg md:text-xl font-black text-navy-900 dark:text-white dark:text-white leading-none">0%</span>
                                     </div>
-                                    <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+                                    <div class="w-full bg-slate-100 dark:bg-navy-950/50 h-2.5 rounded-full overflow-hidden">
                                         <div id="pred-conf-bar" class="h-full rounded-full bg-gradient-to-r from-navy-800 to-gold-500 transition-all duration-1000 w-0"></div>
                                     </div>
                                 </div>

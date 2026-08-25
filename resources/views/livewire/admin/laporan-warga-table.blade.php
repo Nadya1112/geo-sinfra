@@ -1,13 +1,13 @@
 <div>
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
         <div>
-            <h4 class="font-extrabold text-lg text-navy-900">Daftar Laporan Warga</h4>
+            <h4 class="font-extrabold text-lg text-navy-900 dark:text-white">Daftar Laporan Warga</h4>
             <p class="text-xs text-slate-400 font-medium text-left font-sans">Pantau dan kelola laporan kerusakan dari warga</p>
         </div>
         
         <div class="flex flex-col md:flex-row items-center gap-2 w-full md:w-auto">
             <div class="flex flex-col sm:flex-row items-stretch sm:items-center w-full lg:w-[500px]">
-                <select wire:model.live="status" class="w-full sm:w-auto sm:pl-3 sm:pr-7 py-2.5 bg-white border border-slate-100 sm:border-r-0 rounded-t-xl sm:rounded-t-none sm:rounded-l-2xl text-[10px] md:text-xs font-bold text-navy-900 focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm shrink-0">
+                <select wire:model.live="status" class="w-full sm:w-auto sm:pl-3 sm:pr-7 py-2.5 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 sm:border-r-0 rounded-t-xl sm:rounded-t-none sm:rounded-l-2xl text-[10px] md:text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm shrink-0">
                     <option value="all">Semua Status</option>
                     <option value="Menunggu">Menunggu</option>
                     <option value="Ditinjau">Ditinjau</option>
@@ -19,12 +19,12 @@
                     <input type="text" 
                         wire:model.live.debounce.300ms="search"
                         placeholder="Cari nama, deskripsi..." 
-                        class="w-full pl-3 pr-10 py-2.5 bg-white border-y sm:border-y border-x sm:border-x-0 border-slate-100 text-[10px] md:text-xs font-semibold focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm">
+                        class="w-full pl-3 pr-10 py-2.5 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border-y sm:border-y border-x sm:border-x-0 border-slate-100 dark:border-white/10 text-[10px] md:text-xs font-semibold focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm">
                     <div wire:loading wire:target="search" class="absolute right-3 top-1/2 -translate-y-1/2">
                         <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs"></i>
                     </div>
                 </div>
-                <button type="button" wire:click="$set('search', ''); $set('status', 'all')" class="w-full sm:w-auto bg-white border border-slate-100 sm:border-y sm:border-r sm:border-l-0 px-4 md:px-5 py-2.5 rounded-b-xl sm:rounded-b-none sm:rounded-r-2xl hover:bg-slate-50 transition-all shadow-sm group shrink-0 relative" title="Reset Filter">
+                <button type="button" wire:click="$set('search', ''); $set('status', 'all')" class="w-full sm:w-auto bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 sm:border-y sm:border-r sm:border-l-0 px-4 md:px-5 py-2.5 rounded-b-xl sm:rounded-b-none sm:rounded-r-2xl hover:bg-slate-50 dark:hover:bg-white/5 dark:bg-navy-950/50 transition-all shadow-sm group shrink-0 relative" title="Reset Filter">
                     <i class="fas fa-times text-slate-400 group-hover:text-gold-500 transition-colors text-xs" wire:loading.remove wire:target="search"></i>
                     <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs hidden" wire:loading.inline-block wire:target="search"></i>
                 </button>
@@ -33,7 +33,7 @@
     </div>
 
     <!-- Table Container -->
-    <div class="bg-white rounded-[2rem] shadow-xl shadow-slate-200/40 border border-slate-100 overflow-hidden relative">
+    <div class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl rounded-[2rem] shadow-xl shadow-slate-200/40 border border-slate-100 dark:border-white/10 overflow-hidden relative">
 
         <div class="overflow-x-auto custom-scrollbar">
             <!-- Table Layout (Desktop & Tablet) -->
@@ -48,24 +48,24 @@
                         <th class="px-4 py-3 font-extrabold uppercase tracking-widest text-xs text-gold-500 text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100">
+                <tbody class="divide-y divide-slate-100 dark:divide-white/10">
                     @forelse($laporanWarga as $laporan)
                     <tr class="hover:bg-slate-50/80 transition-colors group">
                         <td class="px-4 py-3">
                             <div class="flex items-center gap-2">
                                 <i class="far fa-clock text-slate-400"></i>
                                 <div>
-                                    <p class="font-bold text-navy-900">{{ \Carbon\Carbon::parse($laporan->created_at)->format('d M Y') }}</p>
-                                    <p class="text-xs text-slate-500 font-medium">{{ \Carbon\Carbon::parse($laporan->created_at)->format('H:i') }}</p>
+                                    <p class="font-bold text-navy-900 dark:text-white">{{ \Carbon\Carbon::parse($laporan->created_at)->format('d M Y') }}</p>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">{{ \Carbon\Carbon::parse($laporan->created_at)->format('H:i') }}</p>
                                 </div>
                             </div>
                         </td>
                         <td class="px-4 py-3">
-                            <p class="font-bold text-navy-900">{{ $laporan->nama_pelapor }}</p>
-                            <p class="text-xs font-semibold text-slate-500 mt-0.5"><i class="fas fa-phone-alt text-xs text-slate-400 mr-1"></i> {{ $laporan->no_hp }}</p>
+                            <p class="font-bold text-navy-900 dark:text-white">{{ $laporan->nama_pelapor }}</p>
+                            <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-0.5"><i class="fas fa-phone-alt text-xs text-slate-400 mr-1"></i> {{ $laporan->no_hp }}</p>
                         </td>
                         <td class="px-4 py-3 min-w-[250px]">
-                            <p class="text-sm font-medium text-slate-700 line-clamp-2 leading-relaxed mb-2">{{ $laporan->deskripsi }}</p>
+                            <p class="text-sm font-medium text-slate-700 dark:text-slate-300 line-clamp-2 leading-relaxed mb-2">{{ $laporan->deskripsi }}</p>
                             
                             @if($laporan->label_ai)
                                 @php
@@ -106,7 +106,7 @@
                         </td>
                         <td class="px-4 py-3 text-center">
                             @php
-                                $statusColor = 'bg-slate-100 text-slate-700 border-slate-200';
+                                $statusColor = 'bg-slate-100 dark:bg-navy-950/50 text-slate-700 dark:text-slate-300 border-slate-200';
                                 if($laporan->status == 'Menunggu') $statusColor = 'bg-yellow-50 text-yellow-700 border-yellow-200';
                                 if($laporan->status == 'Ditinjau') $statusColor = 'bg-blue-50 text-blue-700 border-blue-200';
                                 if($laporan->status == 'Diproses') $statusColor = 'bg-indigo-50 text-indigo-700 border-indigo-200';
@@ -127,7 +127,7 @@
                         </td>
                         <td class="px-4 py-3 text-center">
                             @php
-                                $assignColor = $laporan->id_surveyor ? 'bg-indigo-50 text-indigo-700 border-indigo-200' : 'bg-slate-100 text-slate-500 border-slate-200';
+                                $assignColor = $laporan->id_surveyor ? 'bg-indigo-50 text-indigo-700 border-indigo-200' : 'bg-slate-100 dark:bg-navy-950/50 text-slate-500 dark:text-slate-400 border-slate-200';
                             @endphp
                             
                             <div class="relative inline-block w-36 text-left">
@@ -172,25 +172,25 @@
             </table>
 
             <!-- Card Layout (Mobile) -->
-            <div class="flex flex-col md:hidden divide-y divide-slate-100">
+            <div class="flex flex-col md:hidden divide-y divide-slate-100 dark:divide-white/10">
                 @forelse($laporanWarga as $laporan)
                 <div class="p-4 hover:bg-slate-50/80 transition-colors">
                     <div class="flex justify-between items-start mb-3">
                         <div class="flex items-center gap-2">
                             <i class="far fa-clock text-slate-400"></i>
                             <div>
-                                <p class="font-bold text-navy-900 text-xs">{{ \Carbon\Carbon::parse($laporan->created_at)->format('d M Y') }}</p>
-                                <p class="text-[10px] text-slate-500 font-medium">{{ \Carbon\Carbon::parse($laporan->created_at)->format('H:i') }}</p>
+                                <p class="font-bold text-navy-900 dark:text-white text-xs">{{ \Carbon\Carbon::parse($laporan->created_at)->format('d M Y') }}</p>
+                                <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">{{ \Carbon\Carbon::parse($laporan->created_at)->format('H:i') }}</p>
                             </div>
                         </div>
                         <div class="text-right">
-                            <p class="font-bold text-navy-900 text-xs">{{ $laporan->nama_pelapor }}</p>
-                            <p class="text-[10px] font-semibold text-slate-500 mt-0.5"><i class="fas fa-phone-alt text-[10px] text-slate-400 mr-1"></i> {{ $laporan->no_hp }}</p>
+                            <p class="font-bold text-navy-900 dark:text-white text-xs">{{ $laporan->nama_pelapor }}</p>
+                            <p class="text-[10px] font-semibold text-slate-500 dark:text-slate-400 mt-0.5"><i class="fas fa-phone-alt text-[10px] text-slate-400 mr-1"></i> {{ $laporan->no_hp }}</p>
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <p class="text-xs font-medium text-slate-700 line-clamp-3 leading-relaxed mb-2">{{ $laporan->deskripsi }}</p>
+                        <p class="text-xs font-medium text-slate-700 dark:text-slate-300 line-clamp-3 leading-relaxed mb-2">{{ $laporan->deskripsi }}</p>
                         
                         @if($laporan->label_ai)
                             @php
@@ -230,10 +230,10 @@
                         </div>
                     </div>
 
-                    <div class="flex flex-col gap-2 pt-3 border-t border-slate-100">
+                    <div class="flex flex-col gap-2 pt-3 border-t border-slate-100 dark:border-white/10">
                         <div class="flex gap-2">
                             @php
-                                $statusColor = 'bg-slate-100 text-slate-700 border-slate-200';
+                                $statusColor = 'bg-slate-100 dark:bg-navy-950/50 text-slate-700 dark:text-slate-300 border-slate-200';
                                 if($laporan->status == 'Menunggu') $statusColor = 'bg-yellow-50 text-yellow-700 border-yellow-200';
                                 if($laporan->status == 'Ditinjau') $statusColor = 'bg-blue-50 text-blue-700 border-blue-200';
                                 if($laporan->status == 'Diproses') $statusColor = 'bg-indigo-50 text-indigo-700 border-indigo-200';
@@ -252,7 +252,7 @@
                             </div>
 
                             @php
-                                $assignColor = $laporan->id_surveyor ? 'bg-indigo-50 text-indigo-700 border-indigo-200' : 'bg-slate-100 text-slate-500 border-slate-200';
+                                $assignColor = $laporan->id_surveyor ? 'bg-indigo-50 text-indigo-700 border-indigo-200' : 'bg-slate-100 dark:bg-navy-950/50 text-slate-500 dark:text-slate-400 border-slate-200';
                             @endphp
                             <div class="relative flex-1">
                                 <select wire:change="assignSurveyor({{ $laporan->id }}, $event.target.value)" class="w-full appearance-none pl-2 pr-6 py-1.5 rounded-lg text-[10px] font-bold border {{ $assignColor }} focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer shadow-sm">
@@ -294,7 +294,7 @@
         </div>
         
         @if($laporanWarga->hasPages())
-        <div class="p-6 border-t border-slate-100 bg-slate-50/50">
+        <div class="p-6 border-t border-slate-100 dark:border-white/10 bg-slate-50/50">
             {{ $laporanWarga->links() }}
         </div>
         @endif

@@ -35,34 +35,34 @@
     @media (max-width: 767px) { html { font-size: 12px; } }
 </style>
 </head>
-<body class="bg-navy-50 dark:bg-navy-950 text-slate-800 dark:text-slate-200 antialiased flex overflow-hidden h-screen transition-colors duration-300">
+<body class="bg-navy-50 dark:bg-navy-950 text-slate-800 dark:text-slate-200 dark:text-slate-200 antialiased flex overflow-hidden h-screen transition-colors duration-300">
 
     @include('admin.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden">
 
         {{-- ── Header ── --}}
-        <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 px-4 pl-16 md:px-8 py-4 flex justify-between items-center z-40 shrink-0">
+        <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 px-4 pl-16 md:px-8 py-4 flex justify-between items-center z-40 shrink-0">
             <div class="flex items-center gap-4">
                 <a href="{{ route('admin.statistik') }}"
-                   class="hidden md:flex w-10 h-10 bg-white border border-slate-100 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/30 hover:shadow-md transition-all group">
+                   class="hidden md:flex w-10 h-10 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/30 hover:shadow-md transition-all group">
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
                 <div>
                     <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Portal Administrator</p>
-                    <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Statistik Tahunan</h2>
+                    <h2 class="text-xl font-black text-navy-900 dark:text-white dark:text-white leading-none">Statistik Tahunan</h2>
                 </div>
             </div>
 
             <div class="flex items-center gap-3 md:gap-6">
                 <div class="text-right">
-                    <p class="text-xs font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-black text-navy-900 dark:text-white dark:text-white" id="mini-clock">00:00 WITA</p>
                     <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('d M Y') }}</p>
                 </div>
-                <div class="h-8 w-[1px] bg-slate-100"></div>
+                <div class="h-8 w-[1px] bg-slate-100 dark:bg-navy-950/50"></div>
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin.profile') }}" class="text-right group hidden md:block">
-                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
                         <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5">Aktif</p>
                     </a>
                     <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 overflow-hidden hover:shadow-lg transition-all shadow-md">
@@ -93,7 +93,7 @@
                 </form>
 
                 <button onclick="window.print()"
-                    class="flex items-center justify-center gap-2 bg-gold-500 hover:bg-gold-600 text-navy-950 px-4 md:px-5 py-2.5 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest shadow-md shadow-gold-500/20 transition-all shrink-0">
+                    class="flex items-center justify-center gap-2 bg-gold-500 hover:bg-gold-600 text-navy-950 dark:text-white px-4 md:px-5 py-2.5 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest shadow-md shadow-gold-500/20 transition-all shrink-0">
                     <i class="fas fa-print"></i> Cetak
                 </button>
             </div>
@@ -127,13 +127,13 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
                 {{-- Distribusi Jenis Infrastruktur --}}
-                <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-8">
+                <div class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl rounded-3xl border border-slate-100 dark:border-white/10 shadow-sm p-8">
                     <div class="flex items-center gap-3 mb-6">
                         <div class="w-8 h-8 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shrink-0">
                             <i class="fas fa-layer-group text-xs"></i>
                         </div>
                         <div>
-                            <h4 class="text-sm font-black text-navy-900 uppercase tracking-wider">Distribusi Jenis Infrastruktur</h4>
+                            <h4 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-wider">Distribusi Jenis Infrastruktur</h4>
                             <p class="text-xs text-slate-400 font-semibold mt-0.5">Tahun {{ $year }}</p>
                         </div>
                     </div>
@@ -154,16 +154,16 @@
                             $c   = $jenisColors[strtolower($s->jenis)] ?? ['bg'=>'bg-slate-400','bar'=>'bg-slate-400','text'=>'text-white','icon'=>'fa-cube','label'=>$s->jenis];
                             $pct = round(($s->total / $totalJenis) * 100);
                         @endphp
-                        <div class="p-4 bg-slate-50 border border-slate-100 rounded-2xl">
+                        <div class="p-4 bg-slate-50 dark:bg-navy-950/50 border border-slate-100 dark:border-white/10 rounded-2xl">
                             <div class="flex items-center gap-3 mb-3">
                                 <div class="w-9 h-9 {{ $c['bg'] }} {{ $c['text'] }} rounded-xl flex items-center justify-center shrink-0 shadow-sm">
                                     <i class="fas {{ $c['icon'] }} text-sm"></i>
                                 </div>
                                 <div class="flex-1 flex justify-between items-center">
-                                    <p class="text-xs font-black text-navy-900 uppercase">{{ $c['label'] }}</p>
+                                    <p class="text-xs font-black text-navy-900 dark:text-white uppercase">{{ $c['label'] }}</p>
                                     <div class="flex items-center gap-2">
                                         <span class="text-xs font-bold text-slate-400">{{ $pct }}%</span>
-                                        <span class="text-sm font-black text-navy-900">{{ $s->total }} <span class="text-xs text-slate-400 font-semibold">titik</span></span>
+                                        <span class="text-sm font-black text-navy-900 dark:text-white">{{ $s->total }} <span class="text-xs text-slate-400 font-semibold">titik</span></span>
                                     </div>
                                 </div>
                             </div>
@@ -181,13 +181,13 @@
                 </div>
 
                 {{-- Tabel Kondisi per Wilayah --}}
-                <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-8">
+                <div class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl rounded-3xl border border-slate-100 dark:border-white/10 shadow-sm p-8">
                     <div class="flex items-center gap-3 mb-6">
                         <div class="w-8 h-8 bg-gold-500 rounded-xl flex items-center justify-center text-white shrink-0">
                             <i class="fas fa-map-marked-alt text-xs"></i>
                         </div>
                         <div>
-                            <h4 class="text-sm font-black text-navy-900 uppercase tracking-wider">Kondisi per Kecamatan</h4>
+                            <h4 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-wider">Kondisi per Kecamatan</h4>
                             <p class="text-xs text-slate-400 font-semibold mt-0.5">Rekapitulasi wilayah · Tahun {{ $year }}</p>
                         </div>
                     </div>
@@ -195,7 +195,7 @@
                     <div class="overflow-x-auto custom-scrollbar">
                         <table class="w-full text-left border-collapse">
                             <thead>
-                                <tr class="bg-slate-50 border-b border-slate-100">
+                                <tr class="bg-slate-50 dark:bg-navy-950/50 border-b border-slate-100 dark:border-white/10">
                                     <th class="px-3 py-3 text-xs font-black text-slate-400 tracking-widest uppercase">Kecamatan</th>
                                     <th class="px-3 py-3 text-xs font-black text-emerald-500 tracking-widest text-center">Baik</th>
                                     <th class="px-3 py-3 text-xs font-black text-orange-500 tracking-widest text-center">Sedang</th>
@@ -203,13 +203,13 @@
                                     <th class="px-3 py-3 text-xs font-black text-slate-400 tracking-widest text-right">Total</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-slate-50">
+                            <tbody class="divide-y divide-slate-50 dark:divide-white/5">
                                 @foreach($kondisiKecamatan as $item)
                                 <tr class="hover:bg-slate-50/60 transition-colors">
                                     <td class="px-3 py-3">
                                         <div class="flex items-center gap-2">
                                             <i class="fas fa-map-marker-alt text-gold-500 text-xs"></i>
-                                            <p class="text-xs font-black text-navy-900 uppercase">{{ $item['nama'] }}</p>
+                                            <p class="text-xs font-black text-navy-900 dark:text-white uppercase">{{ $item['nama'] }}</p>
                                         </div>
                                     </td>
                                     <td class="px-3 py-3 text-center">
@@ -222,7 +222,7 @@
                                         <span class="text-xs font-black text-red-600 bg-red-50 px-2 py-0.5 rounded-lg">{{ $item['berat'] }}</span>
                                     </td>
                                     <td class="px-3 py-3 text-right">
-                                        <span class="text-xs font-black text-navy-900 bg-navy-50 border border-navy-100 px-2 py-0.5 rounded-lg">{{ $item['total'] }}</span>
+                                        <span class="text-xs font-black text-navy-900 dark:text-white bg-navy-50 border border-navy-100 px-2 py-0.5 rounded-lg">{{ $item['total'] }}</span>
                                     </td>
                                 </tr>
                                 @endforeach

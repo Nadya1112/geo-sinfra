@@ -1,7 +1,7 @@
 <div>
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
         <div>
-            <h4 class="font-extrabold text-lg text-navy-900 uppercase">LOG AKTIVITAS</h4>
+            <h4 class="font-extrabold text-lg text-navy-900 dark:text-white uppercase">LOG AKTIVITAS</h4>
             <p class="text-xs text-slate-400 font-medium text-left">Memantau seluruh aktivitas pengguna di sistem</p>
         </div>
         <div class="flex flex-row flex-nowrap items-center gap-2 w-full md:w-auto relative z-20">
@@ -10,12 +10,12 @@
                     <input type="text" 
                         wire:model.live.debounce.300ms="search"
                         placeholder="Cari log aktivitas..." 
-                        class="w-full pl-3 pr-10 py-2.5 bg-white border border-slate-100 text-[10px] md:text-xs font-semibold focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm rounded-l-2xl">
+                        class="w-full pl-3 pr-10 py-2.5 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 text-[10px] md:text-xs font-semibold focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm rounded-l-2xl">
                     <div wire:loading wire:target="search" class="absolute right-3 top-1/2 -translate-y-1/2">
                         <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs"></i>
                     </div>
                 </div>
-                <button type="button" class="bg-white border-y border-r border-slate-100 px-4 md:px-5 py-2.5 hover:bg-slate-50 transition-all shadow-sm group shrink-0 relative" title="Cari">
+                <button type="button" class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border-y border-r border-slate-100 dark:border-white/10 px-4 md:px-5 py-2.5 hover:bg-slate-50 dark:hover:bg-white/5 dark:bg-navy-950/50 transition-all shadow-sm group shrink-0 relative" title="Cari">
                     <i class="fas fa-search text-slate-400 group-hover:text-gold-500 transition-colors text-xs" wire:loading.remove wire:target="search"></i>
                     <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs hidden" wire:loading.inline-block wire:target="search"></i>
                 </button>
@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden mb-10 relative">
+    <div class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl rounded-[2.5rem] border border-slate-100 dark:border-white/10 shadow-sm overflow-hidden mb-10 relative">
 
 
         <div class="overflow-x-auto w-full custom-scrollbar">
@@ -41,7 +41,7 @@
                     <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Kategori</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-slate-50 text-xs font-medium">
+            <tbody class="divide-y divide-slate-50 dark:divide-white/5 text-xs font-medium">
                 <!-- Dynamic Data Rows -->
                 @forelse($activities as $activity)
                     @php
@@ -73,16 +73,16 @@
                             elseif ($activity->user->role == 'surveyor') $roleColor = 'blue';
                         }
                     @endphp
-                    <tr class="hover:bg-slate-50/50 transition-colors group">
-                        <td class="px-4 py-3 text-xs text-slate-500 whitespace-nowrap">
+                    <tr class="hover:bg-slate-50/50 dark:hover:bg-white/5 transition-colors group">
+                        <td class="px-4 py-3 text-xs text-slate-500 dark:text-slate-400 whitespace-nowrap">
                             <div class="flex flex-col gap-0.5">
-                                <span class="font-bold text-navy-900">{{ $activity->created_at->format('Y-m-d') }}</span>
+                                <span class="font-bold text-navy-900 dark:text-white">{{ $activity->created_at->format('Y-m-d') }}</span>
                                 <span class="text-[10px] text-slate-400"><i class="fas fa-clock mr-1 text-slate-300"></i> {{ $activity->created_at->format('H:i:s') }}</span>
                             </div>
                         </td>
                         <td class="px-4 py-3">
                             <div>
-                                <p class="font-bold text-navy-900">{{ $activity->user ? $activity->user->name : 'Sistem Otomatis' }}</p>
+                                <p class="font-bold text-navy-900 dark:text-white">{{ $activity->user ? $activity->user->name : 'Sistem Otomatis' }}</p>
                                 <p class="text-[10px] text-slate-400 uppercase tracking-wider">{{ $activity->user ? $activity->user->role : 'System' }}</p>
                             </div>
                         </td>
@@ -106,7 +106,7 @@
             </table>
 
             <!-- Card Layout (Mobile) -->
-            <div class="flex flex-col md:hidden divide-y divide-slate-100">
+            <div class="flex flex-col md:hidden divide-y divide-slate-100 dark:divide-white/10">
                 @forelse($activities as $activity)
                     @php
                         $badgeColor = 'slate';
@@ -130,14 +130,14 @@
                             $icon = 'fa-check-circle';
                         }
                     @endphp
-                    <div class="p-4 hover:bg-slate-50/50 transition-colors">
+                    <div class="p-4 hover:bg-slate-50/50 dark:hover:bg-white/5 transition-colors">
                         <div class="flex justify-between items-start mb-2">
                             <div>
-                                <p class="font-bold text-navy-900 text-sm">{{ $activity->user ? $activity->user->name : 'Sistem Otomatis' }}</p>
+                                <p class="font-bold text-navy-900 dark:text-white text-sm">{{ $activity->user ? $activity->user->name : 'Sistem Otomatis' }}</p>
                                 <p class="text-[10px] text-slate-400 uppercase tracking-wider">{{ $activity->user ? $activity->user->role : 'System' }}</p>
                             </div>
                             <div class="text-right">
-                                <span class="font-bold text-navy-900 text-[10px] block">{{ $activity->created_at->format('Y-m-d') }}</span>
+                                <span class="font-bold text-navy-900 dark:text-white text-[10px] block">{{ $activity->created_at->format('Y-m-d') }}</span>
                                 <span class="text-[9px] text-slate-400"><i class="fas fa-clock mr-1 text-slate-300"></i> {{ $activity->created_at->format('H:i:s') }}</span>
                             </div>
                         </div>
@@ -164,7 +164,7 @@
                 {{ $activities->links() }}
             </div>
         @else
-            <div class="px-8 py-4 border-t border-slate-50 bg-slate-50/30 flex justify-between items-center text-xs text-slate-500 font-bold">
+            <div class="px-8 py-4 border-t border-slate-50 bg-slate-50/30 flex justify-between items-center text-xs text-slate-500 dark:text-slate-400 font-bold">
                 <span>Menampilkan total {{ $activities->count() }} aktivitas</span>
             </div>
         @endif

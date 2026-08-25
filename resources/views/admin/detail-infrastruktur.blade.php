@@ -47,7 +47,7 @@
     @media (max-width: 767px) { html { font-size: 12px; } }
 </style>
 </head>
-<body class="bg-navy-50 dark:bg-navy-950 text-slate-800 dark:text-slate-200 antialiased flex overflow-hidden h-screen transition-colors duration-300">
+<body class="bg-navy-50 dark:bg-navy-950 text-slate-800 dark:text-slate-200 dark:text-slate-200 antialiased flex overflow-hidden h-screen transition-colors duration-300">
 
     @include('admin.partials.sidebar')
 
@@ -57,15 +57,15 @@
         </style>
 
         {{-- ── Header ── --}}
-        <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 px-4  md:px-8 py-4 flex justify-between items-center z-40 shrink-0">
+        <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 px-4  md:px-8 py-4 flex justify-between items-center z-40 shrink-0">
             <div class="flex items-center gap-4">
                 <a href="{{ route('admin.infrastruktur') }}"
-                   class="hidden md:flex w-10 h-10 bg-white border border-slate-100 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/30 hover:shadow-md transition-all group">
+                   class="hidden md:flex w-10 h-10 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/30 hover:shadow-md transition-all group">
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
                 <div>
                     <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Portal Administrator</p>
-                    <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Detail {{ ucfirst($inf->jenis) ?? 'Infrastruktur' }}</h2>
+                    <h2 class="text-xl font-black text-navy-900 dark:text-white dark:text-white leading-none">Detail {{ ucfirst($inf->jenis) ?? 'Infrastruktur' }}</h2>
                 </div>
             </div>
 
@@ -85,24 +85,24 @@
                     </span>
                 @endif
 
-                <div class="h-8 w-[1px] bg-slate-100"></div>
+                <div class="h-8 w-[1px] bg-slate-100 dark:bg-navy-950/50"></div>
 
                 {{-- SLOT 2: Jam (Realtime jika belum verifikasi, Waktu Verifikasi jika sudah) --}}
                 <div class="text-right">
                     @if(($inf->status_verifikasi ?? 'Pending') != 'Verified')
-                        <p class="text-xs font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                        <p class="text-xs font-black text-navy-900 dark:text-white dark:text-white" id="mini-clock">00:00 WITA</p>
                         <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('d M Y') }}</p>
                     @else
-                        <p class="text-sm font-black text-navy-900">{{ \Carbon\Carbon::parse($inf->updated_at)->translatedFormat('H:i') }} WITA</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white">{{ \Carbon\Carbon::parse($inf->updated_at)->translatedFormat('H:i') }} WITA</p>
                         <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ \Carbon\Carbon::parse($inf->updated_at)->translatedFormat('l, d F Y') }}</p>
                     @endif
                 </div>
 
 
-                <div class="h-8 w-[1px] bg-slate-100"></div>
+                <div class="h-8 w-[1px] bg-slate-100 dark:bg-navy-950/50"></div>
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin.profile') }}" class="text-right group hidden md:block">
-                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
                         <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5">Aktif</p>
                     </a>
                     <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 overflow-hidden hover:shadow-lg transition-all shadow-md">
@@ -141,7 +141,7 @@
                         'rusak sedang' => 'bg-orange-50 text-orange-600 border-orange-200',
                         'rusak berat'  => 'bg-red-50 text-red-600 border-red-200',
                     ];
-                    $statusClass = $statusMap[strtolower($inf->kondisi ?? '')] ?? 'bg-slate-50 text-slate-500 border-slate-200';
+                    $statusClass = $statusMap[strtolower($inf->kondisi ?? '')] ?? 'bg-slate-50 dark:bg-navy-950/50 text-slate-500 dark:text-slate-400 border-slate-200';
                 @endphp
                 <span class="px-3 py-1.5 border rounded-xl text-xs font-black tracking-widest uppercase {{ $statusClass }}">
                     {{ strtoupper($inf->kondisi ?? 'Pending') }}
@@ -164,13 +164,13 @@
                 <div class="xl:col-span-2 space-y-6">
 
                     {{-- Section 1: Identitas & Wilayah --}}
-                    <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-8">
+                    <div class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl rounded-3xl border border-slate-100 dark:border-white/10 shadow-sm p-8">
                         <div class="flex items-center gap-3 mb-6">
                             <div class="w-8 h-8 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shrink-0">
                                 <i class="fas fa-info-circle text-xs"></i>
                             </div>
                             <div>
-                                <h4 class="text-sm font-black text-navy-900 uppercase tracking-wider">Identitas & Wilayah</h4>
+                                <h4 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-wider">Identitas & Wilayah</h4>
                                 <p class="text-xs text-slate-400 font-semibold mt-0.5">Informasi dasar aset infrastruktur</p>
                             </div>
                         </div>
@@ -179,29 +179,29 @@
                             {{-- Nama --}}
                             <div class="md:col-span-2">
                                 <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Nama Infrastruktur</p>
-                                <div class="px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-sm font-black text-navy-900">
+                                <div class="px-4 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-100 dark:border-white/10 rounded-xl text-sm font-black text-navy-900 dark:text-white">
                                     {{ $inf->nama_objek ?? $inf->nama_infrastruktur }}
                                 </div>
                             </div>
                             {{-- Jenis --}}
                             <div>
                                 <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Jenis Infrastruktur</p>
-                                <div class="px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl flex items-center gap-2">
+                                <div class="px-4 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-100 dark:border-white/10 rounded-xl flex items-center gap-2">
                                     <span class="px-2 py-0.5 bg-navy-900 text-gold-500 rounded-md text-[7px] font-black tracking-wider uppercase">AI</span>
-                                    <span class="text-sm font-black text-navy-900 uppercase">{{ ucfirst($inf->jenis) ?? '—' }}</span>
+                                    <span class="text-sm font-black text-navy-900 dark:text-white uppercase">{{ ucfirst($inf->jenis) ?? '—' }}</span>
                                 </div>
                             </div>
                             {{-- Material --}}
                             <div>
                                 <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Material Utama</p>
-                                <div class="px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-sm font-semibold text-slate-700">
+                                <div class="px-4 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-100 dark:border-white/10 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300">
                                     {{ $inf->material_eksisting ?? '—' }}
                                 </div>
                             </div>
                             {{-- Kecamatan --}}
                             <div>
                                 <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Kecamatan</p>
-                                <div class="px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2">
+                                <div class="px-4 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-100 dark:border-white/10 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-2">
                                     <i class="fas fa-map-marker-alt text-gold-500 text-xs"></i>
                                     {{ $inf->nama_kecamatan ?? '—' }}
                                 </div>
@@ -209,7 +209,7 @@
                             {{-- Kelurahan --}}
                             <div>
                                 <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Kelurahan</p>
-                                <div class="px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2">
+                                <div class="px-4 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-100 dark:border-white/10 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-2">
                                     <i class="fas fa-map-marker-alt text-gold-500 text-xs"></i>
                                     {{ $inf->nama_kelurahan ?? '—' }}
                                 </div>
@@ -218,13 +218,13 @@
                     </div>
 
                     {{-- Section 2: Detail Teknis --}}
-                    <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-8">
+                    <div class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl rounded-3xl border border-slate-100 dark:border-white/10 shadow-sm p-8">
                         <div class="flex items-center gap-3 mb-6">
                             <div class="w-8 h-8 bg-gold-500 rounded-xl flex items-center justify-center text-white shrink-0">
                                 <i class="fas fa-ruler-combined text-xs"></i>
                             </div>
                             <div>
-                                <h4 class="text-sm font-black text-navy-900 uppercase tracking-wider">Detail Teknis</h4>
+                                <h4 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-wider">Detail Teknis</h4>
                                 <p class="text-xs text-slate-400 font-semibold mt-0.5">Dimensi, kondisi, dan parameter lapangan</p>
                             </div>
                         </div>
@@ -232,12 +232,12 @@
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-5">
                             <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-center">
                                 <p class="text-xs font-black text-slate-400 uppercase tracking-wider mb-1">Panjang</p>
-                                <p class="text-xl font-black text-navy-900">{{ number_format($inf->panjang ?? 0, 1) }}</p>
+                                <p class="text-xl font-black text-navy-900 dark:text-white">{{ number_format($inf->panjang ?? 0, 1) }}</p>
                                 <p class="text-xs text-slate-400 font-bold">meter</p>
                             </div>
                             <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-center">
                                 <p class="text-xs font-black text-slate-400 uppercase tracking-wider mb-1">Lebar</p>
-                                <p class="text-xl font-black text-navy-900">{{ number_format($inf->lebar ?? 0, 1) }}</p>
+                                <p class="text-xl font-black text-navy-900 dark:text-white">{{ number_format($inf->lebar ?? 0, 1) }}</p>
                                 <p class="text-xs text-slate-400 font-bold">meter</p>
                             </div>
                             <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-center">
@@ -264,7 +264,7 @@
 
                         <div>
                             <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Deskripsi Kondisi Lapangan</p>
-                            <div class="px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 italic leading-relaxed">
+                            <div class="px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 italic leading-relaxed">
                                 @if(strtolower($inf->kondisi ?? '') == 'menunggu ai')
                                     <div class="flex items-center gap-2 text-amber-600 mb-2 not-italic">
                                         <i class="fas fa-exclamation-triangle text-xs"></i>
@@ -279,13 +279,13 @@
                     </div>
 
                     {{-- Section 3: Lokasi Geografis --}}
-                    <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-8">
+                    <div class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl rounded-3xl border border-slate-100 dark:border-white/10 shadow-sm p-8">
                         <div class="flex items-center gap-3 mb-6">
                             <div class="w-8 h-8 bg-navy-500 rounded-xl flex items-center justify-center text-white shrink-0">
                                 <i class="fas fa-map-marker-alt text-xs"></i>
                             </div>
                             <div>
-                                <h4 class="text-sm font-black text-navy-900 uppercase tracking-wider">Lokasi Geografis</h4>
+                                <h4 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-wider">Lokasi Geografis</h4>
                                 <p class="text-xs text-slate-400 font-semibold mt-0.5">Koordinat dan visualisasi peta</p>
                             </div>
                         </div>
@@ -293,24 +293,24 @@
                         <div class="grid grid-cols-2 gap-4 mb-5">
                             <div>
                                 <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Garis Lintang</p>
-                                <div class="px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-sm font-mono font-bold text-navy-900">
+                                <div class="px-4 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-100 dark:border-white/10 rounded-xl text-sm font-mono font-bold text-navy-900 dark:text-white">
                                     {{ $inf->latitude ?? '—' }}
                                 </div>
                             </div>
                             <div>
                                 <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Garis Bujur</p>
-                                <div class="px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-sm font-mono font-bold text-navy-900">
+                                <div class="px-4 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-100 dark:border-white/10 rounded-xl text-sm font-mono font-bold text-navy-900 dark:text-white">
                                     {{ $inf->longitude ?? '—' }}
                                 </div>
                             </div>
                         </div>
 
                         <div class="pt-2 mb-2">
-                            <div class="relative rounded-[2rem] border border-slate-100 shadow-inner overflow-hidden mb-2">
+                            <div class="relative rounded-[2rem] border border-slate-100 dark:border-white/10 shadow-inner overflow-hidden mb-2">
                                 <div id="mini-map" class="w-full z-0 h-[260px]"></div>
                             </div>
                             <p class="text-xs font-black text-slate-400 text-center tracking-widest mt-3">
-                                LAT: <span class="text-navy-900">{{ $inf->latitude }}</span> &nbsp;|&nbsp; LNG: <span class="text-navy-900">{{ $inf->longitude }}</span>
+                                LAT: <span class="text-navy-900 dark:text-white">{{ $inf->latitude }}</span> &nbsp;|&nbsp; LNG: <span class="text-navy-900 dark:text-white">{{ $inf->longitude }}</span>
                             </p>
                         </div>
                     </div>
@@ -334,7 +334,7 @@
                             <i class="fas fa-comment-dots text-amber-500"></i> Catatan Eksekutif (Tim Teknis)
                         </h4>
                         <div class="p-5 bg-white/60 rounded-2xl border border-amber-200/50">
-                            <p class="text-sm font-bold text-slate-600 leading-relaxed">{{ $inf->alasan_penolakan }}</p>
+                            <p class="text-sm font-bold text-slate-600 dark:text-slate-400 leading-relaxed">{{ $inf->alasan_penolakan }}</p>
                         </div>
                     </div>
                     @endif
@@ -345,13 +345,13 @@
                 <div class="space-y-6">
 
                     {{-- Foto --}}
-                    <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6">
+                    <div class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl rounded-3xl border border-slate-100 dark:border-white/10 shadow-sm p-6">
                         <div class="flex items-center gap-3 mb-4">
                             <div class="w-8 h-8 bg-emerald-500 rounded-xl flex items-center justify-center text-white shrink-0">
                                 <i class="fas fa-camera text-xs"></i>
                             </div>
                             <div>
-                                <h4 class="text-sm font-black text-navy-900 uppercase tracking-wider">Dokumentasi Visual</h4>
+                                <h4 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-wider">Dokumentasi Visual</h4>
                                 <p class="text-xs text-slate-400 font-semibold mt-0.5">Foto survei lapangan</p>
                             </div>
                         </div>
@@ -415,14 +415,14 @@
 
                                 <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                                     <a href="{{ $fotoUrl }}" target="_blank"
-                                       class="bg-white text-navy-900 px-4 py-2 rounded-xl text-xs font-black shadow-xl uppercase tracking-widest hover:scale-105 transition-all flex items-center gap-2">
+                                       class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl text-navy-900 dark:text-white px-4 py-2 rounded-xl text-xs font-black shadow-xl uppercase tracking-widest hover:scale-105 transition-all flex items-center gap-2">
                                         <i class="fas fa-expand"></i> Lihat Full
                                     </a>
                                 </div>
                             @else
                                 <div class="text-center py-10">
-                                    <i class="fas fa-image text-5xl text-slate-700 mb-3 block"></i>
-                                    <p class="text-xs font-black text-slate-500 uppercase tracking-widest">Tidak Ada Foto</p>
+                                    <i class="fas fa-image text-5xl text-slate-700 dark:text-slate-300 mb-3 block"></i>
+                                    <p class="text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">Tidak Ada Foto</p>
                                 </div>
                             @endif
                         </div>
@@ -435,8 +435,8 @@
                     </div>
 
                     {{-- Info Ringkas --}}
-                    <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6">
-                        <h5 class="text-xs font-black text-navy-900 uppercase tracking-widest mb-4">
+                    <div class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl rounded-3xl border border-slate-100 dark:border-white/10 shadow-sm p-6">
+                        <h5 class="text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-4">
                             <i class="fas fa-list-ul mr-1 text-gold-500"></i> Ringkasan Data
                         </h5>
                         <div class="space-y-3">
@@ -455,14 +455,14 @@
                             @foreach($rows as $row)
                             <div class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
                                 <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">{{ $row['label'] }}</span>
-                                <span class="text-xs font-black text-navy-900">{{ $row['value'] }}</span>
+                                <span class="text-xs font-black text-navy-900 dark:text-white">{{ $row['value'] }}</span>
                             </div>
                             @endforeach
                         </div>
                     </div>
 
                     {{-- Tombol Aksi --}}
-                    <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6 space-y-3">
+                    <div class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl rounded-3xl border border-slate-100 dark:border-white/10 shadow-sm p-6 space-y-3">
                         <a href="{{ route('admin.infrastruktur.edit', $inf->id_infrastruktur) }}"
                             class="w-full flex items-center justify-center gap-2 bg-gold-500 hover:bg-gold-600 text-white py-3.5 rounded-2xl font-black text-sm tracking-widest transition-all shadow-md shadow-gold-500/20 uppercase">
                             <i class="fas fa-edit"></i> Edit Data
@@ -472,7 +472,7 @@
                             <i class="fas fa-file-pdf"></i> Export PDF
                         </a>
                         <a href="{{ route('admin.infrastruktur') }}"
-                            class="w-full flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-500 py-3.5 rounded-2xl font-black text-sm tracking-widest transition-all uppercase">
+                            class="w-full flex items-center justify-center gap-2 bg-slate-100 dark:bg-navy-950/50 hover:bg-slate-200 text-slate-500 dark:text-slate-400 py-3.5 rounded-2xl font-black text-sm tracking-widest transition-all uppercase">
                             <i class="fas fa-arrow-left"></i> Kembali
                         </a>
                     </div>

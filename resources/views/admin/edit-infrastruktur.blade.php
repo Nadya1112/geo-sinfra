@@ -46,11 +46,11 @@
 
         /* Input focus ring */
         .field-input {
-            @apply w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 outline-none
+            @apply w-full px-4 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-200 dark:border-white/10 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none
                    focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all placeholder-slate-400;
         }
         .field-select {
-            @apply w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 outline-none
+            @apply w-full px-4 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-200 dark:border-white/10 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none
                    focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all;
         }
 
@@ -89,7 +89,7 @@
     @media (max-width: 767px) { html { font-size: 12px; } }
 </style>
 </head>
-<body class="bg-navy-50 dark:bg-navy-950 text-slate-800 dark:text-slate-200 antialiased flex overflow-hidden h-screen transition-colors duration-300">
+<body class="bg-navy-50 dark:bg-navy-950 text-slate-800 dark:text-slate-200 dark:text-slate-200 antialiased flex overflow-hidden h-screen transition-colors duration-300">
 
     @include('admin.partials.sidebar')
 
@@ -99,28 +99,28 @@
         </style>
 
         {{-- ── Header ── --}}
-        <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 px-4  md:px-8 py-4 flex justify-between items-center z-40 shrink-0">
+        <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 px-4  md:px-8 py-4 flex justify-between items-center z-40 shrink-0">
             <div class="flex items-center gap-4">
                 <a href="{{ route('admin.infrastruktur') }}"
-                   class="hidden md:flex w-10 h-10 bg-white border border-slate-100 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/30 hover:shadow-md transition-all group"
+                   class="hidden md:flex w-10 h-10 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/30 hover:shadow-md transition-all group"
                    title="Kembali ke Manajemen Infrastruktur">
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
                 <div>
                     <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Portal Administrator</p>
-                    <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Edit Data Infrastruktur</h2>
+                    <h2 class="text-xl font-black text-navy-900 dark:text-white dark:text-white leading-none">Edit Data Infrastruktur</h2>
                 </div>
             </div>
 
             <div class="flex items-center gap-3 md:gap-6">
                 <div class="text-right">
-                    <p class="text-xs font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-black text-navy-900 dark:text-white dark:text-white" id="mini-clock">00:00 WITA</p>
                     <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('d M Y') }}</p>
                 </div>
-                <div class="h-8 w-[1px] bg-slate-100"></div>
+                <div class="h-8 w-[1px] bg-slate-100 dark:bg-navy-950/50"></div>
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin.profile') }}" class="text-right group hidden md:block">
-                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
                         <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5">Aktif</p>
                     </a>
                     <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md">
@@ -158,33 +158,33 @@
                     <div class="space-y-6">
 
                         {{-- Section 1: Identitas & Wilayah --}}
-                        <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-8">
+                        <div class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl rounded-3xl border border-slate-100 dark:border-white/10 shadow-sm p-8">
                             <div class="flex items-center gap-3 mb-6">
                                 <div class="w-8 h-8 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 shrink-0">
                                     <i class="fas fa-info-circle text-xs"></i>
                                 </div>
                                 <div>
-                                    <h4 class="text-sm font-black text-navy-900 uppercase tracking-wider">Identitas & Wilayah</h4>
+                                    <h4 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-wider">Identitas & Wilayah</h4>
                                     <p class="text-xs text-slate-400 font-semibold mt-0.5">Nama, jenis, dan lokasi wilayah infrastruktur</p>
                                 </div>
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                                 <div class="md:col-span-2">
-                                    <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Nama Infrastruktur <span class="text-red-400">*</span></label>
+                                    <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Nama Infrastruktur <span class="text-red-400">*</span></label>
                                     <input type="text" name="nama_infrastruktur"
                                            value="{{ $inf->nama_objek ?? $inf->nama_infrastruktur }}"
                                            placeholder="Nama infrastruktur..."
-                                           class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all placeholder-slate-400"
+                                           class="w-full px-4 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-200 dark:border-white/10 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all placeholder-slate-400"
                                            required>
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Jenis Infrastruktur</label>
+                                    <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Jenis Infrastruktur</label>
                                     <input type="hidden" name="jenis" value="{{ $inf->jenis }}">
-                                    <div class="w-full px-4 py-3 bg-slate-100 border border-slate-200 rounded-xl flex items-center justify-between cursor-not-allowed">
+                                    <div class="w-full px-4 py-3 bg-slate-100 dark:bg-navy-950/50 border border-slate-200 dark:border-white/10 rounded-xl flex items-center justify-between cursor-not-allowed">
                                         <div class="flex items-center gap-2">
                                             <span class="px-2 py-0.5 bg-navy-900 text-gold-500 rounded-md text-[7px] font-black tracking-wider uppercase">AI</span>
-                                            <span class="text-sm font-black text-navy-900 uppercase">{{ ucfirst($inf->jenis) ?? '—' }}</span>
+                                            <span class="text-sm font-black text-navy-900 dark:text-white uppercase">{{ ucfirst($inf->jenis) ?? '—' }}</span>
                                         </div>
                                         <i class="fas fa-lock text-slate-400 text-xs"></i>
                                     </div>
@@ -193,9 +193,9 @@
                                     </p>
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Kecamatan</label>
+                                    <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Kecamatan</label>
                                     <select name="id_kecamatan"
-                                            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                                            class="w-full px-4 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-200 dark:border-white/10 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
                                         @foreach($semuaKecamatan as $kec)
                                             <option value="{{ $kec->id_kecamatan }}" {{ $inf->id_kecamatan == $kec->id_kecamatan ? 'selected' : '' }}>
                                                 {{ $kec->nama_kecamatan }}
@@ -204,9 +204,9 @@
                                     </select>
                                 </div>
                                 <div class="md:col-span-2">
-                                    <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Kelurahan</label>
+                                    <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Kelurahan</label>
                                     <select name="id_kelurahan"
-                                            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                                            class="w-full px-4 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-200 dark:border-white/10 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
                                         @foreach($semuaKelurahan as $kel)
                                             <option value="{{ $kel->id_kelurahan }}" {{ $inf->id_kelurahan == $kel->id_kelurahan ? 'selected' : '' }}>
                                                 {{ $kel->nama_kelurahan }}
@@ -218,22 +218,22 @@
                         </div>
 
                         {{-- Section 2: Detail Teknis & AI Parameter --}}
-                        <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-8">
+                        <div class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl rounded-3xl border border-slate-100 dark:border-white/10 shadow-sm p-8">
                             <div class="flex items-center gap-3 mb-6">
                                 <div class="w-8 h-8 bg-gold-500 rounded-xl flex items-center justify-center text-white shrink-0">
                                     <i class="fas fa-brain text-xs"></i>
                                 </div>
                                 <div>
-                                    <h4 class="text-sm font-black text-navy-900 uppercase tracking-wider">Detail Teknis & Parameter AI</h4>
+                                    <h4 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-wider">Detail Teknis & Parameter AI</h4>
                                     <p class="text-xs text-slate-400 font-semibold mt-0.5">Data ini digunakan sebagai input model Decision Tree</p>
                                 </div>
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
                                 <div>
-                                    <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Material Utama <span class="text-red-400">*</span></label>
+                                    <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Material Utama <span class="text-red-400">*</span></label>
                                     <select name="material_eksisting"
-                                            class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all"
+                                            class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all"
                                             required>
                                         <option value="" disabled>-- Pilih Material --</option>
                                         <option value="Cor Beton" {{ $inf->material_eksisting == 'Cor Beton' ? 'selected' : '' }}>Cor Beton</option>
@@ -247,40 +247,40 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Panjang (m) <span class="text-red-400">*</span></label>
+                                    <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Panjang (m) <span class="text-red-400">*</span></label>
                                     <input type="number" step="0.01" name="panjang"
                                            value="{{ $inf->panjang }}"
                                            placeholder="0.00"
-                                           class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all"
+                                           class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all"
                                            required>
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Lebar (m) <span class="text-red-400">*</span></label>
+                                    <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Lebar (m) <span class="text-red-400">*</span></label>
                                     <input type="number" step="0.01" name="lebar"
                                            value="{{ $inf->lebar }}"
                                            placeholder="0.00"
-                                           class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all"
+                                           class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all"
                                            required>
                                 </div>
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                                 <div>
-                                    <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">
+                                    <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">
                                         <i class="fas fa-water text-navy-500 mr-1"></i> Ketersediaan Drainase
                                     </label>
                                     <select name="has_drainase"
-                                            class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                                            class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
                                         <option value="ya"    {{ $inf->has_drainase == 'ya'    ? 'selected' : '' }}>Ada Drainase</option>
                                         <option value="tidak" {{ $inf->has_drainase == 'tidak' ? 'selected' : '' }}>Tidak Ada Drainase</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">
+                                    <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">
                                         <i class="fas fa-circle-notch text-navy-500 mr-1"></i> Ketersediaan Gorong-gorong
                                     </label>
                                     <select name="has_gorong_gorong"
-                                            class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                                            class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
                                         <option value="ya"    {{ $inf->has_gorong_gorong == 'ya'    ? 'selected' : '' }}>Ada Gorong-gorong</option>
                                         <option value="tidak" {{ $inf->has_gorong_gorong == 'tidak' ? 'selected' : '' }}>Tidak Ada Gorong-gorong</option>
                                     </select>
@@ -288,12 +288,12 @@
                             </div>
 
                             <div>
-                                <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">
+                                <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">
                                     Deskripsi Kerusakan <span class="text-xs text-slate-400 normal-case font-semibold">(Trigger Decision Tree)</span>
                                     <span class="text-red-400">*</span>
                                 </label>
                                 <textarea name="kondisi" id="kondisi-textarea" rows="3"
-                                    class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all placeholder-slate-400"
+                                    class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all placeholder-slate-400"
                                     placeholder="Contoh: titian putus, cor beton retak, amblas..."
                                     required>{{ $inf->kondisi }}</textarea>
 
@@ -301,7 +301,7 @@
                                 <div class="mt-3 flex flex-wrap gap-2">
                                     @foreach(['Putus','Hancur','Amblas','Retak','Lubang','Goyang','Total','Parah'] as $keyword)
                                         <button type="button" onclick="addKeyword('{{ $keyword }}')"
-                                            class="px-3 py-1 bg-white border border-slate-200 rounded-lg text-xs font-black text-slate-500 hover:bg-navy-900 hover:text-gold-500 hover:border-navy-900 transition-all shadow-sm">
+                                            class="px-3 py-1 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-lg text-xs font-black text-slate-500 dark:text-slate-400 hover:bg-navy-900 hover:text-gold-500 hover:border-navy-900 transition-all shadow-sm">
                                             + {{ $keyword }}
                                         </button>
                                     @endforeach
@@ -313,29 +313,29 @@
                         </div>
 
                         {{-- Section 3: Lokasi Geografis --}}
-                        <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-8">
+                        <div class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl rounded-3xl border border-slate-100 dark:border-white/10 shadow-sm p-8">
                             <div class="flex items-center gap-3 mb-6">
                                 <div class="w-8 h-8 bg-navy-500 rounded-xl flex items-center justify-center text-white shrink-0">
                                     <i class="fas fa-map-marker-alt text-xs"></i>
                                 </div>
                                 <div>
-                                    <h4 class="text-sm font-black text-navy-900 uppercase tracking-wider">Lokasi Geografis</h4>
+                                    <h4 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-wider">Lokasi Geografis</h4>
                                     <p class="text-xs text-slate-400 font-semibold mt-0.5">Geser marker di peta atau isi koordinat secara manual</p>
                                 </div>
                             </div>
 
                             <div class="grid grid-cols-2 gap-5 mb-5">
                                 <div>
-                                    <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Garis Lintang</label>
+                                    <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Garis Lintang</label>
                                     <input type="text" name="latitude" id="lat-input"
                                            value="{{ $inf->latitude }}"
-                                           class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                                           class="w-full px-4 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-200 dark:border-white/10 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">Garis Bujur</label>
+                                    <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Garis Bujur</label>
                                     <input type="text" name="longitude" id="lng-input"
                                            value="{{ $inf->longitude }}"
-                                           class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                                           class="w-full px-4 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-200 dark:border-white/10 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
                                 </div>
                             </div>
 
@@ -351,18 +351,18 @@
                     <div class="space-y-6">
 
                         {{-- Foto Preview --}}
-                        <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6">
+                        <div class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl rounded-3xl border border-slate-100 dark:border-white/10 shadow-sm p-6">
                             <div class="flex items-center gap-3 mb-4">
                                 <div class="w-8 h-8 bg-emerald-500 rounded-xl flex items-center justify-center text-white shrink-0">
                                     <i class="fas fa-camera text-xs"></i>
                                 </div>
                                 <div>
-                                    <h4 class="text-sm font-black text-navy-900 uppercase tracking-wider">Foto Terkini</h4>
+                                    <h4 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-wider">Foto Terkini</h4>
                                     <p class="text-xs text-slate-400 font-semibold mt-0.5">Read-only — ubah via surveyor</p>
                                 </div>
                             </div>
 
-                            <div class="relative rounded-2xl overflow-hidden border border-slate-100 bg-slate-50 h-52 flex items-center justify-center group">
+                            <div class="relative rounded-2xl overflow-hidden border border-slate-100 dark:border-white/10 bg-slate-50 dark:bg-navy-950/50 h-52 flex items-center justify-center group">
                                 @if($inf->foto_terbaru && $inf->foto_terbaru != 'default.jpg')
                                     @php $cleanPath = str_replace('\\', '/', $inf->foto_terbaru); @endphp
                                     <img src="{{ asset('storage/' . (str_contains($cleanPath, 'infrastruktur/') ? $cleanPath : 'infrastruktur/' . $cleanPath)) }}"
@@ -374,7 +374,7 @@
                                     </div>
                                 @endif
                                 <div class="absolute inset-0 bg-black/30 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <span class="bg-white/90 px-4 py-2 rounded-xl text-xs font-black text-navy-900 uppercase tracking-widest shadow-xl">
+                                    <span class="bg-white/90 dark:bg-navy-950/80 px-4 py-2 rounded-xl text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest shadow-xl">
                                         <i class="fas fa-lock mr-1 text-red-400"></i> Tidak Dapat Diedit
                                     </span>
                                 </div>
@@ -411,13 +411,13 @@
                         </div>
 
                         {{-- Tombol Aksi --}}
-                        <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6 space-y-3">
+                        <div class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl rounded-3xl border border-slate-100 dark:border-white/10 shadow-sm p-6 space-y-3">
                             <button type="submit"
                                 class="w-full flex items-center justify-center gap-2 bg-navy-900 hover:bg-navy-950 text-white py-3.5 rounded-2xl font-black text-sm tracking-widest transition-all shadow-lg shadow-navy-900/20 uppercase">
                                 <i class="fas fa-save"></i> Update & Jalankan AI
                             </button>
                             <a href="{{ route('admin.infrastruktur') }}"
-                                class="w-full flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-500 py-3.5 rounded-2xl font-black text-sm tracking-widest transition-all uppercase">
+                                class="w-full flex items-center justify-center gap-2 bg-slate-100 dark:bg-navy-950/50 hover:bg-slate-200 text-slate-500 dark:text-slate-400 py-3.5 rounded-2xl font-black text-sm tracking-widest transition-all uppercase">
                                 <i class="fas fa-times"></i> Batal
                             </a>
                         </div>

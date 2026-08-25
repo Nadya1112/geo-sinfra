@@ -51,34 +51,34 @@
     @media (max-width: 767px) { html { font-size: 12px; } }
 </style>
 </head>
-<body class="bg-navy-50 dark:bg-navy-950 text-slate-800 dark:text-slate-200 antialiased flex overflow-hidden h-screen transition-colors duration-300">
+<body class="bg-navy-50 dark:bg-navy-950 text-slate-800 dark:text-slate-200 dark:text-slate-200 antialiased flex overflow-hidden h-screen transition-colors duration-300">
 
     @include('admin.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden text-left font-sans">
-        <header class="bg-white/85 dark:bg-navy-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/5 px-4  md:px-8 py-4 flex justify-between items-center z-40 text-left transition-colors duration-300">
+        <header class="bg-white/85 dark:bg-navy-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 dark:border-white/5 px-4  md:px-8 py-4 flex justify-between items-center z-40 text-left transition-colors duration-300">
             <div class="flex items-center gap-4 text-left">
                 <a href="{{ route('admin.users') }}" 
-                   class="hidden md:flex w-10 h-10 bg-white border border-slate-100 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/20 hover:shadow-lg hover:shadow-gold-500/5 transition-all group"
+                   class="hidden md:flex w-10 h-10 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/20 hover:shadow-lg hover:shadow-gold-500/5 transition-all group"
                    title="Kembali ke Daftar">
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
 
                 <div class="text-left">
                     <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Portal Administrator</p>
-                    <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Tambah Pengguna Baru</h2>
+                    <h2 class="text-xl font-black text-navy-900 dark:text-white dark:text-white leading-none">Tambah Pengguna Baru</h2>
                 </div>
             </div>
             
             <div class="flex items-center gap-3 md:gap-6">
                 <div class="text-right hidden sm:block text-left">
-                    <p class="text-xs font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-black text-navy-900 dark:text-white dark:text-white" id="mini-clock">00:00 WITA</p>
                     <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('d M Y') }}</p>
                 </div>
-                <div class="h-8 w-[1px] bg-slate-100"></div>
+                <div class="h-8 w-[1px] bg-slate-100 dark:bg-navy-950/50"></div>
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin.profile') }}" class="text-right group hidden md:block">
-                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
                         <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5">Aktif</p>
                     </a>
                     <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md">
@@ -108,56 +108,56 @@
             </div>
             @endif
 
-            <div class="max-w-2xl bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm mx-auto text-left">
+            <div class="max-w-2xl bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl rounded-[2.5rem] p-10 border border-slate-100 dark:border-white/10 shadow-sm mx-auto text-left">
                 <form action="{{ route('admin.users.store') }}" method="POST" class="space-y-6 text-left">
                     @csrf
                     
                     <div class="text-left">
-                        <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">
+                        <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">
                             Nama Pengguna <span class="text-red-500">*</span>
                         </label>
-                        <input type="text" name="name" value="{{ old('name') }}" class="w-full px-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all" placeholder="Masukkan Nama Lengkap" required>
+                        <input type="text" name="name" value="{{ old('name') }}" class="w-full px-5 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-100 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all" placeholder="Masukkan Nama Lengkap" required>
                     </div>
 
                     <div class="text-left">
-                        <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">
+                        <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">
                             Email <span class="text-red-500">*</span>
                         </label>
-                        <input type="email" name="email" value="{{ old('email') }}" class="w-full px-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all" placeholder="email@contoh.com" required>
+                        <input type="email" name="email" value="{{ old('email') }}" class="w-full px-5 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-100 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all" placeholder="email@contoh.com" required>
                     </div>
 
                     <div class="text-left">
-                        <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">
+                        <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">
                             Nomor WhatsApp / HP <span class="text-red-500">*</span>
                         </label>
-                        <input type="text" name="no_hp" value="{{ old('no_hp') }}" class="w-full px-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all" placeholder="Contoh: 08123456789" required>
+                        <input type="text" name="no_hp" value="{{ old('no_hp') }}" class="w-full px-5 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-100 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all" placeholder="Contoh: 08123456789" required>
                     </div>
 
                     <div class="text-left">
-                        <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">
+                        <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">
                             Password <span class="text-red-500">*</span>
                         </label>
                         <div class="relative text-left">
-                            <input type="password" name="password" class="w-full px-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all" placeholder="Min. 8 Karakter" required>
+                            <input type="password" name="password" class="w-full px-5 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-100 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all" placeholder="Min. 8 Karakter" required>
                             <i class="fas fa-lock absolute right-5 top-1/2 -translate-y-1/2 text-slate-300"></i>
                         </div>
                     </div>
 
                     <div class="text-left">
-                        <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">
+                        <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">
                             Role Akses <span class="text-red-500">*</span>
                         </label>
-                        <select id="role-select" name="role" class="w-full px-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all" onchange="toggleWilayah()" required>
+                        <select id="role-select" name="role" class="w-full px-5 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-100 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all" onchange="toggleWilayah()" required>
                             <option value="surveyor" {{ old('role') == 'surveyor' ? 'selected' : '' }}>SURVEYOR</option>
                             <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>ADMIN</option>
                         </select>
                     </div>
 
                     <div id="wilayah-container" class="text-left">
-                        <label class="block text-xs font-black text-navy-900 uppercase tracking-widest mb-2">
+                        <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">
                             Wilayah Tugas <span class="text-slate-400 font-medium">(Opsional)</span>
                         </label>
-                        <select name="id_kecamatan" class="w-full px-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
+                        <select name="id_kecamatan" class="w-full px-5 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-100 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
                             <option value="">Pilih Wilayah</option>
                             @foreach($semuaWilayah as $wilayah)
                                 <option value="{{ $wilayah->id_kecamatan }}" {{ old('id_kecamatan') == $wilayah->id_kecamatan ? 'selected' : '' }}>{{ $wilayah->nama_kecamatan }}</option>
@@ -167,7 +167,7 @@
 
                     <div class="pt-6 flex gap-3 text-left">
                         <button type="submit" class="flex-1 bg-gold-500 text-white text-xs px-4 py-3 rounded-2xl font-bold shadow-lg shadow-gold-500/10 hover:bg-gold-600 transition tracking-widest uppercase">Simpan User</button>
-                        <a href="{{ route('admin.users') }}" class="flex-1 bg-slate-100 text-slate-500 text-xs px-4 py-3 rounded-2xl font-bold hover:bg-slate-200 transition text-center flex items-center justify-center gap-2 text-left tracking-widest uppercase">
+                        <a href="{{ route('admin.users') }}" class="flex-1 bg-slate-100 dark:bg-navy-950/50 text-slate-500 dark:text-slate-400 text-xs px-4 py-3 rounded-2xl font-bold hover:bg-slate-200 transition text-center flex items-center justify-center gap-2 text-left tracking-widest uppercase">
                             <i class="fas fa-times-circle text-xs"></i> Batal
                         </a>
                     </div>

@@ -45,31 +45,31 @@
     @media (max-width: 767px) { html { font-size: 12px; } }
 </style>
 </head>
-<body class="bg-navy-50 dark:bg-navy-950 text-slate-800 dark:text-slate-200 antialiased flex overflow-hidden h-screen transition-colors duration-300">
+<body class="bg-navy-50 dark:bg-navy-950 text-slate-800 dark:text-slate-200 dark:text-slate-200 antialiased flex overflow-hidden h-screen transition-colors duration-300">
 
     @include('admin.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-y-auto font-sans">
-        <header class="bg-white/85 dark:bg-navy-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/5 px-4  md:px-8 py-4 flex justify-between items-center z-40 text-left transition-colors duration-300">
+        <header class="bg-white/85 dark:bg-navy-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 dark:border-white/5 px-4  md:px-8 py-4 flex justify-between items-center z-40 text-left transition-colors duration-300">
             <div class="flex items-center gap-4 text-left">
-                <a href="{{ route('admin.wilayah') }}" class="hidden md:flex w-10 h-10 bg-white border border-slate-100 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/20 hover:shadow-lg hover:shadow-gold-500/5 transition-all group">
+                <a href="{{ route('admin.wilayah') }}" class="hidden md:flex w-10 h-10 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/20 hover:shadow-lg hover:shadow-gold-500/5 transition-all group">
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
                 <div class="text-left">
                     <p class="text-xs font-black text-gold-500 uppercase tracking-wider mb-1">Portal Administrator</p>
-                    <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Edit Data Wilayah</h2>
+                    <h2 class="text-xl font-black text-navy-900 dark:text-white dark:text-white leading-none">Edit Data Wilayah</h2>
                 </div>
             </div>
             
             <div class="flex items-center gap-6 text-left">
                 <div class="text-right">
-                    <p class="text-xs font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
+                    <p class="text-xs font-black text-navy-900 dark:text-white dark:text-white" id="mini-clock">00:00 WITA</p>
                     <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('d M Y') }}</p>
                 </div>
-                <div class="h-8 w-[1px] bg-slate-100"></div>
+                <div class="h-8 w-[1px] bg-slate-100 dark:bg-navy-950/50"></div>
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin.profile') }}" class="text-right group hidden md:block">
-                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
                         <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5">Aktif</p>
                     </a>
                     <a href="{{ route('admin.profile') }}" class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md">
@@ -84,9 +84,9 @@
         </header>
 
         <div class="p-4 md:p-8 text-left">
-            <div class="max-w-4xl bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm mx-auto">
+            <div class="max-w-4xl bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl rounded-[2.5rem] p-10 border border-slate-100 dark:border-white/10 shadow-sm mx-auto">
                 <div class="mb-10 border-b border-slate-50 pb-5 text-left">
-                    <h3 class="text-lg font-black text-navy-900 tracking-tight">Informasi Wilayah</h3>
+                    <h3 class="text-lg font-black text-navy-900 dark:text-white tracking-tight">Informasi Wilayah</h3>
                     <p class="text-xs text-slate-400 font-medium font-sans">Perbarui koordinat dan nama wilayah administratif</p>
                 </div>
 
@@ -96,12 +96,12 @@
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
                         <div class="text-left">
-                            <label class="block text-xs font-black text-navy-900 tracking-widest mb-2 uppercase">Nama Kelurahan <span class="text-red-500">*</span></label>
-                            <input type="text" name="nama_kelurahan" value="{{ $wilayah->nama_kelurahan }}" class="w-full px-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-semibold outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500" required>
+                            <label class="block text-xs font-black text-navy-900 dark:text-white tracking-widest mb-2 uppercase">Nama Kelurahan <span class="text-red-500">*</span></label>
+                            <input type="text" name="nama_kelurahan" value="{{ $wilayah->nama_kelurahan }}" class="w-full px-5 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-100 dark:border-white/10 rounded-2xl text-sm font-semibold outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500" required>
                         </div>
                         <div class="text-left">
-                            <label class="block text-xs font-black text-navy-900 tracking-widest mb-2 uppercase">Kecamatan <span class="text-red-500">*</span></label>
-                            <select name="id_kecamatan" class="w-full px-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-semibold outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500">
+                            <label class="block text-xs font-black text-navy-900 dark:text-white tracking-widest mb-2 uppercase">Kecamatan <span class="text-red-500">*</span></label>
+                            <select name="id_kecamatan" class="w-full px-5 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-100 dark:border-white/10 rounded-2xl text-sm font-semibold outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500">
                                 @foreach($semuaKecamatan as $kec)
                                     <option value="{{ $kec->id_kecamatan }}" {{ $wilayah->id_kecamatan == $kec->id_kecamatan ? 'selected' : '' }}>
                                         {{ $kec->nama_kecamatan }}
@@ -112,14 +112,14 @@
                     </div>
 
                     <div class="text-left">
-                        <label class="block text-xs font-black text-navy-900 tracking-widest mb-2 uppercase">Data Geometri (GeoJSON) <span class="text-slate-400 font-medium normal-case ml-1">(Opsional)</span></label>
-                        <textarea name="geometri" rows="8" placeholder='{"type": "Polygon", "coordinates": [...]}' class="w-full px-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-xs font-mono focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">{{ old('geometri', $wilayah->geometri) }}</textarea>
+                        <label class="block text-xs font-black text-navy-900 dark:text-white tracking-widest mb-2 uppercase">Data Geometri (GeoJSON) <span class="text-slate-400 font-medium normal-case ml-1">(Opsional)</span></label>
+                        <textarea name="geometri" rows="8" placeholder='{"type": "Polygon", "coordinates": [...]}' class="w-full px-5 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-100 dark:border-white/10 rounded-2xl text-xs font-mono focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">{{ old('geometri', $wilayah->geometri) }}</textarea>
                         <p class="text-xs text-slate-400 mt-2 italic font-medium text-left">Masukkan format GeoJSON untuk menampilkan poligon di peta.</p>
                     </div>
 
                     <div class="flex gap-4 pt-6 text-left">
                         <button type="submit" class="flex-1 bg-gold-500 text-white py-4 rounded-2xl font-bold shadow-lg shadow-gold-500/10 hover:bg-gold-600 transition tracking-widest text-xs uppercase">SIMPAN</button>
-                        <a href="{{ route('admin.wilayah') }}" class="flex-1 bg-slate-100 text-slate-500 py-4 rounded-2xl font-bold hover:bg-slate-200 transition text-center leading-[1.2rem] tracking-widest text-xs uppercase">Batal</a>
+                        <a href="{{ route('admin.wilayah') }}" class="flex-1 bg-slate-100 dark:bg-navy-950/50 text-slate-500 dark:text-slate-400 py-4 rounded-2xl font-bold hover:bg-slate-200 transition text-center leading-[1.2rem] tracking-widest text-xs uppercase">Batal</a>
                     </div>
                 </form>
             </div>
