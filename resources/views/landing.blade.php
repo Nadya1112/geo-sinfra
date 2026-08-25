@@ -24,15 +24,30 @@
             } catch (e) {}
         })();
 
-        // Global Theme Toggle Function
-        window.toggleTheme = function() {
-            const html = document.documentElement;
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                localStorage.setItem('geo-theme', 'light');
-            } else {
-                html.classList.add('dark');
+        function setThemeMode(mode) {
+            if (mode === 'dark') {
+                document.documentElement.classList.add('dark');
                 localStorage.setItem('geo-theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('geo-theme', 'light');
+            }
+            const themeDropdown = document.getElementById('theme-dropdown');
+            if (themeDropdown) themeDropdown.classList.add('hidden');
+            
+            // Refresh map specific layers if needed (e.g. basemap colors)
+            setTimeout(() => {
+                if(window.map && window.activeKelurahanId) {
+                    highlightKelurahan(window.activeKelurahanId);
+                }
+            }, 100);
+        }
+
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                setThemeMode('light');
+            } else {
+                setThemeMode('dark');
             }
         };
     </script>
@@ -433,10 +448,22 @@
 
                 <div class="nav-divider w-px h-5 mx-1 md:mx-2 hidden md:block transition-colors duration-300"></div>
                 
-                <button type="button" id="theme-toggle-landing" onclick="toggleTheme()" class="nav-link w-9 h-9 flex items-center justify-center rounded-xl text-sm transition-all border border-transparent hover:border-gold-500/30 relative z-[6000] cursor-pointer">
-                    <i class="fas fa-sun hidden dark:block pointer-events-none"></i>
-                    <i class="fas fa-moon block dark:hidden pointer-events-none"></i>
-                </button>
+                <!-- Theme Dropdown Selector -->
+                <div class="relative">
+                    <button type="button" onclick="document.getElementById('theme-dropdown').classList.toggle('hidden')" class="nav-link w-9 h-9 flex items-center justify-center rounded-xl text-sm transition-all border border-transparent hover:border-gold-500/30 relative z-[6000] cursor-pointer">
+                        <i class="fas fa-sun hidden dark:block pointer-events-none"></i>
+                        <i class="fas fa-moon block dark:hidden pointer-events-none"></i>
+                    </button>
+                    <!-- Dropdown Content -->
+                    <div id="theme-dropdown" class="hidden absolute right-0 mt-2 w-40 bg-white dark:bg-[#0f0e2c]/95 backdrop-blur-xl rounded-xl shadow-2xl py-2 border border-slate-100 dark:border-white/10 z-[6000] overflow-hidden transform origin-top-right transition-all">
+                        <button onclick="setThemeMode('light')" class="w-full text-left flex items-center px-4 py-2.5 text-xs font-black text-navy-900 dark:text-white hover:bg-slate-50 dark:hover:bg-white/5 uppercase tracking-widest transition-colors border-b border-slate-100 dark:border-white/5">
+                            <i class="fas fa-sun w-6 text-gold-500 text-center"></i> Terang
+                        </button>
+                        <button onclick="setThemeMode('dark')" class="w-full text-left flex items-center px-4 py-2.5 text-xs font-black text-navy-900 dark:text-white hover:bg-slate-50 dark:hover:bg-white/5 uppercase tracking-widest transition-colors">
+                            <i class="fas fa-moon w-6 text-indigo-400 text-center"></i> Gelap
+                        </button>
+                    </div>
+                </div>
                 
                 <a href="{{ url('/login') }}" class="bg-navy-900 text-gold-500 hover:bg-gold-500 hover:text-white px-3 md:px-4 py-2 rounded-lg text-[10px] md:text-xs font-bold transition-all shadow-sm hidden md:flex items-center gap-2 uppercase tracking-wider">
                     <i class="fas fa-lock"></i> <span>Masuk</span>
@@ -461,14 +488,23 @@
                     </div>
                 </div>
                 
-                <!-- Click outside listener for dropdown -->
+                <!-- Click outside listener for dropdowns -->
                 <script>
                     document.addEventListener('click', function(event) {
-                        const dropdown = document.getElementById('mobile-dropdown');
-                        if (dropdown) {
-                            const button = dropdown.previousElementSibling;
-                            if (!dropdown.contains(event.target) && !button.contains(event.target) && !dropdown.classList.contains('hidden')) {
-                                dropdown.classList.add('hidden');
+                        const mobileDropdown = document.getElementById('mobile-dropdown');
+                        const themeDropdown = document.getElementById('theme-dropdown');
+                        
+                        if (mobileDropdown) {
+                            const mobileButton = mobileDropdown.previousElementSibling;
+                            if (!mobileDropdown.contains(event.target) && !mobileButton.contains(event.target) && !mobileDropdown.classList.contains('hidden')) {
+                                mobileDropdown.classList.add('hidden');
+                            }
+                        }
+                        
+                        if (themeDropdown) {
+                            const themeButton = themeDropdown.previousElementSibling;
+                            if (!themeDropdown.contains(event.target) && !themeButton.contains(event.target) && !themeDropdown.classList.contains('hidden')) {
+                                themeDropdown.classList.add('hidden');
                             }
                         }
                     });
