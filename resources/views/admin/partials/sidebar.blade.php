@@ -4,7 +4,7 @@
 <div id="mobile-overlay" onclick="toggleMobileMenu()" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9998] hidden md:hidden transition-opacity duration-300 opacity-0"></div>
 
 {{-- Sidebar Desktop & Tablet --}}
-<aside-navy-900 dark:text-white flex-col hidden md:flex shadow-2xl z-20 text-left border-r border-slate-200 dark:border-white/5 shrink-0 h-screen transition-all duration-300">
+<aside class="w-20 lg:w-64 bg-white dark:bg-[#0f0e2c] text-navy-900 dark:text-white flex-col hidden md:flex shadow-2xl z-20 text-left border-r border-slate-200 dark:border-white/5 shrink-0 h-screen transition-all duration-300">
     <div class="p-4 lg:p-6 flex-1 text-left overflow-y-auto custom-scrollbar">
         <a href="{{ route('admin.dashboard') }}" class="flex items-center justify-center lg:justify-start gap-3 mb-10 hover:opacity-85 transition-opacity group">
             <div class="w-9 h-9 bg-white rounded-xl overflow-hidden shadow-lg shadow-navy-950/10 dark:shadow-navy-950/40 group-hover:scale-105 transition-all shrink-0">
@@ -88,7 +88,7 @@
 
         <form method="POST" action="{{ route('logout') }}" class="w-full">
             @csrf
-            <button type="submit" class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300-red-50 dark:hover:bg-red-500/10 rounded-xl" title="Keluar">
+            <button type="submit" class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 w-full text-left text-sm font-bold transition group hover:bg-red-50 dark:hover:bg-red-500/10 rounded-xl" title="Keluar">
                 <i class="fas fa-sign-out-alt text-lg lg:text-base group-hover:-translate-x-1 transition-transform"></i> 
                 <span class="hidden lg:inline">Keluar</span>
             </button>
@@ -97,7 +97,7 @@
 </aside>
 
 {{-- Sidebar Mobile (Slide Drawer) --}}
-<aside-navy-900 dark:text-white flex flex-col z-[9999] shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+<aside id="mobile-sidebar" class="fixed top-0 left-0 w-72 h-full bg-white dark:bg-[#0f0e2c] text-navy-900 dark:text-white flex flex-col z-[9999] shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden">
     <div class="p-6 flex-1 text-left overflow-y-auto">
         <div class="flex items-center justify-between mb-8">
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 hover:opacity-85 transition-opacity group">
@@ -190,7 +190,7 @@
 
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button type="submit" class="flex items-center gap-3 px-4 py-3.5 text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300-red-50 dark:hover:bg-red-500/10">
+            <button type="submit" class="flex items-center gap-3 px-4 py-3.5 text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 w-full text-left text-sm font-bold transition group rounded-xl hover:bg-red-50 dark:hover:bg-red-500/10">
                 <i class="fas fa-sign-out-alt group-hover:-translate-x-1 transition-transform"></i> 
                 Keluar
             </button>
@@ -199,7 +199,7 @@
 </aside>
 
 <!-- Bottom Navigation Bar (Mobile Only) -->
-<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white dark:bg-white dark:bg-[#0f0e2c] border-t border-slate-200 dark:border-white/10 z-[9990] flex justify-around items-center px-2 py-3 pb-safe shadow-[0_-10px_30px_rgba(0,0,0,0.3)]">
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white dark:bg-[#0f0e2c] border-t border-slate-200 dark:border-white/10 z-[9990] flex justify-around items-center px-2 py-3 pb-safe shadow-[0_-10px_30px_rgba(0,0,0,0.3)]">
     <a href="{{ route('admin.dashboard') }}" class="flex flex-col items-center gap-1.5 p-2 {{ request()->routeIs('admin.dashboard') ? 'text-gold-500' : 'text-slate-500 hover:text-navy-900 dark:text-slate-400 dark:hover:text-white' }} transition-colors">
         <i class="fas fa-home text-xl {{ request()->routeIs('admin.dashboard') ? '-translate-y-1' : '' }} transition-transform"></i>
         <span class="text-[10px] font-bold uppercase tracking-wider">Beranda</span>
