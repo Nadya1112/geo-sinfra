@@ -23,6 +23,18 @@
                 }
             } catch (e) {}
         })();
+
+        // Global Theme Toggle Function
+        window.toggleTheme = function() {
+            const html = document.documentElement;
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('geo-theme', 'light');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('geo-theme', 'dark');
+            }
+        };
     </script>
 
     <link rel="stylesheet" href="{{ secure_asset('build/assets/app-jxQFI8EP.css') }}">
@@ -371,9 +383,9 @@
 
                 <div class="nav-divider w-px h-5 mx-1 md:mx-2 hidden md:block transition-colors duration-300"></div>
                 
-                <button type="button" id="theme-toggle-landing" class="nav-link w-9 h-9 flex items-center justify-center rounded-xl text-sm transition-all border border-transparent hover:border-gold-500/30">
-                    <i class="fas fa-sun hidden dark:block"></i>
-                    <i class="fas fa-moon block dark:hidden"></i>
+                <button type="button" id="theme-toggle-landing" onclick="toggleTheme()" class="nav-link w-9 h-9 flex items-center justify-center rounded-xl text-sm transition-all border border-transparent hover:border-gold-500/30 relative z-[6000] cursor-pointer">
+                    <i class="fas fa-sun hidden dark:block pointer-events-none"></i>
+                    <i class="fas fa-moon block dark:hidden pointer-events-none"></i>
                 </button>
                 
                 <a href="{{ url('/login') }}" class="bg-navy-900 text-gold-500 hover:bg-gold-500 hover:text-white px-3 md:px-4 py-2 rounded-lg text-[10px] md:text-xs font-bold transition-all shadow-sm hidden md:flex items-center gap-2 uppercase tracking-wider">
@@ -1943,21 +1955,7 @@
             // Jalankan polling setiap 30 detik
             setInterval(fetchMapData, 30000);
             
-            // Theme Toggle Logic for Landing Page
-            const toggleBtnLanding = document.getElementById('theme-toggle-landing');
-            if (toggleBtnLanding) {
-                toggleBtnLanding.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const html = document.documentElement;
-                    if (html.classList.contains('dark')) {
-                        html.classList.remove('dark');
-                        localStorage.setItem('geo-theme', 'light');
-                    } else {
-                        html.classList.add('dark');
-                        localStorage.setItem('geo-theme', 'dark');
-                    }
-                });
-            }
+
         });
     </script>
 </body>

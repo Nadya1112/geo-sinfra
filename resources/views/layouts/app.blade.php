@@ -20,6 +20,18 @@
                 }
             } catch (e) {}
         })();
+
+        // Global Theme Toggle Function
+        window.toggleTheme = function() {
+            const html = document.documentElement;
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('geo-theme', 'light');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('geo-theme', 'dark');
+            }
+        };
     </script>
     
     <!-- Tailwind CSS CDN -->
@@ -136,23 +148,6 @@
         }
         setInterval(updateClock, 1000); 
         updateClock();
-
-        // Theme Toggle Logic
-        document.addEventListener('DOMContentLoaded', function() {
-            const toggleBtn = document.getElementById('theme-toggle');
-            if (toggleBtn) {
-                toggleBtn.addEventListener('click', function() {
-                    const html = document.documentElement;
-                    if (html.classList.contains('dark')) {
-                        html.classList.remove('dark');
-                        localStorage.setItem('geo-theme', 'light');
-                    } else {
-                        html.classList.add('dark');
-                        localStorage.setItem('geo-theme', 'dark');
-                    }
-                });
-            }
-        });
     </script>
     @stack('scripts')
 </body>
