@@ -690,7 +690,7 @@
                         </button>
                     </div>
                         
-                    <div id="filter-utama" class="hidden fixed inset-x-0 bottom-0 md:absolute md:top-full md:bottom-auto md:mt-2 md:right-0 w-full md:w-56 bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-t-[2.5rem] md:rounded-xl p-6 md:p-3 shadow-2xl border-t md:border border-white/10 max-h-[85vh] md:max-h-[60vh] overflow-y-auto custom-scrollbar flex-col gap-3 pointer-events-auto">
+                    <div id="filter-utama" class="hidden fixed inset-x-0 bottom-0 md:absolute md:top-full md:bottom-auto md:mt-2 md:right-0 w-full md:w-56 bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-t-[2.5rem] md:rounded-xl p-6 md:p-3 shadow-2xl border-t md:border border-white/10 max-h-[85vh] md:max-h-[60vh] overflow-y-auto custom-scrollbar flex-col gap-3 pointer-events-auto transform md:transform-none translate-y-full md:translate-y-0 transition-transform duration-300">
                         
                         <!-- Mobile Close Button & Handle -->
                         <div class="w-12 h-1.5 bg-white/20 rounded-full mx-auto mb-4 md:hidden"></div>
@@ -925,6 +925,27 @@
         function toggleMobileMenu() {
             const el = document.getElementById('mobile-menu');
             el.classList.toggle('hidden');
+        }
+
+        // Generic toggle for menus
+        function toggleMenu(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                if (el.classList.contains('hidden')) {
+                    el.classList.remove('hidden');
+                    // Use setTimeout to allow display:block to apply before animating transform
+                    setTimeout(() => {
+                        el.classList.remove('translate-y-full');
+                        el.classList.add('flex'); // Because it's flex-col
+                    }, 10);
+                } else {
+                    el.classList.add('translate-y-full');
+                    setTimeout(() => {
+                        el.classList.add('hidden');
+                        el.classList.remove('flex');
+                    }, 300);
+                }
+            }
         }
 
         let activeKelurahanId = null;

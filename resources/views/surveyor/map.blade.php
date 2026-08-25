@@ -34,7 +34,7 @@
 
     @include('surveyor.partials.sidebar')
 
-    <main class="flex-1 flex flex-col h-screen overflow-hidden">
+    <main class="flex-1 flex flex-col h-screen overflow-hidden pb-24 md:pb-0">
         <header class="bg-white  border-b border-navy-50 sticky top-0 px-4 pl-20 md:px-8 py-4 flex justify-between items-center z-10 shadow-sm relative">
             <div class="flex items-center gap-4">
                 <a href="{{ route('surveyor.dashboard') }}" class="hidden md:flex w-10 h-10  items-center justify-center bg-navy-50  text-navy-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 transition-all border border-navy-100">
@@ -73,18 +73,10 @@
             
 
 
-            <!-- Custom Zoom Controls Top Left -->
-            <div class="absolute top-4 left-4 z-[2000] flex flex-col gap-1.5 pointer-events-auto">
-                <button onclick="map.zoomIn()" class="w-12 h-12 md:w-8 md:h-8 bg-[#1e1b4b]/80 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:bg-[#1e1b4b] transition-all group">
-                    <i class="fas fa-plus text-sm md:text-xs group-hover:scale-110 transition-transform"></i>
-                </button>
-                <button onclick="map.zoomOut()" class="w-12 h-12 md:w-8 md:h-8 bg-[#1e1b4b]/80 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:bg-[#1e1b4b] transition-all group">
-                    <i class="fas fa-minus text-sm md:text-xs group-hover:scale-110 transition-transform"></i>
-                </button>
-            </div>
+            <!-- Custom Zoom Controls Removed for Uniformity -->
 
             <!-- Map Overlay UI Bottom Left -->
-            <div class="absolute bottom-28 md:bottom-6 left-4 z-[2000] pointer-events-auto">
+            <div class="absolute bottom-6 left-4 z-[2000] pointer-events-auto">
                 <div id="condition-card" class="bg-navy-900/90 backdrop-blur-xl p-1 rounded-2xl border border-white/10 shadow-2xl min-w-[140px] transition-all duration-300">
                     <button onclick="toggleConditionMenu()" class="w-full px-3 py-2 rounded-xl text-xs font-black uppercase tracking-wider bg-white/5 text-white flex items-center justify-between hover:bg-white/10 transition-all group border border-white/5">
                         <div class="flex items-center gap-1.5">
@@ -134,7 +126,7 @@
             </div>
 
             <!-- Mobile Filter FAB (Only on Mobile) -->
-            <button onclick="document.getElementById('mobile-filter-sheet').classList.remove('hidden'); setTimeout(() => document.getElementById('mobile-filter-sheet').classList.remove('translate-y-full'), 10);" class="md:hidden absolute bottom-24 right-4 z-[2000] w-12 h-12 bg-[#0f0e2c]/95 backdrop-blur-xl border border-white/10 rounded-xl flex items-center justify-center text-gold-500 shadow-2xl pointer-events-auto">
+            <button onclick="document.getElementById('mobile-filter-sheet').classList.remove('hidden'); setTimeout(() => document.getElementById('mobile-filter-sheet').classList.remove('translate-y-full'), 10);" class="md:hidden absolute bottom-6 right-4 z-[2000] w-12 h-12 bg-[#0f0e2c]/95 backdrop-blur-xl border border-white/10 rounded-xl flex items-center justify-center text-gold-500 shadow-2xl pointer-events-auto">
                 <i class="fas fa-filter text-lg"></i>
             </button>
 

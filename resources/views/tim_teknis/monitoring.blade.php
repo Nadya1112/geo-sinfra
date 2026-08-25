@@ -52,7 +52,7 @@
 
     @include('tim_teknis.partials.sidebar')
 
-    <main class="flex-1 flex flex-col h-screen overflow-hidden">
+    <main class="flex-1 flex flex-col h-screen overflow-hidden pb-24 md:pb-0">
         <header class="bg-white dark:bg-[#1e1b4b] border-b border-slate-100 dark:border-white/10 px-4 pl-20 md:pl-4 md:px-8 py-3 md:py-4 flex justify-between items-center z-40 sticky top-0">
             <div class="flex items-center gap-2 md:gap-4 min-w-0">
                 <a href="{{ route('tim_teknis.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100 dark:border-white/10 hidden md:flex flex-shrink-0">
@@ -89,18 +89,10 @@
         <div class="flex-1 relative">
             <div id="main-map" class="absolute inset-0 z-0"></div>
 
-            <!-- Custom Zoom Controls -->
-            <div class="absolute top-4 left-4 z-[2000] pointer-events-auto flex flex-col gap-1.5">
-                <button onclick="map.zoomIn()" class="w-8 h-8 bg-navy-900/80 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:bg-gold-500 transition-all group">
-                    <i class="fas fa-plus text-xs group-hover:scale-110 transition-transform"></i>
-                </button>
-                <button onclick="map.zoomOut()" class="w-8 h-8 bg-navy-900/80 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:bg-gold-500 transition-all group">
-                    <i class="fas fa-minus text-xs group-hover:scale-110 transition-transform"></i>
-                </button>
-            </div>
+            <!-- Custom Zoom Controls Removed for Uniformity -->
 
             <!-- Stats UI Bottom Left -->
-            <div class="absolute bottom-32 md:bottom-6 left-4 z-[2000] pointer-events-auto">
+            <div class="absolute bottom-6 left-4 z-[2000] pointer-events-auto">
                 <div id="condition-card" class="bg-navy-900/90 backdrop-blur-xl p-1 rounded-2xl border border-white/10 shadow-2xl min-w-[140px] transition-all duration-300">
                     <button onclick="toggleMenu('condition-options')" class="w-full px-3 py-2 rounded-xl text-xs font-black uppercase tracking-wider bg-white/5 text-white flex items-center justify-between hover:bg-white/10 transition-all group border border-white/5">
                         <div class="flex items-center gap-1.5">
