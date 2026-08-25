@@ -25,3 +25,6 @@
     --color-gold-600: #b38f4a;
     --color-gold-700: #9d7c3d;
 }
+
+/* Override Tailwind v4 default dark mode to use .dark class */
+@custom-variant dark (&:where(.dark, .dark *));

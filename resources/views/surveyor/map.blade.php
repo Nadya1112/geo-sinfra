@@ -179,14 +179,14 @@
 
             <!-- Mobile Filter Sheet / Dropdown Modal -->
             <div id="mobile-filter-sheet" class="hidden fixed inset-x-0 bottom-0 md:absolute md:top-full md:bottom-auto md:right-0 md:mt-2 z-[2000] pointer-events-auto transition-transform duration-300">
-                <div class="bg-[#1e1b4b]/95 backdrop-blur-xl rounded-t-[2.5rem] md:rounded-2xl border-t md:border border-white/10 shadow-2xl w-full md:w-64 flex flex-col max-h-[85vh]">
+                <div class="bg-white/95 dark:bg-[#1e1b4b]/95 backdrop-blur-xl rounded-t-[2.5rem] md:rounded-2xl border-t md:border border-slate-200 dark:border-white/10 shadow-2xl w-full md:w-64 flex flex-col max-h-[85vh]">
                     
                     <!-- Mobile Close Button & Handle (Sticky Top) -->
-                    <div class="flex-shrink-0 p-6 md:p-3 pb-2 md:pb-3 border-b border-white/5 md:border-none">
-                        <div class="w-12 h-1.5 bg-white/20 rounded-full mx-auto mb-2 md:hidden"></div>
+                    <div class="flex-shrink-0 p-6 md:p-3 pb-2 md:pb-3 border-b border-slate-200 dark:border-white/5 md:border-none">
+                        <div class="w-12 h-1.5 bg-slate-300 dark:bg-white/20 rounded-full mx-auto mb-2 md:hidden"></div>
                         <div class="flex justify-between items-center md:hidden">
-                            <h4 class="text-white font-black text-lg uppercase tracking-wider">Filter Peta</h4>
-                            <button onclick="document.getElementById('mobile-filter-sheet').classList.add('translate-y-full'); setTimeout(() => document.getElementById('mobile-filter-sheet').classList.add('hidden'), 300);" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-all">
+                            <h4 class="text-navy-900 dark:text-white font-black text-lg uppercase tracking-wider">Filter Peta</h4>
+                            <button onclick="document.getElementById('mobile-filter-sheet').classList.add('translate-y-full'); setTimeout(() => document.getElementById('mobile-filter-sheet').classList.add('hidden'), 300);" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center text-navy-900 dark:text-white hover:bg-slate-200 dark:hover:bg-white/20 transition-all">
                                 <i class="fas fa-times"></i>
                             </button>
                         </div>
