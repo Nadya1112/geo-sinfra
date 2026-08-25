@@ -700,47 +700,33 @@
                 </p>
             </div>
 
-            <div class="relative bg-white dark:bg-navy-900 rounded-[2.5rem] shadow-2xl dark:shadow-black/40 overflow-hidden w-full h-[550px] md:h-[750px] lg:h-[850px] z-10 border border-transparent dark:border-white/5">
-                <!-- Map Container -->
-                <div id="map" class="absolute inset-0 z-0"></div>
-
-                <!-- Custom Zoom Controls & GPS -->
-                <div class="absolute top-20 md:top-6 left-2 md:left-6 z-[9999] flex flex-col gap-2 pointer-events-auto">
-                    <button onclick="locateUser()" class="w-9 h-9 mt-2 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-white hover:text-blue-400 hover:bg-[#1e1b4b] transition-all group" title="Lokasi Saya" aria-label="Gunakan Lokasi Saat Ini">
-                        <i class="fas fa-crosshairs text-[10px] group-hover:scale-110 transition-transform" aria-hidden="true"></i>
-                    </button>
-                    <!-- Heatmap Toggle Button -->
-                    <button id="toggle-heatmap" onclick="toggleHeatmap()" class="w-9 h-9 mt-2 bg-[#0f0e2c]/90 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-[#1e1b4b] transition-all group relative" title="Aktifkan Heatmap Kerusakan" aria-label="Toggle Heatmap Kerusakan">
-                        <i class="fas fa-fire text-[10px] group-hover:scale-110 transition-transform" aria-hidden="true"></i>
-                        <span id="heatmap-indicator" class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-[#0f0e2c] hidden"></span>
-                    </button>
+            <!-- Map Toolbar (Outside the map) -->
+            <div class="mb-4 bg-white/80 dark:bg-[#0f0e2c]/60 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl p-3 md:p-4 shadow-xl flex flex-col md:flex-row gap-3 md:items-center justify-between z-[9999] relative">
+                
+                <!-- Search Box -->
+                <div class="relative w-full md:w-1/3">
+                    <input type="text" id="map-search" placeholder="Cari infrastruktur..." class="w-full bg-slate-100 dark:bg-navy-900/50 border border-slate-300 dark:border-white/10 rounded-xl px-4 py-2.5 pl-10 text-sm font-bold text-navy-900 dark:text-white focus:ring-2 focus:ring-gold-500 focus:outline-none transition-all placeholder:text-slate-400">
+                    <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
                 </div>
 
+                <!-- Controls -->
+                <div class="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-2 md:pb-0 hide-scrollbar">
+                    <button onclick="toggleMenu('filter-utama')" class="flex-shrink-0 bg-navy-900 dark:bg-white/10 text-white px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-navy-800 transition-all flex items-center gap-2 border border-transparent dark:border-white/5 shadow-md">
+                        <i class="fas fa-filter text-gold-500"></i> Filter Peta
+                    </button>
+                    
+                    <button onclick="toggleHeatmap()" id="toggle-heatmap" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm relative group">
+                        <i class="fas fa-fire group-hover:text-red-500 transition-colors"></i> Heatmap
+                        <span id="heatmap-indicator" class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white dark:border-[#0f0e2c] hidden"></span>
+                    </button>
 
-
-                <!-- Mini Legend (Removed) -->
-
-                <!-- FLOATING UI WIDGETS -->
-
-                <!-- Mobile Filter FAB (Only on Mobile) -->
-                <button onclick="toggleMenu('filter-utama')" class="md:hidden absolute bottom-24 right-4 z-[9999] w-12 h-12 bg-[#0f0e2c]/95 backdrop-blur-xl border border-white/10 rounded-xl flex items-center justify-center text-gold-500 shadow-2xl pointer-events-auto">
-                    <i class="fas fa-filter text-lg"></i>
-                </button>
-
-                <!-- Top Right Dropdowns (Unified Filter) -->
-                <div class="absolute top-0 right-0 md:top-6 md:right-6 z-[9999] flex flex-col gap-2 w-full md:w-48 pointer-events-none md:pointer-events-auto h-0 md:h-auto">
-                    <!-- Main Filter Button (Desktop) -->
-                    <div class="relative w-full z-50 hidden md:block">
-                        <button onclick="toggleMenu('filter-utama')" class="w-full bg-[#0f0e2c]/90 backdrop-blur-xl border border-white/10 text-white px-3.5 py-3 rounded-xl flex justify-between items-center shadow-2xl hover:bg-[#1e1b4b] transition-all">
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-filter text-xs text-gold-500"></i>
-                                <span class="text-xs font-bold uppercase tracking-wider">Filter Peta</span>
-                            </div>
-                            <i class="fas fa-chevron-down text-xs text-slate-400"></i>
-                        </button>
-                    </div>
-                        
-                    <div id="filter-utama" class="hidden fixed inset-x-0 bottom-0 md:absolute md:top-full md:bottom-auto md:mt-2 md:right-0 w-full md:w-64 bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-t-[2.5rem] md:rounded-xl shadow-2xl border-t md:border border-white/10 max-h-[85vh] md:max-h-[60vh] flex-col pointer-events-auto transform md:transform-none translate-y-full md:translate-y-0 transition-transform duration-300">
+                    <button onclick="locateUser()" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm group">
+                        <i class="fas fa-crosshairs group-hover:text-blue-500 transition-colors"></i> Lokasi Saya
+                    </button>
+                </div>
+                
+                <!-- Filter Dropdown / Bottom Sheet -->
+                <div id="filter-utama" class="hidden fixed inset-x-0 bottom-0 md:absolute md:top-full md:bottom-auto md:mt-2 md:right-0 w-full md:w-72 bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-t-[2.5rem] md:rounded-xl shadow-2xl border-t md:border border-white/10 max-h-[85vh] md:max-h-[70vh] flex-col pointer-events-auto transform md:transform-none translate-y-full md:translate-y-0 transition-transform duration-300">
                         
                         <!-- Mobile Close Button & Handle (Sticky Top) -->
                         <div class="flex-shrink-0 p-6 md:p-3 pb-2 md:pb-3 border-b border-white/5 md:border-none">
@@ -897,9 +883,11 @@
 
                         </div>
                     </div>
-                </div>
-
-                <!-- Floating Lapor Button has been moved to header -->
+            </div>
+            
+            <div class="relative bg-white dark:bg-navy-900 rounded-[2.5rem] shadow-2xl dark:shadow-black/40 overflow-hidden w-full h-[450px] md:h-[650px] lg:h-[750px] z-10 border border-transparent dark:border-white/5">
+                <!-- Map Container -->
+                <div id="map" class="absolute inset-0 z-0"></div>
             </div>
         </div>
     </section>
@@ -1060,14 +1048,22 @@
             const showKelurahan = document.getElementById('toggle-kelurahan-lines').checked;
             const toggleBanjir = document.getElementById('toggle-banjir-lines');
             const showBanjir = toggleBanjir ? toggleBanjir.checked : false;
+            const searchQuery = document.getElementById('map-search') ? document.getElementById('map-search').value.toLowerCase().trim() : '';
             
             // Filter active data
             const filteredInfra = dataInfra.filter(item => {
                 const jenisLower = (item.jenis || 'Lainnya').toLowerCase().trim();
                 const idKecamatanStr = (item.id_kecamatan || '').toString().trim();
+                const namaObjekLower = (item.nama_objek || '').toLowerCase();
+                
+                const matchesSearch = searchQuery === '' || 
+                                      namaObjekLower.includes(searchQuery) || 
+                                      jenisLower.includes(searchQuery);
+
                 return item.latitude && item.longitude && 
                        checkedCategories.includes(jenisLower) && 
-                       checkedDistricts.includes(idKecamatanStr);
+                       checkedDistricts.includes(idKecamatanStr) &&
+                       matchesSearch;
             });
 
             // 1. Draw Kecamatan Polygons
@@ -1342,6 +1338,10 @@
         const toggleBanjirLines = document.getElementById('toggle-banjir-lines');
         if (toggleBanjirLines) {
             toggleBanjirLines.addEventListener('change', applyFilters);
+        }
+        const mapSearch = document.getElementById('map-search');
+        if (mapSearch) {
+            mapSearch.addEventListener('input', applyFilters);
         }
 
         const filterCategories = document.querySelectorAll('.filter-category');
