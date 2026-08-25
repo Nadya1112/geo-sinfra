@@ -654,8 +654,8 @@
                         <button onclick="toggleMenu('filter-utama')" class="w-full bg-[#0f0e2c]/90 backdrop-blur-xl border border-white/10 text-white px-2 py-2 md:px-3.5 md:py-3 rounded-xl flex justify-between items-center shadow-2xl hover:bg-[#1e1b4b] transition-all">
                             <div class="flex items-center gap-1 md:gap-2">
                                 <i class="fas fa-filter text-xs text-gold-500"></i>
-                                <span class="text-xs md:text-xs font-bold uppercase tracking-wider hidden md:inline">Saring Peta</span>
-                                <span class="text-xs font-bold uppercase tracking-wider md:hidden">Saring</span>
+                                <span class="text-xs md:text-xs font-bold uppercase tracking-wider hidden md:inline">Filter Peta</span>
+                                <span class="text-xs font-bold uppercase tracking-wider md:hidden">Filter</span>
                             </div>
                             <i class="fas fa-chevron-down text-xs md:text-xs text-slate-400"></i>
                         </button>
