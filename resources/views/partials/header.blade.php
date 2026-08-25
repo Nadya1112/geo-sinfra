@@ -39,6 +39,12 @@
         <div class="flex items-center gap-3">
             @if(auth()->check())
             
+            <!-- Theme Toggle -->
+            <button type="button" id="theme-toggle" class="w-10 h-10 bg-white dark:bg-navy-900 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:bg-gold-50 dark:hover:bg-white/5 border border-slate-200 dark:border-white/10 transition-all shadow-sm">
+                <i class="fas fa-sun hidden dark:block" id="theme-icon-sun"></i>
+                <i class="fas fa-moon block dark:hidden" id="theme-icon-moon"></i>
+            </button>
+
             <!-- Notification Bell -->
             <div class="relative group">
                 @php

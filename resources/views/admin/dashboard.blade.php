@@ -92,51 +92,51 @@
 
             <!-- Quick Access Cards -->
             <div class="mb-8 text-left">
-                <h4 class="font-extrabold text-lg text-navy-900 mb-6">Akses Cepat</h4>
+                <h4 class="font-extrabold text-lg text-navy-900 dark:text-white mb-6">Akses Cepat</h4>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 text-left">
                     
-                    <button onclick="openQuickModal('Tambah User', 'Daftarkan Surveyor atau Admin baru ke dalam sistem untuk memperluas tim operasional.', '{{ route('admin.users.create') }}', 'fa-user-plus', 'bg-blue-50 text-blue-500 border border-blue-100')" class="group bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-navy-950/5 hover:border-gold-500/50 transition-all text-left w-full relative">
-                        <div class="absolute top-4 right-4 bg-blue-50 text-blue-500 border border-blue-100 text-xs font-black px-2 py-1 rounded-lg">{{ number_format($totalUser) }} User</div>
-                        <div class="w-12 h-12 bg-navy-50 text-gold-500 border border-navy-100 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-all">
+                    <button onclick="openQuickModal('Tambah User', 'Daftarkan Surveyor atau Admin baru ke dalam sistem untuk memperluas tim operasional.', '{{ route('admin.users.create') }}', 'fa-user-plus', 'bg-blue-50 text-blue-500 border border-blue-100')" class="group bg-white dark:bg-navy-900 p-6 rounded-3xl border border-slate-100 dark:border-white/5 shadow-sm hover:shadow-2xl hover:shadow-navy-950/5 dark:hover:shadow-black/50 hover:border-gold-500/50 transition-all text-left w-full relative">
+                        <div class="absolute top-4 right-4 bg-blue-50 dark:bg-blue-500/10 text-blue-500 border border-blue-100 dark:border-blue-500/20 text-xs font-black px-2 py-1 rounded-lg">{{ number_format($totalUser) }} User</div>
+                        <div class="w-12 h-12 bg-navy-50 dark:bg-navy-950 text-gold-500 border border-navy-100 dark:border-white/10 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-all">
                             <i class="fas fa-user-plus text-lg"></i>
                         </div>
-                        <h5 class="font-black text-navy-900 mb-1">Tambah User</h5>
+                        <h5 class="font-black text-navy-900 dark:text-white mb-1">Tambah User</h5>
                         <p class="text-xs text-slate-400 font-semibold leading-relaxed text-left">Daftarkan Surveyor atau Admin baru ke dalam sistem.</p>
                     </button>
 
-                    <button onclick="openQuickModal('Kelola Wilayah', 'Tambahkan atau edit data master wilayah kecamatan dan kelurahan untuk pemetaan.', '{{ route('admin.wilayah') }}', 'fa-sitemap', 'bg-emerald-50 text-emerald-500 border border-emerald-100')" class="group bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-navy-950/5 hover:border-gold-500/50 transition-all text-left w-full relative">
-                        <div class="absolute top-4 right-4 bg-emerald-50 text-emerald-500 border border-emerald-100 text-xs font-black px-2 py-1 rounded-lg">{{ number_format($totalWilayah) }} Area</div>
-                        <div class="w-12 h-12 bg-navy-50 text-gold-500 border border-navy-100 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-all">
+                    <button onclick="openQuickModal('Kelola Wilayah', 'Tambahkan atau edit data master wilayah kecamatan dan kelurahan untuk pemetaan.', '{{ route('admin.wilayah') }}', 'fa-sitemap', 'bg-emerald-50 text-emerald-500 border border-emerald-100')" class="group bg-white dark:bg-navy-900 p-6 rounded-3xl border border-slate-100 dark:border-white/5 shadow-sm hover:shadow-2xl hover:shadow-navy-950/5 dark:hover:shadow-black/50 hover:border-gold-500/50 transition-all text-left w-full relative">
+                        <div class="absolute top-4 right-4 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-500 border border-emerald-100 dark:border-emerald-500/20 text-xs font-black px-2 py-1 rounded-lg">{{ number_format($totalWilayah) }} Area</div>
+                        <div class="w-12 h-12 bg-navy-50 dark:bg-navy-950 text-gold-500 border border-navy-100 dark:border-white/10 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-all">
                             <i class="fas fa-sitemap text-lg"></i>
                         </div>
-                        <h5 class="font-black text-navy-900 mb-1">Kelola Wilayah</h5>
+                        <h5 class="font-black text-navy-900 dark:text-white mb-1">Kelola Wilayah</h5>
                         <p class="text-xs text-slate-400 font-semibold leading-relaxed text-left">Kelola data master wilayah kecamatan dan kelurahan.</p>
                     </button>
 
-                    <button onclick="openQuickModal('Statistik Data', 'Lihat laporan analitik AI, kurva-S, dan distribusi prioritas infrastruktur kota.', '{{ route('admin.statistik') }}', 'fa-chart-pie', 'bg-purple-50 text-purple-500 border border-purple-100')" class="group bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-navy-950/5 hover:border-gold-500/50 transition-all text-left w-full relative">
-                        <div class="absolute top-4 right-4 bg-purple-50 text-purple-500 border border-purple-100 text-xs font-black px-2 py-1 rounded-lg">{{ $persenDianalisis }}% AI</div>
-                        <div class="w-12 h-12 bg-navy-50 text-gold-500 border border-navy-100 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-all">
+                    <button onclick="openQuickModal('Statistik Data', 'Lihat laporan analitik AI, kurva-S, dan distribusi prioritas infrastruktur kota.', '{{ route('admin.statistik') }}', 'fa-chart-pie', 'bg-purple-50 text-purple-500 border border-purple-100')" class="group bg-white dark:bg-navy-900 p-6 rounded-3xl border border-slate-100 dark:border-white/5 shadow-sm hover:shadow-2xl hover:shadow-navy-950/5 dark:hover:shadow-black/50 hover:border-gold-500/50 transition-all text-left w-full relative">
+                        <div class="absolute top-4 right-4 bg-purple-50 dark:bg-purple-500/10 text-purple-500 border border-purple-100 dark:border-purple-500/20 text-xs font-black px-2 py-1 rounded-lg">{{ $persenDianalisis }}% AI</div>
+                        <div class="w-12 h-12 bg-navy-50 dark:bg-navy-950 text-gold-500 border border-navy-100 dark:border-white/10 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-all">
                             <i class="fas fa-chart-pie text-lg"></i>
                         </div>
-                        <h5 class="font-black text-navy-900 mb-1">Statistik Data</h5>
+                        <h5 class="font-black text-navy-900 dark:text-white mb-1">Statistik Data</h5>
                         <p class="text-xs text-slate-400 font-semibold leading-relaxed text-left">Lihat rekapitulasi data dan prediksi prioritas harian.</p>
                     </button>
 
-                    <button onclick="openQuickModal('Data Master', 'Telusuri, edit, atau hapus seluruh data survei infrastruktur beserta hasil AI.', '{{ route('admin.infrastruktur') }}', 'fa-database', 'bg-orange-50 text-orange-500 border border-orange-100')" class="group bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-navy-950/5 hover:border-gold-500/50 transition-all text-left w-full relative">
-                        <div class="absolute top-4 right-4 bg-orange-50 text-orange-500 border border-orange-100 text-xs font-black px-2 py-1 rounded-lg">{{ number_format($totalInfrastruktur) }} Aset</div>
-                        <div class="w-12 h-12 bg-navy-50 text-gold-500 border border-navy-100 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-all">
+                    <button onclick="openQuickModal('Data Master', 'Telusuri, edit, atau hapus seluruh data survei infrastruktur beserta hasil AI.', '{{ route('admin.infrastruktur') }}', 'fa-database', 'bg-orange-50 text-orange-500 border border-orange-100')" class="group bg-white dark:bg-navy-900 p-6 rounded-3xl border border-slate-100 dark:border-white/5 shadow-sm hover:shadow-2xl hover:shadow-navy-950/5 dark:hover:shadow-black/50 hover:border-gold-500/50 transition-all text-left w-full relative">
+                        <div class="absolute top-4 right-4 bg-orange-50 dark:bg-orange-500/10 text-orange-500 border border-orange-100 dark:border-orange-500/20 text-xs font-black px-2 py-1 rounded-lg">{{ number_format($totalInfrastruktur) }} Aset</div>
+                        <div class="w-12 h-12 bg-navy-50 dark:bg-navy-950 text-gold-500 border border-navy-100 dark:border-white/10 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-all">
                             <i class="fas fa-database text-lg"></i>
                         </div>
-                        <h5 class="font-black text-navy-900 mb-1">Data Master</h5>
+                        <h5 class="font-black text-navy-900 dark:text-white mb-1">Data Master</h5>
                         <p class="text-xs text-slate-400 font-semibold leading-relaxed text-left">Lihat dan kelola seluruh data infrastruktur lapangan.</p>
                     </button>
 
-                    <button onclick="openQuickModal('Laporan Warga', 'Tindak lanjuti pengaduan warga terkait infrastruktur rusak dan tugaskan surveyor.', '{{ route('admin.laporan-warga') }}', 'fa-bullhorn', 'bg-red-50 text-red-500 border border-red-100')" class="group bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-navy-950/5 hover:border-gold-500/50 transition-all text-left w-full relative">
-                        <div class="absolute top-4 right-4 bg-red-50 text-red-500 border border-red-100 text-xs font-black px-2 py-1 rounded-lg">{{ number_format($totalLaporanWarga ?? 0) }} Laporan</div>
-                        <div class="w-12 h-12 bg-navy-50 text-gold-500 border border-navy-100 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-all">
+                    <button onclick="openQuickModal('Laporan Warga', 'Tindak lanjuti pengaduan warga terkait infrastruktur rusak dan tugaskan surveyor.', '{{ route('admin.laporan-warga') }}', 'fa-bullhorn', 'bg-red-50 text-red-500 border border-red-100')" class="group bg-white dark:bg-navy-900 p-6 rounded-3xl border border-slate-100 dark:border-white/5 shadow-sm hover:shadow-2xl hover:shadow-navy-950/5 dark:hover:shadow-black/50 hover:border-gold-500/50 transition-all text-left w-full relative">
+                        <div class="absolute top-4 right-4 bg-red-50 dark:bg-red-500/10 text-red-500 border border-red-100 dark:border-red-500/20 text-xs font-black px-2 py-1 rounded-lg">{{ number_format($totalLaporanWarga ?? 0) }} Laporan</div>
+                        <div class="w-12 h-12 bg-navy-50 dark:bg-navy-950 text-gold-500 border border-navy-100 dark:border-white/10 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-all">
                             <i class="fas fa-bullhorn text-lg"></i>
                         </div>
-                        <h5 class="font-black text-navy-900 mb-1">Laporan Warga</h5>
+                        <h5 class="font-black text-navy-900 dark:text-white mb-1">Laporan Warga</h5>
                         <p class="text-xs text-slate-400 font-semibold leading-relaxed text-left">Kelola dan tindak lanjuti laporan kerusakan dari masyarakat.</p>
                     </button>
 

@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html lang="id" class="dark">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'GEO-SINFRA')</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
+    
+    <script>
+        // Time-based and LocalStorage theme detection
+        (function() {
+            try {
+                var storedTheme = localStorage.getItem('geo-theme');
+                var hour = new Date().getHours();
+                var isNight = hour >= 18 || hour < 6;
+                if (storedTheme === 'dark' || (!storedTheme && isNight)) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -120,6 +136,23 @@
         }
         setInterval(updateClock, 1000); 
         updateClock();
+
+        // Theme Toggle Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('theme-toggle');
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', function() {
+                    const html = document.documentElement;
+                    if (html.classList.contains('dark')) {
+                        html.classList.remove('dark');
+                        localStorage.setItem('geo-theme', 'light');
+                    } else {
+                        html.classList.add('dark');
+                        localStorage.setItem('geo-theme', 'dark');
+                    }
+                });
+            }
+        });
     </script>
     @stack('scripts')
 </body>

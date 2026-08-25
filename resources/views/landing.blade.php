@@ -9,6 +9,22 @@
     <meta name="author" content="Pemerintah Kota Banjarmasin">
     <link rel="icon" href="{{ secure_asset('logo_geo-sinfra.png') }}" type="image/png">
     
+    <script>
+        // Time-based and LocalStorage theme detection
+        (function() {
+            try {
+                var storedTheme = localStorage.getItem('geo-theme');
+                var hour = new Date().getHours();
+                var isNight = hour >= 18 || hour < 6;
+                if (storedTheme === 'dark' || (!storedTheme && isNight)) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
+
     <link rel="stylesheet" href="{{ secure_asset('build/assets/app-jxQFI8EP.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -355,6 +371,11 @@
 
                 <div class="nav-divider w-px h-5 mx-1 md:mx-2 hidden md:block transition-colors duration-300"></div>
                 
+                <button type="button" id="theme-toggle-landing" class="nav-link w-9 h-9 flex items-center justify-center rounded-xl text-sm transition-all border border-transparent hover:border-gold-500/30">
+                    <i class="fas fa-sun hidden dark:block"></i>
+                    <i class="fas fa-moon block dark:hidden"></i>
+                </button>
+                
                 <a href="{{ url('/login') }}" class="bg-navy-900 text-gold-500 hover:bg-gold-500 hover:text-white px-3 md:px-4 py-2 rounded-lg text-[10px] md:text-xs font-bold transition-all shadow-sm hidden md:flex items-center gap-2 uppercase tracking-wider">
                     <i class="fas fa-lock"></i> <span>Masuk</span>
                 </a>
@@ -433,40 +454,40 @@
     <!-- Key Metrics / Feature Highlight Cards -->
     <section class="py-12 bg-transparent relative -mt-16 z-20 max-w-7xl mx-auto px-6 md:px-8">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal-up">
-            <div class="bg-white p-6 rounded-3xl shadow-xl shadow-slate-900/5 border border-slate-100 flex gap-5 items-start hover:-translate-y-2 transition-all duration-300">
-                <div class="w-14 h-14 bg-[#6366f1]/10 rounded-2xl flex items-center justify-center text-navy-500 shrink-0">
+            <div class="bg-white dark:bg-navy-900 p-6 rounded-3xl shadow-xl shadow-slate-900/5 dark:shadow-black/20 border border-slate-100 dark:border-white/5 flex gap-5 items-start hover:-translate-y-2 transition-all duration-300">
+                <div class="w-14 h-14 bg-[#6366f1]/10 rounded-2xl flex items-center justify-center text-navy-500 dark:text-indigo-400 shrink-0">
                     <i class="fas fa-map-location-dot text-2xl"></i>
                 </div>
                 <div>
-                    <h5 class="text-base font-extrabold text-navy-900 uppercase tracking-wider mb-2">Interaktif GIS</h5>
-                    <p class="text-sm text-slate-500 leading-relaxed">Visualisasi geospasial real-time yang membagi sebaran aset infrastruktur per kelurahan secara presisi.</p>
+                    <h5 class="text-base font-extrabold text-navy-900 dark:text-white uppercase tracking-wider mb-2">Interaktif GIS</h5>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Visualisasi geospasial real-time yang membagi sebaran aset infrastruktur per kelurahan secara presisi.</p>
                 </div>
             </div>
             
-            <div class="bg-white p-6 rounded-3xl shadow-xl shadow-slate-900/5 border border-slate-100 flex gap-5 items-start hover:-translate-y-2 transition-all duration-300">
+            <div class="bg-white dark:bg-navy-900 p-6 rounded-3xl shadow-xl shadow-slate-900/5 dark:shadow-black/20 border border-slate-100 dark:border-white/5 flex gap-5 items-start hover:-translate-y-2 transition-all duration-300">
                 <div class="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500 shrink-0">
                     <i class="fas fa-brain text-2xl"></i>
                 </div>
                 <div>
-                    <h5 class="text-base font-extrabold text-navy-900 uppercase tracking-wider mb-2">Analisis AI Prediktif</h5>
-                    <p class="text-sm text-slate-500 leading-relaxed">Klasifikasi otomatis jenis dan kondisi kerusakan menggunakan model CNN & Decision Tree hybrid.</p>
+                    <h5 class="text-base font-extrabold text-navy-900 dark:text-white uppercase tracking-wider mb-2">Analisis AI Prediktif</h5>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Klasifikasi otomatis jenis dan kondisi kerusakan menggunakan model CNN & Decision Tree hybrid.</p>
                 </div>
             </div>
 
-            <div class="bg-white p-6 rounded-3xl shadow-xl shadow-slate-900/5 border border-slate-100 flex gap-5 items-start hover:-translate-y-2 transition-all duration-300">
+            <div class="bg-white dark:bg-navy-900 p-6 rounded-3xl shadow-xl shadow-slate-900/5 dark:shadow-black/20 border border-slate-100 dark:border-white/5 flex gap-5 items-start hover:-translate-y-2 transition-all duration-300">
                 <div class="w-14 h-14 bg-amber-500/10 rounded-2xl flex items-center justify-center text-amber-500 shrink-0">
                     <i class="fas fa-file-shield text-2xl"></i>
                 </div>
                 <div>
-                    <h5 class="text-base font-extrabold text-navy-900 uppercase tracking-wider mb-2">Pengambilan Keputusan</h5>
-                    <p class="text-sm text-slate-500 leading-relaxed">Penentuan prioritas perbaikan berbasis bobot skor kerusakan teknis untuk efisiensi anggaran daerah.</p>
+                    <h5 class="text-base font-extrabold text-navy-900 dark:text-white uppercase tracking-wider mb-2">Pengambilan Keputusan</h5>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Penentuan prioritas perbaikan berbasis bobot skor kerusakan teknis untuk efisiensi anggaran daerah.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Statistik Section -->
-    <section id="statistik" class="py-16 lg:py-20 bg-[#0a091d] relative overflow-hidden">
+    <section id="statistik" class="py-16 lg:py-20 bg-slate-50 dark:bg-[#0a091d] relative overflow-hidden transition-colors duration-300">
         <!-- Background Accents -->
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
             <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-gold-500/5 blur-[120px]"></div>
@@ -476,15 +497,15 @@
         <div class="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
             <div class="text-center mb-20 reveal-up">
                 <span class="text-gold-500 font-extrabold text-sm uppercase tracking-[0.3em] mb-3 block">RINGKASAN INFRASTRUKTUR</span>
-                <h4 class="text-white font-black text-3xl md:text-4xl lg:text-5xl tracking-tight mb-4">Statistik GEO-SINFRA</h4>
+                <h4 class="text-navy-900 dark:text-white font-black text-3xl md:text-4xl lg:text-5xl tracking-tight mb-4">Statistik GEO-SINFRA</h4>
                 <div class="w-16 h-1.5 bg-gold-500 mx-auto rounded-full"></div>
             </div>
             
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 reveal-up">
                 <!-- Card 1 -->
-                <div class="bg-[#0f0e2c] text-white p-6 rounded-3xl border border-blue-500/50 shadow-2xl hover:border-blue-500 transition-all duration-300 text-center relative overflow-hidden group hover:scale-[1.02]">
+                <div class="bg-white dark:bg-[#0f0e2c] text-navy-900 dark:text-white p-6 rounded-3xl border border-blue-200 dark:border-blue-500/50 shadow-2xl hover:border-blue-500 transition-all duration-300 text-center relative overflow-hidden group hover:scale-[1.02]">
                     <div class="relative z-10">
-                        <div class="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-500 group-hover:text-white transition-all">
+                        <div class="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-500 group-hover:text-white transition-all text-blue-500">
                             <i class="fas fa-database text-blue-500 text-xl group-hover:text-white"></i>
                         </div>
                         <p class="text-3xl md:text-4xl font-black text-blue-500 leading-none mb-2">{{ number_format($stats['total'] ?? 0) }}</p>
@@ -493,9 +514,9 @@
                 </div>
 
                 <!-- Card 2 -->
-                <div class="bg-[#0f0e2c] text-white p-6 rounded-3xl border border-emerald-500/50 shadow-2xl hover:border-emerald-500 transition-all duration-300 text-center relative overflow-hidden group hover:scale-[1.02]">
+                <div class="bg-white dark:bg-[#0f0e2c] text-navy-900 dark:text-white p-6 rounded-3xl border border-emerald-200 dark:border-emerald-500/50 shadow-2xl hover:border-emerald-500 transition-all duration-300 text-center relative overflow-hidden group hover:scale-[1.02]">
                     <div class="relative z-10">
-                        <div class="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-emerald-500 group-hover:text-white transition-all">
+                        <div class="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-emerald-500 group-hover:text-white transition-all text-emerald-500">
                             <i class="fas fa-map-marked-alt text-emerald-500 text-xl group-hover:text-white"></i>
                         </div>
                         <p class="text-3xl md:text-4xl font-black text-emerald-500 leading-none mb-2">{{ number_format($stats['kecamatan'] ?? 0) }}</p>
@@ -504,9 +525,9 @@
                 </div>
 
                 <!-- Card 3 -->
-                <div class="bg-[#0f0e2c] text-white p-6 rounded-3xl border border-red-500/50 shadow-2xl hover:border-red-500 transition-all duration-300 text-center relative overflow-hidden group hover:scale-[1.02]">
+                <div class="bg-white dark:bg-[#0f0e2c] text-navy-900 dark:text-white p-6 rounded-3xl border border-red-200 dark:border-red-500/50 shadow-2xl hover:border-red-500 transition-all duration-300 text-center relative overflow-hidden group hover:scale-[1.02]">
                     <div class="relative z-10">
-                        <div class="w-14 h-14 bg-red-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-red-500 group-hover:text-white transition-all">
+                        <div class="w-14 h-14 bg-red-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-red-500 group-hover:text-white transition-all text-red-500">
                             <i class="fas fa-exclamation-triangle text-red-500 text-xl group-hover:text-white"></i>
                         </div>
                         <p class="text-3xl md:text-4xl font-black text-red-500 leading-none mb-2">{{ number_format($stats['rusak_berat'] ?? 0) }}</p>
@@ -515,9 +536,9 @@
                 </div>
 
                 <!-- Card 4 (AI Accent) -->
-                <div class="bg-[#0f0e2c] text-white p-6 rounded-3xl shadow-2xl border border-gold-500/60 text-center relative overflow-hidden group hover:scale-[1.02] hover:border-gold-500 transition-all duration-300">
+                <div class="bg-white dark:bg-[#0f0e2c] text-navy-900 dark:text-white p-6 rounded-3xl shadow-2xl border border-gold-300 dark:border-gold-500/60 text-center relative overflow-hidden group hover:scale-[1.02] hover:border-gold-500 transition-all duration-300">
                     <div class="relative z-10">
-                        <div class="w-14 h-14 bg-gold-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:rotate-12 transition-all">
+                        <div class="w-14 h-14 bg-gold-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:rotate-12 transition-all text-gold-500">
                             <i class="fas fa-robot text-gold-500 text-xl"></i>
                         </div>
                         <p class="text-3xl md:text-4xl font-black text-gold-500 leading-none mb-2">{{ $stats['akurasi_ai'] ?? 0 }}%</p>
@@ -530,19 +551,19 @@
             <!-- Detailed Grid Statistics -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-12 reveal-up">
                 <!-- Sebaran Kecamatan -->
-                <div class="bg-[#0f0e2c]/60 backdrop-blur-xl p-6 rounded-3xl border border-white/5 shadow-2xl">
+                <div class="bg-white/80 dark:bg-[#0f0e2c]/60 backdrop-blur-xl p-6 rounded-3xl border border-slate-200 dark:border-white/5 shadow-2xl">
                     <div class="flex items-center gap-3 mb-8">
                         <div class="w-2.5 h-6 bg-gold-500 rounded-full"></div>
-                        <h5 class="text-base font-extrabold text-white uppercase tracking-wider">Kepadatan Titik Data per Wilayah</h5>
+                        <h5 class="text-base font-extrabold text-navy-900 dark:text-white uppercase tracking-wider">Kepadatan Titik Data per Wilayah</h5>
                     </div>
                     <div class="space-y-5">
                         @foreach($sebaranKecamatan as $nama => $count)
                             <div>
                                 <div class="flex justify-between text-sm font-bold uppercase tracking-wider mb-2">
-                                    <span class="text-slate-400">{{ $nama ?: 'Wilayah Tidak Diketahui' }}</span>
-                                    <span class="text-white font-extrabold">{{ $count }} Titik</span>
+                                    <span class="text-slate-500 dark:text-slate-400">{{ $nama ?: 'Wilayah Tidak Diketahui' }}</span>
+                                    <span class="text-navy-900 dark:text-white font-extrabold">{{ $count }} Titik</span>
                                 </div>
-                                <div class="w-full bg-white/5 h-3 rounded-full overflow-hidden">
+                                <div class="w-full bg-slate-200 dark:bg-white/5 h-3 rounded-full overflow-hidden">
                                     <div class="bg-gradient-to-r from-blue-500 to-gold-500 h-full rounded-full" style="width: {{ $stats['total'] > 0 ? ($count / $stats['total'] * 100) : 0 }}%"></div>
                                 </div>
                             </div>
@@ -551,50 +572,48 @@
                 </div>
 
                 <!-- Highlight Card -->
-                <div class="bg-[#0f0e2c] p-8 rounded-3xl shadow-2xl relative overflow-hidden flex flex-col justify-between text-white border border-white/5">
-                    <div class="grid-pattern"></div>
+                <div class="bg-white dark:bg-[#0f0e2c] p-8 rounded-3xl shadow-2xl relative overflow-hidden flex flex-col justify-between text-navy-900 dark:text-white border border-slate-200 dark:border-white/5">
+                    <div class="grid-pattern dark:opacity-100 opacity-10"></div>
                     <div class="relative z-10">
                         <span class="text-gold-500 font-extrabold text-xs uppercase tracking-[0.3em] mb-2 block">KATEGORI DOMINAN</span>
                         <h5 class="text-2xl md:text-4xl font-black uppercase tracking-tight mb-4">{{ $topKategori }}</h5>
-                        <p class="text-slate-400 text-sm leading-relaxed max-w-sm mb-6">
+                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed max-w-sm mb-6">
                             Kategori infrastruktur ini memiliki jumlah laporan tertinggi di sistem GIS dan menjadi perhatian utama dalam proses monitoring pemeliharaan.
                         </p>
                     </div>
                     <div class="relative z-10 flex items-baseline gap-2">
                         <span class="text-3xl md:text-4xl lg:text-5xl font-black text-gold-500">{{ number_format($topKategoriCount) }}</span>
-                        <span class="text-slate-300 font-extrabold text-sm uppercase tracking-wider">Aset Teridentifikasi</span>
+                        <span class="text-slate-500 dark:text-slate-300 font-extrabold text-sm uppercase tracking-wider">Aset Teridentifikasi</span>
                     </div>
-                    <i class="fas fa-chart-pie absolute -right-6 -bottom-6 text-white/5 text-[150px]"></i>
+                    <i class="fas fa-chart-pie absolute -right-6 -bottom-6 text-slate-100 dark:text-white/5 text-[150px]"></i>
                 </div>
             </div>
 
             <!-- Table Ringkasan Wilayah -->
-            <div class="mt-12 bg-[#0f0e2c]/60 backdrop-blur-xl rounded-3xl border border-white/5 shadow-2xl overflow-hidden reveal-up">
-                <div class="p-6 border-b border-white/5 flex items-center gap-3">
+            <div class="mt-12 bg-white/80 dark:bg-[#0f0e2c]/60 backdrop-blur-xl rounded-3xl border border-slate-200 dark:border-white/5 shadow-2xl overflow-hidden reveal-up">
+                <div class="p-6 border-b border-slate-100 dark:border-white/5 flex items-center gap-3">
                     <div class="w-2.5 h-6 bg-gold-500 rounded-full"></div>
-                    <h5 class="text-base font-extrabold text-white uppercase tracking-wider">Ringkasan Keparahan Kondisi</h5>
+                    <h5 class="text-base font-extrabold text-navy-900 dark:text-white uppercase tracking-wider">Ringkasan Keparahan Kondisi</h5>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="bg-white/5 border-b border-white/10">
-                                <th class="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-widest">Kecamatan</th>
-                                <th class="px-6 py-5 text-xs font-black text-slate-300 uppercase tracking-widest text-center">Total Aset</th>
-                                <th class="px-6 py-5 text-xs font-black text-emerald-500 uppercase tracking-widest text-center">Kondisi Baik</th>
-                                <th class="px-6 py-5 text-xs font-black uppercase tracking-widest text-center" style="color: #facc15;">Rusak Ringan</th>
-                                <th class="px-6 py-5 text-xs font-black text-amber-500 uppercase tracking-widest text-center">Rusak Sedang</th>
-                                <th class="px-6 py-5 text-xs font-black text-red-500 uppercase tracking-widest text-center">Rusak Berat</th>
+                            <tr class="bg-slate-50 dark:bg-white/5 border-b border-slate-100 dark:border-white/10">
+                                <th class="px-8 py-5 text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">Kecamatan</th>
+                                <th class="px-8 py-5 text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest text-center">Total Aset</th>
+                                <th class="px-8 py-5 text-xs font-black text-emerald-500 uppercase tracking-widest text-center">Kondisi Baik</th>
+                                <th class="px-8 py-5 text-xs font-black text-amber-500 uppercase tracking-widest text-center">Kondisi Sedang</th>
+                                <th class="px-8 py-5 text-xs font-black text-red-500 uppercase tracking-widest text-center">Rusak Berat</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-white/5">
+                        <tbody class="divide-y divide-slate-100 dark:divide-white/5">
                             @foreach($kondisiWilayah as $item)
-                                <tr class="hover:bg-white/5 transition-all group border-l-4 border-transparent hover:border-gold-500 cursor-default">
-                                    <td class="px-6 py-5 text-sm font-bold text-slate-200 group-hover:text-white group-hover:translate-x-1 transition-transform">{{ $item['nama'] ?: 'Lainnya' }}</td>
-                                    <td class="px-6 py-5 text-center text-sm font-black text-white">{{ $item['total'] }}</td>
-                                    <td class="px-6 py-5 text-center text-sm font-semibold text-emerald-400">{{ $item['baik'] }}</td>
-                                    <td class="px-6 py-5 text-center text-sm font-semibold" style="color: #facc15;">{{ $item['rusak_ringan'] }}</td>
-                                    <td class="px-6 py-5 text-center text-sm font-semibold text-amber-400">{{ $item['rusak_sedang'] }}</td>
-                                    <td class="px-6 py-5 text-center">
+                                <tr class="hover:bg-slate-50 dark:hover:bg-white/5 transition-all group border-l-4 border-transparent hover:border-gold-500 cursor-default">
+                                    <td class="px-8 py-5 text-sm font-bold text-slate-600 dark:text-slate-200 group-hover:text-navy-900 dark:group-hover:text-white group-hover:translate-x-1 transition-transform">{{ $item['nama'] ?: 'Lainnya' }}</td>
+                                    <td class="px-8 py-5 text-center text-sm font-black text-navy-900 dark:text-white">{{ $item['total'] }}</td>
+                                    <td class="px-8 py-5 text-center text-sm font-semibold text-emerald-500 dark:text-emerald-400">{{ $item['baik'] }}</td>
+                                    <td class="px-8 py-5 text-center text-sm font-semibold text-amber-500 dark:text-amber-400">{{ $item['rusak_sedang'] }}</td>
+                                    <td class="px-8 py-5 text-center">
                                         <span class="inline-block px-3.5 py-1.5 bg-red-500/20 text-red-400 rounded-full text-xs font-black tracking-wide group-hover:bg-red-500 group-hover:text-white transition-all shadow-sm">{{ $item['rusak_berat'] }}</span>
                                     </td>
                                 </tr>
@@ -607,19 +626,19 @@
     </section>
 
     <!-- Map Section -->
-    <section id="peta" class="py-16 lg:py-20 bg-slate-100 border-t border-slate-200/50 relative overflow-hidden">
+    <section id="peta" class="py-16 lg:py-20 bg-slate-100 dark:bg-navy-950 border-t border-slate-200/50 dark:border-white/5 relative overflow-hidden transition-colors duration-300">
         <div class="w-full px-4 md:px-12">
             <div class="max-w-7xl mx-auto mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4 px-2">
                 <div>
                     <span class="text-gold-500 font-extrabold text-sm uppercase tracking-[0.3em] mb-2 block">PETA INTERAKTIF</span>
-                    <h4 class="text-navy-900 font-black text-2xl md:text-3xl lg:text-4xl tracking-tight">Peta Sebaran</h4>
+                    <h4 class="text-navy-900 dark:text-white font-black text-2xl md:text-3xl lg:text-4xl tracking-tight">Peta Sebaran</h4>
                 </div>
-                <p class="text-slate-500 text-sm lg:text-base max-w-md">
+                <p class="text-slate-500 dark:text-slate-400 text-sm lg:text-base max-w-md">
                     Gunakan peta GIS interaktif di bawah ini untuk melihat titik lokasi dan tingkat kerusakan infrastruktur permukiman secara real-time.
                 </p>
             </div>
 
-            <div class="relative bg-white rounded-[2.5rem] shadow-2xl overflow-hidden w-full h-[550px] md:h-[750px] lg:h-[850px] z-10">
+            <div class="relative bg-white dark:bg-navy-900 rounded-[2.5rem] shadow-2xl dark:shadow-black/40 overflow-hidden w-full h-[550px] md:h-[750px] lg:h-[850px] z-10 border border-transparent dark:border-white/5">
                 <!-- Map Container -->
                 <div id="map" class="absolute inset-0 z-0"></div>
 
@@ -1909,6 +1928,22 @@
 
             // Jalankan polling setiap 30 detik
             setInterval(fetchMapData, 30000);
+            
+            // Theme Toggle Logic for Landing Page
+            const toggleBtnLanding = document.getElementById('theme-toggle-landing');
+            if (toggleBtnLanding) {
+                toggleBtnLanding.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const html = document.documentElement;
+                    if (html.classList.contains('dark')) {
+                        html.classList.remove('dark');
+                        localStorage.setItem('geo-theme', 'light');
+                    } else {
+                        html.classList.add('dark');
+                        localStorage.setItem('geo-theme', 'dark');
+                    }
+                });
+            }
         });
     </script>
 </body>
