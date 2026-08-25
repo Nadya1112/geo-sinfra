@@ -68,7 +68,7 @@
                             <span class="px-3 py-1.5 bg-emerald-500/20 text-emerald-400 text-xs font-black uppercase tracking-widest rounded-full border border-emerald-500/30">
                                 <i class="fas fa-circle text-[6px] mr-1 animate-pulse"></i> Sistem Aktif
                             </span>
-                            <span class="px-3 py-1.5 bg-gold-500/20 text-gold-400 text-xs font-black uppercase tracking-widest rounded-full border border-gold-500/30">
+                            <span class="px-3 py-1.5 bg-gold-500/20 text-gold-500 text-xs font-black uppercase tracking-widest rounded-full border border-gold-500/30">
                                 <i class="fas fa-robot text-[10px] mr-1"></i> AI Aktif
                             </span>
                         </div>
@@ -78,15 +78,15 @@
                 <!-- Stats Bar — sumber data: Analisis AI (bukan input manual) -->
                 <div class="relative z-10 grid grid-cols-2 md:grid-cols-6 gap-3 md:gap-4">
 
-                    <div class="bg-white/5 backdrop-blur-md rounded-2xl p-3 md:p-5 border border-white/10 hover:bg-white/10 transition-all border-l-gold-400/50 border-l-4">
+                    <div class="bg-white/5 backdrop-blur-md rounded-2xl p-3 md:p-5 border border-white/10 hover:bg-white/10 transition-all border-l-gold-500/50 border-l-4">
                         <div class="flex md:flex-col gap-3 md:gap-2">
-                            <div class="w-8 h-8 md:w-10 md:h-10 bg-gold-400/20 rounded-xl flex-shrink-0 flex items-center justify-center text-gold-400">
+                            <div class="w-8 h-8 md:w-10 md:h-10 bg-gold-500/20 rounded-xl flex-shrink-0 flex items-center justify-center text-gold-500">
                                 <i class="fas fa-database text-sm"></i>
                             </div>
                             <div>
-                                <p class="text-[9px] md:text-[10px] font-black text-gold-400 uppercase tracking-wider">Total Terdata</p>
+                                <p class="text-[9px] md:text-[10px] font-black text-gold-500 uppercase tracking-wider">Total Terdata</p>
                                 <h3 class="text-xl md:text-3xl font-black text-white leading-none">{{ $totalInfrastruktur ?? 0 }}</h3>
-                                <span class="text-[9px] font-bold text-gold-400/60 italic">Objek</span>
+                                <span class="text-[9px] font-bold text-gold-500/60 italic">Objek</span>
                             </div>
                         </div>
                     </div>

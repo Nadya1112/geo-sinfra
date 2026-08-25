@@ -25,7 +25,7 @@
             @forelse($notifications as $notif)
             <div class="p-5 md:p-6 border-b border-slate-50 dark:border-white/5 flex flex-col md:flex-row gap-4 justify-between transition-all {{ is_null($notif->read_at) ? 'bg-gold-50/30 dark:bg-gold-500/5' : 'hover:bg-slate-50 dark:hover:bg-white/5' }}">
                 <div class="flex items-start gap-4">
-                    <div class="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 {{ is_null($notif->read_at) ? 'bg-gold-100 text-gold-600 dark:bg-gold-500/20 dark:text-gold-400' : 'bg-slate-100 text-slate-400 dark:bg-white/5' }}">
+                    <div class="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 {{ is_null($notif->read_at) ? 'bg-gold-100 text-gold-600 dark:bg-gold-500/20 dark:text-gold-500' : 'bg-slate-100 text-slate-400 dark:bg-white/5' }}">
                         @if(isset($notif->data['type']) && $notif->data['type'] == 'alert')
                             <i class="fas fa-exclamation-circle text-lg"></i>
                         @else

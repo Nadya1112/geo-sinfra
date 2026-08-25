@@ -175,8 +175,8 @@
                     <div id="category-options-desktop" class="hidden absolute top-full right-0 mt-2 p-1.5 bg-[#0f0e2c]/95 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex flex-col gap-1 min-w-[200px]">
                         <button onclick="toggleType('Semua')" class="type-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="Semua">
                             <div class="flex items-center gap-1.5">
-                                <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-gold-400 transition-colors">
-                                    <i class="fas fa-check text-[7px] text-gold-400 check-icon" style="opacity:1"></i>
+                                <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-gold-500 transition-colors">
+                                    <i class="fas fa-check text-[7px] text-gold-500 check-icon" style="opacity:1"></i>
                                 </div>
                                 <span class="group-hover:text-white transition-colors">Semua Kategori</span>
                             </div>
@@ -238,8 +238,8 @@
                         @foreach($kecamatan as $kec)
                         <button onclick="toggleKecamatan('{{ $kec->id_kecamatan }}')" class="kec-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="{{ $kec->id_kecamatan }}">
                             <div class="flex items-center gap-1.5">
-                                <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-gold-400 transition-colors shrink-0">
-                                    <i class="fas fa-check text-[7px] text-gold-400 check-icon" style="opacity:1"></i>
+                                <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-gold-500 transition-colors shrink-0">
+                                    <i class="fas fa-check text-[7px] text-gold-500 check-icon" style="opacity:1"></i>
                                 </div>
                                 <span class="whitespace-normal leading-tight group-hover:text-white transition-colors text-left">{{ $kec->nama_kecamatan }}</span>
                             </div>
@@ -287,8 +287,8 @@
                             <div class="bg-[#0f0e2c]/90 rounded-xl border border-white/5 p-2 flex flex-col gap-1">
                                 <button onclick="toggleType('Semua')" class="type-btn w-full px-3 py-2 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="Semua">
                                     <div class="flex items-center gap-2">
-                                        <div class="w-4 h-4 rounded border border-white/20 flex items-center justify-center group-hover:border-gold-400 transition-colors">
-                                            <i class="fas fa-check text-[8px] text-gold-400 check-icon" style="opacity:1"></i>
+                                        <div class="w-4 h-4 rounded border border-white/20 flex items-center justify-center group-hover:border-gold-500 transition-colors">
+                                            <i class="fas fa-check text-[8px] text-gold-500 check-icon" style="opacity:1"></i>
                                         </div>
                                         <span class="group-hover:text-white transition-colors">Semua Kategori</span>
                                     </div>
@@ -348,8 +348,8 @@
                                 @foreach($kecamatan as $kec)
                                 <button onclick="toggleKecamatan('{{ $kec->id_kecamatan }}')" class="kec-btn w-full px-3 py-2 rounded-lg text-[10px] font-black uppercase tracking-wider text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="{{ $kec->id_kecamatan }}">
                                     <div class="flex items-center gap-2">
-                                        <div class="w-4 h-4 rounded border border-white/20 flex items-center justify-center group-hover:border-gold-400 transition-colors shrink-0">
-                                            <i class="fas fa-check text-[8px] text-gold-400 check-icon" style="opacity:1"></i>
+                                        <div class="w-4 h-4 rounded border border-white/20 flex items-center justify-center group-hover:border-gold-500 transition-colors shrink-0">
+                                            <i class="fas fa-check text-[8px] text-gold-500 check-icon" style="opacity:1"></i>
                                         </div>
                                         <span class="whitespace-normal leading-tight group-hover:text-white transition-colors text-left">{{ $kec->nama_kecamatan }}</span>
                                     </div>

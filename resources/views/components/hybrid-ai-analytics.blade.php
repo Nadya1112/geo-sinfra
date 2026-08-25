@@ -49,7 +49,7 @@
                 <div class="px-2.5 py-1 bg-[#2a2444] text-[#8e85c8] text-[9px] font-black tracking-widest rounded-full uppercase leading-tight">
                     VISUAL<br>CNN
                 </div>
-                <i class="fas fa-eye text-slate-500 group-hover:text-gold-400 transition-colors text-xs mt-1 shrink-0"></i>
+                <i class="fas fa-eye text-slate-500 group-hover:text-gold-500 transition-colors text-xs mt-1 shrink-0"></i>
             </div>
             
             <div class="mb-3">
@@ -61,7 +61,7 @@
             </div>
             
             <div class="w-full bg-[#1e2030] h-1.5 rounded-full overflow-hidden mt-auto shrink-0">
-                <div class="bg-gradient-to-r from-[#6b58c4] to-gold-400 h-full shadow-[0_0_10px_rgba(197,160,89,0.3)] transition-all duration-1000" style="width: {{ $cnnScore }}%"></div>
+                <div class="bg-gradient-to-r from-[#6b58c4] to-gold-500 h-full shadow-[0_0_10px_rgba(197,160,89,0.3)] transition-all duration-1000" style="width: {{ $cnnScore }}%"></div>
             </div>
         </div>
 

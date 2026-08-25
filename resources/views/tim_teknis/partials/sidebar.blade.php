@@ -16,13 +16,13 @@
         <nav class="space-y-1">
             <a href="{{ route('tim_teknis.dashboard') }}" 
                class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 {{ request()->routeIs('tim_teknis.dashboard') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="Beranda">
-                <i class="fas fa-th-large text-lg lg:text-base {{ request()->routeIs('tim_teknis.dashboard') ? '' : 'group-hover:text-gold-400' }}"></i> 
+                <i class="fas fa-th-large text-lg lg:text-base {{ request()->routeIs('tim_teknis.dashboard') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 <span class="hidden lg:inline">Beranda</span>
             </a>
 
             <a href="{{ route('tim_teknis.monitoring') }}" 
                class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 {{ request()->routeIs('tim_teknis.monitoring') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="WebGIS Eksekutif">
-                <i class="fas fa-satellite-dish text-lg lg:text-base {{ request()->routeIs('tim_teknis.monitoring') ? '' : 'group-hover:text-gold-400' }}"></i> 
+                <i class="fas fa-satellite-dish text-lg lg:text-base {{ request()->routeIs('tim_teknis.monitoring') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 <span class="hidden lg:inline">WebGIS Eksekutif</span>
             </a>
 
@@ -42,7 +42,7 @@
             <a href="{{ route('tim_teknis.validasi') }}" 
                class="flex items-center justify-center lg:justify-between px-0 lg:px-4 py-3 {{ request()->routeIs('tim_teknis.validasi') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group relative w-full" title="Validasi Usulan">
                 <div class="flex items-center gap-3">
-                    <i class="fas fa-clipboard-check text-lg lg:text-base {{ request()->routeIs('tim_teknis.validasi') ? '' : 'group-hover:text-gold-400' }}"></i> 
+                    <i class="fas fa-clipboard-check text-lg lg:text-base {{ request()->routeIs('tim_teknis.validasi') ? '' : 'group-hover:text-gold-500' }}"></i> 
                     <span class="hidden lg:inline">Validasi Usulan</span>
                 </div>
                 @if($pendingValidasiCount > 0)
@@ -54,7 +54,7 @@
 
             <a href="{{ route('tim_teknis.laporan')  }}" 
                class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 {{ request()->routeIs('tim_teknis.laporan') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="Cetak Laporan">
-                <i class="fas fa-print text-lg lg:text-base {{ request()->routeIs('tim_teknis.laporan') ? '' : 'group-hover:text-gold-400' }}"></i> 
+                <i class="fas fa-print text-lg lg:text-base {{ request()->routeIs('tim_teknis.laporan') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 <span class="hidden lg:inline">Cetak Laporan</span>
             </a>
 
@@ -102,7 +102,7 @@
                 <p class="text-xs font-black text-white uppercase truncate">{{ auth()->check() ? auth()->user()->name : 'Tim Teknis' }}</p>
                 <p class="text-xs font-bold text-emerald-400 uppercase mt-0.5">● Aktif</p>
             </div>
-            <i class="fas fa-chevron-right text-xs text-slate-500 group-hover:text-gold-400 transition-colors"></i>
+            <i class="fas fa-chevron-right text-xs text-slate-500 group-hover:text-gold-500 transition-colors"></i>
         </a>
         
         {{-- Navigation --}}
@@ -110,13 +110,13 @@
         <nav class="space-y-1">
             <a href="{{ route('tim_teknis.dashboard') }}" 
                class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('tim_teknis.dashboard') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-th-large text-sm {{ request()->routeIs('tim_teknis.dashboard') ? '' : 'group-hover:text-gold-400' }}"></i> 
+                <i class="fas fa-th-large text-sm {{ request()->routeIs('tim_teknis.dashboard') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 Beranda
             </a>
 
             <a href="{{ route('tim_teknis.monitoring') }}" 
                class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('tim_teknis.monitoring') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-satellite-dish text-sm {{ request()->routeIs('tim_teknis.monitoring') ? '' : 'group-hover:text-gold-400' }}"></i> 
+                <i class="fas fa-satellite-dish text-sm {{ request()->routeIs('tim_teknis.monitoring') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 WebGIS Eksekutif
             </a>
 
@@ -129,7 +129,7 @@
             <a href="{{ route('tim_teknis.validasi') }}" 
                class="flex items-center justify-between px-4 py-3.5 {{ request()->routeIs('tim_teknis.validasi') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group">
                 <div class="flex items-center gap-3">
-                    <i class="fas fa-clipboard-check text-sm {{ request()->routeIs('tim_teknis.validasi') ? '' : 'group-hover:text-gold-400' }}"></i> 
+                    <i class="fas fa-clipboard-check text-sm {{ request()->routeIs('tim_teknis.validasi') ? '' : 'group-hover:text-gold-500' }}"></i> 
                     Validasi Usulan
                 </div>
                 @if($pendingValidasiCount > 0)
@@ -141,7 +141,7 @@
 
             <a href="{{ route('tim_teknis.laporan')  }}" 
                class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('tim_teknis.laporan') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-print text-sm {{ request()->routeIs('tim_teknis.laporan') ? '' : 'group-hover:text-gold-400' }}"></i> 
+                <i class="fas fa-print text-sm {{ request()->routeIs('tim_teknis.laporan') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 Cetak Laporan
             </a>
         </nav>

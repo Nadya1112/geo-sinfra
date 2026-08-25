@@ -16,31 +16,31 @@
         <nav class="space-y-1">
             <a href="{{ route('surveyor.dashboard') }}" 
                class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 {{ request()->routeIs('surveyor.dashboard') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="Beranda">
-                <i class="fas fa-th-large text-lg lg:text-base {{ request()->routeIs('surveyor.dashboard') ? '' : 'group-hover:text-gold-400' }}"></i> 
+                <i class="fas fa-th-large text-lg lg:text-base {{ request()->routeIs('surveyor.dashboard') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 <span class="hidden lg:inline">Beranda</span>
             </a>
 
             <a href="{{ route('surveyor.laporan') }}" 
                class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 {{ request()->routeIs('surveyor.laporan') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="Penugasan Laporan Warga">
-                <i class="fas fa-tasks text-lg lg:text-base {{ request()->routeIs('surveyor.laporan') ? '' : 'group-hover:text-gold-400' }}"></i> 
+                <i class="fas fa-tasks text-lg lg:text-base {{ request()->routeIs('surveyor.laporan') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 <span class="hidden lg:inline">Penugasan Laporan</span>
             </a>
 
             <a href="{{ route('surveyor.input') }}" 
                class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 {{ request()->routeIs('surveyor.input') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="Input Data Lapangan">
-                <i class="fas fa-plus-circle text-lg lg:text-base {{ request()->routeIs('surveyor.input') ? '' : 'group-hover:text-gold-400' }}"></i> 
+                <i class="fas fa-plus-circle text-lg lg:text-base {{ request()->routeIs('surveyor.input') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 <span class="hidden lg:inline">Input Data</span>
             </a>
 
             <a href="{{ route('surveyor.history') }}" 
                class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 {{ request()->routeIs('surveyor.history') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="Riwayat Data Saya">
-                <i class="fas fa-history text-lg lg:text-base {{ request()->routeIs('surveyor.history') ? '' : 'group-hover:text-gold-400' }}"></i> 
+                <i class="fas fa-history text-lg lg:text-base {{ request()->routeIs('surveyor.history') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 <span class="hidden lg:inline">Riwayat Data Saya</span>
             </a>
 
             <a href="{{ route('surveyor.map') }}" 
                class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 {{ request()->routeIs('surveyor.map') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left" title="Peta Sebaran Saya">
-                <i class="fas fa-map-marked-alt text-lg lg:text-base {{ request()->routeIs('surveyor.map') ? '' : 'group-hover:text-gold-400' }}"></i> 
+                <i class="fas fa-map-marked-alt text-lg lg:text-base {{ request()->routeIs('surveyor.map') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 <span class="hidden lg:inline">Peta Sebaran Saya</span>
             </a>
         </nav>
@@ -78,31 +78,31 @@
         <nav class="space-y-1">
             <a href="{{ route('surveyor.dashboard') }}" 
                class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('surveyor.dashboard') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-th-large text-sm {{ request()->routeIs('surveyor.dashboard') ? '' : 'group-hover:text-gold-400' }}"></i> 
+                <i class="fas fa-th-large text-sm {{ request()->routeIs('surveyor.dashboard') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 Beranda
             </a>
 
             <a href="{{ route('surveyor.laporan') }}" 
                class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('surveyor.laporan') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-tasks text-sm {{ request()->routeIs('surveyor.laporan') ? '' : 'group-hover:text-gold-400' }}"></i> 
+                <i class="fas fa-tasks text-sm {{ request()->routeIs('surveyor.laporan') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 Penugasan Laporan Warga
             </a>
 
             <a href="{{ route('surveyor.input') }}" 
                class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('surveyor.input') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-plus-circle text-sm {{ request()->routeIs('surveyor.input') ? '' : 'group-hover:text-gold-400' }}"></i> 
+                <i class="fas fa-plus-circle text-sm {{ request()->routeIs('surveyor.input') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 Input Data Lapangan
             </a>
 
             <a href="{{ route('surveyor.history') }}" 
                class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('surveyor.history') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-history text-sm {{ request()->routeIs('surveyor.history') ? '' : 'group-hover:text-gold-400' }}"></i> 
+                <i class="fas fa-history text-sm {{ request()->routeIs('surveyor.history') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 Riwayat Data Saya
             </a>
 
             <a href="{{ route('surveyor.map') }}" 
                class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('surveyor.map') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left">
-                <i class="fas fa-map-marked-alt text-sm {{ request()->routeIs('surveyor.map') ? '' : 'group-hover:text-gold-400' }}"></i> 
+                <i class="fas fa-map-marked-alt text-sm {{ request()->routeIs('surveyor.map') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 Peta Sebaran Saya
             </a>
         </nav>

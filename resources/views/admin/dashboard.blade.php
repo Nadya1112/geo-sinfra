@@ -16,7 +16,7 @@
                         <p class="text-white/80 dark:text-slate-300 text-sm font-medium max-w-xl text-left">Pusat kendali manajemen infrastruktur dan pengguna Sistem Pemetaan Infrastruktur Permukiman Kota Banjarmasin. Apa yang ingin Anda kerjakan hari ini?</p>
                     </div>
                     <div class="hidden md:block">
-                        <div class="w-20 h-20 bg-white/10 backdrop-blur-md border border-white/20 dark:border-white/10 rounded-2xl flex items-center justify-center shadow-2xl text-gold-400 dark:text-gold-500">
+                        <div class="w-20 h-20 bg-white/10 backdrop-blur-md border border-white/20 dark:border-white/10 rounded-2xl flex items-center justify-center shadow-2xl text-gold-500 dark:text-gold-500">
                             <i class="fas fa-shield-alt text-4xl"></i>
                         </div>
                     </div>

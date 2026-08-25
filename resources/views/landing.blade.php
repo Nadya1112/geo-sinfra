@@ -1829,7 +1829,7 @@
                 <button type="button" onclick="document.getElementById('modal-lapor').classList.add('hidden')" class="px-6 py-3.5 bg-white/5 border border-white/10 hover:bg-white/10 text-slate-300 rounded-xl font-black text-xs uppercase tracking-widest transition-all">
                     Batal
                 </button>
-                <button type="submit" form="form-lapor-warga" class="px-8 py-3.5 bg-gold-500 hover:bg-gold-600 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-gold-500/30 flex items-center gap-2 border border-gold-400">
+                <button type="submit" form="form-lapor-warga" class="px-8 py-3.5 bg-gold-500 hover:bg-gold-600 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-gold-500/30 flex items-center gap-2 border border-gold-500">
                     Kirim Laporan <i class="fas fa-paper-plane"></i>
                 </button>
             </div>
