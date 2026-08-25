@@ -75,7 +75,7 @@
                         <p class="text-xs md:text-sm font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-all max-w-[200px] truncate hidden md:block">{{ auth()->user()->name }}</p>
                         <p class="text-[8px] md:text-xs font-bold text-emerald-500 uppercase md:mt-0.5">Aktif</p>
                     </a>
-                    <a href="{{ route('surveyor.profile') }}" class="w-8 h-8 md:w-10 md:h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md shrink-0">
+                    <a href="{{ route('surveyor.profile') }}" class="w-8 h-8 md:w-10 md:h-10 bg-white dark:bg-navy-900 border border-slate-200 dark:border-white/5 rounded-xl flex items-center justify-center text-gold-500 border border-slate-200 dark:border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md shrink-0">
                         @if(auth()->user()->profile_photo)
                             <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" class="w-full h-full object-cover">
                         @else
@@ -106,7 +106,7 @@
 
     <!-- Modal Foto -->
     <div id="photoModal" class="fixed inset-0 bg-navy-950/90 backdrop-blur-sm z-[9999] hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
-        <button onclick="closePhotoModal()" class="absolute top-6 right-6 w-12 h-12 bg-white/10  hover:bg-white/20  text-white rounded-full flex items-center justify-center transition-colors">
+        <button onclick="closePhotoModal()" class="absolute top-6 right-6 w-12 h-12 bg-white/10  hover:bg-white/20  text-navy-900 dark:text-white rounded-full flex items-center justify-center transition-colors">
             <i class="fas fa-times text-xl"></i>
         </button>
         <div class="max-w-4xl w-full max-h-[90vh] relative transform scale-95 transition-transform duration-300" id="photoModalContent">
