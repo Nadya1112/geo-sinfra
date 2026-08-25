@@ -46,7 +46,7 @@
     <main class="flex-1 overflow-y-auto custom-scrollbar text-left relative">
         <header class="sticky top-0 bg-white/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 px-4 pl-16 md:px-8 py-4 flex justify-between items-center z-40 text-left shadow-sm">
             <div class="flex items-center gap-2 md:gap-4">
-                <a href="{{ route('admin.dashboard') }}" class="hidden md:flex w-8 h-8 md:w-10 md:h-10 items-center justify-center bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 transition-all border border-slate-200 dark:border-white/10 hover:border-gold-200">
+                <a href="{{ route('admin.dashboard') }}" class="hidden md:flex w-8 h-8 md:w-10 md:h-10 items-center justify-center bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl text-slate-400 rounded-xl hover:bg-gold-50 dark:bg-gold-500/10 hover:text-gold-600 dark:text-gold-500 transition-all border border-slate-200 dark:border-white/10 hover:border-gold-200 dark:border-gold-500/20">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div class="text-left">

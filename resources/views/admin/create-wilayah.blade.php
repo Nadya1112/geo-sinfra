@@ -89,7 +89,7 @@
         <div class="flex-1 p-8 overflow-y-auto custom-scrollbar text-left">
             
             @if ($errors->any())
-            <div class="max-w-3xl mx-auto mb-6 px-4 py-3 bg-red-50 border border-red-100 text-red-700 rounded-2xl">
+            <div class="max-w-3xl mx-auto mb-6 px-4 py-3 bg-red-50 dark:bg-red-500/10 border border-red-100 dark:border-red-500/20 text-red-700 dark:text-red-500 rounded-2xl">
                 <p class="text-xs font-bold mb-2">Gagal menyimpan data:</p>
                 <ul class="list-disc list-inside text-sm font-medium ml-4">
                     @foreach ($errors->all() as $error)

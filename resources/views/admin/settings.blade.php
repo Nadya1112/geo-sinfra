@@ -57,7 +57,7 @@
     <main class="flex-1 overflow-y-auto custom-scrollbar flex flex-col h-screen relative">
         <header class="sticky top-0 bg-white/80 dark:bg-navy-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 dark:border-white/5 px-4 md:px-8 py-4 flex justify-between items-center z-40">
             <div class="flex items-center gap-2 md:gap-4">
-                <a href="{{ route('admin.dashboard') }}" class="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-200 dark:border-white/10 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 hover:border-gold-200 transition-all shadow-sm hidden md:flex">
+                <a href="{{ route('admin.dashboard') }}" class="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-200 dark:border-white/10 text-slate-400 rounded-xl hover:bg-gold-50 dark:bg-gold-500/10 hover:text-gold-600 dark:text-gold-500 hover:border-gold-200 dark:border-gold-500/20 transition-all shadow-sm hidden md:flex">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div class="text-left">
@@ -78,7 +78,7 @@
         <div class="p-4 md:p-8 flex-1">
             <div class="max-w-3xl mx-auto">
                 @if(session('success'))
-                <div class="mb-6 px-4 py-3 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-2xl flex items-center gap-3 shadow-sm">
+                <div class="mb-6 px-4 py-3 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-500 rounded-2xl flex items-center gap-3 shadow-sm">
                     <i class="fas fa-check-circle text-lg"></i>
                     <p class="text-sm font-bold">{{ session('success') }}</p>
                 </div>
@@ -105,7 +105,7 @@
                     
                     <div class="space-y-5 mb-8">
                         <div class="p-4 bg-blue-500/10 border border-blue-500/20 rounded-2xl mb-4">
-                            <p class="text-xs text-blue-700 dark:text-blue-400 leading-relaxed font-medium"><strong>Fitur Baru:</strong> Masukkan Token Fonnte untuk mengaktifkan notifikasi otomatis ke WhatsApp Admin setiap kali ada laporan kerusakan masuk dari warga.</p>
+                            <p class="text-xs text-blue-700 dark:text-blue-500 dark:text-blue-400 leading-relaxed font-medium"><strong>Fitur Baru:</strong> Masukkan Token Fonnte untuk mengaktifkan notifikasi otomatis ke WhatsApp Admin setiap kali ada laporan kerusakan masuk dari warga.</p>
                         </div>
                         <div>
                             <label class="block text-xs font-black text-slate-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 ml-1">Fonnte API Token</label>

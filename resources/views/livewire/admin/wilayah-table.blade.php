@@ -64,7 +64,7 @@
                         </p>
                     </td>
                     <td class="px-4 py-3 text-center">
-                        <span class="px-3 py-1 bg-emerald-50 border border-emerald-100 text-emerald-600 rounded-xl text-xs font-black">
+                        <span class="px-3 py-1 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-500 rounded-xl text-xs font-black">
                             {{ $wly->total_aset ?? 0 }} Titik
                         </span>
                     </td>
@@ -104,7 +104,7 @@
                             <h5 class="text-sm font-black text-navy-900 dark:text-white uppercase leading-none truncate mb-1">{{ $wly->nama_kecamatan }}</h5>
                             <p class="text-xs font-bold text-navy-900 dark:text-white leading-relaxed truncate">{{ $wly->nama_kelurahan ?? '-' }}</p>
                         </div>
-                        <span class="px-3 py-1 bg-emerald-50 border border-emerald-100 text-emerald-600 rounded-xl text-[10px] font-black whitespace-nowrap shrink-0">
+                        <span class="px-3 py-1 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-500 rounded-xl text-[10px] font-black whitespace-nowrap shrink-0">
                             {{ $wly->total_aset ?? 0 }} Titik
                         </span>
                     </div>

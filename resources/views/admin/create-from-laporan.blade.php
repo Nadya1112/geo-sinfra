@@ -92,13 +92,13 @@
             </div>
 
             @if($errors->any())
-            <div class="mb-6 p-5 bg-red-50 border border-red-200 rounded-2xl flex items-center gap-4">
+            <div class="mb-6 p-5 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-2xl flex items-center gap-4">
                 <div class="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center text-red-500 shrink-0">
                     <i class="fas fa-exclamation-triangle"></i>
                 </div>
                 <div>
                     <h4 class="text-sm font-black text-red-800 uppercase mb-1">Validasi Gagal!</h4>
-                    <ul class="text-sm text-red-600 font-semibold space-y-0.5">
+                    <ul class="text-sm text-red-600 dark:text-red-500 font-semibold space-y-0.5">
                         @foreach($errors->all() as $error)
                             <li>• {{ $error }}</li>
                         @endforeach
@@ -170,7 +170,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
                                 <div>
                                     <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Material <span class="text-red-400">*</span></label>
-                                    <select name="material_eksisting" class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all" required>
+                                    <select name="material_eksisting" class="w-full px-4 py-3 bg-amber-50 dark:bg-amber-500/10 border border-amber-100 dark:border-amber-500/20 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all" required>
                                         <option value="" disabled selected>-- Pilih Material --</option>
                                         <option value="Cor Beton">Cor Beton</option>
                                         <option value="Titian (Kayu Ulin)">Titian (Kayu Ulin)</option>
@@ -181,18 +181,18 @@
                                 </div>
                                 <div>
                                     <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Panjang (m) <span class="text-red-400">*</span></label>
-                                    <input type="number" step="0.01" name="panjang" class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all" required>
+                                    <input type="number" step="0.01" name="panjang" class="w-full px-4 py-3 bg-amber-50 dark:bg-amber-500/10 border border-amber-100 dark:border-amber-500/20 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all" required>
                                 </div>
                                 <div>
                                     <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Lebar (m) <span class="text-red-400">*</span></label>
-                                    <input type="number" step="0.01" name="lebar" class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all" required>
+                                    <input type="number" step="0.01" name="lebar" class="w-full px-4 py-3 bg-amber-50 dark:bg-amber-500/10 border border-amber-100 dark:border-amber-500/20 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all" required>
                                 </div>
                             </div>
                             <div>
                                 <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">
                                     Deskripsi Kerusakan <span class="text-red-400">*</span>
                                 </label>
-                                <textarea name="kondisi" rows="3" class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all" required>{{ old('kondisi') ?? $laporan->deskripsi }}</textarea>
+                                <textarea name="kondisi" rows="3" class="w-full px-4 py-3 bg-amber-50 dark:bg-amber-500/10 border border-amber-100 dark:border-amber-500/20 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all" required>{{ old('kondisi') ?? $laporan->deskripsi }}</textarea>
                             </div>
                         </div>
 

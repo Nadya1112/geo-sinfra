@@ -44,7 +44,7 @@
         {{-- ── Header ── --}}
         <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 px-4 md:px-8 py-4 flex justify-between items-center z-40 shrink-0">
             <div class="flex items-center gap-2 md:gap-4">
-                <a href="{{ route('admin.dashboard') }}" class="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-200 dark:border-white/10 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 hover:border-gold-200 transition-all shadow-sm">
+                <a href="{{ route('admin.dashboard') }}" class="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-200 dark:border-white/10 text-slate-400 rounded-xl hover:bg-gold-50 dark:bg-gold-500/10 hover:text-gold-600 dark:text-gold-500 hover:border-gold-200 dark:border-gold-500/20 transition-all shadow-sm">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
@@ -64,14 +64,14 @@
         <div class="flex-1 overflow-y-auto custom-scrollbar p-8 pb-16">
             <div class="max-w-4xl mx-auto">
                 @if(session('success'))
-                <div class="mb-6 px-4 py-3 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-2xl flex items-center gap-3 shadow-sm">
+                <div class="mb-6 px-4 py-3 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-500 rounded-2xl flex items-center gap-3 shadow-sm">
                     <i class="fas fa-check-circle"></i>
                     <p class="text-xs font-bold">{{ session('success') }}</p>
                 </div>
                 @endif
 
                 @if($errors->any())
-                <div class="mb-6 px-4 py-3 bg-red-50 border border-red-100 text-red-700 rounded-2xl shadow-sm">
+                <div class="mb-6 px-4 py-3 bg-red-50 dark:bg-red-500/10 border border-red-100 dark:border-red-500/20 text-red-700 dark:text-red-500 rounded-2xl shadow-sm">
                     <ul class="list-disc list-inside text-xs font-bold">
                         @foreach($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -90,7 +90,7 @@
                             <div class="absolute top-0 left-0 w-full h-24 bg-navy-900 rounded-t-[2.5rem]"></div>
                             
                             <div class="relative w-32 h-32 mx-auto mb-6 mt-4">
-                                <div class="w-full h-full rounded-full bg-gold-50 border-4 border-white shadow-xl overflow-hidden flex items-center justify-center relative z-10">
+                                <div class="w-full h-full rounded-full bg-gold-50 dark:bg-gold-500/10 border-4 border-white shadow-xl overflow-hidden flex items-center justify-center relative z-10">
                                     @if(auth()->user()->profile_photo)
                                         <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" id="preview-photo" class="w-full h-full object-cover">
                                     @else

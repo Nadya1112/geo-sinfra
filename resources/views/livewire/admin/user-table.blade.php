@@ -55,7 +55,7 @@
                     </td>
                     <td class="px-4 md:px-4 py-3">
                         <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 {{ $user->role == 'admin' ? 'bg-gold-500/10 text-gold-500 border-gold-500/20' : ($user->role == 'tim_teknis' ? 'bg-navy-900/10 text-navy-900 dark:text-white border-navy-900/20' : 'bg-slate-100 dark:bg-navy-950/50 text-slate-600 dark:text-slate-400 border-slate-200') }} rounded-xl flex items-center justify-center font-bold text-xs border shrink-0">
+                            <div class="w-10 h-10 {{ $user->role == 'admin' ? 'bg-gold-500/10 text-gold-500 border-gold-500/20' : ($user->role == 'tim_teknis' ? 'bg-navy-900/10 dark:bg-blue-500/10 text-navy-900 dark:text-blue-500 border-navy-900/20 dark:border-blue-500/20' : 'bg-slate-100 dark:bg-navy-950/50 text-slate-600 dark:text-slate-400 border-slate-200') }} rounded-xl flex items-center justify-center font-bold text-xs border shrink-0">
                                 {{ substr($user->name, 0, 1) }}
                             </div>
                             <div>
@@ -67,7 +67,7 @@
                     <td class="px-4 md:px-4 py-3 text-xs font-medium text-slate-500 dark:text-slate-400">{{ $user->email }}</td>
                     <td class="px-4 md:px-4 py-3">
                         <span class="px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-tighter inline-block
-                            {{ $user->role == 'admin' ? 'bg-gold-500/10 text-gold-500 border border-gold-500/20' : ($user->role == 'tim_teknis' ? 'bg-navy-900/10 text-navy-900 dark:text-white border border-navy-900/20' : 'bg-slate-100 dark:bg-navy-950/50 text-slate-600 dark:text-slate-400 border border-slate-200') }}">
+                            {{ $user->role == 'admin' ? 'bg-gold-500/10 text-gold-500 border border-gold-500/20' : ($user->role == 'tim_teknis' ? 'bg-navy-900/10 dark:bg-blue-500/10 text-navy-900 dark:text-blue-500 border border-navy-900/20 dark:border-blue-500/20' : 'bg-slate-100 dark:bg-navy-950/50 text-slate-600 dark:text-slate-400 border border-slate-200') }}">
                             {{ str_replace('_', ' ', $user->role) }}
                         </span>
                     </td>
@@ -110,7 +110,7 @@
                 @forelse($users as $index => $user)
                 <div class="p-4 hover:bg-slate-50 dark:hover:bg-white/5 dark:bg-navy-950/50 transition">
                     <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 {{ $user->role == 'admin' ? 'bg-gold-500/10 text-gold-500 border-gold-500/20' : ($user->role == 'tim_teknis' ? 'bg-navy-900/10 text-navy-900 dark:text-white border-navy-900/20' : 'bg-slate-100 dark:bg-navy-950/50 text-slate-600 dark:text-slate-400 border-slate-200') }} rounded-xl flex items-center justify-center font-bold text-sm border shrink-0">
+                        <div class="w-12 h-12 {{ $user->role == 'admin' ? 'bg-gold-500/10 text-gold-500 border-gold-500/20' : ($user->role == 'tim_teknis' ? 'bg-navy-900/10 dark:bg-blue-500/10 text-navy-900 dark:text-blue-500 border-navy-900/20 dark:border-blue-500/20' : 'bg-slate-100 dark:bg-navy-950/50 text-slate-600 dark:text-slate-400 border-slate-200') }} rounded-xl flex items-center justify-center font-bold text-sm border shrink-0">
                             {{ substr($user->name, 0, 1) }}
                         </div>
                         <div class="flex-1 min-w-0">
@@ -119,7 +119,7 @@
                             
                             <div class="flex items-center justify-between mt-2">
                                 <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter inline-block
-                                    {{ $user->role == 'admin' ? 'bg-gold-500/10 text-gold-500 border border-gold-500/20' : ($user->role == 'tim_teknis' ? 'bg-navy-900/10 text-navy-900 dark:text-white border border-navy-900/20' : 'bg-slate-100 dark:bg-navy-950/50 text-slate-600 dark:text-slate-400 border border-slate-200') }}">
+                                    {{ $user->role == 'admin' ? 'bg-gold-500/10 text-gold-500 border border-gold-500/20' : ($user->role == 'tim_teknis' ? 'bg-navy-900/10 dark:bg-blue-500/10 text-navy-900 dark:text-blue-500 border border-navy-900/20 dark:border-blue-500/20' : 'bg-slate-100 dark:bg-navy-950/50 text-slate-600 dark:text-slate-400 border border-slate-200') }}">
                                     {{ str_replace('_', ' ', $user->role) }}
                                 </span>
                                 

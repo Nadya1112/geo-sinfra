@@ -95,7 +95,7 @@
         <div class="flex-1 p-8 overflow-y-auto custom-scrollbar">
             
             @if(session('success'))
-            <div class="mb-6 px-4 py-3 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-2xl flex items-center gap-3">
+            <div class="mb-6 px-4 py-3 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-500 rounded-2xl flex items-center gap-3">
                 <i class="fas fa-check-circle"></i>
                 <p class="text-xs font-bold">{{ session('success') }}</p>
             </div>

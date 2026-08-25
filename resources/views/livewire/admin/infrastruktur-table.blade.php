@@ -35,7 +35,7 @@
             
             {{-- Ekspor Excel --}}
             <a href="{{ route('admin.infrastruktur.export') }}"
-                class="px-5 py-2.5 bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white border border-emerald-100 hover:border-emerald-500 rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2 w-full lg:w-auto">
+                class="px-5 py-2.5 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-500 hover:bg-emerald-500 hover:text-white border border-emerald-100 dark:border-emerald-500/20 hover:border-emerald-500 rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2 w-full lg:w-auto">
                 <i class="fas fa-file-excel"></i> Excel
             </a>
         </div>
@@ -43,12 +43,12 @@
 
     {{-- Alert --}}
     @if(session('success'))
-    <div class="mb-6 px-5 py-3 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-2xl flex items-center gap-3 text-sm font-bold">
+    <div class="mb-6 px-5 py-3 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-500 rounded-2xl flex items-center gap-3 text-sm font-bold">
         <i class="fas fa-check-circle"></i> {{ session('success') }}
     </div>
     @endif
     @if(session('error'))
-    <div class="mb-6 px-5 py-3 bg-red-50 border border-red-100 text-red-700 rounded-2xl flex items-center gap-3 text-sm font-bold">
+    <div class="mb-6 px-5 py-3 bg-red-50 dark:bg-red-500/10 border border-red-100 dark:border-red-500/20 text-red-700 dark:text-red-500 rounded-2xl flex items-center gap-3 text-sm font-bold">
         <i class="fas fa-exclamation-circle"></i> {{ session('error') }}
     </div>
     @endif
@@ -90,10 +90,10 @@
                                   : 'text-emerald-500');
 
                         $kondisiMap = [
-                            'kondisi baik'         => 'bg-emerald-50 text-emerald-600 border border-emerald-200',
-                            'kondisi rusak ringan' => 'bg-yellow-50  text-yellow-600  border border-yellow-200',
-                            'kondisi rusak sedang' => 'bg-orange-50  text-orange-600  border border-orange-200',
-                            'kondisi rusak berat'  => 'bg-red-50     text-red-600     border border-red-200',
+                            'kondisi baik'         => 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-500 border border-emerald-200 dark:border-emerald-500/20',
+                            'kondisi rusak ringan' => 'bg-yellow-50 dark:bg-yellow-500/10  text-yellow-600 dark:text-yellow-500  border border-yellow-200 dark:border-yellow-500/20',
+                            'kondisi rusak sedang' => 'bg-orange-50 dark:bg-orange-500/10  text-orange-600 dark:text-orange-500  border border-orange-200 dark:border-orange-500/20',
+                            'kondisi rusak berat'  => 'bg-red-50 dark:bg-red-500/10     text-red-600 dark:text-red-500     border border-red-200 dark:border-red-500/20',
                         ];
                         $labelColor = $kondisiMap[strtolower($labelAkhir ?? '')] ?? 'bg-slate-50 dark:bg-navy-950/50 text-slate-500 dark:text-slate-400 border border-slate-200';
 
@@ -125,7 +125,7 @@
                         {{-- Nama & Jenis --}}
                         <td class="px-4 py-3 max-w-[200px]">
                             <p class="text-sm font-black text-navy-900 dark:text-white leading-snug truncate">{{ $inf->nama_objek ?? $inf->nama_infrastruktur }}</p>
-                            <span class="inline-block mt-1 px-2 py-0.5 bg-gold-500/10 text-gold-600 text-xs font-black rounded-md tracking-wider uppercase">
+                            <span class="inline-block mt-1 px-2 py-0.5 bg-gold-500/10 text-gold-600 dark:text-gold-500 text-xs font-black rounded-md tracking-wider uppercase">
                                 {{ ucfirst($inf->jenis) }}
                             </span>
                             <p class="text-xs text-slate-400 mt-1 font-bold">ID: INF-{{ $inf->id_infrastruktur }}</p>
@@ -250,10 +250,10 @@
                               : 'text-emerald-500');
 
                     $kondisiMap = [
-                        'kondisi baik'         => 'bg-emerald-50 text-emerald-600 border border-emerald-200',
-                        'kondisi rusak ringan' => 'bg-yellow-50  text-yellow-600  border border-yellow-200',
-                        'kondisi rusak sedang' => 'bg-orange-50  text-orange-600  border border-orange-200',
-                        'kondisi rusak berat'  => 'bg-red-50     text-red-600     border border-red-200',
+                        'kondisi baik'         => 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-500 border border-emerald-200 dark:border-emerald-500/20',
+                        'kondisi rusak ringan' => 'bg-yellow-50 dark:bg-yellow-500/10  text-yellow-600 dark:text-yellow-500  border border-yellow-200 dark:border-yellow-500/20',
+                        'kondisi rusak sedang' => 'bg-orange-50 dark:bg-orange-500/10  text-orange-600 dark:text-orange-500  border border-orange-200 dark:border-orange-500/20',
+                        'kondisi rusak berat'  => 'bg-red-50 dark:bg-red-500/10     text-red-600 dark:text-red-500     border border-red-200 dark:border-red-500/20',
                     ];
                     $labelColor = $kondisiMap[strtolower($labelAkhir ?? '')] ?? 'bg-slate-50 dark:bg-navy-950/50 text-slate-500 dark:text-slate-400 border border-slate-200';
                 @endphp
@@ -279,7 +279,7 @@
                                     {{ $labelAkhir }}
                                 </span>
                             </div>
-                            <span class="inline-block mb-1 px-2 py-0.5 bg-gold-500/10 text-gold-600 text-[10px] font-black rounded-md tracking-wider uppercase">
+                            <span class="inline-block mb-1 px-2 py-0.5 bg-gold-500/10 text-gold-600 dark:text-gold-500 text-[10px] font-black rounded-md tracking-wider uppercase">
                                 {{ ucfirst($inf->jenis) }}
                             </span>
                             <div class="flex items-center gap-1.5 text-[10px] text-slate-500 dark:text-slate-400 mt-1 truncate">

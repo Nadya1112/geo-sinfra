@@ -93,13 +93,13 @@
                             
                             <div class="flex gap-2">
                                 @if($laporan->foto)
-                                    <button type="button" onclick="showPhotoModal('{{ asset('storage/' . $laporan->foto) }}')" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors">
+                                    <button type="button" onclick="showPhotoModal('{{ asset('storage/' . $laporan->foto) }}')" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-500 hover:bg-blue-100 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors">
                                         <i class="fas fa-image"></i> Lihat Foto
                                     </button>
                                 @endif
                                 
                                 <a href="https://www.google.com/maps/search/?api=1&query={{ $laporan->latitude }},{{ $laporan->longitude }}" target="_blank" 
-                                   class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors">
+                                   class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-500 hover:bg-emerald-100 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors">
                                     <i class="fas fa-map-marker-alt"></i> Cek Lokasi
                                 </a>
                             </div>
@@ -107,11 +107,11 @@
                         <td class="px-4 py-3 text-center">
                             @php
                                 $statusColor = 'bg-slate-100 dark:bg-navy-950/50 text-slate-700 dark:text-slate-300 border-slate-200';
-                                if($laporan->status == 'Menunggu') $statusColor = 'bg-yellow-50 text-yellow-700 border-yellow-200';
-                                if($laporan->status == 'Ditinjau') $statusColor = 'bg-blue-50 text-blue-700 border-blue-200';
-                                if($laporan->status == 'Diproses') $statusColor = 'bg-indigo-50 text-indigo-700 border-indigo-200';
-                                if($laporan->status == 'Selesai') $statusColor = 'bg-emerald-50 text-emerald-700 border-emerald-200';
-                                if($laporan->status == 'Ditolak') $statusColor = 'bg-red-50 text-red-700 border-red-200';
+                                if($laporan->status == 'Menunggu') $statusColor = 'bg-yellow-50 dark:bg-yellow-500/10 dark:bg-yellow-500/10 text-yellow-700 dark:text-yellow-500 dark:text-yellow-500 border-yellow-200 dark:border-yellow-500/20 dark:border-yellow-500/20';
+                                if($laporan->status == 'Ditinjau') $statusColor = 'bg-blue-50 dark:bg-blue-500/10 dark:bg-blue-500/10 text-blue-700 dark:text-blue-500 dark:text-blue-500 border-blue-200 dark:border-blue-500/20 dark:border-blue-500/20';
+                                if($laporan->status == 'Diproses') $statusColor = 'bg-indigo-50 dark:bg-indigo-500/10 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-500 dark:text-indigo-500 border-indigo-200 dark:border-indigo-500/20 dark:border-indigo-500/20';
+                                if($laporan->status == 'Selesai') $statusColor = 'bg-emerald-50 dark:bg-emerald-500/10 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-500 dark:text-emerald-500 border-emerald-200 dark:border-emerald-500/20 dark:border-emerald-500/20';
+                                if($laporan->status == 'Ditolak') $statusColor = 'bg-red-50 dark:bg-red-500/10 dark:bg-red-500/10 text-red-700 dark:text-red-500 dark:text-red-500 border-red-200 dark:border-red-500/20 dark:border-red-500/20';
                             @endphp
                             
                             <div class="relative inline-block w-36 text-left">
@@ -127,7 +127,7 @@
                         </td>
                         <td class="px-4 py-3 text-center">
                             @php
-                                $assignColor = $laporan->id_surveyor ? 'bg-indigo-50 text-indigo-700 border-indigo-200' : 'bg-slate-100 dark:bg-navy-950/50 text-slate-500 dark:text-slate-400 border-slate-200';
+                                $assignColor = $laporan->id_surveyor ? 'bg-indigo-50 dark:bg-indigo-500/10 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-500 dark:text-indigo-500 border-indigo-200 dark:border-indigo-500/20 dark:border-indigo-500/20' : 'bg-slate-100 dark:bg-navy-950/50 text-slate-500 dark:text-slate-400 border-slate-200';
                             @endphp
                             
                             <div class="relative inline-block w-36 text-left">
@@ -218,13 +218,13 @@
                         
                         <div class="flex gap-2">
                             @if($laporan->foto)
-                                <button type="button" onclick="showPhotoModal('{{ asset('storage/' . $laporan->foto) }}')" class="flex-1 items-center justify-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-colors">
+                                <button type="button" onclick="showPhotoModal('{{ asset('storage/' . $laporan->foto) }}')" class="flex-1 items-center justify-center gap-1.5 px-3 py-1.5 bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-500 hover:bg-blue-100 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-colors">
                                     <i class="fas fa-image"></i> Lihat Foto
                                 </button>
                             @endif
                             
                             <a href="https://www.google.com/maps/search/?api=1&query={{ $laporan->latitude }},{{ $laporan->longitude }}" target="_blank" 
-                               class="flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-colors">
+                               class="flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-500 hover:bg-emerald-100 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-colors">
                                 <i class="fas fa-map-marker-alt"></i> Cek Lokasi
                             </a>
                         </div>
@@ -234,11 +234,11 @@
                         <div class="flex gap-2">
                             @php
                                 $statusColor = 'bg-slate-100 dark:bg-navy-950/50 text-slate-700 dark:text-slate-300 border-slate-200';
-                                if($laporan->status == 'Menunggu') $statusColor = 'bg-yellow-50 text-yellow-700 border-yellow-200';
-                                if($laporan->status == 'Ditinjau') $statusColor = 'bg-blue-50 text-blue-700 border-blue-200';
-                                if($laporan->status == 'Diproses') $statusColor = 'bg-indigo-50 text-indigo-700 border-indigo-200';
-                                if($laporan->status == 'Selesai') $statusColor = 'bg-emerald-50 text-emerald-700 border-emerald-200';
-                                if($laporan->status == 'Ditolak') $statusColor = 'bg-red-50 text-red-700 border-red-200';
+                                if($laporan->status == 'Menunggu') $statusColor = 'bg-yellow-50 dark:bg-yellow-500/10 dark:bg-yellow-500/10 text-yellow-700 dark:text-yellow-500 dark:text-yellow-500 border-yellow-200 dark:border-yellow-500/20 dark:border-yellow-500/20';
+                                if($laporan->status == 'Ditinjau') $statusColor = 'bg-blue-50 dark:bg-blue-500/10 dark:bg-blue-500/10 text-blue-700 dark:text-blue-500 dark:text-blue-500 border-blue-200 dark:border-blue-500/20 dark:border-blue-500/20';
+                                if($laporan->status == 'Diproses') $statusColor = 'bg-indigo-50 dark:bg-indigo-500/10 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-500 dark:text-indigo-500 border-indigo-200 dark:border-indigo-500/20 dark:border-indigo-500/20';
+                                if($laporan->status == 'Selesai') $statusColor = 'bg-emerald-50 dark:bg-emerald-500/10 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-500 dark:text-emerald-500 border-emerald-200 dark:border-emerald-500/20 dark:border-emerald-500/20';
+                                if($laporan->status == 'Ditolak') $statusColor = 'bg-red-50 dark:bg-red-500/10 dark:bg-red-500/10 text-red-700 dark:text-red-500 dark:text-red-500 border-red-200 dark:border-red-500/20 dark:border-red-500/20';
                             @endphp
                             <div class="relative flex-1">
                                 <select wire:change="updateStatus({{ $laporan->id }}, $event.target.value)" class="w-full appearance-none pl-2 pr-6 py-1.5 rounded-lg text-[10px] font-bold border {{ $statusColor }} focus:outline-none focus:ring-2 focus:ring-navy-500 cursor-pointer shadow-sm">
@@ -252,7 +252,7 @@
                             </div>
 
                             @php
-                                $assignColor = $laporan->id_surveyor ? 'bg-indigo-50 text-indigo-700 border-indigo-200' : 'bg-slate-100 dark:bg-navy-950/50 text-slate-500 dark:text-slate-400 border-slate-200';
+                                $assignColor = $laporan->id_surveyor ? 'bg-indigo-50 dark:bg-indigo-500/10 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-500 dark:text-indigo-500 border-indigo-200 dark:border-indigo-500/20 dark:border-indigo-500/20' : 'bg-slate-100 dark:bg-navy-950/50 text-slate-500 dark:text-slate-400 border-slate-200';
                             @endphp
                             <div class="relative flex-1">
                                 <select wire:change="assignSurveyor({{ $laporan->id }}, $event.target.value)" class="w-full appearance-none pl-2 pr-6 py-1.5 rounded-lg text-[10px] font-bold border {{ $assignColor }} focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer shadow-sm">

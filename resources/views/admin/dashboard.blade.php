@@ -36,7 +36,7 @@
                         </div>
                         <div class="text-left">
                             <div class="flex items-center gap-2 mb-1.5">
-                                <span class="px-2.5 py-1 bg-emerald-50 dark:bg-emerald-500/20 border border-emerald-200 dark:border-emerald-500/30 text-emerald-600 dark:text-emerald-400 rounded-md text-xs font-black uppercase tracking-widest shadow-sm">Sistem Pemetaan Aktif</span>
+                                <span class="px-2.5 py-1 bg-emerald-50 dark:bg-emerald-500/10 dark:bg-emerald-500/20 border border-emerald-200 dark:border-emerald-500/20 dark:border-emerald-500/30 text-emerald-600 dark:text-emerald-500 dark:text-emerald-400 rounded-md text-xs font-black uppercase tracking-widest shadow-sm">Sistem Pemetaan Aktif</span>
                                 <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Banjarmasin, Kalsel</span>
                             </div>
                             <h4 class="text-2xl font-black text-navy-900 dark:text-white leading-tight">{{ number_format($totalInfrastruktur) }} Aset Diawasi</h4>
@@ -47,7 +47,7 @@
                     <div class="flex sm:flex-col justify-between sm:justify-center gap-4 sm:gap-3 relative z-10 shrink-0 bg-slate-50/80 dark:bg-white/5 p-4 rounded-2xl border border-slate-200 dark:border-white/10 backdrop-blur-sm w-full sm:w-auto">
                         <div class="text-center sm:text-right">
                             <p class="text-[10px] md:text-xs font-black text-slate-400 uppercase tracking-widest mb-0.5">Kondisi Rusak Berat</p>
-                            <p class="text-xl font-black text-red-600 dark:text-red-500">{{ number_format($rusakBerat) }} <span class="text-sm text-red-500 dark:text-red-400"><i class="fas fa-exclamation-triangle"></i></span></p>
+                            <p class="text-xl font-black text-red-600 dark:text-red-500 dark:text-red-500">{{ number_format($rusakBerat) }} <span class="text-sm text-red-500 dark:text-red-400"><i class="fas fa-exclamation-triangle"></i></span></p>
                         </div>
                         <div class="w-px sm:w-full h-10 sm:h-px bg-slate-200 dark:bg-white/10 my-auto"></div>
                         <div class="text-center sm:text-right">
@@ -62,14 +62,14 @@
                         <div class="w-px sm:w-full h-10 sm:h-px bg-slate-200 dark:bg-white/10 my-auto"></div>
                         <div class="text-center sm:text-right">
                             <p class="text-[10px] md:text-xs font-black text-slate-400 uppercase tracking-widest mb-0.5">Kondisi Baik</p>
-                            <p class="text-xl font-black text-emerald-600 dark:text-emerald-400">{{ number_format($kondisiBaik) }} <span class="text-sm text-emerald-500 dark:text-emerald-300"><i class="fas fa-check-circle"></i></span></p>
+                            <p class="text-xl font-black text-emerald-600 dark:text-emerald-500 dark:text-emerald-400">{{ number_format($kondisiBaik) }} <span class="text-sm text-emerald-500 dark:text-emerald-300"><i class="fas fa-check-circle"></i></span></p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Rekomendasi Prioritas AI -->
                 <div class="lg:col-span-1 flex flex-col justify-center bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl rounded-[2.5rem] p-7 border border-slate-200 dark:border-white/10 shadow-xl shadow-slate-200/50 dark:shadow-navy-950/50 relative overflow-hidden group transition-colors duration-300 text-left">
-                    <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-red-50 dark:bg-red-500/20 rounded-full blur-3xl group-hover:bg-red-100 dark:group-hover:bg-red-500/20 transition-all duration-500"></div>
+                    <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-red-50 dark:bg-red-500/10 dark:bg-red-500/20 rounded-full blur-3xl group-hover:bg-red-100 dark:group-hover:bg-red-500/20 transition-all duration-500"></div>
                     <div class="w-12 h-12 bg-gold-500/10 text-gold-500 rounded-2xl flex items-center justify-center mb-4 border border-gold-500/20 shadow-sm">
                         <i class="fas fa-robot text-xl animate-pulse"></i>
                     </div>
@@ -77,11 +77,11 @@
                     @if($rekomendasi)
                         <h5 class="text-sm font-black text-navy-900 dark:text-white mt-4 mb-2 line-clamp-1 leading-snug">{{ $rekomendasi->nama_objek ?? $rekomendasi->nama_infrastruktur }}</h5>
                         <p class="text-sm font-bold text-slate-500 dark:text-slate-400 mb-6 flex items-center gap-1.5"><i class="fas fa-map-marker-alt text-slate-400"></i> Kelurahan {{ $rekomendasi->nama_kelurahan }}</p>
-                        <a href="{{ route('admin.infrastruktur.show', $rekomendasi->id_infrastruktur) }}" class="inline-flex items-center justify-center gap-2 w-full bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 py-3 rounded-xl text-xs font-black hover:bg-red-100 dark:hover:bg-red-500/20 transition-colors uppercase tracking-wider">
+                        <a href="{{ route('admin.infrastruktur.show', $rekomendasi->id_infrastruktur) }}" class="inline-flex items-center justify-center gap-2 w-full bg-red-50 dark:bg-red-500/10 dark:bg-red-500/10 text-red-600 dark:text-red-500 dark:text-red-400 py-3 rounded-xl text-xs font-black hover:bg-red-100 dark:hover:bg-red-500/20 transition-colors uppercase tracking-wider">
                             Lihat Detail <i class="fas fa-arrow-right"></i>
                         </a>
                     @else
-                        <div class="w-12 h-12 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-500 rounded-xl flex items-center justify-center mb-4 border border-emerald-100 dark:border-emerald-500/20 shadow-sm">
+                        <div class="w-12 h-12 bg-emerald-50 dark:bg-emerald-500/10 dark:bg-emerald-500/10 text-emerald-500 rounded-xl flex items-center justify-center mb-4 border border-emerald-100 dark:border-emerald-500/20 dark:border-emerald-500/20 shadow-sm">
                             <i class="fas fa-check-circle text-lg"></i>
                         </div>
                         <h5 class="text-sm font-black text-navy-900 dark:text-white mt-4 mb-2 leading-snug">Semua Aman</h5>
@@ -95,8 +95,8 @@
                 <h4 class="font-extrabold text-lg text-navy-900 dark:text-white mb-6">Akses Cepat</h4>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 text-left">
                     
-                    <button onclick="openQuickModal('Tambah User', 'Daftarkan Surveyor atau Admin baru ke dalam sistem untuk memperluas tim operasional.', '{{ route('admin.users.create') }}', 'fa-user-plus', 'bg-blue-50 text-blue-500 border border-blue-100')" class="group bg-white dark:bg-navy-900/80 dark:backdrop-blur-xl p-6 rounded-3xl border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-2xl hover:shadow-slate-300/50 dark:hover:shadow-navy-950/50 hover:border-gold-500/50 dark:hover:border-gold-500/50 transition-all text-left w-full relative">
-                        <div class="absolute top-4 right-4 bg-blue-50 dark:bg-blue-500/10 text-blue-500 border border-blue-100 dark:border-blue-500/20 text-xs font-black px-2 py-1 rounded-lg">{{ number_format($totalUser) }} User</div>
+                    <button onclick="openQuickModal('Tambah User', 'Daftarkan Surveyor atau Admin baru ke dalam sistem untuk memperluas tim operasional.', '{{ route('admin.users.create') }}', 'fa-user-plus', 'bg-blue-50 dark:bg-blue-500/10 text-blue-500 border border-blue-100 dark:border-blue-500/20')" class="group bg-white dark:bg-navy-900/80 dark:backdrop-blur-xl p-6 rounded-3xl border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-2xl hover:shadow-slate-300/50 dark:hover:shadow-navy-950/50 hover:border-gold-500/50 dark:hover:border-gold-500/50 transition-all text-left w-full relative">
+                        <div class="absolute top-4 right-4 bg-blue-50 dark:bg-blue-500/10 dark:bg-blue-500/10 text-blue-500 border border-blue-100 dark:border-blue-500/20 dark:border-blue-500/20 text-xs font-black px-2 py-1 rounded-lg">{{ number_format($totalUser) }} User</div>
                         <div class="w-12 h-12 bg-slate-50 dark:bg-navy-950 text-gold-500 border border-slate-200 dark:border-white/10 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-all">
                             <i class="fas fa-user-plus text-lg"></i>
                         </div>
@@ -104,8 +104,8 @@
                         <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold leading-relaxed text-left">Daftarkan Surveyor atau Admin baru ke dalam sistem.</p>
                     </button>
 
-                    <button onclick="openQuickModal('Kelola Wilayah', 'Tambahkan atau edit data master wilayah kecamatan dan kelurahan untuk pemetaan.', '{{ route('admin.wilayah') }}', 'fa-sitemap', 'bg-emerald-50 text-emerald-500 border border-emerald-100')" class="group bg-white dark:bg-navy-900/80 dark:backdrop-blur-xl p-6 rounded-3xl border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-2xl hover:shadow-slate-300/50 dark:hover:shadow-navy-950/50 hover:border-gold-500/50 dark:hover:border-gold-500/50 transition-all text-left w-full relative">
-                        <div class="absolute top-4 right-4 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-500 border border-emerald-100 dark:border-emerald-500/20 text-xs font-black px-2 py-1 rounded-lg">{{ number_format($totalWilayah) }} Area</div>
+                    <button onclick="openQuickModal('Kelola Wilayah', 'Tambahkan atau edit data master wilayah kecamatan dan kelurahan untuk pemetaan.', '{{ route('admin.wilayah') }}', 'fa-sitemap', 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-500 border border-emerald-100 dark:border-emerald-500/20')" class="group bg-white dark:bg-navy-900/80 dark:backdrop-blur-xl p-6 rounded-3xl border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-2xl hover:shadow-slate-300/50 dark:hover:shadow-navy-950/50 hover:border-gold-500/50 dark:hover:border-gold-500/50 transition-all text-left w-full relative">
+                        <div class="absolute top-4 right-4 bg-emerald-50 dark:bg-emerald-500/10 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-500 dark:text-emerald-500 border border-emerald-100 dark:border-emerald-500/20 dark:border-emerald-500/20 text-xs font-black px-2 py-1 rounded-lg">{{ number_format($totalWilayah) }} Area</div>
                         <div class="w-12 h-12 bg-slate-50 dark:bg-navy-950 text-gold-500 border border-slate-200 dark:border-white/10 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-all">
                             <i class="fas fa-sitemap text-lg"></i>
                         </div>
@@ -113,8 +113,8 @@
                         <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold leading-relaxed text-left">Kelola data master wilayah kecamatan dan kelurahan.</p>
                     </button>
 
-                    <button onclick="openQuickModal('Statistik Data', 'Lihat laporan analitik AI, kurva-S, dan distribusi prioritas infrastruktur kota.', '{{ route('admin.statistik') }}', 'fa-chart-pie', 'bg-purple-50 text-purple-500 border border-purple-100')" class="group bg-white dark:bg-navy-900/80 dark:backdrop-blur-xl p-6 rounded-3xl border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-2xl hover:shadow-slate-300/50 dark:hover:shadow-navy-950/50 hover:border-gold-500/50 dark:hover:border-gold-500/50 transition-all text-left w-full relative">
-                        <div class="absolute top-4 right-4 bg-purple-50 dark:bg-purple-500/10 text-purple-600 dark:text-purple-500 border border-purple-100 dark:border-purple-500/20 text-xs font-black px-2 py-1 rounded-lg">{{ $persenDianalisis }}% AI</div>
+                    <button onclick="openQuickModal('Statistik Data', 'Lihat laporan analitik AI, kurva-S, dan distribusi prioritas infrastruktur kota.', '{{ route('admin.statistik') }}', 'fa-chart-pie', 'bg-purple-50 dark:bg-purple-500/10 text-purple-500 border border-purple-100 dark:border-purple-500/20')" class="group bg-white dark:bg-navy-900/80 dark:backdrop-blur-xl p-6 rounded-3xl border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-2xl hover:shadow-slate-300/50 dark:hover:shadow-navy-950/50 hover:border-gold-500/50 dark:hover:border-gold-500/50 transition-all text-left w-full relative">
+                        <div class="absolute top-4 right-4 bg-purple-50 dark:bg-purple-500/10 dark:bg-purple-500/10 text-purple-600 dark:text-purple-500 dark:text-purple-500 border border-purple-100 dark:border-purple-500/20 dark:border-purple-500/20 text-xs font-black px-2 py-1 rounded-lg">{{ $persenDianalisis }}% AI</div>
                         <div class="w-12 h-12 bg-slate-50 dark:bg-navy-950 text-gold-500 border border-slate-200 dark:border-white/10 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-all">
                             <i class="fas fa-chart-pie text-lg"></i>
                         </div>
@@ -122,8 +122,8 @@
                         <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold leading-relaxed text-left">Lihat rekapitulasi data dan prediksi prioritas harian.</p>
                     </button>
 
-                    <button onclick="openQuickModal('Data Master', 'Telusuri, edit, atau hapus seluruh data survei infrastruktur beserta hasil AI.', '{{ route('admin.infrastruktur') }}', 'fa-database', 'bg-orange-50 text-orange-500 border border-orange-100')" class="group bg-white dark:bg-navy-900/80 dark:backdrop-blur-xl p-6 rounded-3xl border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-2xl hover:shadow-slate-300/50 dark:hover:shadow-navy-950/50 hover:border-gold-500/50 dark:hover:border-gold-500/50 transition-all text-left w-full relative">
-                        <div class="absolute top-4 right-4 bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-500 border border-orange-100 dark:border-orange-500/20 text-xs font-black px-2 py-1 rounded-lg">{{ number_format($totalInfrastruktur) }} Aset</div>
+                    <button onclick="openQuickModal('Data Master', 'Telusuri, edit, atau hapus seluruh data survei infrastruktur beserta hasil AI.', '{{ route('admin.infrastruktur') }}', 'fa-database', 'bg-orange-50 dark:bg-orange-500/10 text-orange-500 border border-orange-100 dark:border-orange-500/20')" class="group bg-white dark:bg-navy-900/80 dark:backdrop-blur-xl p-6 rounded-3xl border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-2xl hover:shadow-slate-300/50 dark:hover:shadow-navy-950/50 hover:border-gold-500/50 dark:hover:border-gold-500/50 transition-all text-left w-full relative">
+                        <div class="absolute top-4 right-4 bg-orange-50 dark:bg-orange-500/10 dark:bg-orange-500/10 text-orange-600 dark:text-orange-500 dark:text-orange-500 border border-orange-100 dark:border-orange-500/20 dark:border-orange-500/20 text-xs font-black px-2 py-1 rounded-lg">{{ number_format($totalInfrastruktur) }} Aset</div>
                         <div class="w-12 h-12 bg-slate-50 dark:bg-navy-950 text-gold-500 border border-slate-200 dark:border-white/10 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-all">
                             <i class="fas fa-database text-lg"></i>
                         </div>
@@ -131,8 +131,8 @@
                         <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold leading-relaxed text-left">Lihat dan kelola seluruh data infrastruktur lapangan.</p>
                     </button>
 
-                    <button onclick="openQuickModal('Laporan Warga', 'Tindak lanjuti pengaduan warga terkait infrastruktur rusak dan tugaskan surveyor.', '{{ route('admin.laporan-warga') }}', 'fa-bullhorn', 'bg-red-50 text-red-500 border border-red-100')" class="group bg-white dark:bg-navy-900/80 dark:backdrop-blur-xl p-6 rounded-3xl border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-2xl hover:shadow-slate-300/50 dark:hover:shadow-navy-950/50 hover:border-gold-500/50 dark:hover:border-gold-500/50 transition-all text-left w-full relative">
-                        <div class="absolute top-4 right-4 bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-500 border border-red-100 dark:border-red-500/20 text-xs font-black px-2 py-1 rounded-lg">{{ number_format($totalLaporanWarga ?? 0) }} Laporan</div>
+                    <button onclick="openQuickModal('Laporan Warga', 'Tindak lanjuti pengaduan warga terkait infrastruktur rusak dan tugaskan surveyor.', '{{ route('admin.laporan-warga') }}', 'fa-bullhorn', 'bg-red-50 dark:bg-red-500/10 text-red-500 border border-red-100 dark:border-red-500/20')" class="group bg-white dark:bg-navy-900/80 dark:backdrop-blur-xl p-6 rounded-3xl border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-2xl hover:shadow-slate-300/50 dark:hover:shadow-navy-950/50 hover:border-gold-500/50 dark:hover:border-gold-500/50 transition-all text-left w-full relative">
+                        <div class="absolute top-4 right-4 bg-red-50 dark:bg-red-500/10 dark:bg-red-500/10 text-red-600 dark:text-red-500 dark:text-red-500 border border-red-100 dark:border-red-500/20 dark:border-red-500/20 text-xs font-black px-2 py-1 rounded-lg">{{ number_format($totalLaporanWarga ?? 0) }} Laporan</div>
                         <div class="w-12 h-12 bg-slate-50 dark:bg-navy-950 text-gold-500 border border-slate-200 dark:border-white/10 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-all">
                             <i class="fas fa-bullhorn text-lg"></i>
                         </div>
@@ -150,7 +150,7 @@
                     
                     <div class="bg-white dark:bg-navy-900/80 dark:backdrop-blur-xl p-8 rounded-[2.5rem] border border-slate-200 dark:border-white/10 shadow-sm flex items-center justify-between group hover:shadow-xl hover:shadow-slate-300/50 dark:hover:shadow-navy-950/50 transition-all">
                         <div class="flex items-center gap-3 md:gap-6">
-                            <div class="w-16 h-16 bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-500 rounded-2xl flex items-center justify-center border border-blue-200 dark:border-blue-500/20 shadow-sm group-hover:scale-105 transition-transform">
+                            <div class="w-16 h-16 bg-blue-50 dark:bg-blue-500/10 dark:bg-blue-500/10 text-blue-600 dark:text-blue-500 dark:text-blue-500 rounded-2xl flex items-center justify-center border border-blue-200 dark:border-blue-500/20 dark:border-blue-500/20 shadow-sm group-hover:scale-105 transition-transform">
                                 <i class="fas fa-database text-3xl"></i>
                             </div>
                             <div>
@@ -165,7 +165,7 @@
 
                     <a href="{{ route('admin.activity') }}" class="bg-white dark:bg-navy-900/80 dark:backdrop-blur-xl p-8 rounded-[2.5rem] border border-slate-200 dark:border-white/10 shadow-sm flex items-center justify-between group hover:shadow-xl hover:shadow-slate-300/50 dark:hover:shadow-navy-950/50 transition-all">
                         <div class="flex items-center gap-3 md:gap-6">
-                            <div class="w-16 h-16 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-500 rounded-2xl flex items-center justify-center border border-emerald-200 dark:border-emerald-500/20 shadow-sm group-hover:scale-105 transition-transform">
+                            <div class="w-16 h-16 bg-emerald-50 dark:bg-emerald-500/10 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-500 dark:text-emerald-500 rounded-2xl flex items-center justify-center border border-emerald-200 dark:border-emerald-500/20 dark:border-emerald-500/20 shadow-sm group-hover:scale-105 transition-transform">
                                 <i class="fas fa-shield-alt text-3xl"></i>
                             </div>
                             <div>
@@ -213,7 +213,7 @@
                             <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mt-0.5">Akses Cepat</p>
                         </div>
                     </div>
-                    <button onclick="closeQuickModal()" class="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-white/5 text-slate-400 dark:text-slate-300 rounded-xl hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-500/20 dark:hover:text-red-400 border border-transparent dark:border-white/10 transition-all shrink-0">
+                    <button onclick="closeQuickModal()" class="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-white/5 text-slate-400 dark:text-slate-300 rounded-xl hover:bg-red-50 dark:bg-red-500/10 hover:text-red-500 dark:hover:bg-red-500/20 dark:hover:text-red-400 border border-transparent dark:border-white/10 transition-all shrink-0">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>

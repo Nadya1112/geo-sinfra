@@ -213,13 +213,13 @@
                                         </div>
                                     </td>
                                     <td class="px-3 py-3 text-center">
-                                        <span class="text-xs font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg">{{ $item['baik'] }}</span>
+                                        <span class="text-xs font-black text-emerald-600 dark:text-emerald-500 bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-lg">{{ $item['baik'] }}</span>
                                     </td>
                                     <td class="px-3 py-3 text-center">
-                                        <span class="text-xs font-black text-orange-600 bg-orange-50 px-2 py-0.5 rounded-lg">{{ $item['sedang'] }}</span>
+                                        <span class="text-xs font-black text-orange-600 dark:text-orange-500 bg-orange-50 dark:bg-orange-500/10 px-2 py-0.5 rounded-lg">{{ $item['sedang'] }}</span>
                                     </td>
                                     <td class="px-3 py-3 text-center">
-                                        <span class="text-xs font-black text-red-600 bg-red-50 px-2 py-0.5 rounded-lg">{{ $item['berat'] }}</span>
+                                        <span class="text-xs font-black text-red-600 dark:text-red-500 bg-red-50 dark:bg-red-500/10 px-2 py-0.5 rounded-lg">{{ $item['berat'] }}</span>
                                     </td>
                                     <td class="px-3 py-3 text-right">
                                         <span class="text-xs font-black text-navy-900 dark:text-white bg-navy-50 border border-navy-100 px-2 py-0.5 rounded-lg">{{ $item['total'] }}</span>

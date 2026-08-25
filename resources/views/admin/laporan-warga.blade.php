@@ -80,9 +80,9 @@
             <div class="max-w-7xl mx-auto space-y-6">
 
                 @if(session('success'))
-                <div class="bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-3 rounded-2xl mb-6 flex items-center gap-4 shadow-sm animate-fade-in">
+                <div class="bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-500 px-4 py-3 rounded-2xl mb-6 flex items-center gap-4 shadow-sm animate-fade-in">
                     <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center shrink-0">
-                        <i class="fas fa-check text-emerald-600"></i>
+                        <i class="fas fa-check text-emerald-600 dark:text-emerald-500"></i>
                     </div>
                     <div class="flex-1">
                         <p class="font-bold text-sm">{{ session('success') }}</p>
@@ -100,7 +100,7 @@
                     <div class="flex flex-wrap items-center gap-3">
                         {{-- Ekspor Excel --}}
                         <a href="{{ route('admin.laporan-warga.excel') }}" target="_blank"
-                            class="px-4 py-2 bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white border border-emerald-100 hover:border-emerald-500 rounded-xl text-xs font-black tracking-widest uppercase transition-all shadow-sm flex items-center gap-2">
+                            class="px-4 py-2 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-500 hover:bg-emerald-500 hover:text-white border border-emerald-100 dark:border-emerald-500/20 hover:border-emerald-500 rounded-xl text-xs font-black tracking-widest uppercase transition-all shadow-sm flex items-center gap-2">
                             <i class="fas fa-file-excel"></i> Ekspor Excel
                         </a>
                     </div>

@@ -55,7 +55,7 @@
                     <h2 class="text-xl font-black text-navy-900 dark:text-white dark:text-white leading-none">Ringkasan Statistik</h2>
                 </div>
                 <div class="hidden md:block w-[1px] h-8 bg-slate-200 ml-4 mr-2"></div>
-                <a href="{{ route('admin.infrastruktur.export') }}" class="hidden md:flex ml-2 px-4 py-2 bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white border border-emerald-100 hover:border-emerald-500 rounded-xl text-xs font-black tracking-widest uppercase transition-all shadow-sm hover:shadow-lg hover:shadow-emerald-500/20 flex items-center gap-2">
+                <a href="{{ route('admin.infrastruktur.export') }}" class="hidden md:flex ml-2 px-4 py-2 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-500 hover:bg-emerald-500 hover:text-white border border-emerald-100 dark:border-emerald-500/20 hover:border-emerald-500 rounded-xl text-xs font-black tracking-widest uppercase transition-all shadow-sm hover:shadow-lg hover:shadow-emerald-500/20 flex items-center gap-2">
                     <i class="fas fa-file-excel"></i> Ekspor Excel
                 </a>
             </div>
@@ -94,7 +94,7 @@
                         <div class="w-11 h-11 bg-navy-900 rounded-2xl flex items-center justify-center shadow-md shadow-navy-900/20">
                             <i class="fas fa-road text-gold-500"></i>
                         </div>
-                        <span class="text-xs font-black text-emerald-500 bg-emerald-50 border border-emerald-100 px-2 py-1 rounded-lg uppercase tracking-wider">Aktif</span>
+                        <span class="text-xs font-black text-emerald-500 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 px-2 py-1 rounded-lg uppercase tracking-wider">Aktif</span>
                     </div>
                     <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Total Infrastruktur</p>
                     <h3 class="text-3xl font-black text-navy-900 dark:text-white">{{ $jumlahInfrastruktur }}</h3>
@@ -107,7 +107,7 @@
                         <div class="w-11 h-11 bg-gold-500 rounded-2xl flex items-center justify-center shadow-md shadow-gold-500/20">
                             <i class="fas fa-brain text-white"></i>
                         </div>
-                        <span class="text-xs font-black text-gold-600 bg-gold-50 border border-gold-100 px-2 py-1 rounded-lg uppercase tracking-wider">AI</span>
+                        <span class="text-xs font-black text-gold-600 dark:text-gold-500 bg-gold-50 dark:bg-gold-500/10 border border-gold-100 dark:border-gold-500/20 px-2 py-1 rounded-lg uppercase tracking-wider">AI</span>
                     </div>
                     <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Teranalisis AI</p>
                     <h3 class="text-3xl font-black text-navy-900 dark:text-white">{{ $jumlahAnalisis }}</h3>
@@ -133,7 +133,7 @@
                         <div class="w-11 h-11 bg-emerald-500 rounded-2xl flex items-center justify-center shadow-md shadow-emerald-500/20">
                             <i class="fas fa-map text-white"></i>
                         </div>
-                        <span class="text-xs font-black text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-1 rounded-lg uppercase tracking-wider">SIG</span>
+                        <span class="text-xs font-black text-emerald-600 dark:text-emerald-500 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 px-2 py-1 rounded-lg uppercase tracking-wider">SIG</span>
                     </div>
                     <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Wilayah</p>
                     <h3 class="text-3xl font-black text-navy-900 dark:text-white">{{ $jumlahWilayah }}</h3>
@@ -159,10 +159,10 @@
                         @php
                             $total = max(1, $jumlahRusakBerat + $jumlahRusakSedang + $jumlahRusakRingan + $jumlahBaik + $jumlahBelumDianalisis);
                             $priorities = [
-                                ['label'=>'Kondisi Rusak Berat',  'count'=>$jumlahRusakBerat,  'icon'=>'fa-exclamation-triangle', 'bg'=>'bg-red-500',    'light'=>'bg-red-50 border-red-100',    'text'=>'text-red-600',    'bar'=>'bg-red-500',    'desc'=>'Butuh penanganan segera'],
-                                ['label'=>'Kondisi Rusak Sedang', 'count'=>$jumlahRusakSedang, 'icon'=>'fa-hammer',              'bg'=>'bg-orange-500', 'light'=>'bg-orange-50 border-orange-100','text'=>'text-orange-600', 'bar'=>'bg-orange-500', 'desc'=>'Perbaikan dalam waktu dekat'],
-                                ['label'=>'Kondisi Rusak Ringan', 'count'=>$jumlahRusakRingan, 'icon'=>'fa-wrench',              'bg'=>'bg-yellow-500', 'light'=>'bg-yellow-50 border-yellow-100','text'=>'text-yellow-600', 'bar'=>'bg-yellow-500', 'desc'=>'Perbaikan minor diperlukan'],
-                                ['label'=>'Kondisi Baik',         'count'=>$jumlahBaik,         'icon'=>'fa-check-circle',        'bg'=>'bg-emerald-500','light'=>'bg-emerald-50 border-emerald-100','text'=>'text-emerald-600','bar'=>'bg-emerald-500','desc'=>'Kondisi layak dan stabil'],
+                                ['label'=>'Kondisi Rusak Berat',  'count'=>$jumlahRusakBerat,  'icon'=>'fa-exclamation-triangle', 'bg'=>'bg-red-500',    'light'=>'bg-red-50 dark:bg-red-500/10 border-red-100 dark:border-red-500/20',    'text'=>'text-red-600 dark:text-red-500',    'bar'=>'bg-red-500',    'desc'=>'Butuh penanganan segera'],
+                                ['label'=>'Kondisi Rusak Sedang', 'count'=>$jumlahRusakSedang, 'icon'=>'fa-hammer',              'bg'=>'bg-orange-500', 'light'=>'bg-orange-50 dark:bg-orange-500/10 border-orange-100 dark:border-orange-500/20','text'=>'text-orange-600 dark:text-orange-500', 'bar'=>'bg-orange-500', 'desc'=>'Perbaikan dalam waktu dekat'],
+                                ['label'=>'Kondisi Rusak Ringan', 'count'=>$jumlahRusakRingan, 'icon'=>'fa-wrench',              'bg'=>'bg-yellow-500', 'light'=>'bg-yellow-50 dark:bg-yellow-500/10 border-yellow-100 dark:border-yellow-500/20','text'=>'text-yellow-600 dark:text-yellow-500', 'bar'=>'bg-yellow-500', 'desc'=>'Perbaikan minor diperlukan'],
+                                ['label'=>'Kondisi Baik',         'count'=>$jumlahBaik,         'icon'=>'fa-check-circle',        'bg'=>'bg-emerald-500','light'=>'bg-emerald-50 dark:bg-emerald-500/10 border-emerald-100 dark:border-emerald-500/20','text'=>'text-emerald-600 dark:text-emerald-500','bar'=>'bg-emerald-500','desc'=>'Kondisi layak dan stabil'],
                             ];
                         @endphp
 

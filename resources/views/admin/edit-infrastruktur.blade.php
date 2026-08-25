@@ -142,7 +142,7 @@
                 <span class="px-3 py-1.5 bg-navy-900 text-gold-500 rounded-xl text-xs font-black tracking-widest uppercase">
                     <i class="fas fa-edit mr-1"></i> Mode Edit
                 </span>
-                <span class="px-3 py-1.5 bg-gold-500/10 text-gold-600 border border-gold-500/20 rounded-xl text-xs font-black tracking-widest uppercase">
+                <span class="px-3 py-1.5 bg-gold-500/10 text-gold-600 dark:text-gold-500 border border-gold-500/20 rounded-xl text-xs font-black tracking-widest uppercase">
                     ID: INF-{{ $inf->id_infrastruktur }}
                 </span>
                 <span class="text-xs text-slate-400 font-semibold">{{ $inf->nama_objek ?? $inf->nama_infrastruktur }}</span>
@@ -233,7 +233,7 @@
                                 <div>
                                     <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Material Utama <span class="text-red-400">*</span></label>
                                     <select name="material_eksisting"
-                                            class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all"
+                                            class="w-full px-4 py-3 bg-amber-50 dark:bg-amber-500/10 border border-amber-100 dark:border-amber-500/20 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all"
                                             required>
                                         <option value="" disabled>-- Pilih Material --</option>
                                         <option value="Cor Beton" {{ $inf->material_eksisting == 'Cor Beton' ? 'selected' : '' }}>Cor Beton</option>
@@ -251,7 +251,7 @@
                                     <input type="number" step="0.01" name="panjang"
                                            value="{{ $inf->panjang }}"
                                            placeholder="0.00"
-                                           class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all"
+                                           class="w-full px-4 py-3 bg-amber-50 dark:bg-amber-500/10 border border-amber-100 dark:border-amber-500/20 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all"
                                            required>
                                 </div>
                                 <div>
@@ -259,7 +259,7 @@
                                     <input type="number" step="0.01" name="lebar"
                                            value="{{ $inf->lebar }}"
                                            placeholder="0.00"
-                                           class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all"
+                                           class="w-full px-4 py-3 bg-amber-50 dark:bg-amber-500/10 border border-amber-100 dark:border-amber-500/20 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all"
                                            required>
                                 </div>
                             </div>
@@ -270,7 +270,7 @@
                                         <i class="fas fa-water text-navy-500 mr-1"></i> Ketersediaan Drainase
                                     </label>
                                     <select name="has_drainase"
-                                            class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                                            class="w-full px-4 py-3 bg-amber-50 dark:bg-amber-500/10 border border-amber-100 dark:border-amber-500/20 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
                                         <option value="ya"    {{ $inf->has_drainase == 'ya'    ? 'selected' : '' }}>Ada Drainase</option>
                                         <option value="tidak" {{ $inf->has_drainase == 'tidak' ? 'selected' : '' }}>Tidak Ada Drainase</option>
                                     </select>
@@ -280,7 +280,7 @@
                                         <i class="fas fa-circle-notch text-navy-500 mr-1"></i> Ketersediaan Gorong-gorong
                                     </label>
                                     <select name="has_gorong_gorong"
-                                            class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
+                                            class="w-full px-4 py-3 bg-amber-50 dark:bg-amber-500/10 border border-amber-100 dark:border-amber-500/20 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
                                         <option value="ya"    {{ $inf->has_gorong_gorong == 'ya'    ? 'selected' : '' }}>Ada Gorong-gorong</option>
                                         <option value="tidak" {{ $inf->has_gorong_gorong == 'tidak' ? 'selected' : '' }}>Tidak Ada Gorong-gorong</option>
                                     </select>
@@ -293,7 +293,7 @@
                                     <span class="text-red-400">*</span>
                                 </label>
                                 <textarea name="kondisi" id="kondisi-textarea" rows="3"
-                                    class="w-full px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all placeholder-slate-400"
+                                    class="w-full px-4 py-3 bg-amber-50 dark:bg-amber-500/10 border border-amber-100 dark:border-amber-500/20 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all placeholder-slate-400"
                                     placeholder="Contoh: titian putus, cor beton retak, amblas..."
                                     required>{{ $inf->kondisi }}</textarea>
 

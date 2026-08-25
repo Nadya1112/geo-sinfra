@@ -95,14 +95,14 @@
         <div class="flex-1 p-8 overflow-y-auto custom-scrollbar">
             
             @if(session('success'))
-            <div class="mb-6 px-4 py-3 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-2xl flex items-center gap-3">
+            <div class="mb-6 px-4 py-3 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-500 rounded-2xl flex items-center gap-3">
                 <i class="fas fa-check-circle"></i>
                 <p class="text-xs font-bold">{{ session('success') }}</p>
             </div>
             @endif
 
             @if(session('error'))
-            <div class="mb-6 px-4 py-3 bg-red-50 border border-red-100 text-red-700 rounded-2xl flex items-center gap-3">
+            <div class="mb-6 px-4 py-3 bg-red-50 dark:bg-red-500/10 border border-red-100 dark:border-red-500/20 text-red-700 dark:text-red-500 rounded-2xl flex items-center gap-3">
                 <i class="fas fa-exclamation-circle"></i>
                 <p class="text-xs font-bold">{{ session('error') }}</p>
             </div>

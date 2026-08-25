@@ -121,9 +121,9 @@
 
             {{-- Success Alert --}}
             @if(session('success'))
-            <div class="mb-6 p-4 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-center gap-3">
+            <div class="mb-6 p-4 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 rounded-2xl flex items-center gap-3">
                 <i class="fas fa-check-circle text-emerald-500 text-xl"></i>
-                <p class="text-sm font-bold text-emerald-700">{{ session('success') }}</p>
+                <p class="text-sm font-bold text-emerald-700 dark:text-emerald-500">{{ session('success') }}</p>
             </div>
             @endif
 
@@ -132,14 +132,14 @@
                 <span class="px-3 py-1.5 bg-navy-900 text-gold-500 rounded-xl text-xs font-black tracking-widest uppercase">
                     <i class="fas fa-hashtag mr-1"></i> INF-{{ $inf->id_infrastruktur }}
                 </span>
-                <span class="px-3 py-1.5 bg-gold-500/10 text-gold-600 border border-gold-500/20 rounded-xl text-xs font-black tracking-widest uppercase">
+                <span class="px-3 py-1.5 bg-gold-500/10 text-gold-600 dark:text-gold-500 border border-gold-500/20 rounded-xl text-xs font-black tracking-widest uppercase">
                     {{ strtoupper(ucfirst($inf->jenis) ?? 'Infrastruktur') }}
                 </span>
                 @php
                     $statusMap = [
-                        'baik'         => 'bg-emerald-50 text-emerald-600 border-emerald-200',
-                        'rusak sedang' => 'bg-orange-50 text-orange-600 border-orange-200',
-                        'rusak berat'  => 'bg-red-50 text-red-600 border-red-200',
+                        'baik'         => 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-500 border-emerald-200 dark:border-emerald-500/20',
+                        'rusak sedang' => 'bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-500 border-orange-200 dark:border-orange-500/20',
+                        'rusak berat'  => 'bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-500 border-red-200 dark:border-red-500/20',
                     ];
                     $statusClass = $statusMap[strtolower($inf->kondisi ?? '')] ?? 'bg-slate-50 dark:bg-navy-950/50 text-slate-500 dark:text-slate-400 border-slate-200';
                 @endphp
@@ -230,31 +230,31 @@
                         </div>
 
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-5">
-                            <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-center">
+                            <div class="bg-amber-50 dark:bg-amber-500/10 border border-amber-100 dark:border-amber-500/20 rounded-2xl p-4 text-center">
                                 <p class="text-xs font-black text-slate-400 uppercase tracking-wider mb-1">Panjang</p>
                                 <p class="text-xl font-black text-navy-900 dark:text-white">{{ number_format($inf->panjang ?? 0, 1) }}</p>
                                 <p class="text-xs text-slate-400 font-bold">meter</p>
                             </div>
-                            <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-center">
+                            <div class="bg-amber-50 dark:bg-amber-500/10 border border-amber-100 dark:border-amber-500/20 rounded-2xl p-4 text-center">
                                 <p class="text-xs font-black text-slate-400 uppercase tracking-wider mb-1">Lebar</p>
                                 <p class="text-xl font-black text-navy-900 dark:text-white">{{ number_format($inf->lebar ?? 0, 1) }}</p>
                                 <p class="text-xs text-slate-400 font-bold">meter</p>
                             </div>
-                            <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-center">
+                            <div class="bg-amber-50 dark:bg-amber-500/10 border border-amber-100 dark:border-amber-500/20 rounded-2xl p-4 text-center">
                                 <p class="text-xs font-black text-slate-400 uppercase tracking-wider mb-1">Drainase</p>
                                 @if(($inf->has_drainase ?? 'tidak') == 'ya')
                                     <i class="fas fa-check-circle text-2xl text-emerald-500 my-1 block"></i>
-                                    <p class="text-xs text-emerald-600 font-black uppercase">Ada</p>
+                                    <p class="text-xs text-emerald-600 dark:text-emerald-500 font-black uppercase">Ada</p>
                                 @else
                                     <i class="fas fa-times-circle text-2xl text-red-400 my-1 block"></i>
                                     <p class="text-xs text-red-500 font-black uppercase">Tidak Ada</p>
                                 @endif
                             </div>
-                            <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-center">
+                            <div class="bg-amber-50 dark:bg-amber-500/10 border border-amber-100 dark:border-amber-500/20 rounded-2xl p-4 text-center">
                                 <p class="text-xs font-black text-slate-400 uppercase tracking-wider mb-1">Gorong-gorong</p>
                                 @if(($inf->has_gorong_gorong ?? 'tidak') == 'ya')
                                     <i class="fas fa-check-circle text-2xl text-emerald-500 my-1 block"></i>
-                                    <p class="text-xs text-emerald-600 font-black uppercase">Ada</p>
+                                    <p class="text-xs text-emerald-600 dark:text-emerald-500 font-black uppercase">Ada</p>
                                 @else
                                     <i class="fas fa-times-circle text-2xl text-red-400 my-1 block"></i>
                                     <p class="text-xs text-red-500 font-black uppercase">Tidak Ada</p>
@@ -264,9 +264,9 @@
 
                         <div>
                             <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Deskripsi Kondisi Lapangan</p>
-                            <div class="px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 italic leading-relaxed">
+                            <div class="px-4 py-3 bg-amber-50 dark:bg-amber-500/10 border border-amber-100 dark:border-amber-500/20 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 italic leading-relaxed">
                                 @if(strtolower($inf->kondisi ?? '') == 'menunggu ai')
-                                    <div class="flex items-center gap-2 text-amber-600 mb-2 not-italic">
+                                    <div class="flex items-center gap-2 text-amber-600 dark:text-amber-500 mb-2 not-italic">
                                         <i class="fas fa-exclamation-triangle text-xs"></i>
                                         <span class="text-xs font-black uppercase tracking-widest">Deskripsi Belum Lengkap</span>
                                     </div>
@@ -328,7 +328,7 @@
 
                     {{-- Catatan Eksekutif --}}
                     @if($inf->alasan_penolakan)
-                    <div class="bg-amber-50 rounded-[2.5rem] p-8 border border-amber-100 shadow-sm relative overflow-hidden mt-6">
+                    <div class="bg-amber-50 dark:bg-amber-500/10 rounded-[2.5rem] p-8 border border-amber-100 dark:border-amber-500/20 shadow-sm relative overflow-hidden mt-6">
                         <div class="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-bl-full"></div>
                         <h4 class="text-sm font-black text-amber-900 uppercase tracking-widest mb-3 flex items-center gap-2">
                             <i class="fas fa-comment-dots text-amber-500"></i> Catatan Eksekutif (Tim Teknis)
