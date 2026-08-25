@@ -283,7 +283,7 @@
                             <div class="flex items-center gap-4 p-3 hover:bg-slate-50   rounded-2xl border border-transparent hover:border-slate-100  transition-all group cursor-pointer">
                                 <div class="w-12 h-12 rounded-xl bg-slate-100 overflow-hidden flex-shrink-0 relative">
                                     <img src="{{ asset('storage/' . $upload->foto_terbaru) }}" class="w-full h-full object-cover">
-                                    <div class="absolute inset-0 bg-white dark:bg-navy-900 border border-slate-200 dark:border-white/5/10 group-hover:bg-transparent transition-colors"></div>
+                                    <div class="absolute inset-0 bg-navy-900/10 group-hover:bg-transparent transition-colors"></div>
                                 </div>
                                 <div class="flex-1 min-w-0">
                                     <p class="text-xs font-black text-navy-900  truncate uppercase">{{ $upload->nama_infrastruktur }}</p>
@@ -308,7 +308,7 @@
     {{-- Modal Kelola Wilayah --}}
     <div id="territoryModal" class="fixed inset-0 z-[60] hidden overflow-y-auto">
         <div class="flex items-end md:items-center justify-center min-h-screen p-0 md:p-4">
-            <div class="fixed inset-0 bg-white dark:bg-navy-900 border border-slate-200 dark:border-white/5/60 backdrop-blur-sm transition-opacity" onclick="toggleModal('territoryModal')"></div>
+            <div class="fixed inset-0 bg-slate-900/40 dark:bg-navy-900/60 backdrop-blur-sm transition-opacity" onclick="toggleModal('territoryModal')"></div>
             
             <div class="relative bg-white rounded-t-[2.5rem] md:rounded-[2.5rem] w-full max-w-2xl p-6 md:p-8 shadow-2xl transition-all translate-y-full md:translate-y-0 md:scale-95 opacity-0 duration-300 max-h-[90vh] md:max-h-none overflow-y-auto" id="modalContent">
                 <div class="flex justify-between items-center mb-8 pb-4 border-b border-slate-100 ">
