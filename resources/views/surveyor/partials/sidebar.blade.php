@@ -16,31 +16,31 @@
         <nav class="space-y-1">
             <a href="{{ route('surveyor.dashboard') }}" 
                class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 {{ request()->routeIs('surveyor.dashboard') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left whitespace-nowrap" title="Beranda">
-                <i class="fas fa-th-large text-lg lg:text-base {{ request()->routeIs('surveyor.dashboard') ? '' : 'group-hover:text-gold-500' }}"></i> 
+                <i class="fas fa-th-large {{ request()->routeIs('surveyor.dashboard') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 <span class="hidden lg:inline">Beranda</span>
             </a>
 
             <a href="{{ route('surveyor.laporan') }}" 
                class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 {{ request()->routeIs('surveyor.laporan') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left whitespace-nowrap" title="Penugasan Laporan Warga">
-                <i class="fas fa-tasks text-lg lg:text-base {{ request()->routeIs('surveyor.laporan') ? '' : 'group-hover:text-gold-500' }}"></i> 
+                <i class="fas fa-tasks {{ request()->routeIs('surveyor.laporan') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 <span class="hidden lg:inline">Penugasan Laporan</span>
             </a>
 
             <a href="{{ route('surveyor.input') }}" 
                class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 {{ request()->routeIs('surveyor.input') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left whitespace-nowrap" title="Input Data Lapangan">
-                <i class="fas fa-plus-circle text-lg lg:text-base {{ request()->routeIs('surveyor.input') ? '' : 'group-hover:text-gold-500' }}"></i> 
+                <i class="fas fa-plus-circle {{ request()->routeIs('surveyor.input') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 <span class="hidden lg:inline">Input Data</span>
             </a>
 
             <a href="{{ route('surveyor.history') }}" 
                class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 {{ request()->routeIs('surveyor.history') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left whitespace-nowrap" title="Riwayat Data Saya">
-                <i class="fas fa-history text-lg lg:text-base {{ request()->routeIs('surveyor.history') ? '' : 'group-hover:text-gold-500' }}"></i> 
+                <i class="fas fa-history {{ request()->routeIs('surveyor.history') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 <span class="hidden lg:inline">Riwayat Data Saya</span>
             </a>
 
             <a href="{{ route('surveyor.map') }}" 
                class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3 {{ request()->routeIs('surveyor.map') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left whitespace-nowrap" title="Peta Sebaran Saya">
-                <i class="fas fa-map-marked-alt text-lg lg:text-base {{ request()->routeIs('surveyor.map') ? '' : 'group-hover:text-gold-500' }}"></i> 
+                <i class="fas fa-map-marked-alt {{ request()->routeIs('surveyor.map') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 <span class="hidden lg:inline">Peta Sebaran Saya</span>
             </a>
         </nav>
@@ -50,7 +50,7 @@
         <form method="POST" action="{{ route('logout') }}" class="w-full">
             @csrf
             <button type="submit" class="flex items-center justify-center lg:justify-start gap-3 px-0 lg:px-4 py-3.5 text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 w-full text-left text-sm font-bold transition group rounded-xl hover:bg-red-50 dark:hover:bg-red-500/10" title="Keluar">
-                <i class="fas fa-sign-out-alt text-lg lg:text-base group-hover:-translate-x-1 transition-transform"></i> 
+                <i class="fas fa-sign-out-alt group-hover:-translate-x-1 transition-transform"></i> 
                 <span class="hidden lg:inline">Keluar</span>
             </button>
         </form>
