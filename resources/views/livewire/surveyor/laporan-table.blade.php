@@ -44,7 +44,7 @@
     <div class="bg-white rounded-[2rem] shadow-xl shadow-slate-200/40 border border-slate-100 overflow-hidden relative">
 
         <div class="overflow-x-auto custom-scrollbar">
-            <table class="w-full text-left text-sm whitespace-nowrap md:whitespace-normal">
+            <table class="w-full text-left text-sm whitespace-nowrap md:whitespace-normal hidden md:table">
                 <thead class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
                     <tr>
                         <th class="px-6 py-4 font-extrabold uppercase tracking-widest text-xs text-gold-500">Waktu Lapor</th>
@@ -149,6 +149,92 @@
                     @endforelse
                 </tbody>
             </table>
+
+            <!-- Card Layout (Mobile) -->
+            <div class="flex flex-col md:hidden divide-y divide-slate-100">
+                @forelse($laporanWarga as $laporan)
+                <div class="p-4 hover:bg-slate-50 transition-colors">
+                    <div class="flex items-start justify-between gap-2 mb-3">
+                        <div class="flex items-center gap-2">
+                            <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center shrink-0">
+                                <i class="fas fa-user text-slate-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-navy-900 text-sm leading-tight">{{ $laporan->nama_pelapor }}</h4>
+                                <p class="text-xs text-slate-500 font-medium">{{ \Carbon\Carbon::parse($laporan->created_at)->format('d M Y, H:i') }}</p>
+                            </div>
+                        </div>
+                        @php
+                            $statusColor = 'bg-slate-100 text-slate-700 border-slate-200';
+                            if($laporan->status == 'Menunggu') $statusColor = 'bg-yellow-50 text-yellow-700 border-yellow-200';
+                            if($laporan->status == 'Ditinjau') $statusColor = 'bg-blue-50 text-blue-700 border-blue-200';
+                            if($laporan->status == 'Diproses') $statusColor = 'bg-indigo-50 text-indigo-700 border-indigo-200';
+                            if($laporan->status == 'Selesai') $statusColor = 'bg-emerald-50 text-emerald-700 border-emerald-200';
+                            if($laporan->status == 'Ditolak') $statusColor = 'bg-red-50 text-red-700 border-red-200';
+                            
+                            $statusIcon = 'fa-clock';
+                            if($laporan->status == 'Menunggu') $statusIcon = 'fa-hourglass-half';
+                            if($laporan->status == 'Ditinjau') $statusIcon = 'fa-eye';
+                            if($laporan->status == 'Diproses') $statusIcon = 'fa-cog fa-spin';
+                            if($laporan->status == 'Selesai') $statusIcon = 'fa-check-circle';
+                            if($laporan->status == 'Ditolak') $statusIcon = 'fa-times-circle';
+                        @endphp
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border {{ $statusColor }} text-[10px] font-bold tracking-wider shrink-0 shadow-sm">
+                            <i class="fas {{ $statusIcon }}"></i> <span class="hidden sm:inline">{{ $laporan->status }}</span>
+                        </span>
+                    </div>
+
+                    <p class="text-xs font-medium text-slate-700 line-clamp-3 mb-3">{{ $laporan->deskripsi }}</p>
+
+                    @if($laporan->label_ai)
+                        @php
+                            $aiColor = 'bg-slate-100 text-slate-600 border-slate-200';
+                            $aiIcon = 'fa-robot';
+                            if(str_contains(strtolower($laporan->label_ai), 'berat')) {
+                                $aiColor = 'bg-red-50 text-red-600 border-red-200';
+                                $aiIcon = 'fa-exclamation-triangle';
+                            } elseif(str_contains(strtolower($laporan->label_ai), 'sedang')) {
+                                $aiColor = 'bg-yellow-50 text-yellow-600 border-yellow-200';
+                                $aiIcon = 'fa-exclamation-circle';
+                            } elseif(str_contains(strtolower($laporan->label_ai), 'baik')) {
+                                $aiColor = 'bg-emerald-50 text-emerald-600 border-emerald-200';
+                                $aiIcon = 'fa-check-circle';
+                            }
+                            $skorPercent = $laporan->skor_ai ? round($laporan->skor_ai * 100) . '%' : '';
+                        @endphp
+                        <div class="inline-flex items-center gap-1.5 px-2 py-1 mb-3 rounded border {{ $aiColor }} text-[10px] font-bold tracking-wider">
+                            <i class="fas {{ $aiIcon }}"></i> AI: {{ $laporan->label_ai }} {{ $skorPercent ? "($skorPercent)" : '' }}
+                        </div>
+                    @endif
+                    
+                    <div class="flex items-center gap-2 flex-wrap mb-4 border-b border-slate-100 pb-4">
+                        @if($laporan->foto)
+                            <button onclick="showPhotoModal('{{ asset('storage/' . $laporan->foto) }}')" class="flex-1 min-w-[100px] justify-center inline-flex items-center gap-1.5 px-3 py-2 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-colors">
+                                <i class="fas fa-image"></i> Foto
+                            </button>
+                        @endif
+                        <a href="https://www.google.com/maps/search/?api=1&query={{ $laporan->latitude }},{{ $laporan->longitude }}" target="_blank" 
+                           class="flex-1 min-w-[100px] justify-center inline-flex items-center gap-1.5 px-3 py-2 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-colors">
+                            <i class="fas fa-map-marker-alt"></i> Lokasi
+                        </a>
+                    </div>
+                    
+                    <div class="flex gap-2">
+                        <a href="{{ route('surveyor.laporan.edit', $laporan->id) }}" class="flex-1 py-2 flex items-center justify-center gap-2 bg-white border border-slate-200 text-slate-600 rounded-xl hover:bg-gold-500 hover:text-white hover:border-gold-500 transition-all font-bold text-xs">
+                            <i class="fas fa-pen"></i> Ubah
+                        </a>
+                        <a href="{{ route('surveyor.laporan.show', $laporan->id) }}" class="flex-1 py-2 flex items-center justify-center gap-2 bg-navy-900 text-gold-500 rounded-xl hover:bg-navy-950 hover:text-white transition-all font-bold text-xs">
+                            <i class="fas fa-eye"></i> Detail
+                        </a>
+                    </div>
+                </div>
+                @empty
+                <div class="p-8 text-center text-slate-500">
+                    <i class="fas fa-file-alt text-4xl text-slate-200 mb-3 block"></i>
+                    <p class="font-bold text-sm">Belum Ada Laporan Warga.</p>
+                </div>
+                @endforelse
+            </div>
         </div>
         
         @if($laporanWarga->hasPages())

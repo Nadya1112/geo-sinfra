@@ -35,7 +35,7 @@
     <div class="bg-white rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden mb-10 relative">
 
         <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse">
+            <table class="w-full text-left border-collapse hidden md:table">
                 <thead>
                     <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
                         <th class="px-4 py-2 text-xs font-black text-gold-500 uppercase tracking-widest text-center w-12">NO</th>
@@ -189,6 +189,105 @@
                     @endforelse
                 </tbody>
             </table>
+        </div>
+
+        <!-- Card Layout (Mobile) -->
+        <div class="flex flex-col md:hidden divide-y divide-slate-100">
+            @forelse($riwayat as $index => $item)
+            <div class="p-4 hover:bg-slate-50 transition-colors">
+                <div class="flex items-start gap-3 mb-3">
+                    <div class="w-16 h-16 rounded-xl overflow-hidden shadow-sm bg-slate-100 flex flex-col items-center justify-center relative shrink-0">
+                        @if($item->foto_terbaru)
+                            @php $cleanPath = str_replace('\\', '/', $item->foto_terbaru); @endphp
+                            <img src="{{ asset('storage/' . (str_contains($cleanPath, 'infrastruktur/') ? $cleanPath : 'infrastruktur/' . $cleanPath)) }}" class="w-full h-full object-cover">
+                        @else
+                            <i class="fas fa-image text-slate-300 text-lg"></i>
+                        @endif
+
+                        @if($item->status_verifikasi == 'Verified')
+                        <div class="absolute -top-1 -right-1 w-5 h-5 bg-emerald-500 rounded-full border-[2px] border-white flex items-center justify-center shadow-sm">
+                            <i class="fas fa-check text-[10px] text-white"></i>
+                        </div>
+                        @endif
+                    </div>
+                    
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-black text-navy-900 uppercase tracking-tight mb-1 truncate">{{ $item->nama_infrastruktur ?? $item->nama_objek }}</p>
+                        <span class="inline-flex px-1.5 py-0.5 bg-navy-50 text-navy-600 rounded-md text-[10px] font-black uppercase tracking-widest mb-1">{{ ucfirst($item->jenis) }}</span>
+                        
+                        <div class="flex items-center gap-1.5 mt-1">
+                            <i class="fas fa-map-marker-alt text-[10px] text-gold-500"></i>
+                            <p class="text-[10px] font-black text-slate-500 uppercase tracking-wider truncate">
+                                {{ $item->kelurahan ? $item->kelurahan->nama_kelurahan : '-' }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between mb-3 border-y border-slate-50 py-2">
+                    <div class="flex flex-col gap-1">
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Validasi</span>
+                        @if($item->status_validasi == 'Rejected')
+                            <span class="text-xs font-black text-red-600">DITOLAK</span>
+                        @elseif($item->status_validasi == 'Validated')
+                            <span class="text-xs font-black text-emerald-600">DI-ACC</span>
+                        @elseif($item->status_verifikasi == 'Verified')
+                            <span class="text-xs font-black text-blue-600">TERVERIFIKASI</span>
+                        @else
+                            <span class="text-xs font-black text-slate-500">MENUNGGU</span>
+                        @endif
+                    </div>
+
+                    <div class="w-px h-8 bg-slate-100"></div>
+
+                    <div class="flex flex-col gap-1 items-end">
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Kondisi AI</span>
+                        @if($item->cnn || $item->analisis)
+                            @if($item->analisis)
+                                @php
+                                    $labelMap = [
+                                        'Kondisi Baik'         => ['bg' => 'bg-emerald-50', 'text' => 'text-emerald-600', 'icon' => 'fa-check-circle'],
+                                        'Kondisi Rusak Ringan' => ['bg' => 'bg-yellow-50',  'text' => 'text-yellow-600',  'icon' => 'fa-wrench'],
+                                        'Kondisi Rusak Sedang' => ['bg' => 'bg-orange-50',  'text' => 'text-orange-600',  'icon' => 'fa-hammer'],
+                                        'Kondisi Rusak Berat'  => ['bg' => 'bg-red-50',     'text' => 'text-red-600',     'icon' => 'fa-exclamation-triangle'],
+                                    ];
+                                    $style = $labelMap[$item->analisis->label_prioritas] ?? ['bg' => 'bg-slate-50', 'text' => 'text-slate-600', 'icon' => 'fa-info-circle'];
+                                @endphp
+                                <div class="flex items-center gap-1.5 px-2 py-0.5 {{ $style['bg'] }} rounded">
+                                    <i class="fas {{ $style['icon'] }} {{ $style['text'] }} text-[9px]"></i>
+                                    <span class="text-[9px] font-black {{ $style['text'] }} uppercase tracking-wider">{{ $item->analisis->label_prioritas }}</span>
+                                </div>
+                            @else
+                                <span class="text-[9px] font-black text-slate-500 bg-slate-50 px-2 py-0.5 rounded">MENUNGGU STATUS</span>
+                            @endif
+                        @else
+                            <span class="text-[9px] font-black text-slate-400">-</span>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="flex gap-2">
+                    <a href="{{ route('surveyor.infrastruktur.edit', $item->id_infrastruktur) }}" class="flex-1 py-2 flex items-center justify-center gap-2 bg-white border border-slate-200 text-slate-600 rounded-xl hover:bg-gold-500 hover:text-white hover:border-gold-500 transition-all font-bold text-[10px] uppercase tracking-wider">
+                        <i class="fas fa-pen"></i> Ubah
+                    </a>
+                    <a href="{{ route('surveyor.infrastruktur.show', $item->id_infrastruktur) }}" class="flex-1 py-2 flex items-center justify-center gap-2 bg-navy-900 text-gold-500 rounded-xl hover:bg-navy-950 hover:text-white transition-all font-bold text-[10px] uppercase tracking-wider">
+                        <i class="fas fa-eye"></i> Detail
+                    </a>
+                    
+                    @if($item->status_verifikasi === 'Pending')
+                    <button onclick="konfirmasiHapus({{ $item->id_infrastruktur }}, '{{ addslashes($item->nama_objek ?? $item->nama_infrastruktur) }}')"
+                        class="w-10 flex flex-col items-center justify-center bg-white border border-red-200 text-red-400 rounded-xl hover:bg-red-500 hover:text-white transition-all cursor-pointer">
+                        <i class="fas fa-trash text-xs"></i>
+                    </button>
+                    @endif
+                </div>
+            </div>
+            @empty
+            <div class="p-8 text-center text-slate-500">
+                <i class="fas fa-folder-open text-4xl text-slate-200 mb-3 block"></i>
+                <p class="font-bold text-sm">Riwayat Kosong.</p>
+            </div>
+            @endforelse
         </div>
         @if($show != 'all' && isset($riwayat) && $riwayat instanceof \Illuminate\Pagination\LengthAwarePaginator)
             <div class="px-8 py-5 border-t border-slate-100 bg-white">

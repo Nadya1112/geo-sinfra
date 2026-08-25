@@ -230,7 +230,7 @@
         @endif
         
         <div class="overflow-x-auto w-full custom-scrollbar">
-            <table id="laporanTable" class="w-full text-left min-w-[600px] md:min-w-full">
+            <table id="laporanTable" class="w-full text-left min-w-[600px] md:min-w-full hidden md:table print:table">
                 <thead>
                 <tr class="bg-slate-50 dark:bg-[#0f0e2c]/50 text-xs font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 dark:border-white/10">
                     <th class="px-6 py-4 text-center border-b border-slate-100 dark:border-white/10" style="width: 10%;">No</th>
@@ -306,6 +306,57 @@
                 </tr>
             </tfoot>
         </table>
+        </div>
+        
+        <!-- Card Layout (Mobile) -->
+        <div class="flex flex-col md:hidden divide-y divide-slate-100 dark:divide-white/10 print:hidden">
+            @forelse($reports as $index => $item)
+            <div class="p-4 hover:bg-slate-50 dark:hover:bg-[#0f0e2c]/50 transition-colors">
+                <div class="flex items-start justify-between gap-3 mb-2">
+                    <div class="flex-1 min-w-0">
+                        <h4 class="text-sm font-black text-navy-900 dark:text-white leading-tight mb-1 truncate">{{ $item->nama_objek }}</h4>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{{ $item->jenis }}</p>
+                    </div>
+                    <span class="text-[10px] font-bold text-slate-400 bg-slate-50 dark:bg-[#0f0e2c] px-2 py-1 rounded shrink-0">
+                        {{ $item->created_at->format('d/m/Y') }}
+                    </span>
+                </div>
+                
+                <div class="flex items-center gap-1.5 mb-3">
+                    <i class="fas fa-map-marker-alt text-[10px] text-gold-500"></i>
+                    <p class="text-[10px] font-black text-slate-500 uppercase tracking-wider truncate">
+                        {{ $item->kelurahan->nama_kelurahan ?? '-' }}, {{ $item->kelurahan->kecamatan->nama_kecamatan ?? '-' }}
+                    </p>
+                </div>
+                
+                <div class="flex items-center gap-2 border-t border-slate-50 dark:border-white/5 pt-3 mt-1">
+                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Kondisi AI:</span>
+                    @php
+                        $aiLabel = $item->analisis->label_prioritas ?? '';
+                        $aiLabelLower = strtolower($aiLabel);
+                        
+                        $condClass = 'bg-slate-50 dark:bg-[#0f0e2c] text-slate-600 border-slate-200 dark:border-white/20';
+                        if (str_contains($aiLabelLower, 'rusak berat')) {
+                            $condClass = 'bg-[#be123c]/10 text-[#be123c] border-[#be123c]/30';
+                        } elseif (str_contains($aiLabelLower, 'rusak sedang')) {
+                            $condClass = 'bg-[#d97706]/10 text-[#d97706] border-[#d97706]/30';
+                        } elseif (str_contains($aiLabelLower, 'rusak ringan')) {
+                            $condClass = 'bg-[#ca8a04]/10 text-[#ca8a04] border-[#ca8a04]/30';
+                        } elseif (str_contains($aiLabelLower, 'baik')) {
+                            $condClass = 'bg-[#059669]/10 text-[#059669] border-[#059669]/30';
+                        }
+                    @endphp
+                    <span class="px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest border {{ $condClass }}">
+                        {{ $aiLabel ?: 'Belum Dianalisis' }}
+                    </span>
+                </div>
+            </div>
+            @empty
+            <div class="p-8 text-center text-slate-500">
+                <i class="fas fa-folder-open text-4xl text-slate-200 mb-3 block"></i>
+                <p class="font-bold text-sm">Tidak ada data yang ditemukan sesuai filter.</p>
+            </div>
+            @endforelse
         </div>
         
         @if($show != 'all' && isset($reports) && $reports instanceof \Illuminate\Pagination\LengthAwarePaginator)

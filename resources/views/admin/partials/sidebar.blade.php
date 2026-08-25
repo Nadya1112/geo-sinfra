@@ -225,7 +225,7 @@
 </nav>
 
 <!-- Real-time Notification Toast Container -->
-<div id="notification-container" class="fixed bottom-24 md:bottom-6 right-6 z-[9999] flex flex-col gap-3"></div>
+<div id="notification-container" class="fixed bottom-28 md:bottom-6 right-6 z-[9999] flex flex-col gap-3"></div>
 
 <!-- Notification Audio Element -->
 <audio id="notification-sound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" preload="auto"></audio>

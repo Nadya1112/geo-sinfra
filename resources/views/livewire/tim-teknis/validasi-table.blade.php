@@ -81,7 +81,7 @@
 
 
         <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse">
+            <table class="w-full text-left border-collapse hidden md:table">
                 <thead>
                     <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md text-xs font-black text-gold-500 uppercase tracking-widest">
                         <th class="px-2 py-4 w-12 border-b border-navy-800">No</th>
@@ -220,6 +220,106 @@
                 @endforelse
             </tbody>
         </table>
+        </div>
+
+        <!-- Card Layout (Mobile) -->
+        <div class="flex flex-col md:hidden divide-y divide-slate-100 dark:divide-white/10">
+            @forelse($allUsulan as $index => $item)
+            <div class="p-4 hover:bg-slate-50 dark:hover:bg-[#0f0e2c]/50 transition-colors">
+                <div class="flex items-start gap-3 mb-3">
+                    <div class="w-16 h-16 rounded-2xl bg-slate-100 overflow-hidden shadow-inner flex-shrink-0 flex items-center justify-center relative">
+                        @if($item->foto_terbaru)
+                            <img src="{{ asset('storage/' . $item->foto_terbaru) }}" class="w-full h-full object-cover">
+                        @else
+                            <i class="fas fa-image text-slate-300"></i>
+                        @endif
+                    </div>
+                    
+                    <div class="flex-1 min-w-0">
+                        <h4 class="text-sm font-black text-navy-900 dark:text-white leading-tight mb-1 truncate">{{ $item->nama_objek }}</h4>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">{{ $item->jenis }}</p>
+                        
+                        <div class="flex items-center gap-1.5 mt-1">
+                            <i class="fas fa-map-marker-alt text-[10px] text-gold-500"></i>
+                            <p class="text-[10px] font-black text-slate-500 uppercase tracking-wider truncate">
+                                {{ $item->kelurahan->nama_kelurahan ?? '-' }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2 mb-4 bg-slate-50 dark:bg-[#0f0e2c] p-2 rounded-xl">
+                    <div class="w-6 h-6 rounded-full bg-gold-50 flex items-center justify-center text-gold-500 font-bold text-[10px] uppercase shrink-0">
+                        {{ substr($item->user->name ?? 'A', 0, 1) }}
+                    </div>
+                    <p class="text-[10px] font-black text-navy-900 dark:text-white truncate">Surveyor: {{ $item->user->name ?? 'Anonim' }}</p>
+                </div>
+
+                <div class="flex items-center justify-between mb-4 border-y border-slate-50 dark:border-white/5 py-3">
+                    <div class="flex flex-col gap-1 w-1/2">
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Kondisi AI</span>
+                        @php
+                            $aiLabel = $item->analisis->label_prioritas ?? '';
+                            $aiLabelLower = strtolower($aiLabel);
+                            $aiClass = 'bg-slate-50 dark:bg-[#0f0e2c] text-slate-600 border-slate-200 dark:border-white/20';
+                            if (str_contains($aiLabelLower, 'berat')) {
+                                $aiClass = 'bg-[#be123c]/10 text-[#be123c] border-[#be123c]/30';
+                            } elseif (str_contains($aiLabelLower, 'sedang') || str_contains($aiLabelLower, 'ringan')) {
+                                $aiClass = 'bg-[#d97706]/10 text-[#d97706] border-[#d97706]/30';
+                            } elseif (str_contains($aiLabelLower, 'baik')) {
+                                $aiClass = 'bg-[#059669]/10 text-[#059669] border-[#059669]/30';
+                            }
+                        @endphp
+                        <span class="px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest whitespace-nowrap border w-fit {{ $aiClass }}">
+                            {{ $aiLabel ?: 'Belum Dianalisis' }}
+                        </span>
+                    </div>
+
+                    <div class="w-px h-8 bg-slate-100 dark:bg-white/10"></div>
+
+                    <div class="flex flex-col gap-1 w-1/2 pl-3 items-end">
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Validasi</span>
+                        @php
+                            $statusClass = match($item->status_validasi) {
+                                'Validated' => 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400',
+                                'Rejected' => 'bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400',
+                                default => 'bg-slate-50 dark:bg-[#0f0e2c] text-slate-600'
+                            };
+                            $statusText = match($item->status_validasi) {
+                                'Validated' => 'Diterima',
+                                'Rejected' => 'Ditolak',
+                                default => 'Menunggu'
+                            };
+                        @endphp
+                        <span class="px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest {{ $statusClass }}">
+                            {{ $statusText }}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="flex gap-2">
+                    <a href="{{ route('tim_teknis.infrastruktur.show', $item->id_infrastruktur) }}" class="flex-[0.5] py-2 flex items-center justify-center gap-1.5 bg-navy-50 text-navy-900 rounded-xl hover:bg-gold-500 hover:text-white transition-all font-bold text-[10px] uppercase tracking-wider">
+                        <i class="fas fa-eye"></i> Detail
+                    </a>
+
+                    @if($item->status_validasi == 'Pending')
+                        <button type="button" wire:click="openModal({{ $item->id_infrastruktur }}, 'Validated')" class="flex-1 py-2 flex items-center justify-center gap-1.5 bg-[#059669] text-white rounded-xl hover:bg-[#047857] transition-all font-bold text-[10px] uppercase tracking-wider shadow-md">
+                            <i class="fas fa-check"></i> ACC
+                        </button>
+                        <button type="button" wire:click="openModal({{ $item->id_infrastruktur }}, 'Rejected')" class="flex-1 py-2 flex items-center justify-center gap-1.5 bg-rose-50 text-rose-600 border border-rose-200 rounded-xl hover:bg-rose-500 hover:text-white transition-all font-bold text-[10px] uppercase tracking-wider">
+                            <i class="fas fa-times"></i> Tolak
+                        </button>
+                    @endif
+                </div>
+            </div>
+            @empty
+            <div class="p-8 text-center text-slate-500">
+                <div class="w-16 h-16 bg-slate-50 dark:bg-[#0f0e2c] rounded-full flex items-center justify-center text-slate-300 mx-auto mb-3">
+                    <i class="fas fa-clipboard-check text-2xl"></i>
+                </div>
+                <p class="font-bold text-sm">Tidak ada data untuk divalidasi.</p>
+            </div>
+            @endforelse
         </div>
 
         @if($show != 'all' && isset($allUsulan) && $allUsulan instanceof \Illuminate\Pagination\LengthAwarePaginator)
