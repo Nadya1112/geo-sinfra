@@ -69,13 +69,16 @@
         #preloader {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, #141332 0%, #070617 100%);
+            background: radial-gradient(circle at center, #ffffff 0%, #f8fafc 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 99999;
             transition: all 0.6s cubic-bezier(0.85, 0, 0.15, 1);
+        }
+        html.dark #preloader {
+            background: radial-gradient(circle at center, #141332 0%, #070617 100%);
         }
         #preloader.fade-out {
             opacity: 0;
@@ -116,23 +119,36 @@
             background-repeat: no-repeat;
             overflow: hidden;
         }
+        /* Default: Light Mode Gradients */
         .hero-premium::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.6) 0%, transparent 50%),
-                        radial-gradient(circle at 20% 80%, rgba(197, 160, 89, 0.6) 0%, transparent 50%),
-                        rgba(7, 6, 23, 0.75);
+            background: radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 20% 80%, rgba(197, 160, 89, 0.2) 0%, transparent 50%),
+                        rgba(248, 250, 252, 0.9); /* slate-50 overlay */
             pointer-events: none;
             z-index: 0;
+            transition: background 0.3s ease;
         }
         .hero-premium::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, transparent 50%, rgba(7, 6, 23, 0.95) 100%);
+            background: linear-gradient(180deg, transparent 50%, rgba(248, 250, 252, 1) 100%);
             pointer-events: none;
             z-index: 1;
+            transition: background 0.3s ease;
+        }
+        
+        /* Dark Mode Gradients */
+        html.dark .hero-premium::before {
+            background: radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.6) 0%, transparent 50%),
+                        radial-gradient(circle at 20% 80%, rgba(197, 160, 89, 0.6) 0%, transparent 50%),
+                        rgba(7, 6, 23, 0.75);
+        }
+        html.dark .hero-premium::after {
+            background: linear-gradient(180deg, transparent 50%, rgba(7, 6, 23, 0.95) 100%);
         }
         .hero-premium > * {
             position: relative;
@@ -196,14 +212,24 @@
 
         /* Leaflet Customizations for Dark Premium Theme */
         .custom-leaflet-popup .leaflet-popup-content-wrapper {
-            background: #0f0e2c !important;
-            color: #ffffff !important;
+            background: #ffffff !important;
+            color: #0f172a !important;
             border-radius: 1.25rem !important;
             padding: 4px !important;
+            border: 1px solid rgba(0,0,0,0.1) !important;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1) !important;
+        }
+        .custom-leaflet-popup .leaflet-popup-tip {
+            background: #ffffff !important;
+            border: 1px solid rgba(0,0,0,0.1) !important;
+        }
+        html.dark .custom-leaflet-popup .leaflet-popup-content-wrapper {
+            background: #0f0e2c !important;
+            color: #ffffff !important;
             border: 1px solid rgba(255,255,255,0.1) !important;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5) !important;
         }
-        .custom-leaflet-popup .leaflet-popup-tip {
+        html.dark .custom-leaflet-popup .leaflet-popup-tip {
             background: #0f0e2c !important;
             border: 1px solid rgba(255,255,255,0.1) !important;
         }
@@ -222,7 +248,7 @@
             padding: 0 !important;
             top: -8px !important;
             right: -8px !important;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5) !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2) !important;
             z-index: 100 !important;
             font-weight: bold !important;
         }
@@ -300,19 +326,30 @@
         }
         
         #navbar.nav-transparent {
-            background: rgba(15, 14, 44, 0.2);
+            background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(8px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
             height: 80px;
+        }
+        html.dark #navbar.nav-transparent {
+            background: rgba(15, 14, 44, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         #navbar.nav-transparent .nav-brand, 
         #navbar.nav-transparent .nav-link {
+            color: #0f172a;
+        }
+        html.dark #navbar.nav-transparent .nav-brand, 
+        html.dark #navbar.nav-transparent .nav-link {
             color: #ffffff;
         }
         #navbar.nav-transparent .nav-link:hover {
             color: #c5a059;
         }
         #navbar.nav-transparent .nav-divider {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        html.dark #navbar.nav-transparent .nav-divider {
             background: rgba(255, 255, 255, 0.2);
         }
         
@@ -323,17 +360,30 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
             height: 70px;
         }
+        html.dark #navbar.nav-scrolled {
+            background: rgba(15, 14, 44, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
         #navbar.nav-scrolled .nav-brand {
             color: #0f0e2c;
         }
+        html.dark #navbar.nav-scrolled .nav-brand {
+            color: #ffffff;
+        }
         #navbar.nav-scrolled .nav-link {
             color: #475569;
+        }
+        html.dark #navbar.nav-scrolled .nav-link {
+            color: #94a3b8;
         }
         #navbar.nav-scrolled .nav-link:hover {
             color: #c5a059;
         }
         #navbar.nav-scrolled .nav-divider {
             background: #cbd5e1;
+        }
+        html.dark #navbar.nav-scrolled .nav-divider {
+            background: rgba(255, 255, 255, 0.2);
         }
 
         /* Desktop responsive font improvements */
@@ -394,18 +444,18 @@
 
                 <!-- Mobile Hamburger Menu -->
                 <div class="relative md:hidden ml-1">
-                    <button onclick="document.getElementById('mobile-dropdown').classList.toggle('hidden')" class="bg-[#0f0e2c] text-gold-500 hover:bg-gold-500 hover:text-white w-9 h-9 flex items-center justify-center rounded-xl text-sm transition-all shadow-md border border-white/10">
+                    <button onclick="document.getElementById('mobile-dropdown').classList.toggle('hidden')" class="bg-white dark:bg-[#0f0e2c] text-navy-900 dark:text-gold-500 hover:bg-gold-500 hover:text-white dark:hover:text-white w-9 h-9 flex items-center justify-center rounded-xl text-sm transition-all shadow-md border border-slate-200 dark:border-white/10">
                         <i class="fas fa-bars"></i>
                     </button>
                     <!-- Dropdown -->
-                    <div id="mobile-dropdown" class="hidden absolute right-0 mt-3 w-48 bg-white rounded-xl shadow-2xl py-2 border border-slate-100 z-[6000]">
-                        <a href="#peta" onclick="document.getElementById('mobile-dropdown').classList.add('hidden')" class="flex items-center px-4 py-3 text-xs font-black text-navy-900 hover:bg-slate-50 border-b border-slate-100 uppercase tracking-widest">
+                    <div id="mobile-dropdown" class="hidden absolute right-0 mt-3 w-48 bg-white dark:bg-navy-900 rounded-xl shadow-2xl py-2 border border-slate-100 dark:border-white/10 z-[6000]">
+                        <a href="#peta" onclick="document.getElementById('mobile-dropdown').classList.add('hidden')" class="flex items-center px-4 py-3 text-xs font-black text-navy-900 dark:text-white hover:bg-slate-50 dark:hover:bg-white/5 border-b border-slate-100 dark:border-white/5 uppercase tracking-widest">
                             <i class="fas fa-map-marked-alt w-6 text-gold-500 text-center"></i> Peta
                         </a>
-                        <a href="#statistik" onclick="document.getElementById('mobile-dropdown').classList.add('hidden')" class="flex items-center px-4 py-3 text-xs font-black text-navy-900 hover:bg-slate-50 border-b border-slate-100 uppercase tracking-widest">
+                        <a href="#statistik" onclick="document.getElementById('mobile-dropdown').classList.add('hidden')" class="flex items-center px-4 py-3 text-xs font-black text-navy-900 dark:text-white hover:bg-slate-50 dark:hover:bg-white/5 border-b border-slate-100 dark:border-white/5 uppercase tracking-widest">
                             <i class="fas fa-chart-pie w-6 text-gold-500 text-center"></i> Statistik
                         </a>
-                        <a href="{{ url('/login') }}" class="flex items-center px-4 py-3 text-xs font-black text-navy-900 hover:bg-slate-50 uppercase tracking-widest">
+                        <a href="{{ url('/login') }}" class="flex items-center px-4 py-3 text-xs font-black text-navy-900 dark:text-white hover:bg-slate-50 dark:hover:bg-white/5 uppercase tracking-widest">
                             <i class="fas fa-lock w-6 text-gold-500 text-center"></i> Masuk
                         </a>
                     </div>
@@ -434,22 +484,22 @@
         <div class="max-w-7xl mx-auto px-6 md:px-8 w-full relative z-10">
             <div class="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12">
                 <div class="max-w-2xl text-center md:text-left">
-                    <h3 class="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tight leading-[1.1] mb-3 md:mb-5">
+                    <h3 class="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-navy-900 dark:text-white tracking-tight leading-[1.1] mb-3 md:mb-5">
                         <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-500 via-yellow-400 to-[#6366f1] block md:inline whitespace-nowrap">GEO-SINFRA</span>
                     </h3>
-                    <p class="text-slate-300 font-semibold text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed mb-4 md:mb-5 max-w-xl mx-auto md:mx-0">
+                    <p class="text-slate-600 dark:text-slate-300 font-semibold text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed mb-4 md:mb-5 max-w-xl mx-auto md:mx-0">
                         Sistem Informasi Pemetaan Infrastruktur Permukiman 
                         <br class="hidden md:block" />
                         Kota Banjarmasin
                     </p>
-                    <p class="text-slate-400 font-medium text-xs sm:text-sm md:text-base leading-relaxed mb-8 md:mb-10 max-w-xl mx-auto md:mx-0">
+                    <p class="text-slate-500 dark:text-slate-400 font-medium text-xs sm:text-sm md:text-base leading-relaxed mb-8 md:mb-10 max-w-xl mx-auto md:mx-0">
                         Sebuah platform cerdas berbasis WebGIS dan Kecerdasan Buatan (AI) yang dirancang untuk memantau, melaporkan, dan menganalisis kondisi infrastruktur di seluruh wilayah Kota Banjarmasin secara real-time.
                     </p>
                     <div class="flex flex-col sm:flex-row justify-center md:justify-start gap-3 md:gap-4 max-w-xs mx-auto sm:max-w-none">
                         <a href="#peta" class="btn-shine w-full sm:w-auto bg-gradient-to-r from-gold-500 to-gold-600 text-white px-6 py-3.5 md:px-8 md:py-4 rounded-xl md:rounded-2xl font-bold text-xs md:text-sm uppercase tracking-wider hover:scale-105 transition-all shadow-xl shadow-gold-500/20 text-center flex items-center justify-center">
                             <i class="fas fa-map mr-2"></i> Eksplorasi Peta GIS
                         </a>
-                        <a href="#statistik" class="w-full sm:w-auto bg-white/10 backdrop-blur-md text-white border border-white/20 px-6 py-3.5 md:px-8 md:py-4 rounded-xl md:rounded-2xl font-bold text-xs md:text-sm uppercase tracking-wider hover:bg-white hover:text-navy-950 transition-all text-center flex items-center justify-center">
+                        <a href="#statistik" class="w-full sm:w-auto bg-slate-200/50 dark:bg-white/10 backdrop-blur-md text-navy-900 dark:text-white border border-slate-300/50 dark:border-white/20 px-6 py-3.5 md:px-8 md:py-4 rounded-xl md:rounded-2xl font-bold text-xs md:text-sm uppercase tracking-wider hover:bg-slate-300 dark:hover:bg-white hover:text-navy-950 transition-all text-center flex items-center justify-center">
                             Analisis Statistik
                         </a>
                     </div>
