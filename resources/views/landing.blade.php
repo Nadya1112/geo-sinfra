@@ -10,19 +10,28 @@
     <link rel="icon" href="{{ secure_asset('logo_geo-sinfra.png') }}" type="image/png">
     
     <script>
-        // Time-based and LocalStorage theme detection
+        // System Preference and LocalStorage theme detection
         (function() {
             try {
                 var storedTheme = localStorage.getItem('geo-theme');
-                var hour = new Date().getHours();
-                var isNight = hour >= 18 || hour < 6;
-                if (storedTheme === 'dark' || (!storedTheme && isNight)) {
+                if (storedTheme === 'dark' || (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                     document.documentElement.classList.add('dark');
                 } else {
                     document.documentElement.classList.remove('dark');
                 }
             } catch (e) {}
         })();
+
+        // Listen for system theme changes if no explicit preference is set
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (!localStorage.getItem('geo-theme')) {
+                if (e.matches) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            }
+        });
 
         function setThemeMode(mode) {
             if (mode === 'dark') {
