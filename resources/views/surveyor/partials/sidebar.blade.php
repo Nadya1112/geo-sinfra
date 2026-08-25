@@ -4,10 +4,10 @@
 <div id="mobile-overlay" onclick="toggleMobileMenu()" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9998] hidden md:hidden transition-opacity duration-300 opacity-0"></div>
 
 {{-- Sidebar Desktop & Tablet --}}
-<aside class="w-20 lg:w-64 bg-navy-900 text-navy-900 dark:text-white flex-col hidden md:flex shadow-2xl z-20 text-left shrink-0 transition-all duration-300">
+<aside class="w-20 lg:w-64 bg-white dark:bg-[#0f0e2c] text-navy-900 dark:text-white flex-col hidden md:flex shadow-2xl z-20 text-left border-r border-slate-200 dark:border-white/5 shrink-0 h-screen transition-all duration-300">
     <div class="p-4 lg:p-6 flex-1 text-left overflow-y-auto custom-scrollbar">
         <a href="{{ route('surveyor.dashboard') }}" class="flex items-center justify-center lg:justify-start gap-3 mb-10 hover:opacity-80 transition-opacity group">
-            <div class="w-8 h-8 bg-white rounded-lg overflow-hidden shadow-lg shadow-gold-500/20 group-hover:scale-110 transition-transform shrink-0">
+            <div class="w-8 h-8 bg-white rounded-lg overflow-hidden shadow-lg shadow-navy-950/10 dark:shadow-navy-950/40 group-hover:scale-110 transition-transform shrink-0">
                 <img src="{{ asset('logo_geo-sinfra.png') }}" class="w-full h-full object-contain" alt="Logo">
             </div>
             <span class="font-extrabold text-xl tracking-tighter uppercase text-navy-900 dark:text-white hidden lg:block">GEO-SINFRA</span>
@@ -58,7 +58,7 @@
 </aside>
 
 {{-- Sidebar Mobile (Slide Drawer) --}}
-<aside id="mobile-sidebar" class="fixed top-0 left-0 w-72 h-full bg-navy-900 text-navy-900 dark:text-white flex flex-col z-[9999] shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+<aside id="mobile-sidebar" class="fixed top-0 left-0 w-72 h-full bg-white dark:bg-[#0f0e2c] text-navy-900 dark:text-white flex flex-col z-[9999] shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden">
     <div class="p-6 flex-1 text-left overflow-y-auto">
         {{-- Header dengan tombol close --}}
         <div class="flex items-center justify-between mb-8">
