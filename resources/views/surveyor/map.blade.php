@@ -132,18 +132,23 @@
 
             <!-- Floating Filters Right (Combined) -->
             <div id="mobile-filter-sheet" class="hidden md:!flex md:!translate-y-0 translate-y-full fixed inset-x-0 bottom-0 md:absolute md:top-4 md:bottom-auto md:right-4 z-[2000] pointer-events-auto transition-transform duration-300">
-                <div class="bg-[#1e1b4b]/95 backdrop-blur-xl p-6 md:p-3 rounded-t-[2.5rem] md:rounded-2xl border-t md:border border-white/10 shadow-2xl w-full md:w-48 flex flex-col gap-2 max-h-[85vh] overflow-y-auto">
+                <div class="bg-[#1e1b4b]/95 backdrop-blur-xl rounded-t-[2.5rem] md:rounded-2xl border-t md:border border-white/10 shadow-2xl w-full md:w-48 flex flex-col max-h-[85vh]">
                     
-                    <!-- Mobile Close Button & Handle -->
-                    <div class="w-12 h-1.5 bg-white/20 rounded-full mx-auto mb-2 md:hidden"></div>
-                    <div class="flex justify-between items-center mb-4 md:hidden">
-                        <h4 class="text-white font-black text-lg uppercase tracking-wider">Filter Peta</h4>
-                        <button onclick="document.getElementById('mobile-filter-sheet').classList.add('translate-y-full'); setTimeout(() => document.getElementById('mobile-filter-sheet').classList.add('hidden'), 300);" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-all">
-                            <i class="fas fa-times"></i>
-                        </button>
+                    <!-- Mobile Close Button & Handle (Sticky Top) -->
+                    <div class="flex-shrink-0 p-6 md:p-3 pb-2 md:pb-3 border-b border-white/5 md:border-none">
+                        <div class="w-12 h-1.5 bg-white/20 rounded-full mx-auto mb-2 md:hidden"></div>
+                        <div class="flex justify-between items-center md:hidden">
+                            <h4 class="text-white font-black text-lg uppercase tracking-wider">Filter Peta</h4>
+                            <button onclick="document.getElementById('mobile-filter-sheet').classList.add('translate-y-full'); setTimeout(() => document.getElementById('mobile-filter-sheet').classList.add('hidden'), 300);" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-all">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
                     </div>
-                    <!-- Category Section -->
-                    <div id="category-card" class="w-full relative">
+                    
+                    <!-- Scrollable Content -->
+                    <div class="overflow-y-auto custom-scrollbar flex-col gap-2 p-6 pt-0 md:p-3 md:pt-0 pb-10 flex-1">
+                        <!-- Category Section -->
+                        <div id="category-card" class="w-full relative">
                         <button onclick="toggleCategoryMenu()" class="w-full px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider bg-white/5 text-white flex items-center justify-between hover:bg-white/10 transition-all border border-white/5 shadow-inner">
                             <div class="flex items-center gap-2">
                                 <i class="fas fa-layer-group text-sm opacity-90 text-gold-500"></i>
@@ -236,6 +241,8 @@
                                 <div class="w-2.5 h-2.5 rounded border border-white/10" style="background-color: {{ $kec->warna ?? '#cbd5e1' }};"></div>
                             </button>
                             @endforeach
+                        </div>
+                    </div>
                         </div>
                     </div>
                 </div>

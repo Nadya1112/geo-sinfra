@@ -740,16 +740,21 @@
                         </button>
                     </div>
                         
-                    <div id="filter-utama" class="hidden fixed inset-x-0 bottom-0 md:absolute md:top-full md:bottom-auto md:mt-2 md:right-0 w-full md:w-56 bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-t-[2.5rem] md:rounded-xl p-6 md:p-3 shadow-2xl border-t md:border border-white/10 max-h-[85vh] md:max-h-[60vh] overflow-y-auto custom-scrollbar flex-col gap-3 pointer-events-auto transform md:transform-none translate-y-full md:translate-y-0 transition-transform duration-300">
+                    <div id="filter-utama" class="hidden fixed inset-x-0 bottom-0 md:absolute md:top-full md:bottom-auto md:mt-2 md:right-0 w-full md:w-64 bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-t-[2.5rem] md:rounded-xl shadow-2xl border-t md:border border-white/10 max-h-[85vh] md:max-h-[60vh] flex-col pointer-events-auto transform md:transform-none translate-y-full md:translate-y-0 transition-transform duration-300">
                         
-                        <!-- Mobile Close Button & Handle -->
-                        <div class="w-12 h-1.5 bg-white/20 rounded-full mx-auto mb-4 md:hidden"></div>
-                        <div class="flex justify-between items-center mb-4 md:hidden">
-                            <h4 class="text-white font-black text-lg uppercase tracking-wider">Filter Peta</h4>
-                            <button onclick="toggleMenu('filter-utama')" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-all">
-                                <i class="fas fa-times"></i>
-                            </button>
+                        <!-- Mobile Close Button & Handle (Sticky Top) -->
+                        <div class="flex-shrink-0 p-6 md:p-3 pb-2 md:pb-3 border-b border-white/5 md:border-none">
+                            <div class="w-12 h-1.5 bg-white/20 rounded-full mx-auto mb-4 md:hidden"></div>
+                            <div class="flex justify-between items-center md:hidden">
+                                <h4 class="text-white font-black text-lg uppercase tracking-wider">Filter Peta</h4>
+                                <button onclick="toggleMenu('filter-utama')" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-all">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
                         </div>
+                            
+                        <!-- Scrollable Content -->
+                        <div class="overflow-y-auto custom-scrollbar flex-col gap-3 p-6 pt-0 md:p-3 md:pt-0 pb-10 md:pb-3 flex-1">
                             
                             <!-- SECTION: Kategori Objek -->
                             <div>
@@ -1371,21 +1376,7 @@
             }
         }
 
-        function toggleMenu(id) {
-            const menus = ['layer-options', 'filter-utama'];
-            
-            menus.forEach(menuId => {
-                const el = document.getElementById(menuId);
-                if (el && menuId !== id) {
-                    el.classList.add('hidden');
-                }
-            });
-            
-            const panel = document.getElementById(id);
-            if (panel) {
-                panel.classList.toggle('hidden');
-            }
-        }
+
 
         // --- Detail Modal Functions ---
         function openDetailModal(id) {
