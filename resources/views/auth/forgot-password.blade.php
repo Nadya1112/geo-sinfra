@@ -127,7 +127,7 @@
             <span style="background-color: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.1) !important;" class="w-8 h-8 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center group-hover:bg-black/10 dark:group-hover:bg-white/10 transition-all">
                 <i class="fas fa-arrow-left text-[10px]"></i>
             </span>
-            Kembali Login
+            Kembali
         </a>
 
         <div class="relative z-10 flex flex-col items-center text-center max-w-sm">
@@ -136,7 +136,7 @@
             </div>
 
             <span class="text-[11px] font-black text-gold-500 uppercase tracking-[0.35em] mb-3 block">Pemulihan Akun</span>
-            <h1 class="text-4xl font-black text-navy-900 dark:text-white tracking-tight mb-4 leading-none transition-colors duration-300">Lupa Kata<br><span class="text-gold-500">Sandi?</span></h1>
+            <h1 style="color: black !important;" class="text-4xl font-black text-black dark:text-white tracking-tight mb-4 leading-none transition-colors duration-300">Lupa Kata<br><span class="text-gold-500">Sandi?</span></h1>
             <p style="color: black !important;" class="text-black dark:text-white/80 text-sm leading-relaxed font-black max-w-[240px] transition-colors duration-300">
                 Jangan khawatir. Kami akan mengirimkan link pemulihan ke email Anda.
             </p>
@@ -154,8 +154,8 @@
                         <i class="{{ $icon }} text-gold-500 text-[10px]"></i>
                     </div>
                     <div>
-                        <p class="text-navy-900 dark:text-white/80 text-xs font-black uppercase tracking-wide">{{ $title }}</p>
-                        <p class="text-navy-900 dark:text-white/40 text-[10px] font-medium mt-0.5">{{ $desc }}</p>
+                        <p style="color: black !important; font-weight: 900;" class="text-black dark:text-white/80 text-xs font-black uppercase tracking-wide">{{ $title }}</p>
+                        <p style="color: black !important; font-weight: 700;" class="text-black dark:text-white/40 text-[10px] font-medium mt-0.5">{{ $desc }}</p>
                     </div>
                 </div>
                 @endforeach

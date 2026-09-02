@@ -164,7 +164,7 @@
             </div>
 
             <span class="text-[11px] font-black text-gold-500 uppercase tracking-[0.35em] mb-3 block">Keamanan Akun</span>
-            <h1 class="text-4xl font-black text-navy-900 dark:text-white tracking-tight mb-4 leading-none transition-colors duration-300">
+            <h1 style="color: black !important;" class="text-4xl font-black text-black dark:text-white tracking-tight mb-4 leading-none transition-colors duration-300">
                 Verifikasi <span class="text-gold-500">OTP</span>
             </h1>
             <p style="color: black !important;" class="text-black dark:text-white/80 text-sm leading-relaxed font-black max-w-[250px]">

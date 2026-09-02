@@ -145,7 +145,7 @@
                 <i class="fas fa-lock-open text-emerald-400 text-3xl"></i>
             </div>
             <span class="text-[11px] font-black text-gold-500 uppercase tracking-[0.35em] mb-3 block">Keamanan Akun</span>
-            <h1 class="text-4xl font-black text-navy-900 dark:text-white tracking-tight mb-4 leading-none transition-colors duration-300">Buat Sandi<br><span class="text-emerald-400">Baru</span></h1>
+            <h1 style="color: black !important;" class="text-4xl font-black text-black dark:text-white tracking-tight mb-4 leading-none transition-colors duration-300">Buat Sandi<br><span class="text-emerald-400">Baru</span></h1>
             <p style="color: black !important;" class="text-black dark:text-white/80 text-sm leading-relaxed font-black max-w-[240px] transition-colors duration-300">
                 Buat kata sandi baru yang kuat untuk mengamankan akun GEO-SINFRA Anda.
             </p>
@@ -153,7 +153,7 @@
 
             {{-- Tips --}}
             <div class="flex flex-col gap-3 w-full text-left">
-                <p class="text-navy-900 dark:text-white/40 text-[10px] font-black uppercase tracking-widest px-1 mb-1">Tips Sandi Kuat</p>
+                <p style="color: black !important; font-weight: 900;" class="text-black dark:text-white/40 text-[10px] font-black uppercase tracking-widest px-1 mb-1">Tips Sandi Kuat</p>
                 @foreach([
                     ['fas fa-check','text-emerald-400','Minimal 8 karakter'],
                     ['fas fa-check','text-emerald-400','Kombinasi huruf besar & kecil'],
@@ -162,7 +162,7 @@
                 ] as [$icon, $color, $tip])
                 <div class="flex items-center gap-3 bg-white/4 border border-white/6 rounded-xl px-3.5 py-2.5">
                     <i class="{{ $icon }} {{ $color }} text-xs flex-shrink-0"></i>
-                    <span class="text-navy-900 dark:text-white/60 text-xs font-semibold">{{ $tip }}</span>
+                    <span style="color: black !important; font-weight: 900;" class="text-black dark:text-white/60 text-xs font-black">{{ $tip }}</span>
                 </div>
                 @endforeach
             </div>
