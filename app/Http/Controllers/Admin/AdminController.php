@@ -531,6 +531,48 @@ class AdminController extends Controller
         return $pdf->download($fileName);
     }
 
+    public function exportPdfRekap()
+    {
+        $infrastrukturs = DB::table('infrastruktur')
+            ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
+            ->leftJoin('kecamatan', 'kelurahan.id_kecamatan', '=', 'kecamatan.id_kecamatan')
+            ->leftJoin('users', 'infrastruktur.id_user', '=', 'users.id')
+            ->leftJoin('citra_cnn', 'infrastruktur.id_infrastruktur', '=', 'citra_cnn.id_infrastruktur')
+            ->leftJoin('analisis_ai', 'infrastruktur.id_infrastruktur', '=', 'analisis_ai.id_infrastruktur')
+            ->whereNull('infrastruktur.deleted_at')
+            ->orderBy('infrastruktur.id_infrastruktur', 'asc')
+            ->select(
+                'infrastruktur.id_infrastruktur',
+                'infrastruktur.nama_objek',
+                'infrastruktur.jenis',
+                'infrastruktur.panjang',
+                'infrastruktur.lebar',
+                'infrastruktur.material_eksisting',
+                'infrastruktur.kondisi',
+                'kecamatan.nama_kecamatan',
+                'kelurahan.nama_kelurahan',
+                'citra_cnn.skor_cnn',
+                'citra_cnn.label_kondisi as label_cnn',
+                'analisis_ai.skor_dt',
+                'analisis_ai.label_prioritas',
+                'analisis_ai.rekomendasi'
+            )
+            ->get();
+
+        $this->logActivity('infrastruktur', 'Ekspor rekapitulasi data Infrastruktur ke format PDF');
+
+        $pdf = Pdf::loadView('admin.pdf-infrastruktur-rekap', compact('infrastrukturs'))
+            ->setOptions([
+                'isPhpEnabled'     => true,
+                'dpi'              => 150,
+                'defaultFont'      => 'Arial',
+                'defaultPaperSize' => 'a4',
+            ]);
+        $pdf->setPaper('A4', 'landscape');
+
+        return $pdf->download('Rekap_Infrastruktur_' . date('Ymd') . '.pdf');
+    }
+
     public function exportExcel()
     {
         $infrastrukturs = DB::table('infrastruktur')

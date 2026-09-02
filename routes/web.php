@@ -462,6 +462,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/infrastruktur', [AdminController::class, 'infrastruktur'])->name('admin.infrastruktur');
         // Export Excel (CSV)
         Route::get('/infrastruktur/export', [AdminController::class, 'exportExcel'])->name('admin.infrastruktur.export');
+        // Export PDF Rekap Semua Data
+        Route::get('/infrastruktur/export/pdf', [AdminController::class, 'exportPdfRekap'])->name('admin.infrastruktur.export.pdf');
         // Form Tambah Aset
         Route::get('/infrastruktur/create', [AdminController::class, 'createInfrastruktur'])->name('admin.infrastruktur.create');
         // Proses Simpan Aset
