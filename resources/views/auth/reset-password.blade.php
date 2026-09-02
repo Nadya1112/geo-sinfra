@@ -133,8 +133,8 @@
     <div class="hidden lg:flex lg:w-[44%] auth-left transition-colors duration-300 flex-col items-center justify-center relative overflow-hidden p-12">
         <div class="grid-bg"></div>
 
-        <a href="{{ route('login') }}" class="absolute top-6 left-6 z-20 flex items-center gap-2 text-navy-900/50 hover:text-navy-900 dark:text-navy-900 dark:text-white/50 dark:hover:text-navy-900 dark:text-white transition-all text-xs font-bold uppercase tracking-widest group">
-            <span class="w-8 h-8 rounded-xl bg-slate-200 dark:bg-white/5 border border-slate-300 dark:border-white/10 flex items-center justify-center group-hover:bg-slate-300 dark:group-hover:bg-white/10 transition-all">
+        <a href="{{ route('login') }}" class="absolute top-6 left-6 z-20 flex items-center gap-2 text-black hover:text-black dark:text-navy-900 dark:text-white/50 dark:hover:text-navy-900 dark:text-white transition-all text-xs font-bold uppercase tracking-widest group">
+            <span class="w-8 h-8 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center group-hover:bg-black/10 dark:group-hover:bg-white/10 transition-all">
                 <i class="fas fa-arrow-left text-[10px]"></i>
             </span>
             Login
@@ -176,7 +176,7 @@
     {{-- ═══ RIGHT PANEL ═══ --}}
     <div class="flex-1 flex flex-col items-center justify-center bg-white px-6 py-10 relative">
 
-        <a href="{{ route('login') }}" class="lg:hidden absolute top-6 left-6 w-10 h-10 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl flex items-center justify-center text-slate-500 transition shadow-sm">
+        <a href="{{ route('login') }}" class="lg:hidden absolute top-6 left-6 w-10 h-10 bg-black/5 hover:bg-black/10 border border-black/10 rounded-xl flex items-center justify-center text-slate-500 transition shadow-sm">
             <i class="fas fa-arrow-left text-xs"></i>
         </a>
 

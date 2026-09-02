@@ -171,8 +171,8 @@
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
 
-        <a href="{{ route('login') }}" class="absolute top-6 left-6 z-20 flex items-center gap-2 text-navy-900/50 hover:text-navy-900 dark:text-navy-900 dark:text-white/50 dark:hover:text-navy-900 dark:text-white transition-all text-xs font-bold uppercase tracking-widest group">
-            <span class="w-8 h-8 rounded-xl bg-slate-200 dark:bg-white/5 border border-slate-300 dark:border-white/10 flex items-center justify-center group-hover:bg-slate-300 dark:group-hover:bg-white/10 transition-all">
+        <a href="{{ route('login') }}" class="absolute top-6 left-6 z-20 flex items-center gap-2 text-black hover:text-black dark:text-navy-900 dark:text-white/50 dark:hover:text-navy-900 dark:text-white transition-all text-xs font-bold uppercase tracking-widest group">
+            <span class="w-8 h-8 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center group-hover:bg-black/10 dark:group-hover:bg-white/10 transition-all">
                 <i class="fas fa-arrow-left text-[10px]"></i>
             </span>
             Kembali
@@ -193,7 +193,7 @@
 
             <div class="mt-8 flex flex-col gap-3 w-full text-left">
                 @foreach([['fas fa-check-circle','text-emerald-400','Akun terverifikasi via WhatsApp OTP'],['fas fa-shield-alt','text-gold-500','Data tersimpan aman & terenkripsi'],['fas fa-map-marked-alt','text-indigo-400','Akses peta GIS & dashboard real-time']] as [$icon, $color, $text])
-                <div class="flex items-center gap-3 bg-slate-200 dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-xl p-3">
+                <div class="flex items-center gap-3 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl p-3">
                     <i class="{{ $icon }} {{ $color }} text-sm flex-shrink-0"></i>
                     <span class="text-navy-900 dark:text-white/70 text-xs font-semibold">{{ $text }}</span>
                 </div>
