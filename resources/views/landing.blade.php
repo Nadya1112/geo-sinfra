@@ -798,8 +798,8 @@
                                 </label>
                                 @php
                                     $defaultKategori = collect(['Titian', 'Jalan', 'Jembatan']);
-                                    $dbKategori = $dataInfrastruktur->pluck('jenis')->map(function($j) { return $j ?: 'Lainnya'; });
-                                    $kategoriUnik = $defaultKategori->merge($dbKategori)->unique()->values();
+                                    $dbKategori = $dataInfrastruktur->pluck('jenis')->map(function($j) { return ucwords(strtolower(trim($j ?: 'Lainnya'))); });
+                                    $kategoriUnik = $defaultKategori->merge($dbKategori)->unique(function ($item) { return strtolower(trim($item)); })->values();
                                 @endphp
                                 @foreach($kategoriUnik as $kategori)
                                 <label class="flex items-center justify-between p-2 hover:bg-slate-100 dark:hover:bg-slate-50 dark:bg-white/5 rounded-lg cursor-pointer transition-all">
