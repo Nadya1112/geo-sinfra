@@ -175,21 +175,15 @@ class AdminController extends Controller
             $chartData[] = $monthlyData[$m] ?? 0;
         }
 
-        // Statistik per Jenis (Tahunan) - selalu tampilkan 3 jenis meski 0
-        $statsJenisRaw = DB::table('infrastruktur')
+        // Statistik per Jenis (Tahunan) - hanya tampilkan jenis yang ada datanya
+        $statsJenis = DB::table('infrastruktur')
             ->select('jenis', DB::raw('count(*) as total'))
             ->whereRaw("$sqlYear = ?", [(int)$year])
             ->whereNull('deleted_at')
             ->groupBy('jenis')
-            ->get()
-            ->keyBy('jenis');
-
-        $statsJenis = collect(['jalan', 'titian', 'jembatan'])->map(function ($j) use ($statsJenisRaw) {
-            return (object) [
-                'jenis' => $j,
-                'total' => $statsJenisRaw->get($j)?->total ?? 0,
-            ];
-        });
+            ->having('total', '>', 0)
+            ->orderByDesc('total')
+            ->get();
 
         // Sebaran Kondisi per Kecamatan (Tahunan) - 🌟 PERBAIKAN: Menghubungkan langsung ke Hasil Otak AI
         $semuaKecamatan = DB::table('kecamatan')->get();
