@@ -506,6 +506,9 @@ class AdminController extends Controller
 
     public function exportPdf($id)
     {
+        ini_set('memory_limit', '512M');
+        set_time_limit(120);
+
         $inf = DB::table('infrastruktur')
             ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
             ->leftJoin('kecamatan', 'kelurahan.id_kecamatan', '=', 'kecamatan.id_kecamatan')
@@ -515,15 +518,16 @@ class AdminController extends Controller
             ->where('infrastruktur.id_infrastruktur', $id)
             ->select('infrastruktur.*', 'kecamatan.nama_kecamatan', 'kelurahan.nama_kelurahan', 'users.name as nama_user', 'citra_cnn.skor_cnn', 'citra_cnn.label_kondisi as label_cnn', 'analisis_ai.skor_dt', 'analisis_ai.label_prioritas', 'analisis_ai.rekomendasi')
             ->first();
-            
+
         if (!$inf) return redirect()->route('admin.infrastruktur')->with('error', 'ASET TIDAK DITEMUKAN.');
-        
+
         $pdf = Pdf::loadView('admin.pdf-infrastruktur', compact('inf'))
             ->setOptions([
-                'isPhpEnabled'    => true,   // izinkan @php Blade
-                'dpi'             => 150,    // kualitas gambar lebih baik
-                'defaultFont'     => 'Arial',
+                'isPhpEnabled'     => true,
+                'dpi'              => 96,
+                'defaultFont'      => 'Arial',
                 'defaultPaperSize' => 'a4',
+                'isRemoteEnabled'  => false,
             ]);
         $pdf->setPaper('A4', 'portrait');
 
@@ -533,6 +537,9 @@ class AdminController extends Controller
 
     public function exportPdfRekap()
     {
+        ini_set('memory_limit', '512M');
+        set_time_limit(120);
+
         $infrastrukturs = DB::table('infrastruktur')
             ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
             ->leftJoin('kecamatan', 'kelurahan.id_kecamatan', '=', 'kecamatan.id_kecamatan')
@@ -564,9 +571,10 @@ class AdminController extends Controller
         $pdf = Pdf::loadView('admin.pdf-infrastruktur-rekap', compact('infrastrukturs'))
             ->setOptions([
                 'isPhpEnabled'     => true,
-                'dpi'              => 150,
+                'dpi'              => 96,
                 'defaultFont'      => 'Arial',
                 'defaultPaperSize' => 'a4',
+                'isRemoteEnabled'  => false,
             ]);
         $pdf->setPaper('A4', 'landscape');
 
