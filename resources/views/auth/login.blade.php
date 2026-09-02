@@ -109,17 +109,25 @@
             font-size: 14px; font-weight: 600; color: #0f0e2c;
             outline: none; transition: all 0.25s ease;
         }
+        .dark .input-field {
+            background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); color: #fff;
+        }
         .input-field:focus {
             background: #fff; border-color: #c5a059;
             box-shadow: 0 0 0 3px rgba(197,160,89,0.12);
         }
+        .dark .input-field:focus {
+            background: rgba(255,255,255,0.1);
+        }
         .input-field::placeholder { color: #94a3b8; font-weight: 500; }
+        .dark .input-field::placeholder { color: #64748b; }
 
         .label-field {
             display: block; font-size: 10px; font-weight: 800;
             color: #94a3b8; text-transform: uppercase; letter-spacing: 0.18em;
             margin-bottom: 8px;
         }
+        .dark .label-field { color: #cbd5e1; }
 
         /* CTA Button */
         .btn-gold {
@@ -151,11 +159,13 @@
             content: ''; position: absolute; top: 50%; left: 0; right: 0;
             height: 1px; background: #e2e8f0;
         }
+        .dark .divider::before { background: rgba(255,255,255,0.1); }
         .divider span {
             position: relative; background: #fff;
             padding: 0 12px; font-size: 10px; font-weight: 700;
             color: #94a3b8; text-transform: uppercase; letter-spacing: 0.15em;
         }
+        .dark .divider span { background: #0f0e2c; color: #cbd5e1; }
 
         /* Alert variants */
         .alert-error {
@@ -195,7 +205,7 @@
         .delay-5 { animation-delay: 0.5s; }
     </style>
 </head>
-<body class="antialiased bg-slate-50">
+<body class="antialiased bg-slate-50 dark:bg-navy-950 transition-colors duration-300">
 
 <div class="flex min-h-screen">
 
@@ -265,16 +275,16 @@
     {{-- ═══════════════════════════════════════════════════
         RIGHT PANEL — Form Login
     ═══════════════════════════════════════════════════ --}}
-    <div class="flex-1 flex flex-col items-center justify-center bg-white px-6 py-10 relative min-h-screen">
+    <div class="flex-1 flex flex-col items-center justify-center bg-white dark:bg-[#0f0e2c] px-6 py-10 relative min-h-screen transition-colors duration-300">
 
         {{-- Mobile back button --}}
-        <a href="{{ url('/') }}" class="lg:hidden absolute top-6 left-6 w-10 h-10 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl flex items-center justify-center text-slate-500 hover:text-navy-900 transition-all shadow-sm">
+        <a href="{{ url('/') }}" class="lg:hidden absolute top-6 left-6 w-10 h-10 bg-slate-50 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 rounded-xl flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-navy-900 dark:hover:text-white transition-all shadow-sm">
             <i class="fas fa-arrow-left text-xs"></i>
         </a>
 
         {{-- Mobile logo --}}
         <div class="lg:hidden flex flex-col items-center mb-10">
-            <div class="w-16 h-16 rounded-2xl overflow-hidden border-2 border-slate-100 shadow-lg mb-3">
+            <div class="w-16 h-16 rounded-2xl overflow-hidden border-2 border-slate-100 dark:border-white/10 bg-white dark:bg-navy-900 shadow-lg mb-3">
                 <img src="{{ asset('logo_geo-sinfra.png') }}" alt="Logo" class="w-full h-full object-contain">
             </div>
             <p class="text-xs font-black text-gold-500 uppercase tracking-widest">GEO-SINFRA</p>
@@ -285,7 +295,7 @@
             {{-- Header --}}
             <div class="mb-8 fade-in-up">
                 <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.3em] mb-2">Portal Akses</p>
-                <h2 class="text-2xl font-black text-navy-900 tracking-tight">Selamat Datang Kembali</h2>
+                <h2 class="text-2xl font-black text-navy-900 dark:text-white tracking-tight">Selamat Datang Kembali</h2>
                 <p class="text-slate-400 text-sm font-medium mt-1">Masuk untuk mengakses sistem pemetaan infrastruktur</p>
             </div>
 
@@ -373,7 +383,7 @@
                     <label class="flex items-center gap-2 cursor-pointer group">
                         <input type="checkbox" name="remember" id="remember"
                             class="w-4 h-4 rounded-md border-slate-300 text-gold-500 focus:ring-gold-500 cursor-pointer">
-                        <span class="text-[11px] font-bold text-slate-400 group-hover:text-navy-900 transition uppercase tracking-wide">
+                        <span class="text-[11px] font-bold text-slate-400 group-hover:text-navy-900 dark:group-hover:text-white transition uppercase tracking-wide">
                             Ingat Saya
                         </span>
                     </label>
@@ -409,7 +419,7 @@
         </div>
 
         {{-- Bottom note --}}
-        <p class="absolute bottom-6 text-slate-300 text-[10px] font-bold uppercase tracking-widest text-center">
+        <p class="absolute bottom-6 text-slate-400 dark:text-slate-500 text-[10px] font-bold uppercase tracking-widest text-center">
             &copy; 2026 GEO-SINFRA &mdash; Pemerintah Kota Banjarmasin
         </p>
     </div>
