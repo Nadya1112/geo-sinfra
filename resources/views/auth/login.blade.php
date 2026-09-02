@@ -447,7 +447,7 @@
                 {{-- Submit --}}
                 <div class="fade-in-up delay-5">
                     <button type="submit" class="btn-gold" id="login-btn">
-                        <i class="fas fa-sign-in-alt mr-2"></i> Masuk ke Sistem
+                        <i class="fas fa-sign-in-alt mr-2"></i> Masuk
                     </button>
                 </div>
             </form>

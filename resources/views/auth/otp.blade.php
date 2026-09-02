@@ -167,7 +167,7 @@
             <h1 class="text-4xl font-black text-navy-900 dark:text-white tracking-tight mb-4 leading-none transition-colors duration-300">
                 Verifikasi <span class="text-gold-500">OTP</span>
             </h1>
-            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed font-medium max-w-[250px]">
+            <p style="color: black !important;" class="text-black dark:text-white/80 text-sm leading-relaxed font-black max-w-[250px]">
                 Kami telah mengirimkan kode 6-digit ke nomor WhatsApp yang Anda daftarkan.
             </p>
 
@@ -197,7 +197,7 @@
             </div>
         </div>
 
-        <p class="absolute bottom-6 text-navy-900 dark:text-white/20 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300">
+        <p style="color: black !important;" class="absolute bottom-6 text-black dark:text-white/20 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300">
             &copy; 2026 Disperkim Banjarmasin
         </p>
     </div>

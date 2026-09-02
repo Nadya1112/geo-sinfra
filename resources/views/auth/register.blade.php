@@ -186,7 +186,7 @@
             <h1 class="text-4xl xl:text-5xl font-black tracking-tight mb-4 leading-none brand-text-glow cursor-default transition-colors duration-300">
                 GEO-SINFRA
             </h1>
-            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed font-medium max-w-[240px] transition-colors duration-300">
+            <p style="color: black !important;" class="text-black dark:text-white/80 text-sm leading-relaxed font-black max-w-[240px] transition-colors duration-300">
                 Daftarkan akun Anda untuk mulai berkontribusi dalam pemetaan infrastruktur Kota Banjarmasin.
             </p>
             <div class="w-12 h-0.5 bg-gradient-to-r from-gold-500 to-indigo-500 rounded-full mx-auto mt-8 opacity-70"></div>
@@ -195,12 +195,12 @@
                 @foreach([['fas fa-check-circle','text-emerald-400','Akun terverifikasi via WhatsApp OTP'],['fas fa-shield-alt','text-gold-500','Data tersimpan aman & terenkripsi'],['fas fa-map-marked-alt','text-indigo-400','Akses peta GIS & dashboard real-time']] as [$icon, $color, $text])
                 <div class="flex items-center gap-3 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl p-3">
                     <i class="{{ $icon }} {{ $color }} text-sm flex-shrink-0"></i>
-                    <span class="text-navy-900 dark:text-white/70 text-xs font-semibold">{{ $text }}</span>
+                    <span style="color: black !important; font-weight: 900;" class="text-black dark:text-white/70 text-xs font-black">{{ $text }}</span>
                 </div>
                 @endforeach
             </div>
         </div>
-        <p class="absolute bottom-6 text-navy-900 dark:text-white/20 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300">
+        <p style="color: black !important;" class="absolute bottom-6 text-black dark:text-white/20 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300">
             &copy; 2026 Disperkim Banjarmasin
         </p>
     </div>

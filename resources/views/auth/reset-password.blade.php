@@ -146,7 +146,7 @@
             </div>
             <span class="text-[11px] font-black text-gold-500 uppercase tracking-[0.35em] mb-3 block">Keamanan Akun</span>
             <h1 class="text-4xl font-black text-navy-900 dark:text-white tracking-tight mb-4 leading-none transition-colors duration-300">Buat Sandi<br><span class="text-emerald-400">Baru</span></h1>
-            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed font-medium max-w-[240px] transition-colors duration-300">
+            <p style="color: black !important;" class="text-black dark:text-white/80 text-sm leading-relaxed font-black max-w-[240px] transition-colors duration-300">
                 Buat kata sandi baru yang kuat untuk mengamankan akun GEO-SINFRA Anda.
             </p>
             <div class="w-12 h-0.5 bg-gradient-to-r from-emerald-500 to-gold-500 rounded-full mx-auto my-8 opacity-70"></div>
@@ -168,7 +168,7 @@
             </div>
         </div>
 
-        <p class="absolute bottom-6 text-navy-900 dark:text-white/20 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300">
+        <p style="color: black !important;" class="absolute bottom-6 text-black dark:text-white/20 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300">
             &copy; 2026 Disperkim Banjarmasin
         </p>
     </div>
