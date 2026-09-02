@@ -14,9 +14,9 @@
         /* ── JUDUL LAPORAN ── */
         .judul-laporan {
             text-align: center;
-            margin: 0 0 16px;
+            margin: 0 0 10px;
             border-bottom: 1px solid #ccc;
-            padding-bottom: 10px;
+            padding-bottom: 6px;
         }
         .judul-laporan h2 {
             font-size: 14px;
@@ -38,23 +38,23 @@
             color: #1e1b4b;
             text-transform: uppercase;
             background-color: #f3f4f6;
-            padding: 4px 8px;
-            margin-top: 10px;
-            margin-bottom: 6px;
+            padding: 3px 6px;
+            margin-top: 6px;
+            margin-bottom: 4px;
             border-left: 4px solid #3b82f6;
         }
         .section-title.purple { border-left-color: #7c3aed; }
         .section-title.emerald { border-left-color: #059669; }
 
         /* ── TABEL DATA ── */
-        table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 4px; }
         table th {
             text-align: left;
             width: 32%;
             font-size: 11px;
             font-weight: normal;
             color: #555;
-            padding: 4px 6px;
+            padding: 3px 4px;
             border-bottom: 1px solid #e5e7eb;
             vertical-align: top;
         }
@@ -62,7 +62,7 @@
             font-size: 11px;
             font-weight: bold;
             color: #1a1a1a;
-            padding: 4px 6px;
+            padding: 3px 4px;
             border-bottom: 1px solid #e5e7eb;
             vertical-align: top;
         }
@@ -83,14 +83,14 @@
         .badge-berat  { background-color: #fef2f2; color: #b91c1c; border-color: #fca5a5; }
 
         /* ── FOTO ── */
-        .photo-container { text-align: center; margin-top: 8px; }
+        .photo-container { text-align: center; margin-top: 6px; }
         .photo-container img {
             max-width: 100%;
-            max-height: 220px; /* Diperkecil agar menghemat ruang */
+            max-height: 180px; /* Dikompres ekstrim agar menghemat ruang */
             border: 1px solid #d1d5db;
-            padding: 4px;
+            padding: 3px;
         }
-        .photo-caption { font-size: 9px; color: #9ca3af; margin-top: 4px; font-style: italic; }
+        .photo-caption { font-size: 9px; color: #9ca3af; margin-top: 2px; font-style: italic; }
 
         /* ── TANDA TANGAN ── */
         .ttd-wrapper {
@@ -120,7 +120,7 @@
         /* ── FOOTER ── */
         .footer {
             position: fixed;
-            bottom: -20px;
+            bottom: 0px; /* Dinaikkan sesuai permintaan */
             left: 0;
             right: 0;
             text-align: center;

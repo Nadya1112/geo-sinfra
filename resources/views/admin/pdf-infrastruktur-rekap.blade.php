@@ -69,7 +69,7 @@
         /* ── FOOTER ── */
         .footer {
             position: fixed;
-            bottom: -15px;
+            bottom: 0px;
             left: 0; right: 0;
             text-align: center;
             font-size: 8px;

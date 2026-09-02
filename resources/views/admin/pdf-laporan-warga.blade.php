@@ -33,7 +33,7 @@
         .ttd-nip { font-size: 10px; color: #444; margin-top: 2px; }
 
         /* ── FOOTER ── */
-        .footer { position: fixed; bottom: -10px; left: 0; right: 0; text-align: center; font-size: 9px; color: #9ca3af; border-top: 1px solid #e5e7eb; padding-top: 6px; }
+        .footer { position: fixed; bottom: 0px; left: 0; right: 0; text-align: center; font-size: 9px; color: #9ca3af; border-top: 1px solid #e5e7eb; padding-top: 6px; }
     </style>
 <style>
     @media (min-width: 768px) { html { font-size: 14px; } }
