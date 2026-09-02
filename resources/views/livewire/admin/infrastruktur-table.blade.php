@@ -5,10 +5,10 @@
             <p class="text-xs text-slate-400 dark:text-slate-300 font-semibold mt-0.5">Kelola seluruh aset infrastruktur permukiman</p>
         </div>
 
-        <div class="flex flex-col lg:flex-row items-center gap-3 w-full lg:w-auto">
+        <div class="flex flex-col md:flex-row items-center gap-3 w-full md:w-auto">
             {{-- Filter & Search --}}
             {{-- Filter & Search Standardized --}}
-            <div class="flex items-center flex-1 min-w-0 w-full lg:w-[350px] xl:w-[450px]">
+            <div class="flex items-center flex-1 min-w-0 w-full md:w-[350px] xl:w-[450px]">
                 <select wire:model.live="show" class="pl-3 pr-7 py-2.5 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 border-r-0 rounded-l-2xl text-[10px] md:text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm shrink-0">
                     <option value="10">10 Data</option>
                     <option value="all">Semua Data</option>
@@ -30,13 +30,13 @@
 
             {{-- Tambah --}}
             <a href="{{ route('admin.infrastruktur.create') }}" wire:navigate
-                class="bg-gold-500 hover:bg-gold-600 text-white text-xs px-5 py-2.5 rounded-2xl font-bold shadow-lg shadow-gold-500/10 hover:shadow-gold-500/20 transition flex items-center justify-center gap-2 whitespace-nowrap w-full lg:w-auto">
+                class="bg-gold-500 hover:bg-gold-600 text-white text-xs px-5 py-2.5 rounded-2xl font-bold shadow-lg shadow-gold-500/10 hover:shadow-gold-500/20 transition flex items-center justify-center gap-2 whitespace-nowrap w-full md:w-auto">
                 <i class="fas fa-plus text-xs"></i> Tambah Data
             </a>
             
             {{-- Ekspor Excel --}}
             <a href="{{ route('admin.infrastruktur.export') }}" wire:navigate
-                class="px-5 py-2.5 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-500 hover:bg-emerald-500 hover:text-white border border-emerald-100 dark:border-emerald-500/20 hover:border-emerald-500 rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2 w-full lg:w-auto">
+                class="px-5 py-2.5 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-500 hover:bg-emerald-500 hover:text-white border border-emerald-100 dark:border-emerald-500/20 hover:border-emerald-500 rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2 w-full md:w-auto">
                 <i class="fas fa-file-excel"></i> Excel
             </a>
         </div>
