@@ -57,7 +57,7 @@
         .stat-table td { padding: 3px 8px; border: none; font-size: 9px; }
 
         /* ── TANDA TANGAN ── */
-        .ttd-wrapper { page-break-inside: avoid; margin-top: 24px; width: 100%; }
+        .ttd-wrapper { page-break-inside: avoid; margin-top: 60px; width: 100%; }
         .ttd-table { width: 100%; border-collapse: collapse; }
         .ttd-table td { border: none !important; padding: 0 !important; vertical-align: top; font-size: 10px; color: #111; }
         .ttd-kota-tgl { margin-bottom: 5px; }

@@ -23,7 +23,7 @@
         table td { padding: 6px 8px; border: 1px solid #d1d5db; vertical-align: top; font-size: 11px; color: #333; }
         
         /* ── TANDA TANGAN ── */
-        .ttd-wrapper { page-break-inside: avoid; margin-top: 30px; width: 100%; }
+        .ttd-wrapper { page-break-inside: avoid; margin-top: 60px; width: 100%; }
         .ttd-table { width: 100%; border-collapse: collapse; }
         .ttd-table td { border: none !important; background: none !important; padding: 0 !important; vertical-align: top; font-size: 11px; color: #111; }
         .ttd-kota-tgl { margin-bottom: 6px; }

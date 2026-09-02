@@ -95,7 +95,7 @@
         /* ── TANDA TANGAN ── */
         .ttd-wrapper {
             page-break-inside: avoid;
-            margin-top: 16px;
+            margin-top: 60px; /* Ditambah agar lebih dekat ke footer */
             width: 100%;
         }
         .ttd-table {
