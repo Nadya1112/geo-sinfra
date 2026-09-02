@@ -90,15 +90,15 @@
             <div class="max-w-4xl mx-auto space-y-6 animate-fade-in">
 
                 <!-- Header Section -->
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 md:gap-4 bg-navy-900 rounded-[2rem] p-8 shadow-2xl relative overflow-hidden border border-white/5">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 md:gap-4 bg-white dark:bg-navy-900 rounded-[2rem] p-8 shadow-xl dark:shadow-2xl relative overflow-hidden border border-slate-200 dark:border-white/5">
                     <div class="relative z-10">
-                        <h1 class="text-3xl font-black text-white mb-2 tracking-tight">Simulasi Model AI <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-500 to-yellow-300">(Playground)</span></h1>
-                        <p class="text-slate-400 text-sm font-medium">Uji coba langsung deteksi kerusakan infrastruktur menggunakan model Convolutional Neural Network (CNN) tanpa harus mengisi form survei.</p>
+                        <h1 class="text-3xl font-black text-navy-900 dark:text-white mb-2 tracking-tight">Simulasi Model AI <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-500 to-yellow-300">(Playground)</span></h1>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Uji coba langsung deteksi kerusakan infrastruktur menggunakan model Convolutional Neural Network (CNN) tanpa harus mengisi form survei.</p>
                     </div>
-                    <div class="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center shrink-0 border border-white/10 relative z-10 group hover:rotate-12 transition-transform">
+                    <div class="w-16 h-16 bg-slate-50 dark:bg-white/5 rounded-2xl flex items-center justify-center shrink-0 border border-slate-200 dark:border-white/10 relative z-10 group hover:rotate-12 transition-transform">
                         <i class="fas fa-robot text-3xl text-gold-500 group-hover:scale-110 transition-transform"></i>
                     </div>
-                    <i class="fas fa-brain absolute -right-6 -bottom-8 text-[120px] text-white/5 z-0 pointer-events-none"></i>
+                    <i class="fas fa-brain absolute -right-6 -bottom-8 text-[120px] text-slate-50 dark:text-white/5 z-0 pointer-events-none"></i>
                 </div>
 
                 <!-- Playground Area -->
