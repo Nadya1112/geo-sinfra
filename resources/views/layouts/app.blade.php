@@ -103,6 +103,9 @@
                         #070617;
         }
         html { transition: background-color 0.3s ease, color 0.3s ease; }
+
+        @media (min-width: 768px) { html { font-size: 14px; } }
+        @media (max-width: 767px) { html { font-size: 12px; } }
     </style>
 
     @stack('styles')
