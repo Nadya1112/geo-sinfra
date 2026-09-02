@@ -203,15 +203,15 @@
                     </div>
 
                     {{-- Donut Chart Kondisi --}}
-                    <div class="bg-navy-900 rounded-3xl p-8 relative overflow-hidden">
+                    <div class="bg-white dark:bg-navy-900 border border-slate-100 dark:border-white/10 shadow-sm dark:shadow-none rounded-3xl p-8 relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-56 h-56 bg-gold-500/5 rounded-full -mr-16 -mt-16 blur-3xl pointer-events-none"></div>
                         <div class="flex items-center gap-3 mb-6">
                             <div class="w-8 h-8 bg-gold-500/20 rounded-xl flex items-center justify-center">
                                 <i class="fas fa-chart-pie text-gold-500 text-xs"></i>
                             </div>
                             <div>
-                                <h4 class="text-sm font-black text-white uppercase tracking-wider">Distribusi Kondisi</h4>
-                                <p class="text-xs text-slate-400 font-semibold mt-0.5">Proporsi kondisi seluruh infrastruktur</p>
+                                <h4 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-wider">Distribusi Kondisi</h4>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold mt-0.5">Proporsi kondisi seluruh infrastruktur</p>
                             </div>
                         </div>
 
@@ -219,24 +219,24 @@
                             <div class="relative w-48 h-48 shrink-0">
                                 <canvas id="donutChart"></canvas>
                                 <div class="absolute inset-0 flex flex-col items-center justify-center">
-                                    <p class="text-2xl font-black text-white">{{ $jumlahInfrastruktur }}</p>
-                                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total</p>
+                                    <p class="text-2xl font-black text-navy-900 dark:text-white">{{ $jumlahInfrastruktur }}</p>
+                                    <p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Total</p>
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 gap-3 w-full">
                                 @foreach([
-                                    ['label'=>'Kondisi Baik',         'count'=>$jumlahBaik,         'color'=>'bg-emerald-500', 'text'=>'text-emerald-400'],
-                                    ['label'=>'Kondisi Rusak Ringan', 'count'=>$jumlahRusakRingan,  'color'=>'bg-yellow-500',  'text'=>'text-yellow-400'],
-                                    ['label'=>'Kondisi Rusak Sedang', 'count'=>$jumlahRusakSedang,  'color'=>'bg-orange-500',  'text'=>'text-orange-400'],
-                                    ['label'=>'Kondisi Rusak Berat',  'count'=>$jumlahRusakBerat,   'color'=>'bg-red-500',     'text'=>'text-red-400'],
+                                    ['label'=>'Kondisi Baik',         'count'=>$jumlahBaik,         'color'=>'bg-emerald-500', 'text'=>'text-emerald-600 dark:text-emerald-400'],
+                                    ['label'=>'Kondisi Rusak Ringan', 'count'=>$jumlahRusakRingan,  'color'=>'bg-yellow-500',  'text'=>'text-yellow-600 dark:text-yellow-400'],
+                                    ['label'=>'Kondisi Rusak Sedang', 'count'=>$jumlahRusakSedang,  'color'=>'bg-orange-500',  'text'=>'text-orange-600 dark:text-orange-400'],
+                                    ['label'=>'Kondisi Rusak Berat',  'count'=>$jumlahRusakBerat,   'color'=>'bg-red-500',     'text'=>'text-red-600 dark:text-red-400'],
                                 ] as $item)
-                                <div class="bg-white/5 border border-white/10 rounded-2xl p-3">
+                                <div class="bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 rounded-2xl p-3">
                                     <div class="flex items-center gap-2 mb-1">
                                         <span class="w-2.5 h-2.5 rounded-full {{ $item['color'] }} shrink-0"></span>
-                                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">{{ $item['label'] }}</span>
+                                        <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{{ $item['label'] }}</span>
                                     </div>
                                     <p class="text-xl font-black {{ $item['text'] }}">{{ $item['count'] }}</p>
-                                    <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold">{{ $total > 0 ? round(($item['count']/$total)*100) : 0 }}%</p>
+                                    <p class="text-xs text-slate-400 font-semibold">{{ $total > 0 ? round(($item['count']/$total)*100) : 0 }}%</p>
                                 </div>
                                 @endforeach
                             </div>
