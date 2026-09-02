@@ -83,7 +83,7 @@
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse hidden md:table">
                 <thead>
-                    <tr class="bg-slate-100 dark:bg-gradient-to-r dark:from-navy-900 dark:to-navy-800 border-b border-black dark:border-navy-800 shadow-sm dark:shadow-md text-xs font-black text-gold-500 uppercase tracking-widest">
+                    <tr class="bg-gradient-to-r from-gold-500 to-gold-600 dark:from-navy-900 dark:to-navy-800 border-b border-gold-600 dark:border-navy-800 shadow-sm dark:shadow-md text-xs font-black text-white dark:text-white dark:text-gold-500 uppercase tracking-widest">
                         <th class="px-2 py-4 w-12 border-b border-navy-800">No</th>
                     <th class="px-6 py-4 border-b border-navy-800">Infrastruktur</th>
                     <th class="px-6 py-4 border-b border-navy-800">Wilayah</th>

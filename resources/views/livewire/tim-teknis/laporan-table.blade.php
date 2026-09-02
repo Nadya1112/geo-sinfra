@@ -232,7 +232,7 @@
         <div class="overflow-x-auto w-full custom-scrollbar">
             <table id="laporanTable" class="w-full text-left min-w-[600px] md:min-w-full hidden md:table print:table">
                 <thead>
-                <tr class="bg-slate-50 dark:bg-[#0f0e2c]/50 text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest border-b border-black dark:border-white/10">
+                <tr class="bg-gradient-to-r from-gold-500 to-gold-600 dark:bg-[#0f0e2c]/50 text-xs font-black text-white dark:text-slate-400 uppercase tracking-widest border-b border-gold-600 dark:border-white/10">
                     <th class="px-6 py-4 text-center border-b border-slate-100 dark:border-white/10" style="width: 10%;">No</th>
                     <th class="px-6 py-4 text-left border-b border-slate-100 dark:border-white/10" style="width: 30%;">Infrastruktur</th>
                     <th class="px-6 py-4 text-left border-b border-slate-100 dark:border-white/10" style="width: 20%;">Wilayah</th>

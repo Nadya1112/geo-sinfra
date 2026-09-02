@@ -37,14 +37,14 @@
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse hidden md:table">
                 <thead>
-                    <tr class="bg-slate-100 dark:bg-gradient-to-r dark:from-navy-900 dark:to-navy-800 border-b border-black dark:border-navy-800 shadow-sm dark:shadow-md">
-                        <th class="px-4 py-2 text-xs font-black text-gold-500 uppercase tracking-widest text-center w-12">NO</th>
-                        <th class="px-4 py-2 text-xs font-black text-gold-500 uppercase tracking-widest w-20 text-center">FOTO</th>
-                        <th class="px-4 py-2 text-xs font-black text-gold-500 uppercase tracking-widest">INFRASTRUKTUR</th>
-                        <th class="px-4 py-2 text-xs font-black text-gold-500 uppercase tracking-widest">WILAYAH</th>
-                        <th class="px-4 py-2 text-xs font-black text-gold-500 uppercase tracking-widest text-center">STATUS VALIDASI</th>
-                        <th class="px-4 py-2 text-xs font-black text-gold-500 uppercase tracking-widest text-center">STATUS KONDISI</th>
-                        <th class="px-4 py-2 text-xs font-black text-gold-500 uppercase tracking-widest text-center">AKSI</th>
+                    <tr class="bg-gradient-to-r from-gold-500 to-gold-600 dark:from-navy-900 dark:to-navy-800 border-b border-gold-600 dark:border-navy-800 shadow-sm dark:shadow-md">
+                        <th class="px-4 py-2 text-xs font-black text-white dark:text-gold-500 uppercase tracking-widest text-center w-12">NO</th>
+                        <th class="px-4 py-2 text-xs font-black text-white dark:text-gold-500 uppercase tracking-widest w-20 text-center">FOTO</th>
+                        <th class="px-4 py-2 text-xs font-black text-white dark:text-gold-500 uppercase tracking-widest">INFRASTRUKTUR</th>
+                        <th class="px-4 py-2 text-xs font-black text-white dark:text-gold-500 uppercase tracking-widest">WILAYAH</th>
+                        <th class="px-4 py-2 text-xs font-black text-white dark:text-gold-500 uppercase tracking-widest text-center">STATUS VALIDASI</th>
+                        <th class="px-4 py-2 text-xs font-black text-white dark:text-gold-500 uppercase tracking-widest text-center">STATUS KONDISI</th>
+                        <th class="px-4 py-2 text-xs font-black text-white dark:text-gold-500 uppercase tracking-widest text-center">AKSI</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black dark:divide-white/5">

@@ -38,14 +38,14 @@
         <div class="overflow-x-auto custom-scrollbar">
             <!-- Table Layout (Desktop & Tablet) -->
             <table class="w-full text-left text-sm whitespace-nowrap md:whitespace-normal hidden md:table">
-                <thead class="bg-slate-100 dark:bg-gradient-to-r dark:from-navy-900 dark:to-navy-800 border-b border-black dark:border-navy-800 shadow-sm dark:shadow-md">
+                <thead class="bg-gradient-to-r from-gold-500 to-gold-600 dark:from-navy-900 dark:to-navy-800 border-b border-gold-600 dark:border-navy-800 shadow-sm dark:shadow-md">
                     <tr>
-                        <th class="px-4 py-3 font-extrabold uppercase tracking-widest text-xs text-gold-500">Waktu Lapor</th>
-                        <th class="px-4 py-3 font-extrabold uppercase tracking-widest text-xs text-gold-500">Pelapor</th>
-                        <th class="px-4 py-3 font-extrabold uppercase tracking-widest text-xs text-gold-500">Laporan Kerusakan</th>
-                        <th class="px-4 py-3 font-extrabold uppercase tracking-widest text-xs text-gold-500 text-center">Status</th>
-                        <th class="px-4 py-3 font-extrabold uppercase tracking-widest text-xs text-gold-500 text-center">Penugasan</th>
-                        <th class="px-4 py-3 font-extrabold uppercase tracking-widest text-xs text-gold-500 text-center">Aksi</th>
+                        <th class="px-4 py-3 font-extrabold uppercase tracking-widest text-xs text-white dark:text-gold-500">Waktu Lapor</th>
+                        <th class="px-4 py-3 font-extrabold uppercase tracking-widest text-xs text-white dark:text-gold-500">Pelapor</th>
+                        <th class="px-4 py-3 font-extrabold uppercase tracking-widest text-xs text-white dark:text-gold-500">Laporan Kerusakan</th>
+                        <th class="px-4 py-3 font-extrabold uppercase tracking-widest text-xs text-white dark:text-gold-500 text-center">Status</th>
+                        <th class="px-4 py-3 font-extrabold uppercase tracking-widest text-xs text-white dark:text-gold-500 text-center">Penugasan</th>
+                        <th class="px-4 py-3 font-extrabold uppercase tracking-widest text-xs text-white dark:text-gold-500 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black dark:divide-white/10">

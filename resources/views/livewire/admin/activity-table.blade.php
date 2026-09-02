@@ -34,11 +34,11 @@
             <!-- Table Layout (Desktop & Tablet) -->
             <table class="w-full text-left border-collapse min-w-full hidden md:table">
             <thead>
-                <tr class="bg-slate-100 dark:bg-gradient-to-r dark:from-navy-900 dark:to-navy-800 border-b border-black dark:border-navy-800 shadow-sm dark:shadow-md">
-                    <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Waktu</th>
-                    <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Pengguna</th>
-                    <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Aktivitas</th>
-                    <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Kategori</th>
+                <tr class="bg-gradient-to-r from-gold-500 to-gold-600 dark:from-navy-900 dark:to-navy-800 border-b border-gold-600 dark:border-navy-800 shadow-sm dark:shadow-md">
+                    <th class="px-4 py-3 text-xs font-black text-white dark:text-gold-500 uppercase tracking-widest">Waktu</th>
+                    <th class="px-4 py-3 text-xs font-black text-white dark:text-gold-500 uppercase tracking-widest">Pengguna</th>
+                    <th class="px-4 py-3 text-xs font-black text-white dark:text-gold-500 uppercase tracking-widest">Aktivitas</th>
+                    <th class="px-4 py-3 text-xs font-black text-white dark:text-gold-500 uppercase tracking-widest">Kategori</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-black dark:divide-white/5 text-xs font-medium">
