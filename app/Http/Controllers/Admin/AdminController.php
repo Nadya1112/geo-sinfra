@@ -175,13 +175,21 @@ class AdminController extends Controller
             $chartData[] = $monthlyData[$m] ?? 0;
         }
 
-        // Statistik per Jenis (Tahunan)
-        $statsJenis = DB::table('infrastruktur')
+        // Statistik per Jenis (Tahunan) - selalu tampilkan 3 jenis meski 0
+        $statsJenisRaw = DB::table('infrastruktur')
             ->select('jenis', DB::raw('count(*) as total'))
             ->whereRaw("$sqlYear = ?", [(int)$year])
             ->whereNull('deleted_at')
             ->groupBy('jenis')
-            ->get();
+            ->get()
+            ->keyBy('jenis');
+
+        $statsJenis = collect(['jalan', 'titian', 'jembatan'])->map(function ($j) use ($statsJenisRaw) {
+            return (object) [
+                'jenis' => $j,
+                'total' => $statsJenisRaw->get($j)?->total ?? 0,
+            ];
+        });
 
         // Sebaran Kondisi per Kecamatan (Tahunan) - 🌟 PERBAIKAN: Menghubungkan langsung ke Hasil Otak AI
         $semuaKecamatan = DB::table('kecamatan')->get();
@@ -194,20 +202,22 @@ class AdminController extends Controller
                 ->whereRaw("$sqlYearInfrastruktur = ?", [(int)$year])
                 ->whereNull('infrastruktur.deleted_at')
                 ->select(
-                    DB::raw("COUNT(CASE WHEN LOWER(analisis_ai.label_prioritas) LIKE '%baik%' THEN 1 END) as baik"),
+                    DB::raw("COUNT(CASE WHEN LOWER(analisis_ai.label_prioritas) LIKE '%baik%' AND LOWER(analisis_ai.label_prioritas) NOT LIKE '%rusak%' THEN 1 END) as baik"),
+                    DB::raw("COUNT(CASE WHEN LOWER(analisis_ai.label_prioritas) LIKE '%ringan%' THEN 1 END) as ringan"),
                     DB::raw("COUNT(CASE WHEN LOWER(analisis_ai.label_prioritas) LIKE '%sedang%' THEN 1 END) as sedang"),
                     DB::raw("COUNT(CASE WHEN LOWER(analisis_ai.label_prioritas) LIKE '%berat%' THEN 1 END) as berat"),
                     DB::raw("COUNT(*) as total_semua")
                 )
                 ->first();
-            
+
             $kondisiKecamatan[] = [
-                'name' => $kec->nama_kecamatan,
-                'nama' => $kec->nama_kecamatan,
-                'baik' => $infraKec->baik ?? 0,
-                'sedang' => $infraKec->sedang ?? 0,
-                'berat' => $infraKec->berat ?? 0,
-                'total' => $infraKec->total_semua ?? 0
+                'name'   => $kec->nama_kecamatan,
+                'nama'   => $kec->nama_kecamatan,
+                'baik'   => $infraKec->baik   ?? 0,
+                'ringan' => $infraKec->ringan  ?? 0,
+                'sedang' => $infraKec->sedang  ?? 0,
+                'berat'  => $infraKec->berat   ?? 0,
+                'total'  => $infraKec->total_semua ?? 0,
             ];
         }
 

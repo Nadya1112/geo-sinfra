@@ -217,9 +217,10 @@
                             <thead>
                                 <tr class="bg-slate-50 dark:bg-navy-950/50 border-b border-slate-100 dark:border-white/10">
                                     <th class="px-3 py-3 text-xs font-black text-slate-400 dark:text-slate-300 tracking-widest uppercase">Kecamatan</th>
-                                    <th class="px-3 py-3 text-xs font-black text-emerald-500 tracking-widest text-center">Baik</th>
-                                    <th class="px-3 py-3 text-xs font-black text-orange-500 tracking-widest text-center">Sedang</th>
-                                    <th class="px-3 py-3 text-xs font-black text-red-500 tracking-widest text-center">Berat</th>
+                                    <th class="px-3 py-3 text-xs font-black text-emerald-500 tracking-widest text-center">Kondisi Baik</th>
+                                    <th class="px-3 py-3 text-xs font-black text-yellow-500 tracking-widest text-center">Rusak Ringan</th>
+                                    <th class="px-3 py-3 text-xs font-black text-orange-500 tracking-widest text-center">Rusak Sedang</th>
+                                    <th class="px-3 py-3 text-xs font-black text-red-500 tracking-widest text-center">Rusak Berat</th>
                                     <th class="px-3 py-3 text-xs font-black text-slate-400 dark:text-slate-300 tracking-widest text-right">Total</th>
                                 </tr>
                             </thead>
@@ -234,6 +235,9 @@
                                     </td>
                                     <td class="px-3 py-3 text-center">
                                         <span class="text-xs font-black text-emerald-600 dark:text-emerald-500 bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-lg">{{ $item['baik'] }}</span>
+                                    </td>
+                                    <td class="px-3 py-3 text-center">
+                                        <span class="text-xs font-black text-yellow-600 dark:text-yellow-500 bg-yellow-50 dark:bg-yellow-500/10 px-2 py-0.5 rounded-lg">{{ $item['ringan'] }}</span>
                                     </td>
                                     <td class="px-3 py-3 text-center">
                                         <span class="text-xs font-black text-orange-600 dark:text-orange-500 bg-orange-50 dark:bg-orange-500/10 px-2 py-0.5 rounded-lg">{{ $item['sedang'] }}</span>
