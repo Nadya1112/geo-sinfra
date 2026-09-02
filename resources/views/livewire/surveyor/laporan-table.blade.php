@@ -45,7 +45,7 @@
 
         <div class="overflow-x-auto custom-scrollbar">
             <table class="w-full text-left text-sm whitespace-nowrap md:whitespace-normal hidden md:table">
-                <thead class="bg-slate-100 dark:bg-gradient-to-r dark:from-navy-900 dark:to-navy-800 border-b border-slate-200 dark:border-navy-800 shadow-sm dark:shadow-md">
+                <thead class="bg-slate-100 dark:bg-gradient-to-r dark:from-navy-900 dark:to-navy-800 border-b border-black dark:border-navy-800 shadow-sm dark:shadow-md">
                     <tr>
                         <th class="px-6 py-4 font-extrabold uppercase tracking-widest text-xs text-gold-500">Waktu Lapor</th>
                         <th class="px-6 py-4 font-extrabold uppercase tracking-widest text-xs text-gold-500">Pelapor</th>
@@ -54,7 +54,7 @@
                         <th class="px-5 py-4 font-extrabold uppercase tracking-widest text-xs text-gold-500 text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100 dark:divide-white/10">
+                <tbody class="divide-y divide-black dark:divide-white/10">
                     @forelse($laporanWarga as $laporan)
                     <tr class="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors group">
                         <td class="px-6 py-4">

@@ -60,7 +60,7 @@
             <!-- Table Layout (Desktop & Tablet) -->
             <table class="w-full text-left border-collapse hidden md:table">
                 <thead>
-                    <tr class="bg-slate-100 dark:bg-gradient-to-r dark:from-navy-900 dark:to-navy-800 border-b border-slate-200 dark:border-navy-800 shadow-sm dark:shadow-md">
+                    <tr class="bg-slate-100 dark:bg-gradient-to-r dark:from-navy-900 dark:to-navy-800 border-b border-black dark:border-navy-800 shadow-sm dark:shadow-md">
                         <th class="px-4 py-3 text-xs font-black text-gold-500 tracking-widest text-center w-12">NO</th>
                         <th class="hidden md:table-cell px-4 py-3 text-xs font-black text-gold-500 tracking-widest text-center w-20">FOTO</th>
                         <th class="px-4 py-3 text-xs font-black text-gold-500 tracking-widest">INFRASTRUKTUR</th>
@@ -70,7 +70,7 @@
                         <th class="px-4 py-3 text-xs font-black text-gold-500 tracking-widest text-center">AKSI</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-50 dark:divide-white/5">
+                <tbody class="divide-y divide-black dark:divide-white/5">
                     @forelse($infrastruktur as $index => $inf)
                     @php
                         $dt = (object) [
@@ -174,7 +174,7 @@
 
                                 {{-- Verifikasi --}}
                                 @if(($inf->status_verifikasi ?? 'Pending') == 'Verified')
-                                    <span title="Terverifikasi" class="w-8 h-8 flex items-center justify-center bg-slate-100 dark:bg-navy-950/50 text-slate-400 rounded-lg text-xs font-black border border-slate-200 dark:border-white/10 cursor-not-allowed">
+                                    <span title="Terverifikasi" class="w-8 h-8 flex items-center justify-center bg-slate-100 dark:bg-navy-950/50 text-slate-400 rounded-lg text-xs font-black border border-black dark:border-white/10 cursor-not-allowed">
                                         <i class="fas fa-check-double"></i>
                                     </span>
                                 @else
@@ -230,7 +230,7 @@
             </table>
 
             <!-- Card Layout (Mobile) -->
-            <div class="flex flex-col md:hidden divide-y divide-slate-100 dark:divide-white/10">
+            <div class="flex flex-col md:hidden divide-y divide-black dark:divide-white/10">
                 @forelse($infrastruktur as $index => $inf)
                 @php
                     $dt = (object) [
@@ -291,7 +291,7 @@
 
                     {{-- Analisis AI --}}
                     <div class="flex gap-2 mb-3 bg-slate-50 dark:bg-navy-950/50 rounded-xl p-2 border border-slate-100 dark:border-white/10">
-                        <div class="flex-1 flex items-center gap-2 border-r border-slate-200 dark:border-white/10 pr-2">
+                        <div class="flex-1 flex items-center gap-2 border-r border-black dark:border-white/10 pr-2">
                             <span class="shrink-0 px-1.5 py-0.5 bg-navy-900 text-white rounded text-[7px] font-black tracking-wider">CNN</span>
                             <span class="text-[10px] font-bold {{ $cnnLabel ? $cnnColor : 'text-slate-400' }} leading-none truncate">
                                 {{ $cnn ? round($cnn->skor_cnn * 100).'%' : '—' }}
@@ -310,7 +310,7 @@
                     <div class="flex items-center gap-2 pt-2 border-t border-slate-100 dark:border-white/10">
                         {{-- Verifikasi --}}
                         @if(($inf->status_verifikasi ?? 'Pending') == 'Verified')
-                            <span title="Terverifikasi" class="flex-1 h-8 flex items-center justify-center bg-slate-100 dark:bg-navy-950/50 text-slate-400 rounded-lg text-[10px] uppercase font-black border border-slate-200 dark:border-white/10 cursor-not-allowed">
+                            <span title="Terverifikasi" class="flex-1 h-8 flex items-center justify-center bg-slate-100 dark:bg-navy-950/50 text-slate-400 rounded-lg text-[10px] uppercase font-black border border-black dark:border-white/10 cursor-not-allowed">
                                 <i class="fas fa-check-double mr-1.5"></i> Terverifikasi
                             </span>
                         @else

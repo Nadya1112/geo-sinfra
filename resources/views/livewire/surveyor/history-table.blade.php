@@ -37,7 +37,7 @@
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse hidden md:table">
                 <thead>
-                    <tr class="bg-slate-100 dark:bg-gradient-to-r dark:from-navy-900 dark:to-navy-800 border-b border-slate-200 dark:border-navy-800 shadow-sm dark:shadow-md">
+                    <tr class="bg-slate-100 dark:bg-gradient-to-r dark:from-navy-900 dark:to-navy-800 border-b border-black dark:border-navy-800 shadow-sm dark:shadow-md">
                         <th class="px-4 py-2 text-xs font-black text-gold-500 uppercase tracking-widest text-center w-12">NO</th>
                         <th class="px-4 py-2 text-xs font-black text-gold-500 uppercase tracking-widest w-20 text-center">FOTO</th>
                         <th class="px-4 py-2 text-xs font-black text-gold-500 uppercase tracking-widest">INFRASTRUKTUR</th>
@@ -47,7 +47,7 @@
                         <th class="px-4 py-2 text-xs font-black text-gold-500 uppercase tracking-widest text-center">AKSI</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-50 dark:divide-white/5">
+                <tbody class="divide-y divide-black dark:divide-white/5">
                     @forelse($riwayat as $index => $item)
                     <tr wire:key="history-row-{{ $item->id }}" class="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
                         <td class="px-4 py-2 text-center">

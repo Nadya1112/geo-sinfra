@@ -39,7 +39,7 @@
             <!-- Table Layout (Desktop & Tablet) -->
             <table class="w-full text-left border-collapse hidden md:table">
             <thead>
-                <tr class="bg-slate-100 dark:bg-gradient-to-r dark:from-navy-900 dark:to-navy-800 border-b border-slate-200 dark:border-navy-800 shadow-sm dark:shadow-md">
+                <tr class="bg-slate-100 dark:bg-gradient-to-r dark:from-navy-900 dark:to-navy-800 border-b border-black dark:border-navy-800 shadow-sm dark:shadow-md">
                     <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest w-24 text-center">No.</th>
                     <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Nama Kecamatan</th>
                     <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Kelurahan</th>
@@ -47,7 +47,7 @@
                     <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest text-center w-32">Aksi</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-slate-50 dark:divide-white/5">
+            <tbody class="divide-y divide-black dark:divide-white/5">
                 @forelse($wilayah as $index => $wly)
                 <tr class="hover:bg-slate-50/50 dark:hover:bg-white/5 transition">
                     <td class="px-4 py-3 text-center">
@@ -96,7 +96,7 @@
             </table>
 
             <!-- Card Layout (Mobile) -->
-            <div class="flex flex-col md:hidden divide-y divide-slate-100 dark:divide-white/10">
+            <div class="flex flex-col md:hidden divide-y divide-black dark:divide-white/10">
                 @forelse($wilayah as $index => $wly)
                 <div class="p-4 hover:bg-slate-50 dark:hover:bg-white/5 dark:bg-navy-950/50 transition">
                     <div class="flex items-start justify-between gap-3 mb-2">

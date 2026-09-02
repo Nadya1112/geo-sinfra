@@ -232,7 +232,7 @@
         <div class="overflow-x-auto w-full custom-scrollbar">
             <table id="laporanTable" class="w-full text-left min-w-[600px] md:min-w-full hidden md:table print:table">
                 <thead>
-                <tr class="bg-slate-50 dark:bg-[#0f0e2c]/50 text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest border-b border-slate-200 dark:border-white/10">
+                <tr class="bg-slate-50 dark:bg-[#0f0e2c]/50 text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest border-b border-black dark:border-white/10">
                     <th class="px-6 py-4 text-center border-b border-slate-100 dark:border-white/10" style="width: 10%;">No</th>
                     <th class="px-6 py-4 text-left border-b border-slate-100 dark:border-white/10" style="width: 30%;">Infrastruktur</th>
                     <th class="px-6 py-4 text-left border-b border-slate-100 dark:border-white/10" style="width: 20%;">Wilayah</th>
@@ -240,7 +240,7 @@
                     <th class="px-6 py-4 text-center border-b border-slate-100 dark:border-white/10" style="width: 20%;">Tanggal Data</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-slate-50 dark:divide-white/5">
+            <tbody class="divide-y divide-black dark:divide-white/5">
                 @forelse($reports as $index => $item)
                 <tr class="group hover:bg-slate-50 dark:bg-[#0f0e2c]/50 transition-all">
                     <td class="px-6 py-3 text-xs font-bold text-slate-400 text-center">{{ $show == 'all' ? $index + 1 : ($reports->currentPage() - 1) * $reports->perPage() + $index + 1 }}</td>
@@ -309,7 +309,7 @@
         </div>
         
         <!-- Card Layout (Mobile) -->
-        <div class="flex flex-col md:hidden divide-y divide-slate-100 dark:divide-white/10 print:hidden">
+        <div class="flex flex-col md:hidden divide-y divide-black dark:divide-white/10 print:hidden">
             @forelse($reports as $index => $item)
             <div class="p-4 hover:bg-slate-50 dark:hover:bg-[#0f0e2c]/50 transition-colors">
                 <div class="flex items-start justify-between gap-3 mb-2">

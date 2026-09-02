@@ -34,14 +34,14 @@
             <!-- Table Layout (Desktop & Tablet) -->
             <table class="w-full text-left border-collapse min-w-full hidden md:table">
             <thead>
-                <tr class="bg-slate-100 dark:bg-gradient-to-r dark:from-navy-900 dark:to-navy-800 border-b border-slate-200 dark:border-navy-800 shadow-sm dark:shadow-md">
+                <tr class="bg-slate-100 dark:bg-gradient-to-r dark:from-navy-900 dark:to-navy-800 border-b border-black dark:border-navy-800 shadow-sm dark:shadow-md">
                     <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Waktu</th>
                     <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Pengguna</th>
                     <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Aktivitas</th>
                     <th class="px-4 py-3 text-xs font-black text-gold-500 uppercase tracking-widest">Kategori</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-slate-50 dark:divide-white/5 text-xs font-medium">
+            <tbody class="divide-y divide-black dark:divide-white/5 text-xs font-medium">
                 <!-- Dynamic Data Rows -->
                 @forelse($activities as $activity)
                     @php
@@ -106,7 +106,7 @@
             </table>
 
             <!-- Card Layout (Mobile) -->
-            <div class="flex flex-col md:hidden divide-y divide-slate-100 dark:divide-white/10">
+            <div class="flex flex-col md:hidden divide-y divide-black dark:divide-white/10">
                 @forelse($activities as $activity)
                     @php
                         $badgeColor = 'slate';
