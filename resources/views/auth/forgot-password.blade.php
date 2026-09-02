@@ -227,12 +227,7 @@
                 </div>
             </form>
 
-            <div class="mt-8 pt-6 border-t border-slate-100 text-center fade-in-up d4">
-                <a href="{{ route('login') }}" class="inline-flex items-center gap-2 text-slate-400 hover:text-navy-900 text-xs uppercase tracking-wider font-black transition">
-                    <i class="fas fa-arrow-left text-[10px]"></i>
-                    Kembali ke Halaman Login
-                </a>
-            </div>
+
 
         </div>
     </div>
