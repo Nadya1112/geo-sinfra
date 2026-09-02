@@ -106,7 +106,7 @@
             background: rgba(15,14,44,0.08); border: 1px solid rgba(15,14,44,0.15);
             backdrop-filter: blur(12px); border-radius: 100px;
             padding: 8px 16px; font-size: 11px; font-weight: 700;
-            color: #0f0e2c; font-weight: 900; text-transform: uppercase; letter-spacing: 0.12em;
+            color: #000000; font-weight: 900; text-transform: uppercase; letter-spacing: 0.12em;
         }
         .dark .stat-pill {
             background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
@@ -285,7 +285,7 @@
             <h1 class="text-4xl xl:text-5xl font-black tracking-tight mb-4 leading-none brand-text-glow cursor-default transition-colors duration-300">
                 GEO-SINFRA
             </h1>
-            <p class="text-navy-900 dark:text-white/80 text-sm leading-relaxed font-bold max-w-[260px] transition-colors duration-300">
+            <p class="text-black dark:text-white/80 text-sm leading-relaxed font-black max-w-[260px] transition-colors duration-300">
                 Infrastruktur Permukiman Kota Banjarmasin berbasis Web GIS & AI
             </p>
 
@@ -310,7 +310,7 @@
         </div>
 
         {{-- Bottom copyright --}}
-        <p class="absolute bottom-6 text-navy-900 dark:text-white/50 text-[10px] font-black uppercase tracking-widest transition-colors duration-300">
+        <p class="absolute bottom-6 text-black dark:text-white/50 text-[10px] font-black uppercase tracking-widest transition-colors duration-300">
             &copy; 2026 GEO-SINFRA
         </p>
     </div>
