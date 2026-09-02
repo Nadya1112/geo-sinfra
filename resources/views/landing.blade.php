@@ -1743,20 +1743,20 @@
         </div>
     </div>
     <!-- Modal Lapor Warga -->
-    <div id="modal-lapor" class="hidden fixed inset-0 z-[10000] flex items-center justify-center p-4 sm:p-6 backdrop-blur-xl bg-[#0a091d]/80 transition-all duration-300">
-        <div class="bg-[#0f0e2c]/95 backdrop-blur-3xl w-full max-w-2xl rounded-[2.5rem] shadow-2xl border border-white/10 overflow-hidden flex flex-col max-h-[90vh]">
+    <div id="modal-lapor" class="hidden fixed inset-0 z-[10000] flex items-center justify-center p-4 sm:p-6 backdrop-blur-xl bg-black/50 dark:bg-[#0a091d]/80 transition-all duration-300">
+        <div class="bg-white dark:bg-[#0f0e2c]/95 backdrop-blur-3xl w-full max-w-2xl rounded-[2.5rem] shadow-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col max-h-[90vh]">
             <!-- Header -->
-            <div class="p-6 flex justify-between items-center text-white shrink-0 border-b border-white/10">
+            <div class="p-6 flex justify-between items-center text-navy-900 dark:text-white shrink-0 border-b border-slate-200 dark:border-white/10">
                 <div class="flex items-center gap-4">
                     <div class="w-12 h-12 bg-gold-500/10 rounded-2xl flex items-center justify-center border border-gold-500/20">
                         <i class="fas fa-bullhorn text-xl text-gold-500"></i>
                     </div>
                     <div>
                         <h3 class="font-black text-xl tracking-tight leading-none mb-1">Lapor Kerusakan</h3>
-                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Partisipasi Warga Banjarmasin</p>
+                        <p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Partisipasi Warga Banjarmasin</p>
                     </div>
                 </div>
-                <button onclick="document.getElementById('modal-lapor').classList.add('hidden')" class="w-10 h-10 bg-white/5 hover:bg-red-500 hover:text-white text-slate-400 rounded-xl flex items-center justify-center transition-all border border-white/10 hover:border-red-500">
+                <button onclick="document.getElementById('modal-lapor').classList.add('hidden')" class="w-10 h-10 bg-slate-100 dark:bg-white/5 hover:bg-red-500 hover:text-white text-slate-500 dark:text-slate-400 rounded-xl flex items-center justify-center transition-all border border-slate-200 dark:border-white/10 hover:border-red-500">
                     <i class="fas fa-times text-lg"></i>
                 </button>
             </div>
@@ -1770,52 +1770,52 @@
                         <!-- Nama & HP -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div>
-                                <label class="block text-xs font-black text-slate-300 uppercase tracking-widest mb-2 ml-1">Nama Pelapor <span class="text-red-500">*</span></label>
-                                <input type="text" name="nama_pelapor" required placeholder="Nama Anda" class="w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-sm font-semibold text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all placeholder-slate-500">
+                                <label class="block text-xs font-black text-slate-700 dark:text-slate-300 uppercase tracking-widest mb-2 ml-1">Nama Pelapor <span class="text-red-500">*</span></label>
+                                <input type="text" name="nama_pelapor" required placeholder="Nama Anda" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold text-navy-900 dark:text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all placeholder-slate-400 dark:placeholder-slate-500">
                             </div>
                             <div>
-                                <label class="block text-xs font-black text-slate-300 uppercase tracking-widest mb-2 ml-1">No. WhatsApp <span class="text-red-500">*</span></label>
-                                <input type="text" name="no_hp" required placeholder="Nomor WhatsApp (Agar tim bisa menghubungi)" class="w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-sm font-semibold text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all placeholder-slate-500">
+                                <label class="block text-xs font-black text-slate-700 dark:text-slate-300 uppercase tracking-widest mb-2 ml-1">No. WhatsApp <span class="text-red-500">*</span></label>
+                                <input type="text" name="no_hp" required placeholder="Nomor WhatsApp (Agar tim bisa menghubungi)" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold text-navy-900 dark:text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all placeholder-slate-400 dark:placeholder-slate-500">
                             </div>
                         </div>
 
                         <!-- Deskripsi -->
                         <div>
-                            <label class="block text-xs font-black text-slate-300 uppercase tracking-widest mb-2 ml-1">Deskripsi Kerusakan <span class="text-red-500">*</span></label>
-                            <textarea name="deskripsi" required rows="3" placeholder="Contoh: Jalan berlubang cukup dalam dan sering digenangi air saat hujan..." class="w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-sm font-semibold text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all resize-none placeholder-slate-500"></textarea>
+                            <label class="block text-xs font-black text-slate-700 dark:text-slate-300 uppercase tracking-widest mb-2 ml-1">Deskripsi Kerusakan <span class="text-red-500">*</span></label>
+                            <textarea name="deskripsi" required rows="3" placeholder="Contoh: Jalan berlubang cukup dalam dan sering digenangi air saat hujan..." class="w-full px-5 py-3.5 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold text-navy-900 dark:text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all resize-none placeholder-slate-400 dark:placeholder-slate-500"></textarea>
                         </div>
 
                         <!-- Lokasi GPS & Map Picker -->
-                        <div class="p-5 bg-white/5 rounded-2xl border border-white/10">
+                        <div class="p-5 bg-slate-50 dark:bg-white/5 rounded-2xl border border-slate-200 dark:border-white/10">
                             <div class="flex items-center justify-between mb-4">
                                 <div>
-                                    <h4 class="font-black text-white text-sm">Titik Lokasi <span class="text-red-500">*</span></h4>
-                                    <p class="text-xs text-slate-400 font-medium">Geser pin pada peta atau klik tombol GPS.</p>
+                                    <h4 class="font-black text-navy-900 dark:text-white text-sm">Titik Lokasi <span class="text-red-500">*</span></h4>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Geser pin pada peta atau klik tombol GPS.</p>
                                 </div>
-                                <button type="button" onclick="getWargaLocation(this)" class="px-4 py-2 bg-blue-500/20 hover:bg-blue-500 border border-blue-500/50 hover:border-blue-500 text-blue-400 hover:text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2">
+                                <button type="button" onclick="getWargaLocation(this)" class="px-4 py-2 bg-blue-500/10 hover:bg-blue-500 border border-blue-500/30 hover:border-blue-500 text-blue-600 dark:text-blue-400 hover:text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2">
                                     <i class="fas fa-crosshairs"></i> Ambil GPS
                                 </button>
                             </div>
                             
                             <!-- Mini Map for Picking Location -->
-                            <div id="warga-map" class="w-full h-48 rounded-xl z-10 mb-3 border border-white/20"></div>
+                            <div id="warga-map" class="w-full h-48 rounded-xl z-10 mb-3 border border-slate-300 dark:border-white/20"></div>
 
                             <div class="grid grid-cols-2 gap-3">
-                                <input type="text" id="warga-lat" name="latitude" required readonly placeholder="Latitude" class="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs font-bold text-slate-400 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all cursor-not-allowed">
-                                <input type="text" id="warga-lng" name="longitude" required readonly placeholder="Longitude" class="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs font-bold text-slate-400 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all cursor-not-allowed">
+                                <input type="text" id="warga-lat" name="latitude" required readonly placeholder="Latitude" class="w-full px-4 py-2.5 bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-400 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all cursor-not-allowed">
+                                <input type="text" id="warga-lng" name="longitude" required readonly placeholder="Longitude" class="w-full px-4 py-2.5 bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-400 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all cursor-not-allowed">
                             </div>
                         </div>
 
                         <!-- Foto Bukti -->
                         <div>
-                            <label class="block text-xs font-black text-slate-300 uppercase tracking-widest mb-2 ml-1">Foto Bukti Lapangan <span class="text-red-500">*</span></label>
-                            <div class="relative w-full h-40 border-2 border-dashed border-white/20 rounded-2xl bg-white/5 hover:bg-gold-500/5 hover:border-gold-500/50 transition-all cursor-pointer flex flex-col items-center justify-center overflow-hidden group">
+                            <label class="block text-xs font-black text-slate-700 dark:text-slate-300 uppercase tracking-widest mb-2 ml-1">Foto Bukti Lapangan <span class="text-red-500">*</span></label>
+                            <div class="relative w-full h-40 border-2 border-dashed border-slate-300 dark:border-white/20 rounded-2xl bg-slate-50 dark:bg-white/5 hover:bg-gold-500/5 hover:border-gold-500/50 transition-all cursor-pointer flex flex-col items-center justify-center overflow-hidden group">
                                 <input type="file" name="foto" required accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="previewWargaFoto(this)">
                                 <div id="warga-foto-placeholder" class="text-center px-4">
-                                    <div class="w-12 h-12 bg-white/10 border border-white/10 rounded-full flex items-center justify-center mx-auto mb-2 text-slate-400 group-hover:text-gold-500 group-hover:border-gold-500/50 group-hover:bg-gold-500/10 transition-colors">
+                                    <div class="w-12 h-12 bg-slate-200 dark:bg-white/10 border border-slate-300 dark:border-white/10 rounded-full flex items-center justify-center mx-auto mb-2 text-slate-500 dark:text-slate-400 group-hover:text-gold-500 group-hover:border-gold-500/50 group-hover:bg-gold-500/10 transition-colors">
                                         <i class="fas fa-camera text-xl"></i>
                                     </div>
-                                    <p class="text-xs font-bold text-slate-400">Ketuk untuk mengambil foto</p>
+                                    <p class="text-xs font-bold text-slate-500 dark:text-slate-400">Ketuk untuk mengambil foto</p>
                                 </div>
                                 <img id="warga-foto-preview" class="hidden absolute inset-0 w-full h-full object-cover">
                             </div>
@@ -1825,8 +1825,8 @@
             </div>
 
             <!-- Footer -->
-            <div class="p-6 border-t border-white/10 flex justify-end gap-3 shrink-0 bg-[#0f0e2c]">
-                <button type="button" onclick="document.getElementById('modal-lapor').classList.add('hidden')" class="px-6 py-3.5 bg-white/5 border border-white/10 hover:bg-white/10 text-slate-300 rounded-xl font-black text-xs uppercase tracking-widest transition-all">
+            <div class="p-6 border-t border-slate-200 dark:border-white/10 flex justify-end gap-3 shrink-0 bg-white dark:bg-[#0f0e2c]">
+                <button type="button" onclick="document.getElementById('modal-lapor').classList.add('hidden')" class="px-6 py-3.5 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 rounded-xl font-black text-xs uppercase tracking-widest transition-all">
                     Batal
                 </button>
                 <button type="submit" form="form-lapor-warga" class="px-8 py-3.5 bg-gold-500 hover:bg-gold-600 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-gold-500/30 flex items-center gap-2 border border-gold-500">
