@@ -38,23 +38,23 @@
             color: #1e1b4b;
             text-transform: uppercase;
             background-color: #f3f4f6;
-            padding: 6px 8px;
-            margin-top: 14px;
-            margin-bottom: 8px;
+            padding: 4px 8px;
+            margin-top: 10px;
+            margin-bottom: 6px;
             border-left: 4px solid #3b82f6;
         }
         .section-title.purple { border-left-color: #7c3aed; }
         .section-title.emerald { border-left-color: #059669; }
 
         /* ── TABEL DATA ── */
-        table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
         table th {
             text-align: left;
             width: 32%;
             font-size: 11px;
             font-weight: normal;
             color: #555;
-            padding: 6px 8px;
+            padding: 4px 6px;
             border-bottom: 1px solid #e5e7eb;
             vertical-align: top;
         }
@@ -62,7 +62,7 @@
             font-size: 11px;
             font-weight: bold;
             color: #1a1a1a;
-            padding: 6px 8px;
+            padding: 4px 6px;
             border-bottom: 1px solid #e5e7eb;
             vertical-align: top;
         }
@@ -83,10 +83,10 @@
         .badge-berat  { background-color: #fef2f2; color: #b91c1c; border-color: #fca5a5; }
 
         /* ── FOTO ── */
-        .photo-container { text-align: center; margin-top: 12px; }
+        .photo-container { text-align: center; margin-top: 8px; }
         .photo-container img {
             max-width: 100%;
-            max-height: 280px;
+            max-height: 220px; /* Diperkecil agar menghemat ruang */
             border: 1px solid #d1d5db;
             padding: 4px;
         }
@@ -95,7 +95,7 @@
         /* ── TANDA TANGAN ── */
         .ttd-wrapper {
             page-break-inside: avoid;
-            margin-top: 28px;
+            margin-top: 16px;
             width: 100%;
         }
         .ttd-table {
