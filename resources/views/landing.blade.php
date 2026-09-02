@@ -962,7 +962,7 @@
             animation-duration: 1.5s, 1s;
         }
     </style>
-    <footer class="bg-navy-950 pt-20 pb-10 text-white relative border-t border-white/5">
+    <footer class="bg-white dark:bg-navy-950 pt-20 pb-10 text-navy-900 dark:text-white relative border-t border-slate-200 dark:border-white/5 transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
                 <!-- Brand -->
@@ -976,19 +976,19 @@
                 
                 <!-- Links -->
                 <div>
-                    <h5 class="text-base font-black text-white uppercase tracking-wider mb-6">Tautan Penting</h5>
+                    <h5 class="text-base font-black text-navy-900 dark:text-white uppercase tracking-wider mb-6">Tautan Penting</h5>
                     <ul class="space-y-3">
-                        <li><a href="#peta" class="text-sm text-slate-400 hover:text-gold-500 transition-colors flex items-center gap-2"><i class="fas fa-angle-right text-xs"></i> Peta Sebaran</a></li>
-                        <li><a href="#statistik" class="text-sm text-slate-400 hover:text-gold-500 transition-colors flex items-center gap-2"><i class="fas fa-angle-right text-xs"></i> Statistik Data</a></li>
+                        <li><a href="#peta" class="text-sm text-slate-500 dark:text-slate-400 hover:text-gold-500 transition-colors flex items-center gap-2"><i class="fas fa-angle-right text-xs"></i> Peta Sebaran</a></li>
+                        <li><a href="#statistik" class="text-sm text-slate-500 dark:text-slate-400 hover:text-gold-500 transition-colors flex items-center gap-2"><i class="fas fa-angle-right text-xs"></i> Statistik Data</a></li>
                     </ul>
                 </div>
             </div>
             
-            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center gap-6 relative">
+            <div class="border-t border-slate-200 dark:border-white/10 pt-8 flex flex-col md:flex-row items-center gap-6 relative transition-colors duration-300">
                 <p class="text-xs font-bold text-slate-500 uppercase tracking-widest md:absolute md:left-1/2 md:-translate-x-1/2 text-center">&copy; 2026 GEO-SINFRA. Hak Cipta Dilindungi.</p>
                 <div class="flex gap-4 md:ml-auto">
-                    <a href="#" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:bg-gold-500 hover:text-white transition-all shadow-sm hover:shadow-gold-500/50" title="Instagram"><i class="fab fa-instagram"></i></a>
-                    <span class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-500 cursor-default" title="YouTube (Belum Tersedia)"><i class="fab fa-youtube"></i></span>
+                    <a href="#" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-white/5 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:bg-gold-500 hover:text-white transition-all shadow-sm hover:shadow-gold-500/50" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <span class="w-8 h-8 rounded-full bg-slate-100 dark:bg-white/5 flex items-center justify-center text-slate-500 cursor-default" title="YouTube (Belum Tersedia)"><i class="fab fa-youtube"></i></span>
                 </div>
             </div>
         </div>
