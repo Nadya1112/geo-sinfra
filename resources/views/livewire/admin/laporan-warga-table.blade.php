@@ -1,11 +1,7 @@
 <div>
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-        <div>
-            <h4 class="font-extrabold text-lg text-navy-900 dark:text-white">Daftar Laporan Warga</h4>
-            <p class="text-xs text-slate-400 dark:text-slate-300 font-medium text-left font-sans">Pantau dan kelola laporan kerusakan dari warga</p>
-        </div>
+    <div class="flex flex-col md:flex-row justify-end items-start md:items-center gap-4 mb-8">
         
-        <div class="flex flex-col md:flex-row items-center gap-3 w-full md:w-auto">
+        <div class="flex flex-col md:flex-row items-center justify-end gap-3 w-full">
             {{-- Filter & Search Standardized --}}
             <div class="flex items-center flex-1 min-w-0 w-full md:w-[480px] xl:w-[560px]">
                 <select wire:model.live="status" class="pl-3 pr-7 py-2.5 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 border-r-0 rounded-l-2xl text-[10px] md:text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm shrink-0">

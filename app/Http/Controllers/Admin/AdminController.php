@@ -936,7 +936,12 @@ class AdminController extends Controller
         $laporanWarga = LaporanWarga::orderBy('created_at', 'desc')->get();
         $this->logActivity('laporan', "Ekspor data Laporan Warga ke format PDF");
         
-        $pdf = Pdf::loadView('admin.pdf-laporan-warga', compact('laporanWarga'))->setPaper('a4', 'landscape');
+        $pdf = Pdf::loadView('admin.pdf-laporan-warga', compact('laporanWarga'))
+            ->setOptions([
+                'isPhpEnabled' => true,
+                'defaultFont'  => 'Arial',
+            ])
+            ->setPaper('a4', 'landscape');
         return $pdf->download('Laporan_Warga_SINFRA_' . date('Ymd') . '.pdf');
     }
 

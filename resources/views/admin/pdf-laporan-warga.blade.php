@@ -6,18 +6,11 @@
     <style>
         @page {
             size: A4 landscape;
-            margin: 4cm 3cm 3cm 4cm; /* Top 4cm, Right 3cm, Bottom 3cm, Left 4cm (Standar Pemerintahan) */
+            margin: 2cm 2cm 2cm 3cm; /* Top 2cm, Right 2cm, Bottom 2cm, Left 3cm */
         }
         div, span, h1, h2, h3, p, table, tbody, tr, th, td { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: Arial, Helvetica, sans-serif; color: #111; font-size: 11px; line-height: 1.4; }
 
-        /* ── KOP DINAS ── */
-        .kop-wrapper { border-bottom: 4px solid #1a1a1a; padding-bottom: 8px; margin-bottom: 4px; }
-        .kop-inner { display: table; width: 100%; }
-        .kop-teks { display: table-cell; vertical-align: middle; text-align: center; padding: 0 8px; }
-        .kop-teks .nama-dinas { font-size: 16px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: #1a1a1a; }
-        .kop-teks .alamat, .kop-teks .kontak { font-size: 10px; color: #444; margin-top: 2px; }
-        .garis-bawah-kop { border-top: 1px solid #1a1a1a; margin-top: 6px; }
 
         /* ── JUDUL LAPORAN ── */
         .judul-laporan { text-align: center; margin: 16px 0 12px; padding-bottom: 10px; }
@@ -49,17 +42,7 @@
 </head>
 <body>
 
-    <div class="kop-wrapper">
-        <div class="kop-inner">
-            <div class="kop-teks">
-                <div class="nama-dinas">Dinas Perumahan Rakyat dan Kawasan Permukiman</div>
-                <div class="nama-dinas">Kota Banjarmasin</div>
-                <div class="alamat">Jl. R.E. Martadinata No. 1 Blok B Lt. 2, Kec. Banjarmasin Tengah, Kota Banjarmasin, Kalimantan Selatan 70111</div>
-                <div class="kontak">Telp: (0511) 3365592 &nbsp;|&nbsp; Email: ampihkumuh@gmail.com</div>
-            </div>
-        </div>
-        <div class="garis-bawah-kop"></div>
-    </div>
+
 
     <div class="judul-laporan">
         <h2>Rekapitulasi Laporan Pengaduan Masyarakat (GEO-SINFRA)</h2>
