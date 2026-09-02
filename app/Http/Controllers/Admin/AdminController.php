@@ -162,7 +162,7 @@ class AdminController extends Controller
         // Data Perbulan (Jan - Des)
         $monthlyData = DB::table('infrastruktur')
             ->select(DB::raw("$sqlMonth as month"), DB::raw('count(*) as total'))
-            ->where(DB::raw($sqlYear), $year)
+            ->whereRaw("$sqlYear = ?", [(int)$year])
             ->whereNull('deleted_at')
             ->groupBy('month')
             ->get()
@@ -178,7 +178,7 @@ class AdminController extends Controller
         // Statistik per Jenis (Tahunan)
         $statsJenis = DB::table('infrastruktur')
             ->select('jenis', DB::raw('count(*) as total'))
-            ->where(DB::raw($sqlYear), $year)
+            ->whereRaw("$sqlYear = ?", [(int)$year])
             ->whereNull('deleted_at')
             ->groupBy('jenis')
             ->get();
@@ -191,7 +191,7 @@ class AdminController extends Controller
                 ->leftJoin('kelurahan', 'infrastruktur.id_kelurahan', '=', 'kelurahan.id_kelurahan')
                 ->leftJoin('analisis_ai', 'infrastruktur.id_infrastruktur', '=', 'analisis_ai.id_infrastruktur')
                 ->where('kelurahan.id_kecamatan', $kec->id_kecamatan)
-                ->where(DB::raw($sqlYearInfrastruktur), $year)
+                ->whereRaw("$sqlYearInfrastruktur = ?", [(int)$year])
                 ->whereNull('infrastruktur.deleted_at')
                 ->select(
                     DB::raw("COUNT(CASE WHEN LOWER(analisis_ai.label_prioritas) LIKE '%baik%' THEN 1 END) as baik"),

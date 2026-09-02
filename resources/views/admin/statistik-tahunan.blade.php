@@ -108,6 +108,7 @@
             </div>
 
             {{-- ── Grafik Kurva-S ── --}}
+            @php $hasChartData = array_sum($chartData) > 0; @endphp
             <div class="bg-white dark:bg-navy-900 border border-slate-100 dark:border-white/10 shadow-sm dark:shadow-none rounded-3xl p-8 relative overflow-hidden">
                 <div class="absolute top-0 right-0 w-80 h-80 bg-gold-500/5 rounded-full -mr-24 -mt-24 blur-3xl pointer-events-none"></div>
                 <div class="absolute bottom-0 left-0 w-56 h-56 bg-navy-500/10 rounded-full -ml-16 -mb-16 blur-2xl pointer-events-none"></div>
@@ -128,7 +129,17 @@
                 </div>
 
                 <div class="h-72 w-full relative">
-                    <canvas id="yearlyChart"></canvas>
+                    @if($hasChartData)
+                        <canvas id="yearlyChart"></canvas>
+                    @else
+                        <div class="flex flex-col items-center justify-center h-full gap-3">
+                            <div class="w-16 h-16 bg-slate-100 dark:bg-navy-800 rounded-2xl flex items-center justify-center">
+                                <i class="fas fa-chart-line text-2xl text-slate-300 dark:text-slate-600"></i>
+                            </div>
+                            <p class="text-sm font-bold text-slate-400 dark:text-slate-500">Belum ada data survey untuk Tahun {{ $year }}</p>
+                            <p class="text-xs text-slate-300 dark:text-slate-600 font-semibold">Data akan muncul setelah surveyor melakukan input di tahun ini</p>
+                        </div>
+                    @endif
                 </div>
             </div>
 
@@ -254,7 +265,8 @@
         }
         setInterval(updateClock, 1000); updateClock();
 
-        // Kurva-S Chart
+        // Kurva-S Chart - hanya render jika ada data
+        @if($hasChartData)
         const ctx = document.getElementById('yearlyChart').getContext('2d');
         const monthLimit = 12;
         const allLabels = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
@@ -316,6 +328,7 @@
                 }
             }
         });
+        @endif
     </script>
 </body>
 </html>
