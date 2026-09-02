@@ -106,13 +106,15 @@
         }
 
     
-        /* Forced text colors */
-        .auth-text-dark { color: #000000 !important; }
-        .dark .auth-text-dark { color: rgba(255,255,255,0.8) !important; }
         
-        .auth-footer-text { color: #000000 !important; }
-        .dark .auth-footer-text { color: rgba(255,255,255,0.5) !important; }
         
+    
+        /* Forced text colors for dynamic switching */
+        .auth-dynamic-text { color: #000000 !important; }
+        .dark .auth-dynamic-text { color: rgba(255,255,255,0.85) !important; }
+        
+        .auth-dynamic-bg { background-color: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.1) !important; }
+        .dark .auth-dynamic-bg { background-color: rgba(255,255,255,0.05) !important; border-color: rgba(255,255,255,0.1) !important; }
     </style>
 </head>
 <body class="antialiased bg-slate-50">
@@ -123,8 +125,8 @@
     <div class="hidden lg:flex lg:w-[44%] auth-left transition-colors duration-300 flex-col items-center justify-center relative overflow-hidden p-12">
         <div class="grid-bg"></div>
 
-        <a href="{{ route('login') }}" style="color: black !important;" class="absolute top-6 left-6 z-20 flex items-center gap-2 text-black hover:text-black dark:text-navy-900 dark:text-white/50 dark:hover:text-navy-900 dark:text-white transition-all text-xs font-bold uppercase tracking-widest group">
-            <span style="background-color: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.1) !important;" class="w-8 h-8 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center group-hover:bg-black/10 dark:group-hover:bg-white/10 transition-all">
+        <a href="{{ route('login') }}" class="auth-dynamic-text absolute top-6 left-6 z-20 flex items-center gap-2 text-black hover:text-black dark:text-navy-900 dark:text-white/50 dark:hover:text-navy-900 dark:text-white transition-all text-xs font-bold uppercase tracking-widest group">
+            <span class="auth-dynamic-bg w-8 h-8 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center group-hover:bg-black/10 dark:group-hover:bg-white/10 transition-all">
                 <i class="fas fa-arrow-left text-[10px]"></i>
             </span>
             Kembali
@@ -136,8 +138,8 @@
             </div>
 
             <span class="text-[11px] font-black text-gold-500 uppercase tracking-[0.35em] mb-3 block">Pemulihan Akun</span>
-            <h1 style="color: black !important;" class="text-4xl font-black text-black dark:text-white tracking-tight mb-4 leading-none transition-colors duration-300">Lupa Kata<br><span class="text-gold-500">Sandi?</span></h1>
-            <p style="color: black !important;" class="text-black dark:text-white/80 text-sm leading-relaxed font-black max-w-[240px] transition-colors duration-300">
+            <h1 class="auth-dynamic-text text-4xl font-black text-black dark:text-white tracking-tight mb-4 leading-none transition-colors duration-300">Lupa Kata<br><span class="text-gold-500">Sandi?</span></h1>
+            <p class="auth-dynamic-text text-black dark:text-white/80 text-sm leading-relaxed font-black max-w-[240px] transition-colors duration-300">
                 Jangan khawatir. Kami akan mengirimkan link pemulihan ke email Anda.
             </p>
             <div class="w-12 h-0.5 bg-gradient-to-r from-gold-500 to-indigo-500 rounded-full mx-auto my-8 opacity-70"></div>
@@ -154,15 +156,15 @@
                         <i class="{{ $icon }} text-gold-500 text-[10px]"></i>
                     </div>
                     <div>
-                        <p style="color: black !important; font-weight: 900;" class="text-black dark:text-white/80 text-xs font-black uppercase tracking-wide">{{ $title }}</p>
-                        <p style="color: black !important; font-weight: 700;" class="text-black dark:text-white/40 text-[10px] font-medium mt-0.5">{{ $desc }}</p>
+                        <p class="auth-dynamic-text text-black dark:text-white/80 text-xs font-black uppercase tracking-wide">{{ $title }}</p>
+                        <p class="auth-dynamic-text text-black dark:text-white/40 text-[10px] font-medium mt-0.5">{{ $desc }}</p>
                     </div>
                 </div>
                 @endforeach
             </div>
         </div>
 
-        <p style="color: black !important;" class="absolute bottom-6 text-black dark:text-white/20 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300">
+        <p class="auth-dynamic-text absolute bottom-6 text-black dark:text-white/20 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300">
             &copy; 2026 GEO-SINFRA
         </p>
     </div>

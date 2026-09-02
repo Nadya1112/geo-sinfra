@@ -141,13 +141,15 @@
         }
 
     
-        /* Forced text colors */
-        .auth-text-dark { color: #000000 !important; }
-        .dark .auth-text-dark { color: rgba(255,255,255,0.8) !important; }
         
-        .auth-footer-text { color: #000000 !important; }
-        .dark .auth-footer-text { color: rgba(255,255,255,0.5) !important; }
         
+    
+        /* Forced text colors for dynamic switching */
+        .auth-dynamic-text { color: #000000 !important; }
+        .dark .auth-dynamic-text { color: rgba(255,255,255,0.85) !important; }
+        
+        .auth-dynamic-bg { background-color: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.1) !important; }
+        .dark .auth-dynamic-bg { background-color: rgba(255,255,255,0.05) !important; border-color: rgba(255,255,255,0.1) !important; }
     </style>
 </head>
 <body class="antialiased bg-slate-50">
@@ -164,10 +166,10 @@
             </div>
 
             <span class="text-[11px] font-black text-gold-500 uppercase tracking-[0.35em] mb-3 block">Keamanan Akun</span>
-            <h1 style="color: black !important;" class="text-4xl font-black text-black dark:text-white tracking-tight mb-4 leading-none transition-colors duration-300">
+            <h1 class="auth-dynamic-text text-4xl font-black text-black dark:text-white tracking-tight mb-4 leading-none transition-colors duration-300">
                 Verifikasi <span class="text-gold-500">OTP</span>
             </h1>
-            <p style="color: black !important;" class="text-black dark:text-white/80 text-sm leading-relaxed font-black max-w-[250px]">
+            <p class="auth-dynamic-text text-black dark:text-white/80 text-sm leading-relaxed font-black max-w-[250px]">
                 Kami telah mengirimkan kode 6-digit ke nomor WhatsApp yang Anda daftarkan.
             </p>
 
@@ -197,7 +199,7 @@
             </div>
         </div>
 
-        <p style="color: black !important;" class="absolute bottom-6 text-black dark:text-white/20 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300">
+        <p class="auth-dynamic-text absolute bottom-6 text-black dark:text-white/20 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300">
             &copy; 2026 GEO-SINFRA
         </p>
     </div>
