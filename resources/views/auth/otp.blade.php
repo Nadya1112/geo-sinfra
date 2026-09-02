@@ -117,6 +117,29 @@
         .fade-in-up { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.5s ease forwards; }
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
         .d1{animation-delay:.1s} .d2{animation-delay:.2s} .d3{animation-delay:.3s} .d4{animation-delay:.4s}
+    
+        /* Brand Glow Animation */
+        @keyframes shimmerFlow {
+            0%   { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        @keyframes glowPulse {
+            0%, 100% { filter: drop-shadow(0 0 6px rgba(223,167,42,0.4)) drop-shadow(0 0 12px rgba(117,116,216,0.3)); }
+            50%       { filter: drop-shadow(0 0 14px rgba(223,167,42,0.8)) drop-shadow(0 0 28px rgba(117,116,216,0.7)); }
+        }
+        .brand-text-glow {
+            background: linear-gradient(to right, #DFA72A, #C4AE7D, #7574D8, #DFA72A, #C4AE7D);
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+            animation: shimmerFlow 4s linear infinite, glowPulse 2.5s ease-in-out infinite;
+        }
+        .brand-text-glow:hover {
+            animation-duration: 1.5s, 1s;
+        }
+
     </style>
 </head>
 <body class="antialiased bg-slate-50">
