@@ -45,7 +45,7 @@
 
         <div class="overflow-x-auto custom-scrollbar">
             <table class="w-full text-left text-sm whitespace-nowrap md:whitespace-normal hidden md:table">
-                <thead class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
+                <thead class="bg-slate-100 dark:bg-gradient-to-r dark:from-navy-900 dark:to-navy-800 border-b border-slate-200 dark:border-navy-800 shadow-sm dark:shadow-md">
                     <tr>
                         <th class="px-6 py-4 font-extrabold uppercase tracking-widest text-xs text-gold-500">Waktu Lapor</th>
                         <th class="px-6 py-4 font-extrabold uppercase tracking-widest text-xs text-gold-500">Pelapor</th>
@@ -54,9 +54,9 @@
                         <th class="px-5 py-4 font-extrabold uppercase tracking-widest text-xs text-gold-500 text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100">
+                <tbody class="divide-y divide-slate-100 dark:divide-white/10">
                     @forelse($laporanWarga as $laporan)
-                    <tr class="hover:bg-slate-50 transition-colors group">
+                    <tr class="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors group">
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-2">
                                 <i class="far fa-clock text-slate-400"></i>
@@ -153,7 +153,7 @@
             <!-- Card Layout (Mobile) -->
             <div class="flex flex-col md:hidden divide-y divide-slate-100">
                 @forelse($laporanWarga as $laporan)
-                <div class="p-4 hover:bg-slate-50 transition-colors">
+                <div class="p-4 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
                     <div class="flex items-start justify-between gap-2 mb-3">
                         <div class="flex items-center gap-2">
                             <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center shrink-0">

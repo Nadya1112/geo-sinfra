@@ -37,7 +37,7 @@
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse hidden md:table">
                 <thead>
-                    <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
+                    <tr class="bg-slate-100 dark:bg-gradient-to-r dark:from-navy-900 dark:to-navy-800 border-b border-slate-200 dark:border-navy-800 shadow-sm dark:shadow-md">
                         <th class="px-4 py-2 text-xs font-black text-gold-500 uppercase tracking-widest text-center w-12">NO</th>
                         <th class="px-4 py-2 text-xs font-black text-gold-500 uppercase tracking-widest w-20 text-center">FOTO</th>
                         <th class="px-4 py-2 text-xs font-black text-gold-500 uppercase tracking-widest">INFRASTRUKTUR</th>
@@ -47,9 +47,9 @@
                         <th class="px-4 py-2 text-xs font-black text-gold-500 uppercase tracking-widest text-center">AKSI</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-50">
+                <tbody class="divide-y divide-slate-50 dark:divide-white/5">
                     @forelse($riwayat as $index => $item)
-                    <tr wire:key="history-row-{{ $item->id }}" class="hover:bg-slate-50 transition-colors">
+                    <tr wire:key="history-row-{{ $item->id }}" class="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
                         <td class="px-4 py-2 text-center">
                             <span class="text-xs font-black text-slate-400">{{ $show == 'all' ? $index + 1 : ($riwayat->currentPage() - 1) * $riwayat->perPage() + $index + 1 }}</span>
                         </td>
@@ -194,7 +194,7 @@
         <!-- Card Layout (Mobile) -->
         <div class="flex flex-col md:hidden divide-y divide-slate-100">
             @forelse($riwayat as $index => $item)
-            <div class="p-4 hover:bg-slate-50 transition-colors">
+            <div class="p-4 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
                 <div class="flex items-start gap-3 mb-3">
                     <div class="w-16 h-16 rounded-xl overflow-hidden shadow-sm bg-slate-100 flex flex-col items-center justify-center relative shrink-0">
                         @if($item->foto_terbaru)

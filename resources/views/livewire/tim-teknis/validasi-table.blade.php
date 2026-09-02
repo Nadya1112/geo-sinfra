@@ -83,7 +83,7 @@
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse hidden md:table">
                 <thead>
-                    <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md text-xs font-black text-gold-500 uppercase tracking-widest">
+                    <tr class="bg-slate-100 dark:bg-gradient-to-r dark:from-navy-900 dark:to-navy-800 border-b border-slate-200 dark:border-navy-800 shadow-sm dark:shadow-md text-xs font-black text-gold-500 uppercase tracking-widest">
                         <th class="px-2 py-4 w-12 border-b border-navy-800">No</th>
                     <th class="px-6 py-4 border-b border-navy-800">Infrastruktur</th>
                     <th class="px-6 py-4 border-b border-navy-800">Wilayah</th>
@@ -93,7 +93,7 @@
                     <th class="px-6 py-4 text-center border-b border-navy-800">Aksi</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-slate-50">
+            <tbody class="divide-y divide-slate-50 dark:divide-white/5">
                 @forelse($allUsulan as $index => $item)
                 <tr class="hover:bg-slate-50 dark:bg-[#0f0e2c]/50 transition-colors group">
                     <td class="px-2 py-5 whitespace-nowrap text-xs font-black text-slate-300">

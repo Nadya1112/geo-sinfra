@@ -60,7 +60,7 @@
             <!-- Table Layout (Desktop & Tablet) -->
             <table class="w-full text-left border-collapse hidden md:table">
                 <thead>
-                    <tr class="bg-gradient-to-r from-navy-900 to-navy-800 border-b border-navy-800 shadow-md">
+                    <tr class="bg-slate-100 dark:bg-gradient-to-r dark:from-navy-900 dark:to-navy-800 border-b border-slate-200 dark:border-navy-800 shadow-sm dark:shadow-md">
                         <th class="px-4 py-3 text-xs font-black text-gold-500 tracking-widest text-center w-12">NO</th>
                         <th class="hidden md:table-cell px-4 py-3 text-xs font-black text-gold-500 tracking-widest text-center w-20">FOTO</th>
                         <th class="px-4 py-3 text-xs font-black text-gold-500 tracking-widest">INFRASTRUKTUR</th>
@@ -102,7 +102,7 @@
                             : ($infrastruktur->currentPage() - 1) * $infrastruktur->perPage() + $index + 1;
                     @endphp
 
-                    <tr class="hover:bg-slate-50/60 transition-colors">
+                    <tr class="hover:bg-slate-50/60 dark:hover:bg-white/5 transition-colors">
 
                         {{-- No --}}
                         <td class="px-4 py-3 text-center">
@@ -258,7 +258,7 @@
                     $labelColor = $kondisiMap[strtolower($labelAkhir ?? '')] ?? 'bg-slate-50 dark:bg-navy-950/50 text-slate-500 dark:text-slate-400 border border-slate-200';
                 @endphp
 
-                <div class="p-4 hover:bg-slate-50/60 transition-colors">
+                <div class="p-4 hover:bg-slate-50/60 dark:hover:bg-white/5 transition-colors">
                     <div class="flex gap-3 mb-3">
                         {{-- Foto --}}
                         <div class="w-20 h-20 rounded-2xl overflow-hidden border-2 border-slate-100 dark:border-white/10 shadow-sm bg-slate-100 dark:bg-navy-950/50 flex items-center justify-center shrink-0">
