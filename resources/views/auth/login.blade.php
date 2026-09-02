@@ -317,7 +317,7 @@
         </div>
 
         {{-- Bottom copyright --}}
-        <p class="absolute bottom-6 text-slate-400 dark:text-white/20 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300">
+        <p class="absolute bottom-6 text-navy-900 dark:text-white/50 text-[10px] font-black uppercase tracking-widest transition-colors duration-300">
             &copy; 2026 GEO-SINFRA
         </p>
     </div>
