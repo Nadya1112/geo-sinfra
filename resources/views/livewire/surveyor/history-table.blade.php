@@ -34,7 +34,14 @@
 
     <div class="bg-white dark:bg-navy-900/90 rounded-[2rem] border border-slate-100 dark:border-white/10 shadow-sm overflow-hidden mb-10 relative">
 
-        <div class="overflow-x-auto">
+        
+        <div wire:loading wire:target="search, show, filter, setFilter" class="absolute inset-0 z-50 flex items-center justify-center bg-white/50 dark:bg-navy-900/50 backdrop-blur-sm rounded-3xl">
+            <div class="flex flex-col items-center gap-2">
+                <i class="fas fa-circle-notch fa-spin text-3xl text-gold-500"></i>
+                <span class="text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest drop-shadow-md">Memuat Data...</span>
+            </div>
+        </div>
+<div class="overflow-x-auto" wire:loading.class="opacity-50 transition-opacity duration-300" wire:target="search, show, filter, setFilter">
             <table class="w-full text-left border-collapse hidden md:table">
                 <thead>
                     <tr class="bg-gradient-to-r from-gold-500 to-gold-600 dark:from-navy-900 dark:to-navy-800 border-b border-gold-600 dark:border-navy-800 shadow-sm dark:shadow-md">

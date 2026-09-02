@@ -35,7 +35,14 @@
     <!-- Table Container -->
     <div class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl rounded-[2rem] shadow-xl shadow-slate-200/40 border border-slate-100 dark:border-white/10 overflow-hidden relative">
 
-        <div class="overflow-x-auto custom-scrollbar">
+        
+        <div wire:loading wire:target="search, show, filter, setFilter" class="absolute inset-0 z-50 flex items-center justify-center bg-white/50 dark:bg-navy-900/50 backdrop-blur-sm rounded-3xl">
+            <div class="flex flex-col items-center gap-2">
+                <i class="fas fa-circle-notch fa-spin text-3xl text-gold-500"></i>
+                <span class="text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest drop-shadow-md">Memuat Data...</span>
+            </div>
+        </div>
+<div class="overflow-x-auto custom-scrollbar" wire:loading.class="opacity-50 transition-opacity duration-300" wire:target="search, show, filter, setFilter">
             <!-- Table Layout (Desktop & Tablet) -->
             <table class="w-full text-left text-sm whitespace-nowrap md:whitespace-normal hidden md:table">
                 <thead class="bg-gradient-to-r from-gold-500 to-gold-600 dark:from-navy-900 dark:to-navy-800 border-b border-gold-600 dark:border-navy-800 shadow-sm dark:shadow-md">
@@ -240,16 +247,26 @@
                                 if($laporan->status == 'Selesai') $statusColor = 'bg-emerald-50 dark:bg-emerald-500/10 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-500 dark:text-emerald-500 border-emerald-200 dark:border-emerald-500/20 dark:border-emerald-500/20';
                                 if($laporan->status == 'Ditolak') $statusColor = 'bg-red-50 dark:bg-red-500/10 dark:bg-red-500/10 text-red-700 dark:text-red-500 dark:text-red-500 border-red-200 dark:border-red-500/20 dark:border-red-500/20';
                             @endphp
-                            <div class="relative flex-1">
-                                <select wire:change="updateStatus({{ $laporan->id }}, $event.target.value)" class="w-full appearance-none pl-2 pr-6 py-1.5 rounded-lg text-[10px] font-bold border {{ $statusColor }} focus:outline-none focus:ring-2 focus:ring-navy-500 cursor-pointer shadow-sm">
-                                    <option value="Menunggu" {{ $laporan->status == 'Menunggu' ? 'selected' : '' }}>⏳ Menunggu</option>
-                                    <option value="Ditinjau" {{ $laporan->status == 'Ditinjau' ? 'selected' : '' }}>👀 Ditinjau</option>
-                                    <option value="Diproses" {{ $laporan->status == 'Diproses' ? 'selected' : '' }}>⚙️ Diproses</option>
-                                    <option value="Selesai" {{ $laporan->status == 'Selesai' ? 'selected' : '' }}>✅ Selesai</option>
-                                    <option value="Ditolak" {{ $laporan->status == 'Ditolak' ? 'selected' : '' }}>❌ Ditolak</option>
-                                </select>
-                                <i class="fas fa-chevron-down absolute right-2 top-1/2 -translate-y-1/2 text-[10px] opacity-60 pointer-events-none"></i>
-                            </div>
+                            {{-- Filter & Search Standardized --}}
+            <div class="flex items-center flex-1 min-w-0 w-full lg:w-[350px] xl:w-[450px]">
+                <select wire:model.live="show" class="pl-3 pr-7 py-2.5 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 border-r-0 rounded-l-2xl text-[10px] md:text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm shrink-0">
+                    <option value="10">10 Data</option>
+                    <option value="all">Semua Data</option>
+                </select>
+                <div class="relative flex-1 min-w-[80px]">
+                    <input type="text" 
+                        wire:model.live.debounce.300ms="search"
+                        placeholder="Cari data..." 
+                        class="w-full pl-3 pr-10 py-2.5 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 text-[10px] md:text-xs font-semibold text-navy-900 dark:text-white focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm">
+                    <div wire:loading wire:target="search" class="absolute right-3 top-1/2 -translate-y-1/2">
+                        <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs"></i>
+                    </div>
+                </div>
+                <button type="button" class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border-y border-r border-slate-100 dark:border-white/10 px-4 md:px-5 py-2.5 rounded-r-2xl hover:bg-slate-50 dark:hover:bg-white/5 transition-all shadow-sm group shrink-0 relative">
+                    <i class="fas fa-search text-slate-400 dark:text-slate-300 group-hover:text-gold-500 transition-colors text-xs" wire:loading.remove wire:target="search"></i>
+                    <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs hidden" wire:loading.inline-block wire:target="search"></i>
+                </button>
+            </div>
 
                             @php
                                 $assignColor = $laporan->id_surveyor ? 'bg-indigo-50 dark:bg-indigo-500/10 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-500 dark:text-indigo-500 border-indigo-200 dark:border-indigo-500/20 dark:border-indigo-500/20' : 'bg-slate-100 dark:bg-navy-950/50 text-slate-500 dark:text-slate-400 border-slate-200';

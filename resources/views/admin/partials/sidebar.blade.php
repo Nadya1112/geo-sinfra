@@ -139,14 +139,14 @@
                 Manajemen Infrastruktur
             </a>
 
-            <a href="{{ route('admin.laporan-warga') }}" 
+            <a href="{{ route('admin.laporan-warga') }}" onclick="const badge = this.querySelector('.laporan-badge'); if(badge) badge.remove();"
                class="flex items-center justify-between px-4 py-3.5 {{ request()->routeIs('admin.laporan-warga*') ? 'bg-gold-500 text-navy-950 font-bold shadow-xl shadow-gold-500/10' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left whitespace-nowrap relative w-full">
                 <div class="flex items-center gap-3">
                     <i class="fas fa-bullhorn {{ request()->routeIs('admin.laporan-warga*') ? '' : 'group-hover:text-gold-500' }}"></i> 
                     <span>Laporan Warga</span>
                 </div>
                 @if(!request()->routeIs('admin.laporan-warga*') && isset($laporanMenungguCount) && $laporanMenungguCount > 0)
-                <span class="bg-red-500 text-white text-xs font-black px-1.5 py-0.5 rounded-md min-w-[20px] text-center shadow-lg">{{ $laporanMenungguCount }}</span>
+                <span class="laporan-badge bg-red-500 text-white text-xs font-black px-1.5 py-0.5 rounded-md min-w-[20px] text-center shadow-lg">{{ $laporanMenungguCount }}</span>
                 @endif
             </a>
 

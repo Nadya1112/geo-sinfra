@@ -7,7 +7,8 @@
 
         <div class="flex flex-col lg:flex-row items-center gap-3 w-full lg:w-auto">
             {{-- Filter & Search --}}
-            <div class="flex items-center flex-1 min-w-0 w-full lg:w-[280px] xl:w-[400px]">
+            {{-- Filter & Search Standardized --}}
+            <div class="flex items-center flex-1 min-w-0 w-full lg:w-[350px] xl:w-[450px]">
                 <select wire:model.live="show" class="pl-3 pr-7 py-2.5 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 border-r-0 rounded-l-2xl text-[10px] md:text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm shrink-0">
                     <option value="10">10 Data</option>
                     <option value="all">Semua Data</option>
@@ -15,13 +16,13 @@
                 <div class="relative flex-1 min-w-[80px]">
                     <input type="text" 
                         wire:model.live.debounce.300ms="search"
-                        placeholder="Cari infrastruktur..." 
-                        class="w-full pl-3 pr-10 py-2.5 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 text-[10px] md:text-xs font-semibold focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm">
+                        placeholder="Cari data..." 
+                        class="w-full pl-3 pr-10 py-2.5 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 text-[10px] md:text-xs font-semibold text-navy-900 dark:text-white focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all shadow-sm">
                     <div wire:loading wire:target="search" class="absolute right-3 top-1/2 -translate-y-1/2">
                         <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs"></i>
                     </div>
                 </div>
-                <button type="button" class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border-y border-r border-slate-100 dark:border-white/10 px-4 md:px-5 py-2.5 rounded-r-2xl hover:bg-slate-50 dark:hover:bg-white/5 dark:bg-navy-950/50 transition-all shadow-sm group shrink-0 relative">
+                <button type="button" class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border-y border-r border-slate-100 dark:border-white/10 px-4 md:px-5 py-2.5 rounded-r-2xl hover:bg-slate-50 dark:hover:bg-white/5 transition-all shadow-sm group shrink-0 relative">
                     <i class="fas fa-search text-slate-400 dark:text-slate-300 group-hover:text-gold-500 transition-colors text-xs" wire:loading.remove wire:target="search"></i>
                     <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs hidden" wire:loading.inline-block wire:target="search"></i>
                 </button>
@@ -56,7 +57,14 @@
     {{-- ── Tabel ── --}}
     <div class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl rounded-3xl border border-slate-100 dark:border-white/10 shadow-sm overflow-hidden mb-10 relative">
 
-        <div class="overflow-x-auto custom-scrollbar">
+        
+        <div wire:loading wire:target="search, show, filter, setFilter" class="absolute inset-0 z-50 flex items-center justify-center bg-white/50 dark:bg-navy-900/50 backdrop-blur-sm rounded-3xl">
+            <div class="flex flex-col items-center gap-2">
+                <i class="fas fa-circle-notch fa-spin text-3xl text-gold-500"></i>
+                <span class="text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest drop-shadow-md">Memuat Data...</span>
+            </div>
+        </div>
+<div class="overflow-x-auto custom-scrollbar" wire:loading.class="opacity-50 transition-opacity duration-300" wire:target="search, show, filter, setFilter">
             <!-- Table Layout (Desktop & Tablet) -->
             <table class="w-full text-left border-collapse hidden md:table">
                 <thead>
