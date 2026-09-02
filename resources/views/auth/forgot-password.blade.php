@@ -163,7 +163,7 @@
         </div>
 
         <p style="color: black !important;" class="absolute bottom-6 text-black dark:text-white/20 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300">
-            &copy; 2026 Disperkim Banjarmasin
+            &copy; 2026 GEO-SINFRA
         </p>
     </div>
 
@@ -210,7 +210,7 @@
                     <div class="relative">
                         <input
                             type="email" name="email" id="email-input"
-                            placeholder="nama@disperkim.go.id"
+                            placeholder="nama@geo-sinfra.co.id"
                             value="{{ old('email') }}" required autofocus
                             class="input-field"
                         >

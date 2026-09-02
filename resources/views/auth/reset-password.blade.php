@@ -169,7 +169,7 @@
         </div>
 
         <p style="color: black !important;" class="absolute bottom-6 text-black dark:text-white/20 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300">
-            &copy; 2026 Disperkim Banjarmasin
+            &copy; 2026 GEO-SINFRA
         </p>
     </div>
 
@@ -222,7 +222,7 @@
                         Email Konfirmasi <span class="text-gold-500">*</span>
                     </label>
                     <div class="relative">
-                        <input type="email" name="email" value="{{ old('email') }}" placeholder="nama@disperkim.go.id" required class="input-field" style="padding-left:44px">
+                        <input type="email" name="email" value="{{ old('email') }}" placeholder="nama@geo-sinfra.co.id" required class="input-field" style="padding-left:44px">
                         <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"><i class="fas fa-envelope"></i></span>
                     </div>
                 </div>

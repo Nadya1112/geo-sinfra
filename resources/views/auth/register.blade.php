@@ -201,7 +201,7 @@
             </div>
         </div>
         <p style="color: black !important;" class="absolute bottom-6 text-black dark:text-white/20 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300">
-            &copy; 2026 Disperkim Banjarmasin
+            &copy; 2026 GEO-SINFRA 
         </p>
     </div>
 
@@ -240,7 +240,7 @@
                 <div class="fade-in-up d3">
                     <label class="label-field">Email / NIP <span class="text-gold-500">*</span></label>
                     <div class="relative">
-                        <input type="text" name="email" placeholder="nama@disperkim.go.id" value="{{ old('email') }}" required
+                        <input type="text" name="email" placeholder="nama@geo-sinfra.co.id" value="{{ old('email') }}" required
                             class="input-field pl-10">
                         <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"><i class="fas fa-envelope"></i></span>
                     </div>

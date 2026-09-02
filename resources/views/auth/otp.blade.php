@@ -198,7 +198,7 @@
         </div>
 
         <p style="color: black !important;" class="absolute bottom-6 text-black dark:text-white/20 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300">
-            &copy; 2026 Disperkim Banjarmasin
+            &copy; 2026 GEO-SINFRA
         </p>
     </div>
 
