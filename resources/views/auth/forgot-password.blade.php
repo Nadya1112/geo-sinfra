@@ -105,6 +105,14 @@
             animation-duration: 1.5s, 1s;
         }
 
+    
+        /* Forced text colors */
+        .auth-text-dark { color: #000000 !important; }
+        .dark .auth-text-dark { color: rgba(255,255,255,0.8) !important; }
+        
+        .auth-footer-text { color: #000000 !important; }
+        .dark .auth-footer-text { color: rgba(255,255,255,0.5) !important; }
+        
     </style>
 </head>
 <body class="antialiased bg-slate-50">

@@ -246,7 +246,15 @@
                 radial-gradient(ellipse at 50% 50%, rgba(14,14,40,0.6) 0%, transparent 80%),
                 #070617;
         }
-        </style>
+        
+        /* Forced text colors */
+        .auth-text-dark { color: #000000 !important; }
+        .dark .auth-text-dark { color: rgba(255,255,255,0.8) !important; }
+        
+        .auth-footer-text { color: #000000 !important; }
+        .dark .auth-footer-text { color: rgba(255,255,255,0.5) !important; }
+        
+    </style>
 </head>
 <body class="antialiased bg-slate-50">
 
@@ -285,7 +293,7 @@
             <h1 class="text-4xl xl:text-5xl font-black tracking-tight mb-4 leading-none brand-text-glow cursor-default transition-colors duration-300">
                 GEO-SINFRA
             </h1>
-            <p class="text-black dark:text-white/80 text-sm leading-relaxed font-black max-w-[260px] transition-colors duration-300">
+            <p class="auth-text-dark text-black dark:text-white/80 text-sm leading-relaxed font-black max-w-[260px] transition-colors duration-300">
                 Infrastruktur Permukiman Kota Banjarmasin berbasis Web GIS & AI
             </p>
 
@@ -310,7 +318,7 @@
         </div>
 
         {{-- Bottom copyright --}}
-        <p class="absolute bottom-6 text-black dark:text-white/50 text-[10px] font-black uppercase tracking-widest transition-colors duration-300">
+        <p class="absolute bottom-6 auth-footer-text text-black dark:text-white/50 text-[10px] font-black uppercase tracking-widest transition-colors duration-300">
             &copy; 2026 GEO-SINFRA
         </p>
     </div>
