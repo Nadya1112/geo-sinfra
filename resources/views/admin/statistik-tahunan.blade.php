@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -108,7 +108,7 @@
             </div>
 
             {{-- ── Grafik Kurva-S ── --}}
-            <div class="bg-navy-900 rounded-3xl p-8 relative overflow-hidden">
+            <div class="bg-white dark:bg-navy-900 border border-slate-100 dark:border-white/10 shadow-sm dark:shadow-none rounded-3xl p-8 relative overflow-hidden">
                 <div class="absolute top-0 right-0 w-80 h-80 bg-gold-500/5 rounded-full -mr-24 -mt-24 blur-3xl pointer-events-none"></div>
                 <div class="absolute bottom-0 left-0 w-56 h-56 bg-navy-500/10 rounded-full -ml-16 -mb-16 blur-2xl pointer-events-none"></div>
 
@@ -118,8 +118,8 @@
                             <i class="fas fa-chart-line text-gold-500"></i>
                         </div>
                         <div>
-                            <h4 class="text-sm font-black text-white uppercase tracking-wider">Grafik Pertumbuhan Laporan</h4>
-                            <p class="text-xs text-slate-400 font-semibold mt-0.5">Kurva-S kumulatif data survey per bulan · Tahun {{ $year }}</p>
+                            <h4 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-wider">Grafik Pertumbuhan Laporan</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold mt-0.5">Kurva-S kumulatif data survey per bulan · Tahun {{ $year }}</p>
                         </div>
                     </div>
                     <span class="px-4 py-2 bg-emerald-500 text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-lg shadow-emerald-500/30">
