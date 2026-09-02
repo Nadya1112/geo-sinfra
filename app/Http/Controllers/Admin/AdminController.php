@@ -522,7 +522,7 @@ class AdminController extends Controller
             ->setOptions([
                 'isPhpEnabled'    => true,   // izinkan @php Blade
                 'dpi'             => 150,    // kualitas gambar lebih baik
-                'defaultFont'     => 'Helvetica',
+                'defaultFont'     => 'Arial',
                 'defaultPaperSize' => 'a4',
             ]);
         $pdf->setPaper('A4', 'portrait');

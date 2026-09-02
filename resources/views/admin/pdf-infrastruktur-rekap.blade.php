@@ -168,8 +168,8 @@
                     <div class="ttd-kota-tgl">Banjarmasin, {{ now()->translatedFormat('d F Y') }}</div>
                     <div class="ttd-jabatan">Koordinator Tim Teknis</div>
                     <div class="ttd-ruang"></div>
-                    <div class="ttd-nama">{{ strtoupper($timTeknis->name ?? 'HIZBULWATHONI, S.T.') }}</div>
-                    <div class="ttd-nip">NIP. {{ $timTeknis->nip ?? '19760814 200604 1 008' }}</div>
+                    <div class="ttd-nama">{{ strtoupper(optional($timTeknis)->name ?? 'HIZBULWATHONI, S.T.') }}</div>
+                    <div class="ttd-nip">NIP. {{ optional($timTeknis)->nip ?? '19760814 200604 1 008' }}</div>
                 </td>
             </tr>
         </table>
