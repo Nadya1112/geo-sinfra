@@ -474,7 +474,7 @@
                     </div>
                 </div>
                 
-                <a href="{{ url('/login') }}" class="bg-navy-900 text-gold-500 hover:bg-gold-500 hover:text-white px-3 md:px-4 py-2 rounded-lg text-[10px] md:text-xs font-bold transition-all shadow-sm hidden md:flex items-center gap-2 uppercase tracking-wider">
+                <a href="{{ url('/login') }}" class="bg-slate-100 dark:bg-navy-900 text-navy-900 dark:text-gold-500 hover:bg-gold-500 hover:text-white dark:hover:text-white px-3 md:px-4 py-2 rounded-lg text-[10px] md:text-xs font-bold transition-all shadow-sm hidden md:flex items-center gap-2 uppercase tracking-wider">
                     <i class="fas fa-lock"></i> <span>Masuk</span>
                 </a>
 
@@ -758,7 +758,7 @@
 
                 <!-- Controls -->
                 <div class="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-2 md:pb-0 hide-scrollbar">
-                    <button onclick="toggleMenu('filter-utama')" class="flex-shrink-0 bg-navy-900 dark:bg-white/10 text-white px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-navy-800 transition-all flex items-center gap-2 border border-transparent dark:border-white/5 shadow-md">
+                    <button onclick="toggleMenu('filter-utama')" class="flex-shrink-0 bg-slate-100 dark:bg-white/10 text-navy-900 dark:text-white px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-200 dark:hover:bg-white/20 transition-all flex items-center gap-2 border border-slate-200 dark:border-transparent shadow-md">
                         <i class="fas fa-filter text-gold-500"></i> Filter Peta
                     </button>
                     
