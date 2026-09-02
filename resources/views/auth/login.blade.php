@@ -269,8 +269,8 @@
         <div class="orb orb-2"></div>
 
         {{-- Back to home --}}
-        <a href="{{ url('/') }}" class="absolute top-6 left-6 z-20 flex items-center gap-2 text-black hover:text-black dark:text-white/50 dark:hover:text-white transition-all text-xs font-bold uppercase tracking-widest group">
-            <span class="w-8 h-8 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center group-hover:bg-black/10 dark:group-hover:bg-white/10 transition-all">
+        <a href="{{ url('/') }}" style="color: black !important;" class="absolute top-6 left-6 z-20 flex items-center gap-2 text-black hover:text-black dark:text-white/50 dark:hover:text-white transition-all text-xs font-bold uppercase tracking-widest group">
+            <span style="background-color: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.1) !important;" class="w-8 h-8 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center group-hover:bg-black/10 dark:group-hover:bg-white/10 transition-all">
                 <i class="fas fa-arrow-left text-[10px]"></i>
             </span>
             Kembali
