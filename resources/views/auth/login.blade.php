@@ -38,8 +38,22 @@
         *, *::before, *::after { box-sizing: border-box; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
 
-        /* ── Left Panel ── */
+                /* ── Left Panel ── */
         .auth-left {
+            background:
+                radial-gradient(ellipse at 70% 10%, rgba(197,160,89,0.1) 0%, transparent 55%),
+                radial-gradient(ellipse at 20% 90%, rgba(99,102,241,0.1) 0%, transparent 55%),
+                radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.8) 0%, transparent 80%),
+                #f8fafc;
+        }
+        .dark .auth-left {
+            background:
+                radial-gradient(ellipse at 70% 10%, rgba(197,160,89,0.18) 0%, transparent 55%),
+                radial-gradient(ellipse at 20% 90%, rgba(99,102,241,0.20) 0%, transparent 55%),
+                radial-gradient(ellipse at 50% 50%, rgba(14,14,40,0.6) 0%, transparent 80%),
+                #070617;
+        }
+        .dark .auth-left {
             background:
                 radial-gradient(ellipse at 70% 10%, rgba(197,160,89,0.18) 0%, transparent 55%),
                 radial-gradient(ellipse at 20% 90%, rgba(99,102,241,0.20) 0%, transparent 55%),
@@ -51,11 +65,21 @@
         .grid-bg {
             position: absolute; inset: 0; pointer-events: none;
             background-image:
-                linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+                linear-gradient(rgba(15,14,44,0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15,14,44,0.035) 1px, transparent 1px);
             background-size: 44px 44px;
             mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
             animation: gridDrift 20s linear infinite;
+        }
+        .dark .grid-bg {
+            background-image:
+                linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+        }
+        .dark .grid-bg {
+            background-image:
+                linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
         }
         @keyframes gridDrift {
             0% { background-position: 0 0; }
@@ -80,26 +104,40 @@
             border-radius: 50%;
             background: linear-gradient(135deg, #c5a059 0%, #6366f1 100%);
             padding: 2px;
-            box-shadow: 0 0 40px rgba(197,160,89,0.4), 0 0 80px rgba(197,160,89,0.15);
+            box-shadow: 0 0 40px rgba(197,160,89,0.2), 0 0 80px rgba(197,160,89,0.1);
             animation: ringPulse 3s ease-in-out infinite;
+        }
+        .dark .logo-ring {
+            box-shadow: 0 0 40px rgba(197,160,89,0.4), 0 0 80px rgba(197,160,89,0.15);
         }
         .logo-ring-inner {
             width: 100%; height: 100%; border-radius: 50%;
-            background: #0f0e2c; overflow: hidden;
+            background: #fff; overflow: hidden;
             display: flex; align-items: center; justify-content: center;
         }
+        .dark .logo-ring-inner { background: #0f0e2c; }
+        .dark .logo-ring-inner { background: #0f0e2c; }
+
         @keyframes ringPulse {
-            0%, 100% { box-shadow: 0 0 30px rgba(197,160,89,0.35), 0 0 60px rgba(197,160,89,0.12); }
-            50%       { box-shadow: 0 0 50px rgba(197,160,89,0.55), 0 0 100px rgba(197,160,89,0.20); }
+            0%, 100% { box-shadow: 0 0 30px rgba(197,160,89,0.2), 0 0 60px rgba(197,160,89,0.1); }
+            50%       { box-shadow: 0 0 50px rgba(197,160,89,0.4), 0 0 100px rgba(197,160,89,0.15); }
         }
 
         /* Stats pill */
         .stat-pill {
             display: inline-flex; align-items: center; gap: 8px;
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(15,14,44,0.05); border: 1px solid rgba(15,14,44,0.1);
             backdrop-filter: blur(12px); border-radius: 100px;
             padding: 8px 16px; font-size: 11px; font-weight: 700;
-            color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.12em;
+            color: rgba(15,14,44,0.7); text-transform: uppercase; letter-spacing: 0.12em;
+        }
+        .dark .stat-pill {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.7);
+        }
+        .dark .stat-pill {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.7);
         }
 
         /* ── Right Panel / Form ── */
@@ -209,17 +247,17 @@
 
 <div class="flex min-h-screen">
 
-    {{-- ═══════════════════════════════════════════════════
+        {{-- ═══════════════════════════════════════════════════
         LEFT PANEL — Branding
     ═══════════════════════════════════════════════════ --}}
-    <div class="hidden lg:flex lg:w-[46%] xl:w-5/12 auth-left flex-col items-center justify-center relative overflow-hidden p-12">
+    <div class="hidden lg:flex lg:w-[46%] xl:w-5/12 auth-left flex-col items-center justify-center relative overflow-hidden p-12 transition-colors duration-300">
         <div class="grid-bg"></div>
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
 
         {{-- Back to home --}}
-        <a href="{{ url('/') }}" class="absolute top-6 left-6 z-20 flex items-center gap-2 text-white/50 hover:text-white transition-all text-xs font-bold uppercase tracking-widest group">
-            <span class="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-white/10 transition-all">
+        <a href="{{ url('/') }}" class="absolute top-6 left-6 z-20 flex items-center gap-2 text-navy-900/50 hover:text-navy-900 dark:text-white/50 dark:hover:text-white transition-all text-xs font-bold uppercase tracking-widest group">
+            <span class="w-8 h-8 rounded-xl bg-slate-200 dark:bg-white/5 border border-slate-300 dark:border-white/10 flex items-center justify-center group-hover:bg-slate-300 dark:group-hover:bg-white/10 transition-all">
                 <i class="fas fa-arrow-left text-[10px]"></i>
             </span>
             Kembali
@@ -239,10 +277,10 @@
             <div class="mb-2">
                 <span class="text-[11px] font-black text-gold-500 uppercase tracking-[0.35em]">Sistem Pemetaan</span>
             </div>
-            <h1 class="text-4xl xl:text-5xl font-black text-white tracking-tight mb-4 leading-none">
+            <h1 class="text-4xl xl:text-5xl font-black text-navy-900 dark:text-white tracking-tight mb-4 leading-none transition-colors duration-300">
                 GEO<span class="text-gold-500">-</span>SINFRA
             </h1>
-            <p class="text-slate-400 text-sm leading-relaxed font-medium max-w-[260px]">
+            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed font-medium max-w-[260px] transition-colors duration-300">
                 Infrastruktur Permukiman Kota Banjarmasin berbasis Web GIS & AI
             </p>
 
@@ -267,8 +305,8 @@
         </div>
 
         {{-- Bottom copyright --}}
-        <p class="absolute bottom-6 text-white/20 text-[10px] font-bold uppercase tracking-widest">
-            &copy; 2026 Disperkim Banjarmasin
+        <p class="absolute bottom-6 text-slate-400 dark:text-white/20 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300">
+            &copy; 2026 GEO-SINFRA
         </p>
     </div>
 
@@ -295,7 +333,7 @@
             {{-- Header --}}
             <div class="mb-8 fade-in-up">
                 <p class="text-[10px] font-black text-gold-500 uppercase tracking-[0.3em] mb-2">Portal Akses</p>
-                <h2 class="text-2xl font-black text-navy-900 dark:text-white tracking-tight">Selamat Datang Kembali</h2>
+                <h2 class="text-2xl font-black text-navy-900 dark:text-white tracking-tight">Selamat Datang</h2>
                 <p class="text-slate-400 text-sm font-medium mt-1">Masuk untuk mengakses sistem pemetaan infrastruktur</p>
             </div>
 
@@ -420,7 +458,7 @@
 
         {{-- Bottom note --}}
         <p class="absolute bottom-6 text-slate-400 dark:text-slate-500 text-[10px] font-bold uppercase tracking-widest text-center">
-            &copy; 2026 GEO-SINFRA &mdash; Pemerintah Kota Banjarmasin
+            &copy; 2026 GEO-SINFRA
         </p>
     </div>
 

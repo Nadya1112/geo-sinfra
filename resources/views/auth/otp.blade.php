@@ -39,18 +39,31 @@
 
         .auth-left {
             background:
-                radial-gradient(ellipse at 30% 20%, rgba(99,102,241,0.25) 0%, transparent 55%),
-                radial-gradient(ellipse at 80% 80%, rgba(197,160,89,0.18) 0%, transparent 55%),
+                radial-gradient(ellipse at 70% 10%, rgba(197,160,89,0.1) 0%, transparent 55%),
+                radial-gradient(ellipse at 20% 90%, rgba(99,102,241,0.1) 0%, transparent 55%),
+                radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.8) 0%, transparent 80%),
+                #f8fafc;
+        }
+        .dark .auth-left {
+            background:
+                radial-gradient(ellipse at 70% 10%, rgba(197,160,89,0.18) 0%, transparent 55%),
+                radial-gradient(ellipse at 20% 90%, rgba(99,102,241,0.20) 0%, transparent 55%),
+                radial-gradient(ellipse at 50% 50%, rgba(14,14,40,0.6) 0%, transparent 80%),
                 #070617;
         }
         .grid-bg {
             position: absolute; inset: 0; pointer-events: none;
             background-image:
-                linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+                linear-gradient(rgba(15,14,44,0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15,14,44,0.035) 1px, transparent 1px);
             background-size: 44px 44px;
             mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
             animation: gridDrift 20s linear infinite;
+        }
+        .dark .grid-bg {
+            background-image:
+                linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
         }
         @keyframes gridDrift { 0% { background-position: 0 0; } 100% { background-position: 44px 44px; } }
 
@@ -111,7 +124,7 @@
 <div class="flex min-h-screen">
 
     {{-- ═══ LEFT PANEL ═══ --}}
-    <div class="hidden lg:flex lg:w-[44%] auth-left flex-col items-center justify-center relative overflow-hidden p-12">
+    <div class="hidden lg:flex lg:w-[44%] auth-left transition-colors duration-300 flex-col items-center justify-center relative overflow-hidden p-12">
         <div class="grid-bg"></div>
 
         <div class="relative z-10 flex flex-col items-center text-center max-w-sm">
@@ -120,10 +133,10 @@
             </div>
 
             <span class="text-[11px] font-black text-gold-500 uppercase tracking-[0.35em] mb-3 block">Keamanan Akun</span>
-            <h1 class="text-4xl font-black text-white tracking-tight mb-4 leading-none">
+            <h1 class="text-4xl font-black text-navy-900 dark:text-white tracking-tight mb-4 leading-none transition-colors duration-300">
                 Verifikasi <span class="text-gold-500">OTP</span>
             </h1>
-            <p class="text-slate-400 text-sm leading-relaxed font-medium max-w-[250px]">
+            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed font-medium max-w-[250px]">
                 Kami telah mengirimkan kode 6-digit ke nomor WhatsApp yang Anda daftarkan.
             </p>
 
@@ -137,23 +150,23 @@
                     ['3', 'Akses', 'Mulai gunakan sistem', false],
                 ] as [$step, $title, $desc, $done])
                 <div class="flex items-center gap-4 bg-white/{{ $done ? '8' : '3' }} border border-white/{{ $done ? '12' : '5' }} rounded-xl p-3.5">
-                    <div class="w-8 h-8 rounded-full {{ $done ? 'bg-gold-500' : 'bg-white/5 border border-white/15' }} flex items-center justify-center flex-shrink-0">
+                    <div class="w-8 h-8 rounded-full {{ $done ? 'bg-gold-500' : 'bg-slate-200 dark:bg-white/5 border border-white/15' }} flex items-center justify-center flex-shrink-0">
                         @if($done)
-                            <i class="fas fa-check text-white text-xs"></i>
+                            <i class="fas fa-check text-navy-900 dark:text-white text-xs"></i>
                         @else
-                            <span class="text-white/30 text-xs font-black">{{ $step }}</span>
+                            <span class="text-navy-900 dark:text-white/30 text-xs font-black">{{ $step }}</span>
                         @endif
                     </div>
                     <div>
-                        <p class="text-white/{{ $done ? '90' : '40' }} text-xs font-black uppercase tracking-wide">{{ $title }}</p>
-                        <p class="text-white/{{ $done ? '50' : '25' }} text-[10px] font-medium">{{ $desc }}</p>
+                        <p class="text-navy-900 dark:text-white/{{ $done ? '90' : '40' }} text-xs font-black uppercase tracking-wide">{{ $title }}</p>
+                        <p class="text-navy-900 dark:text-white/{{ $done ? '50' : '25' }} text-[10px] font-medium">{{ $desc }}</p>
                     </div>
                 </div>
                 @endforeach
             </div>
         </div>
 
-        <p class="absolute bottom-6 text-white/20 text-[10px] font-bold uppercase tracking-widest">
+        <p class="absolute bottom-6 text-navy-900 dark:text-white/20 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300">
             &copy; 2026 Disperkim Banjarmasin
         </p>
     </div>

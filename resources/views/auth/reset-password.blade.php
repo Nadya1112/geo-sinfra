@@ -39,17 +39,31 @@
 
         .auth-left {
             background:
-                radial-gradient(ellipse at 30% 20%, rgba(16,185,129,0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(197,160,89,0.18) 0%, transparent 55%),
-                radial-gradient(ellipse at 50% 50%, rgba(99,102,241,0.1) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 10%, rgba(197,160,89,0.1) 0%, transparent 55%),
+                radial-gradient(ellipse at 20% 90%, rgba(99,102,241,0.1) 0%, transparent 55%),
+                radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.8) 0%, transparent 80%),
+                #f8fafc;
+        }
+        .dark .auth-left {
+            background:
+                radial-gradient(ellipse at 70% 10%, rgba(197,160,89,0.18) 0%, transparent 55%),
+                radial-gradient(ellipse at 20% 90%, rgba(99,102,241,0.20) 0%, transparent 55%),
+                radial-gradient(ellipse at 50% 50%, rgba(14,14,40,0.6) 0%, transparent 80%),
                 #070617;
         }
         .grid-bg {
             position: absolute; inset: 0; pointer-events: none;
-            background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-image:
+                linear-gradient(rgba(15,14,44,0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15,14,44,0.035) 1px, transparent 1px);
             background-size: 44px 44px;
             mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
             animation: gridDrift 20s linear infinite;
+        }
+        .dark .grid-bg {
+            background-image:
+                linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
         }
         @keyframes gridDrift { 0% { background-position: 0 0; } 100% { background-position: 44px 44px; } }
 
@@ -85,11 +99,11 @@
 <div class="flex min-h-screen">
 
     {{-- ═══ LEFT PANEL ═══ --}}
-    <div class="hidden lg:flex lg:w-[44%] auth-left flex-col items-center justify-center relative overflow-hidden p-12">
+    <div class="hidden lg:flex lg:w-[44%] auth-left transition-colors duration-300 flex-col items-center justify-center relative overflow-hidden p-12">
         <div class="grid-bg"></div>
 
-        <a href="{{ route('login') }}" class="absolute top-6 left-6 z-20 flex items-center gap-2 text-white/50 hover:text-white transition-all text-xs font-bold uppercase tracking-widest group">
-            <span class="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-white/10 transition-all">
+        <a href="{{ route('login') }}" class="absolute top-6 left-6 z-20 flex items-center gap-2 text-navy-900/50 hover:text-navy-900 dark:text-navy-900 dark:text-white/50 dark:hover:text-navy-900 dark:text-white transition-all text-xs font-bold uppercase tracking-widest group">
+            <span class="w-8 h-8 rounded-xl bg-slate-200 dark:bg-white/5 border border-slate-300 dark:border-white/10 flex items-center justify-center group-hover:bg-slate-300 dark:group-hover:bg-white/10 transition-all">
                 <i class="fas fa-arrow-left text-[10px]"></i>
             </span>
             Login
@@ -100,15 +114,15 @@
                 <i class="fas fa-lock-open text-emerald-400 text-3xl"></i>
             </div>
             <span class="text-[11px] font-black text-gold-500 uppercase tracking-[0.35em] mb-3 block">Keamanan Akun</span>
-            <h1 class="text-4xl font-black text-white tracking-tight mb-4 leading-none">Buat Sandi<br><span class="text-emerald-400">Baru</span></h1>
-            <p class="text-slate-400 text-sm leading-relaxed font-medium max-w-[240px]">
+            <h1 class="text-4xl font-black text-navy-900 dark:text-white tracking-tight mb-4 leading-none transition-colors duration-300">Buat Sandi<br><span class="text-emerald-400">Baru</span></h1>
+            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed font-medium max-w-[240px] transition-colors duration-300">
                 Buat kata sandi baru yang kuat untuk mengamankan akun GEO-SINFRA Anda.
             </p>
             <div class="w-12 h-0.5 bg-gradient-to-r from-emerald-500 to-gold-500 rounded-full mx-auto my-8 opacity-70"></div>
 
             {{-- Tips --}}
             <div class="flex flex-col gap-3 w-full text-left">
-                <p class="text-white/40 text-[10px] font-black uppercase tracking-widest px-1 mb-1">Tips Sandi Kuat</p>
+                <p class="text-navy-900 dark:text-white/40 text-[10px] font-black uppercase tracking-widest px-1 mb-1">Tips Sandi Kuat</p>
                 @foreach([
                     ['fas fa-check','text-emerald-400','Minimal 8 karakter'],
                     ['fas fa-check','text-emerald-400','Kombinasi huruf besar & kecil'],
@@ -117,13 +131,13 @@
                 ] as [$icon, $color, $tip])
                 <div class="flex items-center gap-3 bg-white/4 border border-white/6 rounded-xl px-3.5 py-2.5">
                     <i class="{{ $icon }} {{ $color }} text-xs flex-shrink-0"></i>
-                    <span class="text-white/60 text-xs font-semibold">{{ $tip }}</span>
+                    <span class="text-navy-900 dark:text-white/60 text-xs font-semibold">{{ $tip }}</span>
                 </div>
                 @endforeach
             </div>
         </div>
 
-        <p class="absolute bottom-6 text-white/20 text-[10px] font-bold uppercase tracking-widest">
+        <p class="absolute bottom-6 text-navy-900 dark:text-white/20 text-[10px] font-bold uppercase tracking-widest transition-colors duration-300">
             &copy; 2026 Disperkim Banjarmasin
         </p>
     </div>
