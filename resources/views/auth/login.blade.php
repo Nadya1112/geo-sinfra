@@ -90,12 +90,9 @@
         .dark .logo-ring {
             box-shadow: 0 0 40px rgba(197,160,89,0.4), 0 0 80px rgba(197,160,89,0.15);
         }
-        .logo-ring-inner {
-            width: 100%; height: 100%; border-radius: 50%;
-            background: #fff; overflow: hidden;
+        .logo-ring-inner { width: 100%; height: 100%; border-radius: 50%; background: #ffffff; overflow: hidden;
             display: flex; align-items: center; justify-content: center;
         }
-        .dark .logo-ring-inner { background: #0f0e2c; }
         .dark .logo-ring-inner { background: #0f0e2c; }
 
         @keyframes ringPulse {
@@ -106,14 +103,10 @@
         /* Stats pill */
         .stat-pill {
             display: inline-flex; align-items: center; gap: 8px;
-            background: rgba(15,14,44,0.05); border: 1px solid rgba(15,14,44,0.1);
+            background: rgba(15,14,44,0.08); border: 1px solid rgba(15,14,44,0.15);
             backdrop-filter: blur(12px); border-radius: 100px;
             padding: 8px 16px; font-size: 11px; font-weight: 700;
-            color: rgba(15,14,44,0.7); text-transform: uppercase; letter-spacing: 0.12em;
-        }
-        .dark .stat-pill {
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-            color: rgba(255,255,255,0.7);
+            color: #0f0e2c; font-weight: 900; text-transform: uppercase; letter-spacing: 0.12em;
         }
         .dark .stat-pill {
             background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
@@ -292,7 +285,7 @@
             <h1 class="text-4xl xl:text-5xl font-black tracking-tight mb-4 leading-none brand-text-glow cursor-default transition-colors duration-300">
                 GEO-SINFRA
             </h1>
-            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed font-medium max-w-[260px] transition-colors duration-300">
+            <p class="text-navy-900 dark:text-white/80 text-sm leading-relaxed font-bold max-w-[260px] transition-colors duration-300">
                 Infrastruktur Permukiman Kota Banjarmasin berbasis Web GIS & AI
             </p>
 
