@@ -6,7 +6,7 @@
     <style>
         @page {
             size: A4 landscape;
-            margin: 2cm 2cm 2cm 3cm; /* Top 2cm, Right 2cm, Bottom 2cm, Left 3cm */
+            margin: 1cm 1.5cm 1.5cm 1.5cm; /* Margin diminimalkan */
         }
         div, span, h1, h2, h3, p, table, tbody, tr, th, td { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: Arial, Helvetica, sans-serif; color: #111; font-size: 11px; line-height: 1.4; }
@@ -28,7 +28,7 @@
         .ttd-table td { border: none !important; background: none !important; padding: 0 !important; vertical-align: top; font-size: 11px; color: #111; }
         .ttd-kota-tgl { margin-bottom: 6px; }
         .ttd-jabatan { font-weight: bold; margin-bottom: 4px; }
-        .ttd-ruang { height: 60px; }
+        .ttd-ruang { height: 40px; }
         .ttd-nama { font-weight: bold; text-decoration: underline; }
         .ttd-nip { font-size: 10px; color: #444; margin-top: 2px; }
 
@@ -115,7 +115,6 @@
 
     <div class="footer">
         Dicetak melalui GEO-SINFRA &nbsp;|&nbsp; {{ now()->translatedFormat('d F Y, H:i') }} WITA
-        &nbsp;|&nbsp; Dinas Perumahan Rakyat dan Kawasan Permukiman Kota Banjarmasin
     </div>
 
 </body>
