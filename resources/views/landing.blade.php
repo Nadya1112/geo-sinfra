@@ -1126,9 +1126,10 @@
                         const layer = L.geoJSON(geoData, {
                             style: {
                                 color: color,
-                                weight: 2,
-                                fillOpacity: 0.08,
-                                dashArray: '4'
+                                weight: 3.5,
+                                opacity: 1,
+                                fillOpacity: 0.15,
+                                dashArray: '5, 5'
                             }
                         }).bindTooltip(wil.nama_kecamatan, { sticky: true }).addTo(polygonsLayer);
 
@@ -1153,10 +1154,10 @@
                         try {
                             const geoData = typeof kel.geometri === 'string' ? JSON.parse(kel.geometri) : kel.geometri;
                             
-                            let polygonColor = '#94a3b8'; // Abu-abu netral (Slate-400)
-                            let fillColor = '#94a3b8';
-                            let fillOpacity = 0.01;
-                            let weight = showKelurahan ? 1.2 : 0.0;
+                            let polygonColor = '#64748b'; // Sedikit lebih tegas (Slate-500)
+                            let fillColor = '#64748b';
+                            let fillOpacity = 0.05;
+                            let weight = showKelurahan ? 2.5 : 0.0;
 
                             if (showBanjir) {
                                 const riskLevel = kel.id_kelurahan % 3; 
