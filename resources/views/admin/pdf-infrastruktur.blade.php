@@ -11,47 +11,10 @@
         div, span, h1, h2, h3, p, table, tbody, tr, th, td { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: Arial, Helvetica, sans-serif; color: #111; font-size: 12px; line-height: 1.5; }
 
-        /* ── KOP DINAS ── */
-        .kop-wrapper {
-            border-bottom: 4px solid #1a1a1a;
-            padding-bottom: 8px;
-            margin-bottom: 4px;
-        }
-        .kop-inner {
-            display: table;
-            width: 100%;
-        }
-        .kop-teks {
-            display: table-cell;
-            vertical-align: middle;
-            text-align: center;
-            padding: 0 8px;
-        }
-        .kop-teks .pemerintah {
-            font-size: 11px;
-            font-weight: normal;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-        .kop-teks .nama-dinas {
-            font-size: 16px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #1a1a1a;
-        }
-        .kop-teks .alamat {
-            font-size: 10px;
-            color: #444;
-            margin-top: 2px;
-        }
-        .kop-teks .kontak {
-            font-size: 10px;
-            color: #444;
-        }
-        .garis-bawah-kop {
-            border-top: 1px solid #1a1a1a;
-            margin-top: 6px;
+        /* ── HEADER MINIMALIS ── */
+        .header-line {
+            border-top: 2px solid #1a1a1a;
+            margin-bottom: 14px;
         }
 
         /* ── JUDUL LAPORAN ── */
@@ -176,26 +139,16 @@
 <body>
 
     {{-- ═══════════════════════════════════════════ --}}
-    {{-- KOP DINAS                                   --}}
+    {{-- HEADER MINIMALIS                            --}}
     {{-- ═══════════════════════════════════════════ --}}
-    <div class="kop-wrapper">
-        <div class="kop-inner">
-            {{-- Teks Kop (Tanpa Logo) --}}
-            <div class="kop-teks">
-                <div class="nama-dinas">Dinas Perumahan Rakyat dan Kawasan Permukiman</div>
-                <div class="nama-dinas">Kota Banjarmasin</div>
-                <div class="alamat">Jl. R.E. Martadinata No. 1 Blok B Lt. 2, Kec. Banjarmasin Tengah, Kota Banjarmasin, Kalimantan Selatan 70111</div>
-                <div class="kontak">Telp: (0511) 3365592 &nbsp;|&nbsp; Email: ampihkumuh@gmail.com</div>
-            </div>
-        </div>
-        <div class="garis-bawah-kop"></div>
-    </div>
+    <div class="header-line"></div>
 
     {{-- ═══════════════════════════════════════════ --}}
     {{-- JUDUL LAPORAN                               --}}
     {{-- ═══════════════════════════════════════════ --}}
     <div class="judul-laporan">
         <h2>Laporan Data Infrastruktur Permukiman</h2>
+        <p>Dinas Perumahan Rakyat dan Kawasan Permukiman Kota Banjarmasin</p>
     </div>
 
     {{-- ═══════════════════════════════════════════ --}}

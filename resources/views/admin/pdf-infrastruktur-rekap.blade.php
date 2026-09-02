@@ -6,18 +6,13 @@
     <style>
         @page {
             size: A4 landscape;
-            margin: 3cm 2cm 2.5cm 3cm; /* Standar Pemerintahan - Landscape */
+            margin: 4cm 3cm 3cm 4cm; /* Standar pemerintahan */
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: Arial, Helvetica, sans-serif; color: #111; font-size: 10px; line-height: 1.4; }
 
-        /* ── KOP DINAS ── */
-        .kop-wrapper { border-bottom: 4px solid #1a1a1a; padding-bottom: 8px; margin-bottom: 4px; }
-        .kop-inner { display: table; width: 100%; }
-        .kop-teks { display: table-cell; vertical-align: middle; text-align: center; padding: 0 8px; }
-        .kop-teks .nama-dinas { font-size: 15px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: #1a1a1a; }
-        .kop-teks .alamat, .kop-teks .kontak { font-size: 9px; color: #444; margin-top: 2px; }
-        .garis-bawah-kop { border-top: 1px solid #1a1a1a; margin-top: 6px; }
+        /* ── HEADER MINIMALIS ── */
+        .header-line { border-top: 2px solid #1a1a1a; margin-bottom: 12px; }
 
         /* ── JUDUL LAPORAN ── */
         .judul-laporan { text-align: center; margin: 14px 0 10px; }
@@ -90,25 +85,16 @@
 <body>
 
     {{-- ═══════════════════════════════════════════ --}}
-    {{-- KOP DINAS                                   --}}
+    {{-- HEADER MINIMALIS                            --}}
     {{-- ═══════════════════════════════════════════ --}}
-    <div class="kop-wrapper">
-        <div class="kop-inner">
-            <div class="kop-teks">
-                <div class="nama-dinas">Dinas Perumahan Rakyat dan Kawasan Permukiman</div>
-                <div class="nama-dinas">Kota Banjarmasin</div>
-                <div class="alamat">Jl. R.E. Martadinata No. 1 Blok B Lt. 2, Kec. Banjarmasin Tengah, Kota Banjarmasin, Kalimantan Selatan 70111</div>
-                <div class="kontak">Telp: (0511) 3365592 &nbsp;|&nbsp; Email: ampihkumuh@gmail.com</div>
-            </div>
-        </div>
-        <div class="garis-bawah-kop"></div>
-    </div>
+    <div class="header-line"></div>
 
     {{-- ═══════════════════════════════════════════ --}}
     {{-- JUDUL LAPORAN                               --}}
     {{-- ═══════════════════════════════════════════ --}}
     <div class="judul-laporan">
         <h2>Rekapitulasi Data Infrastruktur Permukiman</h2>
+        <p>Dinas Perumahan Rakyat dan Kawasan Permukiman Kota Banjarmasin</p>
         <p>Tanggal Cetak: {{ now()->translatedFormat('d F Y') }} &nbsp;|&nbsp; Total Data: {{ count($infrastrukturs) }} Aset</p>
     </div>
 
