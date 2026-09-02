@@ -773,10 +773,10 @@
                 </div>
                 
                 <!-- Filter Dropdown / Bottom Sheet -->
-                <div id="filter-utama" class="hidden fixed inset-x-0 bottom-0 md:absolute md:top-full md:bottom-auto md:mt-2 md:right-0 w-full md:w-72 bg-white/95 dark:bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-t-[2.5rem] md:rounded-xl shadow-2xl border-t md:border border-slate-200 dark:border-white/10 max-h-[85vh] md:max-h-[70vh] flex-col pointer-events-auto transform md:transform-none translate-y-full md:translate-y-0 transition-transform duration-300">
+                <div id="filter-utama" class="hidden fixed inset-x-0 bottom-0 md:absolute md:top-full md:bottom-auto md:mt-2 md:right-0 w-full md:w-72 bg-white/95 dark:bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-t-[2.5rem] md:rounded-xl shadow-2xl border-t md:border border-slate-200 dark:border-slate-200 dark:border-white/10 max-h-[85vh] md:max-h-[70vh] flex-col pointer-events-auto transform md:transform-none translate-y-full md:translate-y-0 transition-transform duration-300">
                         
                         <!-- Mobile Close Button & Handle (Sticky Top) -->
-                        <div class="flex-shrink-0 p-6 md:p-3 pb-2 md:pb-3 border-b border-slate-200 dark:border-white/5 md:border-none">
+                        <div class="flex-shrink-0 p-6 md:p-3 pb-2 md:pb-3 border-b border-slate-200 dark:border-slate-200 dark:border-white/5 md:border-none">
                             <div class="w-12 h-1.5 bg-slate-300 dark:bg-white/20 rounded-full mx-auto mb-4 md:hidden"></div>
                             <div class="flex justify-between items-center md:hidden">
                                 <h4 class="text-navy-900 dark:text-white font-black text-lg uppercase tracking-wider">Filter Peta</h4>
@@ -791,53 +791,53 @@
                             
                             <!-- SECTION: Kategori Objek -->
                             <div>
-                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest px-1 mb-1 block">Kategori Objek</span>
-                                <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all border-b border-white/5 mb-1 pb-2">
+                                <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest px-1 mb-1 block">Kategori Objek</span>
+                                <label class="flex items-center justify-between p-2 hover:bg-slate-100 dark:hover:bg-slate-50 dark:bg-white/5 rounded-lg cursor-pointer transition-all border-b border-slate-200 dark:border-white/5 mb-1 pb-2">
                                     <span class="text-xs font-black text-gold-500 uppercase tracking-wider">Pilih Semua</span>
-                                    <input type="checkbox" id="check-all-categories" class="w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" checked>
+                                    <input type="checkbox" id="check-all-categories" class="w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 bg-transparent text-gold-500 focus:ring-0" checked>
                                 </label>
                                 @php
                                     $kategoriUnik = $dataInfrastruktur->pluck('jenis')->map(function($j) { return $j ?: 'Lainnya'; })->unique();
                                 @endphp
                                 @foreach($kategoriUnik as $kategori)
-                                <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all">
-                                    <span class="text-xs font-bold text-slate-200 uppercase tracking-wider">{{ $kategori }}</span>
-                                    <input type="checkbox" class="filter-category w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="{{ strtolower($kategori) }}" checked>
+                                <label class="flex items-center justify-between p-2 hover:bg-slate-100 dark:hover:bg-slate-50 dark:bg-white/5 rounded-lg cursor-pointer transition-all">
+                                    <span class="text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">{{ $kategori }}</span>
+                                    <input type="checkbox" class="filter-category w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="{{ strtolower($kategori) }}" checked>
                                 </label>
                                 @endforeach
                             </div>
 
                             <!-- SECTION: Pilih Kecamatan -->
-                            <div class="border-t border-white/10 pt-2">
-                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest px-1 mb-1 block">Pilih Kecamatan</span>
-                                <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all border-b border-white/5 mb-1 pb-2">
+                            <div class="border-t border-slate-200 dark:border-white/10 pt-2">
+                                <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest px-1 mb-1 block">Pilih Kecamatan</span>
+                                <label class="flex items-center justify-between p-2 hover:bg-slate-100 dark:hover:bg-slate-50 dark:bg-white/5 rounded-lg cursor-pointer transition-all border-b border-slate-200 dark:border-white/5 mb-1 pb-2">
                                     <span class="text-xs font-black text-gold-500 uppercase tracking-wider">Pilih Semua</span>
-                                    <input type="checkbox" id="check-all-districts" class="w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" checked>
+                                    <input type="checkbox" id="check-all-districts" class="w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 bg-transparent text-gold-500 focus:ring-0" checked>
                                 </label>
                                 @php $kecColors = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#06b6d4']; @endphp
                                 @foreach($semuaWilayah as $index => $wil)
-                                <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all group">
+                                <label class="flex items-center justify-between p-2 hover:bg-slate-100 dark:hover:bg-slate-50 dark:bg-white/5 rounded-lg cursor-pointer transition-all group">
                                     <div class="flex items-center gap-2">
-                                        <input type="checkbox" class="filter-district w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="{{ $wil->id_kecamatan }}" checked>
-                                        <span class="text-xs font-bold text-slate-200 uppercase tracking-wider">{{ $wil->nama_kecamatan }}</span>
+                                        <input type="checkbox" class="filter-district w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="{{ $wil->id_kecamatan }}" checked>
+                                        <span class="text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">{{ $wil->nama_kecamatan }}</span>
                                     </div>
                                     <div class="w-2 h-2 rounded-full" style="background: {{ $kecColors[$index % count($kecColors)] }}"></div>
                                 </label>
                                 @endforeach
-                                <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all group">
+                                <label class="flex items-center justify-between p-2 hover:bg-slate-100 dark:hover:bg-slate-50 dark:bg-white/5 rounded-lg cursor-pointer transition-all group">
                                     <div class="flex items-center gap-2">
-                                        <input type="checkbox" class="filter-district w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="" checked>
-                                        <span class="text-xs font-bold text-slate-200 uppercase tracking-wider">Tanpa Wilayah</span>
+                                        <input type="checkbox" class="filter-district w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="" checked>
+                                        <span class="text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">Tanpa Wilayah</span>
                                     </div>
                                     <div class="w-2 h-2 rounded-full" style="background: #94a3b8"></div>
                                 </label>
                             </div>
 
                             <!-- SECTION: Filter Tahun (Waktu) -->
-                            <div class="border-t border-white/10 pt-2 flex flex-col gap-1.5 mb-2">
-                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest px-1 mb-1 block">Periode Waktu</span>
+                            <div class="border-t border-slate-200 dark:border-white/10 pt-2 flex flex-col gap-1.5 mb-2">
+                                <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest px-1 mb-1 block">Periode Waktu</span>
                                 <div class="relative">
-                                    <select id="filter-tahun" onchange="fetchMapData()" class="w-full bg-[#0f0e2c] border border-white/10 text-slate-200 text-xs font-bold rounded-lg px-3 py-2.5 appearance-none cursor-pointer focus:outline-none focus:border-gold-500/50 transition-all">
+                                    <select id="filter-tahun" onchange="fetchMapData()" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-200 text-xs font-bold rounded-lg px-3 py-2.5 appearance-none cursor-pointer focus:outline-none focus:border-gold-500/50 transition-all">
                                         <option value="all">Semua Tahun</option>
                                         @php
                                             // Get distinct years safely across any database (SQLite/MySQL)
@@ -858,28 +858,28 @@
                             </div>
 
                             <!-- SECTION: Layer Tambahan -->
-                            <div class="border-t border-white/10 pt-2 flex flex-col gap-1.5">
-                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest px-1 mb-1 block">Layer Tambahan</span>
-                                <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all border border-white/5 bg-white/5">
+                            <div class="border-t border-slate-200 dark:border-white/10 pt-2 flex flex-col gap-1.5">
+                                <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest px-1 mb-1 block">Layer Tambahan</span>
+                                <label class="flex items-center justify-between p-2 hover:bg-slate-100 dark:hover:bg-slate-50 dark:bg-white/5 rounded-lg cursor-pointer transition-all border border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-white/5">
                                     <div class="flex items-center gap-2">
-                                        <input type="checkbox" id="toggle-kelurahan-lines" class="w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-gold-500 focus:ring-0" checked>
-                                        <span class="text-xs font-bold text-slate-200 uppercase tracking-wider">Batas Kelurahan</span>
+                                        <input type="checkbox" id="toggle-kelurahan-lines" class="w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 bg-transparent text-gold-500 focus:ring-0" checked>
+                                        <span class="text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">Batas Kelurahan</span>
                                     </div>
                                     <i class="fas fa-home text-gold-500 text-xs"></i>
                                 </label>
-                                <label class="flex items-center justify-between p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-all border border-white/5 bg-white/5">
+                                <label class="flex items-center justify-between p-2 hover:bg-slate-100 dark:hover:bg-slate-50 dark:bg-white/5 rounded-lg cursor-pointer transition-all border border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-white/5">
                                     <div class="flex items-center gap-2">
-                                        <input type="checkbox" id="toggle-banjir-lines" class="w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-blue-500 focus:ring-blue-500">
-                                        <span class="text-xs font-bold text-slate-200 uppercase tracking-wider">Kerawanan Banjir</span>
+                                        <input type="checkbox" id="toggle-banjir-lines" class="w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 bg-transparent text-blue-500 focus:ring-blue-500">
+                                        <span class="text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">Kerawanan Banjir</span>
                                     </div>
                                     <i class="fas fa-water text-blue-500 text-xs"></i>
                                 </label>
                             </div>
 
                             <!-- SECTION: Statistik Filter -->
-                            <div class="border-t border-white/10 pt-2 flex flex-col gap-1.5">
-                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest px-1 mb-1 block">Statistik Filter</span>
-                                <div class="bg-white/5 rounded-xl p-3 space-y-3">
+                            <div class="border-t border-slate-200 dark:border-white/10 pt-2 flex flex-col gap-1.5">
+                                <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest px-1 mb-1 block">Statistik Filter</span>
+                                <div class="bg-slate-50 dark:bg-white/5 rounded-xl p-3 space-y-3">
                                     <div class="flex justify-between items-center">
                                         <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Titik</span>
                                         <span id="stat-total" class="bg-indigo-500/20 text-[#6366f1] px-2 py-0.5 rounded-lg text-xs font-black min-w-[45px] text-center border border-indigo-500/20">0</span>
@@ -887,28 +887,28 @@
                                     <div class="flex justify-between items-center">
                                         <div class="flex items-center gap-2">
                                             <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-md shadow-emerald-500/20"></div>
-                                            <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Baik</span>
+                                            <span class="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">Baik</span>
                                         </div>
                                         <span id="stat-baik" class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-lg text-xs font-black min-w-[45px] text-center border border-emerald-500/20">0</span>
                                     </div>
                                     <div class="flex justify-between items-center">
                                         <div class="flex items-center gap-2">
                                             <div class="w-2 h-2 rounded-full shadow-md" style="background-color: #eab308; box-shadow: 0 4px 6px -1px rgba(234, 179, 8, 0.2);"></div>
-                                            <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Rusak Ringan</span>
+                                            <span class="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">Rusak Ringan</span>
                                         </div>
                                         <span id="stat-ringan" class="px-2 py-0.5 rounded-lg text-xs font-black min-w-[45px] text-center border" style="background-color: rgba(234, 179, 8, 0.2); color: #facc15; border-color: rgba(234, 179, 8, 0.2);">0</span>
                                     </div>
                                     <div class="flex justify-between items-center">
                                         <div class="flex items-center gap-2">
                                             <div class="w-2 h-2 rounded-full bg-amber-500 shadow-md shadow-amber-500/20"></div>
-                                            <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Rusak Sedang</span>
+                                            <span class="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">Rusak Sedang</span>
                                         </div>
                                         <span id="stat-sedang" class="bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-lg text-xs font-black min-w-[45px] text-center border border-amber-500/20">0</span>
                                     </div>
                                     <div class="flex justify-between items-center">
                                         <div class="flex items-center gap-2">
                                             <div class="w-2 h-2 rounded-full bg-red-500 shadow-md shadow-red-500/20"></div>
-                                            <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Rusak Berat</span>
+                                            <span class="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">Rusak Berat</span>
                                         </div>
                                         <span id="stat-berat" class="bg-red-500/20 text-red-400 px-2 py-0.5 rounded-lg text-xs font-black min-w-[45px] text-center border border-red-500/20">0</span>
                                     </div>
@@ -916,15 +916,15 @@
                             </div>
 
                             <!-- SECTION: Gaya Basemap -->
-                            <div class="border-t border-white/10 pt-2 flex flex-col gap-1.5 pb-2">
-                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest px-1 mb-1 block">Gaya Basemap</span>
+                            <div class="border-t border-slate-200 dark:border-white/10 pt-2 flex flex-col gap-1.5 pb-2">
+                                <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest px-1 mb-1 block">Gaya Basemap</span>
                                 <div class="grid grid-cols-2 gap-2">
-                                    <button onclick="setBasemap('google')" class="basemap-btn bg-white/10 text-white px-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider hover:bg-white/20 transition-all text-center">Default</button>
-                                    <button onclick="setBasemap('satelit')" class="basemap-btn bg-[#0f0e2c] border border-white/5 text-slate-400 px-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-center">Satelit</button>
-                                    <button onclick="setBasemap('dark')" class="basemap-btn bg-[#0f0e2c] border border-white/5 text-slate-400 px-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-center">Gelap</button>
-                                    <button onclick="setBasemap('greyscale')" class="basemap-btn bg-[#0f0e2c] border border-white/5 text-slate-400 px-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-center">Abu-abu</button>
-                                    <button onclick="setBasemap('osm')" class="basemap-btn bg-[#0f0e2c] border border-white/5 text-slate-400 px-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-center">OSM</button>
-                                    <button onclick="setBasemap('banjir')" class="basemap-btn bg-[#0f0e2c] border border-white/5 text-blue-400 px-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all text-center">Banjir</button>
+                                    <button onclick="setBasemap('google')" class="basemap-btn bg-slate-200 dark:bg-white/10 text-navy-900 dark:text-white px-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider hover:bg-white/20 transition-all text-center">Default</button>
+                                    <button onclick="setBasemap('satelit')" class="basemap-btn bg-[#0f0e2c] border border-slate-200 dark:border-white/5 text-slate-400 px-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider hover:bg-slate-200 dark:hover:bg-white/10 hover:text-navy-900 dark:hover:text-white transition-all text-center">Satelit</button>
+                                    <button onclick="setBasemap('dark')" class="basemap-btn bg-[#0f0e2c] border border-slate-200 dark:border-white/5 text-slate-400 px-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider hover:bg-slate-200 dark:hover:bg-white/10 hover:text-navy-900 dark:hover:text-white transition-all text-center">Gelap</button>
+                                    <button onclick="setBasemap('greyscale')" class="basemap-btn bg-[#0f0e2c] border border-slate-200 dark:border-white/5 text-slate-400 px-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider hover:bg-slate-200 dark:hover:bg-white/10 hover:text-navy-900 dark:hover:text-white transition-all text-center">Abu-abu</button>
+                                    <button onclick="setBasemap('osm')" class="basemap-btn bg-[#0f0e2c] border border-slate-200 dark:border-white/5 text-slate-400 px-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider hover:bg-slate-200 dark:hover:bg-white/10 hover:text-navy-900 dark:hover:text-white transition-all text-center">OSM</button>
+                                    <button onclick="setBasemap('banjir')" class="basemap-btn bg-[#0f0e2c] border border-slate-200 dark:border-white/5 text-blue-400 px-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider hover:bg-slate-200 dark:hover:bg-white/10 hover:text-navy-900 dark:hover:text-white transition-all text-center">Banjir</button>
                                 </div>
                             </div>
 
