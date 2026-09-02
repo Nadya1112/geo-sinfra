@@ -797,7 +797,9 @@
                                     <input type="checkbox" id="check-all-categories" class="w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 bg-transparent text-gold-500 focus:ring-0" checked>
                                 </label>
                                 @php
-                                    $kategoriUnik = $dataInfrastruktur->pluck('jenis')->map(function($j) { return $j ?: 'Lainnya'; })->unique();
+                                    $defaultKategori = collect(['Titian', 'Jalan', 'Jembatan']);
+                                    $dbKategori = $dataInfrastruktur->pluck('jenis')->map(function($j) { return $j ?: 'Lainnya'; });
+                                    $kategoriUnik = $defaultKategori->merge($dbKategori)->unique()->values();
                                 @endphp
                                 @foreach($kategoriUnik as $kategori)
                                 <label class="flex items-center justify-between p-2 hover:bg-slate-100 dark:hover:bg-slate-50 dark:bg-white/5 rounded-lg cursor-pointer transition-all">
