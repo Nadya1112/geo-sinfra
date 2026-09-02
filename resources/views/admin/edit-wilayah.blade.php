@@ -103,7 +103,7 @@
                     @csrf
                     @method('PUT')
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+                    <div class="grid grid-cols-1 gap-8 text-left">
                         <div class="text-left">
                             <label class="block text-xs font-black text-navy-900 dark:text-white tracking-widest mb-2 uppercase">Nama Kelurahan <span class="text-red-500">*</span></label>
                             <input type="text" name="nama_kelurahan" value="{{ $wilayah->nama_kelurahan }}" class="w-full px-5 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-100 dark:border-white/10 rounded-2xl text-sm font-semibold outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500" required>

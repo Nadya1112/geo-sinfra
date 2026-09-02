@@ -52,7 +52,7 @@
 
     @include('surveyor.partials.sidebar')
 
-    <main class="flex-1 flex flex-col h-screen overflow-y-auto custom-scrollbar bg-slate-50 dark:bg-[#0b0a26]/50 ">
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto custom-scrollbar bg-slate-50 dark:bg-[#0b0a26]/50">
         {{-- ── Header ── --}}
         <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 sticky top-0 px-4 md:px-8 py-4 flex justify-between items-center sticky top-0 z-[1000] shadow-sm">
             <div class="flex items-center gap-4">
@@ -67,7 +67,7 @@
             
             <div class="flex items-center gap-6">
                 <div class="text-right">
-                    <p class="text-sm font-black text-navy-900 dark:text-white " id="mini-clock">00:00 WITA</p>
+                    <p class="text-sm font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
                     <p class="text-[9px] font-bold text-slate-400 dark:text-slate-300 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
@@ -112,7 +112,7 @@
                         <div class="bg-white dark:bg-navy-900/90 rounded-[2.5rem] p-8 border border-slate-100 dark:border-white/10 shadow-sm hover:shadow-md transition-shadow">
                             
                             {{-- Info Bar (Status & AI) --}}
-                            <div class="flex items-center justify-between mb-8 p-4 bg-slate-50 dark:bg-[#0b0a26]/50 rounded-2xl border border-slate-100 dark:border-white/10 ">
+                            <div class="flex items-center justify-between mb-8 p-4 bg-slate-50 dark:bg-[#0b0a26]/50 rounded-2xl border border-slate-100 dark:border-white/10">
                                 <h4 class="font-black text-navy-900 dark:text-white text-xs uppercase tracking-widest">Status Terkini</h4>
                                 <div class="flex items-center gap-3">
                                     <span class="px-4 py-1.5 rounded-xl text-xs font-black tracking-widest border uppercase shadow-sm {{ str_contains(strtolower($infrastruktur->kondisi), 'baik') ? 'bg-emerald-50 text-emerald-600 border-emerald-200' : (str_contains(strtolower($infrastruktur->kondisi), 'rusak ringan') ? 'bg-yellow-50 text-yellow-600 border-yellow-200' : (str_contains(strtolower($infrastruktur->kondisi), 'rusak sedang') ? 'bg-amber-50 text-amber-600 border-amber-200' : (str_contains(strtolower($infrastruktur->kondisi), 'rusak berat') ? 'bg-red-50 text-red-600 border-red-200' : 'bg-white text-slate-500 border-slate-200 dark:border-white/10 '))) }}">
@@ -122,7 +122,7 @@
                                     <div class="flex gap-2">
                                         @if($infrastruktur->cnn)
                                             <span class="px-3 py-1.5 rounded-xl bg-white dark:bg-navy-900/90 border border-slate-200 dark:border-white/10 text-xs font-black text-slate-500 shadow-sm">
-                                                CNN: <span class="text-navy-900 dark:text-white ">{{ number_format($infrastruktur->cnn->skor_cnn * 100, 1) }}%</span>
+                                                CNN: <span class="text-navy-900 dark:text-white">{{ number_format($infrastruktur->cnn->skor_cnn * 100, 1) }}%</span>
                                             </span>
                                         @endif
                                         @if($infrastruktur->analisis)
@@ -151,12 +151,12 @@
                                         <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Alamat / Lokasi Jalan <span class="text-red-500">*</span></label>
                                         <div class="relative group">
                                             <i class="fas fa-map-pin absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors"></i>
-                                            <input type="text" name="nama_infrastruktur" value="{{ old('nama_infrastruktur', $infrastruktur->nama_objek) }}" placeholder="Contoh: Gg. Manggis RT 02 / Jalan Hasan Basry" class="w-full pl-12 pr-5 py-4 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900 dark:text-white " required>
+                                            <input type="text" name="nama_infrastruktur" value="{{ old('nama_infrastruktur', $infrastruktur->nama_objek) }}" placeholder="Contoh: Gg. Manggis RT 02 / Jalan Hasan Basry" class="w-full pl-12 pr-5 py-4 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900 dark:text-white" required>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <div class="grid grid-cols-1 gap-5">
                                     <div>
                                         <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">
                                             Kecamatan Wilayah <span class="text-red-500">*</span>
@@ -166,7 +166,7 @@
                                         </label>
                                         <div class="relative group">
                                             <i class="fas fa-map-location-dot absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors z-10"></i>
-                                            <select name="id_kecamatan" id="id_kecamatan" class="w-full pl-12 pr-10 py-4 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none appearance-none cursor-pointer transition-all relative z-0 text-navy-900 dark:text-white " required onchange="filterKelurahan()">
+                                            <select name="id_kecamatan" id="id_kecamatan" class="w-full pl-12 pr-10 py-4 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none appearance-none cursor-pointer transition-all relative z-0 text-navy-900 dark:text-white" required onchange="filterKelurahan()">
                                                 <option value="">Pilih Kecamatan...</option>
                                                 @foreach($semuaKecamatan as $kec)
                                                     <option value="{{ $kec->id_kecamatan }}" {{ $infrastruktur->id_kecamatan == $kec->id_kecamatan ? 'selected' : '' }}>{{ $kec->nama_kecamatan }}</option>
@@ -179,7 +179,7 @@
                                         <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Kelurahan / Desa <span class="text-red-500">*</span></label>
                                         <div class="relative group">
                                             <i class="fas fa-city absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors z-10"></i>
-                                            <select name="id_kelurahan" id="id_kelurahan" class="w-full pl-12 pr-10 py-4 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none appearance-none cursor-pointer transition-all relative z-0 text-navy-900 dark:text-white " required onchange="focusToKelurahan()">
+                                            <select name="id_kelurahan" id="id_kelurahan" class="w-full pl-12 pr-10 py-4 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none appearance-none cursor-pointer transition-all relative z-0 text-navy-900 dark:text-white" required onchange="focusToKelurahan()">
                                                 <option value="">Pilih Kelurahan...</option>
                                                 @foreach($semuaKelurahan as $kel)
                                                     <option value="{{ $kel->id_kelurahan }}" 
@@ -211,21 +211,21 @@
                             </div>
 
                             <div class="space-y-6">
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <div class="grid grid-cols-1 gap-5">
                                     <div class="space-y-6">
-                                        <div class="grid grid-cols-2 gap-4">
+                                        <div class="grid grid-cols-1 gap-4">
                                             <div>
                                                 <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Panjang (m) <span class="text-red-500">*</span></label>
                                                 <div class="relative group">
                                                     <i class="fas fa-arrows-left-right absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors"></i>
-                                                    <input type="number" step="0.01" name="panjang" value="{{ old('panjang', $infrastruktur->panjang) }}" placeholder="0.00" class="w-full pl-12 pr-5 py-3.5 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900 dark:text-white " required>
+                                                    <input type="number" step="0.01" name="panjang" value="{{ old('panjang', $infrastruktur->panjang) }}" placeholder="0.00" class="w-full pl-12 pr-5 py-3.5 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900 dark:text-white" required>
                                                 </div>
                                             </div>
                                             <div>
                                                 <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Lebar (m) <span class="text-red-500">*</span></label>
                                                 <div class="relative group">
                                                     <i class="fas fa-arrows-up-down absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors"></i>
-                                                    <input type="number" step="0.01" name="lebar" value="{{ old('lebar', $infrastruktur->lebar) }}" placeholder="0.00" class="w-full pl-12 pr-5 py-3.5 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900 dark:text-white " required>
+                                                    <input type="number" step="0.01" name="lebar" value="{{ old('lebar', $infrastruktur->lebar) }}" placeholder="0.00" class="w-full pl-12 pr-5 py-3.5 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900 dark:text-white" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -235,7 +235,7 @@
                                             <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Material Utama  <span class="text-red-500">*</span></label>
                                             <div class="relative group">
                                                 <i class="fas fa-layer-group absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors z-10"></i>
-                                                <select name="material_eksisting" class="w-full pl-12 pr-10 py-3.5 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none appearance-none cursor-pointer transition-all relative z-0 text-navy-900 dark:text-white " required>
+                                                <select name="material_eksisting" class="w-full pl-12 pr-10 py-3.5 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none appearance-none cursor-pointer transition-all relative z-0 text-navy-900 dark:text-white" required>
                                                     <option value="" disabled>Pilih Material Utama...</option>
                                                     @foreach(['Cor Beton', 'Titian (Kayu Ulin)', 'Tanah Asli', 'Tanah Pemadatan', 'Tanah Lepas', 'Paving Block', 'Aspal', 'Bata Press'] as $mat)
                                                         <option value="{{ $mat }}" {{ (old('material_eksisting', $infrastruktur->material_eksisting) == $mat) ? 'selected' : '' }}>{{ $mat }}</option>
@@ -270,7 +270,7 @@
                                 <div class="pt-4 border-t border-slate-50">
                                     <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Deskripsi Kondisi Fisik Lapangan <span class="text-slate-400 dark:text-slate-300 font-medium">(Opsional)</span></label>
                                     <div class="relative group">
-                                        <textarea name="kondisi" id="kondisi-textarea" rows="3" placeholder="Deskripsikan kerusakan spesifik..." class="w-full px-5 py-4 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900 dark:text-white ">{{ old('kondisi', $infrastruktur->kondisi) }}</textarea>
+                                        <textarea name="kondisi" id="kondisi-textarea" rows="3" placeholder="Deskripsikan kerusakan spesifik..." class="w-full px-5 py-4 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900 dark:text-white">{{ old('kondisi', $infrastruktur->kondisi) }}</textarea>
                                     </div>
                                     <p class="text-xs text-slate-400 dark:text-slate-300 mt-2 italic font-medium px-2">* Memperbarui deskripsi akan menyebabkan AI menghitung ulang prioritas.</p>
                                 </div>
@@ -305,17 +305,17 @@
                                 <div class="absolute bottom-4 left-4 right-4 z-10">
                                     <div class="bg-white/90 backdrop-blur-md px-4 py-3 rounded-xl shadow-lg border border-slate-100 dark:border-white/10 text-center flex items-center justify-center gap-2">
                                         <div class="w-2 h-2 rounded-full bg-gold-500 animate-pulse"></div>
-                                        <p class="text-xs font-black uppercase tracking-widest text-navy-900 dark:text-white ">Klik Peta Untuk Menggeser Pin</p>
+                                        <p class="text-xs font-black uppercase tracking-widest text-navy-900 dark:text-white">Klik Peta Untuk Menggeser Pin</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="grid grid-cols-2 gap-4">
-                                <div class="bg-slate-50 dark:bg-[#0b0a26]/50 p-4 rounded-2xl border border-slate-200 dark:border-white/10 ">
+                            <div class="grid grid-cols-1 gap-4">
+                                <div class="bg-slate-50 dark:bg-[#0b0a26]/50 p-4 rounded-2xl border border-slate-200 dark:border-white/10">
                                     <label class="block text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-[0.2em] mb-1">Garis Lintang</label>
                                     <input type="text" id="lat-input" name="latitude" value="{{ old('latitude', $infrastruktur->latitude) }}" class="w-full bg-transparent border-none p-0 text-xs font-black text-navy-900 dark:text-white outline-none focus:ring-0">
                                 </div>
-                                <div class="bg-slate-50 dark:bg-[#0b0a26]/50 p-4 rounded-2xl border border-slate-200 dark:border-white/10 ">
+                                <div class="bg-slate-50 dark:bg-[#0b0a26]/50 p-4 rounded-2xl border border-slate-200 dark:border-white/10">
                                     <label class="block text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-[0.2em] mb-1">Garis Bujur</label>
                                     <input type="text" id="lng-input" name="longitude" value="{{ old('longitude', $infrastruktur->longitude) }}" class="w-full bg-transparent border-none p-0 text-xs font-black text-navy-900 dark:text-white outline-none focus:ring-0">
                                 </div>
@@ -341,9 +341,9 @@
                                 </div>
                             </div>
 
-                            <div class="grid grid-cols-1 gap-4 pt-4 border-t border-slate-100 dark:border-white/10 ">
+                            <div class="grid grid-cols-1 gap-4 pt-4 border-t border-slate-100 dark:border-white/10">
                                 <div class="flex items-center justify-between px-2 mb-2">
-                                    <span class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest">Tgl Survey: <span class="text-navy-900 dark:text-white ">{{ \Carbon\Carbon::parse($infrastruktur->tgl_survey)->translatedFormat('d M Y') }}</span></span>
+                                    <span class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest">Tgl Survey: <span class="text-navy-900 dark:text-white">{{ \Carbon\Carbon::parse($infrastruktur->tgl_survey)->translatedFormat('d M Y') }}</span></span>
                                     <input type="hidden" name="tgl_survey" value="{{ $infrastruktur->tgl_survey }}">
                                 </div>
                                 <button type="submit" id="btn-submit" class="w-full py-5 bg-navy-900 hover:bg-gold-500 text-white hover:text-navy-900 rounded-[2rem] font-black text-sm uppercase tracking-[0.2em] transition-all shadow-xl active:scale-95 flex items-center justify-center gap-3">

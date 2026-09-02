@@ -165,9 +165,9 @@
                                 </div>
                             </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div class="grid grid-cols-1 gap-5">
                                 {{-- Nama --}}
-                                <div class="md:col-span-2">
+                                <div class="">
                                     <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Nama Infrastruktur <span class="text-red-400">*</span></label>
                                     <input type="text" name="nama_infrastruktur"
                                            value="{{ old('nama_infrastruktur') }}"
@@ -203,7 +203,7 @@
                                 </div>
 
                                 {{-- Kelurahan --}}
-                                <div class="md:col-span-2">
+                                <div class="">
                                     <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Kelurahan</label>
                                     <select name="id_kelurahan"
                                             class="w-full px-4 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-200 dark:border-white/10 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
@@ -229,7 +229,7 @@
                                 </div>
                             </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
+                            <div class="grid grid-cols-1 gap-5 mb-5">
                                 <div>
                                     <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Material Utama <span class="text-red-400">*</span></label>
                                     <select name="material_eksisting"
@@ -264,7 +264,7 @@
                                 </div>
                             </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                            <div class="grid grid-cols-1 gap-5 mb-5">
                                 <div>
                                     <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">
                                         <i class="fas fa-water text-navy-500 mr-1"></i> Ketersediaan Drainase
@@ -324,7 +324,7 @@
                                 </div>
                             </div>
 
-                            <div class="grid grid-cols-2 gap-5 mb-5">
+                            <div class="grid grid-cols-1 gap-5 mb-5">
                                 <div>
                                     <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">Garis Lintang</label>
                                     <input type="text" name="latitude" id="lat-input"

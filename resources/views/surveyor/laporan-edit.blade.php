@@ -60,7 +60,7 @@
 
                         <div class="mb-8 p-6 bg-slate-50 dark:bg-[#0b0a26]/50 rounded-[1.5rem] border border-slate-100 dark:border-white/10">
                             <h3 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-widest mb-4">Informasi Laporan</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 gap-4">
                                 <div>
                                     <p class="text-[10px] font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1">Nama Pelapor</p>
                                     <p class="text-sm font-bold text-navy-900 dark:text-white">{{ $laporan->nama_pelapor }}</p>
@@ -69,7 +69,7 @@
                                     <p class="text-[10px] font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1">Waktu Laporan</p>
                                     <p class="text-sm font-bold text-navy-900 dark:text-white">{{ \Carbon\Carbon::parse($laporan->created_at)->translatedFormat('l, d M Y H:i') }}</p>
                                 </div>
-                                <div class="md:col-span-2">
+                                <div class="">
                                     <p class="text-[10px] font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1">Deskripsi Kerusakan</p>
                                     <p class="text-sm font-medium text-slate-700">{{ $laporan->deskripsi }}</p>
                                 </div>

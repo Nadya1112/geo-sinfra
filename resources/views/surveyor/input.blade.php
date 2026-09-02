@@ -70,17 +70,17 @@
                                         <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Alamat / Lokasi Jalan <span class="text-red-500">*</span></label>
                                         <div class="relative group">
                                             <i class="fas fa-map-pin absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors"></i>
-                                            <input type="text" name="nama_infrastruktur" placeholder="Contoh: Gg. Manggis RT 02 / Jalan Hasan Basry" class="w-full pl-12 pr-5 py-4 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900 dark:text-white " required>
+                                            <input type="text" name="nama_infrastruktur" placeholder="Contoh: Gg. Manggis RT 02 / Jalan Hasan Basry" class="w-full pl-12 pr-5 py-4 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900 dark:text-white" required>
                                         </div>
                                     </div>
                                 </div>
 
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div class="grid grid-cols-1 gap-5">
                                         <div>
                                             <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Kecamatan Wilayah <span class="text-red-500">*</span></label>
                                             <div class="relative group">
                                                 <i class="fas fa-map-location-dot absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors z-10"></i>
-                                                <select name="id_kecamatan" id="id_kecamatan" class="w-full pl-12 pr-10 py-4 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none appearance-none cursor-pointer transition-all relative z-0 text-navy-900 dark:text-white " required onchange="filterKelurahan()">
+                                                <select name="id_kecamatan" id="id_kecamatan" class="w-full pl-12 pr-10 py-4 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none appearance-none cursor-pointer transition-all relative z-0 text-navy-900 dark:text-white" required onchange="filterKelurahan()">
                                                     <option value="">Pilih Kecamatan...</option>
                                                     @foreach($semuaKecamatan as $kec)
                                                         <option value="{{ $kec->id_kecamatan }}" {{ count($semuaKecamatan) == 1 ? 'selected' : '' }}>{{ $kec->nama_kecamatan }}</option>
@@ -93,7 +93,7 @@
                                             <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Kelurahan / Desa <span class="text-red-500">*</span></label>
                                             <div class="relative group">
                                                 <i class="fas fa-city absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors z-10"></i>
-                                                <select name="id_kelurahan" id="id_kelurahan" class="w-full pl-12 pr-10 py-4 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none appearance-none cursor-pointer transition-all relative z-0 text-navy-900 dark:text-white " required onchange="focusToKelurahan()">
+                                                <select name="id_kelurahan" id="id_kelurahan" class="w-full pl-12 pr-10 py-4 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none appearance-none cursor-pointer transition-all relative z-0 text-navy-900 dark:text-white" required onchange="focusToKelurahan()">
                                                     <option value="">Pilih Kelurahan...</option>
                                                     @foreach($semuaKelurahan as $kel)
                                                         <option value="{{ $kel->id_kelurahan }}" 
@@ -124,21 +124,21 @@
                                 </div>
 
                                 <div class="space-y-6">
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div class="grid grid-cols-1 gap-5">
                                         <div class="space-y-6">
-                                            <div class="grid grid-cols-2 gap-4">
+                                            <div class="grid grid-cols-1 gap-4">
                                                 <div>
                                                     <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Panjang (m) <span class="text-red-500">*</span></label>
                                                     <div class="relative group">
                                                         <i class="fas fa-arrows-left-right absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors"></i>
-                                                        <input type="number" step="0.01" name="panjang" placeholder="0.00" class="w-full pl-12 pr-5 py-3.5 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900 dark:text-white " required>
+                                                        <input type="number" step="0.01" name="panjang" placeholder="0.00" class="w-full pl-12 pr-5 py-3.5 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900 dark:text-white" required>
                                                     </div>
                                                 </div>
                                                 <div>
                                                     <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Lebar (m) <span class="text-red-500">*</span></label>
                                                     <div class="relative group">
                                                         <i class="fas fa-arrows-up-down absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors"></i>
-                                                        <input type="number" step="0.01" name="lebar" placeholder="0.00" class="w-full pl-12 pr-5 py-3.5 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900 dark:text-white " required>
+                                                        <input type="number" step="0.01" name="lebar" placeholder="0.00" class="w-full pl-12 pr-5 py-3.5 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900 dark:text-white" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -148,7 +148,7 @@
                                                 <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Material Utama  <span class="text-red-500">*</span></label>
                                                 <div class="relative group">
                                                     <i class="fas fa-layer-group absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-gold-500 transition-colors z-10"></i>
-                                                    <select name="material_eksisting" class="w-full pl-12 pr-10 py-3.5 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none appearance-none cursor-pointer transition-all relative z-0 text-navy-900 dark:text-white " required>
+                                                    <select name="material_eksisting" class="w-full pl-12 pr-10 py-3.5 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none appearance-none cursor-pointer transition-all relative z-0 text-navy-900 dark:text-white" required>
                                                         <option value="" disabled selected>Pilih Material Utama...</option>
                                                         <option value="Cor Beton">Cor Beton</option>
                                                         <option value="Titian (Kayu Ulin)">Titian (Kayu Ulin)</option>
@@ -188,7 +188,7 @@
                                     <div class="pt-4 border-t border-slate-50">
                                         <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-3 ml-1">Deskripsi Kondisi Fisik Lapangan <span class="text-slate-400 dark:text-slate-300 font-medium">(Opsional)</span></label>
                                         <div class="relative group">
-                                            <textarea name="kondisi" id="kondisi-textarea" rows="3" placeholder="Deskripsikan kerusakan spesifik (Contoh: retak dan berlubang akibat genangan air)..." class="w-full px-5 py-4 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900 dark:text-white "></textarea>
+                                            <textarea name="kondisi" id="kondisi-textarea" rows="3" placeholder="Deskripsikan kerusakan spesifik (Contoh: retak dan berlubang akibat genangan air)..." class="w-full px-5 py-4 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-semibold focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all text-navy-900 dark:text-white"></textarea>
                                         </div>
                                     </div>
 
@@ -235,12 +235,12 @@
                                     <div class="absolute bottom-4 left-4 right-4 z-10 pointer-events-none">
                                         <div class="bg-white/90 backdrop-blur-md px-4 py-3 rounded-xl shadow-lg border border-slate-100 dark:border-white/10 text-center flex items-center justify-center gap-2 pointer-events-none">
                                             <div class="w-2 h-2 rounded-full bg-gold-500 animate-pulse"></div>
-                                            <p class="text-xs font-black uppercase tracking-widest text-navy-900 dark:text-white ">Klik Pada Peta Untuk Geser Pin</p>
+                                            <p class="text-xs font-black uppercase tracking-widest text-navy-900 dark:text-white">Klik Pada Peta Untuk Geser Pin</p>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="grid grid-cols-2 gap-4">
+                                <div class="grid grid-cols-1 gap-4">
                                     <div class="bg-slate-50 dark:bg-[#0b0a26]/50 p-4 rounded-2xl border border-slate-200 dark:border-white/10 relative group">
                                         <div class="absolute top-2 right-2 text-red-500 text-xs"><i class="fas fa-asterisk"></i></div>
                                         <label class="block text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-[0.2em] mb-1">Garis Lintang</label>
@@ -269,9 +269,9 @@
                                 <div class="space-y-6">
                                     <div class="relative group cursor-pointer h-72">
                                         <input type="file" name="foto" id="foto-input" accept="image/*" capture="environment" class="absolute inset-0 opacity-0 z-10 cursor-pointer" required onchange="previewImage(event)">
-                                        <div id="foto-preview-container" class="absolute inset-0 border-[3px] border-dashed border-slate-200 dark:border-white/10 rounded-[2rem] flex flex-col items-center justify-center gap-4 group-hover:bg-gold-50/50 group-hover:border-gold-300 transition-all overflow-hidden bg-slate-50 dark:bg-[#0b0a26]/50 ">
+                                        <div id="foto-preview-container" class="absolute inset-0 border-[3px] border-dashed border-slate-200 dark:border-white/10 rounded-[2rem] flex flex-col items-center justify-center gap-4 group-hover:bg-gold-50/50 group-hover:border-gold-300 transition-all overflow-hidden bg-slate-50 dark:bg-[#0b0a26]/50">
                                             <div id="placeholder-elements" class="flex flex-col items-center text-center px-6">
-                                                <div class="w-16 h-16 bg-white dark:bg-navy-900/90 rounded-2xl shadow-sm flex items-center justify-center mb-3 group-hover:scale-110 transition-transform border border-slate-100 dark:border-white/10 ">
+                                                <div class="w-16 h-16 bg-white dark:bg-navy-900/90 rounded-2xl shadow-sm flex items-center justify-center mb-3 group-hover:scale-110 transition-transform border border-slate-100 dark:border-white/10">
                                                     <i class="fas fa-camera text-2xl text-gold-500"></i>
                                                 </div>
                                                 <p class="text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-1">Ambil Foto Langsung</p>
@@ -289,9 +289,9 @@
                                         </p>
                                     </div>
 
-                                    <div class="grid grid-cols-1 gap-4 pt-4 border-t border-slate-100 dark:border-white/10 ">
+                                    <div class="grid grid-cols-1 gap-4 pt-4 border-t border-slate-100 dark:border-white/10">
                                         <div class="flex items-center justify-between px-2 mb-2">
-                                            <span class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest">Tgl Survey: <span class="text-navy-900 dark:text-white ">{{ date('d M Y') }}</span></span>
+                                            <span class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest">Tgl Survey: <span class="text-navy-900 dark:text-white">{{ date('d M Y') }}</span></span>
                                             <input type="hidden" name="tgl_survey" value="{{ date('Y-m-d') }}">
                                         </div>
                                         <button type="submit" id="btn-submit" class="w-full py-5 bg-gold-500 hover:bg-gold-600 text-white rounded-[2rem] font-black text-sm uppercase tracking-[0.2em] transition-all shadow-xl shadow-gold-500/20 active:scale-95 flex items-center justify-center gap-3">
