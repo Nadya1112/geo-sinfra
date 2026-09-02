@@ -6,21 +6,15 @@
     <style>
         @page {
             size: A4 portrait;
-            margin: 4cm 3cm 3cm 4cm; /* Top 4cm, Right 3cm, Bottom 3cm, Left 4cm (Standar Pemerintahan) */
+            margin: 2cm 2cm 2cm 3cm; /* Kiri 3cm untuk jilid */
         }
         div, span, h1, h2, h3, p, table, tbody, tr, th, td { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: Arial, Helvetica, sans-serif; color: #111; font-size: 12px; line-height: 1.5; }
 
-        /* ── HEADER MINIMALIS ── */
-        .header-line {
-            border-top: 2px solid #1a1a1a;
-            margin-bottom: 14px;
-        }
-
         /* ── JUDUL LAPORAN ── */
         .judul-laporan {
             text-align: center;
-            margin: 16px 0 12px;
+            margin: 0 0 16px;
             border-bottom: 1px solid #ccc;
             padding-bottom: 10px;
         }
@@ -139,16 +133,10 @@
 <body>
 
     {{-- ═══════════════════════════════════════════ --}}
-    {{-- HEADER MINIMALIS                            --}}
-    {{-- ═══════════════════════════════════════════ --}}
-    <div class="header-line"></div>
-
-    {{-- ═══════════════════════════════════════════ --}}
     {{-- JUDUL LAPORAN                               --}}
     {{-- ═══════════════════════════════════════════ --}}
     <div class="judul-laporan">
         <h2>Laporan Data Infrastruktur Permukiman</h2>
-        <p>Dinas Perumahan Rakyat dan Kawasan Permukiman Kota Banjarmasin</p>
     </div>
 
     {{-- ═══════════════════════════════════════════ --}}

@@ -6,16 +6,13 @@
     <style>
         @page {
             size: A4 landscape;
-            margin: 4cm 3cm 3cm 4cm; /* Standar pemerintahan */
+            margin: 2cm 2cm 2cm 3cm; /* Kiri 3cm untuk jilid */
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: Arial, Helvetica, sans-serif; color: #111; font-size: 10px; line-height: 1.4; }
 
-        /* ── HEADER MINIMALIS ── */
-        .header-line { border-top: 2px solid #1a1a1a; margin-bottom: 12px; }
-
         /* ── JUDUL LAPORAN ── */
-        .judul-laporan { text-align: center; margin: 14px 0 10px; }
+        .judul-laporan { text-align: center; margin: 0 0 14px; }
         .judul-laporan h2 { font-size: 13px; font-weight: bold; text-transform: uppercase; text-decoration: underline; letter-spacing: 0.5px; }
         .judul-laporan p { font-size: 9px; color: #555; margin-top: 3px; }
 
@@ -85,16 +82,10 @@
 <body>
 
     {{-- ═══════════════════════════════════════════ --}}
-    {{-- HEADER MINIMALIS                            --}}
-    {{-- ═══════════════════════════════════════════ --}}
-    <div class="header-line"></div>
-
-    {{-- ═══════════════════════════════════════════ --}}
     {{-- JUDUL LAPORAN                               --}}
     {{-- ═══════════════════════════════════════════ --}}
     <div class="judul-laporan">
         <h2>Rekapitulasi Data Infrastruktur Permukiman</h2>
-        <p>Dinas Perumahan Rakyat dan Kawasan Permukiman Kota Banjarmasin</p>
         <p>Tanggal Cetak: {{ now()->translatedFormat('d F Y') }} &nbsp;|&nbsp; Total Data: {{ count($infrastrukturs) }} Aset</p>
     </div>
 
