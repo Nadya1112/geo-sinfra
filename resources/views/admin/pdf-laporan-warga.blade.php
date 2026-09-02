@@ -6,17 +6,15 @@
     <style>
         @page {
             size: A4 landscape;
-            margin: 1.5cm;
+            margin: 4cm 3cm 3cm 4cm; /* Top 4cm, Right 3cm, Bottom 3cm, Left 4cm (Standar Pemerintahan) */
         }
         div, span, h1, h2, h3, p, table, tbody, tr, th, td { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'DejaVu Sans', Arial, sans-serif; color: #111; font-size: 11px; line-height: 1.4; }
+        body { font-family: Arial, Helvetica, sans-serif; color: #111; font-size: 11px; line-height: 1.4; }
 
         /* ── KOP DINAS ── */
         .kop-wrapper { border-bottom: 4px solid #1a1a1a; padding-bottom: 8px; margin-bottom: 4px; }
         .kop-inner { display: table; width: 100%; }
-        .kop-logo-kiri, .kop-logo-kanan { display: table-cell; width: 80px; vertical-align: middle; text-align: center; }
         .kop-teks { display: table-cell; vertical-align: middle; text-align: center; padding: 0 8px; }
-        .kop-logo-kiri img, .kop-logo-kanan img { max-width: 70px; max-height: 70px; }
         .kop-teks .nama-dinas { font-size: 16px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: #1a1a1a; }
         .kop-teks .alamat, .kop-teks .kontak { font-size: 10px; color: #444; margin-top: 2px; }
         .garis-bawah-kop { border-top: 1px solid #1a1a1a; margin-top: 6px; }
@@ -51,24 +49,14 @@
 </head>
 <body>
 
-    @php
-        $logoKiriPath = public_path('logo_dinas.jpeg');
-        $logoKiriB64 = file_exists($logoKiriPath) ? 'data:image/jpeg;base64,' . base64_encode(file_get_contents($logoKiriPath)) : '';
-
-        $logoKananPath = public_path('logo_geo-sinfra.png');
-        $logoKananB64 = file_exists($logoKananPath) ? 'data:image/png;base64,' . base64_encode(file_get_contents($logoKananPath)) : '';
-    @endphp
-
     <div class="kop-wrapper">
         <div class="kop-inner">
-            <div class="kop-logo-kiri"></div>
             <div class="kop-teks">
                 <div class="nama-dinas">Dinas Perumahan Rakyat dan Kawasan Permukiman</div>
                 <div class="nama-dinas">Kota Banjarmasin</div>
                 <div class="alamat">Jl. R.E. Martadinata No. 1 Blok B Lt. 2, Kec. Banjarmasin Tengah, Kota Banjarmasin, Kalimantan Selatan 70111</div>
                 <div class="kontak">Telp: (0511) 3365592 &nbsp;|&nbsp; Email: ampihkumuh@gmail.com</div>
             </div>
-            <div class="kop-logo-kanan"></div>
         </div>
         <div class="garis-bawah-kop"></div>
     </div>

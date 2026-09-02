@@ -6,10 +6,10 @@
     <style>
         @page {
             size: A4 portrait;
-            margin: 1.5cm;
+            margin: 4cm 3cm 3cm 4cm; /* Top 4cm, Right 3cm, Bottom 3cm, Left 4cm (Standar Pemerintahan) */
         }
         div, span, h1, h2, h3, p, table, tbody, tr, th, td { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'DejaVu Sans', Arial, sans-serif; color: #111; font-size: 12px; line-height: 1.5; }
+        body { font-family: Arial, Helvetica, sans-serif; color: #111; font-size: 12px; line-height: 1.5; }
 
         /* ── KOP DINAS ── */
         .kop-wrapper {
@@ -21,28 +21,11 @@
             display: table;
             width: 100%;
         }
-        .kop-logo-kiri {
-            display: table-cell;
-            width: 80px;
-            vertical-align: middle;
-            text-align: center;
-        }
-        .kop-logo-kanan {
-            display: table-cell;
-            width: 80px;
-            vertical-align: middle;
-            text-align: center;
-        }
         .kop-teks {
             display: table-cell;
             vertical-align: middle;
             text-align: center;
             padding: 0 8px;
-        }
-        .kop-logo-kiri img,
-        .kop-logo-kanan img {
-            max-width: 70px;
-            max-height: 70px;
         }
         .kop-teks .pemerintah {
             font-size: 11px;
@@ -200,40 +183,14 @@
     {{-- ═══════════════════════════════════════════ --}}
     {{-- KOP DINAS                                   --}}
     {{-- ═══════════════════════════════════════════ --}}
-    @php
-        // Logo Dinas (kiri)
-        $logoKiriPath = public_path('logo_dinas.jpeg');
-        $logoKiriB64  = '';
-        if (file_exists($logoKiriPath)) {
-            $logoKiriB64 = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($logoKiriPath));
-        }
-
-        // Logo GEO-SINFRA (kanan)
-        $logoKananPath = public_path('logo_geo-sinfra.png');
-        $logoKananB64  = '';
-        if (file_exists($logoKananPath)) {
-            $logoKananB64 = 'data:image/png;base64,' . base64_encode(file_get_contents($logoKananPath));
-        }
-    @endphp
-
     <div class="kop-wrapper">
         <div class="kop-inner">
-            {{-- Logo Dinas (kiri) --}}
-            <div class="kop-logo-kiri">
-                {{-- Logo removed per user request --}}
-            </div>
-
-            {{-- Teks Kop --}}
+            {{-- Teks Kop (Tanpa Logo) --}}
             <div class="kop-teks">
                 <div class="nama-dinas">Dinas Perumahan Rakyat dan Kawasan Permukiman</div>
                 <div class="nama-dinas">Kota Banjarmasin</div>
                 <div class="alamat">Jl. R.E. Martadinata No. 1 Blok B Lt. 2, Kec. Banjarmasin Tengah, Kota Banjarmasin, Kalimantan Selatan 70111</div>
                 <div class="kontak">Telp: (0511) 3365592 &nbsp;|&nbsp; Email: ampihkumuh@gmail.com</div>
-            </div>
-
-            {{-- Spacer (kanan) --}}
-            <div class="kop-logo-kanan">
-                {{-- Logo GEO-SINFRA dihapus sesuai permintaan --}}
             </div>
         </div>
         <div class="garis-bawah-kop"></div>
