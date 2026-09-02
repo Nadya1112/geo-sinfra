@@ -26,7 +26,7 @@
                 </button>
             </div>
 
-            <a href="{{ route('admin.wilayah.create') }}" class="bg-gold-500 text-white text-xs px-4 md:px-6 py-2.5 rounded-2xl font-bold shadow-lg shadow-gold-500/10 hover:bg-gold-600 hover:shadow-gold-500/20 transition flex items-center justify-center gap-2 whitespace-nowrap shrink-0">
+            <a href="{{ route('admin.wilayah.create') }}" wire:navigate class="bg-gold-500 text-white text-xs px-4 md:px-6 py-2.5 rounded-2xl font-bold shadow-lg shadow-gold-500/10 hover:bg-gold-600 hover:shadow-gold-500/20 transition flex items-center justify-center gap-2 whitespace-nowrap shrink-0">
                 <i class="fas fa-plus text-xs"></i> <span class="hidden sm:inline">Tambah Wilayah</span>
             </a>
         </div>
@@ -77,7 +77,7 @@
                     </td>
                     <td class="px-4 py-3">
                         <div class="flex justify-center gap-2">
-                            <a href="{{ route('admin.wilayah.edit', $wly->id_kelurahan) }}" title="Ubah Wilayah" class="w-8 h-8 flex items-center justify-center bg-gold-500 hover:bg-gold-600 text-white rounded-lg text-xs font-black transition shadow-sm hover:scale-105">
+                            <a href="{{ route('admin.wilayah.edit', $wly->id_kelurahan) }}" wire:navigate title="Ubah Wilayah" class="w-8 h-8 flex items-center justify-center bg-gold-500 hover:bg-gold-600 text-white rounded-lg text-xs font-black transition shadow-sm hover:scale-105">
                                 <i class="fas fa-edit"></i>
                             </a>
                             
@@ -117,7 +117,7 @@
                     </div>
                     
                     <div class="flex items-center justify-end gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-white/10">
-                        <a href="{{ route('admin.wilayah.edit', $wly->id_kelurahan) }}" title="Ubah Wilayah" class="w-8 h-8 flex items-center justify-center bg-gold-500 hover:bg-gold-600 text-white rounded-lg text-xs font-black transition shadow-sm active:scale-95">
+                        <a href="{{ route('admin.wilayah.edit', $wly->id_kelurahan) }}" wire:navigate title="Ubah Wilayah" class="w-8 h-8 flex items-center justify-center bg-gold-500 hover:bg-gold-600 text-white rounded-lg text-xs font-black transition shadow-sm active:scale-95">
                             <i class="fas fa-edit"></i>
                         </a>
                         

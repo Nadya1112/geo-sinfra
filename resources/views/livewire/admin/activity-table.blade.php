@@ -21,7 +21,7 @@
                 </button>
             </div>
 
-            <a href="{{ route('admin.activity.export') }}" class="bg-emerald-500 text-white text-xs px-4 md:px-6 py-2.5 rounded-2xl font-bold shadow-lg shadow-emerald-500/10 hover:bg-emerald-600 hover:shadow-emerald-500/20 transition flex items-center justify-center gap-2 whitespace-nowrap shrink-0">
+            <a href="{{ route('admin.activity.export') }}" wire:navigate class="bg-emerald-500 text-white text-xs px-4 md:px-6 py-2.5 rounded-2xl font-bold shadow-lg shadow-emerald-500/10 hover:bg-emerald-600 hover:shadow-emerald-500/20 transition flex items-center justify-center gap-2 whitespace-nowrap shrink-0">
                 <i class="fas fa-file-excel text-xs"></i> <span class="hidden sm:inline">Ekspor Excel</span>
             </a>
         </div>

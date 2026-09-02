@@ -152,11 +152,11 @@
                         <td class="px-4 py-3 text-center">
                             <div class="flex items-center justify-center gap-2 mx-auto">
                                 @if(!$laporan->id_infrastruktur)
-                                <a href="{{ route('admin.laporan-warga.convert', $laporan->id) }}" title="Verifikasi & Tindak Lanjuti" class="w-8 h-8 flex items-center justify-center bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg text-xs font-black transition shadow-sm hover:scale-105">
+                                <a href="{{ route('admin.laporan-warga.convert', $laporan->id) }}" wire:navigate title="Verifikasi & Tindak Lanjuti" class="w-8 h-8 flex items-center justify-center bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg text-xs font-black transition shadow-sm hover:scale-105">
                                     <i class="fas fa-check-double"></i>
                                 </a>
                                 @else
-                                <a href="{{ route('admin.infrastruktur.show', $laporan->id_infrastruktur) }}" title="Lihat Infrastruktur" class="w-8 h-8 flex items-center justify-center bg-navy-900 hover:bg-navy-950 text-white rounded-lg text-xs font-black transition shadow-sm hover:scale-105">
+                                <a href="{{ route('admin.infrastruktur.show', $laporan->id_infrastruktur) }}" wire:navigate title="Lihat Infrastruktur" class="w-8 h-8 flex items-center justify-center bg-navy-900 hover:bg-navy-950 text-white rounded-lg text-xs font-black transition shadow-sm hover:scale-105">
                                     <i class="fas fa-eye"></i>
                                 </a>
                                 @endif
@@ -286,11 +286,11 @@
                         
                         <div class="flex gap-2 mt-1">
                             @if(!$laporan->id_infrastruktur)
-                            <a href="{{ route('admin.laporan-warga.convert', $laporan->id) }}" class="flex-1 flex items-center justify-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-lg text-[10px] font-black transition shadow-sm active:scale-95">
+                            <a href="{{ route('admin.laporan-warga.convert', $laporan->id) }}" wire:navigate class="flex-1 flex items-center justify-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-lg text-[10px] font-black transition shadow-sm active:scale-95">
                                 <i class="fas fa-check-double"></i> Tindak Lanjuti
                             </a>
                             @else
-                            <a href="{{ route('admin.infrastruktur.show', $laporan->id_infrastruktur) }}" class="flex-1 flex items-center justify-center gap-1.5 bg-navy-900 hover:bg-navy-950 text-white py-1.5 rounded-lg text-[10px] font-black transition shadow-sm active:scale-95">
+                            <a href="{{ route('admin.infrastruktur.show', $laporan->id_infrastruktur) }}" wire:navigate class="flex-1 flex items-center justify-center gap-1.5 bg-navy-900 hover:bg-navy-950 text-white py-1.5 rounded-lg text-[10px] font-black transition shadow-sm active:scale-95">
                                 <i class="fas fa-eye"></i> Lihat Infrastruktur
                             </a>
                             @endif

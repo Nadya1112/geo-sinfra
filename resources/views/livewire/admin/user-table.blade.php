@@ -26,7 +26,7 @@
                 </button>
             </div>
 
-            <a href="{{ route('admin.users.create') }}" class="w-full md:w-auto bg-gold-500 text-white text-xs px-4 md:px-6 py-2.5 rounded-xl md:rounded-2xl font-bold shadow-lg shadow-gold-500/10 hover:bg-gold-600 hover:shadow-gold-500/20 transition flex items-center justify-center gap-2 whitespace-nowrap shrink-0 mt-2 md:mt-0">
+            <a href="{{ route('admin.users.create') }}" wire:navigate class="w-full md:w-auto bg-gold-500 text-white text-xs px-4 md:px-6 py-2.5 rounded-xl md:rounded-2xl font-bold shadow-lg shadow-gold-500/10 hover:bg-gold-600 hover:shadow-gold-500/20 transition flex items-center justify-center gap-2 whitespace-nowrap shrink-0 mt-2 md:mt-0">
                 <i class="fas fa-user-plus text-xs"></i> <span>Tambah User</span>
             </a>
         </div>
@@ -81,7 +81,7 @@
                         <div class="flex justify-center gap-2">
                             @if($user->role !== 'tim_teknis')
                             
-                            <a href="{{ route('admin.users.edit', $user->id) }}" title="Ubah User" class="w-8 h-8 flex items-center justify-center bg-gold-500 hover:bg-gold-600 text-white rounded-lg text-xs font-black transition shadow-sm hover:scale-105">
+                            <a href="{{ route('admin.users.edit', $user->id) }}" wire:navigate title="Ubah User" class="w-8 h-8 flex items-center justify-center bg-gold-500 hover:bg-gold-600 text-white rounded-lg text-xs font-black transition shadow-sm hover:scale-105">
                                 <i class="fas fa-edit"></i>
                             </a>
                             
@@ -130,7 +130,7 @@
                                 
                                 <div class="flex justify-end gap-2">
                                     @if($user->role !== 'tim_teknis')
-                                    <a href="{{ route('admin.users.edit', $user->id) }}" title="Ubah User" class="w-8 h-8 flex items-center justify-center bg-gold-500 hover:bg-gold-600 text-white rounded-lg text-xs font-black transition shadow-sm active:scale-95">
+                                    <a href="{{ route('admin.users.edit', $user->id) }}" wire:navigate title="Ubah User" class="w-8 h-8 flex items-center justify-center bg-gold-500 hover:bg-gold-600 text-white rounded-lg text-xs font-black transition shadow-sm active:scale-95">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     

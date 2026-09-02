@@ -29,13 +29,13 @@
             </div>
 
             {{-- Tambah --}}
-            <a href="{{ route('admin.infrastruktur.create') }}"
+            <a href="{{ route('admin.infrastruktur.create') }}" wire:navigate
                 class="bg-gold-500 hover:bg-gold-600 text-white text-xs px-5 py-2.5 rounded-2xl font-bold shadow-lg shadow-gold-500/10 hover:shadow-gold-500/20 transition flex items-center justify-center gap-2 whitespace-nowrap w-full lg:w-auto">
                 <i class="fas fa-plus text-xs"></i> Tambah Data
             </a>
             
             {{-- Ekspor Excel --}}
-            <a href="{{ route('admin.infrastruktur.export') }}"
+            <a href="{{ route('admin.infrastruktur.export') }}" wire:navigate
                 class="px-5 py-2.5 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-500 hover:bg-emerald-500 hover:text-white border border-emerald-100 dark:border-emerald-500/20 hover:border-emerald-500 rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2 w-full lg:w-auto">
                 <i class="fas fa-file-excel"></i> Excel
             </a>
@@ -196,13 +196,13 @@
                                 @endif
 
                                 {{-- Detail --}}
-                                <a href="{{ route('admin.infrastruktur.show', $inf->id_infrastruktur) }}" title="Lihat Detail"
+                                <a href="{{ route('admin.infrastruktur.show', $inf->id_infrastruktur) }}" wire:navigate title="Lihat Detail"
                                     class="w-8 h-8 flex items-center justify-center bg-navy-900 hover:bg-navy-950 text-white rounded-lg text-xs font-black transition shadow-sm hover:scale-105">
                                     <i class="fas fa-eye"></i>
                                 </a>
 
                                 {{-- Edit --}}
-                                <a href="{{ route('admin.infrastruktur.edit', $inf->id_infrastruktur) }}" title="Ubah Data"
+                                <a href="{{ route('admin.infrastruktur.edit', $inf->id_infrastruktur) }}" wire:navigate title="Ubah Data"
                                     class="w-8 h-8 flex items-center justify-center bg-gold-500 hover:bg-gold-600 text-white rounded-lg text-xs font-black transition shadow-sm hover:scale-105">
                                     <i class="fas fa-edit"></i>
                                 </a>
@@ -333,11 +333,11 @@
 
                         {{-- Action Icons --}}
                         <div class="flex items-center gap-1.5">
-                            <a href="{{ route('admin.infrastruktur.show', $inf->id_infrastruktur) }}" title="Lihat Detail"
+                            <a href="{{ route('admin.infrastruktur.show', $inf->id_infrastruktur) }}" wire:navigate title="Lihat Detail"
                                 class="w-8 h-8 flex items-center justify-center bg-navy-900 hover:bg-navy-950 text-white rounded-lg text-xs font-black transition shadow-sm active:scale-95">
                                 <i class="fas fa-eye"></i>
                             </a>
-                            <a href="{{ route('admin.infrastruktur.edit', $inf->id_infrastruktur) }}" title="Ubah Data"
+                            <a href="{{ route('admin.infrastruktur.edit', $inf->id_infrastruktur) }}" wire:navigate title="Ubah Data"
                                 class="w-8 h-8 flex items-center justify-center bg-gold-500 hover:bg-gold-600 text-white rounded-lg text-xs font-black transition shadow-sm active:scale-95">
                                 <i class="fas fa-edit"></i>
                             </a>

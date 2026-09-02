@@ -77,7 +77,7 @@
                     @if($rekomendasi)
                         <h5 class="text-sm font-black text-navy-900 dark:text-white mt-4 mb-2 line-clamp-1 leading-snug">{{ $rekomendasi->nama_objek ?? $rekomendasi->nama_infrastruktur }}</h5>
                         <p class="text-sm font-bold text-slate-500 dark:text-slate-400 mb-6 flex items-center gap-1.5"><i class="fas fa-map-marker-alt text-slate-400 dark:text-slate-300"></i> Kelurahan {{ $rekomendasi->nama_kelurahan }}</p>
-                        <a href="{{ route('admin.infrastruktur.show', $rekomendasi->id_infrastruktur) }}" class="inline-flex items-center justify-center gap-2 w-full bg-red-50 dark:bg-red-500/10 dark:bg-red-500/10 text-red-600 dark:text-red-500 dark:text-red-400 py-3 rounded-xl text-xs font-black hover:bg-red-100 dark:hover:bg-red-500/20 transition-colors uppercase tracking-wider">
+                        <a href="{{ route('admin.infrastruktur.show', $rekomendasi->id_infrastruktur) }}" wire:navigate class="inline-flex items-center justify-center gap-2 w-full bg-red-50 dark:bg-red-500/10 dark:bg-red-500/10 text-red-600 dark:text-red-500 dark:text-red-400 py-3 rounded-xl text-xs font-black hover:bg-red-100 dark:hover:bg-red-500/20 transition-colors uppercase tracking-wider">
                             Lihat Detail <i class="fas fa-arrow-right"></i>
                         </a>
                     @else
@@ -163,7 +163,7 @@
                         </button>
                     </div>
 
-                    <a href="{{ route('admin.activity') }}" class="bg-white dark:bg-navy-900/80 dark:backdrop-blur-xl p-8 rounded-[2.5rem] border border-slate-200 dark:border-white/10 shadow-sm flex items-center justify-between group hover:shadow-xl hover:shadow-slate-300/50 dark:hover:shadow-navy-950/50 transition-all">
+                    <a href="{{ route('admin.activity') }}" wire:navigate class="bg-white dark:bg-navy-900/80 dark:backdrop-blur-xl p-8 rounded-[2.5rem] border border-slate-200 dark:border-white/10 shadow-sm flex items-center justify-between group hover:shadow-xl hover:shadow-slate-300/50 dark:hover:shadow-navy-950/50 transition-all">
                         <div class="flex items-center gap-3 md:gap-6">
                             <div class="w-16 h-16 bg-emerald-50 dark:bg-emerald-500/10 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-500 dark:text-emerald-500 rounded-2xl flex items-center justify-center border border-emerald-200 dark:border-emerald-500/20 dark:border-emerald-500/20 shadow-sm group-hover:scale-105 transition-transform">
                                 <i class="fas fa-shield-alt text-3xl"></i>
