@@ -44,22 +44,22 @@
                         {{-- Mini Stats Box --}}
                         <div class="flex sm:flex-col justify-between sm:justify-center gap-4 sm:gap-3 shrink-0 bg-slate-50 dark:bg-white/5 p-4 rounded-2xl border border-slate-200 dark:border-white/10 backdrop-blur-sm w-full sm:w-auto">
                             <div class="text-center sm:text-right">
-                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Kondisi Rusak Berat</p>
+                                <p class="text-[10px] font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-0.5">Kondisi Rusak Berat</p>
                                 <p class="text-lg font-black text-red-500">{{ number_format($totalRusakBerat ?? 0) }} <span class="text-xs text-red-400"><i class="fas fa-exclamation-triangle"></i></span></p>
                             </div>
                             <div class="w-px sm:w-full h-8 sm:h-px bg-white/10 my-auto"></div>
                             <div class="text-center sm:text-right">
-                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Kondisi Rusak Sedang</p>
+                                <p class="text-[10px] font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-0.5">Kondisi Rusak Sedang</p>
                                 <p class="text-lg font-black text-amber-400">{{ number_format($totalRusakSedang ?? 0) }} <span class="text-xs text-amber-300"><i class="fas fa-exclamation-circle"></i></span></p>
                             </div>
                             <div class="w-px sm:w-full h-8 sm:h-px bg-white/10 my-auto"></div>
                             <div class="text-center sm:text-right">
-                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Kondisi Rusak Ringan</p>
+                                <p class="text-[10px] font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-0.5">Kondisi Rusak Ringan</p>
                                 <p class="text-lg font-black text-yellow-400">{{ number_format($totalRusakRingan ?? 0) }} <span class="text-xs text-yellow-300"><i class="fas fa-wrench"></i></span></p>
                             </div>
                             <div class="w-px sm:w-full h-8 sm:h-px bg-white/10 my-auto"></div>
                             <div class="text-center sm:text-right">
-                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Kondisi Baik</p>
+                                <p class="text-[10px] font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-0.5">Kondisi Baik</p>
                                 <p class="text-lg font-black text-emerald-400">{{ number_format($totalBaik ?? 0) }} <span class="text-xs text-emerald-300"><i class="fas fa-check-circle"></i></span></p>
                             </div>
                         </div>
@@ -162,7 +162,7 @@
             <!-- Main Menu Cards -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
                 <a href="{{ route('tim_teknis.monitoring') }}" class="bg-white dark:bg-[#1e1b4b] p-4 md:p-8 rounded-2xl md:rounded-[2.5rem] border border-slate-100 dark:border-white/10 shadow-sm hover:shadow-xl hover:-translate-y-1 md:hover:-translate-y-2 transition-all group relative overflow-hidden">
-                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-navy-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-navy-50 dark:bg-white/5 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
                     <div class="relative z-10 flex flex-col h-full justify-between gap-3 md:gap-6">
                         <div class="w-10 h-10 md:w-14 md:h-14 bg-white dark:bg-navy-900 border border-slate-200 dark:border-white/5 rounded-xl md:rounded-2xl flex items-center justify-center text-navy-900 dark:text-white shadow-lg">
                             <i class="fas fa-map-location-dot text-base md:text-xl"></i>

@@ -91,17 +91,17 @@
     <div class="bg-white dark:bg-[#1e1b4b] rounded-[2rem] p-5 md:p-8 border border-slate-100 dark:border-white/10 shadow-sm mb-4 no-print relative z-20">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             <div class="w-full">
-                <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Cari Nama</label>
+                <label class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest block mb-2">Cari Nama</label>
                 <div class="relative w-full">
                     <input type="text" wire:model.live.debounce.300ms="search" placeholder="Ketik infrastruktur..." class="w-full pl-11 pr-4 py-2.5 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all">
-                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs" wire:loading.remove wire:target="search"></i>
+                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-300 text-xs" wire:loading.remove wire:target="search"></i>
                     <div wire:loading wire:target="search" class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center">
                         <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs"></i>
                     </div>
                 </div>
             </div>
             <div class="w-full">
-                <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Wilayah</label>
+                <label class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest block mb-2">Wilayah</label>
                 <select wire:model.live="kecamatan" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all cursor-pointer">
                     <option value="">Semua Kecamatan</option>
                     @foreach($allKecamatan as $kec)
@@ -112,7 +112,7 @@
                 </select>
             </div>
             <div class="w-full">
-                <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Kondisi</label>
+                <label class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest block mb-2">Kondisi</label>
                 <select wire:model.live="kondisi" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all cursor-pointer">
                     <option value="">Semua Kondisi</option>
                     <option value="Kondisi Baik">Kondisi Baik</option>
@@ -122,7 +122,7 @@
                 </select>
             </div>
             <div class="w-full">
-                <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Infrastruktur</label>
+                <label class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest block mb-2">Infrastruktur</label>
                 <select wire:model.live="jenis" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all cursor-pointer">
                     <option value="">Semua Infrastruktur</option>
                     <option value="Jalan">Jalan</option>
@@ -131,11 +131,11 @@
                 </select>
             </div>
             <div class="w-full">
-                <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Mulai Tanggal</label>
+                <label class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest block mb-2">Mulai Tanggal</label>
                 <input type="date" wire:model.live="start_date" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all cursor-pointer">
             </div>
             <div class="w-full">
-                <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Sampai Tanggal</label>
+                <label class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest block mb-2">Sampai Tanggal</label>
                 <input type="date" wire:model.live="end_date" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all cursor-pointer">
             </div>
             <div class="w-full flex justify-end">
@@ -179,7 +179,7 @@
         <div class="px-4 md:px-8 py-4 md:py-6 border-b border-slate-50 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-slate-50 dark:bg-[#0f0e2c]/30 no-print">
             <div>
                 <h3 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-widest">Data Laporan</h3>
-                <p class="text-xs text-slate-400 font-bold uppercase mt-1">Hasil filter rekapitulasi data</p>
+                <p class="text-xs text-slate-400 dark:text-slate-300 font-bold uppercase mt-1">Hasil filter rekapitulasi data</p>
             </div>
             <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full md:w-auto">
                 <div class="flex items-center justify-between sm:justify-start gap-2 border-b sm:border-b-0 sm:border-r border-slate-200 dark:border-white/20 pb-3 sm:pb-0 pr-0 sm:pr-4">
@@ -191,7 +191,7 @@
                     </button>
                 </div>
                 <div class="flex items-center gap-2 w-full sm:w-auto">
-                    <label class="text-xs font-black text-slate-400 uppercase tracking-widest whitespace-nowrap">Tampilan:</label>
+                    <label class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest whitespace-nowrap">Tampilan:</label>
                     <select wire:model.live="show" class="text-xs font-bold text-navy-900 dark:text-white bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-xl px-3 py-2 focus:outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all shadow-sm cursor-pointer">
                         <option value="10">10 Data</option>
                         <option value="all">Semua Data</option>
@@ -204,22 +204,22 @@
         <div class="bg-navy-50/50 px-6 py-4 border-b border-navy-100/50 flex flex-wrap items-center gap-3 no-print">
             <span class="text-xs font-black text-navy-400 uppercase tracking-widest mr-2">Penyaringan Aktif:</span>
             @if($search)
-                <span class="px-3 py-1 bg-white dark:bg-[#1e1b4b] text-navy-600 rounded-full text-xs font-bold shadow-sm border border-navy-100">
+                <span class="px-3 py-1 bg-white dark:bg-[#1e1b4b] text-navy-600 rounded-full text-xs font-bold shadow-sm border border-navy-100 dark:border-white/10">
                     <i class="fas fa-search mr-1"></i> "{{ $search }}"
                 </span>
             @endif
             @if($kecamatan)
-                <span class="px-3 py-1 bg-white dark:bg-[#1e1b4b] text-navy-600 rounded-full text-xs font-bold shadow-sm border border-navy-100">
+                <span class="px-3 py-1 bg-white dark:bg-[#1e1b4b] text-navy-600 rounded-full text-xs font-bold shadow-sm border border-navy-100 dark:border-white/10">
                     <i class="fas fa-map-marker-alt mr-1"></i> {{ $allKecamatan->where('id_kecamatan', $kecamatan)->first()->nama_kecamatan ?? 'Wilayah' }}
                 </span>
             @endif
             @if($kondisi)
-                <span class="px-3 py-1 bg-white dark:bg-[#1e1b4b] text-navy-600 rounded-full text-xs font-bold shadow-sm border border-navy-100">
+                <span class="px-3 py-1 bg-white dark:bg-[#1e1b4b] text-navy-600 rounded-full text-xs font-bold shadow-sm border border-navy-100 dark:border-white/10">
                     <i class="fas fa-clipboard-list mr-1"></i> {{ $kondisi }}
                 </span>
             @endif
             @if($jenis)
-                <span class="px-3 py-1 bg-white dark:bg-[#1e1b4b] text-navy-600 rounded-full text-xs font-bold shadow-sm border border-navy-100">
+                <span class="px-3 py-1 bg-white dark:bg-[#1e1b4b] text-navy-600 rounded-full text-xs font-bold shadow-sm border border-navy-100 dark:border-white/10">
                     <i class="fas fa-layer-group mr-1"></i> {{ $jenis }}
                 </span>
             @endif
@@ -243,14 +243,14 @@
             <tbody class="divide-y divide-black dark:divide-white/5">
                 @forelse($reports as $index => $item)
                 <tr class="group hover:bg-slate-50 dark:bg-[#0f0e2c]/50 transition-all">
-                    <td class="px-6 py-3 text-xs font-bold text-slate-400 text-center">{{ $show == 'all' ? $index + 1 : ($reports->currentPage() - 1) * $reports->perPage() + $index + 1 }}</td>
+                    <td class="px-6 py-3 text-xs font-bold text-slate-400 dark:text-slate-300 text-center">{{ $show == 'all' ? $index + 1 : ($reports->currentPage() - 1) * $reports->perPage() + $index + 1 }}</td>
                     <td class="px-6 py-3">
                         <span class="text-xs font-black text-navy-900 dark:text-white uppercase">{{ $item->nama_objek }}</span><br style="mso-data-placement:same-cell;">
-                        <span class="text-xs text-slate-400 font-bold uppercase">{{ $item->jenis }}</span>
+                        <span class="text-xs text-slate-400 dark:text-slate-300 font-bold uppercase">{{ $item->jenis }}</span>
                     </td>
                     <td class="px-6 py-3">
                         <span class="text-xs font-bold text-navy-900 dark:text-white">{{ $item->kelurahan->nama_kelurahan ?? '-' }}</span><br style="mso-data-placement:same-cell;">
-                        <span class="text-xs text-slate-400 font-bold uppercase">{{ $item->kelurahan->kecamatan->nama_kecamatan ?? '-' }}</span>
+                        <span class="text-xs text-slate-400 dark:text-slate-300 font-bold uppercase">{{ $item->kelurahan->kecamatan->nama_kecamatan ?? '-' }}</span>
                     </td>
                     <td class="px-6 py-3">
                         <div class="flex justify-center">
@@ -274,7 +274,7 @@
                             </span>
                         </div>
                     </td>
-                    <td class="px-6 py-3 text-center text-xs font-bold text-slate-400">
+                    <td class="px-6 py-3 text-center text-xs font-bold text-slate-400 dark:text-slate-300">
                         {{ $item->created_at->format('d/m/Y') }}
                     </td>
                 </tr>
@@ -283,7 +283,7 @@
                     <td colspan="5" class="px-6 py-20 text-center">
                         <div class="flex flex-col items-center">
                             <i class="fas fa-folder-open text-slate-200 text-4xl mb-4"></i>
-                            <p class="text-xs text-slate-400 font-bold italic uppercase">Tidak ada data yang ditemukan sesuai filter.</p>
+                            <p class="text-xs text-slate-400 dark:text-slate-300 font-bold italic uppercase">Tidak ada data yang ditemukan sesuai filter.</p>
                         </div>
                     </td>
                 </tr>
@@ -315,9 +315,9 @@
                 <div class="flex items-start justify-between gap-3 mb-2">
                     <div class="flex-1 min-w-0">
                         <h4 class="text-sm font-black text-navy-900 dark:text-white leading-tight mb-1 truncate">{{ $item->nama_objek }}</h4>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{{ $item->jenis }}</p>
+                        <p class="text-[10px] font-bold text-slate-400 dark:text-slate-300 uppercase tracking-widest">{{ $item->jenis }}</p>
                     </div>
-                    <span class="text-[10px] font-bold text-slate-400 bg-slate-50 dark:bg-[#0f0e2c] px-2 py-1 rounded shrink-0">
+                    <span class="text-[10px] font-bold text-slate-400 dark:text-slate-300 bg-slate-50 dark:bg-[#0f0e2c] px-2 py-1 rounded shrink-0">
                         {{ $item->created_at->format('d/m/Y') }}
                     </span>
                 </div>
@@ -330,7 +330,7 @@
                 </div>
                 
                 <div class="flex items-center gap-2 border-t border-slate-50 dark:border-white/5 pt-3 mt-1">
-                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Kondisi AI:</span>
+                    <span class="text-[9px] font-bold text-slate-400 dark:text-slate-300 uppercase tracking-widest">Kondisi AI:</span>
                     @php
                         $aiLabel = $item->analisis->label_prioritas ?? '';
                         $aiLabelLower = strtolower($aiLabel);

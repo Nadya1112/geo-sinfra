@@ -50,7 +50,7 @@
         {{-- ── Header ── --}}
         <header class="bg-white/80 dark:bg-[#1e1b4b]/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 px-4 pl-20 md:px-8 py-4 flex justify-between items-center z-40 shrink-0 sticky top-0">
             <div class="flex items-center gap-4 min-w-0">
-                <a href="{{ route('tim_teknis.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 hover:border-gold-200 transition-all shadow-sm hidden md:flex">
+                <a href="{{ route('tim_teknis.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 text-slate-400 dark:text-slate-300 rounded-xl hover:bg-gold-50 dark:hover:bg-gold-500/10 hover:text-gold-600 hover:border-gold-200 transition-all shadow-sm hidden md:flex">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div class="min-w-0">
@@ -62,7 +62,7 @@
             <div class="flex items-center gap-3 md:gap-6 flex-shrink-0">
                 <div class="text-right">
                     <p class="text-[10px] md:text-xs font-black text-navy-900 dark:text-white mt-1" id="mini-clock">00:00 WITA</p>
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter hidden md:block">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-xs font-bold text-slate-400 dark:text-slate-300 uppercase tracking-tighter hidden md:block">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
             </div>
         </header>
@@ -111,7 +111,7 @@
                             </div>
                             
                             <h4 class="font-black text-navy-900 dark:text-white text-lg uppercase tracking-wider">{{ auth()->user()->name }}</h4>
-                            <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-navy-50 border border-navy-100 rounded-lg mt-2">
+                            <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-navy-50 dark:bg-white/5 border border-navy-100 dark:border-white/10 rounded-lg mt-2">
                                 <i class="fas fa-shield-alt text-gold-500 text-xs"></i>
                                 <p class="text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest">{{ auth()->user()->role }}</p>
                             </div>
@@ -123,7 +123,7 @@
                         <div class="bg-white dark:bg-[#1e1b4b] rounded-[2.5rem] p-10 border border-slate-100 dark:border-white/10 shadow-sm">
                             <div class="mb-8 border-b border-slate-100 dark:border-white/10 pb-5">
                                 <h3 class="text-lg font-black text-navy-900 dark:text-white uppercase tracking-wider">Informasi Pribadi</h3>
-                                <p class="text-xs text-slate-400 font-semibold mt-1">Perbarui informasi dasar dan kredensial akun Pengawas Anda</p>
+                                <p class="text-xs text-slate-400 dark:text-slate-300 font-semibold mt-1">Perbarui informasi dasar dan kredensial akun Pengawas Anda</p>
                             </div>
 
                             <div class="space-y-6">
@@ -149,12 +149,12 @@
 
                                 <div class="pt-6 border-t border-slate-100 dark:border-white/10">
                                     <div class="flex items-center gap-3 mb-5">
-                                        <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400">
+                                        <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 dark:text-slate-300">
                                             <i class="fas fa-lock text-xs"></i>
                                         </div>
                                         <div>
                                             <h4 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-wider">Keamanan Akun</h4>
-                                            <p class="text-xs font-bold text-slate-400 italic">Kosongkan jika tidak ingin mengubah kata sandi</p>
+                                            <p class="text-xs font-bold text-slate-400 dark:text-slate-300 italic">Kosongkan jika tidak ingin mengubah kata sandi</p>
                                         </div>
                                     </div>
 

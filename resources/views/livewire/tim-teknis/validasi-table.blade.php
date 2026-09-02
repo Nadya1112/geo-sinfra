@@ -12,12 +12,12 @@
                 </div>
                 <div>
                     <h3 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-widest">Antrean Validasi</h3>
-                    <p class="text-xs text-slate-400 font-bold uppercase mt-1">Daftar laporan surveyor yang menunggu keputusan</p>
+                    <p class="text-xs text-slate-400 dark:text-slate-300 font-bold uppercase mt-1">Daftar laporan surveyor yang menunggu keputusan</p>
                 </div>
             </div>
             <div>
                 <div class="flex items-center gap-2 relative z-20">
-                    <label class="text-xs font-black text-slate-400 uppercase tracking-widest">Tampilan:</label>
+                    <label class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest">Tampilan:</label>
                     <select wire:model.live="show" class="text-xs font-bold text-navy-900 dark:text-white bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-xl px-3 py-2 focus:outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all shadow-sm cursor-pointer">
                         <option value="10">10 Data</option>
                         <option value="all">Semua Data</option>
@@ -32,10 +32,10 @@
                 <!-- Filter Status -->
                 <div class="flex flex-wrap gap-2 mb-2 items-center justify-between w-full">
                     <div class="flex flex-wrap gap-2">
-                        <button wire:click="setStatusFilter('All')" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all cursor-pointer {{ $statusFilter == 'All' ? 'bg-navy-900 text-white shadow-md' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Semua Antrean</button>
-                        <button wire:click="setStatusFilter('Pending')" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all cursor-pointer {{ $statusFilter == 'Pending' ? 'bg-amber-500 text-white shadow-md shadow-amber-500/20' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Menunggu</button>
-                        <button wire:click="setStatusFilter('Validated')" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all cursor-pointer {{ $statusFilter == 'Validated' ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Disetujui (Validated)</button>
-                        <button wire:click="setStatusFilter('Rejected')" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all cursor-pointer {{ $statusFilter == 'Rejected' ? 'bg-rose-500 text-white shadow-md shadow-rose-500/20' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Ditolak / Perbaikan</button>
+                        <button wire:click="setStatusFilter('All')" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all cursor-pointer {{ $statusFilter == 'All' ? 'bg-navy-900 text-white shadow-md' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 dark:text-slate-300 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Semua Antrean</button>
+                        <button wire:click="setStatusFilter('Pending')" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all cursor-pointer {{ $statusFilter == 'Pending' ? 'bg-amber-500 text-white shadow-md shadow-amber-500/20' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 dark:text-slate-300 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Menunggu</button>
+                        <button wire:click="setStatusFilter('Validated')" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all cursor-pointer {{ $statusFilter == 'Validated' ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 dark:text-slate-300 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Disetujui (Validated)</button>
+                        <button wire:click="setStatusFilter('Rejected')" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all cursor-pointer {{ $statusFilter == 'Rejected' ? 'bg-rose-500 text-white shadow-md shadow-rose-500/20' : 'bg-white dark:bg-[#1e1b4b] text-slate-400 dark:text-slate-300 hover:bg-slate-100 border border-slate-200 dark:border-white/20' }}">Ditolak / Perbaikan</button>
                     </div>
                     <div>
                         <a href="{{ route('tim_teknis.laporan.pdf') }}?status={{ $statusFilter }}&kecamatan={{ $kecamatan }}&start={{ $start_date }}&end={{ $end_date }}" target="_blank" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all cursor-pointer bg-red-600 hover:bg-red-700 text-white shadow-md shadow-red-500/20 flex items-center gap-2">
@@ -47,17 +47,17 @@
                 <!-- Advanced Filter -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end bg-slate-50 dark:bg-[#0f0e2c]/50 p-4 rounded-2xl border border-slate-100 dark:border-white/10">
                     <div class="w-full">
-                        <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Pencarian</label>
+                        <label class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest block mb-2">Pencarian</label>
                         <div class="relative w-full">
                             <input type="text" wire:model.live.debounce.300ms="search" placeholder="Cari infrastruktur..." class="w-full pl-11 pr-4 py-2.5 bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 rounded-xl text-xs font-bold text-navy-900 dark:text-white shadow-sm focus:outline-none focus:border-gold-500 transition-all">
-                            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs" wire:loading.remove wire:target="search"></i>
+                            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-300 text-xs" wire:loading.remove wire:target="search"></i>
                             <div wire:loading wire:target="search" class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center">
                                 <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs"></i>
                             </div>
                         </div>
                     </div>
                     <div class="w-full">
-                        <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Wilayah Kecamatan</label>
+                        <label class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest block mb-2">Wilayah Kecamatan</label>
                         <select wire:model.live="kecamatan" class="w-full bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:border-gold-500 transition-all shadow-sm cursor-pointer">
                             <option value="">Semua Kecamatan</option>
                             @foreach($allKecamatan as $kec)
@@ -68,11 +68,11 @@
                         </select>
                     </div>
                     <div class="w-full">
-                        <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Mulai Tanggal</label>
+                        <label class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest block mb-2">Mulai Tanggal</label>
                         <input type="date" wire:model.live="start_date" class="w-full bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:border-gold-500 transition-all shadow-sm cursor-pointer">
                     </div>
                     <div class="w-full">
-                        <label class="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Sampai Tanggal</label>
+                        <label class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest block mb-2">Sampai Tanggal</label>
                         <input type="date" wire:model.live="end_date" class="w-full bg-white dark:bg-[#1e1b4b] border border-slate-200 dark:border-white/20 rounded-xl px-4 py-2.5 text-xs font-bold text-navy-900 dark:text-white focus:outline-none focus:border-gold-500 transition-all shadow-sm cursor-pointer">
                     </div>
                 </div>
@@ -110,13 +110,13 @@
                             </div>
                             <div>
                                 <h4 class="text-[13px] font-black text-navy-900 dark:text-white leading-tight mb-0.5">{{ $item->nama_objek }}</h4>
-                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">{{ $item->jenis }}</p>
+                                <p class="text-xs font-bold text-slate-400 dark:text-slate-300 uppercase tracking-widest">{{ $item->jenis }}</p>
                             </div>
                         </div>
                     </td>
                     <td class="px-6 py-5 min-w-[150px]">
                         <p class="text-xs font-bold text-navy-900 dark:text-white mb-0.5">{{ $item->kelurahan->nama_kelurahan ?? '-' }}</p>
-                        <p class="text-xs text-slate-400 font-bold uppercase tracking-widest">{{ $item->kelurahan->kecamatan->nama_kecamatan ?? '-' }}</p>
+                        <p class="text-xs text-slate-400 dark:text-slate-300 font-bold uppercase tracking-widest">{{ $item->kelurahan->kecamatan->nama_kecamatan ?? '-' }}</p>
                     </td>
                     <td class="px-6 py-5 min-w-[150px]">
                         <div class="flex items-center gap-3">
@@ -146,7 +146,7 @@
                                 {{ $aiLabel ?: 'Belum Dianalisis' }}
                             </span>
                             @if($aiScore !== null)
-                                <span class="text-xs font-bold text-slate-400 uppercase flex items-center gap-1.5 tracking-widest mt-1">
+                                <span class="text-xs font-bold text-slate-400 dark:text-slate-300 uppercase flex items-center gap-1.5 tracking-widest mt-1">
                                     <i class="fas fa-chart-bar text-gold-500"></i> Skor Prioritas: {{ number_format($aiScore, 1) }}%
                                 </span>
                             @endif
@@ -175,7 +175,7 @@
                     <td class="px-6 py-5 min-w-[260px]">
                         <div class="flex items-center justify-center gap-2">
                             {{-- Detail --}}
-                            <a href="{{ route('tim_teknis.infrastruktur.show', $item->id_infrastruktur) }}" class="flex items-center justify-center gap-2 px-3 py-2.5 bg-navy-50 text-navy-900 dark:text-white rounded-xl hover:bg-gold-500 hover:text-white transition-all border border-navy-100 shadow-sm group" title="Lihat Detail">
+                            <a href="{{ route('tim_teknis.infrastruktur.show', $item->id_infrastruktur) }}" class="flex items-center justify-center gap-2 px-3 py-2.5 bg-navy-50 dark:bg-white/5 text-navy-900 dark:text-white rounded-xl hover:bg-gold-500 hover:text-white transition-all border border-navy-100 dark:border-white/10 shadow-sm group" title="Lihat Detail">
                                 <i class="fas fa-eye text-xs group-hover:scale-110 transition-transform"></i>
                                 <span class="text-xs font-black uppercase tracking-widest hidden 2xl:block">Detail</span>
                             </a>
@@ -213,7 +213,7 @@
                             <div class="w-16 h-16 bg-slate-50 dark:bg-[#0f0e2c] rounded-full flex items-center justify-center text-slate-300">
                                 <i class="fas fa-clipboard-check text-2xl"></i>
                             </div>
-                            <p class="text-sm font-bold text-slate-400 uppercase tracking-widest">Tidak ada data untuk divalidasi</p>
+                            <p class="text-sm font-bold text-slate-400 dark:text-slate-300 uppercase tracking-widest">Tidak ada data untuk divalidasi</p>
                         </div>
                     </td>
                 </tr>
@@ -237,7 +237,7 @@
                     
                     <div class="flex-1 min-w-0">
                         <h4 class="text-sm font-black text-navy-900 dark:text-white leading-tight mb-1 truncate">{{ $item->nama_objek }}</h4>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">{{ $item->jenis }}</p>
+                        <p class="text-[10px] font-bold text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1">{{ $item->jenis }}</p>
                         
                         <div class="flex items-center gap-1.5 mt-1">
                             <i class="fas fa-map-marker-alt text-[10px] text-gold-500"></i>
@@ -257,7 +257,7 @@
 
                 <div class="flex items-center justify-between mb-4 border-y border-slate-50 dark:border-white/5 py-3">
                     <div class="flex flex-col gap-1 w-1/2">
-                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Kondisi AI</span>
+                        <span class="text-[9px] font-bold text-slate-400 dark:text-slate-300 uppercase tracking-widest">Kondisi AI</span>
                         @php
                             $aiLabel = $item->analisis->label_prioritas ?? '';
                             $aiLabelLower = strtolower($aiLabel);
@@ -278,7 +278,7 @@
                     <div class="w-px h-8 bg-slate-100 dark:bg-white/10"></div>
 
                     <div class="flex flex-col gap-1 w-1/2 pl-3 items-end">
-                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Validasi</span>
+                        <span class="text-[9px] font-bold text-slate-400 dark:text-slate-300 uppercase tracking-widest">Validasi</span>
                         @php
                             $statusClass = match($item->status_validasi) {
                                 'Validated' => 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400',
@@ -298,7 +298,7 @@
                 </div>
 
                 <div class="flex gap-2">
-                    <a href="{{ route('tim_teknis.infrastruktur.show', $item->id_infrastruktur) }}" class="flex-[0.5] py-2 flex items-center justify-center gap-1.5 bg-navy-50 text-navy-900 rounded-xl hover:bg-gold-500 hover:text-white transition-all font-bold text-[10px] uppercase tracking-wider">
+                    <a href="{{ route('tim_teknis.infrastruktur.show', $item->id_infrastruktur) }}" class="flex-[0.5] py-2 flex items-center justify-center gap-1.5 bg-navy-50 dark:bg-white/5 text-navy-900 dark:text-white rounded-xl hover:bg-gold-500 hover:text-white transition-all font-bold text-[10px] uppercase tracking-wider">
                         <i class="fas fa-eye"></i> Detail
                     </a>
 
@@ -339,7 +339,7 @@
                 @else
                     <h3 class="text-xl font-black text-emerald-600">Setujui Validasi</h3>
                 @endif
-                <button type="button" wire:click="closeModal" class="w-8 h-8 flex items-center justify-center bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 rounded-xl hover:bg-rose-50 hover:text-rose-500 transition-colors border border-slate-100 dark:border-white/10">
+                <button type="button" wire:click="closeModal" class="w-8 h-8 flex items-center justify-center bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 dark:text-slate-300 rounded-xl hover:bg-rose-50 hover:text-rose-500 transition-colors border border-slate-100 dark:border-white/10">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -354,7 +354,7 @@
             
             <div class="mb-8">
                 @if($modalAction === 'Rejected')
-                    <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Catatan / Alasan Penolakan</label>
+                    <label class="block text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-2">Catatan / Alasan Penolakan</label>
                     <textarea wire:model="alasan" rows="4" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl p-4 text-sm font-medium text-navy-900 dark:text-white focus:outline-none focus:border-rose-500 focus:ring-4 focus:ring-rose-500/20 transition-all placeholder:text-slate-300" placeholder="Ketik alasan penolakan di sini..."></textarea>
                     @error('alasan')
                     <p class="text-xs text-rose-500 mt-2 font-bold flex items-center gap-1.5">
@@ -362,7 +362,7 @@
                     </p>
                     @enderror
                 @else
-                    <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Rekomendasi Penanganan (Manual)</label>
+                    <label class="block text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-2">Rekomendasi Penanganan (Manual)</label>
                     <textarea wire:model="rekomendasi_manual" rows="4" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-2xl p-4 text-sm font-medium text-navy-900 dark:text-white focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 transition-all placeholder:text-slate-300" placeholder="Ketik rekomendasi teknis di sini (opsional)..."></textarea>
                 @endif
             </div>

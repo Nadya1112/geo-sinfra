@@ -56,7 +56,7 @@
         <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 px-4 pl-16 md:px-8 py-4 flex justify-between items-center z-40 shrink-0">
             <div class="flex items-center gap-4">
                 <a href="{{ route('admin.dashboard') }}"
-                   class="hidden md:flex w-10 h-10 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/30 hover:shadow-md transition-all group">
+                   class="hidden md:flex w-10 h-10 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 rounded-xl flex items-center justify-center text-slate-400 dark:text-slate-300 hover:text-gold-500 hover:border-gold-500/30 hover:shadow-md transition-all group">
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
                 <div>
@@ -72,7 +72,7 @@
             <div class="flex items-center gap-3 md:gap-6">
                 <div class="text-right">
                     <p class="text-xs font-black text-navy-900 dark:text-white dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('d M Y') }}</p>
+                    <p class="text-[9px] font-bold text-slate-400 dark:text-slate-300 uppercase tracking-tighter">{{ now()->translatedFormat('d M Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100 dark:bg-navy-950/50"></div>
                 <div class="flex items-center gap-3">
@@ -105,9 +105,9 @@
                         </div>
                         <span class="text-xs font-black text-emerald-500 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 px-2 py-1 rounded-lg uppercase tracking-wider">Aktif</span>
                     </div>
-                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Total Infrastruktur</p>
+                    <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1">Total Infrastruktur</p>
                     <h3 class="text-3xl font-black text-navy-900 dark:text-white">{{ $jumlahInfrastruktur }}</h3>
-                    <p class="text-xs text-slate-400 font-semibold mt-1">Objek terdaftar</p>
+                    <p class="text-xs text-slate-400 dark:text-slate-300 font-semibold mt-1">Objek terdaftar</p>
                 </a>
 
                 {{-- Analisis AI --}}
@@ -118,9 +118,9 @@
                         </div>
                         <span class="text-xs font-black text-gold-600 dark:text-gold-500 bg-gold-50 dark:bg-gold-500/10 border border-gold-100 dark:border-gold-500/20 px-2 py-1 rounded-lg uppercase tracking-wider">AI</span>
                     </div>
-                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Teranalisis AI</p>
+                    <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1">Teranalisis AI</p>
                     <h3 class="text-3xl font-black text-navy-900 dark:text-white">{{ $jumlahAnalisis }}</h3>
-                    <p class="text-xs text-slate-400 font-semibold mt-1">Data diproses</p>
+                    <p class="text-xs text-slate-400 dark:text-slate-300 font-semibold mt-1">Data diproses</p>
                 </a>
 
                 {{-- Surveyor & Tim Teknis --}}
@@ -129,11 +129,11 @@
                         <div class="w-11 h-11 bg-navy-500 rounded-2xl flex items-center justify-center shadow-md shadow-navy-500/20">
                             <i class="fas fa-users text-white"></i>
                         </div>
-                        <span class="text-xs font-black text-navy-800 bg-navy-50 border border-navy-100 px-2 py-1 rounded-lg uppercase tracking-wider">User</span>
+                        <span class="text-xs font-black text-navy-800 bg-navy-50 dark:bg-white/5 border border-navy-100 dark:border-white/10 px-2 py-1 rounded-lg uppercase tracking-wider">User</span>
                     </div>
-                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Surveyor & Tim Teknis</p>
+                    <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1">Surveyor & Tim Teknis</p>
                     <h3 class="text-3xl font-black text-navy-900 dark:text-white">{{ $jumlahSurveyor + $jumlahTimTeknis }}</h3>
-                    <p class="text-xs text-slate-400 font-semibold mt-1">{{ $jumlahSurveyor }} surveyor · {{ $jumlahTimTeknis }} tim_teknis</p>
+                    <p class="text-xs text-slate-400 dark:text-slate-300 font-semibold mt-1">{{ $jumlahSurveyor }} surveyor · {{ $jumlahTimTeknis }} tim_teknis</p>
                 </a>
 
                 {{-- Wilayah --}}
@@ -144,9 +144,9 @@
                         </div>
                         <span class="text-xs font-black text-emerald-600 dark:text-emerald-500 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 px-2 py-1 rounded-lg uppercase tracking-wider">SIG</span>
                     </div>
-                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Wilayah</p>
+                    <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1">Wilayah</p>
                     <h3 class="text-3xl font-black text-navy-900 dark:text-white">{{ $jumlahWilayah }}</h3>
-                    <p class="text-xs text-slate-400 font-semibold mt-1">Kecamatan terpetakan</p>
+                    <p class="text-xs text-slate-400 dark:text-slate-300 font-semibold mt-1">Kecamatan terpetakan</p>
                 </a>
             </div>
 
@@ -161,7 +161,7 @@
                             </div>
                             <div>
                                 <h4 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-wider">Prediksi Prioritas Perbaikan</h4>
-                                <p class="text-xs text-slate-400 font-semibold mt-0.5">Berdasarkan klasifikasi Hybrid AI (CNN + Decision Tree)</p>
+                                <p class="text-xs text-slate-400 dark:text-slate-300 font-semibold mt-0.5">Berdasarkan klasifikasi Hybrid AI (CNN + Decision Tree)</p>
                             </div>
                         </div>
 
@@ -188,7 +188,7 @@
                                             <p class="text-xs font-black text-navy-900 dark:text-white">{{ $p['label'] }}</p>
                                             <div class="flex items-center gap-2">
                                                 <span class="text-xs font-bold {{ $p['text'] }}">{{ $pct }}%</span>
-                                                <span class="text-xs font-black text-navy-900 dark:text-white">{{ $p['count'] }} <span class="text-xs text-slate-400 font-semibold">titik</span></span>
+                                                <span class="text-xs font-black text-navy-900 dark:text-white">{{ $p['count'] }} <span class="text-xs text-slate-400 dark:text-slate-300 font-semibold">titik</span></span>
                                             </div>
                                         </div>
                                         <div class="w-full bg-white/70 h-1.5 rounded-full overflow-hidden">
@@ -236,7 +236,7 @@
                                         <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{{ $item['label'] }}</span>
                                     </div>
                                     <p class="text-xl font-black {{ $item['text'] }}">{{ $item['count'] }}</p>
-                                    <p class="text-xs text-slate-400 font-semibold">{{ $total > 0 ? round(($item['count']/$total)*100) : 0 }}%</p>
+                                    <p class="text-xs text-slate-400 dark:text-slate-300 font-semibold">{{ $total > 0 ? round(($item['count']/$total)*100) : 0 }}%</p>
                                 </div>
                                 @endforeach
                             </div>

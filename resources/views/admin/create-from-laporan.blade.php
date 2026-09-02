@@ -58,10 +58,10 @@
         <style>
             #mobile-menu-btn { display: none !important; }
         </style>
-        <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 px-4  md:px-8 py-4 flex justify-between items-center z-40 shrink-0">
+        <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 px-4 md:px-8 py-4 flex justify-between items-center z-40 shrink-0">
             <div class="flex items-center gap-4">
                 <a href="{{ route('admin.laporan-warga') }}"
-                   class="hidden md:flex w-10 h-10 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/30 hover:shadow-md transition-all group"
+                   class="hidden md:flex w-10 h-10 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 rounded-xl flex items-center justify-center text-slate-400 dark:text-slate-300 hover:text-gold-500 hover:border-gold-500/30 hover:shadow-md transition-all group"
                    title="Kembali ke Laporan Warga">
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
@@ -73,7 +73,7 @@
             <div class="flex items-center gap-3 md:gap-6">
                 <div class="text-right">
                     <p class="text-xs font-black text-navy-900 dark:text-white dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('d M Y') }}</p>
+                    <p class="text-[9px] font-bold text-slate-400 dark:text-slate-300 uppercase tracking-tighter">{{ now()->translatedFormat('d M Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100 dark:bg-navy-950/50"></div>
                 <div class="flex items-center gap-3">
@@ -97,7 +97,7 @@
                 <span class="px-3 py-1.5 bg-emerald-500 text-white rounded-xl text-xs font-black tracking-widest uppercase shadow-sm shadow-emerald-500/20">
                     <i class="fas fa-check-double mr-1"></i> Verifikasi Laporan
                 </span>
-                <span class="text-xs text-slate-400 font-semibold">Lengkapi data teknis yang kurang untuk memverifikasi laporan warga menjadi aset infrastruktur.</span>
+                <span class="text-xs text-slate-400 dark:text-slate-300 font-semibold">Lengkapi data teknis yang kurang untuk memverifikasi laporan warga menjadi aset infrastruktur.</span>
             </div>
 
             @if($errors->any())
@@ -242,12 +242,12 @@
                                 @if($laporan->foto)
                                     <img src="{{ asset('storage/' . $laporan->foto) }}" class="w-full h-full object-cover" alt="Foto Laporan">
                                 @else
-                                    <div class="flex items-center justify-center w-full h-full text-slate-400">
+                                    <div class="flex items-center justify-center w-full h-full text-slate-400 dark:text-slate-300">
                                         <i class="fas fa-image text-3xl"></i>
                                     </div>
                                 @endif
                             </div>
-                            <p class="text-xs text-slate-400 font-semibold mt-2">
+                            <p class="text-xs text-slate-400 dark:text-slate-300 font-semibold mt-2">
                                 <i class="fas fa-info-circle mr-1 text-gold-500"></i> Foto ini akan disalin ke database Infrastruktur saat disimpan.
                             </p>
                         </div>

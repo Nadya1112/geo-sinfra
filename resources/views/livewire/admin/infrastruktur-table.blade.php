@@ -2,7 +2,7 @@
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
         <div>
             <h4 class="font-extrabold text-lg text-navy-900 dark:text-white">Data Manajemen Infrastruktur</h4>
-            <p class="text-xs text-slate-400 font-semibold mt-0.5">Kelola seluruh aset infrastruktur permukiman</p>
+            <p class="text-xs text-slate-400 dark:text-slate-300 font-semibold mt-0.5">Kelola seluruh aset infrastruktur permukiman</p>
         </div>
 
         <div class="flex flex-col lg:flex-row items-center gap-3 w-full lg:w-auto">
@@ -22,7 +22,7 @@
                     </div>
                 </div>
                 <button type="button" class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border-y border-r border-slate-100 dark:border-white/10 px-4 md:px-5 py-2.5 rounded-r-2xl hover:bg-slate-50 dark:hover:bg-white/5 dark:bg-navy-950/50 transition-all shadow-sm group shrink-0 relative">
-                    <i class="fas fa-search text-slate-400 group-hover:text-gold-500 transition-colors text-xs" wire:loading.remove wire:target="search"></i>
+                    <i class="fas fa-search text-slate-400 dark:text-slate-300 group-hover:text-gold-500 transition-colors text-xs" wire:loading.remove wire:target="search"></i>
                     <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs hidden" wire:loading.inline-block wire:target="search"></i>
                 </button>
             </div>
@@ -106,7 +106,7 @@
 
                         {{-- No --}}
                         <td class="px-4 py-3 text-center">
-                            <span class="text-xs font-black text-slate-400">{{ $nomor }}</span>
+                            <span class="text-xs font-black text-slate-400 dark:text-slate-300">{{ $nomor }}</span>
                         </td>
 
                         {{-- Foto --}}
@@ -128,7 +128,7 @@
                             <span class="inline-block mt-1 px-2 py-0.5 bg-gold-500/10 text-gold-600 dark:text-gold-500 text-xs font-black rounded-md tracking-wider uppercase">
                                 {{ ucfirst($inf->jenis) }}
                             </span>
-                            <p class="text-xs text-slate-400 mt-1 font-bold">ID: INF-{{ $inf->id_infrastruktur }}</p>
+                            <p class="text-xs text-slate-400 dark:text-slate-300 mt-1 font-bold">ID: INF-{{ $inf->id_infrastruktur }}</p>
                         </td>
 
                         {{-- Wilayah --}}
@@ -149,7 +149,7 @@
                                     <span class="shrink-0 px-1.5 py-0.5 bg-navy-900 text-white rounded text-[7px] font-black tracking-wider">CNN</span>
                                     <span class="text-xs font-bold {{ $cnnLabel ? $cnnColor : 'text-slate-400' }} leading-none">
                                         {{ $cnn ? round($cnn->skor_cnn * 100).'%' : '—' }}
-                                        <span class="text-slate-400">({{ $cnn->label_kondisi ?? 'Scanning' }})</span>
+                                        <span class="text-slate-400 dark:text-slate-300">({{ $cnn->label_kondisi ?? 'Scanning' }})</span>
                                     </span>
                                 </div>
                                 <div class="flex items-center gap-2 w-full">
@@ -174,7 +174,7 @@
 
                                 {{-- Verifikasi --}}
                                 @if(($inf->status_verifikasi ?? 'Pending') == 'Verified')
-                                    <span title="Terverifikasi" class="w-8 h-8 flex items-center justify-center bg-slate-100 dark:bg-navy-950/50 text-slate-400 rounded-lg text-xs font-black border border-black dark:border-white/10 cursor-not-allowed">
+                                    <span title="Terverifikasi" class="w-8 h-8 flex items-center justify-center bg-slate-100 dark:bg-navy-950/50 text-slate-400 dark:text-slate-300 rounded-lg text-xs font-black border border-black dark:border-white/10 cursor-not-allowed">
                                         <i class="fas fa-check-double"></i>
                                     </span>
                                 @else
@@ -222,7 +222,7 @@
                     <tr>
                         <td colspan="7" class="px-8 py-20 text-center">
                             <i class="fas fa-database text-4xl text-slate-200 mb-4 block"></i>
-                            <p class="text-slate-400 font-bold text-sm">Belum Ada Data Infrastruktur.</p>
+                            <p class="text-slate-400 dark:text-slate-300 font-bold text-sm">Belum Ada Data Infrastruktur.</p>
                         </td>
                     </tr>
                     @endforelse
@@ -295,7 +295,7 @@
                             <span class="shrink-0 px-1.5 py-0.5 bg-navy-900 text-white rounded text-[7px] font-black tracking-wider">CNN</span>
                             <span class="text-[10px] font-bold {{ $cnnLabel ? $cnnColor : 'text-slate-400' }} leading-none truncate">
                                 {{ $cnn ? round($cnn->skor_cnn * 100).'%' : '—' }}
-                                <span class="text-slate-400">({{ $cnn->label_kondisi ?? 'Scanning' }})</span>
+                                <span class="text-slate-400 dark:text-slate-300">({{ $cnn->label_kondisi ?? 'Scanning' }})</span>
                             </span>
                         </div>
                         <div class="flex-1 flex items-center gap-2 pl-1">
@@ -310,7 +310,7 @@
                     <div class="flex items-center gap-2 pt-2 border-t border-slate-100 dark:border-white/10">
                         {{-- Verifikasi --}}
                         @if(($inf->status_verifikasi ?? 'Pending') == 'Verified')
-                            <span title="Terverifikasi" class="flex-1 h-8 flex items-center justify-center bg-slate-100 dark:bg-navy-950/50 text-slate-400 rounded-lg text-[10px] uppercase font-black border border-black dark:border-white/10 cursor-not-allowed">
+                            <span title="Terverifikasi" class="flex-1 h-8 flex items-center justify-center bg-slate-100 dark:bg-navy-950/50 text-slate-400 dark:text-slate-300 rounded-lg text-[10px] uppercase font-black border border-black dark:border-white/10 cursor-not-allowed">
                                 <i class="fas fa-check-double mr-1.5"></i> Terverifikasi
                             </span>
                         @else
@@ -351,7 +351,7 @@
                 @empty
                 <div class="px-8 py-16 text-center">
                     <i class="fas fa-database text-4xl text-slate-200 mb-4 block"></i>
-                    <p class="text-slate-400 font-bold text-sm">Belum Ada Data Infrastruktur.</p>
+                    <p class="text-slate-400 dark:text-slate-300 font-bold text-sm">Belum Ada Data Infrastruktur.</p>
                 </div>
                 @endforelse
             </div>

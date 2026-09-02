@@ -2,7 +2,7 @@
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
         <div>
             <h4 class="font-extrabold text-lg text-navy-900 dark:text-white">DATA MASTER WILAYAH</h4>
-            <p class="text-xs text-slate-400 font-medium text-left">Kelola data wilayah cakupan pemetaan infrastruktur</p>
+            <p class="text-xs text-slate-400 dark:text-slate-300 font-medium text-left">Kelola data wilayah cakupan pemetaan infrastruktur</p>
         </div>
         
         <div class="flex flex-wrap items-center gap-2 w-full md:w-auto relative z-20">
@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <button type="button" class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border-y border-r border-slate-100 dark:border-white/10 px-4 md:px-5 py-2.5 rounded-r-2xl hover:bg-slate-50 dark:hover:bg-white/5 dark:bg-navy-950/50 transition-all shadow-sm group shrink-0 relative">
-                    <i class="fas fa-search text-slate-400 group-hover:text-gold-500 transition-colors text-xs" wire:loading.remove wire:target="search"></i>
+                    <i class="fas fa-search text-slate-400 dark:text-slate-300 group-hover:text-gold-500 transition-colors text-xs" wire:loading.remove wire:target="search"></i>
                     <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs hidden" wire:loading.inline-block wire:target="search"></i>
                 </button>
             </div>

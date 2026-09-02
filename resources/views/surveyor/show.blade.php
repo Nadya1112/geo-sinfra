@@ -47,7 +47,7 @@
     @media (max-width: 767px) { html { font-size: 12px; } }
 </style>
 </head>
-<body class="bg-slate-50  flex h-screen overflow-hidden text-slate-800 font-sans   transition-colors duration-300">
+<body class="bg-slate-50 dark:bg-[#0b0a26]/50 flex h-screen overflow-hidden text-slate-800 font-sans transition-colors duration-300">
 
     @include('surveyor.partials.sidebar')
 
@@ -56,26 +56,26 @@
             #mobile-menu-btn { display: none !important; }
         </style>
         {{-- ── Header ── --}}
-        <header class="bg-white/80  backdrop-blur-xl border-b border-slate-100  sticky top-0 px-4  md:px-8 py-4 flex justify-between items-center z-40 shrink-0 shadow-sm">
+        <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 sticky top-0 px-4 md:px-8 py-4 flex justify-between items-center z-40 shrink-0 shadow-sm">
             <div class="flex items-center gap-4">
-                <a href="{{ route('surveyor.history') }}" class="hidden md:flex w-10 h-10  items-center justify-center bg-white  text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 transition-all border border-slate-200  hover:border-gold-200">
+                <a href="{{ route('surveyor.history') }}" class="hidden md:flex w-10 h-10 items-center justify-center bg-white text-slate-400 dark:text-slate-300 rounded-xl hover:bg-gold-50 dark:hover:bg-gold-500/10 hover:text-gold-600 transition-all border border-slate-200 dark:border-white/10 hover:border-gold-200">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
                     <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-0.5">Laporan Detail</p>
-                    <h2 class="text-xl font-black text-navy-900  tracking-tight">Informasi Infrastruktur</h2>
+                    <h2 class="text-xl font-black text-navy-900 dark:text-white tracking-tight">Informasi Infrastruktur</h2>
                 </div>
             </div>
             
             <div class="flex items-center gap-6">
                 <div class="text-right">
-                    <p class="text-sm font-black text-navy-900 " id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-sm font-black text-navy-900 dark:text-white " id="mini-clock">00:00 WITA</p>
+                    <p class="text-[9px] font-bold text-slate-400 dark:text-slate-300 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100"></div>
                 <a href="{{ route('surveyor.profile') }}" class="flex items-center gap-3">
                     <div class="text-right">
-                        <p class="text-xs font-black text-navy-900  leading-none uppercase max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
+                        <p class="text-xs font-black text-navy-900 dark:text-white leading-none uppercase max-w-[100px] sm:max-w-[150px] md:max-w-[300px] truncate">{{ auth()->user()->name }}</p>
                         <p class="text-[10px] md:text-xs font-bold text-emerald-500 uppercase mt-0.5">Aktif</p>
                     </div>
                     <div class="w-10 h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-navy-800 overflow-hidden shadow-md">
@@ -96,7 +96,7 @@
                 <div class="lg:col-span-1 space-y-6">
                     
                     {{-- Preview Gambar --}}
-                    <div class="bg-white  rounded-[2.5rem] p-4 border border-slate-100  shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="bg-white dark:bg-navy-900/90 rounded-[2.5rem] p-4 border border-slate-100 dark:border-white/10 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
                         <div class="relative aspect-[3/4] w-full rounded-[2rem] overflow-hidden bg-navy-950 group flex items-center justify-center">
                             @php $cleanPath = str_replace('\\', '/', $infrastruktur->foto_terbaru); @endphp
                             <img src="{{ asset('storage/' . (str_contains($cleanPath, 'infrastruktur/') ? $cleanPath : 'infrastruktur/' . $cleanPath)) }}" class="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105">
@@ -180,29 +180,29 @@
                     <h4 class="text-xs font-black text-amber-900 uppercase tracking-widest mb-3 flex items-center gap-2">
                         <i class="fas fa-comment-dots text-amber-500"></i> Catatan Eksekutif (Tim Teknis)
                     </h4>
-                    <div class="p-4 bg-white/60  rounded-2xl border border-amber-200/50">
-                        <p class="text-xs font-bold text-slate-600  leading-relaxed">{{ $infrastruktur->alasan_penolakan }}</p>
+                    <div class="p-4 bg-white/60 rounded-2xl border border-amber-200/50">
+                        <p class="text-xs font-bold text-slate-600 leading-relaxed">{{ $infrastruktur->alasan_penolakan }}</p>
                     </div>
                 </div>
                 @endif
 
                 {{-- KOLOM KANAN (Detail Informasi) --}}
                 <div class="lg:col-span-2 space-y-6">
-                    <div class="bg-white  rounded-[2.5rem] p-8 lg:p-10 border border-slate-100  shadow-sm hover:shadow-md transition-shadow space-y-8">
+                    <div class="bg-white dark:bg-navy-900/90 rounded-[2.5rem] p-8 lg:p-10 border border-slate-100 dark:border-white/10 shadow-sm hover:shadow-md transition-shadow space-y-8">
                         
                         {{-- Header Judul --}}
                         <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 border-b border-slate-50 pb-6">
                             <div>
-                                <div class="inline-flex items-center gap-2 px-3 py-1 bg-navy-50  border border-navy-100 rounded-lg mb-3">
+                                <div class="inline-flex items-center gap-2 px-3 py-1 bg-navy-50 dark:bg-white/5 border border-navy-100 dark:border-white/10 rounded-lg mb-3">
                                     <i class="fas fa-layer-group text-xs text-gold-500"></i>
-                                    <p class="text-xs font-black text-navy-900  uppercase tracking-widest">{{ ucfirst($infrastruktur->jenis) }}</p>
+                                    <p class="text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest">{{ ucfirst($infrastruktur->jenis) }}</p>
                                 </div>
-                                <h3 class="text-2xl lg:text-3xl font-black text-navy-900  leading-tight">{{ $infrastruktur->nama_objek ?? $infrastruktur->nama_infrastruktur }}</h3>
+                                <h3 class="text-2xl lg:text-3xl font-black text-navy-900 dark:text-white leading-tight">{{ $infrastruktur->nama_objek ?? $infrastruktur->nama_infrastruktur }}</h3>
                             </div>
                             <div class="sm:text-right shrink-0 space-y-2">
                                 <div>
-                                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Diinput Pada</p>
-                                    <p class="text-xs font-black text-navy-900  mt-1">{{ $infrastruktur->created_at->translatedFormat('d M Y, H:i') }}</p>
+                                    <p class="text-xs font-bold text-slate-400 dark:text-slate-300 uppercase tracking-widest">Diinput Pada</p>
+                                    <p class="text-xs font-black text-navy-900 dark:text-white mt-1">{{ $infrastruktur->created_at->translatedFormat('d M Y, H:i') }}</p>
                                 </div>
                                 {{-- Badge Status Verifikasi Tim Teknis --}}
                                 @php
@@ -226,50 +226,50 @@
 
                         {{-- Info Geospasial --}}
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                            <div class="bg-slate-50  p-5 rounded-[1.5rem] border border-slate-200  flex items-center gap-4 hover:border-gold-300 transition-colors">
-                                <div class="w-12 h-12 rounded-2xl bg-white  flex items-center justify-center text-gold-500 shadow-sm">
+                            <div class="bg-slate-50 dark:bg-[#0b0a26]/50 p-5 rounded-[1.5rem] border border-slate-200 dark:border-white/10 flex items-center gap-4 hover:border-gold-300 transition-colors">
+                                <div class="w-12 h-12 rounded-2xl bg-white dark:bg-navy-900/90 flex items-center justify-center text-gold-500 shadow-sm">
                                     <i class="fas fa-map text-lg"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest">Kecamatan</p>
-                                    <p class="text-sm font-black text-navy-900  mt-0.5">{{ $infrastruktur->kelurahan->kecamatan->nama_kecamatan ?? '-' }}</p>
+                                    <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest">Kecamatan</p>
+                                    <p class="text-sm font-black text-navy-900 dark:text-white mt-0.5">{{ $infrastruktur->kelurahan->kecamatan->nama_kecamatan ?? '-' }}</p>
                                 </div>
                             </div>
-                            <div class="bg-slate-50  p-5 rounded-[1.5rem] border border-slate-200  flex items-center gap-4 hover:border-gold-300 transition-colors">
-                                <div class="w-12 h-12 rounded-2xl bg-white  flex items-center justify-center text-gold-500 shadow-sm">
+                            <div class="bg-slate-50 dark:bg-[#0b0a26]/50 p-5 rounded-[1.5rem] border border-slate-200 dark:border-white/10 flex items-center gap-4 hover:border-gold-300 transition-colors">
+                                <div class="w-12 h-12 rounded-2xl bg-white dark:bg-navy-900/90 flex items-center justify-center text-gold-500 shadow-sm">
                                     <i class="fas fa-city text-lg"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest">Kelurahan</p>
-                                    <p class="text-sm font-black text-navy-900  mt-0.5">{{ $infrastruktur->kelurahan->nama_kelurahan ?? '-' }}</p>
+                                    <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest">Kelurahan</p>
+                                    <p class="text-sm font-black text-navy-900 dark:text-white mt-0.5">{{ $infrastruktur->kelurahan->nama_kelurahan ?? '-' }}</p>
                                 </div>
                             </div>
                         </div>
 
                         {{-- Spesifikasi Teknis Infrastruktur --}}
                         <div class="pt-2">
-                            <h4 class="text-sm font-black text-navy-900  uppercase tracking-widest mb-4 flex items-center gap-2">
+                            <h4 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-widest mb-4 flex items-center gap-2">
                                 <i class="fas fa-ruler-combined text-gold-500"></i> Spesifikasi & Dimensi Lapangan
                             </h4>
                             <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                                <div class="bg-white  p-4 rounded-[1.5rem] border border-slate-200  shadow-sm text-center">
-                                    <span class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Panjang</span>
-                                    <span class="text-xs font-black text-navy-900 ">{{ $infrastruktur->panjang ?? '0' }} m</span>
+                                <div class="bg-white dark:bg-navy-900/90 p-4 rounded-[1.5rem] border border-slate-200 dark:border-white/10 shadow-sm text-center">
+                                    <span class="block text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1.5">Panjang</span>
+                                    <span class="text-xs font-black text-navy-900 dark:text-white ">{{ $infrastruktur->panjang ?? '0' }} m</span>
                                 </div>
-                                <div class="bg-white  p-4 rounded-[1.5rem] border border-slate-200  shadow-sm text-center">
-                                    <span class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Lebar</span>
-                                    <span class="text-xs font-black text-navy-900 ">{{ $infrastruktur->lebar ?? '0' }} m</span>
+                                <div class="bg-white dark:bg-navy-900/90 p-4 rounded-[1.5rem] border border-slate-200 dark:border-white/10 shadow-sm text-center">
+                                    <span class="block text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1.5">Lebar</span>
+                                    <span class="text-xs font-black text-navy-900 dark:text-white ">{{ $infrastruktur->lebar ?? '0' }} m</span>
                                 </div>
-                                <div class="bg-white  p-4 rounded-[1.5rem] border border-slate-200  shadow-sm text-center">
-                                    <span class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Material</span>
-                                    <span class="text-sm font-black text-navy-900 ">{{ $infrastruktur->material_eksisting ?? '-' }}</span>
+                                <div class="bg-white dark:bg-navy-900/90 p-4 rounded-[1.5rem] border border-slate-200 dark:border-white/10 shadow-sm text-center">
+                                    <span class="block text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1.5">Material</span>
+                                    <span class="text-sm font-black text-navy-900 dark:text-white ">{{ $infrastruktur->material_eksisting ?? '-' }}</span>
                                 </div>
-                                <div class="bg-white  p-4 rounded-[1.5rem] border border-slate-200  shadow-sm text-center">
-                                    <span class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Drainase</span>
+                                <div class="bg-white dark:bg-navy-900/90 p-4 rounded-[1.5rem] border border-slate-200 dark:border-white/10 shadow-sm text-center">
+                                    <span class="block text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1.5">Drainase</span>
                                     @if($infrastruktur->has_drainase == 'ya')
                                         <span class="inline-flex px-2 py-0.5 bg-emerald-50 text-emerald-600 rounded text-xs font-black uppercase">Tersedia</span>
                                     @else
-                                        <span class="inline-flex px-2 py-0.5 bg-slate-50  text-slate-500 rounded text-xs font-black uppercase">Tidak</span>
+                                        <span class="inline-flex px-2 py-0.5 bg-slate-50 dark:bg-[#0b0a26]/50 text-slate-500 rounded text-xs font-black uppercase">Tidak</span>
                                     @endif
                                 </div>
                             </div>
@@ -277,12 +277,12 @@
 
                         {{-- Deskripsi Lapangan --}}
                         <div class="pt-2">
-                            <h4 class="text-sm font-black text-navy-900  uppercase tracking-widest mb-4 flex items-center gap-2">
+                            <h4 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-widest mb-4 flex items-center gap-2">
                                 <i class="fas fa-comment-dots text-gold-500"></i> Catatan Deskripsi Kerusakan
                             </h4>
-                            <div class="bg-slate-50  p-5 rounded-[1.5rem] border border-slate-200  relative">
+                            <div class="bg-slate-50 dark:bg-[#0b0a26]/50 p-5 rounded-[1.5rem] border border-slate-200 dark:border-white/10 relative">
                                 <i class="fas fa-quote-left absolute top-4 right-5 text-2xl text-slate-200"></i>
-                                <p class="text-sm font-medium text-slate-700  leading-relaxed pr-8">
+                                <p class="text-sm font-medium text-slate-700 leading-relaxed pr-8">
                                     "{{ $infrastruktur->kondisi }}"
                                 </p>
                             </div>
@@ -290,14 +290,14 @@
 
                         {{-- Peta Lokasi --}}
                         <div class="pt-2">
-                            <h4 class="text-sm font-black text-navy-900  uppercase tracking-widest mb-4 flex items-center gap-2">
+                            <h4 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-widest mb-4 flex items-center gap-2">
                                 <i class="fas fa-satellite text-gold-500"></i> Titik Koordinat Geospasial
                             </h4>
                             <div class="relative rounded-[2rem] border-[6px] border-slate-50 shadow-inner overflow-hidden mb-2">
                                 <div id="map" class="h-[280px] w-full z-0 bg-slate-100"></div>
                             </div>
-                            <p class="text-xs font-black text-slate-400 text-center tracking-widest mt-3">
-                                LAT: <span class="text-navy-900 ">{{ $infrastruktur->latitude }}</span> &nbsp;|&nbsp; LNG: <span class="text-navy-900 ">{{ $infrastruktur->longitude }}</span>
+                            <p class="text-xs font-black text-slate-400 dark:text-slate-300 text-center tracking-widest mt-3">
+                                LAT: <span class="text-navy-900 dark:text-white ">{{ $infrastruktur->latitude }}</span> &nbsp;|&nbsp; LNG: <span class="text-navy-900 dark:text-white ">{{ $infrastruktur->longitude }}</span>
                             </p>
                         </div>
 

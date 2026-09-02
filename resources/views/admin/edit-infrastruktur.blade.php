@@ -108,10 +108,10 @@
         </style>
 
         {{-- ── Header ── --}}
-        <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 px-4  md:px-8 py-4 flex justify-between items-center z-40 shrink-0">
+        <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 px-4 md:px-8 py-4 flex justify-between items-center z-40 shrink-0">
             <div class="flex items-center gap-4">
                 <a href="{{ route('admin.infrastruktur') }}"
-                   class="hidden md:flex w-10 h-10 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/30 hover:shadow-md transition-all group"
+                   class="hidden md:flex w-10 h-10 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 rounded-xl flex items-center justify-center text-slate-400 dark:text-slate-300 hover:text-gold-500 hover:border-gold-500/30 hover:shadow-md transition-all group"
                    title="Kembali ke Manajemen Infrastruktur">
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
@@ -124,7 +124,7 @@
             <div class="flex items-center gap-3 md:gap-6">
                 <div class="text-right">
                     <p class="text-xs font-black text-navy-900 dark:text-white dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('d M Y') }}</p>
+                    <p class="text-[9px] font-bold text-slate-400 dark:text-slate-300 uppercase tracking-tighter">{{ now()->translatedFormat('d M Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100 dark:bg-navy-950/50"></div>
                 <div class="flex items-center gap-3">
@@ -154,7 +154,7 @@
                 <span class="px-3 py-1.5 bg-gold-500/10 text-gold-600 dark:text-gold-500 border border-gold-500/20 rounded-xl text-xs font-black tracking-widest uppercase">
                     ID: INF-{{ $inf->id_infrastruktur }}
                 </span>
-                <span class="text-xs text-slate-400 font-semibold">{{ $inf->nama_objek ?? $inf->nama_infrastruktur }}</span>
+                <span class="text-xs text-slate-400 dark:text-slate-300 font-semibold">{{ $inf->nama_objek ?? $inf->nama_infrastruktur }}</span>
             </div>
 
             <form action="{{ route('admin.infrastruktur.update', $inf->id_infrastruktur) }}" method="POST" enctype="multipart/form-data">
@@ -174,7 +174,7 @@
                                 </div>
                                 <div>
                                     <h4 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-wider">Identitas & Wilayah</h4>
-                                    <p class="text-xs text-slate-400 font-semibold mt-0.5">Nama, jenis, dan lokasi wilayah infrastruktur</p>
+                                    <p class="text-xs text-slate-400 dark:text-slate-300 font-semibold mt-0.5">Nama, jenis, dan lokasi wilayah infrastruktur</p>
                                 </div>
                             </div>
 
@@ -195,9 +195,9 @@
                                             <span class="px-2 py-0.5 bg-navy-900 text-gold-500 rounded-md text-[7px] font-black tracking-wider uppercase">AI</span>
                                             <span class="text-sm font-black text-navy-900 dark:text-white uppercase">{{ ucfirst($inf->jenis) ?? '—' }}</span>
                                         </div>
-                                        <i class="fas fa-lock text-slate-400 text-xs"></i>
+                                        <i class="fas fa-lock text-slate-400 dark:text-slate-300 text-xs"></i>
                                     </div>
-                                    <p class="text-xs text-slate-400 font-semibold mt-1.5">
+                                    <p class="text-xs text-slate-400 dark:text-slate-300 font-semibold mt-1.5">
                                         <i class="fas fa-robot mr-1 text-gold-500"></i> Jenis tidak dapat diubah pada mode edit.
                                     </p>
                                 </div>
@@ -234,7 +234,7 @@
                                 </div>
                                 <div>
                                     <h4 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-wider">Detail Teknis & Parameter AI</h4>
-                                    <p class="text-xs text-slate-400 font-semibold mt-0.5">Data ini digunakan sebagai input model Decision Tree</p>
+                                    <p class="text-xs text-slate-400 dark:text-slate-300 font-semibold mt-0.5">Data ini digunakan sebagai input model Decision Tree</p>
                                 </div>
                             </div>
 
@@ -298,7 +298,7 @@
 
                             <div>
                                 <label class="block text-xs font-black text-navy-900 dark:text-white uppercase tracking-widest mb-2">
-                                    Deskripsi Kerusakan <span class="text-xs text-slate-400 normal-case font-semibold">(Trigger Decision Tree)</span>
+                                    Deskripsi Kerusakan <span class="text-xs text-slate-400 dark:text-slate-300 normal-case font-semibold">(Trigger Decision Tree)</span>
                                     <span class="text-red-400">*</span>
                                 </label>
                                 <textarea name="kondisi" id="kondisi-textarea" rows="3"
@@ -315,7 +315,7 @@
                                         </button>
                                     @endforeach
                                 </div>
-                                <p class="text-xs text-slate-400 mt-2 font-semibold">
+                                <p class="text-xs text-slate-400 dark:text-slate-300 mt-2 font-semibold">
                                     <i class="fas fa-info-circle mr-1"></i> Perubahan teks ini akan otomatis mengupdate skor AI saat disimpan.
                                 </p>
                             </div>
@@ -329,7 +329,7 @@
                                 </div>
                                 <div>
                                     <h4 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-wider">Lokasi Geografis</h4>
-                                    <p class="text-xs text-slate-400 font-semibold mt-0.5">Geser marker di peta atau isi koordinat secara manual</p>
+                                    <p class="text-xs text-slate-400 dark:text-slate-300 font-semibold mt-0.5">Geser marker di peta atau isi koordinat secara manual</p>
                                 </div>
                             </div>
 
@@ -349,7 +349,7 @@
                             </div>
 
                             <div id="edit-map" class="w-full rounded-2xl overflow-hidden" style="height: 260px;"></div>
-                            <p class="text-xs text-slate-400 font-semibold mt-2">
+                            <p class="text-xs text-slate-400 dark:text-slate-300 font-semibold mt-2">
                                 <i class="fas fa-hand-pointer mr-1 text-gold-500"></i> Klik dan geser marker untuk memperbarui koordinat.
                             </p>
                         </div>
@@ -367,7 +367,7 @@
                                 </div>
                                 <div>
                                     <h4 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-wider">Foto Terkini</h4>
-                                    <p class="text-xs text-slate-400 font-semibold mt-0.5">Read-only — ubah via surveyor</p>
+                                    <p class="text-xs text-slate-400 dark:text-slate-300 font-semibold mt-0.5">Read-only — ubah via surveyor</p>
                                 </div>
                             </div>
 
@@ -379,7 +379,7 @@
                                 @else
                                     <div class="text-center">
                                         <i class="fas fa-image text-5xl text-slate-200 mb-2 block"></i>
-                                        <p class="text-xs font-black text-slate-400 uppercase tracking-widest">Tidak Ada Foto</p>
+                                        <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest">Tidak Ada Foto</p>
                                     </div>
                                 @endif
                                 <div class="absolute inset-0 bg-black/30 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -401,19 +401,19 @@
                             @endphp
                             <div class="space-y-3">
                                 <div class="flex justify-between items-center py-2 border-b border-white/10">
-                                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Skor CNN</span>
+                                    <span class="text-xs font-bold text-slate-400 dark:text-slate-300 uppercase tracking-wider">Skor CNN</span>
                                     <span class="text-xs font-black text-gold-500">{{ $cnnData ? round($cnnData->skor_cnn * 100).'%' : '—' }}</span>
                                 </div>
                                 <div class="flex justify-between items-center py-2 border-b border-white/10">
-                                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">CNN Label</span>
+                                    <span class="text-xs font-bold text-slate-400 dark:text-slate-300 uppercase tracking-wider">CNN Label</span>
                                     <span class="text-xs font-black text-white">{{ $cnnData->label_kondisi ?? 'Belum Dianalisis' }}</span>
                                 </div>
                                 <div class="flex justify-between items-center py-2 border-b border-white/10">
-                                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">DT Score</span>
+                                    <span class="text-xs font-bold text-slate-400 dark:text-slate-300 uppercase tracking-wider">DT Score</span>
                                     <span class="text-xs font-black text-gold-500">{{ $dtData->skor_dt ?? '0' }}/100</span>
                                 </div>
                                 <div class="flex justify-between items-center py-2">
-                                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Prioritas</span>
+                                    <span class="text-xs font-bold text-slate-400 dark:text-slate-300 uppercase tracking-wider">Prioritas</span>
                                     <span class="text-xs font-black text-white">{{ $dtData->label_prioritas ?? $inf->kondisi }}</span>
                                 </div>
                             </div>

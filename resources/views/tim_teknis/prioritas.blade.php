@@ -50,7 +50,7 @@
     <main class="flex-1 flex flex-col h-screen overflow-hidden">
         <header class="bg-white dark:bg-[#1e1b4b] border-b border-slate-100 dark:border-white/10 px-4 pl-20 md:px-8 py-4 flex justify-between items-center z-40 sticky top-0">
             <div class="flex items-center gap-4 min-w-0">
-                <a href="{{ route('tim_teknis.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100 dark:border-white/10 hidden md:flex">
+                <a href="{{ route('tim_teknis.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 dark:text-slate-300 rounded-xl hover:bg-gold-50 dark:hover:bg-gold-500/10 hover:text-gold-500 transition-all border border-slate-100 dark:border-white/10 hidden md:flex">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div class="min-w-0">
@@ -62,7 +62,7 @@
             <div class="flex items-center gap-3 md:gap-6 flex-shrink-0">
                 <div class="text-right">
                     <p class="text-[10px] md:text-xs font-black text-navy-900 dark:text-white mt-1" id="mini-clock">00:00 WITA</p>
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter hidden md:block">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-xs font-bold text-slate-400 dark:text-slate-300 uppercase tracking-tighter hidden md:block">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-6 md:h-8 w-[1px] bg-slate-200 dark:bg-white/10"></div>
                 <a href="{{ route('tim_teknis.profile') }}" class="flex items-center gap-2 md:gap-3 group">
@@ -126,11 +126,11 @@
                         <!-- Content Section -->
                         <div class="p-6">
                             <div class="flex items-start gap-3 mb-5 border-b border-slate-50 pb-5">
-                                <div class="w-10 h-10 rounded-xl bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 flex items-center justify-center shrink-0 border border-slate-100 dark:border-white/10">
+                                <div class="w-10 h-10 rounded-xl bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 dark:text-slate-300 flex items-center justify-center shrink-0 border border-slate-100 dark:border-white/10">
                                     <i class="fas fa-map-marker-alt"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Lokasi Detail</p>
+                                    <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1">Lokasi Detail</p>
                                     <p class="text-sm font-bold text-navy-900 dark:text-white leading-tight">
                                         {{ $item->kelurahan->nama_kelurahan ?? '-' }}, {{ $item->kelurahan->kecamatan->nama_kecamatan ?? '-' }}
                                     </p>
@@ -139,7 +139,7 @@
                             
                             <div class="grid grid-cols-2 gap-4 mb-6">
                                 <div>
-                                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Status Kondisi</p>
+                                    <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1.5">Status Kondisi</p>
                                     <div class="flex items-center gap-2 px-3 py-2 bg-rose-50 border border-rose-100 rounded-xl">
                                         <div class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></div>
                                         <span class="text-xs font-black text-rose-600 uppercase tracking-widest whitespace-nowrap">
@@ -148,9 +148,9 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Surveyor</p>
+                                    <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1.5">Surveyor</p>
                                     <div class="flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-[#0f0e2c] border border-slate-100 dark:border-white/10 rounded-xl">
-                                        <i class="fas fa-user-circle text-slate-400"></i>
+                                        <i class="fas fa-user-circle text-slate-400 dark:text-slate-300"></i>
                                         <span class="text-xs font-black text-slate-600 uppercase tracking-widest truncate w-full">
                                             {{ $item->user->name ?? 'Sistem' }}
                                         </span>

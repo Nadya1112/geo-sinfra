@@ -59,9 +59,9 @@
     @include('admin.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-y-auto font-sans">
-        <header class="bg-white/85 dark:bg-navy-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 dark:border-white/5 px-4  md:px-8 py-4 flex justify-between items-center z-40 text-left transition-colors duration-300">
+        <header class="bg-white/85 dark:bg-navy-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 dark:border-white/5 px-4 md:px-8 py-4 flex justify-between items-center z-40 text-left transition-colors duration-300">
             <div class="flex items-center gap-4 text-left">
-                <a href="{{ route('admin.wilayah') }}" class="hidden md:flex w-10 h-10 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/20 hover:shadow-lg hover:shadow-gold-500/5 transition-all group">
+                <a href="{{ route('admin.wilayah') }}" class="hidden md:flex w-10 h-10 bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 rounded-xl flex items-center justify-center text-slate-400 dark:text-slate-300 hover:text-gold-500 hover:border-gold-500/20 hover:shadow-lg hover:shadow-gold-500/5 transition-all group">
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
                 <div class="text-left">
@@ -73,7 +73,7 @@
             <div class="flex items-center gap-6 text-left">
                 <div class="text-right">
                     <p class="text-xs font-black text-navy-900 dark:text-white dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('d M Y') }}</p>
+                    <p class="text-[9px] font-bold text-slate-400 dark:text-slate-300 uppercase tracking-tighter">{{ now()->translatedFormat('d M Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100 dark:bg-navy-950/50"></div>
                 <div class="flex items-center gap-3">
@@ -96,7 +96,7 @@
             <div class="max-w-4xl bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl rounded-[2.5rem] p-10 border border-slate-100 dark:border-white/10 shadow-sm mx-auto">
                 <div class="mb-10 border-b border-slate-50 pb-5 text-left">
                     <h3 class="text-lg font-black text-navy-900 dark:text-white tracking-tight">Informasi Wilayah</h3>
-                    <p class="text-xs text-slate-400 font-medium font-sans">Perbarui koordinat dan nama wilayah administratif</p>
+                    <p class="text-xs text-slate-400 dark:text-slate-300 font-medium font-sans">Perbarui koordinat dan nama wilayah administratif</p>
                 </div>
 
                 <form action="{{ route('admin.wilayah.update', $wilayah->id_kelurahan) }}" method="POST" class="space-y-8 text-left">
@@ -121,9 +121,9 @@
                     </div>
 
                     <div class="text-left">
-                        <label class="block text-xs font-black text-navy-900 dark:text-white tracking-widest mb-2 uppercase">Data Geometri (GeoJSON) <span class="text-slate-400 font-medium normal-case ml-1">(Opsional)</span></label>
+                        <label class="block text-xs font-black text-navy-900 dark:text-white tracking-widest mb-2 uppercase">Data Geometri (GeoJSON) <span class="text-slate-400 dark:text-slate-300 font-medium normal-case ml-1">(Opsional)</span></label>
                         <textarea name="geometri" rows="8" placeholder='{"type": "Polygon", "coordinates": [...]}' class="w-full px-5 py-3 bg-slate-50 dark:bg-navy-950/50 border border-slate-100 dark:border-white/10 rounded-2xl text-xs font-mono focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">{{ old('geometri', $wilayah->geometri) }}</textarea>
-                        <p class="text-xs text-slate-400 mt-2 italic font-medium text-left">Masukkan format GeoJSON untuk menampilkan poligon di peta.</p>
+                        <p class="text-xs text-slate-400 dark:text-slate-300 mt-2 italic font-medium text-left">Masukkan format GeoJSON untuk menampilkan poligon di peta.</p>
                     </div>
 
                     <div class="flex gap-4 pt-6 text-left">

@@ -11,18 +11,18 @@
     @endif
 
     <!-- Filters & Search -->
-    <div class="bg-white p-5 rounded-[2rem] shadow-sm border border-slate-100 flex flex-col md:flex-row gap-4 items-center justify-between mb-4">
+    <div class="bg-white dark:bg-navy-900/90 p-5 rounded-[2rem] shadow-sm border border-slate-100 dark:border-white/10 flex flex-col md:flex-row gap-4 items-center justify-between mb-4">
         <div class="flex flex-col md:flex-row gap-3 w-full">
             <div class="flex-1 relative">
-                <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs" wire:loading.remove wire:target="search"></i>
+                <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-300 text-xs" wire:loading.remove wire:target="search"></i>
                 <div wire:loading wire:target="search" class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center">
                     <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs"></i>
                 </div>
                 <input type="text" wire:model.live.debounce.300ms="search" placeholder="Cari nama pelapor, deskripsi, atau no HP..." 
-                       class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all font-medium">
+                       class="w-full pl-11 pr-4 py-2.5 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-xl text-sm focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all font-medium">
             </div>
             <div class="w-full md:w-48 relative">
-                <select wire:model.live="status" class="w-full pl-4 pr-10 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-navy-900 focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 appearance-none">
+                <select wire:model.live="status" class="w-full pl-4 pr-10 py-2.5 bg-slate-50 dark:bg-[#0b0a26]/50 border border-slate-200 dark:border-white/10 rounded-xl text-sm font-bold text-navy-900 dark:text-white focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 appearance-none">
                     <option value="all">Semua Status</option>
                     <option value="Menunggu">Menunggu</option>
                     <option value="Ditinjau">Ditinjau</option>
@@ -30,7 +30,7 @@
                     <option value="Selesai">Selesai</option>
                     <option value="Ditolak">Ditolak</option>
                 </select>
-                <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
+                <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-300 text-xs pointer-events-none"></i>
             </div>
             @if($search || ($status !== 'all'))
             <button wire:click="$set('search', ''); $set('status', 'all')" class="px-4 py-3 bg-red-50 text-red-600 font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-red-100 transition-all text-center flex items-center justify-center shrink-0" title="Reset Filter">
@@ -41,7 +41,7 @@
     </div>
 
     <!-- Table Container -->
-    <div class="bg-white rounded-[2rem] shadow-xl shadow-slate-200/40 border border-slate-100 overflow-hidden relative">
+    <div class="bg-white rounded-[2rem] shadow-xl shadow-slate-200/40 border border-slate-100 dark:border-white/10 overflow-hidden relative">
 
         <div class="overflow-x-auto custom-scrollbar">
             <table class="w-full text-left text-sm whitespace-nowrap md:whitespace-normal hidden md:table">
@@ -59,16 +59,16 @@
                     <tr class="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors group">
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-2">
-                                <i class="far fa-clock text-slate-400"></i>
+                                <i class="far fa-clock text-slate-400 dark:text-slate-300"></i>
                                 <div>
-                                    <p class="font-bold text-navy-900">{{ \Carbon\Carbon::parse($laporan->created_at)->format('d M Y') }}</p>
+                                    <p class="font-bold text-navy-900 dark:text-white">{{ \Carbon\Carbon::parse($laporan->created_at)->format('d M Y') }}</p>
                                     <p class="text-xs text-slate-500 font-medium">{{ \Carbon\Carbon::parse($laporan->created_at)->format('H:i') }}</p>
                                 </div>
                             </div>
                         </td>
                         <td class="px-6 py-4">
-                            <p class="font-bold text-navy-900">{{ $laporan->nama_pelapor }}</p>
-                            <p class="text-xs font-semibold text-slate-500 mt-0.5"><i class="fas fa-phone-alt text-xs text-slate-400 mr-1"></i> {{ $laporan->no_hp }}</p>
+                            <p class="font-bold text-navy-900 dark:text-white">{{ $laporan->nama_pelapor }}</p>
+                            <p class="text-xs font-semibold text-slate-500 mt-0.5"><i class="fas fa-phone-alt text-xs text-slate-400 dark:text-slate-300 mr-1"></i> {{ $laporan->no_hp }}</p>
                         </td>
                         <td class="px-6 py-4 min-w-[250px]">
                             <p class="text-sm font-medium text-slate-700 line-clamp-2 leading-relaxed mb-2">{{ $laporan->deskripsi }}</p>
@@ -130,7 +130,7 @@
                         </td>
                         <td class="px-4 py-2 text-center">
                             <div class="flex items-center justify-center gap-1.5">
-                                <a href="{{ route('surveyor.laporan.edit', $laporan->id) }}" class="w-7 h-7 flex items-center justify-center bg-white border border-slate-200 text-slate-400 rounded-md hover:bg-gold-500 hover:text-white hover:border-gold-500 hover:shadow-sm transition-all cursor-pointer" title="Ubah Data">
+                                <a href="{{ route('surveyor.laporan.edit', $laporan->id) }}" class="w-7 h-7 flex items-center justify-center bg-white border border-slate-200 dark:border-white/10 text-slate-400 dark:text-slate-300 rounded-md hover:bg-gold-500 hover:text-white hover:border-gold-500 hover:shadow-sm transition-all cursor-pointer" title="Ubah Data">
                                     <i class="fas fa-pen text-xs"></i>
                                 </a>
                                 <a href="{{ route('surveyor.laporan.show', $laporan->id) }}" class="w-7 h-7 flex items-center justify-center bg-navy-900 text-gold-500 rounded-md hover:bg-navy-950 hover:text-white transition-all shadow-sm cursor-pointer" title="Lihat Detail">
@@ -143,7 +143,7 @@
                     <tr>
                         <td colspan="4" class="px-8 py-20 text-center">
                             <i class="fas fa-file-alt text-4xl text-slate-200 mb-4 block"></i>
-                            <p class="text-slate-400 font-bold text-sm">Belum Ada Laporan Warga.</p>
+                            <p class="text-slate-400 dark:text-slate-300 font-bold text-sm">Belum Ada Laporan Warga.</p>
                         </td>
                     </tr>
                     @endforelse
@@ -157,10 +157,10 @@
                     <div class="flex items-start justify-between gap-2 mb-3">
                         <div class="flex items-center gap-2">
                             <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center shrink-0">
-                                <i class="fas fa-user text-slate-400"></i>
+                                <i class="fas fa-user text-slate-400 dark:text-slate-300"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-navy-900 text-sm leading-tight">{{ $laporan->nama_pelapor }}</h4>
+                                <h4 class="font-bold text-navy-900 dark:text-white text-sm leading-tight">{{ $laporan->nama_pelapor }}</h4>
                                 <p class="text-xs text-slate-500 font-medium">{{ \Carbon\Carbon::parse($laporan->created_at)->format('d M Y, H:i') }}</p>
                             </div>
                         </div>
@@ -207,7 +207,7 @@
                         </div>
                     @endif
                     
-                    <div class="flex items-center gap-2 flex-wrap mb-4 border-b border-slate-100 pb-4">
+                    <div class="flex items-center gap-2 flex-wrap mb-4 border-b border-slate-100 dark:border-white/10 pb-4">
                         @if($laporan->foto)
                             <button onclick="showPhotoModal('{{ asset('storage/' . $laporan->foto) }}')" class="flex-1 min-w-[100px] justify-center inline-flex items-center gap-1.5 px-3 py-2 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-colors">
                                 <i class="fas fa-image"></i> Foto
@@ -220,7 +220,7 @@
                     </div>
                     
                     <div class="flex gap-2">
-                        <a href="{{ route('surveyor.laporan.edit', $laporan->id) }}" class="flex-1 py-2 flex items-center justify-center gap-2 bg-white border border-slate-200 text-slate-600 rounded-xl hover:bg-gold-500 hover:text-white hover:border-gold-500 transition-all font-bold text-xs">
+                        <a href="{{ route('surveyor.laporan.edit', $laporan->id) }}" class="flex-1 py-2 flex items-center justify-center gap-2 bg-white border border-slate-200 dark:border-white/10 text-slate-600 rounded-xl hover:bg-gold-500 hover:text-white hover:border-gold-500 transition-all font-bold text-xs">
                             <i class="fas fa-pen"></i> Ubah
                         </a>
                         <a href="{{ route('surveyor.laporan.show', $laporan->id) }}" class="flex-1 py-2 flex items-center justify-center gap-2 bg-navy-900 text-gold-500 rounded-xl hover:bg-navy-950 hover:text-white transition-all font-bold text-xs">
@@ -238,7 +238,7 @@
         </div>
         
         @if($laporanWarga->hasPages())
-        <div class="p-6 border-t border-slate-100 bg-slate-50">
+        <div class="p-6 border-t border-slate-100 dark:border-white/10 bg-slate-50 dark:bg-[#0b0a26]/50">
             {{ $laporanWarga->links() }}
         </div>
         @endif

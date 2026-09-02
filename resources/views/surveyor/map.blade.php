@@ -39,31 +39,31 @@
     @media (max-width: 767px) { html { font-size: 12px; } }
 </style>
 </head>
-<body class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 text-left   transition-colors duration-300">
+<body class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 text-left transition-colors duration-300">
 
     @include('surveyor.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden pb-24 md:pb-0">
-        <header class="bg-white  border-b border-navy-50 sticky top-0 px-4 pl-20 md:px-8 py-4 flex justify-between items-center z-10 shadow-sm relative">
+        <header class="bg-white dark:bg-navy-900/90 border-b border-navy-50 sticky top-0 px-4 pl-20 md:px-8 py-4 flex justify-between items-center z-10 shadow-sm relative">
             <div class="flex items-center gap-4">
-                <a href="{{ route('surveyor.dashboard') }}" class="hidden md:flex w-10 h-10  items-center justify-center bg-navy-50  text-navy-400 rounded-xl hover:bg-gold-50 hover:text-gold-600 transition-all border border-navy-100">
+                <a href="{{ route('surveyor.dashboard') }}" class="hidden md:flex w-10 h-10 items-center justify-center bg-navy-50 dark:bg-white/5 text-navy-400 rounded-xl hover:bg-gold-50 dark:hover:bg-gold-500/10 hover:text-gold-600 transition-all border border-navy-100 dark:border-white/10">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div>
                     <p class="text-xs font-extrabold text-gold-500 uppercase tracking-[0.2em] mb-1">Visualisasi Geografis</p>
-                    <h2 class="text-xl font-black text-navy-900  leading-none">Peta Sebaran Laporan Saya</h2>
+                    <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Peta Sebaran Laporan Saya</h2>
                 </div>
             </div>
             
             <div class="flex items-center gap-3 md:gap-6">
                 <div class="text-right">
-                    <p class="text-[10px] md:text-xs font-black text-navy-900 mt-1" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter hidden md:block">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-[10px] md:text-xs font-black text-navy-900 dark:text-white mt-1" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[10px] font-bold text-slate-400 dark:text-slate-300 uppercase tracking-tighter hidden md:block">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-6 md:h-8 w-[1px] bg-navy-100"></div>
                 <a href="{{ route('surveyor.profile') }}" class="flex items-center gap-2 md:gap-3 group">
                     <div class="text-right">
-                        <p class="text-sm font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-all max-w-[200px] truncate hidden md:block">{{ auth()->user()->name }}</p>
+                        <p class="text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all max-w-[200px] truncate hidden md:block">{{ auth()->user()->name }}</p>
                         <p class="text-[8px] md:text-xs font-bold text-emerald-500 uppercase md:mt-0.5">Aktif</p>
                     </div>
                     <div class="w-8 h-8 md:w-10 md:h-10 bg-navy-900 rounded-xl flex items-center justify-center text-gold-500 border border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md shrink-0">
@@ -78,11 +78,11 @@
         </header>
 
         <!-- Map Toolbar (Outside the map) -->
-        <div class="bg-white border-b border-navy-50 p-3 flex flex-col md:flex-row gap-3 md:items-center justify-between z-[9999] relative shadow-sm">
+        <div class="bg-white dark:bg-navy-900/90 border-b border-navy-50 p-3 flex flex-col md:flex-row gap-3 md:items-center justify-between z-[9999] relative shadow-sm">
             <!-- Search Box -->
             <div class="relative w-full md:w-1/3">
-                <input type="text" id="map-search" placeholder="Cari laporan (contoh: Jalan Teratai)..." class="w-full bg-slate-100 border border-slate-300 rounded-xl px-4 py-2 pl-9 text-sm font-bold text-navy-900 focus:ring-2 focus:ring-gold-500 focus:outline-none transition-all placeholder:text-slate-400">
-                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                <input type="text" id="map-search" placeholder="Cari laporan (contoh: Jalan Teratai)..." class="w-full bg-slate-100 border border-slate-300 dark:border-white/20 rounded-xl px-4 py-2 pl-9 text-sm font-bold text-navy-900 dark:text-white focus:ring-2 focus:ring-gold-500 focus:outline-none transition-all placeholder:text-slate-400">
+                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-300 text-sm"></i>
             </div>
 
             <!-- Controls (Horizontal Scrollable on Mobile) -->
@@ -95,7 +95,7 @@
 
                 <!-- Condition Filter Dropdown Button -->
                 <div class="relative">
-                    <button onclick="toggleConditionMenu()" class="flex-shrink-0 bg-white border border-slate-200 text-slate-600 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 transition-all flex items-center gap-2 shadow-sm">
+                    <button onclick="toggleConditionMenu()" class="flex-shrink-0 bg-white dark:bg-navy-900/90 border border-slate-200 dark:border-white/10 text-slate-600 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 transition-all flex items-center gap-2 shadow-sm">
                         <i class="fas fa-list-check text-gold-500"></i> <span id="current-cond-label">Kondisi</span> <i id="cond-chevron" class="fas fa-chevron-down text-[10px] ml-1"></i>
                     </button>
                     <!-- Condition Dropdown Menu -->
@@ -137,7 +137,7 @@
 
                 <!-- Basemap Layer Button -->
                 <div class="relative">
-                    <button onclick="toggleLayerMenu()" class="flex-shrink-0 bg-white border border-slate-200 text-slate-600 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 transition-all flex items-center gap-2 shadow-sm">
+                    <button onclick="toggleLayerMenu()" class="flex-shrink-0 bg-white dark:bg-navy-900/90 border border-slate-200 dark:border-white/10 text-slate-600 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 transition-all flex items-center gap-2 shadow-sm">
                         <i class="fas fa-layer-group text-blue-500"></i> Basemap
                     </button>
                     <!-- Basemap Dropdown -->
@@ -210,7 +210,7 @@
                                 <i class="fas fa-layer-group text-sm opacity-90 text-gold-500"></i>
                                 <span id="current-cat-label" class="truncate max-w-[130px] text-[10px]">SEMUA KATEGORI</span>
                             </div>
-                            <i id="cat-chevron" class="fas fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                            <i id="cat-chevron" class="fas fa-chevron-down text-[10px] text-slate-400 dark:text-slate-300 transition-transform"></i>
                         </button>
                         
                         <div id="category-options" class="hidden mt-2 p-1.5 bg-[#0f0e2c]/90 rounded-xl border border-white/5 flex flex-col gap-1 max-h-[40vh] overflow-y-auto custom-scrollbar">
@@ -272,7 +272,7 @@
                                 <i class="fas fa-map-location-dot text-sm opacity-90 text-gold-500"></i>
                                 <span id="current-territory-label" class="truncate max-w-[130px] text-[10px]">SEMUA WILAYAH</span>
                             </div>
-                            <i id="territory-chevron" class="fas fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                            <i id="territory-chevron" class="fas fa-chevron-down text-[10px] text-slate-400 dark:text-slate-300 transition-transform"></i>
                         </button>
                         
                         <div id="territory-options" class="hidden mt-1 p-1 flex-col overflow-y-auto custom-scrollbar" style="max-height: 25vh;">
@@ -488,21 +488,21 @@
                         
                         <div class="space-y-2 mb-3.5">
                             <div class="flex items-start gap-2.5">
-                                <i class="fas fa-map-marker-alt text-slate-400 text-xs mt-0.5 w-4 text-center"></i>
+                                <i class="fas fa-map-marker-alt text-slate-400 dark:text-slate-300 text-xs mt-0.5 w-4 text-center"></i>
                                 <span class="text-slate-300 text-sm leading-relaxed flex-1">${point.kelurahan && point.kelurahan.kecamatan ? point.kelurahan.kecamatan.nama_kecamatan : 'Lokasi tidak diketahui'}</span>
                             </div>
                             <div class="flex items-start gap-2.5">
-                                <i class="fas fa-clock text-slate-400 text-xs mt-0.5 w-4 text-center"></i>
+                                <i class="fas fa-clock text-slate-400 dark:text-slate-300 text-xs mt-0.5 w-4 text-center"></i>
                                 <span class="text-slate-300 text-sm leading-relaxed flex-1">Update: ${new Date(point.updated_at).toLocaleDateString('id-ID', {day:'2-digit', month:'long', year:'numeric'})}</span>
                             </div>
                             <div class="flex items-start gap-2.5">
-                                <i class="fas fa-robot text-slate-400 text-xs mt-0.5 w-4 text-center"></i>
+                                <i class="fas fa-robot text-slate-400 dark:text-slate-300 text-xs mt-0.5 w-4 text-center"></i>
                                 <span class="text-slate-300 text-sm leading-relaxed flex-1">Skor CNN: ${point.cnn ? (point.cnn.skor_cnn * 100).toFixed(1) + '%' : 'N/A'}</span>
                             </div>
                         </div>
 
                         <div class="border-t border-white/10 pt-3.5 flex items-center justify-between gap-3 mt-3 mb-3.5">
-                            <span class="text-slate-400 text-xs font-bold uppercase tracking-widest">Kondisi:</span>
+                            <span class="text-slate-400 dark:text-slate-300 text-xs font-bold uppercase tracking-widest">Kondisi:</span>
                             <div class="px-3.5 py-1.5 ${conditionColor} text-xs font-black uppercase tracking-wider rounded-lg shadow-md">
                                 ${prioritas}
                             </div>

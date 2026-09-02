@@ -9,7 +9,7 @@
             {{-- Warning: Kecamatan Belum Dipilih --}}
             <div class="bg-orange-50 border border-orange-100 p-6 rounded-3xl mb-8 flex flex-col md:flex-row items-center justify-between shadow-sm">
                 <div class="flex items-center gap-5 mb-4 md:mb-0">
-                    <div class="w-14 h-14 bg-white  rounded-2xl flex-shrink-0 flex items-center justify-center text-orange-500 shadow-sm border border-orange-100 text-2xl">
+                    <div class="w-14 h-14 bg-white dark:bg-navy-900/90 rounded-2xl flex-shrink-0 flex items-center justify-center text-orange-500 shadow-sm border border-orange-100 text-2xl">
                         <i class="fas fa-exclamation-triangle"></i>
                     </div>
                     <div>
@@ -42,17 +42,17 @@
                         {{-- Mini Stats Box sama seperti Admin --}}
                         <div class="flex sm:flex-col justify-between sm:justify-center gap-4 sm:gap-3 shrink-0 bg-slate-50 dark:bg-white/5 p-4 rounded-2xl border border-slate-200 dark:border-white/10 backdrop-blur-sm w-full sm:w-auto">
                             <div class="text-center sm:text-right">
-                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Rusak Berat</p>
+                                <p class="text-[10px] font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-0.5">Rusak Berat</p>
                                 <p class="text-lg font-black text-red-500">{{ number_format($rusakBerat ?? 0) }} <span class="text-xs text-red-400"><i class="fas fa-exclamation-triangle"></i></span></p>
                             </div>
                             <div class="w-px sm:w-full h-8 sm:h-px bg-white/10 my-auto"></div>
                             <div class="text-center sm:text-right">
-                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Rusak Sedang</p>
+                                <p class="text-[10px] font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-0.5">Rusak Sedang</p>
                                 <p class="text-lg font-black text-amber-400">{{ number_format($rusakSedang ?? 0) }} <span class="text-xs text-amber-300"><i class="fas fa-exclamation-circle"></i></span></p>
                             </div>
                             <div class="w-px sm:w-full h-8 sm:h-px bg-white/10 my-auto"></div>
                             <div class="text-center sm:text-right">
-                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Kondisi Baik</p>
+                                <p class="text-[10px] font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-0.5">Kondisi Baik</p>
                                 <p class="text-lg font-black text-emerald-400">{{ number_format($kondisiBaik ?? 0) }} <span class="text-xs text-emerald-300"><i class="fas fa-check-circle"></i></span></p>
                             </div>
                         </div>
@@ -102,39 +102,39 @@
 
             {{-- Stats Grid --}}
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-                <div class="bg-blue-50  p-6 rounded-3xl border border-blue-100  shadow-sm hover:-translate-y-1 transition-transform">
+                <div class="bg-blue-50 p-6 rounded-3xl border border-blue-100 shadow-sm hover:-translate-y-1 transition-transform">
                     <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 bg-white  rounded-2xl flex items-center justify-center shadow-sm">
+                        <div class="w-11 h-11 bg-white dark:bg-navy-900/90 rounded-2xl flex items-center justify-center shadow-sm">
                             <i class="fas fa-file-alt text-blue-500 "></i>
                         </div>
                     </div>
-                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Total Survey Saya</p>
-                    <h3 class="text-3xl font-black text-blue-600 ">{{ $totalSurvey }} <span class="text-xs font-bold text-slate-400">Laporan</span></h3>
+                    <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1">Total Survey Saya</p>
+                    <h3 class="text-3xl font-black text-blue-600 ">{{ $totalSurvey }} <span class="text-xs font-bold text-slate-400 dark:text-slate-300">Laporan</span></h3>
                 </div>
                 
-                <div class="bg-orange-50  p-6 rounded-3xl border border-orange-100  shadow-sm hover:-translate-y-1 transition-transform">
+                <div class="bg-orange-50 p-6 rounded-3xl border border-orange-100 shadow-sm hover:-translate-y-1 transition-transform">
                     <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 bg-white  text-orange-500  rounded-2xl flex items-center justify-center shadow-sm">
+                        <div class="w-11 h-11 bg-white dark:bg-navy-900/90 text-orange-500 rounded-2xl flex items-center justify-center shadow-sm">
                             <i class="fas fa-clock"></i>
                         </div>
                     </div>
-                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Menunggu Validasi</p>
-                    <h3 class="text-3xl font-black text-orange-600 ">{{ $waitingValidation }} <span class="text-xs font-bold text-slate-400">Objek</span></h3>
+                    <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1">Menunggu Validasi</p>
+                    <h3 class="text-3xl font-black text-orange-600 ">{{ $waitingValidation }} <span class="text-xs font-bold text-slate-400 dark:text-slate-300">Objek</span></h3>
                 </div>
                 
-                <div class="bg-emerald-50  p-6 rounded-3xl border border-emerald-100  shadow-sm hover:-translate-y-1 transition-transform">
+                <div class="bg-emerald-50 p-6 rounded-3xl border border-emerald-100 shadow-sm hover:-translate-y-1 transition-transform">
                     <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 bg-white  text-emerald-500  rounded-2xl flex items-center justify-center shadow-sm">
+                        <div class="w-11 h-11 bg-white dark:bg-navy-900/90 text-emerald-500 rounded-2xl flex items-center justify-center shadow-sm">
                             <i class="fas fa-check-double"></i>
                         </div>
                     </div>
-                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Terverifikasi AI</p>
-                    <h3 class="text-3xl font-black text-emerald-600 ">{{ $verifiedAI }} <span class="text-xs font-bold text-slate-400">Selesai</span></h3>
+                    <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1">Terverifikasi AI</p>
+                    <h3 class="text-3xl font-black text-emerald-600 ">{{ $verifiedAI }} <span class="text-xs font-bold text-slate-400 dark:text-slate-300">Selesai</span></h3>
                 </div>
                 
-                <div class="bg-red-50  p-6 rounded-3xl border border-red-100  shadow-sm hover:-translate-y-1 transition-transform">
+                <div class="bg-red-50 p-6 rounded-3xl border border-red-100 shadow-sm hover:-translate-y-1 transition-transform">
                     <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 bg-white  text-red-500  rounded-2xl flex items-center justify-center shadow-sm">
+                        <div class="w-11 h-11 bg-white dark:bg-navy-900/90 text-red-500 rounded-2xl flex items-center justify-center shadow-sm">
                             <i class="fas fa-rotate-left"></i>
                         </div>
                     </div>
@@ -144,39 +144,39 @@
             </div>
 
             {{-- Stats Grid Laporan Warga --}}
-            <h4 class="font-black text-lg text-navy-900  mb-4 flex items-center gap-2"><i class="fas fa-clipboard-list text-gold-500"></i> Penugasan Laporan Warga</h4>
+            <h4 class="font-black text-lg text-navy-900 dark:text-white mb-4 flex items-center gap-2"><i class="fas fa-clipboard-list text-gold-500"></i> Penugasan Laporan Warga</h4>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-                <a href="{{ route('surveyor.laporan') }}" class="block bg-indigo-50  p-6 rounded-3xl border border-indigo-100  shadow-sm hover:border-indigo-500/50 transition-all group hover:-translate-y-1">
+                <a href="{{ route('surveyor.laporan') }}" class="block bg-indigo-50 p-6 rounded-3xl border border-indigo-100 shadow-sm hover:border-indigo-500/50 transition-all group hover:-translate-y-1">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-white  rounded-2xl flex items-center justify-center text-indigo-500 group-hover:bg-indigo-500 group-hover:text-white transition-colors shadow-sm">
+                        <div class="w-12 h-12 bg-white dark:bg-navy-900/90 rounded-2xl flex items-center justify-center text-indigo-500 group-hover:bg-indigo-500 group-hover:text-white transition-colors shadow-sm">
                             <i class="fas fa-tasks text-xl"></i>
                         </div>
                         <div>
-                            <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Total Tugas</p>
+                            <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1">Total Tugas</p>
                             <h3 class="text-2xl font-black text-indigo-600 ">{{ $totalTugas }}</h3>
                         </div>
                     </div>
                 </a>
                 
-                <a href="{{ route('surveyor.laporan', ['status' => 'Menunggu']) }}" class="block bg-orange-50  p-6 rounded-3xl border border-orange-100  shadow-sm hover:border-orange-500/50 transition-all group hover:-translate-y-1">
+                <a href="{{ route('surveyor.laporan', ['status' => 'Menunggu']) }}" class="block bg-orange-50 p-6 rounded-3xl border border-orange-100 shadow-sm hover:border-orange-500/50 transition-all group hover:-translate-y-1">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-white  rounded-2xl flex items-center justify-center text-orange-500 group-hover:bg-orange-500 group-hover:text-white transition-colors shadow-sm">
+                        <div class="w-12 h-12 bg-white dark:bg-navy-900/90 rounded-2xl flex items-center justify-center text-orange-500 group-hover:bg-orange-500 group-hover:text-white transition-colors shadow-sm">
                             <i class="fas fa-clock text-xl"></i>
                         </div>
                         <div>
-                            <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Tugas Menunggu</p>
+                            <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1">Tugas Menunggu</p>
                             <h3 class="text-2xl font-black text-orange-600 ">{{ $tugasMenunggu }}</h3>
                         </div>
                     </div>
                 </a>
                 
-                <a href="{{ route('surveyor.laporan', ['status' => 'Selesai']) }}" class="block bg-emerald-50  p-6 rounded-3xl border border-emerald-100  shadow-sm hover:border-emerald-500/50 transition-all group hover:-translate-y-1">
+                <a href="{{ route('surveyor.laporan', ['status' => 'Selesai']) }}" class="block bg-emerald-50 p-6 rounded-3xl border border-emerald-100 shadow-sm hover:border-emerald-500/50 transition-all group hover:-translate-y-1">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-white  rounded-2xl flex items-center justify-center text-emerald-500 group-hover:bg-emerald-500 group-hover:text-white transition-colors shadow-sm">
+                        <div class="w-12 h-12 bg-white dark:bg-navy-900/90 rounded-2xl flex items-center justify-center text-emerald-500 group-hover:bg-emerald-500 group-hover:text-white transition-colors shadow-sm">
                             <i class="fas fa-check-circle text-xl"></i>
                         </div>
                         <div>
-                            <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Tugas Selesai</p>
+                            <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1">Tugas Selesai</p>
                             <h3 class="text-2xl font-black text-emerald-600 ">{{ $tugasSelesai }}</h3>
                         </div>
                     </div>
@@ -185,33 +185,33 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {{-- Panduan Survey --}}
-                <div class="bg-white  rounded-[2.5rem] p-8 border border-slate-100  shadow-sm">
+                <div class="bg-white dark:bg-navy-900/90 rounded-[2.5rem] p-8 border border-slate-100 dark:border-white/10 shadow-sm">
                     <div class="flex items-center gap-3 mb-8">
                         <div class="w-8 h-8 bg-white dark:bg-navy-900 border border-slate-200 dark:border-white/5 rounded-xl flex items-center justify-center text-gold-500 shrink-0">
                             <i class="fas fa-book-open text-xs"></i>
                         </div>
-                        <h4 class="font-black text-lg text-navy-900 ">Panduan Survey Cepat</h4>
+                        <h4 class="font-black text-lg text-navy-900 dark:text-white ">Panduan Survey Cepat</h4>
                     </div>
 
                     <div class="space-y-4">
-                        <div class="flex items-start gap-4 p-4 bg-slate-50  rounded-2xl border border-slate-100  group hover:border-gold-500/30 transition-colors">
-                            <div class="w-8 h-8 bg-white  rounded-lg flex items-center justify-center text-gold-500 font-black shadow-sm shrink-0 group-hover:bg-gold-500 group-hover:text-white transition-colors">1</div>
+                        <div class="flex items-start gap-4 p-4 bg-slate-50 dark:bg-[#0b0a26]/50 rounded-2xl border border-slate-100 dark:border-white/10 group hover:border-gold-500/30 transition-colors">
+                            <div class="w-8 h-8 bg-white dark:bg-navy-900/90 rounded-lg flex items-center justify-center text-gold-500 font-black shadow-sm shrink-0 group-hover:bg-gold-500 group-hover:text-white transition-colors">1</div>
                             <div>
-                                <p class="text-xs font-black text-navy-900  uppercase">Pilih Detail Infrastruktur</p>
+                                <p class="text-xs font-black text-navy-900 dark:text-white uppercase">Pilih Detail Infrastruktur</p>
                                 <p class="text-xs text-slate-500 mt-1 font-medium">Pastikan seluruh form mulai dari Jenis hingga Material Utama sesuai kondisi lapangan.</p>
                             </div>
                         </div>
-                        <div class="flex items-start gap-4 p-4 bg-slate-50  rounded-2xl border border-slate-100  group hover:border-gold-500/30 transition-colors">
-                            <div class="w-8 h-8 bg-white  rounded-lg flex items-center justify-center text-gold-500 font-black shadow-sm shrink-0 group-hover:bg-gold-500 group-hover:text-white transition-colors">2</div>
+                        <div class="flex items-start gap-4 p-4 bg-slate-50 dark:bg-[#0b0a26]/50 rounded-2xl border border-slate-100 dark:border-white/10 group hover:border-gold-500/30 transition-colors">
+                            <div class="w-8 h-8 bg-white dark:bg-navy-900/90 rounded-lg flex items-center justify-center text-gold-500 font-black shadow-sm shrink-0 group-hover:bg-gold-500 group-hover:text-white transition-colors">2</div>
                             <div>
-                                <p class="text-xs font-black text-navy-900  uppercase">Ambil Foto Fokus</p>
+                                <p class="text-xs font-black text-navy-900 dark:text-white uppercase">Ambil Foto Fokus</p>
                                 <p class="text-xs text-slate-500 mt-1 font-medium">AI membutuhkan foto yang jelas dan terpusat pada area yang rusak untuk akurasi.</p>
                             </div>
                         </div>
-                        <div class="flex items-start gap-4 p-4 bg-slate-50  rounded-2xl border border-slate-100  group hover:border-gold-500/30 transition-colors">
-                            <div class="w-8 h-8 bg-white  rounded-lg flex items-center justify-center text-gold-500 font-black shadow-sm shrink-0 group-hover:bg-gold-500 group-hover:text-white transition-colors">3</div>
+                        <div class="flex items-start gap-4 p-4 bg-slate-50 dark:bg-[#0b0a26]/50 rounded-2xl border border-slate-100 dark:border-white/10 group hover:border-gold-500/30 transition-colors">
+                            <div class="w-8 h-8 bg-white dark:bg-navy-900/90 rounded-lg flex items-center justify-center text-gold-500 font-black shadow-sm shrink-0 group-hover:bg-gold-500 group-hover:text-white transition-colors">3</div>
                             <div>
-                                <p class="text-xs font-black text-navy-900  uppercase">Aktifkan GPS</p>
+                                <p class="text-xs font-black text-navy-900 dark:text-white uppercase">Aktifkan GPS</p>
                                 <p class="text-xs text-slate-500 mt-1 font-medium">Koordinat akan terisi otomatis jika GPS HP Anda aktif saat form dibuka.</p>
                             </div>
                         </div>
@@ -228,9 +228,9 @@
                                     <span class="px-2 py-0.5 bg-red-500/20 text-red-400 border border-red-500/30 rounded text-xs font-black uppercase tracking-widest">Waspada Banjir</span>
                                 </div>
                                 <h4 class="font-black text-xl leading-none mb-1">Hujan Lebat</h4>
-                                <p class="text-xs text-slate-400 font-bold uppercase tracking-widest">Banjarmasin, 28°C</p>
+                                <p class="text-xs text-slate-400 dark:text-slate-300 font-bold uppercase tracking-widest">Banjarmasin, 28°C</p>
                             </div>
-                            <div class="w-16 h-16 bg-white/10  backdrop-blur-md rounded-2xl flex items-center justify-center text-blue-400 shadow-inner border border-slate-200 dark:border-white/10 shrink-0">
+                            <div class="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-blue-400 shadow-inner border border-slate-200 dark:border-white/10 shrink-0">
                                 <i class="fas fa-cloud-showers-heavy text-3xl"></i>
                             </div>
                         </div>
@@ -248,24 +248,24 @@
                             <div class="flex justify-between items-start mb-8">
                                 <div>
                                     <h4 class="font-black text-lg mb-1">Wilayah Tugas Anda</h4>
-                                    <p class="text-slate-400 text-xs uppercase tracking-widest font-bold">Kecamatan Tanggung Jawab</p>
+                                    <p class="text-slate-400 dark:text-slate-300 text-xs uppercase tracking-widest font-bold">Kecamatan Tanggung Jawab</p>
                                 </div>
-                                <button onclick="toggleModal('territoryModal')" class="px-4 py-2 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10  hover:bg-white/10  text-gold-500 border border-white/10 rounded-xl text-xs font-black uppercase tracking-widest transition-all backdrop-blur-md">
+                                <button onclick="toggleModal('territoryModal')" class="px-4 py-2 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:bg-white/10 text-gold-500 border border-white/10 rounded-xl text-xs font-black uppercase tracking-widest transition-all backdrop-blur-md">
                                     <i class="fas fa-edit mr-2"></i> Kelola
                                 </button>
                             </div>
                             
                             <div class="grid grid-cols-1 gap-3">
                                 @forelse($kecamatans as $assignedKec)
-                                <div class="bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10  border border-white/10 rounded-2xl p-4 backdrop-blur-md flex items-center gap-4 transition-transform hover:-translate-y-1 cursor-default">
+                                <div class="bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 border border-white/10 rounded-2xl p-4 backdrop-blur-md flex items-center gap-4 transition-transform hover:-translate-y-1 cursor-default">
                                     <div class="w-10 h-10 bg-gold-500 rounded-xl flex items-center justify-center text-white shadow-md shadow-gold-500/20">
                                         <i class="fas fa-map-marker-alt"></i>
                                     </div>
                                     <h5 class="text-sm font-black text-gold-500 uppercase tracking-wider">{{ $assignedKec->nama_kecamatan }}</h5>
                                 </div>
                                 @empty
-                                <div class="bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10  border border-white/10 rounded-2xl p-6 backdrop-blur-md text-center">
-                                    <p class="text-xs text-slate-400 font-bold uppercase tracking-widest">Belum ada wilayah tugas.</p>
+                                <div class="bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 border border-white/10 rounded-2xl p-6 backdrop-blur-md text-center">
+                                    <p class="text-xs text-slate-400 dark:text-slate-300 font-bold uppercase tracking-widest">Belum ada wilayah tugas.</p>
                                 </div>
                                 @endforelse
                             </div>
@@ -273,30 +273,30 @@
                     </div>
 
                     {{-- Unggahan Terbaru --}}
-                    <div class="bg-white  rounded-[2.5rem] p-8 border border-slate-100  shadow-sm">
+                    <div class="bg-white dark:bg-navy-900/90 rounded-[2.5rem] p-8 border border-slate-100 dark:border-white/10 shadow-sm">
                         <div class="flex justify-between items-center mb-6">
-                            <h4 class="font-black text-lg text-navy-900 ">Unggahan Terbaru</h4>
+                            <h4 class="font-black text-lg text-navy-900 dark:text-white ">Unggahan Terbaru</h4>
                             <a href="{{ route('surveyor.history') }}" class="text-xs font-black text-gold-500 uppercase tracking-widest hover:text-gold-600 transition-colors">Semua Riwayat</a>
                         </div>
                         <div class="space-y-4">
                             @forelse($recentUploads as $upload)
-                            <div class="flex items-center gap-4 p-3 hover:bg-slate-50   rounded-2xl border border-transparent hover:border-slate-100  transition-all group cursor-pointer">
+                            <div class="flex items-center gap-4 p-3 hover:bg-slate-50 rounded-2xl border border-transparent hover:border-slate-100 transition-all group cursor-pointer">
                                 <div class="w-12 h-12 rounded-xl bg-slate-100 overflow-hidden flex-shrink-0 relative">
                                     <img src="{{ asset('storage/' . $upload->foto_terbaru) }}" class="w-full h-full object-cover">
                                     <div class="absolute inset-0 bg-navy-900/10 group-hover:bg-transparent transition-colors"></div>
                                 </div>
                                 <div class="flex-1 min-w-0">
-                                    <p class="text-xs font-black text-navy-900  truncate uppercase">{{ $upload->nama_infrastruktur }}</p>
-                                    <p class="text-xs text-slate-400 font-bold uppercase">{{ $upload->created_at->diffForHumans() }}</p>
+                                    <p class="text-xs font-black text-navy-900 dark:text-white truncate uppercase">{{ $upload->nama_infrastruktur }}</p>
+                                    <p class="text-xs text-slate-400 dark:text-slate-300 font-bold uppercase">{{ $upload->created_at->diffForHumans() }}</p>
                                 </div>
                                 @if($upload->status_verifikasi == 'Verified')
-                                    <div class="px-2 py-1 bg-emerald-50  text-emerald-600  border border-emerald-100  rounded-lg text-xs font-black uppercase tracking-wider">Terverifikasi</div>
+                                    <div class="px-2 py-1 bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-lg text-xs font-black uppercase tracking-wider">Terverifikasi</div>
                                 @else
-                                    <div class="px-2 py-1 bg-orange-50  text-orange-600  border border-orange-100  rounded-lg text-xs font-black uppercase tracking-wider">Menunggu</div>
+                                    <div class="px-2 py-1 bg-orange-50 text-orange-600 border border-orange-100 rounded-lg text-xs font-black uppercase tracking-wider">Menunggu</div>
                                 @endif
                             </div>
                             @empty
-                            <p class="text-xs text-slate-400 font-bold text-center py-6 uppercase tracking-wider">Belum ada data diunggah.</p>
+                            <p class="text-xs text-slate-400 dark:text-slate-300 font-bold text-center py-6 uppercase tracking-wider">Belum ada data diunggah.</p>
                             @endforelse
                         </div>
                     </div>
@@ -311,12 +311,12 @@
             <div class="fixed inset-0 bg-slate-900/40 dark:bg-navy-900/60 backdrop-blur-sm transition-opacity" onclick="toggleModal('territoryModal')"></div>
             
             <div class="relative bg-white rounded-t-[2.5rem] md:rounded-[2.5rem] w-full max-w-2xl p-6 md:p-8 shadow-2xl transition-all translate-y-full md:translate-y-0 md:scale-95 opacity-0 duration-300 max-h-[90vh] md:max-h-none overflow-y-auto" id="modalContent">
-                <div class="flex justify-between items-center mb-8 pb-4 border-b border-slate-100 ">
+                <div class="flex justify-between items-center mb-8 pb-4 border-b border-slate-100 dark:border-white/10 ">
                     <div>
-                        <h3 class="text-xl font-black text-navy-900 ">Kelola Wilayah Tugas</h3>
-                        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mt-1">Pilih kecamatan yang menjadi tanggung jawab Anda</p>
+                        <h3 class="text-xl font-black text-navy-900 dark:text-white ">Kelola Wilayah Tugas</h3>
+                        <p class="text-xs font-bold text-slate-400 dark:text-slate-300 uppercase tracking-wider mt-1">Pilih kecamatan yang menjadi tanggung jawab Anda</p>
                     </div>
-                    <button onclick="toggleModal('territoryModal')" class="w-10 h-10 flex items-center justify-center bg-slate-50  text-slate-400 rounded-xl hover:bg-red-50 hover:text-red-500 transition-all">
+                    <button onclick="toggleModal('territoryModal')" class="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-[#0b0a26]/50 text-slate-400 dark:text-slate-300 rounded-xl hover:bg-red-50 hover:text-red-500 transition-all">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
@@ -326,11 +326,11 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                         @php $assignedIds = $kecamatans->pluck('id_kecamatan')->toArray(); @endphp
                         @foreach($semuaKecamatan as $kec)
-                        <label class="relative flex items-center gap-3 p-4 bg-slate-50  rounded-2xl border border-slate-100  cursor-pointer hover:bg-gold-50 hover:border-gold-200 transition-all group">
+                        <label class="relative flex items-center gap-3 p-4 bg-slate-50 dark:bg-[#0b0a26]/50 rounded-2xl border border-slate-100 dark:border-white/10 cursor-pointer hover:bg-gold-50 dark:hover:bg-gold-500/10 hover:border-gold-200 transition-all group">
                             <input type="checkbox" name="id_kecamatan[]" value="{{ $kec->id_kecamatan }}" 
                                 {{ in_array($kec->id_kecamatan, $assignedIds) ? 'checked' : '' }}
-                                class="w-5 h-5 rounded-lg text-gold-500 focus:ring-gold-500 border-slate-300 transition-all cursor-pointer">
-                            <span class="text-xs font-bold text-slate-600  group-hover:text-navy-900  uppercase">{{ $kec->nama_kecamatan }}</span>
+                                class="w-5 h-5 rounded-lg text-gold-500 focus:ring-gold-500 border-slate-300 dark:border-white/20 transition-all cursor-pointer">
+                            <span class="text-xs font-bold text-slate-600 group-hover:text-navy-900 uppercase">{{ $kec->nama_kecamatan }}</span>
                         </label>
                         @endforeach
                     </div>

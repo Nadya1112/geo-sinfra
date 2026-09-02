@@ -66,7 +66,7 @@
     <main class="flex-1 overflow-y-auto custom-scrollbar flex flex-col h-screen relative">
         <header class="sticky top-0 bg-white/80 dark:bg-navy-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 dark:border-white/5 px-4 md:px-8 py-4 flex justify-between items-center z-40">
             <div class="flex items-center gap-2 md:gap-4">
-                <a href="{{ route('admin.dashboard') }}" class="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-200 dark:border-white/10 text-slate-400 rounded-xl hover:bg-gold-50 dark:bg-gold-500/10 hover:text-gold-600 dark:text-gold-500 hover:border-gold-200 dark:border-gold-500/20 transition-all shadow-sm hidden md:flex">
+                <a href="{{ route('admin.dashboard') }}" class="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-200 dark:border-white/10 text-slate-400 rounded-xl hover:bg-gold-50 dark:hover:bg-gold-500/10 dark:bg-gold-500/10 hover:text-gold-600 dark:text-gold-500 hover:border-gold-200 dark:border-gold-500/20 transition-all shadow-sm hidden md:flex">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div class="text-left">
@@ -119,7 +119,7 @@
                         <div>
                             <label class="block text-xs font-black text-slate-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 ml-1">Fonnte API Token</label>
                             <input type="password" name="fonnte_token" value="{{ $settings['fonnte_token'] ?? '' }}" placeholder="Masukkan token Fonnte Anda..." class="w-full px-5 py-3.5 bg-slate-50 dark:bg-navy-950/50 dark:bg-navy-950 border border-slate-200 dark:border-white/10 dark:border-white/10 rounded-2xl text-sm font-semibold text-navy-900 dark:text-white dark:text-white focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 outline-none transition-all">
-                            <p class="text-[10px] text-slate-400 mt-2 ml-2">Dapatkan token di <a href="https://md.fonnte.com/device" target="_blank" class="text-gold-500 hover:underline">dashboard Fonnte</a>.</p>
+                            <p class="text-[10px] text-slate-400 dark:text-slate-300 mt-2 ml-2">Dapatkan token di <a href="https://md.fonnte.com/device" target="_blank" class="text-gold-500 hover:underline">dashboard Fonnte</a>.</p>
                         </div>
                         <div>
                             <label class="block text-xs font-black text-slate-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 ml-1">Nomor WhatsApp Admin (Penerima Notifikasi)</label>

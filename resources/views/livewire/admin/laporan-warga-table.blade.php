@@ -2,7 +2,7 @@
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
         <div>
             <h4 class="font-extrabold text-lg text-navy-900 dark:text-white">Daftar Laporan Warga</h4>
-            <p class="text-xs text-slate-400 font-medium text-left font-sans">Pantau dan kelola laporan kerusakan dari warga</p>
+            <p class="text-xs text-slate-400 dark:text-slate-300 font-medium text-left font-sans">Pantau dan kelola laporan kerusakan dari warga</p>
         </div>
         
         <div class="flex flex-col md:flex-row items-center gap-2 w-full md:w-auto">
@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <button type="button" wire:click="$set('search', ''); $set('status', 'all')" class="w-full sm:w-auto bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 sm:border-y sm:border-r sm:border-l-0 px-4 md:px-5 py-2.5 rounded-b-xl sm:rounded-b-none sm:rounded-r-2xl hover:bg-slate-50 dark:hover:bg-white/5 dark:bg-navy-950/50 transition-all shadow-sm group shrink-0 relative" title="Reset Filter">
-                    <i class="fas fa-times text-slate-400 group-hover:text-gold-500 transition-colors text-xs" wire:loading.remove wire:target="search"></i>
+                    <i class="fas fa-times text-slate-400 dark:text-slate-300 group-hover:text-gold-500 transition-colors text-xs" wire:loading.remove wire:target="search"></i>
                     <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs hidden" wire:loading.inline-block wire:target="search"></i>
                 </button>
             </div>
@@ -53,7 +53,7 @@
                     <tr class="hover:bg-slate-50/80 dark:hover:bg-white/5 transition-colors group">
                         <td class="px-4 py-3">
                             <div class="flex items-center gap-2">
-                                <i class="far fa-clock text-slate-400"></i>
+                                <i class="far fa-clock text-slate-400 dark:text-slate-300"></i>
                                 <div>
                                     <p class="font-bold text-navy-900 dark:text-white">{{ \Carbon\Carbon::parse($laporan->created_at)->format('d M Y') }}</p>
                                     <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">{{ \Carbon\Carbon::parse($laporan->created_at)->format('H:i') }}</p>
@@ -62,7 +62,7 @@
                         </td>
                         <td class="px-4 py-3">
                             <p class="font-bold text-navy-900 dark:text-white">{{ $laporan->nama_pelapor }}</p>
-                            <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-0.5"><i class="fas fa-phone-alt text-xs text-slate-400 mr-1"></i> {{ $laporan->no_hp }}</p>
+                            <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-0.5"><i class="fas fa-phone-alt text-xs text-slate-400 dark:text-slate-300 mr-1"></i> {{ $laporan->no_hp }}</p>
                         </td>
                         <td class="px-4 py-3 min-w-[250px]">
                             <p class="text-sm font-medium text-slate-700 dark:text-slate-300 line-clamp-2 leading-relaxed mb-2">{{ $laporan->deskripsi }}</p>
@@ -164,7 +164,7 @@
                     <tr>
                         <td colspan="6" class="px-8 py-20 text-center">
                             <i class="fas fa-file-alt text-4xl text-slate-200 mb-4 block"></i>
-                            <p class="text-slate-400 font-bold text-sm">Belum Ada Laporan Warga.</p>
+                            <p class="text-slate-400 dark:text-slate-300 font-bold text-sm">Belum Ada Laporan Warga.</p>
                         </td>
                     </tr>
                     @endforelse
@@ -177,7 +177,7 @@
                 <div class="p-4 hover:bg-slate-50/80 dark:hover:bg-white/5 transition-colors">
                     <div class="flex justify-between items-start mb-3">
                         <div class="flex items-center gap-2">
-                            <i class="far fa-clock text-slate-400"></i>
+                            <i class="far fa-clock text-slate-400 dark:text-slate-300"></i>
                             <div>
                                 <p class="font-bold text-navy-900 dark:text-white text-xs">{{ \Carbon\Carbon::parse($laporan->created_at)->format('d M Y') }}</p>
                                 <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">{{ \Carbon\Carbon::parse($laporan->created_at)->format('H:i') }}</p>
@@ -185,7 +185,7 @@
                         </div>
                         <div class="text-right">
                             <p class="font-bold text-navy-900 dark:text-white text-xs">{{ $laporan->nama_pelapor }}</p>
-                            <p class="text-[10px] font-semibold text-slate-500 dark:text-slate-400 mt-0.5"><i class="fas fa-phone-alt text-[10px] text-slate-400 mr-1"></i> {{ $laporan->no_hp }}</p>
+                            <p class="text-[10px] font-semibold text-slate-500 dark:text-slate-400 mt-0.5"><i class="fas fa-phone-alt text-[10px] text-slate-400 dark:text-slate-300 mr-1"></i> {{ $laporan->no_hp }}</p>
                         </div>
                     </div>
 
@@ -287,7 +287,7 @@
                 @empty
                 <div class="px-8 py-16 text-center">
                     <i class="fas fa-file-alt text-4xl text-slate-200 mb-4 block"></i>
-                    <p class="text-slate-400 font-bold text-sm">Belum Ada Laporan Warga.</p>
+                    <p class="text-slate-400 dark:text-slate-300 font-bold text-sm">Belum Ada Laporan Warga.</p>
                 </div>
                 @endforelse
             </div>

@@ -46,33 +46,33 @@
     @media (max-width: 767px) { html { font-size: 12px; } }
 </style>
 </head>
-<body class="bg-slate-50  flex h-screen overflow-hidden text-slate-800 text-left font-sans   transition-colors duration-300">
+<body class="bg-slate-50 dark:bg-[#0b0a26]/50 flex h-screen overflow-hidden text-slate-800 text-left font-sans transition-colors duration-300">
 
     @include('surveyor.partials.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden text-left font-sans relative">
-        <header class="bg-white/85  backdrop-blur-xl border-b border-slate-100  sticky top-0 px-4 pl-20 md:px-8 py-4 flex justify-between items-center z-40 text-left">
+        <header class="bg-white/85 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 sticky top-0 px-4 pl-20 md:px-8 py-4 flex justify-between items-center z-40 text-left">
             <div class="flex items-center gap-4">
                 <a href="{{ route('surveyor.dashboard') }}"
-                   class="hidden md:flex w-10 h-10 bg-white  border border-slate-100  rounded-xl  items-center justify-center text-slate-400 hover:text-gold-500 hover:border-gold-500/20 hover:shadow-lg hover:shadow-gold-500/5 transition-all group"
+                   class="hidden md:flex w-10 h-10 bg-white border border-slate-100 dark:border-white/10 rounded-xl items-center justify-center text-slate-400 dark:text-slate-300 hover:text-gold-500 hover:border-gold-500/20 hover:shadow-lg hover:shadow-gold-500/5 transition-all group"
                    title="Kembali ke Beranda Utama">
                     <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
                 </a>
                 <div class="text-left">
                     <p class="text-xs font-black text-gold-500 uppercase tracking-[0.2em] mb-1">Portal Surveyor</p>
-                    <h2 class="text-xl font-black text-navy-900  leading-none">Penugasan Laporan Warga</h2>
+                    <h2 class="text-xl font-black text-navy-900 dark:text-white leading-none">Penugasan Laporan Warga</h2>
                 </div>
             </div>
 
             <div class="flex items-center gap-3 md:gap-6">
                 <div class="text-right">
-                    <p class="text-[10px] md:text-sm font-black text-navy-900 mt-1" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter hidden md:block">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-[10px] md:text-sm font-black text-navy-900 dark:text-white mt-1" id="mini-clock">00:00 WITA</p>
+                    <p class="text-[9px] font-bold text-slate-400 dark:text-slate-300 uppercase tracking-tighter hidden md:block">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-6 md:h-8 w-[1px] bg-slate-200"></div>
                 <div class="flex items-center gap-2 md:gap-3">
                     <a href="{{ route('surveyor.profile') }}" class="text-right group">
-                        <p class="text-xs md:text-sm font-black text-navy-900 leading-none uppercase group-hover:text-gold-500 transition-all max-w-[200px] truncate hidden md:block">{{ auth()->user()->name }}</p>
+                        <p class="text-xs md:text-sm font-black text-navy-900 dark:text-white leading-none uppercase group-hover:text-gold-500 transition-all max-w-[200px] truncate hidden md:block">{{ auth()->user()->name }}</p>
                         <p class="text-[8px] md:text-xs font-bold text-emerald-500 uppercase md:mt-0.5">Aktif</p>
                     </a>
                     <a href="{{ route('surveyor.profile') }}" class="w-8 h-8 md:w-10 md:h-10 bg-white dark:bg-navy-900 border border-slate-200 dark:border-white/5 rounded-xl flex items-center justify-center text-gold-500 border border-slate-200 dark:border-white/10 overflow-hidden hover:shadow-lg hover:shadow-navy-950/20 transition-all shadow-md shrink-0">
@@ -87,14 +87,14 @@
         </header>
 
         <!-- Content -->
-        <div class="flex-1 overflow-y-auto custom-scrollbar p-6 md:p-8 bg-slate-50 ">
+        <div class="flex-1 overflow-y-auto custom-scrollbar p-6 md:p-8 bg-slate-50 dark:bg-[#0b0a26]/50 ">
             <div class="max-w-7xl mx-auto space-y-6">
                 
                 {{-- ── Toolbar: Judul + Filter + Ekspor ── --}}
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-2">
                     <div>
-                        <h4 class="font-extrabold text-lg text-navy-900 ">Daftar Penugasan Laporan Warga</h4>
-                        <p class="text-xs text-slate-400 font-semibold mt-0.5">Tinjau lokasi laporan di lapangan dan ubah status laporan</p>
+                        <h4 class="font-extrabold text-lg text-navy-900 dark:text-white ">Daftar Penugasan Laporan Warga</h4>
+                        <p class="text-xs text-slate-400 dark:text-slate-300 font-semibold mt-0.5">Tinjau lokasi laporan di lapangan dan ubah status laporan</p>
                     </div>
                 </div>
 
@@ -106,7 +106,7 @@
 
     <!-- Modal Foto -->
     <div id="photoModal" class="fixed inset-0 bg-navy-950/90 backdrop-blur-sm z-[9999] hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
-        <button onclick="closePhotoModal()" class="absolute top-6 right-6 w-12 h-12 bg-white/10  hover:bg-white/20  text-navy-900 dark:text-white rounded-full flex items-center justify-center transition-colors">
+        <button onclick="closePhotoModal()" class="absolute top-6 right-6 w-12 h-12 bg-white/10 hover:bg-white/20 text-navy-900 dark:text-white rounded-full flex items-center justify-center transition-colors">
             <i class="fas fa-times text-xl"></i>
         </button>
         <div class="max-w-4xl w-full max-h-[90vh] relative transform scale-95 transition-transform duration-300" id="photoModalContent">

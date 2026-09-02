@@ -64,7 +64,7 @@
     <main class="flex-1 flex flex-col h-screen overflow-hidden pb-24 md:pb-0">
         <header class="bg-white dark:bg-[#1e1b4b] border-b border-slate-100 dark:border-white/10 px-4 pl-20 md:pl-4 md:px-8 py-3 md:py-4 flex justify-between items-center z-40 sticky top-0">
             <div class="flex items-center gap-2 md:gap-4 min-w-0">
-                <a href="{{ route('tim_teknis.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100 dark:border-white/10 hidden md:flex flex-shrink-0">
+                <a href="{{ route('tim_teknis.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 dark:text-slate-300 rounded-xl hover:bg-gold-50 dark:hover:bg-gold-500/10 hover:text-gold-500 transition-all border border-slate-100 dark:border-white/10 hidden md:flex flex-shrink-0">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div class="min-w-0">
@@ -76,7 +76,7 @@
             <div class="flex items-center gap-3 md:gap-6 flex-shrink-0">
                 <div class="text-right">
                     <p class="text-[10px] md:text-xs font-black text-navy-900 dark:text-white mt-1" id="mini-clock">00:00 WITA</p>
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter hidden md:block">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-xs font-bold text-slate-400 dark:text-slate-300 uppercase tracking-tighter hidden md:block">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-6 md:h-8 w-[1px] bg-slate-200 dark:bg-white/10"></div>
                 <a href="{{ route('tim_teknis.profile') }}" class="flex items-center gap-2 md:gap-3 group">
@@ -100,7 +100,7 @@
             <!-- Search Box -->
             <div class="relative w-full md:w-1/3">
                 <input type="text" id="map-search" placeholder="Cari laporan (contoh: Jalan Teratai)..." class="w-full bg-slate-100 dark:bg-[#0f0e2c] border border-slate-300 dark:border-white/10 rounded-xl px-4 py-2 pl-9 text-sm font-bold text-navy-900 dark:text-white focus:ring-2 focus:ring-gold-500 focus:outline-none transition-all placeholder:text-slate-400">
-                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-300 text-sm"></i>
             </div>
 
             <!-- Controls (Horizontal Scrollable on Mobile) -->
@@ -245,7 +245,7 @@
                             </div>
                         </button>
                         @foreach($kecamatan as $kec)
-                        <button onclick="toggleKecamatan('{{ $kec->id_kecamatan }}')" class="kec-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="{{ $kec->id_kecamatan }}">
+                        <button onclick="toggleKecamatan('{{ $kec->id_kecamatan }}')" class="kec-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-300 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="{{ $kec->id_kecamatan }}">
                             <div class="flex items-center gap-1.5">
                                 <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-gold-500 transition-colors shrink-0">
                                     <i class="fas fa-check text-[7px] text-gold-500 check-icon" style="opacity:1"></i>
@@ -355,7 +355,7 @@
                                     </div>
                                 </button>
                                 @foreach($kecamatan as $kec)
-                                <button onclick="toggleKecamatan('{{ $kec->id_kecamatan }}')" class="kec-btn w-full px-3 py-2 rounded-lg text-[10px] font-black uppercase tracking-wider text-slate-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="{{ $kec->id_kecamatan }}">
+                                <button onclick="toggleKecamatan('{{ $kec->id_kecamatan }}')" class="kec-btn w-full px-3 py-2 rounded-lg text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-300 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="{{ $kec->id_kecamatan }}">
                                     <div class="flex items-center gap-2">
                                         <div class="w-4 h-4 rounded border border-white/20 flex items-center justify-center group-hover:border-gold-500 transition-colors shrink-0">
                                             <i class="fas fa-check text-[8px] text-gold-500 check-icon" style="opacity:1"></i>
@@ -584,18 +584,18 @@
                         </div>
                         <div class="px-1">
                             <h4 class="text-xs font-black text-navy-900 dark:text-white mb-1">${point.nama_objek || point.nama_infrastruktur || '-'}</h4>
-                            <p class="text-xs text-slate-400 font-bold uppercase mb-3">Wilayah: ${point.kelurahan?.nama_kelurahan ?? '-'}</p>
+                            <p class="text-xs text-slate-400 dark:text-slate-300 font-bold uppercase mb-3">Wilayah: ${point.kelurahan?.nama_kelurahan ?? '-'}</p>
                             
                             <div class="flex items-center gap-2 mb-2">
                                 <span class="px-2 py-1 rounded-full text-[7px] font-black uppercase tracking-widest" style="background-color: ${color}15; color: ${color}; border: 1px solid ${color}30;">
                                     ${isSelesai ? 'SUDAH DIPERBAIKI' : kondisiAktual}
                                 </span>
-                                <span class="px-2 py-1 bg-navy-50 text-navy-600 rounded-full text-[7px] font-black uppercase border border-navy-100">
+                                <span class="px-2 py-1 bg-navy-50 dark:bg-white/5 text-navy-600 rounded-full text-[7px] font-black uppercase border border-navy-100 dark:border-white/10">
                                     By: ${point.user?.name ?? 'Surveyor'}
                                 </span>
                             </div>
 
-                            <div class="mb-3 flex items-center gap-1.5 text-[8px] font-bold text-slate-400 uppercase">
+                            <div class="mb-3 flex items-center gap-1.5 text-[8px] font-bold text-slate-400 dark:text-slate-300 uppercase">
                                 <i class="fas fa-clock"></i>
                                 Update: ${new Date(point.updated_at).toLocaleDateString('id-ID', {day: 'numeric', month: 'short', year: 'numeric'})}
                             </div>

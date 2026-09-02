@@ -6,7 +6,7 @@
             
             <div class="flex items-center gap-3">
                 <div class="flex items-center gap-2">
-                    <label class="text-xs font-black text-slate-400 uppercase tracking-widest whitespace-nowrap">Tampilan:</label>
+                    <label class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest whitespace-nowrap">Tampilan:</label>
                     <select wire:model.live="show" class="text-xs font-bold text-navy-900 dark:text-white bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-xl px-3 py-2 focus:outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all shadow-sm cursor-pointer">
                         <option value="10">10 Data</option>
                         <option value="all">Semua Data</option>
@@ -44,7 +44,7 @@
                         <p class="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2 leading-relaxed">
                             {{ $notif->data['message'] ?? 'Ada pembaruan data yang memerlukan perhatian Anda.' }}
                         </p>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
+                        <p class="text-[10px] font-bold text-slate-400 dark:text-slate-300 uppercase tracking-widest flex items-center gap-1.5">
                             <i class="fas fa-clock"></i> {{ $notif->created_at->diffForHumans() }} 
                             <span class="text-slate-300 dark:text-slate-600 mx-1">•</span> 
                             {{ $notif->created_at->translatedFormat('d M Y, H:i') }}

@@ -37,7 +37,7 @@
                         <div class="text-left">
                             <div class="flex items-center gap-2 mb-1.5">
                                 <span class="px-2.5 py-1 bg-emerald-50 dark:bg-emerald-500/10 dark:bg-emerald-500/20 border border-emerald-200 dark:border-emerald-500/20 dark:border-emerald-500/30 text-emerald-600 dark:text-emerald-500 dark:text-emerald-400 rounded-md text-xs font-black uppercase tracking-widest shadow-sm">Sistem Pemetaan Aktif</span>
-                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Banjarmasin, Kalsel</span>
+                                <span class="text-xs font-bold text-slate-400 dark:text-slate-300 uppercase tracking-widest">Banjarmasin, Kalsel</span>
                             </div>
                             <h4 class="text-2xl font-black text-navy-900 dark:text-white leading-tight">{{ number_format($totalInfrastruktur) }} Aset Diawasi</h4>
                             <p class="text-sm text-slate-500 dark:text-slate-300 font-medium mt-1">Total infrastruktur di Kota Banjarmasin yang terdata dan dianalisis oleh AI ({{ $persenDianalisis }}% teranalisis).</p>
@@ -46,22 +46,22 @@
                     
                     <div class="flex sm:flex-col justify-between sm:justify-center gap-4 sm:gap-3 relative z-10 shrink-0 bg-slate-50/80 dark:bg-white/5 p-4 rounded-2xl border border-slate-200 dark:border-white/10 backdrop-blur-sm w-full sm:w-auto">
                         <div class="text-center sm:text-right">
-                            <p class="text-[10px] md:text-xs font-black text-slate-400 uppercase tracking-widest mb-0.5">Kondisi Rusak Berat</p>
+                            <p class="text-[10px] md:text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-0.5">Kondisi Rusak Berat</p>
                             <p class="text-xl font-black text-red-600 dark:text-red-500 dark:text-red-500">{{ number_format($rusakBerat) }} <span class="text-sm text-red-500 dark:text-red-400"><i class="fas fa-exclamation-triangle"></i></span></p>
                         </div>
                         <div class="w-px sm:w-full h-10 sm:h-px bg-slate-200 dark:bg-white/10 my-auto"></div>
                         <div class="text-center sm:text-right">
-                            <p class="text-[10px] md:text-xs font-black text-slate-400 uppercase tracking-widest mb-0.5">Kondisi Rusak Sedang</p>
+                            <p class="text-[10px] md:text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-0.5">Kondisi Rusak Sedang</p>
                             <p class="text-xl font-black text-orange-500 dark:text-orange-400">{{ number_format($rusakSedang) }} <span class="text-sm text-orange-400 dark:text-orange-300"><i class="fas fa-exclamation-circle"></i></span></p>
                         </div>
                         <div class="w-px sm:w-full h-10 sm:h-px bg-slate-200 dark:bg-white/10 my-auto"></div>
                         <div class="text-center sm:text-right">
-                            <p class="text-[10px] md:text-xs font-black text-slate-400 uppercase tracking-widest mb-0.5">Kondisi Rusak Ringan</p>
+                            <p class="text-[10px] md:text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-0.5">Kondisi Rusak Ringan</p>
                             <p class="text-xl font-black text-yellow-500 dark:text-yellow-400">{{ number_format($rusakRingan) }} <span class="text-sm text-yellow-400 dark:text-yellow-300"><i class="fas fa-wrench"></i></span></p>
                         </div>
                         <div class="w-px sm:w-full h-10 sm:h-px bg-slate-200 dark:bg-white/10 my-auto"></div>
                         <div class="text-center sm:text-right">
-                            <p class="text-[10px] md:text-xs font-black text-slate-400 uppercase tracking-widest mb-0.5">Kondisi Baik</p>
+                            <p class="text-[10px] md:text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-0.5">Kondisi Baik</p>
                             <p class="text-xl font-black text-emerald-600 dark:text-emerald-500 dark:text-emerald-400">{{ number_format($kondisiBaik) }} <span class="text-sm text-emerald-500 dark:text-emerald-300"><i class="fas fa-check-circle"></i></span></p>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                     <h5 class="font-black text-navy-900 dark:text-white mb-2">Rekomendasi Prioritas AI</h5>
                     @if($rekomendasi)
                         <h5 class="text-sm font-black text-navy-900 dark:text-white mt-4 mb-2 line-clamp-1 leading-snug">{{ $rekomendasi->nama_objek ?? $rekomendasi->nama_infrastruktur }}</h5>
-                        <p class="text-sm font-bold text-slate-500 dark:text-slate-400 mb-6 flex items-center gap-1.5"><i class="fas fa-map-marker-alt text-slate-400"></i> Kelurahan {{ $rekomendasi->nama_kelurahan }}</p>
+                        <p class="text-sm font-bold text-slate-500 dark:text-slate-400 mb-6 flex items-center gap-1.5"><i class="fas fa-map-marker-alt text-slate-400 dark:text-slate-300"></i> Kelurahan {{ $rekomendasi->nama_kelurahan }}</p>
                         <a href="{{ route('admin.infrastruktur.show', $rekomendasi->id_infrastruktur) }}" class="inline-flex items-center justify-center gap-2 w-full bg-red-50 dark:bg-red-500/10 dark:bg-red-500/10 text-red-600 dark:text-red-500 dark:text-red-400 py-3 rounded-xl text-xs font-black hover:bg-red-100 dark:hover:bg-red-500/20 transition-colors uppercase tracking-wider">
                             Lihat Detail <i class="fas fa-arrow-right"></i>
                         </a>
@@ -210,7 +210,7 @@
                         </div>
                         <div>
                             <h3 id="qm-title" class="text-lg font-black text-navy-900 dark:text-white">Title</h3>
-                            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mt-0.5">Akses Cepat</p>
+                            <p class="text-xs font-bold text-slate-400 dark:text-slate-300 uppercase tracking-wider mt-0.5">Akses Cepat</p>
                         </div>
                     </div>
                     <button onclick="closeQuickModal()" class="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-white/5 text-slate-400 dark:text-slate-300 rounded-xl hover:bg-red-50 dark:bg-red-500/10 hover:text-red-500 dark:hover:bg-red-500/20 dark:hover:text-red-400 border border-transparent dark:border-white/10 transition-all shrink-0">

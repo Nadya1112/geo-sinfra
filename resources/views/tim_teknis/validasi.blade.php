@@ -55,7 +55,7 @@
         <!-- HEADER -->
         <header class="bg-white dark:bg-[#1e1b4b] border-b border-slate-100 dark:border-white/10 px-4 pl-20 md:px-8 py-4 flex justify-between items-center z-40 sticky top-0">
             <div class="flex items-center gap-4 min-w-0">
-                <a href="{{ route('tim_teknis.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100 dark:border-white/10 hidden md:flex">
+                <a href="{{ route('tim_teknis.dashboard') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 dark:text-slate-300 rounded-xl hover:bg-gold-50 dark:hover:bg-gold-500/10 hover:text-gold-500 transition-all border border-slate-100 dark:border-white/10 hidden md:flex">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div class="min-w-0">
@@ -67,7 +67,7 @@
             <div class="flex items-center gap-3 md:gap-6 flex-shrink-0">
                 <div class="text-right">
                     <p class="text-[10px] md:text-xs font-black text-navy-900 dark:text-white mt-1" id="mini-clock">00:00 WITA</p>
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter hidden md:block">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-xs font-bold text-slate-400 dark:text-slate-300 uppercase tracking-tighter hidden md:block">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-6 md:h-8 w-[1px] bg-slate-200 dark:bg-white/10"></div>
                 <a href="{{ route('tim_teknis.profile') }}" class="flex items-center gap-2 md:gap-3 group">

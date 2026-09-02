@@ -2,7 +2,7 @@
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
         <div>
             <h4 class="font-extrabold text-lg text-navy-900 dark:text-white">Daftar Pengguna Sistem</h4>
-            <p class="text-xs text-slate-400 font-medium text-left font-sans">Kelola hak akses untuk Admin, Surveyor, dan Tim Teknis</p>
+            <p class="text-xs text-slate-400 dark:text-slate-300 font-medium text-left font-sans">Kelola hak akses untuk Admin, Surveyor, dan Tim Teknis</p>
         </div>
         
         <div class="flex flex-col md:flex-row items-center gap-2 w-full md:w-auto">
@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <button type="button" class="w-full sm:w-auto bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border border-slate-100 dark:border-white/10 sm:border-y sm:border-r sm:border-l-0 px-4 md:px-5 py-2.5 rounded-b-xl sm:rounded-b-none sm:rounded-r-2xl hover:bg-slate-50 dark:hover:bg-white/5 dark:bg-navy-950/50 transition-all shadow-sm group shrink-0 relative">
-                    <i class="fas fa-search text-slate-400 group-hover:text-gold-500 transition-colors text-xs" wire:loading.remove wire:target="search"></i>
+                    <i class="fas fa-search text-slate-400 dark:text-slate-300 group-hover:text-gold-500 transition-colors text-xs" wire:loading.remove wire:target="search"></i>
                     <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs hidden" wire:loading.inline-block wire:target="search"></i>
                 </button>
             </div>
@@ -60,14 +60,13 @@
                             </div>
                             <div>
                                 <p class="text-xs font-black text-navy-900 dark:text-white uppercase leading-none">{{ $user->name }}</p>
-                                <p class="text-xs text-slate-400 font-bold uppercase mt-1 italic">ID: #{{ str_pad($user->id, 4, '0', STR_PAD_LEFT) }}</p>
+                                <p class="text-xs text-slate-400 dark:text-slate-300 font-bold uppercase mt-1 italic">ID: #{{ str_pad($user->id, 4, '0', STR_PAD_LEFT) }}</p>
                             </div>
                         </div>
                     </td>
                     <td class="px-4 md:px-4 py-3 text-xs font-medium text-slate-500 dark:text-slate-400">{{ $user->email }}</td>
                     <td class="px-4 md:px-4 py-3">
-                        <span class="px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-tighter inline-block
-                            {{ $user->role == 'admin' ? 'bg-gold-500/10 text-gold-500 border border-gold-500/20' : ($user->role == 'tim_teknis' ? 'bg-navy-900/10 dark:bg-blue-500/10 text-navy-900 dark:text-blue-500 border border-navy-900/20 dark:border-blue-500/20' : 'bg-slate-100 dark:bg-navy-950/50 text-slate-600 dark:text-slate-400 border border-slate-200') }}">
+                        <span class="px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-tighter inline-block {{ $user->role == 'admin' ? 'bg-gold-500/10 text-gold-500 border border-gold-500/20' : ($user->role == 'tim_teknis' ? 'bg-navy-900/10 dark:bg-blue-500/10 text-navy-900 dark:text-blue-500 border border-navy-900/20 dark:border-blue-500/20' : 'bg-slate-100 dark:bg-navy-950/50 text-slate-600 dark:text-slate-400 border border-slate-200') }}">
                             {{ str_replace('_', ' ', $user->role) }}
                         </span>
                     </td>
@@ -88,7 +87,7 @@
                             </form>
 
                             @else
-                            <span class="px-2 h-8 bg-slate-100 dark:bg-navy-950/50 text-slate-400 text-[10px] md:text-xs font-bold rounded-lg flex items-center justify-center cursor-not-allowed gap-1 md:gap-1.5 whitespace-nowrap" title="Akun Tim Teknis dilindungi sistem">
+                            <span class="px-2 h-8 bg-slate-100 dark:bg-navy-950/50 text-slate-400 dark:text-slate-300 text-[10px] md:text-xs font-bold rounded-lg flex items-center justify-center cursor-not-allowed gap-1 md:gap-1.5 whitespace-nowrap" title="Akun Tim Teknis dilindungi sistem">
                                 <i class="fas fa-lock"></i> Terkunci
                             </span>
                             @endif
@@ -118,8 +117,7 @@
                             <p class="text-xs text-slate-500 dark:text-slate-400 truncate mb-2">{{ $user->email }}</p>
                             
                             <div class="flex items-center justify-between mt-2">
-                                <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter inline-block
-                                    {{ $user->role == 'admin' ? 'bg-gold-500/10 text-gold-500 border border-gold-500/20' : ($user->role == 'tim_teknis' ? 'bg-navy-900/10 dark:bg-blue-500/10 text-navy-900 dark:text-blue-500 border border-navy-900/20 dark:border-blue-500/20' : 'bg-slate-100 dark:bg-navy-950/50 text-slate-600 dark:text-slate-400 border border-slate-200') }}">
+                                <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter inline-block {{ $user->role == 'admin' ? 'bg-gold-500/10 text-gold-500 border border-gold-500/20' : ($user->role == 'tim_teknis' ? 'bg-navy-900/10 dark:bg-blue-500/10 text-navy-900 dark:text-blue-500 border border-navy-900/20 dark:border-blue-500/20' : 'bg-slate-100 dark:bg-navy-950/50 text-slate-600 dark:text-slate-400 border border-slate-200') }}">
                                     {{ str_replace('_', ' ', $user->role) }}
                                 </span>
                                 
@@ -137,7 +135,7 @@
                                         </button>
                                     </form>
                                     @else
-                                    <span class="px-2 h-8 bg-slate-100 dark:bg-navy-950/50 text-slate-400 text-[10px] font-bold rounded-lg flex items-center justify-center cursor-not-allowed gap-1 whitespace-nowrap" title="Akun Tim Teknis dilindungi sistem">
+                                    <span class="px-2 h-8 bg-slate-100 dark:bg-navy-950/50 text-slate-400 dark:text-slate-300 text-[10px] font-bold rounded-lg flex items-center justify-center cursor-not-allowed gap-1 whitespace-nowrap" title="Akun Tim Teknis dilindungi sistem">
                                         <i class="fas fa-lock"></i>
                                     </span>
                                     @endif

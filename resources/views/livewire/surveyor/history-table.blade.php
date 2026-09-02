@@ -1,25 +1,25 @@
 <div>
     <div class="flex justify-between items-end mb-6 flex-col md:flex-row gap-4">
         <div>
-            <h3 class="text-lg font-black text-navy-900">Daftar Data Lapangan</h3>
-            <p class="text-xs text-slate-400 font-medium mt-1">Seluruh laporan infrastruktur yang telah Anda kumpulkan.</p>
+            <h3 class="text-lg font-black text-navy-900 dark:text-white">Daftar Data Lapangan</h3>
+            <p class="text-xs text-slate-400 dark:text-slate-300 font-medium mt-1">Seluruh laporan infrastruktur yang telah Anda kumpulkan.</p>
         </div>
         <div class="flex flex-col md:flex-row gap-2 w-full md:w-auto mt-3 md:mt-0">
             <div class="relative w-full md:w-64">
-                <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs" wire:loading.remove wire:target="search"></i>
+                <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-300 text-xs" wire:loading.remove wire:target="search"></i>
                 <div wire:loading wire:target="search" class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center">
                     <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs"></i>
                 </div>
-                <input type="text" wire:model.live.debounce.300ms="search" placeholder="Cari infrastruktur..." class="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-xs font-bold text-navy-900 shadow-sm focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all">
+                <input type="text" wire:model.live.debounce.300ms="search" placeholder="Cari infrastruktur..." class="w-full pl-10 pr-4 py-3 bg-white dark:bg-navy-900/90 border border-slate-200 dark:border-white/10 rounded-xl text-xs font-bold text-navy-900 dark:text-white shadow-sm focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all">
             </div>
-            <select wire:model.live="status" class="w-full md:w-40 bg-white border border-slate-200 rounded-xl px-4 py-3 text-xs font-black text-navy-900 shadow-sm focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all cursor-pointer">
+            <select wire:model.live="status" class="w-full md:w-40 bg-white dark:bg-navy-900/90 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-xs font-black text-navy-900 dark:text-white shadow-sm focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all cursor-pointer">
                 <option value="">Semua Status</option>
                 <option value="Menunggu">Menunggu</option>
                 <option value="Terverifikasi">Terverifikasi AI</option>
                 <option value="Di-ACC">Di-ACC</option>
                 <option value="Ditolak">Ditolak</option>
             </select>
-            <select wire:model.live="show" class="w-full md:w-48 bg-white border border-slate-200 rounded-xl px-4 py-3 text-xs font-black text-navy-900 shadow-sm focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all cursor-pointer">
+            <select wire:model.live="show" class="w-full md:w-48 bg-white dark:bg-navy-900/90 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-xs font-black text-navy-900 dark:text-white shadow-sm focus:outline-none focus:ring-4 focus:ring-gold-500/10 focus:border-gold-500 transition-all cursor-pointer">
                 <option value="">10 Data</option>
                 <option value="all">Semua Data</option>
             </select>
@@ -32,7 +32,7 @@
         </div>
     </div>
 
-    <div class="bg-white rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden mb-10 relative">
+    <div class="bg-white dark:bg-navy-900/90 rounded-[2rem] border border-slate-100 dark:border-white/10 shadow-sm overflow-hidden mb-10 relative">
 
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse hidden md:table">
@@ -51,7 +51,7 @@
                     @forelse($riwayat as $index => $item)
                     <tr wire:key="history-row-{{ $item->id }}" class="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
                         <td class="px-4 py-2 text-center">
-                            <span class="text-xs font-black text-slate-400">{{ $show == 'all' ? $index + 1 : ($riwayat->currentPage() - 1) * $riwayat->perPage() + $index + 1 }}</span>
+                            <span class="text-xs font-black text-slate-400 dark:text-slate-300">{{ $show == 'all' ? $index + 1 : ($riwayat->currentPage() - 1) * $riwayat->perPage() + $index + 1 }}</span>
                         </td>
 
                         {{-- FOTO --}}
@@ -75,8 +75,8 @@
 
                         {{-- NAMA INFRASTRUKTUR --}}
                         <td class="px-4 py-2">
-                            <p class="text-xs font-black text-navy-900 uppercase tracking-tight mb-0.5">{{ $item->nama_infrastruktur ?? $item->nama_objek }}</p>
-                            <span class="inline-flex px-1.5 py-0.5 bg-navy-50 text-navy-600 rounded-md text-xs font-black uppercase tracking-widest">{{ ucfirst($item->jenis) }}</span>
+                            <p class="text-xs font-black text-navy-900 dark:text-white uppercase tracking-tight mb-0.5">{{ $item->nama_infrastruktur ?? $item->nama_objek }}</p>
+                            <span class="inline-flex px-1.5 py-0.5 bg-navy-50 dark:bg-white/5 text-navy-600 rounded-md text-xs font-black uppercase tracking-widest">{{ ucfirst($item->jenis) }}</span>
                         </td>
 
                         {{-- LOKASI --}}
@@ -86,8 +86,8 @@
                                     <i class="fas fa-map-marker-alt text-xs"></i>
                                 </div>
                                 <div>
-                                    <p class="text-xs font-black text-navy-900 uppercase tracking-wider">{{ $item->kelurahan ? $item->kelurahan->nama_kelurahan : '-' }}</p>
-                                    <p class="text-xs text-slate-400 font-bold uppercase tracking-widest mt-0.5">
+                                    <p class="text-xs font-black text-navy-900 dark:text-white uppercase tracking-wider">{{ $item->kelurahan ? $item->kelurahan->nama_kelurahan : '-' }}</p>
+                                    <p class="text-xs text-slate-400 dark:text-slate-300 font-bold uppercase tracking-widest mt-0.5">
                                         KEC. {{ $item->kelurahan && $item->kelurahan->kecamatan ? $item->kelurahan->kecamatan->nama_kecamatan : '-' }}
                                     </p>
                                 </div>
@@ -106,7 +106,7 @@
                             @elseif($item->status_verifikasi == 'Verified')
                                 <span class="inline-flex px-2 py-1 bg-blue-100 text-blue-600 border border-blue-200 rounded-lg text-xs font-black uppercase tracking-widest shadow-sm">Terverifikasi</span>
                             @else
-                                <span class="inline-flex px-2 py-1 bg-slate-100 text-slate-500 border border-slate-200 rounded-lg text-xs font-black uppercase tracking-widest shadow-sm">Menunggu</span>
+                                <span class="inline-flex px-2 py-1 bg-slate-100 text-slate-500 border border-slate-200 dark:border-white/10 rounded-lg text-xs font-black uppercase tracking-widest shadow-sm">Menunggu</span>
                             @endif
                         </td>
 
@@ -114,7 +114,7 @@
                         <td class="px-4 py-2">
                             @if($item->cnn || $item->analisis)
                                 <div class="flex justify-center">
-                                    <div class="inline-flex items-center bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
+                                    <div class="inline-flex items-center bg-white dark:bg-navy-900/90 rounded-lg border border-slate-200 dark:border-white/10 shadow-sm overflow-hidden">
                                         @if($item->analisis)
                                             @php
                                                 $labelMap = [
@@ -130,21 +130,21 @@
                                                 <span class="text-xs font-black {{ $style['text'] }} uppercase tracking-wider">{{ $item->analisis->label_prioritas }}</span>
                                             </div>
                                         @else
-                                            <div class="flex items-center gap-1 px-3 py-1.5 bg-slate-50">
+                                            <div class="flex items-center gap-1 px-3 py-1.5 bg-slate-50 dark:bg-[#0b0a26]/50">
                                                 <span class="text-xs font-black text-slate-500 uppercase tracking-wider">Menunggu Status</span>
                                             </div>
                                         @endif
                                     </div>
                                 </div>
                             @else
-                                <p class="text-xs text-slate-400 font-bold uppercase text-center">-</p>
+                                <p class="text-xs text-slate-400 dark:text-slate-300 font-bold uppercase text-center">-</p>
                             @endif
                         </td>
 
                         {{-- AKSI --}}
                         <td class="px-4 py-2 text-center">
                             <div class="flex items-center justify-center gap-1.5">
-                                <a href="{{ route('surveyor.infrastruktur.edit', $item->id_infrastruktur) }}" class="w-7 h-7 flex items-center justify-center bg-white border border-slate-200 text-slate-400 rounded-md hover:bg-gold-500 hover:text-white hover:border-gold-500 hover:shadow-sm transition-all cursor-pointer" title="Ubah Data">
+                                <a href="{{ route('surveyor.infrastruktur.edit', $item->id_infrastruktur) }}" class="w-7 h-7 flex items-center justify-center bg-white border border-slate-200 dark:border-white/10 text-slate-400 dark:text-slate-300 rounded-md hover:bg-gold-500 hover:text-white hover:border-gold-500 hover:shadow-sm transition-all cursor-pointer" title="Ubah Data">
                                     <i class="fas fa-pen text-xs"></i>
                                 </a>
                                 <a href="{{ route('surveyor.infrastruktur.show', $item->id_infrastruktur) }}" class="w-7 h-7 flex items-center justify-center bg-navy-900 text-gold-500 rounded-md hover:bg-navy-950 hover:text-white transition-all shadow-sm cursor-pointer" title="Lihat Detail">
@@ -173,12 +173,12 @@
                     <tr>
                         <td colspan="7" class="px-8 py-24 text-center">
                             <div class="flex flex-col items-center gap-4">
-                                <div class="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center text-slate-300">
+                                <div class="w-24 h-24 bg-slate-50 dark:bg-[#0b0a26]/50 rounded-full flex items-center justify-center text-slate-300">
                                     <i class="fas fa-folder-open text-5xl"></i>
                                 </div>
                                 <div>
-                                    <p class="text-sm text-navy-900 font-black uppercase tracking-wider mb-1">Riwayat Kosong</p>
-                                    <p class="text-xs text-slate-400 font-bold uppercase tracking-widest">Anda belum memiliki riwayat survey lapangan.</p>
+                                    <p class="text-sm text-navy-900 dark:text-white font-black uppercase tracking-wider mb-1">Riwayat Kosong</p>
+                                    <p class="text-xs text-slate-400 dark:text-slate-300 font-bold uppercase tracking-widest">Anda belum memiliki riwayat survey lapangan.</p>
                                 </div>
                                 <a href="{{ route('surveyor.input') }}" class="mt-4 px-8 py-3 bg-gold-500 text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-md shadow-gold-500/20 hover:bg-gold-600 transition-all active:scale-95">
                                     Mulai Survey Pertama
@@ -212,8 +212,8 @@
                     </div>
                     
                     <div class="flex-1 min-w-0">
-                        <p class="text-sm font-black text-navy-900 uppercase tracking-tight mb-1 truncate">{{ $item->nama_infrastruktur ?? $item->nama_objek }}</p>
-                        <span class="inline-flex px-1.5 py-0.5 bg-navy-50 text-navy-600 rounded-md text-[10px] font-black uppercase tracking-widest mb-1">{{ ucfirst($item->jenis) }}</span>
+                        <p class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-tight mb-1 truncate">{{ $item->nama_infrastruktur ?? $item->nama_objek }}</p>
+                        <span class="inline-flex px-1.5 py-0.5 bg-navy-50 dark:bg-white/5 text-navy-600 rounded-md text-[10px] font-black uppercase tracking-widest mb-1">{{ ucfirst($item->jenis) }}</span>
                         
                         <div class="flex items-center gap-1.5 mt-1">
                             <i class="fas fa-map-marker-alt text-[10px] text-gold-500"></i>
@@ -226,7 +226,7 @@
 
                 <div class="flex items-center justify-between mb-3 border-y border-slate-50 py-2">
                     <div class="flex flex-col gap-1">
-                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Validasi</span>
+                        <span class="text-[9px] font-bold text-slate-400 dark:text-slate-300 uppercase tracking-widest">Validasi</span>
                         @if($item->status_validasi == 'Rejected')
                             <span class="text-xs font-black text-red-600">DITOLAK</span>
                         @elseif($item->status_validasi == 'Validated')
@@ -241,7 +241,7 @@
                     <div class="w-px h-8 bg-slate-100"></div>
 
                     <div class="flex flex-col gap-1 items-end">
-                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Kondisi AI</span>
+                        <span class="text-[9px] font-bold text-slate-400 dark:text-slate-300 uppercase tracking-widest">Kondisi AI</span>
                         @if($item->cnn || $item->analisis)
                             @if($item->analisis)
                                 @php
@@ -258,16 +258,16 @@
                                     <span class="text-[9px] font-black {{ $style['text'] }} uppercase tracking-wider">{{ $item->analisis->label_prioritas }}</span>
                                 </div>
                             @else
-                                <span class="text-[9px] font-black text-slate-500 bg-slate-50 px-2 py-0.5 rounded">MENUNGGU STATUS</span>
+                                <span class="text-[9px] font-black text-slate-500 bg-slate-50 dark:bg-[#0b0a26]/50 px-2 py-0.5 rounded">MENUNGGU STATUS</span>
                             @endif
                         @else
-                            <span class="text-[9px] font-black text-slate-400">-</span>
+                            <span class="text-[9px] font-black text-slate-400 dark:text-slate-300">-</span>
                         @endif
                     </div>
                 </div>
 
                 <div class="flex gap-2">
-                    <a href="{{ route('surveyor.infrastruktur.edit', $item->id_infrastruktur) }}" class="flex-1 py-2 flex items-center justify-center gap-2 bg-white border border-slate-200 text-slate-600 rounded-xl hover:bg-gold-500 hover:text-white hover:border-gold-500 transition-all font-bold text-[10px] uppercase tracking-wider">
+                    <a href="{{ route('surveyor.infrastruktur.edit', $item->id_infrastruktur) }}" class="flex-1 py-2 flex items-center justify-center gap-2 bg-white border border-slate-200 dark:border-white/10 text-slate-600 rounded-xl hover:bg-gold-500 hover:text-white hover:border-gold-500 transition-all font-bold text-[10px] uppercase tracking-wider">
                         <i class="fas fa-pen"></i> Ubah
                     </a>
                     <a href="{{ route('surveyor.infrastruktur.show', $item->id_infrastruktur) }}" class="flex-1 py-2 flex items-center justify-center gap-2 bg-navy-900 text-gold-500 rounded-xl hover:bg-navy-950 hover:text-white transition-all font-bold text-[10px] uppercase tracking-wider">
@@ -290,7 +290,7 @@
             @endforelse
         </div>
         @if($show != 'all' && isset($riwayat) && $riwayat instanceof \Illuminate\Pagination\LengthAwarePaginator)
-            <div class="px-8 py-5 border-t border-slate-100 bg-white">
+            <div class="px-8 py-5 border-t border-slate-100 dark:border-white/10 bg-white">
                 {{ $riwayat->links() }}
             </div>
         @endif

@@ -54,7 +54,7 @@
         <!-- HEADER -->
         <header class="bg-white dark:bg-[#1e1b4b] border-b border-slate-100 dark:border-white/10 px-4 pl-20 md:px-8 py-4 flex justify-between items-center z-40 sticky top-0">
             <div class="flex items-center gap-4 min-w-0">
-                <a href="{{ route('tim_teknis.validasi') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 rounded-xl hover:bg-gold-50 hover:text-gold-500 transition-all border border-slate-100 dark:border-white/10 hidden md:flex">
+                <a href="{{ route('tim_teknis.validasi') }}" class="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-[#0f0e2c] text-slate-400 dark:text-slate-300 rounded-xl hover:bg-gold-50 dark:hover:bg-gold-500/10 hover:text-gold-500 transition-all border border-slate-100 dark:border-white/10 hidden md:flex">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div class="min-w-0">
@@ -71,7 +71,7 @@
             <div class="flex items-center gap-3 md:gap-6 flex-shrink-0">
                 <div class="text-right">
                     <p class="text-[10px] md:text-xs font-black text-navy-900 dark:text-white mt-1" id="mini-clock">00:00 WITA</p>
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter hidden md:block">{{ now()->translatedFormat('l, d F Y') }}</p>
+                    <p class="text-xs font-bold text-slate-400 dark:text-slate-300 uppercase tracking-tighter hidden md:block">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-6 md:h-8 w-[1px] bg-slate-200 dark:bg-white/10"></div>
                 <div class="flex items-center gap-2 md:gap-3">
@@ -186,7 +186,7 @@
                     <!-- Aksi Verifikasi -->
                     @if($infrastruktur->status_verifikasi == 'Pending')
                     <div class="bg-white dark:bg-[#1e1b4b] rounded-[2.5rem] p-6 border border-slate-100 dark:border-white/10 shadow-sm">
-                        <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">Tindakan Verifikasi</p>
+                        <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-4">Tindakan Verifikasi</p>
                         <div class="flex flex-col gap-3">
                             <form action="{{ route('tim_teknis.validasi.proses', $infrastruktur->id_infrastruktur) }}" method="POST">
                                 @csrf
@@ -221,10 +221,10 @@
                                         </div>
                                         <div>
                                             <p class="text-sm font-black {{ $infrastruktur->status_perbaikan == 'Menunggu' ? 'text-amber-700' : 'text-slate-600' }} uppercase tracking-wider">Menunggu</p>
-                                            <p class="text-xs font-bold text-slate-400">Belum ditindaklanjuti</p>
+                                            <p class="text-xs font-bold text-slate-400 dark:text-slate-300">Belum ditindaklanjuti</p>
                                         </div>
                                     </div>
-                                    <input type="radio" name="status_perbaikan" value="Menunggu" class="w-4 h-4 text-amber-500 border-slate-300 focus:ring-amber-500" {{ $infrastruktur->status_perbaikan == 'Menunggu' ? 'checked' : '' }}>
+                                    <input type="radio" name="status_perbaikan" value="Menunggu" class="w-4 h-4 text-amber-500 border-slate-300 dark:border-white/20 focus:ring-amber-500" {{ $infrastruktur->status_perbaikan == 'Menunggu' ? 'checked' : '' }}>
                                 </label>
 
                                 <label class="flex items-center justify-between p-3 rounded-2xl border cursor-pointer transition-all {{ $infrastruktur->status_perbaikan == 'Proses Perbaikan' ? 'border-blue-500 bg-blue-50' : 'border-slate-200 dark:border-white/20 hover:bg-slate-50 dark:bg-[#0f0e2c]' }}">
@@ -234,10 +234,10 @@
                                         </div>
                                         <div>
                                             <p class="text-sm font-black {{ $infrastruktur->status_perbaikan == 'Proses Perbaikan' ? 'text-blue-700' : 'text-slate-600' }} uppercase tracking-wider">Dalam Perbaikan</p>
-                                            <p class="text-xs font-bold text-slate-400">Sedang dikerjakan tim</p>
+                                            <p class="text-xs font-bold text-slate-400 dark:text-slate-300">Sedang dikerjakan tim</p>
                                         </div>
                                     </div>
-                                    <input type="radio" name="status_perbaikan" value="Proses Perbaikan" class="w-4 h-4 text-blue-500 border-slate-300 focus:ring-blue-500" {{ $infrastruktur->status_perbaikan == 'Proses Perbaikan' ? 'checked' : '' }}>
+                                    <input type="radio" name="status_perbaikan" value="Proses Perbaikan" class="w-4 h-4 text-blue-500 border-slate-300 dark:border-white/20 focus:ring-blue-500" {{ $infrastruktur->status_perbaikan == 'Proses Perbaikan' ? 'checked' : '' }}>
                                 </label>
 
                                 <label class="flex items-center justify-between p-3 rounded-2xl border cursor-pointer transition-all {{ $infrastruktur->status_perbaikan == 'Selesai' ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20' : 'border-slate-200 dark:border-white/20 hover:bg-slate-50 dark:bg-[#0f0e2c]' }}">
@@ -247,20 +247,20 @@
                                         </div>
                                         <div>
                                             <p class="text-sm font-black {{ $infrastruktur->status_perbaikan == 'Selesai' ? 'text-emerald-700' : 'text-slate-600' }} uppercase tracking-wider">Selesai</p>
-                                            <p class="text-xs font-bold text-slate-400">Infrastruktur telah tuntas</p>
+                                            <p class="text-xs font-bold text-slate-400 dark:text-slate-300">Infrastruktur telah tuntas</p>
                                         </div>
                                     </div>
-                                    <input type="radio" name="status_perbaikan" value="Selesai" class="w-4 h-4 text-emerald-500 border-slate-300 focus:ring-emerald-500" {{ $infrastruktur->status_perbaikan == 'Selesai' ? 'checked' : '' }}>
+                                    <input type="radio" name="status_perbaikan" value="Selesai" class="w-4 h-4 text-emerald-500 border-slate-300 dark:border-white/20 focus:ring-emerald-500" {{ $infrastruktur->status_perbaikan == 'Selesai' ? 'checked' : '' }}>
                                 </label>
                             </div>
 
                             <div class="space-y-4 mb-6 border-t border-slate-100 dark:border-white/10 pt-4">
                                 <div>
-                                    <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Nama Vendor / Pelaksana</label>
+                                    <label class="block text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1.5">Nama Vendor / Pelaksana</label>
                                     <input type="text" name="pelaksana_perbaikan" value="{{ $infrastruktur->pelaksana_perbaikan }}" placeholder="Masukkan nama kontraktor/tim..." class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all text-navy-900 dark:text-white">
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Estimasi Selesai</label>
+                                    <label class="block text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1.5">Estimasi Selesai</label>
                                     <input type="date" name="estimasi_selesai" value="{{ $infrastruktur->estimasi_selesai }}" class="w-full bg-slate-50 dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/20 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all text-navy-900 dark:text-white">
                                 </div>
                             </div>
@@ -294,7 +294,7 @@
                                 <h3 class="text-2xl font-black text-navy-900 dark:text-white">{{ $infrastruktur->nama_infrastruktur }}</h3>
                             </div>
                             <div class="text-right">
-                                <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">Diinput Pada</p>
+                                <p class="text-xs font-bold text-slate-400 dark:text-slate-300 uppercase tracking-tighter">Diinput Pada</p>
                                 <p class="text-xs font-black text-navy-900 dark:text-white">{{ $infrastruktur->created_at->translatedFormat('d F Y, H:i') }} WITA</p>
                             </div>
                         </div>
@@ -302,40 +302,40 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
                             <div class="space-y-4">
                                 <div class="flex items-start gap-4">
-                                    <div class="w-10 h-10 rounded-2xl bg-navy-50 flex items-center justify-center text-navy-500 border border-navy-100 flex-shrink-0">
+                                    <div class="w-10 h-10 rounded-2xl bg-navy-50 dark:bg-white/5 flex items-center justify-center text-navy-500 border border-navy-100 dark:border-white/10 flex-shrink-0">
                                         <i class="fas fa-map-marked-alt text-sm"></i>
                                     </div>
                                     <div>
-                                        <p class="text-xs font-black text-slate-400 uppercase tracking-widest">Kecamatan</p>
+                                        <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest">Kecamatan</p>
                                         <p class="text-sm font-bold text-navy-900 dark:text-white">{{ $infrastruktur->kelurahan->kecamatan->nama_kecamatan ?? '-' }}</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start gap-4">
-                                    <div class="w-10 h-10 rounded-2xl bg-navy-50 flex items-center justify-center text-navy-500 border border-navy-100 flex-shrink-0">
+                                    <div class="w-10 h-10 rounded-2xl bg-navy-50 dark:bg-white/5 flex items-center justify-center text-navy-500 border border-navy-100 dark:border-white/10 flex-shrink-0">
                                         <i class="fas fa-building text-sm"></i>
                                     </div>
                                     <div>
-                                        <p class="text-xs font-black text-slate-400 uppercase tracking-widest">Kelurahan</p>
+                                        <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest">Kelurahan</p>
                                         <p class="text-sm font-bold text-navy-900 dark:text-white">{{ $infrastruktur->kelurahan->nama_kelurahan ?? '-' }}</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start gap-4">
-                                    <div class="w-10 h-10 rounded-2xl bg-navy-50 flex items-center justify-center text-navy-500 border border-navy-100 flex-shrink-0">
+                                    <div class="w-10 h-10 rounded-2xl bg-navy-50 dark:bg-white/5 flex items-center justify-center text-navy-500 border border-navy-100 dark:border-white/10 flex-shrink-0">
                                         <i class="fas fa-user text-sm"></i>
                                     </div>
                                     <div>
-                                        <p class="text-xs font-black text-slate-400 uppercase tracking-widest">Surveyor</p>
+                                        <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest">Surveyor</p>
                                         <p class="text-sm font-bold text-navy-900 dark:text-white">{{ $infrastruktur->user->name ?? '-' }}</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="space-y-4">
                                 <div class="flex items-start gap-4">
-                                    <div class="w-10 h-10 rounded-2xl bg-navy-50 flex items-center justify-center text-navy-500 border border-navy-100 flex-shrink-0">
+                                    <div class="w-10 h-10 rounded-2xl bg-navy-50 dark:bg-white/5 flex items-center justify-center text-navy-500 border border-navy-100 dark:border-white/10 flex-shrink-0">
                                         <i class="fas fa-location-arrow text-sm"></i>
                                     </div>
                                     <div>
-                                        <p class="text-xs font-black text-slate-400 uppercase tracking-widest">Koordinat</p>
+                                        <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest">Koordinat</p>
                                         <p class="text-xs font-bold text-navy-900 dark:text-white">{{ $infrastruktur->latitude }}, {{ $infrastruktur->longitude }}</p>
                                     </div>
                                 </div>
@@ -345,20 +345,20 @@
 
                         <!-- Detail Teknis -->
                         <div class="border-t border-slate-100 dark:border-white/10 pt-6 mb-8 mt-2">
-                            <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">Informasi Fisik Lapangan</p>
+                            <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-4">Informasi Fisik Lapangan</p>
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-5">
                                 <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-center">
-                                    <p class="text-xs font-black text-slate-400 uppercase tracking-wider mb-1">Panjang</p>
+                                    <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-wider mb-1">Panjang</p>
                                     <p class="text-xl font-black text-navy-900 dark:text-white">{{ number_format($infrastruktur->panjang ?? 0, 1) }}</p>
-                                    <p class="text-xs text-slate-400 font-bold">meter</p>
+                                    <p class="text-xs text-slate-400 dark:text-slate-300 font-bold">meter</p>
                                 </div>
                                 <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-center">
-                                    <p class="text-xs font-black text-slate-400 uppercase tracking-wider mb-1">Lebar</p>
+                                    <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-wider mb-1">Lebar</p>
                                     <p class="text-xl font-black text-navy-900 dark:text-white">{{ number_format($infrastruktur->lebar ?? 0, 1) }}</p>
-                                    <p class="text-xs text-slate-400 font-bold">meter</p>
+                                    <p class="text-xs text-slate-400 dark:text-slate-300 font-bold">meter</p>
                                 </div>
                                 <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-center">
-                                    <p class="text-xs font-black text-slate-400 uppercase tracking-wider mb-1">Drainase</p>
+                                    <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-wider mb-1">Drainase</p>
                                     @if(($infrastruktur->has_drainase ?? 'tidak') == 'ya')
                                         <i class="fas fa-check-circle text-2xl text-emerald-500 my-1 block"></i>
                                         <p class="text-xs text-emerald-600 font-black uppercase">Ada</p>
@@ -368,7 +368,7 @@
                                     @endif
                                 </div>
                                 <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-center">
-                                    <p class="text-xs font-black text-slate-400 uppercase tracking-wider mb-1">Gorong-gorong</p>
+                                    <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-wider mb-1">Gorong-gorong</p>
                                     @if(($infrastruktur->has_gorong_gorong ?? 'tidak') == 'ya')
                                         <i class="fas fa-check-circle text-2xl text-emerald-500 my-1 block"></i>
                                         <p class="text-xs text-emerald-600 font-black uppercase">Ada</p>
@@ -379,10 +379,10 @@
                                 </div>
                             </div>
                             <div>
-                                <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5">Keterangan Tambahan Surveyor</p>
+                                <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1.5">Keterangan Tambahan Surveyor</p>
                                 <div class="px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-sm font-semibold text-slate-700 italic leading-relaxed">
                                     @if(strtolower($infrastruktur->kondisi ?? '') == 'menunggu ai')
-                                        <span class="text-slate-400 font-medium">Kondisi akan ditentukan oleh sistem AI...</span>
+                                        <span class="text-slate-400 dark:text-slate-300 font-medium">Kondisi akan ditentukan oleh sistem AI...</span>
                                     @else
                                         "{{ $infrastruktur->kondisi ?? 'Tidak ada keterangan tambahan.' }}"
                                     @endif
@@ -395,7 +395,7 @@
                             <div class="relative rounded-[2rem] border border-slate-100 dark:border-white/10 shadow-inner overflow-hidden mb-2">
                                 <div id="map" class="h-[280px] w-full z-0"></div>
                             </div>
-                            <p class="text-xs font-black text-slate-400 text-center tracking-widest mt-3">
+                            <p class="text-xs font-black text-slate-400 dark:text-slate-300 text-center tracking-widest mt-3">
                                 LAT: <span class="text-navy-900 dark:text-white">{{ $infrastruktur->latitude }}</span> &nbsp;|&nbsp; LNG: <span class="text-navy-900 dark:text-white">{{ $infrastruktur->longitude }}</span>
                             </p>
                         </div>
@@ -405,7 +405,7 @@
                             $logs = \App\Models\ActivityLog::with('user')->where('reference_id', $infrastruktur->id_infrastruktur)->where('type', 'infrastruktur')->orderBy('created_at', 'desc')->get();
                         @endphp
                         <div class="border-t border-slate-100 dark:border-white/10 pt-6">
-                            <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-2">
+                            <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-6 flex items-center gap-2">
                                 <i class="fas fa-history text-slate-300"></i> Riwayat Aktivitas & Validasi
                             </p>
                             @if($logs->count() > 0)
@@ -416,7 +416,7 @@
                                         <div class="bg-slate-50 dark:bg-[#0f0e2c] p-4 rounded-2xl border border-slate-100 dark:border-white/10">
                                             <div class="flex justify-between items-start mb-2">
                                                 <p class="text-[10px] md:text-xs font-black text-navy-900 dark:text-white uppercase tracking-wider">{{ $log->user->name ?? 'Sistem / Anonim' }}</p>
-                                                <p class="text-[9px] md:text-[10px] font-bold text-slate-400">{{ $log->created_at->translatedFormat('d M Y, H:i') }}</p>
+                                                <p class="text-[9px] md:text-[10px] font-bold text-slate-400 dark:text-slate-300">{{ $log->created_at->translatedFormat('d M Y, H:i') }}</p>
                                             </div>
                                             <p class="text-xs md:text-sm text-slate-600 dark:text-slate-300 font-medium">{{ $log->description }}</p>
                                         </div>
@@ -426,7 +426,7 @@
                             @else
                                 <div class="text-center py-6 bg-slate-50 dark:bg-[#0f0e2c] rounded-2xl border border-dashed border-slate-200 dark:border-white/10">
                                     <i class="fas fa-history text-2xl text-slate-300 mb-2 block"></i>
-                                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Belum ada riwayat aktivitas</p>
+                                    <p class="text-xs font-bold text-slate-400 dark:text-slate-300 uppercase tracking-widest">Belum ada riwayat aktivitas</p>
                                 </div>
                             @endif
                         </div>

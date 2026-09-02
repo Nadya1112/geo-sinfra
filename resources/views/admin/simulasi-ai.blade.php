@@ -55,7 +55,7 @@
     <main class="flex-1 overflow-y-auto custom-scrollbar text-left relative">
         <header class="sticky top-0 bg-white/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 px-4 pl-16 md:px-8 py-4 flex justify-between items-center z-40 text-left shadow-sm">
             <div class="flex items-center gap-2 md:gap-4">
-                <a href="{{ route('admin.dashboard') }}" class="hidden md:flex w-8 h-8 md:w-10 md:h-10 items-center justify-center bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl text-slate-400 rounded-xl hover:bg-gold-50 dark:bg-gold-500/10 hover:text-gold-600 dark:text-gold-500 transition-all border border-slate-200 dark:border-white/10 hover:border-gold-200 dark:border-gold-500/20">
+                <a href="{{ route('admin.dashboard') }}" class="hidden md:flex w-8 h-8 md:w-10 md:h-10 items-center justify-center bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl text-slate-400 rounded-xl hover:bg-gold-50 dark:hover:bg-gold-500/10 dark:bg-gold-500/10 hover:text-gold-600 dark:text-gold-500 transition-all border border-slate-200 dark:border-white/10 hover:border-gold-200 dark:border-gold-500/20">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </a>
                 <div class="text-left">
@@ -67,7 +67,7 @@
             <div class="flex items-center gap-3 md:gap-6">
                 <div class="text-right">
                     <p class="text-xs font-black text-navy-900 dark:text-white dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{ now()->translatedFormat('d M Y') }}</p>
+                    <p class="text-[9px] font-bold text-slate-400 dark:text-slate-300 uppercase tracking-tighter">{{ now()->translatedFormat('d M Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100 dark:bg-navy-950/50"></div>
                 <div class="flex items-center gap-3">
@@ -109,23 +109,23 @@
                         <div class="space-y-4">
                             <div class="flex items-center justify-between mb-2">
                                 <h3 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-widest"><i class="fas fa-image text-gold-500 mr-2"></i> Input Citra</h3>
-                                <button onclick="document.getElementById('image-input').click()" class="text-xs bg-navy-50 text-navy-600 hover:bg-navy-900 hover:text-white px-3 py-1.5 rounded-lg font-bold transition-colors">
+                                <button onclick="document.getElementById('image-input').click()" class="text-xs bg-navy-50 dark:bg-white/5 text-navy-600 hover:bg-navy-900 hover:text-white px-3 py-1.5 rounded-lg font-bold transition-colors">
                                     Pilih File
                                 </button>
                             </div>
                             
                             <!-- Drag & Drop Zone -->
-                            <div id="drop-zone" class="border-2 border-dashed border-slate-300 rounded-3xl p-8 flex flex-col items-center justify-center text-center cursor-pointer hover:border-gold-500 hover:bg-gold-50/30 transition-all min-h-[300px] relative overflow-hidden group">
+                            <div id="drop-zone" class="border-2 border-dashed border-slate-300 dark:border-white/20 rounded-3xl p-8 flex flex-col items-center justify-center text-center cursor-pointer hover:border-gold-500 hover:bg-gold-50/30 transition-all min-h-[300px] relative overflow-hidden group">
                                 <input type="file" id="image-input" accept="image/jpeg, image/png, image/jpg" class="hidden">
                                 
                                 <!-- Default State -->
                                 <div id="upload-prompt" class="space-y-4">
                                     <div class="w-20 h-20 bg-slate-50 dark:bg-navy-950/50 rounded-full flex items-center justify-center mx-auto group-hover:bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl group-hover:shadow-md transition-all">
-                                        <i class="fas fa-cloud-upload-alt text-3xl text-slate-400 group-hover:text-gold-500 transition-colors"></i>
+                                        <i class="fas fa-cloud-upload-alt text-3xl text-slate-400 dark:text-slate-300 group-hover:text-gold-500 transition-colors"></i>
                                     </div>
                                     <div>
                                         <p class="font-bold text-navy-900 dark:text-white">Seret & lepas foto di sini</p>
-                                        <p class="text-xs text-slate-400 mt-1">atau klik untuk memilih file (JPG/PNG)</p>
+                                        <p class="text-xs text-slate-400 dark:text-slate-300 mt-1">atau klik untuk memilih file (JPG/PNG)</p>
                                     </div>
                                 </div>
 
@@ -146,7 +146,7 @@
                             <h3 class="text-sm font-black text-navy-900 dark:text-white uppercase tracking-widest mb-6"><i class="fas fa-poll-h text-gold-500 mr-2"></i> Hasil Analisis</h3>
                             
                             <!-- Waiting State -->
-                            <div id="result-waiting" class="flex-1 flex flex-col items-center justify-center text-slate-400 text-center">
+                            <div id="result-waiting" class="flex-1 flex flex-col items-center justify-center text-slate-400 dark:text-slate-300 text-center">
                                 <i class="fas fa-radar text-4xl mb-4 opacity-20"></i>
                                 <p class="text-sm font-bold">Menunggu input citra...</p>
                                 <p class="text-xs mt-1 opacity-70">Model CNN siap memproses gambar.</p>
@@ -168,7 +168,7 @@
                             <div id="result-success" class="flex-1 flex flex-col justify-center hidden space-y-6">
                                 <!-- Status Badge -->
                                 <div class="text-center">
-                                    <span class="text-xs font-black text-slate-400 uppercase tracking-wider mb-2 block">Klasifikasi Kondisi</span>
+                                    <span class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-wider mb-2 block">Klasifikasi Kondisi</span>
                                     <div id="pred-badge" class="inline-block px-6 py-2 rounded-xl text-sm font-black uppercase tracking-wider text-white shadow-lg">
                                         BAIK
                                     </div>

@@ -2,7 +2,7 @@
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
         <div>
             <h4 class="font-extrabold text-lg text-navy-900 dark:text-white uppercase">LOG AKTIVITAS</h4>
-            <p class="text-xs text-slate-400 font-medium text-left">Memantau seluruh aktivitas pengguna di sistem</p>
+            <p class="text-xs text-slate-400 dark:text-slate-300 font-medium text-left">Memantau seluruh aktivitas pengguna di sistem</p>
         </div>
         <div class="flex flex-row flex-nowrap items-center gap-2 w-full md:w-auto relative z-20">
             <div class="flex items-center flex-1 min-w-0 md:w-[400px]">
@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <button type="button" class="bg-white dark:bg-navy-900/90 dark:backdrop-blur-xl border-y border-r border-slate-100 dark:border-white/10 px-4 md:px-5 py-2.5 hover:bg-slate-50 dark:hover:bg-white/5 dark:bg-navy-950/50 transition-all shadow-sm group shrink-0 relative" title="Cari">
-                    <i class="fas fa-search text-slate-400 group-hover:text-gold-500 transition-colors text-xs" wire:loading.remove wire:target="search"></i>
+                    <i class="fas fa-search text-slate-400 dark:text-slate-300 group-hover:text-gold-500 transition-colors text-xs" wire:loading.remove wire:target="search"></i>
                     <i class="fas fa-circle-notch fa-spin text-gold-500 text-xs hidden" wire:loading.inline-block wire:target="search"></i>
                 </button>
             </div>
@@ -77,13 +77,13 @@
                         <td class="px-4 py-3 text-xs text-slate-500 dark:text-slate-400 whitespace-nowrap">
                             <div class="flex flex-col gap-0.5">
                                 <span class="font-bold text-navy-900 dark:text-white">{{ $activity->created_at->format('Y-m-d') }}</span>
-                                <span class="text-[10px] text-slate-400"><i class="fas fa-clock mr-1 text-slate-300"></i> {{ $activity->created_at->format('H:i:s') }}</span>
+                                <span class="text-[10px] text-slate-400 dark:text-slate-300"><i class="fas fa-clock mr-1 text-slate-300"></i> {{ $activity->created_at->format('H:i:s') }}</span>
                             </div>
                         </td>
                         <td class="px-4 py-3">
                             <div>
                                 <p class="font-bold text-navy-900 dark:text-white">{{ $activity->user ? $activity->user->name : 'Sistem Otomatis' }}</p>
-                                <p class="text-[10px] text-slate-400 uppercase tracking-wider">{{ $activity->user ? $activity->user->role : 'System' }}</p>
+                                <p class="text-[10px] text-slate-400 dark:text-slate-300 uppercase tracking-wider">{{ $activity->user ? $activity->user->role : 'System' }}</p>
                             </div>
                         </td>
                         <td class="px-4 py-3">
@@ -134,11 +134,11 @@
                         <div class="flex justify-between items-start mb-2">
                             <div>
                                 <p class="font-bold text-navy-900 dark:text-white text-sm">{{ $activity->user ? $activity->user->name : 'Sistem Otomatis' }}</p>
-                                <p class="text-[10px] text-slate-400 uppercase tracking-wider">{{ $activity->user ? $activity->user->role : 'System' }}</p>
+                                <p class="text-[10px] text-slate-400 dark:text-slate-300 uppercase tracking-wider">{{ $activity->user ? $activity->user->role : 'System' }}</p>
                             </div>
                             <div class="text-right">
                                 <span class="font-bold text-navy-900 dark:text-white text-[10px] block">{{ $activity->created_at->format('Y-m-d') }}</span>
-                                <span class="text-[9px] text-slate-400"><i class="fas fa-clock mr-1 text-slate-300"></i> {{ $activity->created_at->format('H:i:s') }}</span>
+                                <span class="text-[9px] text-slate-400 dark:text-slate-300"><i class="fas fa-clock mr-1 text-slate-300"></i> {{ $activity->created_at->format('H:i:s') }}</span>
                             </div>
                         </div>
                         <div class="mb-2">
