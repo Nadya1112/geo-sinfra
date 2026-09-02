@@ -205,19 +205,24 @@ class AdminController extends Controller
                     DB::raw("COUNT(CASE WHEN LOWER(analisis_ai.label_prioritas) LIKE '%baik%' AND LOWER(analisis_ai.label_prioritas) NOT LIKE '%rusak%' THEN 1 END) as baik"),
                     DB::raw("COUNT(CASE WHEN LOWER(analisis_ai.label_prioritas) LIKE '%ringan%' THEN 1 END) as ringan"),
                     DB::raw("COUNT(CASE WHEN LOWER(analisis_ai.label_prioritas) LIKE '%sedang%' THEN 1 END) as sedang"),
-                    DB::raw("COUNT(CASE WHEN LOWER(analisis_ai.label_prioritas) LIKE '%berat%' THEN 1 END) as berat"),
-                    DB::raw("COUNT(*) as total_semua")
+                    DB::raw("COUNT(CASE WHEN LOWER(analisis_ai.label_prioritas) LIKE '%berat%' THEN 1 END) as berat")
                 )
                 ->first();
+
+            $baik   = (int) ($infraKec->baik   ?? 0);
+            $ringan = (int) ($infraKec->ringan  ?? 0);
+            $sedang = (int) ($infraKec->sedang  ?? 0);
+            $berat  = (int) ($infraKec->berat   ?? 0);
 
             $kondisiKecamatan[] = [
                 'name'   => $kec->nama_kecamatan,
                 'nama'   => $kec->nama_kecamatan,
-                'baik'   => $infraKec->baik   ?? 0,
-                'ringan' => $infraKec->ringan  ?? 0,
-                'sedang' => $infraKec->sedang  ?? 0,
-                'berat'  => $infraKec->berat   ?? 0,
-                'total'  => $infraKec->total_semua ?? 0,
+                'baik'   => $baik,
+                'ringan' => $ringan,
+                'sedang' => $sedang,
+                'berat'  => $berat,
+                // Total = jumlah yang teranalisis AI saja (bukan COUNT(*) semua infrastruktur)
+                'total'  => $baik + $ringan + $sedang + $berat,
             ];
         }
 
