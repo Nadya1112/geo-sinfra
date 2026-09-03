@@ -108,9 +108,18 @@ def load_models():
         dt_jenis_model = joblib.load(DT_JENIS_PATH)
         logger.info("[OK] DT Jenis dimuat!")
 
+        # Muat Decision Tree (Kondisi)
         logger.info("Memuat Decision Tree (Kondisi)...")
         dt_kondisi_model = joblib.load(DT_KONDISI_PATH)
         logger.info("[OK] DT Kondisi dimuat!")
+
+        # Muat ResNet18 utuh untuk ImageNet Validation (Filter Bukan Infrastruktur)
+        logger.info("Memuat model ImageNet Validator (ResNet18)...")
+        global imagenet_model, imagenet_categories
+        imagenet_model = models.resnet18(weights=models.ResNet18_Weights.DEFAULT)
+        imagenet_model.eval()
+        imagenet_categories = models.ResNet18_Weights.DEFAULT.meta["categories"]
+        logger.info("[OK] ImageNet Validator dimuat!")
 
         # Muat PCA transformer (jika ada)
         if os.path.exists(PCA_PATH):
@@ -165,7 +174,43 @@ def predict_image(image_path):
     std = torch.tensor([0.229, 0.224, 0.225]).view(1, 3, 1, 1)
     img_tensor = (img_tensor - mean) / std
 
-    # Ekstrak fitur dengan CNN
+    # ===== PRE-FILTER IMAGENET (Deteksi Bukan Infrastruktur) =====
+    with torch.no_grad():
+        im_out = imagenet_model(img_tensor)
+        prob = torch.nn.functional.softmax(im_out[0], dim=0)
+        top5_prob, top5_catid = torch.topk(prob, 5)
+        top5_labels = [imagenet_categories[i] for i in top5_catid]
+
+    # Keyword yang berhubungan dengan jalan, jembatan, lingkungan luar, atau kendaraan (sering muncul di jalan)
+    infra_keywords = [
+        'street', 'road', 'bridge', 'building', 'wall', 'fence', 'house', 'paving', 
+        'asphalt', 'dirt', 'path', 'trail', 'sidewalk', 'pier', 'dam', 'viaduct', 
+        'mountain', 'valley', 'park', 'tree', 'sign', 'car', 'vehicle', 'truck', 
+        'bus', 'bicycle', 'motorcycle', 'pole', 'traffic', 'stone', 'earth', 'ground',
+        'cab', 'jeep', 'minivan', 'tractor', 'wagon', 'bannister', 'breakwater'
+    ]
+    
+    is_infra = False
+    for label in top5_labels:
+        if any(kw in label.lower() for kw in infra_keywords):
+            is_infra = True
+            break
+            
+    if not is_infra:
+        top_prediction = top5_labels[0].title()
+        return {
+            "jenis": f"Bukan Infrastruktur",
+            "kondisi": "Tidak Terdeteksi",
+            "confidence_jenis": 0.0,
+            "confidence_kondisi": 0.0,
+            "prioritas": "Tidak Ada",
+            "detail_jenis": {},
+            "detail_kondisi": {},
+            "probability": 0.0,
+            "label": f"Bukan Infrastruktur ({top_prediction})",
+        }
+
+    # Ekstrak fitur dengan CNN (Feature Extractor)
     with torch.no_grad():
         features = cnn_model(img_tensor).numpy()
 
