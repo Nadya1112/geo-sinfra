@@ -58,7 +58,18 @@ class AIPredictController extends Controller
                 ], 500);
             }
 
-            return response()->json(json_decode($responseBody, true));
+            $aiResult = json_decode($responseBody, true);
+
+            // 5. Validasi Jenis Infrastruktur (Hanya Jalan, Jembatan, Titian yang diizinkan)
+            $allowedJenis = ['Jalan', 'Jembatan', 'Titian'];
+            if (isset($aiResult['jenis']) && !in_array($aiResult['jenis'], $allowedJenis)) {
+                return response()->json([
+                    'success' => false,
+                    'error' => 'Validasi Gagal: Foto yang diunggah terdeteksi sebagai "' . $aiResult['jenis'] . '". Harap unggah foto Jalan, Titian, atau Jembatan saja.'
+                ], 422); // 422 Unprocessable Entity
+            }
+
+            return response()->json($aiResult);
 
         } catch (\Exception $e) {
             Log::error('AI Prediction Exception: ' . $e->getMessage());
