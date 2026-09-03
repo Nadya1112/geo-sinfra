@@ -181,13 +181,15 @@ def predict_image(image_path):
         top5_prob, top5_catid = torch.topk(prob, 5)
         top5_labels = [imagenet_categories[i] for i in top5_catid]
 
-    # DAFTAR KEYWORD INFRA: Objek yang biasa ada di jalan/infrastruktur (termasuk kendaraan & rambu)
+    # DAFTAR KEYWORD INFRA: Objek jalan, infrastruktur, kendaraan, ATAU elemen lingkungan sekitarnya (alam, pedesaan, pohon)
     infra_keywords = [
         'street', 'road', 'bridge', 'paving', 'asphalt', 'path', 'trail', 'sidewalk', 
         'viaduct', 'highway', 'lane', 'alley', 'crossing', 'pier', 'dam', 'breakwater',
         'sign', 'car', 'vehicle', 'truck', 'bus', 'bicycle', 'motorcycle', 'traffic', 
         'stone', 'earth', 'ground', 'cab', 'jeep', 'minivan', 'tractor', 'wagon', 
-        'bannister', 'fence', 'pole', 'manhole', 'patio'
+        'bannister', 'fence', 'pole', 'manhole', 'patio',
+        'house', 'building', 'park', 'tree', 'wood', 'forest', 'grass', 'plant', 'flower',
+        'mountain', 'valley', 'river', 'lake', 'water', 'thatch', 'barn', 'farm', 'lumber'
     ]
     
     # DAFTAR KEYWORD REJECT: Manusia, pakaian, objek indoor
@@ -211,8 +213,9 @@ def predict_image(image_path):
         if any(kw in lbl_lower for kw in infra_keywords):
             infra_score += weight
             
-    # Tolak jika TIDAK ADA unsur infra sama sekali, ATAU unsur reject jauh lebih dominan
-    if infra_score == 0 or (reject_score > infra_score * 1.5):
+    # Tolak JIKA skor objek terlarang (manusia/indoor) sangat dominan melebihi lingkungan infrastrukturnya,
+    # ATAU jika sama sekali tidak ada unsur infrastruktur/alam namun ada objek manusia/indoor
+    if (reject_score >= 4 and reject_score > infra_score) or (infra_score == 0 and reject_score > 0):
         top_prediction = top5_labels[0].title()
         return {
             "jenis": f"Bukan Infrastruktur",
