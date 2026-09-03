@@ -89,14 +89,14 @@
                 @php
                     $unreadCount = auth()->user()->unreadNotifications->count();
                 @endphp
-                <button type="button" class="w-10 h-10 bg-white dark:bg-navy-900 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:bg-gold-50 dark:hover:bg-white/5 border border-slate-200 dark:border-white/10 transition-all relative">
+                <a href="{{ $notifRoute }}" class="w-10 h-10 bg-white dark:bg-navy-900 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:bg-gold-50 dark:hover:bg-white/5 border border-slate-200 dark:border-white/10 transition-all relative">
                     <i class="fas fa-bell"></i>
                     @if($unreadCount > 0)
                         <span class="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 text-white text-[9px] font-black rounded-full flex items-center justify-center border-2 border-white dark:border-navy-950 shadow-sm animate-pulse">
                             {{ $unreadCount > 9 ? '9+' : $unreadCount }}
                         </span>
                     @endif
-                </button>
+                </a>
                 <!-- Dropdown -->
                 <div class="absolute right-0 top-full mt-4 w-72 md:w-80 bg-white dark:bg-[#1e1b4b] rounded-2xl border border-slate-100 dark:border-white/10 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 transform origin-top-right scale-95 group-hover:scale-100 before:content-[''] before:absolute before:-top-4 before:right-0 before:w-10 before:h-4">
                     <div class="p-4 border-b border-slate-50 dark:border-white/5 flex justify-between items-center">
