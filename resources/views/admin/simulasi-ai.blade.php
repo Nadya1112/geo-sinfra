@@ -320,6 +320,22 @@
                 const data = JSON.parse(errText2);
                 
                 if (data.success) {
+                    // Penanganan Elegan untuk "Bukan Infrastruktur"
+                    if (data.jenis === 'Bukan Infrastruktur') {
+                        const badge = document.getElementById('pred-badge');
+                        badge.className = `inline-block px-6 py-2 rounded-xl text-sm font-black uppercase tracking-wider text-white shadow-lg bg-slate-500 shadow-slate-500/30`;
+                        badge.innerText = 'BUKAN INFRASTRUKTUR';
+                        
+                        document.getElementById('pred-conf-text').innerText = '0%';
+                        setTimeout(() => {
+                            document.getElementById('pred-conf-bar').style.width = '0%';
+                        }, 100);
+
+                        document.getElementById('pred-rekomendasi').innerText = 'Gambar ditolak. Harap unggah foto Jalan, Titian, atau Jembatan saja.';
+                        showResult('success');
+                        return;
+                    }
+
                     // Determine Colors & Text
                     let label = data.kondisi || 'Baik';
                     let conf = data.confidence_kondisi || 0;

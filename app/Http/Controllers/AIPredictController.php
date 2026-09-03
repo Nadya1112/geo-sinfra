@@ -60,14 +60,8 @@ class AIPredictController extends Controller
 
             $aiResult = json_decode($responseBody, true);
 
-            // 5. Validasi Jenis Infrastruktur (Hanya Jalan, Jembatan, Titian yang diizinkan)
-            $allowedJenis = ['Jalan', 'Jembatan', 'Titian'];
-            if (isset($aiResult['jenis']) && !in_array($aiResult['jenis'], $allowedJenis)) {
-                return response()->json([
-                    'success' => false,
-                    'error' => 'Validasi Gagal: Foto yang diunggah terdeteksi sebagai "' . $aiResult['jenis'] . '". Harap unggah foto Jalan, Titian, atau Jembatan saja.'
-                ], 422); // 422 Unprocessable Entity
-            }
+            // Validasi jenis infrastruktur dihapus dari controller.
+            // Biarkan frontend (UI) yang menangani respons 'Bukan Infrastruktur' agar tampilannya lebih elegan.
 
             return response()->json($aiResult);
 
