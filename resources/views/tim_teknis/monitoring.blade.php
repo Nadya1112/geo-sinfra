@@ -104,7 +104,7 @@
             </div>
 
             <!-- Controls (Horizontal Scrollable on Mobile) -->
-            <div class="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-1 md:pb-0 hide-scrollbar">
+            <div class="flex items-center gap-2 overflow-x-auto md:overflow-visible custom-scrollbar pb-1 md:pb-0 hide-scrollbar">
                 
                 <!-- Filter Dropdown Button -->
                 <button onclick="document.getElementById('mobile-filter-sheet').classList.remove('hidden'); setTimeout(() => document.getElementById('mobile-filter-sheet').classList.remove('translate-y-full'), 10);" class="flex-shrink-0 bg-navy-900 dark:bg-white/10 text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-navy-800 dark:hover:bg-white/20 transition-all flex items-center gap-2 shadow-md md:hidden">
