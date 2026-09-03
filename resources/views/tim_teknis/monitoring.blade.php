@@ -113,11 +113,11 @@
 
                 <!-- Statistics Dropdown Button -->
                 <div class="relative hidden md:block">
-                    <button onclick="toggleMenu('condition-options-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
+                    <button onclick="toggleMenu(event, 'condition-options-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
                         <i class="fas fa-chart-pie text-gold-500"></i> <span id="current-cond-label-desktop">Statistik</span> <i class="fas fa-chevron-down text-[10px] ml-1"></i>
                     </button>
                     <!-- Stats Dropdown Menu -->
-                    <div id="condition-options-desktop" class="hidden absolute top-full left-0 mt-2 p-1.5 bg-[#1e1b4b]/95 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex flex-col min-w-[200px]">
+                    <div id="condition-options-desktop" class="hidden absolute top-full left-0 mt-2 p-1.5 bg-[#1e1b4b]/95 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex flex-col min-w-[200px] z-[10000]">
                         <div class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-300 flex items-center justify-between">
                             <span>Total</span>
                             <span id="stat-total-desktop" class="text-[10px] font-black text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-400/20">0</span>
@@ -128,7 +128,7 @@
 
                 <!-- Basemap Layer Button -->
                 <div class="relative hidden md:block">
-                    <button onclick="toggleMenu('layer-options-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
+                    <button onclick="toggleMenu(event, 'layer-options-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
                         <i class="fas fa-layer-group text-blue-500"></i> Basemap
                     </button>
                     <!-- Basemap Dropdown -->
@@ -178,10 +178,10 @@
 
                 <!-- Kategori Dropdown Button -->
                 <div class="relative hidden md:block">
-                    <button onclick="toggleMenu('category-options-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
+                    <button onclick="toggleMenu(event, 'category-options-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
                         <i class="fas fa-layer-group text-gold-500"></i> <span id="current-cat-label-desktop">Semua Kategori</span> <i class="fas fa-chevron-down text-[10px] ml-1"></i>
                     </button>
-                    <div id="category-options-desktop" class="hidden absolute top-full right-0 mt-2 p-1.5 bg-[#0f0e2c]/95 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex flex-col gap-1 min-w-[200px]">
+                    <div id="category-options-desktop" class="hidden absolute top-full right-0 mt-2 p-1.5 bg-[#0f0e2c]/95 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex flex-col gap-1 min-w-[200px] z-[10000]">
                         <button onclick="toggleType('Semua')" class="type-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="Semua">
                             <div class="flex items-center gap-1.5">
                                 <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-gold-500 transition-colors">
@@ -232,7 +232,7 @@
                 
                 <!-- Wilayah Dropdown Button -->
                 <div class="relative hidden md:block">
-                    <button onclick="toggleMenu('territory-options-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
+                    <button onclick="toggleMenu(event, 'territory-options-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
                         <i class="fas fa-map-location-dot text-gold-500"></i> <span id="current-kec-label-desktop">Semua Wilayah</span> <i class="fas fa-chevron-down text-[10px] ml-1"></i>
                     </button>
                     <div id="territory-options-desktop" class="hidden absolute top-full right-0 mt-2 p-1 bg-[#0f0e2c]/95 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex flex-col gap-1 min-w-[200px] max-h-[50vh] overflow-y-auto custom-scrollbar">
@@ -866,19 +866,31 @@
             document.getElementById('current-kec-label-desktop').textContent = label;
         }
 
-        function toggleMenu(id) { document.getElementById(id).classList.toggle('hidden'); }
+        function toggleMenu(e, id) { 
+            if(e) e.stopPropagation();
+            
+            // Auto-close other menus
+            ['condition-options-desktop', 'layer-options-desktop', 'category-options-desktop', 'territory-options-desktop'].forEach(menuId => {
+                if(menuId !== id) {
+                    const el = document.getElementById(menuId);
+                    if (el) el.classList.add('hidden');
+                }
+            });
+
+            document.getElementById(id).classList.toggle('hidden'); 
+        }
+
         function changeBaseLayer(type) {
             map.removeLayer(currentBaseLayer);
             currentBaseLayer = baseLayers[type].addTo(map);
-            toggleMenu('layer-options');
+            toggleMenu(null, 'layer-options-desktop');
         }
 
         // Auto-close dropdowns when clicking outside
         document.addEventListener('click', function(e) {
             const isClickInsideMenu = e.target.closest('#condition-options-desktop') || e.target.closest('#layer-options-desktop') || e.target.closest('#category-options-desktop') || e.target.closest('#territory-options-desktop');
-            const isClickOnButton = e.target.closest('button[onclick^="toggleMenu"]');
             
-            if (!isClickInsideMenu && !isClickOnButton) {
+            if (!isClickInsideMenu) {
                 ['condition-options-desktop', 'layer-options-desktop', 'category-options-desktop', 'territory-options-desktop'].forEach(id => {
                     const el = document.getElementById(id);
                     if (el) el.classList.add('hidden');
