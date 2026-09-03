@@ -61,7 +61,6 @@
         };
     </script>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -69,6 +68,9 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+    
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
@@ -458,8 +460,8 @@
                 <div class="nav-divider w-px h-5 mx-1 md:mx-2 hidden md:block transition-colors duration-300"></div>
                 
                 <!-- Theme Dropdown Selector -->
-                <div class="relative">
-                    <button type="button" onclick="document.getElementById('theme-dropdown').classList.toggle('hidden')" class="nav-link w-9 h-9 flex items-center justify-center rounded-xl text-sm transition-all border border-transparent hover:border-gold-500/30 relative z-[6000] cursor-pointer">
+                <div class="relative group/theme">
+                    <button type="button" onclick="document.getElementById('theme-dropdown').classList.toggle('hidden')" class="w-9 h-9 bg-white dark:bg-navy-900 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:bg-gold-50 dark:hover:bg-white/5 border border-slate-200 dark:border-white/10 transition-all shadow-sm relative z-[6000] cursor-pointer">
                         <i class="fas fa-sun hidden dark:block pointer-events-none"></i>
                         <i class="fas fa-moon block dark:hidden pointer-events-none"></i>
                     </button>
