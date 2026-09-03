@@ -292,14 +292,33 @@ class SurveyorController extends Controller
             // Native PHP upload bypasses php_fileinfo error
             $file->move($destinationPath, $namaFoto);
 
+            // Validasi AI terlebih dahulu untuk update foto
+            $aiResult = $this->analyzeImageOnly('infrastruktur/' . $namaFoto);
+            
+            if (!$aiResult || (isset($aiResult['success']) && $aiResult['success'] == false)) {
+                if (file_exists($destinationPath . '/' . $namaFoto)) {
+                    unlink($destinationPath . '/' . $namaFoto);
+                }
+                return back()->withErrors(['foto' => 'Sistem AI Validasi sedang offline atau terjadi gangguan. Data tidak dapat diperbarui tanpa divalidasi oleh AI.'])->withInput();
+            }
+
+            if (isset($aiResult['jenis']) && $aiResult['jenis'] == 'Bukan Infrastruktur') {
+                if (file_exists($destinationPath . '/' . $namaFoto)) {
+                    unlink($destinationPath . '/' . $namaFoto);
+                }
+                return back()->withErrors(['foto' => 'Foto tidak valid! AI mendeteksi foto tersebut bukan merupakan Jalan, Jembatan, atau Titian.'])->withInput();
+            }
+
             // Hapus foto lama jika ada
             if ($infrastruktur->foto_terbaru && file_exists(storage_path('app/public/' . $infrastruktur->foto_terbaru))) {
-                unlink(storage_path('app/public/' . $infrastruktur->foto_terbaru));
+                if ($infrastruktur->foto_terbaru !== 'infrastruktur/default.jpg') {
+                    @unlink(storage_path('app/public/' . $infrastruktur->foto_terbaru));
+                }
             }
             $infrastruktur->foto_terbaru = 'infrastruktur/' . $namaFoto;
             
-            // Analisis visual otomatis jika foto baru diunggah
-            $this->processCnnAnalysis($infrastruktur->id_infrastruktur, $infrastruktur->foto_terbaru);
+            // Analisis visual otomatis jika foto baru diunggah, menggunakan hasil cache $aiResult
+            $this->processCnnAnalysis($infrastruktur->id_infrastruktur, $infrastruktur->foto_terbaru, $aiResult);
         }
 
         $infrastruktur->nama_objek = $request->nama_infrastruktur;
@@ -326,10 +345,7 @@ class SurveyorController extends Controller
         // 🌟 Pemanggilan save() pada Eloquent model otomatis menyenggol Observer AI untuk hitung ulang skor
         $infrastruktur->save();
 
-        // Jika ada foto baru, kirim ulang ke model visual Python CNN
-        if ($request->hasFile('foto')) {
-            $this->processCnnAnalysis($infrastruktur->id_infrastruktur, 'infrastruktur/' . $infrastruktur->foto_terbaru);
-        }
+        // Pemanggilan processCnnAnalysis dihapus karena sudah dilakukan di blok pengecekan file di atas.
 
         return redirect()->route('surveyor.history')->with('success', 'Data & hasil Analisis AI berhasil diperbarui!');
     }
