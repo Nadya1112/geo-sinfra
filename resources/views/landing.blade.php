@@ -413,10 +413,10 @@
         }
 
         /* Theme Toggle Icon Fix */
-        html.dark .theme-toggle-sun { display: block !important; }
-        html.dark .theme-toggle-moon { display: none !important; }
-        html:not(.dark) .theme-toggle-sun { display: none !important; }
-        html:not(.dark) .theme-toggle-moon { display: block !important; }
+        html.dark .theme-toggle-sun { display: none !important; }
+        html.dark .theme-toggle-moon { display: block !important; }
+        html:not(.dark) .theme-toggle-sun { display: block !important; }
+        html:not(.dark) .theme-toggle-moon { display: none !important; }
 
         /* Desktop responsive font improvements */
         @media (min-width: 1024px) {

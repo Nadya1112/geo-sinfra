@@ -42,8 +42,8 @@
             <!-- Theme Dropdown Selector -->
             <div class="relative group/theme">
                 <button type="button" onclick="document.getElementById('theme-dropdown-header').classList.toggle('hidden')" class="w-10 h-10 bg-white dark:bg-navy-900 rounded-xl flex items-center justify-center text-slate-400 hover:text-gold-500 hover:bg-gold-50 dark:hover:bg-white/5 border border-slate-200 dark:border-white/10 transition-all shadow-sm relative z-[6000] cursor-pointer">
-                    <i class="fas fa-sun hidden dark:block pointer-events-none"></i>
-                    <i class="fas fa-moon block dark:hidden pointer-events-none"></i>
+                    <i class="fas fa-sun block dark:hidden pointer-events-none"></i>
+                    <i class="fas fa-moon hidden dark:block pointer-events-none"></i>
                 </button>
                 <!-- Dropdown Content -->
                 <div id="theme-dropdown-header" class="hidden absolute right-0 mt-2 w-40 bg-white dark:bg-[#1e1b4b] rounded-xl shadow-xl py-2 border border-slate-100 dark:border-white/10 z-[6000] overflow-hidden transform origin-top-right transition-all">
