@@ -84,13 +84,13 @@
         <div class="flex-1 overflow-y-auto p-8 custom-scrollbar space-y-8">
             
             <!-- Header Banner -->
-            <div class="flex items-center gap-5 bg-rose-50 border border-rose-100 rounded-[2rem] p-8 shadow-sm">
-                <div class="w-16 h-16 bg-white dark:bg-[#1e1b4b] rounded-2xl flex items-center justify-center text-rose-500 shadow-sm border border-rose-100 shrink-0">
+            <div class="flex items-center gap-5 bg-rose-50 dark:bg-rose-900/20 border border-rose-100 dark:border-rose-500/20 rounded-[2rem] p-8 shadow-sm">
+                <div class="w-16 h-16 bg-white dark:bg-[#1e1b4b] rounded-2xl flex items-center justify-center text-rose-500 shadow-sm border border-rose-100 dark:border-rose-500/20 shrink-0">
                     <i class="fas fa-exclamation-triangle text-3xl animate-pulse"></i>
                 </div>
                 <div>
                     <h2 class="text-2xl font-black text-navy-900 dark:text-white leading-none mb-2">Rekomendasi Prioritas Penanganan</h2>
-                    <p class="text-sm font-bold text-slate-500">Daftar infrastruktur dengan tingkat kerusakan <span class="text-rose-500 font-black uppercase tracking-widest px-2 py-0.5 bg-rose-100 rounded-md text-xs">Sangat Berat</span> yang dianalisis oleh AI. Membutuhkan alokasi anggaran dan perbaikan segera.</p>
+                    <p class="text-sm font-bold text-slate-500 dark:text-slate-400">Daftar infrastruktur dengan tingkat kerusakan <span class="text-rose-500 font-black uppercase tracking-widest px-2 py-0.5 bg-rose-100 dark:bg-rose-500/20 rounded-md text-xs">Sangat Berat</span> yang dianalisis oleh AI. Membutuhkan alokasi anggaran dan perbaikan segera.</p>
                 </div>
             </div>
 
