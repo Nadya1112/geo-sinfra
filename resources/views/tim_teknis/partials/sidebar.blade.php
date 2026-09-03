@@ -58,6 +58,22 @@
                 <span class="hidden lg:inline">Cetak Laporan</span>
             </a>
 
+            @php
+                $unreadNotifCount = auth()->user()->unreadNotifications->count();
+            @endphp
+            <a href="{{ route('tim_teknis.notifikasi') }}" 
+               class="flex items-center justify-center lg:justify-between px-0 lg:px-4 py-3 {{ request()->routeIs('tim_teknis.notifikasi') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group relative w-full" title="Notifikasi Sistem">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-bell {{ request()->routeIs('tim_teknis.notifikasi') ? '' : 'group-hover:text-gold-500' }}"></i> 
+                    <span class="hidden lg:inline">Notifikasi</span>
+                </div>
+                @if($unreadNotifCount > 0)
+                    <span class="absolute top-1 right-1 lg:relative lg:top-auto lg:right-auto bg-rose-500 text-white text-[10px] lg:text-xs font-black px-1.5 py-0.5 rounded-full shadow-sm min-w-[16px] lg:min-w-[20px] text-center">
+                        {{ $unreadNotifCount }}
+                    </span>
+                @endif
+            </a>
+
 
         </nav>
     </div>
@@ -143,6 +159,19 @@
                class="flex items-center gap-3 px-4 py-3.5 {{ request()->routeIs('tim_teknis.laporan') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group text-left whitespace-nowrap">
                 <i class="fas fa-print text-sm {{ request()->routeIs('tim_teknis.laporan') ? '' : 'group-hover:text-gold-500' }}"></i> 
                 Cetak Laporan
+            </a>
+
+            <a href="{{ route('tim_teknis.notifikasi') }}" 
+               class="flex items-center justify-between px-4 py-3.5 {{ request()->routeIs('tim_teknis.notifikasi') ? 'bg-gold-500 text-navy-900 dark:text-white font-bold shadow-lg shadow-gold-500/20' : 'text-slate-500 hover:text-navy-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5' }} rounded-xl text-sm font-semibold transition group">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-bell text-sm {{ request()->routeIs('tim_teknis.notifikasi') ? '' : 'group-hover:text-gold-500' }}"></i> 
+                    Notifikasi
+                </div>
+                @if(isset($unreadNotifCount) && $unreadNotifCount > 0)
+                    <span class="bg-rose-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full shadow-sm">
+                        {{ $unreadNotifCount }}
+                    </span>
+                @endif
             </a>
         </nav>
     </div>
