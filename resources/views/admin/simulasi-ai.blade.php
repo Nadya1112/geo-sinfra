@@ -305,11 +305,14 @@
 
                 if (!response.ok) {
                     const errText = await response.text();
+                    let errData = null;
                     try {
-                        const errData = JSON.parse(errText);
-                        throw new Error(errData.error || errData.message || 'Server error: ' + response.status);
+                        errData = JSON.parse(errText);
                     } catch (parseError) {
                         throw new Error('Server (Bukan JSON): ' + errText.substring(0, 150));
+                    }
+                    if (errData) {
+                        throw new Error(errData.error || errData.message || 'Server error: ' + response.status);
                     }
                 }
 

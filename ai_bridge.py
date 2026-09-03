@@ -181,14 +181,16 @@ def predict_image(image_path):
         top5_prob, top5_catid = torch.topk(prob, 5)
         top5_labels = [imagenet_categories[i] for i in top5_catid]
 
-    # DAFTAR KEYWORD KETAT: Hanya mendeteksi objek infrastruktur fisik (jalan, jembatan, bangunan).
-    # Menghapus keyword bias seperti 'wall', 'car', 'vehicle', 'minivan', dsb yang sering terdeteksi di foto non-infrastruktur
+    # DAFTAR KEYWORD INFRA: Objek yang biasa ada di jalan/infrastruktur (termasuk kendaraan & rambu)
     infra_keywords = [
         'street', 'road', 'bridge', 'paving', 'asphalt', 'path', 'trail', 'sidewalk', 
-        'viaduct', 'highway', 'lane', 'alley', 'crossing', 'pier', 'dam', 'breakwater'
+        'viaduct', 'highway', 'lane', 'alley', 'crossing', 'pier', 'dam', 'breakwater',
+        'sign', 'car', 'vehicle', 'truck', 'bus', 'bicycle', 'motorcycle', 'traffic', 
+        'stone', 'earth', 'ground', 'cab', 'jeep', 'minivan', 'tractor', 'wagon', 
+        'bannister', 'fence', 'pole', 'manhole', 'patio'
     ]
     
-    # DAFTAR KEYWORD REJECT: Jika terdeteksi manusia, pakaian, hewan, atau objek dalam ruangan, langsung tolak.
+    # DAFTAR KEYWORD REJECT: Manusia, pakaian, objek indoor
     reject_keywords = [
         'person', 'man', 'woman', 'boy', 'girl', 'face', 'hair', 'suit', 'tie', 'lipstick', 
         'sunglasses', 'glasses', 'gown', 'miniskirt', 'trench coat', 'jersey', 'abaya', 'bikini', 
@@ -197,18 +199,20 @@ def predict_image(image_path):
         'laptop', 'cellular telephone', 'desk', 'coffee mug', 'animal', 'dog', 'cat', 'bird', 'fish'
     ]
 
-    is_infra = False
-    is_rejected = False
+    infra_score = 0
+    reject_score = 0
     
-    for label in top5_labels:
+    for i, label in enumerate(top5_labels):
         lbl_lower = label.lower()
+        weight = 5 - i  # Top 1 = 5, Top 5 = 1
+        
         if any(kw in lbl_lower for kw in reject_keywords):
-            is_rejected = True
-            break
+            reject_score += weight
         if any(kw in lbl_lower for kw in infra_keywords):
-            is_infra = True
+            infra_score += weight
             
-    if is_rejected or not is_infra:
+    # Tolak jika TIDAK ADA unsur infra sama sekali, ATAU unsur reject jauh lebih dominan
+    if infra_score == 0 or (reject_score > infra_score * 1.5):
         top_prediction = top5_labels[0].title()
         return {
             "jenis": f"Bukan Infrastruktur",
