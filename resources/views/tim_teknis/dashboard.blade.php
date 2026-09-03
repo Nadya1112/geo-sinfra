@@ -22,7 +22,7 @@
                             <p class="text-rose-100 text-xs md:text-sm font-medium">AI mendeteksi <strong class="text-navy-900 dark:text-white">{{ $totalRusakBerat }} infrastruktur</strong> kondisi kritis. Segera tinjau!</p>
                         </div>
                     </div>
-                    <a href="{{ route('tim_teknis.laporan') }}?kondisi=Berat" class="flex-shrink-0 px-3 py-2 md:px-6 md:py-4 bg-white text-rose-600 rounded-xl md:rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-widest hover:bg-rose-50 transition-colors shadow-lg flex items-center gap-1.5">
+                    <a href="{{ route('tim_teknis.prioritas') }}" class="flex-shrink-0 px-3 py-2 md:px-6 md:py-4 bg-white text-rose-600 rounded-xl md:rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-widest hover:bg-rose-50 transition-colors shadow-lg flex items-center gap-1.5">
                         Tinjau <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
