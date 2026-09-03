@@ -620,7 +620,28 @@
                     
                     const responseData = await response.json();
                     
-                    Swal.fire('Berhasil!', responseData.message || 'Data survei berhasil diunggah ke server dan dianalisis AI.', 'success')
+                    let aiHtml = '';
+                    if (responseData.ai_data) {
+                        const ai = responseData.ai_data;
+                        aiHtml = `
+                            <div class="mt-4 p-4 bg-slate-50 dark:bg-navy-900 rounded-xl border border-slate-200 dark:border-white/10 text-left">
+                                <p class="text-xs font-black text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">Hasil Analisis AI</p>
+                                <ul class="text-sm space-y-1.5 text-slate-600 dark:text-slate-400 font-medium">
+                                    <li><i class="fas fa-tag text-gold-500 mr-2 w-4"></i> Objek: <b class="text-navy-900 dark:text-white">${ai.jenis || 'Jalan'}</b></li>
+                                    <li><i class="fas fa-heart pulse text-red-500 mr-2 w-4"></i> Kondisi: <b class="text-navy-900 dark:text-white">${ai.kondisi || 'Baik'}</b></li>
+                                    <li><i class="fas fa-bullseye text-blue-500 mr-2 w-4"></i> Akurasi: <b class="text-navy-900 dark:text-white">${(ai.confidence_kondisi || 0)}%</b></li>
+                                </ul>
+                            </div>
+                        `;
+                    }
+                    
+                    Swal.fire({
+                        title: 'Berhasil!',
+                        html: (responseData.message || 'Data survei berhasil diunggah ke server dan dianalisis AI.') + aiHtml,
+                        icon: 'success',
+                        confirmButtonText: 'Tutup & Input Baru',
+                        confirmButtonColor: '#c5a059'
+                    })
                     .then(() => { 
                         // Reset form dan tetap di halaman
                         form.reset();

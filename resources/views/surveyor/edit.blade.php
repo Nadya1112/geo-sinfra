@@ -19,6 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <script>
         tailwind.config = {
@@ -536,6 +537,35 @@
         window.addEventListener('DOMContentLoaded', () => {
             filterKelurahan();
         });
+
+        // Notifikasi SweetAlert untuk Hasil Update Data
+        @if(session('success'))
+            Swal.fire({
+                title: 'Pembaruan Berhasil!',
+                html: `{!! session('success') !!}`,
+                icon: 'success',
+                confirmButtonText: 'Lanjutkan',
+                confirmButtonColor: '#c5a059'
+            });
+        @endif
+
+        @if($errors->any())
+            Swal.fire({
+                title: 'Pembaruan Gagal!',
+                html: `
+                    <div class="text-left text-sm text-red-600">
+                        <ul class="list-disc pl-4 space-y-1">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                `,
+                icon: 'error',
+                confirmButtonText: 'Tutup',
+                confirmButtonColor: '#ef4444'
+            });
+        @endif
     </script>
 </body>
 </html>

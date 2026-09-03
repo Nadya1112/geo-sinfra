@@ -194,7 +194,7 @@ class SurveyorController extends Controller
             ]);
         }
 
-        return redirect()->route('surveyor.history')->with('success', 'Data lapangan berhasil disimpan & dianalisis otomatis oleh AI!');
+        return redirect()->back()->with('success', 'Data lapangan berhasil disimpan & dianalisis otomatis oleh AI!')->with('ai_data', $aiResult);
     }
 
     public function history(\Illuminate\Http\Request $request)
@@ -347,7 +347,7 @@ class SurveyorController extends Controller
 
         // Pemanggilan processCnnAnalysis dihapus karena sudah dilakukan di blok pengecekan file di atas.
 
-        return redirect()->route('surveyor.history')->with('success', 'Data & hasil Analisis AI berhasil diperbarui!');
+        return redirect()->back()->with('success', 'Data & hasil Analisis AI berhasil diperbarui!');
     }
 
     /**
