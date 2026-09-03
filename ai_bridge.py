@@ -181,22 +181,34 @@ def predict_image(image_path):
         top5_prob, top5_catid = torch.topk(prob, 5)
         top5_labels = [imagenet_categories[i] for i in top5_catid]
 
-    # Keyword yang berhubungan dengan jalan, jembatan, lingkungan luar, atau kendaraan (sering muncul di jalan)
+    # DAFTAR KEYWORD KETAT: Hanya mendeteksi objek infrastruktur fisik (jalan, jembatan, bangunan).
+    # Menghapus keyword bias seperti 'wall', 'car', 'vehicle', 'minivan', dsb yang sering terdeteksi di foto non-infrastruktur
     infra_keywords = [
-        'street', 'road', 'bridge', 'building', 'wall', 'fence', 'house', 'paving', 
-        'asphalt', 'dirt', 'path', 'trail', 'sidewalk', 'pier', 'dam', 'viaduct', 
-        'mountain', 'valley', 'park', 'tree', 'sign', 'car', 'vehicle', 'truck', 
-        'bus', 'bicycle', 'motorcycle', 'pole', 'traffic', 'stone', 'earth', 'ground',
-        'cab', 'jeep', 'minivan', 'tractor', 'wagon', 'bannister', 'breakwater'
+        'street', 'road', 'bridge', 'paving', 'asphalt', 'path', 'trail', 'sidewalk', 
+        'viaduct', 'highway', 'lane', 'alley', 'crossing', 'pier', 'dam', 'breakwater'
     ]
     
+    # DAFTAR KEYWORD REJECT: Jika terdeteksi manusia, pakaian, hewan, atau objek dalam ruangan, langsung tolak.
+    reject_keywords = [
+        'person', 'man', 'woman', 'boy', 'girl', 'face', 'hair', 'suit', 'tie', 'lipstick', 
+        'sunglasses', 'glasses', 'gown', 'miniskirt', 'trench coat', 'jersey', 'abaya', 'bikini', 
+        'brassiere', 'cardigan', 'cloak', 'cowboy hat', 'jean', 'lab coat', 'necklace', 'pajama', 
+        'purse', 'sombrero', 'sweatshirt', 'swimming trunks', 't-shirt', 'vest', 'monitor', 'screen', 
+        'laptop', 'cellular telephone', 'desk', 'coffee mug', 'animal', 'dog', 'cat', 'bird', 'fish'
+    ]
+
     is_infra = False
+    is_rejected = False
+    
     for label in top5_labels:
-        if any(kw in label.lower() for kw in infra_keywords):
-            is_infra = True
+        lbl_lower = label.lower()
+        if any(kw in lbl_lower for kw in reject_keywords):
+            is_rejected = True
             break
+        if any(kw in lbl_lower for kw in infra_keywords):
+            is_infra = True
             
-    if not is_infra:
+    if is_rejected or not is_infra:
         top_prediction = top5_labels[0].title()
         return {
             "jenis": f"Bukan Infrastruktur",
