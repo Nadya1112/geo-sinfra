@@ -300,6 +300,12 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    animation: {
+                        duration: 2000,
+                        easing: 'easeOutQuart',
+                        x: { type: 'number', easing: 'linear', duration: 1500 },
+                        y: { type: 'number', easing: 'easeOutBounce', duration: 2000 }
+                    },
                     plugins: {
                         legend: { display: false },
                         tooltip: {

@@ -284,7 +284,12 @@
                             cornerRadius: 10,
                         }
                     },
-                    animation: { animateScale: true, duration: 1000 }
+                    animation: { 
+                        animateScale: true, 
+                        animateRotate: true,
+                        duration: 2000,
+                        easing: 'easeOutQuart'
+                    }
                 }
             });
         }
