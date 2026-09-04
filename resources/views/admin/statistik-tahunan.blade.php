@@ -258,67 +258,79 @@
 
         // Kurva-S Chart - hanya render jika ada data
         @if($hasChartData)
-        const ctx = document.getElementById('yearlyChart').getContext('2d');
-        const monthLimit = 12;
-        const allLabels = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
-        const chartLabels = allLabels.slice(0, monthLimit);
-        const rawData = @json($chartData).slice(0, monthLimit);
+        function initYearlyChart() {
+            const canvas = document.getElementById('yearlyChart');
+            if (!canvas) return;
 
-        let cumulative = [], total = 0;
-        rawData.forEach(v => { total += v; cumulative.push(total); });
+            let existingChart = Chart.getChart(canvas);
+            if(existingChart) existingChart.destroy();
 
-        const gradient = ctx.createLinearGradient(0, 0, 0, 280);
-        gradient.addColorStop(0, 'rgba(197,160,89,0.3)');
-        gradient.addColorStop(1, 'rgba(197,160,89,0.0)');
+            const ctx = canvas.getContext('2d');
+            const monthLimit = 12;
+            const allLabels = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+            const chartLabels = allLabels.slice(0, monthLimit);
+            const rawData = @json($chartData).slice(0, monthLimit);
 
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: chartLabels,
-                datasets: [{
-                    label: 'Kumulatif Survey Masuk',
-                    data: cumulative,
-                    borderColor: '#c5a059',
-                    borderWidth: 3,
-                    pointBackgroundColor: '#0f0e2c',
-                    pointBorderColor: '#c5a059',
-                    pointBorderWidth: 3,
-                    pointRadius: 6,
-                    pointHoverRadius: 9,
-                    tension: 0.4,
-                    fill: true,
-                    backgroundColor: gradient
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        backgroundColor: '#070617',
-                        titleColor: '#c5a059',
-                        bodyColor: '#fff',
-                        padding: 12,
-                        cornerRadius: 12,
-                        callbacks: {
-                            label: (ctx) => ` ${ctx.raw} survey kumulatif`
+            let cumulative = [], total = 0;
+            rawData.forEach(v => { total += v; cumulative.push(total); });
+
+            const gradient = ctx.createLinearGradient(0, 0, 0, 280);
+            gradient.addColorStop(0, 'rgba(197,160,89,0.3)');
+            gradient.addColorStop(1, 'rgba(197,160,89,0.0)');
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: chartLabels,
+                    datasets: [{
+                        label: 'Kumulatif Survey Masuk',
+                        data: cumulative,
+                        borderColor: '#c5a059',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#0f0e2c',
+                        pointBorderColor: '#c5a059',
+                        pointBorderWidth: 3,
+                        pointRadius: 6,
+                        pointHoverRadius: 9,
+                        tension: 0.4,
+                        fill: true,
+                        backgroundColor: gradient
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#070617',
+                            titleColor: '#c5a059',
+                            bodyColor: '#fff',
+                            padding: 12,
+                            cornerRadius: 12,
+                            callbacks: {
+                                label: (ctx) => ` ${ctx.raw} survey kumulatif`
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(255,255,255,0.05)', borderDash: [4,4] },
+                            ticks: { font: { size: 10, weight: 'bold' }, color: '#64748b', stepSize: 1 }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { font: { size: 10, weight: 'bold' }, color: '#94a3b8' }
                         }
                     }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: { color: 'rgba(255,255,255,0.05)', borderDash: [4,4] },
-                        ticks: { font: { size: 10, weight: 'bold' }, color: '#64748b', stepSize: 1 }
-                    },
-                    x: {
-                        grid: { display: false },
-                        ticks: { font: { size: 10, weight: 'bold' }, color: '#94a3b8' }
-                    }
                 }
-            }
-        });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', initYearlyChart);
+        document.addEventListener('livewire:navigated', initYearlyChart);
+        initYearlyChart();
         @endif
     </script>
 </body>

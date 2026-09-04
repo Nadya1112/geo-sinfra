@@ -249,37 +249,49 @@
         setInterval(updateClock, 1000); updateClock();
 
         // Donut Chart
-        const ctx = document.getElementById('donutChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Kondisi Baik', 'Kondisi Rusak Ringan', 'Kondisi Rusak Sedang', 'Kondisi Rusak Berat'],
-                datasets: [{
-                    data: [{{ $jumlahBaik }}, {{ $jumlahRusakRingan }}, {{ $jumlahRusakSedang }}, {{ $jumlahRusakBerat }}],
-                    backgroundColor: ['#10b981', '#eab308', '#f97316', '#ef4444'],
-                    borderColor: '#0f0e2c',
-                    borderWidth: 3,
-                    hoverOffset: 8,
-                }]
-            },
-            options: {
-                cutout: '72%',
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        callbacks: {
-                            label: (ctx) => ` ${ctx.label}: ${ctx.raw} titik`
-                        },
-                        backgroundColor: '#0f0e2c',
-                        titleColor: '#c5a059',
-                        bodyColor: '#fff',
-                        padding: 10,
-                        cornerRadius: 10,
-                    }
+        function initDonutChart() {
+            const canvas = document.getElementById('donutChart');
+            if (!canvas) return;
+            
+            let existingChart = Chart.getChart(canvas);
+            if(existingChart) existingChart.destroy();
+
+            const ctx = canvas.getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Kondisi Baik', 'Kondisi Rusak Ringan', 'Kondisi Rusak Sedang', 'Kondisi Rusak Berat'],
+                    datasets: [{
+                        data: [{{ $jumlahBaik }}, {{ $jumlahRusakRingan }}, {{ $jumlahRusakSedang }}, {{ $jumlahRusakBerat }}],
+                        backgroundColor: ['#10b981', '#eab308', '#f97316', '#ef4444'],
+                        borderColor: '#0f0e2c',
+                        borderWidth: 3,
+                        hoverOffset: 8,
+                    }]
                 },
-                animation: { animateScale: true, duration: 1000 }
-            }
-        });
+                options: {
+                    cutout: '72%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: (ctx) => ` ${ctx.label}: ${ctx.raw} titik`
+                            },
+                            backgroundColor: '#0f0e2c',
+                            titleColor: '#c5a059',
+                            bodyColor: '#fff',
+                            padding: 10,
+                            cornerRadius: 10,
+                        }
+                    },
+                    animation: { animateScale: true, duration: 1000 }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', initDonutChart);
+        document.addEventListener('livewire:navigated', initDonutChart);
+        initDonutChart();
     </script>
 </body>
 </html>
