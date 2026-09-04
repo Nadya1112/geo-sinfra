@@ -4,6 +4,7 @@
 @section('page_title', 'Panel Pengawasan')
 
 @section('content')
+<div class="space-y-6">
 
             @if(isset($totalRusakBerat) && $totalRusakBerat > 0)
             <!-- Critical Alert Banner -->
@@ -213,5 +214,5 @@
                     </div>
                 </a>
             </div>
-
+</div>
 @endsection
