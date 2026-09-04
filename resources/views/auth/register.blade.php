@@ -73,7 +73,7 @@
         }
 
         .input-field {
-            width: 100%; padding: 11px 16px;
+            width: 100%; padding-top: 11px; padding-bottom: 11px;
             background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px;
             font-size: 13px; font-weight: 600; color: #0f0e2c;
             outline: none; transition: all 0.25s ease;
@@ -221,7 +221,7 @@
                     <label class="label-field">Nama Lengkap <span class="text-gold-500">*</span></label>
                     <div class="relative">
                         <input type="text" name="name" placeholder="Masukkan nama lengkap" value="{{ old('name') }}" required
-                            class="input-field pl-10">
+                            class="input-field pl-10 pr-4">
                         <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"><i class="fas fa-id-card"></i></span>
                     </div>
                 </div>
@@ -231,7 +231,7 @@
                     <label class="label-field">Email / NIP <span class="text-gold-500">*</span></label>
                     <div class="relative">
                         <input type="text" name="email" placeholder="nama@geo-sinfra.co.id" value="{{ old('email') }}" required
-                            class="input-field pl-10">
+                            class="input-field pl-10 pr-4">
                         <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"><i class="fas fa-envelope"></i></span>
                     </div>
                 </div>
@@ -241,7 +241,7 @@
                     <label class="label-field">Nomor WhatsApp <span class="text-gold-500">*</span></label>
                     <div class="relative">
                         <input type="text" name="no_hp" placeholder="08123456789" value="{{ old('no_hp') }}" required
-                            class="input-field pl-10">
+                            class="input-field pl-10 pr-4">
                         <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"><i class="fab fa-whatsapp"></i></span>
                     </div>
                 </div>

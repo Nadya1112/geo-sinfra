@@ -103,7 +103,7 @@
 
         /* ── Right Panel / Form ── */
         .input-field {
-            width: 100%; padding: 13px 18px;
+            width: 100%; padding-top: 13px; padding-bottom: 13px;
             background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 14px;
             font-size: 14px; font-weight: 600; color: #0f0e2c;
             outline: none; transition: all 0.25s ease;
@@ -374,7 +374,7 @@
                             type="text" name="login" id="login-input"
                             placeholder="Email atau 0812xxxx"
                             value="{{ old('login') }}" required autocomplete="username"
-                            class="input-field pl-11"
+                            class="input-field pl-11 pr-4"
                         >
                         <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm">
                             <i class="fas fa-user"></i>
@@ -411,7 +411,7 @@
                         <input
                             type="number" name="captcha"
                             placeholder="Jawaban Anda" required
-                            class="input-field pl-11"
+                            class="input-field pl-11 pr-4"
                         >
                         <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm">
                             <i class="fas fa-calculator"></i>
