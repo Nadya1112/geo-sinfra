@@ -13,20 +13,8 @@
     </script>
 
     <title>Peta Sebaran Saya | GEO-SINFRA</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        navy: { 50: '#f4f4fa', 100: '#e9e9f3', 200: '#c7c8e3', 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 800: '#1e1b4b', 900: '#0f0e2c', 950: '#070617' },
-                        gold: { 50: '#fdfbf7', 100: '#fbf7ed', 400: '#fbbf24', 500: '#c5a059', 600: '#b38f4a', 700: '#9d7c3d' }
-                    }
-                }
-            }
-        }
-    </script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />

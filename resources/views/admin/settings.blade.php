@@ -15,40 +15,11 @@
     <title>Pengaturan | Admin SINFRA</title>
     <link rel="icon" href="{{ asset('logo_geo-sinfra.png') }}" type="image/png">
     
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                    },
-                    colors: {
-                        navy: {
-                            50: '#f4f4fa',
-                            100: '#e9e9f3',
-                            200: '#c7c8e3',
-                            500: '#6366f1',
-                            800: '#1e1b4b',
-                            900: '#0f0e2c',
-                            950: '#070617',
-                        },
-                        gold: {
-                            50: '#fdfbf7',
-                            100: '#fbf7ed',
-                            500: '#c5a059',
-                            600: '#b38f4a',
-                            700: '#9d7c3d',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    
 
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
