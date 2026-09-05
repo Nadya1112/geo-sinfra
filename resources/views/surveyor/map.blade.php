@@ -66,7 +66,347 @@
         </header>
 
         <!-- Map Toolbar (Outside the map) -->
-        <div class="bg-white dark:bg-navy-900/90 border-b border-navy-50 p-3 flex flex-col md:flex-row gap-3 md:items-center justify-between z-[9999] relative shadow-sm">
+        <div class="bg-white dark:bg-navy-900/90 border-b border-navy-50 dark:border-white/10 p-3 flex flex-col md:flex-row gap-3 md:items-center justify-between z-[9999] relative shadow-sm">
+            <!-- Search Box -->
+            <div class="relative w-full md:w-1/3">
+                <input type="text" id="map-search" placeholder="Cari laporan (contoh: Jalan Teratai)..." class="w-full bg-slate-100 dark:bg-[#0f0e2c] border border-slate-300 dark:border-white/10 rounded-xl px-4 py-2 pl-9 text-sm font-bold text-navy-900 dark:text-white focus:ring-2 focus:ring-gold-500 focus:outline-none transition-all placeholder:text-slate-400">
+                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-300 text-sm"></i>
+            </div>
+
+            <!-- Controls -->
+            <div class="flex items-center gap-2 overflow-x-auto md:overflow-visible pb-1 md:pb-0 hide-scrollbar">
+
+                <!-- [MOBILE ONLY] Filter Peta Button -->
+                <button onclick="document.getElementById('mobile-filter-sheet').classList.remove('hidden'); setTimeout(() => document.getElementById('mobile-filter-sheet').classList.remove('translate-y-full'), 10);" class="flex-shrink-0 bg-navy-900 dark:bg-white/10 text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-navy-800 dark:hover:bg-white/20 transition-all flex items-center gap-2 shadow-md md:hidden">
+                    <i class="fas fa-filter text-gold-500"></i> Filter Peta
+                </button>
+
+                <!-- [DESKTOP] Kondisi / Statistik Dropdown -->
+                <div class="relative hidden md:block">
+                    <button onclick="toggleMenu(event, 'condition-options-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
+                        <i class="fas fa-chart-pie text-gold-500"></i> <span id="current-cond-label-desktop">Kondisi</span> <i class="fas fa-chevron-down text-[10px] ml-1"></i>
+                    </button>
+                    <div id="condition-options-desktop" class="hidden absolute top-full left-0 mt-2 p-1.5 bg-[#1e1b4b]/95 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex flex-col min-w-[200px] z-[10000]">
+                        <button onclick="handleConditionSelect('Semua')" class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-300 hover:bg-white/10 transition-all flex items-center justify-between group">
+                            <span class="group-hover:text-white transition-colors">Semua</span>
+                            <span class="text-[9px] font-black text-blue-400 bg-blue-500/10 px-1.5 py-0.5 rounded border border-blue-400/20">{{ $dataMap->count() }}</span>
+                        </button>
+                        <button onclick="handleConditionSelect('Kondisi Baik')" class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-[#059669]/10 hover:text-[#059669] transition-all flex items-center justify-between group">
+                            <div class="flex items-center gap-1.5">
+                                <div class="w-2 h-2 bg-[#059669] rounded-full"></div>
+                                <span class="group-hover:text-[#059669] transition-colors">Baik</span>
+                            </div>
+                            <span class="text-[9px] font-black text-[#059669] bg-white/5 px-1.5 py-0.5 rounded border border-[#059669]/20">{{ $dataMap->filter(fn($i) => optional($i->analisis)->label_prioritas == 'Kondisi Baik')->count() }}</span>
+                        </button>
+                        <button onclick="handleConditionSelect('Kondisi Rusak Ringan')" class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-[#ca8a04]/10 hover:text-[#ca8a04] transition-all flex items-center justify-between group">
+                            <div class="flex items-center gap-1.5">
+                                <div class="w-2 h-2 bg-[#ca8a04] rounded-full"></div>
+                                <span class="group-hover:text-[#ca8a04] transition-colors">Ringan</span>
+                            </div>
+                            <span class="text-[9px] font-black text-[#ca8a04] bg-white/5 px-1.5 py-0.5 rounded border border-[#ca8a04]/20">{{ $dataMap->filter(fn($i) => optional($i->analisis)->label_prioritas == 'Kondisi Rusak Ringan')->count() }}</span>
+                        </button>
+                        <button onclick="handleConditionSelect('Kondisi Rusak Sedang')" class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-[#d97706]/10 hover:text-[#d97706] transition-all flex items-center justify-between group">
+                            <div class="flex items-center gap-1.5">
+                                <div class="w-2 h-2 bg-[#d97706] rounded-full"></div>
+                                <span class="group-hover:text-[#d97706] transition-colors">Sedang</span>
+                            </div>
+                            <span class="text-[9px] font-black text-[#d97706] bg-white/5 px-1.5 py-0.5 rounded border border-[#d97706]/20">{{ $dataMap->filter(fn($i) => optional($i->analisis)->label_prioritas == 'Kondisi Rusak Sedang')->count() }}</span>
+                        </button>
+                        <button onclick="handleConditionSelect('Kondisi Rusak Berat')" class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-[#be123c]/10 hover:text-[#be123c] transition-all flex items-center justify-between group">
+                            <div class="flex items-center gap-1.5">
+                                <div class="w-2 h-2 bg-[#be123c] rounded-full"></div>
+                                <span class="group-hover:text-[#be123c] transition-colors">Berat</span>
+                            </div>
+                            <span class="text-[9px] font-black text-[#be123c] bg-white/5 px-1.5 py-0.5 rounded border border-[#be123c]/20">{{ $dataMap->filter(fn($i) => optional($i->analisis)->label_prioritas == 'Kondisi Rusak Berat')->count() }}</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- [DESKTOP] Basemap Dropdown -->
+                <div class="relative hidden md:block">
+                    <button onclick="toggleMenu(event, 'layer-options-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
+                        <i class="fas fa-layer-group text-blue-500"></i> Basemap
+                    </button>
+                    <div id="layer-options-desktop" class="hidden absolute top-full left-0 mt-2 p-1.5 bg-[#1e1b4b]/95 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex flex-col gap-1 min-w-[150px] z-[10000]">
+                        <button onclick="changeBaseLayer('greyscale')" class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-white/10 transition-all group">
+                            <div class="w-6 h-6 rounded-md bg-gray-500/20 flex items-center justify-center text-gray-400 group-hover:bg-gray-500 group-hover:text-white transition-all">
+                                <i class="fas fa-adjust text-[10px]"></i>
+                            </div>
+                            <span class="text-[10px] font-black uppercase tracking-wider text-gray-300 group-hover:text-white">Greyscale</span>
+                        </button>
+                        <button onclick="changeBaseLayer('satellite')" class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-white/10 transition-all group">
+                            <div class="w-6 h-6 rounded-md bg-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white transition-all">
+                                <i class="fas fa-satellite text-[10px]"></i>
+                            </div>
+                            <span class="text-[10px] font-black uppercase tracking-wider text-gray-300 group-hover:text-white">Satelit</span>
+                        </button>
+                        <button onclick="changeBaseLayer('osm')" class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-white/10 transition-all group">
+                            <div class="w-6 h-6 rounded-md bg-amber-500/20 flex items-center justify-center text-amber-400 group-hover:bg-amber-500 group-hover:text-white transition-all">
+                                <i class="fas fa-map-marked-alt text-[10px]"></i>
+                            </div>
+                            <span class="text-[10px] font-black uppercase tracking-wider text-gray-300 group-hover:text-white">OSM</span>
+                        </button>
+                        <button onclick="changeBaseLayer('dark')" class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-white/10 transition-all group">
+                            <div class="w-6 h-6 rounded-md bg-indigo-500/20 flex items-center justify-center text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-all">
+                                <i class="fas fa-moon text-[10px]"></i>
+                            </div>
+                            <span class="text-[10px] font-black uppercase tracking-wider text-gray-300 group-hover:text-white">Gelap</span>
+                        </button>
+                        <button onclick="changeBaseLayer('street')" class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-white/10 transition-all group">
+                            <div class="w-6 h-6 rounded-md bg-blue-500/20 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all">
+                                <i class="fas fa-map text-[10px]"></i>
+                            </div>
+                            <span class="text-[10px] font-black uppercase tracking-wider text-gray-300 group-hover:text-white">Default</span>
+                        </button>
+                        <div class="h-[1px] bg-white/10 my-0.5 mx-1"></div>
+                        <button onclick="toggleFloodLayer()" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-white/10 transition-all group w-full text-left">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-water text-blue-400 text-[10px]"></i>
+                                <span class="text-[10px] font-black uppercase tracking-wider text-slate-300 group-hover:text-white transition-colors">Banjir</span>
+                            </div>
+                            <div class="w-5 h-2.5 rounded-full bg-slate-700 relative border border-white/10 transition-colors" id="flood-toggle-bg">
+                                <div id="flood-toggle-dot" class="absolute left-[2px] top-[1px] w-1.5 h-1.5 bg-slate-400 rounded-full transition-all"></div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- [DESKTOP] Kategori Dropdown -->
+                <div class="relative hidden md:block">
+                    <button onclick="toggleMenu(event, 'category-options-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
+                        <i class="fas fa-layer-group text-gold-500"></i> <span id="current-cat-label-desktop">Semua Kategori</span> <i class="fas fa-chevron-down text-[10px] ml-1"></i>
+                    </button>
+                    <div id="category-options-desktop" class="hidden absolute top-full left-0 mt-2 p-1.5 bg-[#0f0e2c]/95 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex flex-col gap-1 min-w-[190px] z-[10000]">
+                        <button onclick="handleCategorySelect('Semua')" data-type="Semua" class="cat-opt-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
+                            <div class="flex items-center gap-1.5">
+                                <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-gold-500 transition-colors">
+                                    <i class="fas fa-check text-[7px] text-gold-500 cat-check-desktop opacity-0 transition-opacity"></i>
+                                </div>
+                                <span class="group-hover:text-white transition-colors">Semua Kategori</span>
+                            </div>
+                            <div class="w-3 h-3 rounded bg-gray-500/30"></div>
+                        </button>
+                        <button onclick="handleCategorySelect('Jalan')" data-type="Jalan" class="cat-opt-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
+                            <div class="flex items-center gap-1.5">
+                                <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors">
+                                    <i class="fas fa-check text-[7px] text-blue-400 cat-check-desktop opacity-0 transition-opacity"></i>
+                                </div>
+                                <span class="group-hover:text-white transition-colors">Jalan</span>
+                            </div>
+                            <div class="w-3 h-3 rounded bg-blue-500"></div>
+                        </button>
+                        <button onclick="handleCategorySelect('Jembatan')" data-type="Jembatan" class="cat-opt-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
+                            <div class="flex items-center gap-1.5">
+                                <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
+                                    <i class="fas fa-check text-[7px] text-emerald-400 cat-check-desktop opacity-0 transition-opacity"></i>
+                                </div>
+                                <span class="group-hover:text-white transition-colors">Jembatan</span>
+                            </div>
+                            <div class="w-3 h-3 rounded bg-emerald-500"></div>
+                        </button>
+                        <button onclick="handleCategorySelect('Titian')" data-type="Titian" class="cat-opt-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
+                            <div class="flex items-center gap-1.5">
+                                <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-purple-400 transition-colors">
+                                    <i class="fas fa-check text-[7px] text-purple-400 cat-check-desktop opacity-0 transition-opacity"></i>
+                                </div>
+                                <span class="group-hover:text-white transition-colors">Titian</span>
+                            </div>
+                            <div class="w-3 h-3 rounded bg-purple-500"></div>
+                        </button>
+                        <div class="h-[1px] bg-white/5 my-0.5"></div>
+                        <button onclick="toggleKelurahanPoints()" class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" id="kel-toggle-btn-desktop">
+                            <div class="flex items-center gap-1.5">
+                                <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
+                                    <i class="fas fa-check text-[7px] text-emerald-400 kel-check-icon-sync" style="opacity:1"></i>
+                                </div>
+                                <span class="group-hover:text-white transition-colors">Kelurahan</span>
+                            </div>
+                            <i class="fas fa-home text-emerald-500 text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- [DESKTOP] Wilayah Dropdown -->
+                <div class="relative hidden md:block">
+                    <button onclick="toggleMenu(event, 'territory-options-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
+                        <i class="fas fa-map-location-dot text-gold-500"></i> <span id="current-territory-label-desktop">Semua Wilayah</span> <i class="fas fa-chevron-down text-[10px] ml-1"></i>
+                    </button>
+                    <div id="territory-options-desktop" class="hidden absolute top-full right-0 mt-2 p-1 bg-[#0f0e2c]/95 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex flex-col gap-1 min-w-[200px] max-h-[50vh] overflow-y-auto custom-scrollbar z-[10000]">
+                        <button onclick="handleTerritorySelect('Semua', 'Semua Wilayah')" data-id="Semua" class="territory-opt-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-emerald-400 hover:bg-white/10 transition-all flex items-center justify-between group border-b border-white/5 mb-1">
+                            <div class="flex items-center gap-1.5">
+                                <div class="w-3 h-3 rounded border border-emerald-400/50 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
+                                    <i class="fas fa-check text-[7px] text-emerald-400 territory-check-desktop" style="opacity:1"></i>
+                                </div>
+                                <span class="group-hover:text-white transition-colors">Semua Wilayah</span>
+                            </div>
+                        </button>
+                        @foreach($myKecamatans as $kec)
+                        <button onclick="handleTerritorySelect('{{ $kec->id_kecamatan }}', '{{ $kec->nama_kecamatan }}')" data-id="{{ $kec->id_kecamatan }}" class="territory-opt-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group shrink-0">
+                            <div class="flex items-center gap-1.5">
+                                <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
+                                    <i class="fas fa-check text-[7px] text-emerald-400 territory-check-desktop opacity-0 transition-opacity"></i>
+                                </div>
+                                <span class="truncate max-w-[120px] group-hover:text-white transition-colors">{{ $kec->nama_kecamatan }}</span>
+                            </div>
+                            <div class="w-3 h-3 rounded border border-white/10" style="background-color: {{ $kec->warna ?? '#cbd5e1' }};"></div>
+                        </button>
+                        @endforeach
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Mobile Filter Sheet (Bottom Sheet - mobile only) -->
+            <div id="mobile-filter-sheet" class="hidden fixed inset-x-0 bottom-0 z-[9999] pointer-events-auto translate-y-full transition-transform duration-300">
+                <div class="bg-white/95 dark:bg-[#1e1b4b]/95 backdrop-blur-xl rounded-t-[2.5rem] border-t border-slate-200 dark:border-white/10 shadow-2xl w-full flex flex-col max-h-[85vh]">
+
+                    <!-- Handle & Header -->
+                    <div class="flex-shrink-0 p-6 pb-2 border-b border-slate-200 dark:border-white/5">
+                        <div class="w-12 h-1.5 bg-slate-300 dark:bg-white/20 rounded-full mx-auto mb-3"></div>
+                        <div class="flex justify-between items-center">
+                            <h4 class="text-navy-900 dark:text-white font-black text-lg uppercase tracking-wider">Filter Peta</h4>
+                            <button onclick="document.getElementById('mobile-filter-sheet').classList.add('translate-y-full'); setTimeout(() => document.getElementById('mobile-filter-sheet').classList.add('hidden'), 300);" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center text-navy-900 dark:text-white hover:bg-slate-200 dark:hover:bg-white/20 transition-all">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Scrollable Content -->
+                    <div class="overflow-y-auto custom-scrollbar flex flex-col gap-2 p-6 pt-4 pb-10 flex-1">
+
+                        <!-- Kondisi Section (Mobile) -->
+                        <div class="w-full relative">
+                            <button onclick="toggleCategoryMenu()" class="w-full px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider bg-white/5 text-navy-900 dark:text-white flex items-center justify-between hover:bg-slate-50 dark:hover:bg-white/10 transition-all border border-slate-200 dark:border-white/5 shadow-inner">
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-chart-pie text-sm text-gold-500"></i>
+                                    <span id="current-cond-label" class="truncate max-w-[130px] text-[10px]">KONDISI</span>
+                                </div>
+                                <i id="cond-chevron" class="fas fa-chevron-down text-[10px] text-slate-400 dark:text-slate-300 transition-transform"></i>
+                            </button>
+                            <div id="condition-options-mobile" class="hidden mt-2 p-1.5 bg-[#0f0e2c]/90 rounded-xl border border-white/5 flex flex-col gap-1">
+                                <button onclick="handleConditionSelect('Semua')" class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-300 hover:bg-white/10 transition-all flex items-center justify-between group">
+                                    <span class="group-hover:text-white">Semua</span>
+                                    <span class="text-[9px] font-black text-blue-400 bg-blue-500/10 px-1.5 py-0.5 rounded border border-blue-400/20">{{ $dataMap->count() }}</span>
+                                </button>
+                                <button onclick="handleConditionSelect('Kondisi Baik')" class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-[#059669]/10 hover:text-[#059669] transition-all flex items-center justify-between group">
+                                    <div class="flex items-center gap-1.5"><div class="w-2 h-2 bg-[#059669] rounded-full"></div><span>Baik</span></div>
+                                    <span class="text-[9px] font-black text-[#059669] bg-white/5 px-1.5 py-0.5 rounded border border-[#059669]/20">{{ $dataMap->filter(fn($i) => optional($i->analisis)->label_prioritas == 'Kondisi Baik')->count() }}</span>
+                                </button>
+                                <button onclick="handleConditionSelect('Kondisi Rusak Ringan')" class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-[#ca8a04]/10 hover:text-[#ca8a04] transition-all flex items-center justify-between group">
+                                    <div class="flex items-center gap-1.5"><div class="w-2 h-2 bg-[#ca8a04] rounded-full"></div><span>Ringan</span></div>
+                                    <span class="text-[9px] font-black text-[#ca8a04] bg-white/5 px-1.5 py-0.5 rounded border border-[#ca8a04]/20">{{ $dataMap->filter(fn($i) => optional($i->analisis)->label_prioritas == 'Kondisi Rusak Ringan')->count() }}</span>
+                                </button>
+                                <button onclick="handleConditionSelect('Kondisi Rusak Sedang')" class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-[#d97706]/10 hover:text-[#d97706] transition-all flex items-center justify-between group">
+                                    <div class="flex items-center gap-1.5"><div class="w-2 h-2 bg-[#d97706] rounded-full"></div><span>Sedang</span></div>
+                                    <span class="text-[9px] font-black text-[#d97706] bg-white/5 px-1.5 py-0.5 rounded border border-[#d97706]/20">{{ $dataMap->filter(fn($i) => optional($i->analisis)->label_prioritas == 'Kondisi Rusak Sedang')->count() }}</span>
+                                </button>
+                                <button onclick="handleConditionSelect('Kondisi Rusak Berat')" class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-[#be123c]/10 hover:text-[#be123c] transition-all flex items-center justify-between group">
+                                    <div class="flex items-center gap-1.5"><div class="w-2 h-2 bg-[#be123c] rounded-full"></div><span>Berat</span></div>
+                                    <span class="text-[9px] font-black text-[#be123c] bg-white/5 px-1.5 py-0.5 rounded border border-[#be123c]/20">{{ $dataMap->filter(fn($i) => optional($i->analisis)->label_prioritas == 'Kondisi Rusak Berat')->count() }}</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="h-[1px] bg-slate-200 dark:bg-white/5 w-full my-1"></div>
+
+                        <!-- Kategori Section (Mobile) -->
+                        <div id="category-card" class="w-full relative">
+                            <button onclick="toggleCategoryMenuMobile()" class="w-full px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider bg-white/5 text-navy-900 dark:text-white flex items-center justify-between hover:bg-slate-50 dark:hover:bg-white/10 transition-all border border-slate-200 dark:border-white/5 shadow-inner">
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-layer-group text-sm text-gold-500"></i>
+                                    <span id="current-cat-label" class="truncate max-w-[130px] text-[10px]">SEMUA KATEGORI</span>
+                                </div>
+                                <i id="cat-chevron" class="fas fa-chevron-down text-[10px] text-slate-400 dark:text-slate-300 transition-transform"></i>
+                            </button>
+                            <div id="category-options" class="hidden mt-2 p-1.5 bg-[#0f0e2c]/90 rounded-xl border border-white/5 flex flex-col gap-1 max-h-[40vh] overflow-y-auto custom-scrollbar">
+                                <button onclick="handleCategorySelect('Semua')" data-type="Semua" class="cat-opt-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
+                                    <div class="flex items-center gap-1.5">
+                                        <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors">
+                                            <i class="fas fa-check text-[7px] text-blue-400 opacity-0 transition-opacity"></i>
+                                        </div>
+                                        <span class="group-hover:text-white transition-colors">Semua Kategori</span>
+                                    </div>
+                                    <div class="w-3 h-3 rounded bg-gray-500/30"></div>
+                                </button>
+                                <button onclick="handleCategorySelect('Jalan')" data-type="Jalan" class="cat-opt-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
+                                    <div class="flex items-center gap-1.5">
+                                        <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors">
+                                            <i class="fas fa-check text-[7px] text-blue-400 opacity-0 transition-opacity"></i>
+                                        </div>
+                                        <span class="group-hover:text-white transition-colors">Jalan</span>
+                                    </div>
+                                    <div class="w-3 h-3 rounded bg-blue-500"></div>
+                                </button>
+                                <button onclick="handleCategorySelect('Jembatan')" data-type="Jembatan" class="cat-opt-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
+                                    <div class="flex items-center gap-1.5">
+                                        <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors">
+                                            <i class="fas fa-check text-[7px] text-blue-400 opacity-0 transition-opacity"></i>
+                                        </div>
+                                        <span class="group-hover:text-white transition-colors">Jembatan</span>
+                                    </div>
+                                    <div class="w-3 h-3 rounded bg-emerald-500"></div>
+                                </button>
+                                <button onclick="handleCategorySelect('Titian')" data-type="Titian" class="cat-opt-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
+                                    <div class="flex items-center gap-1.5">
+                                        <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-purple-400 transition-colors">
+                                            <i class="fas fa-check text-[7px] text-purple-400 opacity-0 transition-opacity"></i>
+                                        </div>
+                                        <span class="group-hover:text-white transition-colors">Titian</span>
+                                    </div>
+                                    <div class="w-3 h-3 rounded bg-purple-500"></div>
+                                </button>
+                                <div class="h-[1px] bg-white/5 my-0.5"></div>
+                                <button onclick="toggleKelurahanPoints()" class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" id="kel-toggle-btn">
+                                    <div class="flex items-center gap-1.5">
+                                        <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
+                                            <i class="fas fa-check text-[7px] text-emerald-400 kel-check-icon-sync" style="opacity:1"></i>
+                                        </div>
+                                        <span class="group-hover:text-white transition-colors">Kelurahan</span>
+                                    </div>
+                                    <i class="fas fa-home text-emerald-500 text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="h-[1px] bg-slate-200 dark:bg-white/5 w-full my-1"></div>
+
+                        <!-- Wilayah Section (Mobile) -->
+                        <div id="territory-card" class="w-full relative">
+                            <button onclick="toggleTerritoryMenu()" class="w-full px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider bg-white/5 text-navy-900 dark:text-white flex items-center justify-between hover:bg-slate-50 dark:hover:bg-white/10 transition-all border border-slate-200 dark:border-white/5 shadow-inner">
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-map-location-dot text-sm text-gold-500"></i>
+                                    <span id="current-territory-label" class="truncate max-w-[130px] text-[10px]">SEMUA WILAYAH</span>
+                                </div>
+                                <i id="territory-chevron" class="fas fa-chevron-down text-[10px] text-slate-400 dark:text-slate-300 transition-transform"></i>
+                            </button>
+                            <div id="territory-options" class="hidden mt-1 p-1 flex-col overflow-y-auto custom-scrollbar" style="max-height: 25vh;">
+                                <button onclick="handleTerritorySelect('Semua', 'Semua Wilayah')" data-id="Semua" class="territory-opt-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group shrink-0">
+                                    <div class="flex items-center gap-1.5">
+                                        <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
+                                            <i class="fas fa-check text-[7px] text-emerald-400 opacity-0 transition-opacity"></i>
+                                        </div>
+                                        <span class="group-hover:text-white transition-colors">Semua Wilayah</span>
+                                    </div>
+                                </button>
+                                @foreach($myKecamatans as $kec)
+                                <button onclick="handleTerritorySelect('{{ $kec->id_kecamatan }}', '{{ $kec->nama_kecamatan }}')" data-id="{{ $kec->id_kecamatan }}" class="territory-opt-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group shrink-0">
+                                    <div class="flex items-center gap-1.5">
+                                        <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
+                                            <i class="fas fa-check text-[7px] text-emerald-400 opacity-0 transition-opacity"></i>
+                                        </div>
+                                        <span class="truncate max-w-[120px] group-hover:text-white transition-colors">{{ $kec->nama_kecamatan }}</span>
+                                    </div>
+                                    <div class="w-3 h-3 rounded border border-white/10" style="background-color: {{ $kec->warna ?? '#cbd5e1' }};"></div>
+                                </button>
+                                @endforeach
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
             <!-- Search Box -->
             <div class="relative w-full md:w-1/3">
                 <input type="text" id="map-search" placeholder="Cari laporan (contoh: Jalan Teratai)..." class="w-full bg-slate-100 border border-slate-300 dark:border-white/20 rounded-xl px-4 py-2 pl-9 text-sm font-bold text-navy-900 dark:text-white focus:ring-2 focus:ring-gold-500 focus:outline-none transition-all placeholder:text-slate-400">
@@ -320,16 +660,46 @@
         currentBaseLayer = baseLayers.street;
         currentBaseLayer.addTo(map);
 
+        function toggleMenu(event, menuId) {
+            event.stopPropagation();
+            const allMenus = ['condition-options-desktop', 'layer-options-desktop', 'category-options-desktop', 'territory-options-desktop'];
+            allMenus.forEach(id => {
+                if (id !== menuId) {
+                    const el = document.getElementById(id);
+                    if (el) el.classList.add('hidden');
+                }
+            });
+            const menu = document.getElementById(menuId);
+            if (menu) menu.classList.toggle('hidden');
+        }
+
+        // Close all desktop dropdowns when clicking outside
+        document.addEventListener('click', function() {
+            ['condition-options-desktop', 'layer-options-desktop', 'category-options-desktop', 'territory-options-desktop'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.add('hidden');
+            });
+        });
+
         function toggleLayerMenu() {
-            const menu = document.getElementById('layer-options');
-            menu.classList.toggle('hidden');
+            const menu = document.getElementById('layer-options-desktop');
+            if (menu) menu.classList.toggle('hidden');
         }
 
         function changeBaseLayer(type) {
             map.removeLayer(currentBaseLayer);
             currentBaseLayer = baseLayers[type];
             currentBaseLayer.addTo(map);
-            toggleLayerMenu();
+            // close basemap dropdown
+            const menu = document.getElementById('layer-options-desktop');
+            if (menu) menu.classList.add('hidden');
+        }
+
+        function toggleCategoryMenuMobile() {
+            const opts = document.getElementById('category-options');
+            const chevron = document.getElementById('cat-chevron');
+            if (opts) opts.classList.toggle('hidden');
+            if (chevron) chevron.classList.toggle('rotate-180');
         }
 
         const dataPoints = @json($dataMap);

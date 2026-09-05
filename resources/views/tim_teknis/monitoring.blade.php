@@ -101,7 +101,7 @@
                 <!-- Statistics Dropdown Button -->
                 <div class="relative hidden md:block">
                     <button onclick="toggleMenu(event, 'condition-options-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
-                        <i class="fas fa-chart-pie text-gold-500"></i> <span id="current-cond-label-desktop">Statistik</span> <i class="fas fa-chevron-down text-[10px] ml-1"></i>
+                        <i class="fas fa-chart-pie text-gold-500"></i> <span id="current-cond-label-desktop">Filter Kondisi</span> <i class="fas fa-chevron-down text-[10px] ml-1"></i>
                     </button>
                     <!-- Stats Dropdown Menu -->
                     <div id="condition-options-desktop" class="hidden absolute top-full left-0 mt-2 p-1.5 bg-[#1e1b4b]/95 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex flex-col min-w-[200px] z-[10000]">
@@ -116,7 +116,7 @@
                 <!-- Basemap Layer Button -->
                 <div class="relative hidden md:block">
                     <button onclick="toggleMenu(event, 'layer-options-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
-                        <i class="fas fa-layer-group text-blue-500"></i> Basemap
+                        <i class="fas fa-layer-group text-blue-500"></i> Filter Base Map
                     </button>
                     <!-- Basemap Dropdown -->
                     <div id="layer-options-desktop" class="hidden absolute top-full left-0 mt-2 p-1.5 bg-[#1e1b4b]/95 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex flex-col gap-1 min-w-[150px]">
@@ -163,12 +163,17 @@
                     </div>
                 </div>
 
-                <!-- Kategori Dropdown Button -->
+                <!-- Filter Peta Dropdown Button (Gabungan Kategori & Wilayah) -->
                 <div class="relative hidden md:block">
-                    <button onclick="toggleMenu(event, 'category-options-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
-                        <i class="fas fa-layer-group text-gold-500"></i> <span id="current-cat-label-desktop">Semua Kategori</span> <i class="fas fa-chevron-down text-[10px] ml-1"></i>
+                    <button onclick="toggleMenu(event, 'map-filter-options-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
+                        <i class="fas fa-filter text-gold-500"></i> <span>Filter Peta</span> <i class="fas fa-chevron-down text-[10px] ml-1"></i>
                     </button>
-                    <div id="category-options-desktop" class="hidden absolute top-full right-0 mt-2 p-1.5 bg-[#0f0e2c]/95 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex flex-col gap-1 min-w-[200px] z-[10000]">
+                    <div id="map-filter-options-desktop" class="hidden absolute top-full right-0 mt-2 p-1.5 bg-[#0f0e2c]/95 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex flex-col gap-1 min-w-[220px] max-h-[70vh] overflow-y-auto custom-scrollbar z-[10000]">
+                        
+                        <!-- Kategori Section -->
+                        <div class="px-2 py-1 mt-1">
+                            <span class="text-[9px] font-black uppercase tracking-wider text-slate-400">Kategori</span>
+                        </div>
                         <button onclick="toggleType('Semua')" class="type-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" data-id="Semua">
                             <div class="flex items-center gap-1.5">
                                 <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-gold-500 transition-colors">
@@ -214,15 +219,13 @@
                             </div>
                             <i class="fas fa-home text-emerald-500 text-xs"></i>
                         </button>
-                    </div>
-                </div>
-                
-                <!-- Wilayah Dropdown Button -->
-                <div class="relative hidden md:block">
-                    <button onclick="toggleMenu(event, 'territory-options-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
-                        <i class="fas fa-map-location-dot text-gold-500"></i> <span id="current-kec-label-desktop">Semua Wilayah</span> <i class="fas fa-chevron-down text-[10px] ml-1"></i>
-                    </button>
-                    <div id="territory-options-desktop" class="hidden absolute top-full right-0 mt-2 p-1 bg-[#0f0e2c]/95 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex flex-col gap-1 min-w-[200px] max-h-[50vh] overflow-y-auto custom-scrollbar">
+
+                        <div class="h-[1px] bg-white/10 my-1 mx-1"></div>
+
+                        <!-- Wilayah Section -->
+                        <div class="px-2 py-1">
+                            <span class="text-[9px] font-black uppercase tracking-wider text-slate-400">Wilayah</span>
+                        </div>
                         <button onclick="toggleKecamatan('Semua')" class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-emerald-400 hover:bg-white/10 transition-all flex items-center justify-between group border-b border-white/5 mb-1" id="btn-select-all-kec-desktop">
                             <div class="flex items-center gap-1.5">
                                 <div class="w-3 h-3 rounded border border-emerald-400/50 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
