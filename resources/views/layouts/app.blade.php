@@ -62,6 +62,12 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         .leaflet-container { font-family: inherit; }
         
+        /* Theme Toggle Icon Fix for Global Layouts */
+        html.dark .theme-toggle-sun { display: none !important; }
+        html.dark .theme-toggle-moon { display: block !important; }
+        html:not(.dark) .theme-toggle-sun { display: block !important; }
+        html:not(.dark) .theme-toggle-moon { display: none !important; }
+        
         /* Premium UI Mesh & Patterns */
         .bg-pattern {
             background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.06) 1px, transparent 0);
