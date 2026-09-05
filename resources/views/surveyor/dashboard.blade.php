@@ -219,24 +219,26 @@
                 </div>
 
                 <div class="space-y-6">
-                    {{-- Kondisi Cuaca Lapangan --}}
-                    <div class="bg-gradient-to-br from-[#0f0e2c] to-navy-900 rounded-[2.5rem] p-8 text-navy-900 dark:text-white relative overflow-hidden shadow-lg shadow-navy-900/10 border border-white/5">
-                        <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
+                    {{-- Kondisi Cuaca Lapangan (Real-time via Open-Meteo) --}}
+                    <div id="weather-widget" class="bg-gradient-to-br from-sky-50 to-blue-100 dark:from-[#0f0e2c] dark:to-navy-900 rounded-[2.5rem] p-8 text-navy-900 dark:text-white relative overflow-hidden shadow-lg shadow-navy-900/10 border border-sky-200 dark:border-white/5 transition-colors duration-300">
+                        <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-blue-400/20 dark:bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
                         <div class="relative z-10 flex items-center justify-between gap-4">
                             <div>
                                 <div class="flex items-center gap-2 mb-2">
-                                    <span class="px-2 py-0.5 bg-red-500/20 text-red-400 border border-red-500/30 rounded text-xs font-black uppercase tracking-widest">Waspada Banjir</span>
+                                    <span id="weather-badge" class="px-2 py-0.5 bg-sky-200/70 dark:bg-blue-500/20 text-sky-700 dark:text-blue-300 border border-sky-300 dark:border-blue-500/30 rounded text-xs font-black uppercase tracking-widest transition-all">
+                                        <i class="fas fa-spinner fa-spin text-[10px] mr-1"></i>Memuat...
+                                    </span>
                                 </div>
-                                <h4 class="font-black text-xl leading-none mb-1">Hujan Lebat</h4>
-                                <p class="text-xs text-slate-400 dark:text-slate-300 font-bold uppercase tracking-widest">Banjarmasin, 28°C</p>
+                                <h4 id="weather-desc" class="font-black text-xl leading-none mb-1 text-navy-900 dark:text-white">— —</h4>
+                                <p id="weather-city" class="text-xs text-slate-500 dark:text-slate-300 font-bold uppercase tracking-widest">Mendeteksi lokasi...</p>
                             </div>
-                            <div class="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-blue-400 shadow-inner border border-slate-200 dark:border-white/10 shrink-0">
-                                <i class="fas fa-cloud-showers-heavy text-3xl"></i>
+                            <div id="weather-icon-wrap" class="w-16 h-16 bg-sky-200/50 dark:bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-inner border border-sky-300 dark:border-white/10 shrink-0 transition-colors duration-300">
+                                <i id="weather-icon" class="fas fa-circle-notch fa-spin text-3xl text-sky-500 dark:text-blue-400"></i>
                             </div>
                         </div>
-                        <div class="relative z-10 mt-6 pt-4 border-t border-slate-200 dark:border-white/10">
-                            <p class="text-xs text-slate-500 dark:text-slate-300 font-medium leading-relaxed">
-                                <strong class="text-navy-900 dark:text-white">Peringatan Lapangan:</strong> Hati-hati saat mengambil foto di area genangan. Pastikan kamera fokus pada titik kerusakan drainase atau aspal yang terendam.
+                        <div class="relative z-10 mt-6 pt-4 border-t border-sky-200 dark:border-white/10">
+                            <p id="weather-tip" class="text-xs text-slate-500 dark:text-slate-300 font-medium leading-relaxed">
+                                <strong class="text-navy-900 dark:text-white">Tips Lapangan:</strong> Sedang mendeteksi kondisi cuaca di lokasi Anda...
                             </p>
                         </div>
                     </div>
@@ -350,22 +352,125 @@
 
 @push('scripts')
 <script>
-        function toggleModal(id) {
-            const modal = document.getElementById(id);
-            const content = document.getElementById('modalContent');
-            if (modal.classList.contains('hidden')) {
-                modal.classList.remove('hidden');
-                setTimeout(() => {
-                    content.classList.remove('translate-y-full', 'md:scale-95', 'opacity-0');
-                    content.classList.add('translate-y-0', 'md:scale-100', 'opacity-100');
-                }, 10);
-            } else {
-                content.classList.remove('translate-y-0', 'md:scale-100', 'opacity-100');
-                content.classList.add('translate-y-full', 'md:scale-95', 'opacity-0');
-                setTimeout(() => {
-                    modal.classList.add('hidden');
-                }, 300);
+    // ============================================================
+    // Modal Toggle
+    // ============================================================
+    function toggleModal(id) {
+        const modal = document.getElementById(id);
+        const content = document.getElementById('modalContent');
+        if (modal.classList.contains('hidden')) {
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                content.classList.remove('translate-y-full', 'md:scale-95', 'opacity-0');
+                content.classList.add('translate-y-0', 'md:scale-100', 'opacity-100');
+            }, 10);
+        } else {
+            content.classList.remove('translate-y-0', 'md:scale-100', 'opacity-100');
+            content.classList.add('translate-y-full', 'md:scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+    }
+
+    // ============================================================
+    // Real-Time Weather Widget (Open-Meteo + Geolocation API)
+    // ============================================================
+    (function initWeatherWidget() {
+        // WMO Weather Code Mapping (ID: Bahasa Indonesia)
+        const WMO_CODES = {
+            0:   { desc: 'Cerah Sempurna',    icon: 'fa-sun',                  color: 'text-yellow-500 dark:text-yellow-400', badge: 'Cerah',          badgeCls: 'bg-yellow-100 dark:bg-yellow-500/20 text-yellow-700 dark:text-yellow-300 border-yellow-300 dark:border-yellow-500/30', tip: 'Cuaca cerah, waktu terbaik untuk survei lapangan. Pastikan foto diambil dengan cahaya optimal untuk analisis AI.' },
+            1:   { desc: 'Sebagian Berawan',  icon: 'fa-cloud-sun',            color: 'text-blue-400',                        badge: 'Sedikit Awan',   badgeCls: 'bg-sky-100 dark:bg-sky-500/20 text-sky-700 dark:text-sky-300 border-sky-300 dark:border-sky-500/30', tip: 'Kondisi cukup baik untuk survei. Waspadai bayangan awan pada foto yang dapat mempengaruhi kualitas analisis.' },
+            2:   { desc: 'Berawan Sebagian',  icon: 'fa-cloud-sun',            color: 'text-blue-400',                        badge: 'Berawan',        badgeCls: 'bg-sky-100 dark:bg-sky-500/20 text-sky-700 dark:text-sky-300 border-sky-300 dark:border-sky-500/30', tip: 'Kondisi cukup baik untuk survei. Waspadai bayangan awan pada foto yang dapat mempengaruhi kualitas analisis.' },
+            3:   { desc: 'Mendung Tebal',     icon: 'fa-cloud',                color: 'text-slate-500 dark:text-slate-400',   badge: 'Mendung',        badgeCls: 'bg-slate-100 dark:bg-slate-500/20 text-slate-600 dark:text-slate-300 border-slate-300 dark:border-slate-500/30', tip: 'Cuaca mendung. Perhatikan pencahayaan saat mengambil foto agar detail kerusakan terlihat jelas.' },
+            45:  { desc: 'Berkabut',          icon: 'fa-smog',                 color: 'text-slate-400',                       badge: 'Kabut',          badgeCls: 'bg-slate-100 dark:bg-slate-500/20 text-slate-600 dark:text-slate-300 border-slate-300 dark:border-slate-500/30', tip: 'Hati-hati berkabut. Visibilitas terbatas, hindari survei di area jalan raya atau jembatan.' },
+            48:  { desc: 'Berkabut Beku',     icon: 'fa-smog',                 color: 'text-slate-400',                       badge: 'Kabut Beku',     badgeCls: 'bg-slate-100 dark:bg-slate-500/20 text-slate-600 dark:text-slate-300 border-slate-300 dark:border-slate-500/30', tip: 'Hati-hati berkabut. Visibilitas terbatas, hindari survei di area jalan raya atau jembatan.' },
+            51:  { desc: 'Gerimis Tipis',     icon: 'fa-cloud-rain',           color: 'text-blue-400 dark:text-blue-300',     badge: 'Gerimis',        badgeCls: 'bg-blue-100 dark:bg-blue-500/20 text-blue-700 dark:text-blue-300 border-blue-300 dark:border-blue-500/30', tip: 'Ada gerimis. Lindungi perangkat dari air. Foto mungkin kurang tajam, tambahkan beberapa foto pendukung.' },
+            53:  { desc: 'Gerimis Sedang',    icon: 'fa-cloud-rain',           color: 'text-blue-400 dark:text-blue-300',     badge: 'Gerimis',        badgeCls: 'bg-blue-100 dark:bg-blue-500/20 text-blue-700 dark:text-blue-300 border-blue-300 dark:border-blue-500/30', tip: 'Ada gerimis. Lindungi perangkat dari air. Foto mungkin kurang tajam, tambahkan beberapa foto pendukung.' },
+            55:  { desc: 'Gerimis Lebat',     icon: 'fa-cloud-rain',           color: 'text-blue-500 dark:text-blue-400',     badge: 'Gerimis Lebat',  badgeCls: 'bg-blue-100 dark:bg-blue-500/20 text-blue-700 dark:text-blue-300 border-blue-300 dark:border-blue-500/30', tip: 'Gerimis cukup lebat. Pertimbangkan untuk menunda survei. Jaga perangkat tetap kering.' },
+            61:  { desc: 'Hujan Ringan',      icon: 'fa-cloud-rain',           color: 'text-blue-500 dark:text-blue-400',     badge: 'Hujan Ringan',   badgeCls: 'bg-blue-100 dark:bg-blue-500/20 text-blue-700 dark:text-blue-300 border-blue-300 dark:border-blue-500/30', tip: 'Hujan ringan. Tetap waspada genangan kecil. Pastikan foto jelas meski kondisi basah.' },
+            63:  { desc: 'Hujan Sedang',      icon: 'fa-cloud-showers-heavy',  color: 'text-blue-600 dark:text-blue-400',     badge: 'Hujan',          badgeCls: 'bg-blue-100 dark:bg-indigo-500/20 text-blue-700 dark:text-indigo-300 border-blue-300 dark:border-indigo-500/30', tip: 'Hujan sedang. Perhatikan keamanan di area survei. Genangan mungkin menyembunyikan kerusakan drainase.' },
+            65:  { desc: 'Hujan Lebat',       icon: 'fa-cloud-showers-heavy',  color: 'text-indigo-500 dark:text-indigo-400', badge: 'Waspada Banjir', badgeCls: 'bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-400 border-red-300 dark:border-red-500/30', tip: '⚠️ Hujan lebat! Hati-hati di area genangan. Pastikan kamera fokus pada titik kerusakan drainase atau aspal terendam.' },
+            80:  { desc: 'Hujan Lokal',       icon: 'fa-cloud-rain',           color: 'text-blue-500 dark:text-blue-400',     badge: 'Hujan Lokal',    badgeCls: 'bg-blue-100 dark:bg-blue-500/20 text-blue-700 dark:text-blue-300 border-blue-300 dark:border-blue-500/30', tip: 'Hujan lokal tidak merata. Periksa kondisi aktual di lokasi sebelum memulai survei.' },
+            81:  { desc: 'Hujan Deras',       icon: 'fa-cloud-showers-heavy',  color: 'text-indigo-500 dark:text-indigo-400', badge: 'Waspada Banjir', badgeCls: 'bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-400 border-red-300 dark:border-red-500/30', tip: '⚠️ Hujan deras! Hati-hati saat mengambil foto di area genangan. Pastikan Anda berada di posisi aman.' },
+            82:  { desc: 'Hujan Sangat Deras',icon: 'fa-cloud-showers-heavy',  color: 'text-red-500 dark:text-red-400',       badge: 'Bahaya Banjir',  badgeCls: 'bg-red-200 dark:bg-red-500/30 text-red-800 dark:text-red-300 border-red-400 dark:border-red-500/50', tip: '🚨 Hujan sangat deras! Tunda survei lapangan. Prioritaskan keselamatan Anda.' },
+            95:  { desc: 'Badai Petir',       icon: 'fa-bolt',                 color: 'text-yellow-500 dark:text-yellow-400', badge: 'Badai Petir',    badgeCls: 'bg-yellow-100 dark:bg-yellow-500/20 text-yellow-800 dark:text-yellow-300 border-yellow-400 dark:border-yellow-500/40', tip: '🚨 Badai petir! Hentikan aktivitas lapangan segera. Cari tempat berlindung yang aman.' },
+            99:  { desc: 'Badai Hebat',       icon: 'fa-bolt',                 color: 'text-red-500 dark:text-red-400',       badge: 'Bahaya!',        badgeCls: 'bg-red-200 dark:bg-red-500/30 text-red-800 dark:text-red-300 border-red-400 dark:border-red-500/50', tip: '🚨 Badai sangat hebat! Jangan keluar ruangan. Tunda semua kegiatan survei.' },
+        };
+
+        function getWmoInfo(code) {
+            return WMO_CODES[code] || WMO_CODES[0];
+        }
+
+        async function reverseGeocode(lat, lon) {
+            try {
+                const resp = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=id`);
+                const data = await resp.json();
+                const addr = data.address;
+                return addr.city || addr.town || addr.county || addr.state || 'Lokasi Anda';
+            } catch (e) {
+                return 'Lokasi Anda';
             }
         }
+
+        async function fetchWeather(lat, lon) {
+            const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weathercode,windspeed_10m,relativehumidity_2m&timezone=auto`;
+            const resp = await fetch(url);
+            if (!resp.ok) throw new Error('Gagal mengambil data cuaca');
+            return await resp.json();
+        }
+
+        function updateWidget(info, temp, city) {
+            document.getElementById('weather-desc').textContent = info.desc;
+            document.getElementById('weather-city').textContent = `${city}, ${Math.round(temp)}°C`;
+
+            const badge = document.getElementById('weather-badge');
+            badge.innerHTML = info.badge;
+            badge.className = `px-2 py-0.5 rounded text-xs font-black uppercase tracking-widest border transition-all ${info.badgeCls}`;
+
+            const iconEl = document.getElementById('weather-icon');
+            iconEl.className = `fas ${info.icon} text-3xl ${info.color}`;
+
+            document.getElementById('weather-tip').innerHTML =
+                `<strong class="text-navy-900 dark:text-white">Tips Lapangan:</strong> ${info.tip}`;
+        }
+
+        function showError(msg) {
+            document.getElementById('weather-desc').textContent = 'Data Tidak Tersedia';
+            document.getElementById('weather-city').textContent = msg;
+            document.getElementById('weather-badge').innerHTML = 'Gagal Memuat';
+            document.getElementById('weather-badge').className = 'px-2 py-0.5 bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400 border border-slate-300 dark:border-slate-600 rounded text-xs font-black uppercase tracking-widest';
+            document.getElementById('weather-icon').className = 'fas fa-exclamation-triangle text-3xl text-slate-400';
+            document.getElementById('weather-tip').innerHTML = '<strong class="text-navy-900 dark:text-white">Tips Lapangan:</strong> Tidak dapat mendeteksi cuaca secara otomatis. Periksa kondisi cuaca secara manual sebelum survei.';
+        }
+
+        async function loadWeatherWithCoords(lat, lon) {
+            try {
+                const [weatherData, cityName] = await Promise.all([
+                    fetchWeather(lat, lon),
+                    reverseGeocode(lat, lon)
+                ]);
+                const current  = weatherData.current;
+                const info     = getWmoInfo(current.weathercode);
+                updateWidget(info, current.temperature_2m, cityName);
+            } catch (e) {
+                showError('Gagal memuat data cuaca');
+            }
+        }
+
+        // Default fallback: Banjarmasin
+        const DEFAULT_LAT = -3.3194;
+        const DEFAULT_LON = 114.5908;
+
+        if ('geolocation' in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                (pos) => loadWeatherWithCoords(pos.coords.latitude, pos.coords.longitude),
+                ()    => loadWeatherWithCoords(DEFAULT_LAT, DEFAULT_LON),
+                { timeout: 8000, maximumAge: 60000 }
+            );
+        } else {
+            loadWeatherWithCoords(DEFAULT_LAT, DEFAULT_LON);
+        }
+    })();
 </script>
 @endpush
