@@ -171,88 +171,8 @@
                     </div>
                 </div>
 
-                <!-- [DESKTOP] Kategori Dropdown -->
-                <div class="relative hidden md:block">
-                    <button onclick="toggleMenu(event, 'category-options-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
-                        <i class="fas fa-layer-group text-gold-500"></i> <span id="current-cat-label-desktop">Semua Kategori</span> <i class="fas fa-chevron-down text-[10px] ml-1"></i>
-                    </button>
-                    <div id="category-options-desktop" class="hidden absolute top-full left-0 mt-2 p-1.5 bg-[#0f0e2c]/95 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex flex-col gap-1 min-w-[190px] z-[10000]">
-                        <button onclick="handleCategorySelect('Semua')" data-type="Semua" class="cat-opt-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
-                            <div class="flex items-center gap-1.5">
-                                <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-gold-500 transition-colors">
-                                    <i class="fas fa-check text-[7px] text-gold-500 cat-check-desktop opacity-0 transition-opacity"></i>
-                                </div>
-                                <span class="group-hover:text-white transition-colors">Semua Kategori</span>
-                            </div>
-                            <div class="w-3 h-3 rounded bg-gray-500/30"></div>
-                        </button>
-                        <button onclick="handleCategorySelect('Jalan')" data-type="Jalan" class="cat-opt-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
-                            <div class="flex items-center gap-1.5">
-                                <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-blue-400 transition-colors">
-                                    <i class="fas fa-check text-[7px] text-blue-400 cat-check-desktop opacity-0 transition-opacity"></i>
-                                </div>
-                                <span class="group-hover:text-white transition-colors">Jalan</span>
-                            </div>
-                            <div class="w-3 h-3 rounded bg-blue-500"></div>
-                        </button>
-                        <button onclick="handleCategorySelect('Jembatan')" data-type="Jembatan" class="cat-opt-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
-                            <div class="flex items-center gap-1.5">
-                                <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
-                                    <i class="fas fa-check text-[7px] text-emerald-400 cat-check-desktop opacity-0 transition-opacity"></i>
-                                </div>
-                                <span class="group-hover:text-white transition-colors">Jembatan</span>
-                            </div>
-                            <div class="w-3 h-3 rounded bg-emerald-500"></div>
-                        </button>
-                        <button onclick="handleCategorySelect('Titian')" data-type="Titian" class="cat-opt-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
-                            <div class="flex items-center gap-1.5">
-                                <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-purple-400 transition-colors">
-                                    <i class="fas fa-check text-[7px] text-purple-400 cat-check-desktop opacity-0 transition-opacity"></i>
-                                </div>
-                                <span class="group-hover:text-white transition-colors">Titian</span>
-                            </div>
-                            <div class="w-3 h-3 rounded bg-purple-500"></div>
-                        </button>
-                        <div class="h-[1px] bg-white/5 my-0.5"></div>
-                        <button onclick="toggleKelurahanPoints()" class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group" id="kel-toggle-btn-desktop">
-                            <div class="flex items-center gap-1.5">
-                                <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
-                                    <i class="fas fa-check text-[7px] text-emerald-400 kel-check-icon-sync" style="opacity:1"></i>
-                                </div>
-                                <span class="group-hover:text-white transition-colors">Kelurahan</span>
-                            </div>
-                            <i class="fas fa-home text-emerald-500 text-xs"></i>
-                        </button>
-                    </div>
-                </div>
 
-                <!-- [DESKTOP] Wilayah Dropdown -->
-                <div class="relative hidden md:block">
-                    <button onclick="toggleMenu(event, 'territory-options-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
-                        <i class="fas fa-map-location-dot text-gold-500"></i> <span id="current-territory-label-desktop">Semua Wilayah</span> <i class="fas fa-chevron-down text-[10px] ml-1"></i>
-                    </button>
-                    <div id="territory-options-desktop" class="hidden absolute top-full right-0 mt-2 p-1 bg-[#0f0e2c]/95 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex flex-col gap-1 min-w-[200px] max-h-[50vh] overflow-y-auto custom-scrollbar z-[10000]">
-                        <button onclick="handleTerritorySelect('Semua', 'Semua Wilayah')" data-id="Semua" class="territory-opt-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-emerald-400 hover:bg-white/10 transition-all flex items-center justify-between group border-b border-white/5 mb-1">
-                            <div class="flex items-center gap-1.5">
-                                <div class="w-3 h-3 rounded border border-emerald-400/50 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
-                                    <i class="fas fa-check text-[7px] text-emerald-400 territory-check-desktop" style="opacity:1"></i>
-                                </div>
-                                <span class="group-hover:text-white transition-colors">Semua Wilayah</span>
-                            </div>
-                        </button>
-                        @foreach($myKecamatans as $kec)
-                        <button onclick="handleTerritorySelect('{{ $kec->id_kecamatan }}', '{{ $kec->nama_kecamatan }}')" data-id="{{ $kec->id_kecamatan }}" class="territory-opt-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group shrink-0">
-                            <div class="flex items-center gap-1.5">
-                                <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-emerald-400 transition-colors">
-                                    <i class="fas fa-check text-[7px] text-emerald-400 territory-check-desktop opacity-0 transition-opacity"></i>
-                                </div>
-                                <span class="truncate max-w-[120px] group-hover:text-white transition-colors">{{ $kec->nama_kecamatan }}</span>
-                            </div>
-                            <div class="w-3 h-3 rounded border border-white/10" style="background-color: {{ $kec->warna ?? '#cbd5e1' }};"></div>
-                        </button>
-                        @endforeach
-                    </div>
-                </div>
+
 
             </div>
 
