@@ -102,82 +102,82 @@
 
             {{-- Stats Grid --}}
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-                <div class="bg-blue-50 p-6 rounded-3xl border border-blue-100 shadow-sm hover:-translate-y-1 transition-transform">
+                <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-3xl border border-blue-100 dark:border-blue-500/30 shadow-sm hover:-translate-y-1 transition-transform">
                     <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 bg-white dark:bg-navy-900/90 rounded-2xl flex items-center justify-center shadow-sm">
-                            <i class="fas fa-file-alt text-blue-500 "></i>
+                        <div class="w-11 h-11 bg-white dark:bg-blue-500/20 rounded-2xl flex items-center justify-center shadow-sm">
+                            <i class="fas fa-file-alt text-blue-500 dark:text-blue-400"></i>
                         </div>
                     </div>
-                    <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1">Total Survey Saya</p>
-                    <h3 class="text-3xl font-black text-blue-600 ">{{ $totalSurvey }} <span class="text-xs font-bold text-slate-400 dark:text-slate-300">Laporan</span></h3>
+                    <p class="text-xs font-black text-slate-400 dark:text-blue-300 uppercase tracking-widest mb-1">Total Survey Saya</p>
+                    <h3 class="text-3xl font-black text-blue-600 dark:text-blue-400">{{ $totalSurvey }} <span class="text-xs font-bold text-slate-400 dark:text-blue-300/70">Laporan</span></h3>
                 </div>
                 
-                <div class="bg-orange-50 p-6 rounded-3xl border border-orange-100 shadow-sm hover:-translate-y-1 transition-transform">
+                <div class="bg-orange-50 dark:bg-orange-900/20 p-6 rounded-3xl border border-orange-100 dark:border-orange-500/30 shadow-sm hover:-translate-y-1 transition-transform">
                     <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 bg-white dark:bg-navy-900/90 text-orange-500 rounded-2xl flex items-center justify-center shadow-sm">
+                        <div class="w-11 h-11 bg-white dark:bg-orange-500/20 text-orange-500 dark:text-orange-400 rounded-2xl flex items-center justify-center shadow-sm">
                             <i class="fas fa-clock"></i>
                         </div>
                     </div>
-                    <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1">Menunggu Validasi</p>
-                    <h3 class="text-3xl font-black text-orange-600 ">{{ $waitingValidation }} <span class="text-xs font-bold text-slate-400 dark:text-slate-300">Objek</span></h3>
+                    <p class="text-xs font-black text-slate-400 dark:text-orange-300 uppercase tracking-widest mb-1">Menunggu Validasi</p>
+                    <h3 class="text-3xl font-black text-orange-600 dark:text-orange-400">{{ $waitingValidation }} <span class="text-xs font-bold text-slate-400 dark:text-orange-300/70">Objek</span></h3>
                 </div>
                 
-                <div class="bg-emerald-50 p-6 rounded-3xl border border-emerald-100 shadow-sm hover:-translate-y-1 transition-transform">
+                <div class="bg-emerald-50 dark:bg-emerald-900/20 p-6 rounded-3xl border border-emerald-100 dark:border-emerald-500/30 shadow-sm hover:-translate-y-1 transition-transform">
                     <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 bg-white dark:bg-navy-900/90 text-emerald-500 rounded-2xl flex items-center justify-center shadow-sm">
+                        <div class="w-11 h-11 bg-white dark:bg-emerald-500/20 text-emerald-500 dark:text-emerald-400 rounded-2xl flex items-center justify-center shadow-sm">
                             <i class="fas fa-check-double"></i>
                         </div>
                     </div>
-                    <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1">Terverifikasi AI</p>
-                    <h3 class="text-3xl font-black text-emerald-600 ">{{ $verifiedAI }} <span class="text-xs font-bold text-slate-400 dark:text-slate-300">Selesai</span></h3>
+                    <p class="text-xs font-black text-slate-400 dark:text-emerald-300 uppercase tracking-widest mb-1">Terverifikasi AI</p>
+                    <h3 class="text-3xl font-black text-emerald-600 dark:text-emerald-400">{{ $verifiedAI }} <span class="text-xs font-bold text-slate-400 dark:text-emerald-300/70">Selesai</span></h3>
                 </div>
                 
-                <div class="bg-red-50 p-6 rounded-3xl border border-red-100 shadow-sm hover:-translate-y-1 transition-transform">
+                <div class="bg-red-50 dark:bg-red-900/20 p-6 rounded-3xl border border-red-100 dark:border-red-500/30 shadow-sm hover:-translate-y-1 transition-transform">
                     <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 bg-white dark:bg-navy-900/90 text-red-500 rounded-2xl flex items-center justify-center shadow-sm">
+                        <div class="w-11 h-11 bg-white dark:bg-red-500/20 text-red-500 dark:text-red-400 rounded-2xl flex items-center justify-center shadow-sm">
                             <i class="fas fa-rotate-left"></i>
                         </div>
                     </div>
-                    <p class="text-xs font-black text-red-400 uppercase tracking-widest mb-1">Ditolak / Revisi</p>
-                    <h3 class="text-3xl font-black text-red-600 ">{{ $totalRejected }} <span class="text-xs font-bold text-red-400/50">Tindakan</span></h3>
+                    <p class="text-xs font-black text-red-400 dark:text-red-300 uppercase tracking-widest mb-1">Ditolak / Revisi</p>
+                    <h3 class="text-3xl font-black text-red-600 dark:text-red-400">{{ $totalRejected }} <span class="text-xs font-bold text-red-400/50 dark:text-red-300/60">Tindakan</span></h3>
                 </div>
             </div>
 
             {{-- Stats Grid Laporan Warga --}}
             <h4 class="font-black text-lg text-navy-900 dark:text-white mb-4 flex items-center gap-2"><i class="fas fa-clipboard-list text-gold-500"></i> Penugasan Laporan Warga</h4>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-                <a href="{{ route('surveyor.laporan') }}" class="block bg-indigo-50 p-6 rounded-3xl border border-indigo-100 shadow-sm hover:border-indigo-500/50 transition-all group hover:-translate-y-1">
+                <a href="{{ route('surveyor.laporan') }}" class="block bg-indigo-50 dark:bg-indigo-900/20 p-6 rounded-3xl border border-indigo-100 dark:border-indigo-500/30 shadow-sm hover:border-indigo-500/50 dark:hover:border-indigo-400/60 transition-all group hover:-translate-y-1">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-white dark:bg-navy-900/90 rounded-2xl flex items-center justify-center text-indigo-500 group-hover:bg-indigo-500 group-hover:text-white transition-colors shadow-sm">
+                        <div class="w-12 h-12 bg-white dark:bg-indigo-500/20 rounded-2xl flex items-center justify-center text-indigo-500 dark:text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-colors shadow-sm">
                             <i class="fas fa-tasks text-xl"></i>
                         </div>
                         <div>
-                            <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1">Total Tugas</p>
-                            <h3 class="text-2xl font-black text-indigo-600 ">{{ $totalTugas }}</h3>
+                            <p class="text-xs font-black text-slate-400 dark:text-indigo-300 uppercase tracking-widest mb-1">Total Tugas</p>
+                            <h3 class="text-2xl font-black text-indigo-600 dark:text-indigo-400">{{ $totalTugas }}</h3>
                         </div>
                     </div>
                 </a>
                 
-                <a href="{{ route('surveyor.laporan', ['status' => 'Menunggu']) }}" class="block bg-orange-50 p-6 rounded-3xl border border-orange-100 shadow-sm hover:border-orange-500/50 transition-all group hover:-translate-y-1">
+                <a href="{{ route('surveyor.laporan', ['status' => 'Menunggu']) }}" class="block bg-orange-50 dark:bg-orange-900/20 p-6 rounded-3xl border border-orange-100 dark:border-orange-500/30 shadow-sm hover:border-orange-500/50 dark:hover:border-orange-400/60 transition-all group hover:-translate-y-1">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-white dark:bg-navy-900/90 rounded-2xl flex items-center justify-center text-orange-500 group-hover:bg-orange-500 group-hover:text-white transition-colors shadow-sm">
+                        <div class="w-12 h-12 bg-white dark:bg-orange-500/20 rounded-2xl flex items-center justify-center text-orange-500 dark:text-orange-400 group-hover:bg-orange-500 group-hover:text-white transition-colors shadow-sm">
                             <i class="fas fa-clock text-xl"></i>
                         </div>
                         <div>
-                            <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1">Tugas Menunggu</p>
-                            <h3 class="text-2xl font-black text-orange-600 ">{{ $tugasMenunggu }}</h3>
+                            <p class="text-xs font-black text-slate-400 dark:text-orange-300 uppercase tracking-widest mb-1">Tugas Menunggu</p>
+                            <h3 class="text-2xl font-black text-orange-600 dark:text-orange-400">{{ $tugasMenunggu }}</h3>
                         </div>
                     </div>
                 </a>
                 
-                <a href="{{ route('surveyor.laporan', ['status' => 'Selesai']) }}" class="block bg-emerald-50 p-6 rounded-3xl border border-emerald-100 shadow-sm hover:border-emerald-500/50 transition-all group hover:-translate-y-1">
+                <a href="{{ route('surveyor.laporan', ['status' => 'Selesai']) }}" class="block bg-emerald-50 dark:bg-emerald-900/20 p-6 rounded-3xl border border-emerald-100 dark:border-emerald-500/30 shadow-sm hover:border-emerald-500/50 dark:hover:border-emerald-400/60 transition-all group hover:-translate-y-1">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-white dark:bg-navy-900/90 rounded-2xl flex items-center justify-center text-emerald-500 group-hover:bg-emerald-500 group-hover:text-white transition-colors shadow-sm">
+                        <div class="w-12 h-12 bg-white dark:bg-emerald-500/20 rounded-2xl flex items-center justify-center text-emerald-500 dark:text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white transition-colors shadow-sm">
                             <i class="fas fa-check-circle text-xl"></i>
                         </div>
                         <div>
-                            <p class="text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest mb-1">Tugas Selesai</p>
-                            <h3 class="text-2xl font-black text-emerald-600 ">{{ $tugasSelesai }}</h3>
+                            <p class="text-xs font-black text-slate-400 dark:text-emerald-300 uppercase tracking-widest mb-1">Tugas Selesai</p>
+                            <h3 class="text-2xl font-black text-emerald-600 dark:text-emerald-400">{{ $tugasSelesai }}</h3>
                         </div>
                     </div>
                 </a>
