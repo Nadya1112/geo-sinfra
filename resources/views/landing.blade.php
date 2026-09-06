@@ -1312,13 +1312,22 @@
                         
                         const layer = L.geoJSON(geoData, {
                             style: {
-                                color: color,
-                                weight: 3.5,
+                                fillColor: color,
+                                weight: 2,
                                 opacity: 1,
-                                fillOpacity: 0.15,
-                                dashArray: '5, 5'
+                                color: 'white',
+                                fillOpacity: 0.2
                             }
                         }).bindTooltip(wil.nama_kecamatan, { sticky: true }).addTo(polygonsLayer);
+
+                        layer.on('mouseover', function(e) {
+                            var layer = e.target;
+                            layer.setStyle({ fillOpacity: 0.4, weight: 3 });
+                        });
+                        layer.on('mouseout', function(e) {
+                            var layer = e.target;
+                            layer.setStyle({ fillOpacity: 0.2, weight: 2 });
+                        });
 
                         if (checkedDistricts.length === 1 && !activeKelurahanId) {
                             singleDistrictLayer = layer;
@@ -1341,10 +1350,10 @@
                         try {
                             const geoData = typeof kel.geometri === 'string' ? JSON.parse(kel.geometri) : kel.geometri;
                             
-                            let polygonColor = '#64748b'; // Sedikit lebih tegas (Slate-500)
-                            let fillColor = '#64748b';
-                            let fillOpacity = 0.05;
-                            let weight = showKelurahan ? 2.5 : 0.0;
+                            let polygonColor = '#94a3b8'; // Slate-400 (Surveyor style)
+                            let fillColor = 'transparent';
+                            let fillOpacity = 0;
+                            let weight = showKelurahan ? 2.0 : 0.0;
 
                             if (showBanjir) {
                                 const riskLevel = kel.id_kelurahan % 3; 
@@ -1369,10 +1378,10 @@
                                 style: {
                                     color: polygonColor,
                                     weight: weight,
-                                    opacity: 0.95,
+                                    opacity: 0.8,
                                     fillOpacity: fillOpacity,
                                     fillColor: fillColor,
-                                    dashArray: (activeKelurahanId == kel.id_kelurahan || showBanjir) ? '0' : '4, 4'
+                                    dashArray: (activeKelurahanId == kel.id_kelurahan || showBanjir) ? '0' : '5, 5'
                                 }
                             }).bindTooltip(`<div class="text-xs font-bold text-navy-900 leading-none">Kel. ${kel.nama_kelurahan}${showBanjir ? ' (Simulasi Banjir)' : ''}</div>`, { sticky: true }).addTo(polygonsLayer);
 
