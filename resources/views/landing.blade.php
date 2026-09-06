@@ -743,7 +743,7 @@
     </section>
 
     <!-- Map Section -->
-    <section id="peta" class="py-16 lg:py-20 bg-slate-100 dark:bg-navy-950 border-t border-slate-200/50 dark:border-white/5 relative overflow-hidden transition-colors duration-300">
+    <section id="peta" class="py-16 lg:py-20 bg-slate-100 dark:bg-navy-950 border-t border-slate-200/50 dark:border-white/5 relative transition-colors duration-300">
         <div class="w-full px-4 md:px-12">
             <div class="max-w-7xl mx-auto mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4 px-2">
                 <div>
@@ -756,7 +756,7 @@
             </div>
 
             <!-- Map Toolbar (Outside the map) -->
-            <div class="mb-4 bg-white/80 dark:bg-[#0f0e2c]/60 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl p-3 md:p-4 shadow-xl flex flex-col md:flex-row gap-3 md:items-center justify-between z-[9999] relative">
+            <div class="mb-4 bg-white/80 dark:bg-[#0f0e2c]/60 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl p-3 md:p-4 shadow-xl flex flex-col md:flex-row gap-3 md:items-center justify-between relative" style="z-index: 10001;">
                 
                 <!-- Search Box -->
                 <div class="relative w-full md:w-1/3">
@@ -1177,24 +1177,48 @@
 
         // Generic toggle for menus
         function toggleMenu(id) {
+            event.stopPropagation();
+            const allMenus = ['filter-peta-desktop', 'filter-kondisi-desktop', 'filter-basemap-desktop', 'filter-utama'];
+            allMenus.forEach(menuId => {
+                if (menuId !== id) {
+                    const otherEl = document.getElementById(menuId);
+                    if (otherEl && !otherEl.classList.contains('hidden')) {
+                        // Untuk mobile bottom sheet pakai animasi
+                        if (menuId === 'filter-utama') {
+                            otherEl.classList.add('translate-y-full');
+                            setTimeout(() => { otherEl.classList.add('hidden'); otherEl.classList.remove('flex'); }, 300);
+                        } else {
+                            otherEl.classList.add('hidden');
+                        }
+                    }
+                }
+            });
+
             const el = document.getElementById(id);
             if (el) {
-                if (el.classList.contains('hidden')) {
-                    el.classList.remove('hidden');
-                    // Use setTimeout to allow display:block to apply before animating transform
-                    setTimeout(() => {
-                        el.classList.remove('translate-y-full');
-                        el.classList.add('flex'); // Because it's flex-col
-                    }, 10);
+                if (id === 'filter-utama') {
+                    // Bottom sheet animation (mobile)
+                    if (el.classList.contains('hidden')) {
+                        el.classList.remove('hidden');
+                        setTimeout(() => { el.classList.remove('translate-y-full'); el.classList.add('flex'); }, 10);
+                    } else {
+                        el.classList.add('translate-y-full');
+                        setTimeout(() => { el.classList.add('hidden'); el.classList.remove('flex'); }, 300);
+                    }
                 } else {
-                    el.classList.add('translate-y-full');
-                    setTimeout(() => {
-                        el.classList.add('hidden');
-                        el.classList.remove('flex');
-                    }, 300);
+                    // Desktop dropdown
+                    el.classList.toggle('hidden');
                 }
             }
         }
+
+        // Tutup semua dropdown desktop saat klik di luar
+        document.addEventListener('click', function() {
+            ['filter-peta-desktop', 'filter-kondisi-desktop', 'filter-basemap-desktop'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.add('hidden');
+            });
+        });
 
         let activeKelurahanId = null;
 
