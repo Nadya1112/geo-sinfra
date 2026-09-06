@@ -81,14 +81,13 @@
                     <i class="fas fa-filter text-gold-500"></i> Filter Peta
                 </button>
 
-                <!-- [DESKTOP] Filter Peta (Kategori + Wilayah) -->
+                <!-- [DESKTOP] Filter Kategori (Jalan/Jembatan/Titian + Kelurahan) -->
                 <div class="relative hidden md:block">
-                    <button onclick="toggleMenu(event, 'map-filter-options-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
-                        <i class="fas fa-filter text-gold-500"></i> <span>Filter Peta</span> <i class="fas fa-chevron-down text-[10px] ml-1"></i>
+                    <button onclick="toggleMenu(event, 'category-options-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
+                        <i class="fas fa-layer-group text-gold-500"></i> <span id="current-cat-label-desktop">Filter Kategori</span> <i class="fas fa-chevron-down text-[10px] ml-1"></i>
                     </button>
-                    <div id="map-filter-options-desktop" class="hidden absolute top-full left-0 mt-2 p-1.5 bg-[#0f0e2c]/95 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex flex-col gap-1 min-w-[220px] max-h-[70vh] overflow-y-auto custom-scrollbar z-[10000]">
-                        <!-- Kategori -->
-                        <div class="px-2 py-1 mt-1"><span class="text-[9px] font-black uppercase tracking-wider text-slate-400">Kategori</span></div>
+                    <div id="category-options-desktop" class="hidden absolute top-full left-0 mt-2 p-1.5 bg-[#0f0e2c]/95 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex flex-col gap-1 min-w-[200px] z-[10000]">
+                        <div class="px-2 py-1 mt-1"><span class="text-[9px] font-black uppercase tracking-wider text-slate-400">Kategori Infrastruktur</span></div>
                         <button onclick="handleCategorySelect('Semua')" data-type="Semua" class="cat-opt-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-gray-400 hover:bg-white/10 transition-all flex items-center justify-between group">
                             <div class="flex items-center gap-1.5">
                                 <div class="w-3 h-3 rounded border border-white/20 flex items-center justify-center group-hover:border-gold-500 transition-colors"><i class="fas fa-check text-[7px] text-gold-500 opacity-0 transition-opacity"></i></div>
@@ -124,9 +123,16 @@
                             </div>
                             <i class="fas fa-home text-emerald-500 text-xs"></i>
                         </button>
-                        <div class="h-[1px] bg-white/10 my-1 mx-1"></div>
-                        <!-- Wilayah -->
-                        <div class="px-2 py-1"><span class="text-[9px] font-black uppercase tracking-wider text-slate-400">Wilayah</span></div>
+                    </div>
+                </div>
+
+                <!-- [DESKTOP] Filter Wilayah (Kecamatan) -->
+                <div class="relative hidden md:block">
+                    <button onclick="toggleMenu(event, 'territory-options-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
+                        <i class="fas fa-map-marker-alt text-rose-400"></i> <span id="current-territory-label-desktop">Filter Wilayah</span> <i class="fas fa-chevron-down text-[10px] ml-1"></i>
+                    </button>
+                    <div id="territory-options-desktop" class="hidden absolute top-full left-0 mt-2 p-1.5 bg-[#0f0e2c]/95 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl flex flex-col gap-1 min-w-[220px] max-h-[70vh] overflow-y-auto custom-scrollbar z-[10000]">
+                        <div class="px-2 py-1 mt-1"><span class="text-[9px] font-black uppercase tracking-wider text-slate-400">Wilayah Kecamatan</span></div>
                         <button onclick="handleTerritorySelect('Semua', 'Semua Wilayah')" data-id="Semua" class="territory-opt-btn w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-emerald-400 hover:bg-white/10 transition-all flex items-center justify-between group border-b border-white/5 mb-1">
                             <div class="flex items-center gap-1.5">
                                 <div class="w-3 h-3 rounded border border-emerald-400/50 flex items-center justify-center group-hover:border-emerald-400 transition-colors"><i class="fas fa-check text-[7px] text-emerald-400 opacity-0 transition-opacity"></i></div>
@@ -352,7 +358,7 @@
 
         function toggleMenu(event, menuId) {
             event.stopPropagation();
-            const allMenus = ['map-filter-options-desktop', 'condition-options-desktop', 'layer-options-desktop'];
+            const allMenus = ['category-options-desktop', 'territory-options-desktop', 'condition-options-desktop', 'layer-options-desktop'];
             allMenus.forEach(id => {
                 if (id !== menuId) {
                     const el = document.getElementById(id);
@@ -365,7 +371,7 @@
 
         // Close all desktop dropdowns when clicking outside
         document.addEventListener('click', function() {
-            ['map-filter-options-desktop', 'condition-options-desktop', 'layer-options-desktop'].forEach(id => {
+            ['category-options-desktop', 'territory-options-desktop', 'condition-options-desktop', 'layer-options-desktop'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.classList.add('hidden');
             });
