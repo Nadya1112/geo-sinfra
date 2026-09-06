@@ -776,13 +776,13 @@
                 <div class="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-2 md:pb-0 hide-scrollbar">
 
                     <!-- [MOBILE] Filter Peta Button (opens full bottom-sheet) -->
-                    <button onclick="toggleMenu(event, 'filter-utama')" class="flex-shrink-0 md:hidden bg-slate-100 dark:bg-white/10 text-navy-900 dark:text-white px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-200 dark:hover:bg-white/20 transition-all flex items-center gap-2 border border-slate-200 dark:border-transparent shadow-md">
+                    <button onclick="toggleMenu(event, 'filter-utama')" class="flex-shrink-0 md:hidden bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
                         <i class="fas fa-filter text-gold-500"></i> Filter Peta
                     </button>
 
                     <!-- [DESKTOP] Filter Kategori -->
                     <div class="relative hidden md:block">
-                        <button onclick="toggleMenu(event, 'filter-kategori-desktop')" class="flex-shrink-0 bg-slate-100 dark:bg-white/10 text-navy-900 dark:text-white px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-200 dark:hover:bg-white/20 transition-all flex items-center gap-2 border border-slate-200 dark:border-transparent shadow-md">
+                        <button onclick="toggleMenu(event, 'filter-kategori-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
                             <i class="fas fa-layer-group text-gold-500"></i> Filter Kategori <i class="fas fa-chevron-down text-[10px] ml-1"></i>
                         </button>
                         <div id="filter-kategori-desktop" class="hidden absolute top-full left-0 mt-2 p-2 bg-white/95 dark:bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-xl border border-slate-200 dark:border-white/10 shadow-2xl flex flex-col gap-2 min-w-[200px] max-h-[70vh] overflow-y-auto custom-scrollbar z-[10000]">
@@ -821,7 +821,7 @@
 
                     <!-- [DESKTOP] Filter Wilayah -->
                     <div class="relative hidden md:block">
-                        <button onclick="toggleMenu(event, 'filter-wilayah-desktop')" class="flex-shrink-0 bg-slate-100 dark:bg-white/10 text-navy-900 dark:text-white px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-200 dark:hover:bg-white/20 transition-all flex items-center gap-2 border border-slate-200 dark:border-transparent shadow-md">
+                        <button onclick="toggleMenu(event, 'filter-wilayah-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
                             <i class="fas fa-map-marker-alt text-rose-500"></i> Filter Wilayah <i class="fas fa-chevron-down text-[10px] ml-1"></i>
                         </button>
                         <div id="filter-wilayah-desktop" class="hidden absolute top-full left-0 mt-2 p-2 bg-white/95 dark:bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-xl border border-slate-200 dark:border-white/10 shadow-2xl flex flex-col gap-2 min-w-[240px] max-h-[70vh] overflow-y-auto custom-scrollbar z-[10000]">
