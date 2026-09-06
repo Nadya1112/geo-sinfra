@@ -1065,13 +1065,7 @@
                                         </div>
                                         <i class="fas fa-home text-gold-500 text-xs"></i>
                                     </label>
-                                    <label class="flex items-center justify-between p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg cursor-pointer transition-all">
-                                        <div class="flex items-center gap-2">
-                                            <input type="checkbox" id="toggle-banjir-lines-mobile" class="w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 bg-transparent text-blue-500 focus:ring-blue-500">
-                                            <span class="text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">Kerawanan Banjir</span>
-                                        </div>
-                                        <i class="fas fa-water text-blue-500 text-xs"></i>
-                                    </label>
+                                    
                                 </div>
                             </div>
 
@@ -1228,6 +1222,7 @@
         });
 
         let activeKelurahanId = null;
+        let isFloodMode = false;
 
         let dataInfra = []; // Loaded dynamically via fetchMapData
         const dataWilayah = @json($semuaWilayah);
@@ -1282,8 +1277,7 @@
                 const checkedCategories = Array.from(document.querySelectorAll('.filter-category:checked')).map(el => el.value);
             const checkedDistricts = Array.from(document.querySelectorAll('.filter-district:checked')).map(el => el.value);
             const showKelurahan = document.getElementById('toggle-kelurahan-lines').checked;
-            const toggleBanjir = document.getElementById('toggle-banjir-lines');
-            const showBanjir = toggleBanjir ? toggleBanjir.checked : false;
+            const showBanjir = isFloodMode;
             const searchQuery = document.getElementById('map-search') ? document.getElementById('map-search').value.toLowerCase().trim() : '';
             
             // Filter active data
@@ -1579,10 +1573,7 @@
         if (toggleKelurahanLines) {
             toggleKelurahanLines.addEventListener('change', applyFilters);
         }
-        const toggleBanjirLines = document.getElementById('toggle-banjir-lines');
-        if (toggleBanjirLines) {
-            toggleBanjirLines.addEventListener('change', applyFilters);
-        }
+
         const mapSearch = document.getElementById('map-search');
         if (mapSearch) {
             mapSearch.addEventListener('input', applyFilters);
@@ -1614,10 +1605,13 @@
             } else if (type === 'osm') {
                 map.addLayer(osmMap);
             } else if (type === 'banjir') {
-                map.addLayer(petaBanjirMap);
+                map.addLayer(googleStreets); 
             } else { 
                 map.addLayer(googleStreets); 
             }
+            
+            isFloodMode = (type === 'banjir');
+            applyFilters();
         }
 
 
