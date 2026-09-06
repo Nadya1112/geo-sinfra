@@ -567,7 +567,7 @@
     </section>
 
     <!-- Key Metrics / Feature Highlight Cards -->
-    <section class="py-12 bg-transparent relative -mt-16 z-20 max-w-7xl mx-auto px-6 md:px-8">
+    <section class="py-12 bg-transparent relative -mt-8 z-20 max-w-7xl mx-auto px-6 md:px-8">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal-up">
             <div class="bg-white dark:bg-navy-900 p-6 rounded-3xl shadow-xl shadow-slate-900/5 dark:shadow-black/20 border border-slate-100 dark:border-white/5 flex gap-5 items-start hover:-translate-y-2 transition-all duration-300">
                 <div class="w-14 h-14 bg-[#6366f1]/10 rounded-2xl flex items-center justify-center text-navy-500 dark:text-indigo-400 shrink-0">
