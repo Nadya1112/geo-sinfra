@@ -50,8 +50,11 @@
                     <button onclick="setThemeMode('light')" class="w-full text-left flex items-center px-4 py-2.5 text-xs font-black text-navy-900 dark:text-white hover:bg-slate-50 dark:hover:bg-white/5 uppercase tracking-widest transition-colors border-b border-slate-100 dark:border-white/5">
                         <i class="fas fa-sun w-6 text-gold-500 text-center"></i> Terang
                     </button>
-                    <button onclick="setThemeMode('dark')" class="w-full text-left flex items-center px-4 py-2.5 text-xs font-black text-navy-900 dark:text-white hover:bg-slate-50 dark:hover:bg-white/5 uppercase tracking-widest transition-colors">
+                    <button onclick="setThemeMode('dark')" class="w-full text-left flex items-center px-4 py-2.5 text-xs font-black text-navy-900 dark:text-white hover:bg-slate-50 dark:hover:bg-white/5 uppercase tracking-widest transition-colors border-b border-slate-100 dark:border-white/5">
                         <i class="fas fa-moon w-6 text-indigo-400 text-center"></i> Gelap
+                    </button>
+                    <button onclick="setThemeMode('auto')" class="w-full text-left flex items-center px-4 py-2.5 text-xs font-black text-navy-900 dark:text-white hover:bg-slate-50 dark:hover:bg-white/5 uppercase tracking-widest transition-colors">
+                        <i class="fas fa-clock w-6 text-slate-400 text-center"></i> Auto
                     </button>
                 </div>
             </div>
@@ -74,9 +77,18 @@
                         if (mode === 'dark') {
                             document.documentElement.classList.add('dark');
                             localStorage.setItem('geo-theme', 'dark');
-                        } else {
+                        } else if (mode === 'light') {
                             document.documentElement.classList.remove('dark');
                             localStorage.setItem('geo-theme', 'light');
+                        } else { // auto
+                            var currentHour = new Date().getHours();
+                            var isNight = currentHour < 6 || currentHour >= 18;
+                            if (isNight) {
+                                document.documentElement.classList.add('dark');
+                            } else {
+                                document.documentElement.classList.remove('dark');
+                            }
+                            localStorage.setItem('geo-theme', 'auto');
                         }
                         const dropdown = document.getElementById('theme-dropdown-header');
                         if (dropdown) dropdown.classList.add('hidden');

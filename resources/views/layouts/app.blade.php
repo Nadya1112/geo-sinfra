@@ -11,7 +11,10 @@
         (function() {
             try {
                 var storedTheme = localStorage.getItem('geo-theme');
-                if (storedTheme === 'dark' || (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                var currentHour = new Date().getHours();
+                var isNight = currentHour < 6 || currentHour >= 18;
+                
+                if (storedTheme === 'dark' || ((!storedTheme || storedTheme === 'auto') && isNight)) {
                     document.documentElement.classList.add('dark');
                 } else {
                     document.documentElement.classList.remove('dark');
@@ -19,25 +22,23 @@
             } catch (e) {}
         })();
 
-        // Listen for system theme changes if no explicit preference is set
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-            if (!localStorage.getItem('geo-theme')) {
-                if (e.matches) {
-                    document.documentElement.classList.add('dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                }
-            }
-        });
-
         // Global Theme Toggle Function
         window.toggleTheme = function() {
-            const html = document.documentElement;
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
+            var currentTheme = localStorage.getItem('geo-theme') || 'auto';
+            if (currentTheme === 'auto') {
+                var isNight = new Date().getHours() < 6 || new Date().getHours() >= 18;
+                if (isNight) { // it is currently dark, so toggle to light
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('geo-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('geo-theme', 'dark');
+                }
+            } else if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
                 localStorage.setItem('geo-theme', 'light');
             } else {
-                html.classList.add('dark');
+                document.documentElement.classList.add('dark');
                 localStorage.setItem('geo-theme', 'dark');
             }
         };

@@ -14,7 +14,10 @@
         (function() {
             try {
                 var storedTheme = localStorage.getItem('geo-theme');
-                if (storedTheme === 'dark' || (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                var currentHour = new Date().getHours();
+                var isNight = currentHour < 6 || currentHour >= 18;
+                
+                if (storedTheme === 'dark' || ((!storedTheme || storedTheme === 'auto') && isNight)) {
                     document.documentElement.classList.add('dark');
                 } else {
                     document.documentElement.classList.remove('dark');
@@ -22,24 +25,22 @@
             } catch (e) {}
         })();
 
-        // Listen for system theme changes if no explicit preference is set
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-            if (!localStorage.getItem('geo-theme')) {
-                if (e.matches) {
-                    document.documentElement.classList.add('dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                }
-            }
-        });
-
         function setThemeMode(mode) {
             if (mode === 'dark') {
                 document.documentElement.classList.add('dark');
                 localStorage.setItem('geo-theme', 'dark');
-            } else {
+            } else if (mode === 'light') {
                 document.documentElement.classList.remove('dark');
                 localStorage.setItem('geo-theme', 'light');
+            } else { // auto
+                var currentHour = new Date().getHours();
+                var isNight = currentHour < 6 || currentHour >= 18;
+                if (isNight) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+                localStorage.setItem('geo-theme', 'auto');
             }
             const themeDropdown = document.getElementById('theme-dropdown');
             if (themeDropdown) themeDropdown.classList.add('hidden');
@@ -53,7 +54,11 @@
         }
 
         function toggleTheme() {
-            if (document.documentElement.classList.contains('dark')) {
+            var currentTheme = localStorage.getItem('geo-theme') || 'auto';
+            if (currentTheme === 'auto') {
+                var isNight = new Date().getHours() < 6 || new Date().getHours() >= 18;
+                setThemeMode(isNight ? 'light' : 'dark');
+            } else if (document.documentElement.classList.contains('dark')) {
                 setThemeMode('light');
             } else {
                 setThemeMode('dark');
@@ -476,8 +481,11 @@
                         <button onclick="setThemeMode('light')" class="w-full text-left flex items-center px-4 py-2.5 text-xs font-black text-navy-900 dark:text-white hover:bg-slate-50 dark:hover:bg-white/5 uppercase tracking-widest transition-colors border-b border-slate-100 dark:border-white/5">
                             <i class="fas fa-sun w-6 text-gold-500 text-center"></i> Terang
                         </button>
-                        <button onclick="setThemeMode('dark')" class="w-full text-left flex items-center px-4 py-2.5 text-xs font-black text-navy-900 dark:text-white hover:bg-slate-50 dark:hover:bg-white/5 uppercase tracking-widest transition-colors">
+                        <button onclick="setThemeMode('dark')" class="w-full text-left flex items-center px-4 py-2.5 text-xs font-black text-navy-900 dark:text-white hover:bg-slate-50 dark:hover:bg-white/5 uppercase tracking-widest transition-colors border-b border-slate-100 dark:border-white/5">
                             <i class="fas fa-moon w-6 text-indigo-400 text-center"></i> Gelap
+                        </button>
+                        <button onclick="setThemeMode('auto')" class="w-full text-left flex items-center px-4 py-2.5 text-xs font-black text-navy-900 dark:text-white hover:bg-slate-50 dark:hover:bg-white/5 uppercase tracking-widest transition-colors">
+                            <i class="fas fa-clock w-6 text-slate-400 text-center"></i> Auto
                         </button>
                     </div>
                 </div>
