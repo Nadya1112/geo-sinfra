@@ -768,17 +768,16 @@
                 <div class="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-2 md:pb-0 hide-scrollbar">
 
                     <!-- [MOBILE] Filter Peta Button (opens full bottom-sheet) -->
-                    <button onclick="toggleMenu('filter-utama')" class="flex-shrink-0 md:hidden bg-slate-100 dark:bg-white/10 text-navy-900 dark:text-white px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-200 dark:hover:bg-white/20 transition-all flex items-center gap-2 border border-slate-200 dark:border-transparent shadow-md">
+                    <button onclick="toggleMenu(event, 'filter-utama')" class="flex-shrink-0 md:hidden bg-slate-100 dark:bg-white/10 text-navy-900 dark:text-white px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-200 dark:hover:bg-white/20 transition-all flex items-center gap-2 border border-slate-200 dark:border-transparent shadow-md">
                         <i class="fas fa-filter text-gold-500"></i> Filter Peta
                     </button>
 
-                    <!-- [DESKTOP] Filter Peta Button (Kategori + Wilayah + Periode + Layer Tambahan) -->
+                    <!-- [DESKTOP] Filter Kategori -->
                     <div class="relative hidden md:block">
-                        <button onclick="toggleMenu('filter-peta-desktop')" class="flex-shrink-0 bg-slate-100 dark:bg-white/10 text-navy-900 dark:text-white px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-200 dark:hover:bg-white/20 transition-all flex items-center gap-2 border border-slate-200 dark:border-transparent shadow-md">
-                            <i class="fas fa-filter text-gold-500"></i> Filter Peta <i class="fas fa-chevron-down text-[10px] ml-1"></i>
+                        <button onclick="toggleMenu(event, 'filter-kategori-desktop')" class="flex-shrink-0 bg-slate-100 dark:bg-white/10 text-navy-900 dark:text-white px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-200 dark:hover:bg-white/20 transition-all flex items-center gap-2 border border-slate-200 dark:border-transparent shadow-md">
+                            <i class="fas fa-layer-group text-gold-500"></i> Filter Kategori <i class="fas fa-chevron-down text-[10px] ml-1"></i>
                         </button>
-                        <div id="filter-peta-desktop" class="hidden absolute top-full left-0 mt-2 p-2 bg-white/95 dark:bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-xl border border-slate-200 dark:border-white/10 shadow-2xl flex flex-col gap-2 min-w-[260px] max-h-[70vh] overflow-y-auto custom-scrollbar z-[10000]">
-
+                        <div id="filter-kategori-desktop" class="hidden absolute top-full left-0 mt-2 p-2 bg-white/95 dark:bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-xl border border-slate-200 dark:border-white/10 shadow-2xl flex flex-col gap-2 min-w-[200px] max-h-[70vh] overflow-y-auto custom-scrollbar z-[10000]">
                             <!-- Kategori Objek -->
                             <div>
                                 <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest px-1 mb-1 block">Kategori Objek</span>
@@ -798,9 +797,28 @@
                                 </label>
                                 @endforeach
                             </div>
+                            
+                            <!-- Layer Tambahan (Kelurahan) -->
+                            <div class="border-t border-slate-200 dark:border-white/10 pt-2 flex flex-col gap-1.5">
+                                <label class="flex items-center justify-between p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg cursor-pointer transition-all border border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-white/5">
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" id="toggle-kelurahan-lines" class="w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 bg-transparent text-gold-500 focus:ring-0" checked>
+                                        <span class="text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">Batas Kelurahan</span>
+                                    </div>
+                                    <i class="fas fa-home text-gold-500 text-xs"></i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
 
+                    <!-- [DESKTOP] Filter Wilayah -->
+                    <div class="relative hidden md:block">
+                        <button onclick="toggleMenu(event, 'filter-wilayah-desktop')" class="flex-shrink-0 bg-slate-100 dark:bg-white/10 text-navy-900 dark:text-white px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-200 dark:hover:bg-white/20 transition-all flex items-center gap-2 border border-slate-200 dark:border-transparent shadow-md">
+                            <i class="fas fa-map-marker-alt text-rose-500"></i> Filter Wilayah <i class="fas fa-chevron-down text-[10px] ml-1"></i>
+                        </button>
+                        <div id="filter-wilayah-desktop" class="hidden absolute top-full left-0 mt-2 p-2 bg-white/95 dark:bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-xl border border-slate-200 dark:border-white/10 shadow-2xl flex flex-col gap-2 min-w-[240px] max-h-[70vh] overflow-y-auto custom-scrollbar z-[10000]">
                             <!-- Pilih Kecamatan -->
-                            <div class="border-t border-slate-200 dark:border-white/10 pt-2">
+                            <div>
                                 <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest px-1 mb-1 block">Pilih Kecamatan</span>
                                 <label class="flex items-center justify-between p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg cursor-pointer transition-all border-b border-slate-200 dark:border-white/5 mb-1 pb-2">
                                     <span class="text-xs font-black text-gold-500 uppercase tracking-wider">Pilih Semua</span>
@@ -847,31 +865,12 @@
                                     <i class="fas fa-calendar-alt absolute right-3 top-1/2 -translate-y-1/2 text-gold-500 text-xs pointer-events-none"></i>
                                 </div>
                             </div>
-
-                            <!-- Layer Tambahan -->
-                            <div class="border-t border-slate-200 dark:border-white/10 pt-2 flex flex-col gap-1.5">
-                                <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest px-1 mb-1 block">Layer Tambahan</span>
-                                <label class="flex items-center justify-between p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg cursor-pointer transition-all border border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-white/5">
-                                    <div class="flex items-center gap-2">
-                                        <input type="checkbox" id="toggle-kelurahan-lines" class="w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 bg-transparent text-gold-500 focus:ring-0" checked>
-                                        <span class="text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">Batas Kelurahan</span>
-                                    </div>
-                                    <i class="fas fa-home text-gold-500 text-xs"></i>
-                                </label>
-                                <label class="flex items-center justify-between p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg cursor-pointer transition-all border border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-white/5">
-                                    <div class="flex items-center gap-2">
-                                        <input type="checkbox" id="toggle-banjir-lines" class="w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 bg-transparent text-blue-500 focus:ring-blue-500">
-                                        <span class="text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">Kerawanan Banjir</span>
-                                    </div>
-                                    <i class="fas fa-water text-blue-500 text-xs"></i>
-                                </label>
-                            </div>
                         </div>
                     </div>
 
                     <!-- [DESKTOP] Filter Kondisi Button (Statistik) -->
                     <div class="relative hidden md:block">
-                        <button onclick="toggleMenu('filter-kondisi-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
+                        <button onclick="toggleMenu(event, 'filter-kondisi-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
                             <i class="fas fa-chart-pie text-gold-500"></i> Filter Kondisi <i class="fas fa-chevron-down text-[10px] ml-1"></i>
                         </button>
                         <div id="filter-kondisi-desktop" class="hidden absolute top-full left-0 mt-2 p-2 bg-white/95 dark:bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-xl border border-slate-200 dark:border-white/10 shadow-2xl flex flex-col gap-1.5 min-w-[220px] z-[10000]">
@@ -915,7 +914,7 @@
 
                     <!-- [DESKTOP] Filter Base Map Button -->
                     <div class="relative hidden md:block">
-                        <button onclick="toggleMenu('filter-basemap-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
+                        <button onclick="toggleMenu(event, 'filter-basemap-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
                             <i class="fas fa-layer-group text-blue-500"></i> Filter Base Map <i class="fas fa-chevron-down text-[10px] ml-1"></i>
                         </button>
                         <div id="filter-basemap-desktop" class="hidden absolute top-full left-0 mt-2 p-2 bg-white/95 dark:bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-xl border border-slate-200 dark:border-white/10 shadow-2xl flex flex-col gap-1.5 min-w-[200px] z-[10000]">
@@ -951,7 +950,7 @@
                             <div class="w-12 h-1.5 bg-slate-300 dark:bg-white/20 rounded-full mx-auto mb-4"></div>
                             <div class="flex justify-between items-center">
                                 <h4 class="text-navy-900 dark:text-white font-black text-lg uppercase tracking-wider">Filter Peta</h4>
-                                <button onclick="toggleMenu('filter-utama')" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center text-navy-900 dark:text-white hover:bg-slate-200 dark:hover:bg-white/20 transition-all">
+                                <button onclick="toggleMenu(event, 'filter-utama')" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center text-navy-900 dark:text-white hover:bg-slate-200 dark:hover:bg-white/20 transition-all">
                                     <i class="fas fa-times"></i>
                                 </button>
                             </div>
@@ -1176,9 +1175,9 @@
         }
 
         // Generic toggle for menus
-        function toggleMenu(id) {
-            event.stopPropagation();
-            const allMenus = ['filter-peta-desktop', 'filter-kondisi-desktop', 'filter-basemap-desktop', 'filter-utama'];
+        function toggleMenu(event, id) {
+            if(event) event.stopPropagation();
+            const allMenus = ['filter-kategori-desktop', 'filter-wilayah-desktop', 'filter-kondisi-desktop', 'filter-basemap-desktop', 'filter-utama'];
             allMenus.forEach(menuId => {
                 if (menuId !== id) {
                     const otherEl = document.getElementById(menuId);
@@ -1214,7 +1213,7 @@
 
         // Tutup semua dropdown desktop saat klik di luar
         document.addEventListener('click', function() {
-            ['filter-peta-desktop', 'filter-kondisi-desktop', 'filter-basemap-desktop'].forEach(id => {
+            ['filter-kategori-desktop', 'filter-wilayah-desktop', 'filter-kondisi-desktop', 'filter-basemap-desktop'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.classList.add('hidden');
             });
