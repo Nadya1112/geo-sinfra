@@ -776,22 +776,27 @@
                 <div class="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-2 md:pb-0 hide-scrollbar">
 
                     <!-- [MOBILE] Filter Peta Button (opens full bottom-sheet) -->
-                    <button onclick="toggleMenu(event, 'filter-utama')" class="flex-shrink-0 md:hidden bg-slate-100 dark:bg-white/10 text-navy-900 dark:text-white px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-200 dark:hover:bg-white/20 transition-all flex items-center gap-2 border border-slate-200 dark:border-transparent shadow-md">
+                    <button onclick="toggleMenu(event, 'filter-utama')" class="flex-shrink-0 md:hidden bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
                         <i class="fas fa-filter text-gold-500"></i> Filter Peta
                     </button>
 
                     <!-- [DESKTOP] Filter Kategori -->
                     <div class="relative hidden md:block">
-                        <button onclick="toggleMenu(event, 'filter-kategori-desktop')" class="flex-shrink-0 bg-slate-100 dark:bg-white/10 text-navy-900 dark:text-white px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-200 dark:hover:bg-white/20 transition-all flex items-center gap-2 border border-slate-200 dark:border-transparent shadow-md">
+                        <button onclick="toggleMenu(event, 'filter-kategori-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
                             <i class="fas fa-layer-group text-gold-500"></i> Filter Kategori <i class="fas fa-chevron-down text-[10px] ml-1"></i>
                         </button>
                         <div id="filter-kategori-desktop" class="hidden absolute top-full left-0 mt-2 p-2 bg-white/95 dark:bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-xl border border-slate-200 dark:border-white/10 shadow-2xl flex flex-col gap-2 min-w-[200px] max-h-[70vh] overflow-y-auto custom-scrollbar z-[10000]">
                             <!-- Kategori Objek -->
                             <div>
                                 <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest px-1 mb-1 block">Kategori Objek</span>
-                                <label class="flex items-center justify-between p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg cursor-pointer transition-all border-b border-slate-200 dark:border-white/5 mb-1 pb-2">
-                                    <span class="text-xs font-black text-gold-500 uppercase tracking-wider">Pilih Semua</span>
-                                    <input type="checkbox" id="check-all-categories" class="w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 bg-transparent text-gold-500 focus:ring-0" checked>
+                                <label class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-slate-600 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-white/10 transition-all flex items-center justify-between group cursor-pointer border-b border-slate-200 dark:border-white/5 mb-1 pb-2">
+                                    <input type="checkbox" id="check-all-categories" class="peer hidden" checked>
+                                    <div class="flex items-center gap-1.5">
+                                        <div class="w-3 h-3 rounded border border-slate-300 dark:border-white/20 peer-checked:border-gold-500 flex items-center justify-center transition-colors">
+                                            <i class="fas fa-check text-[7px] text-gold-500 opacity-0 peer-checked:opacity-100 transition-opacity"></i>
+                                        </div>
+                                        <span class="text-gold-500 group-hover:text-gold-600 transition-colors">Pilih Semua</span>
+                                    </div>
                                 </label>
                                 @php
                                     $defaultKategori = collect(['Titian', 'Jalan', 'Jembatan']);
@@ -799,19 +804,27 @@
                                     $kategoriUnik = $defaultKategori->merge($dbKategori)->unique(function ($item) { return strtolower(trim($item)); })->values();
                                 @endphp
                                 @foreach($kategoriUnik as $kategori)
-                                <label class="flex items-center justify-between p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg cursor-pointer transition-all">
-                                    <span class="text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">{{ $kategori }}</span>
-                                    <input type="checkbox" class="filter-category w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="{{ strtolower($kategori) }}" checked>
+                                <label class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-slate-600 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-white/10 transition-all flex items-center justify-between group cursor-pointer">
+                                    <input type="checkbox" class="filter-category peer hidden" value="{{ strtolower($kategori) }}" checked>
+                                    <div class="flex items-center gap-1.5">
+                                        <div class="w-3 h-3 rounded border border-slate-300 dark:border-white/20 peer-checked:border-gold-500 flex items-center justify-center transition-colors">
+                                            <i class="fas fa-check text-[7px] text-gold-500 opacity-0 peer-checked:opacity-100 transition-opacity"></i>
+                                        </div>
+                                        <span class="group-hover:text-navy-900 dark:group-hover:text-white transition-colors">{{ $kategori }}</span>
+                                    </div>
                                 </label>
                                 @endforeach
                             </div>
                             
                             <!-- Layer Tambahan (Kelurahan) -->
                             <div class="border-t border-slate-200 dark:border-white/10 pt-2 flex flex-col gap-1.5">
-                                <label class="flex items-center justify-between p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg cursor-pointer transition-all border border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-white/5">
-                                    <div class="flex items-center gap-2">
-                                        <input type="checkbox" id="toggle-kelurahan-lines" class="w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 bg-transparent text-gold-500 focus:ring-0" checked>
-                                        <span class="text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">Batas Kelurahan</span>
+                                <label class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-slate-600 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-white/10 transition-all flex items-center justify-between group cursor-pointer border border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-white/5 mt-1">
+                                    <input type="checkbox" id="toggle-kelurahan-lines" class="peer hidden" checked>
+                                    <div class="flex items-center gap-1.5">
+                                        <div class="w-3 h-3 rounded border border-slate-300 dark:border-white/20 peer-checked:border-gold-500 flex items-center justify-center transition-colors">
+                                            <i class="fas fa-check text-[7px] text-gold-500 opacity-0 peer-checked:opacity-100 transition-opacity"></i>
+                                        </div>
+                                        <span class="group-hover:text-navy-900 dark:group-hover:text-white transition-colors">Batas Kelurahan</span>
                                     </div>
                                     <i class="fas fa-home text-gold-500 text-xs"></i>
                                 </label>
@@ -821,33 +834,44 @@
 
                     <!-- [DESKTOP] Filter Wilayah -->
                     <div class="relative hidden md:block">
-                        <button onclick="toggleMenu(event, 'filter-wilayah-desktop')" class="flex-shrink-0 bg-slate-100 dark:bg-white/10 text-navy-900 dark:text-white px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-200 dark:hover:bg-white/20 transition-all flex items-center gap-2 border border-slate-200 dark:border-transparent shadow-md">
+                        <button onclick="toggleMenu(event, 'filter-wilayah-desktop')" class="flex-shrink-0 bg-white dark:bg-[#0f0e2c] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm">
                             <i class="fas fa-map-marker-alt text-rose-500"></i> Filter Wilayah <i class="fas fa-chevron-down text-[10px] ml-1"></i>
                         </button>
                         <div id="filter-wilayah-desktop" class="hidden absolute top-full left-0 mt-2 p-2 bg-white/95 dark:bg-[#0f0e2c]/95 backdrop-blur-2xl rounded-xl border border-slate-200 dark:border-white/10 shadow-2xl flex flex-col gap-2 min-w-[240px] max-h-[70vh] overflow-y-auto custom-scrollbar z-[10000]">
                             <!-- Pilih Kecamatan -->
                             <div>
                                 <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest px-1 mb-1 block">Pilih Kecamatan</span>
-                                <label class="flex items-center justify-between p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg cursor-pointer transition-all border-b border-slate-200 dark:border-white/5 mb-1 pb-2">
-                                    <span class="text-xs font-black text-gold-500 uppercase tracking-wider">Pilih Semua</span>
-                                    <input type="checkbox" id="check-all-districts" class="w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 bg-transparent text-gold-500 focus:ring-0" checked>
+                                <label class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-slate-600 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-white/10 transition-all flex items-center justify-between group cursor-pointer border-b border-slate-200 dark:border-white/5 mb-1 pb-2">
+                                    <input type="checkbox" id="check-all-districts" class="peer hidden" checked>
+                                    <div class="flex items-center gap-1.5">
+                                        <div class="w-3 h-3 rounded border border-slate-300 dark:border-white/20 peer-checked:border-gold-500 flex items-center justify-center transition-colors">
+                                            <i class="fas fa-check text-[7px] text-gold-500 opacity-0 peer-checked:opacity-100 transition-opacity"></i>
+                                        </div>
+                                        <span class="text-gold-500 group-hover:text-gold-600 transition-colors">Pilih Semua</span>
+                                    </div>
                                 </label>
                                 @php $kecColors = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#06b6d4']; @endphp
                                 @foreach($semuaWilayah as $index => $wil)
-                                <label class="flex items-center justify-between p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg cursor-pointer transition-all group">
-                                    <div class="flex items-center gap-2">
-                                        <input type="checkbox" class="filter-district w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="{{ $wil->id_kecamatan }}" checked>
-                                        <span class="text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">{{ $wil->nama_kecamatan }}</span>
+                                <label class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-slate-600 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-white/10 transition-all flex items-center justify-between group cursor-pointer">
+                                    <input type="checkbox" class="filter-district peer hidden" value="{{ $wil->id_kecamatan }}" checked>
+                                    <div class="flex items-center gap-1.5">
+                                        <div class="w-3 h-3 rounded border border-slate-300 dark:border-white/20 peer-checked:border-gold-500 flex items-center justify-center transition-colors shrink-0">
+                                            <i class="fas fa-check text-[7px] text-gold-500 opacity-0 peer-checked:opacity-100 transition-opacity"></i>
+                                        </div>
+                                        <span class="whitespace-normal leading-tight group-hover:text-navy-900 dark:group-hover:text-white transition-colors text-left">{{ $wil->nama_kecamatan }}</span>
                                     </div>
-                                    <div class="w-2 h-2 rounded-full" style="background: {{ $kecColors[$index % count($kecColors)] }}"></div>
+                                    <div class="w-3 h-3 rounded border border-white/10 shrink-0" style="background-color: {{ $kecColors[$index % count($kecColors)] }}"></div>
                                 </label>
                                 @endforeach
-                                <label class="flex items-center justify-between p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg cursor-pointer transition-all group">
-                                    <div class="flex items-center gap-2">
-                                        <input type="checkbox" class="filter-district w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="" checked>
-                                        <span class="text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">Tanpa Wilayah</span>
+                                <label class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-slate-600 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-white/10 transition-all flex items-center justify-between group cursor-pointer">
+                                    <input type="checkbox" class="filter-district peer hidden" value="" checked>
+                                    <div class="flex items-center gap-1.5">
+                                        <div class="w-3 h-3 rounded border border-slate-300 dark:border-white/20 peer-checked:border-gold-500 flex items-center justify-center transition-colors shrink-0">
+                                            <i class="fas fa-check text-[7px] text-gold-500 opacity-0 peer-checked:opacity-100 transition-opacity"></i>
+                                        </div>
+                                        <span class="whitespace-normal leading-tight group-hover:text-navy-900 dark:group-hover:text-white transition-colors text-left">Tanpa Wilayah</span>
                                     </div>
-                                    <div class="w-2 h-2 rounded-full" style="background: #94a3b8"></div>
+                                    <div class="w-3 h-3 rounded border border-white/10 shrink-0" style="background-color: #94a3b8"></div>
                                 </label>
                             </div>
 
@@ -998,14 +1022,24 @@
                             <div class="w-full">
                                 <h5 class="text-navy-900 dark:text-white text-xs font-black uppercase tracking-wider mb-2 opacity-80">Kategori Objek</h5>
                                 <div class="bg-slate-50 dark:bg-white/5 rounded-xl border border-slate-200 dark:border-white/5 p-2 flex flex-col gap-1">
-                                    <label class="flex items-center justify-between p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg cursor-pointer transition-all border-b border-slate-200 dark:border-white/5 mb-1 pb-2">
-                                        <span class="text-xs font-black text-gold-500 uppercase tracking-wider">Pilih Semua</span>
-                                        <input type="checkbox" id="check-all-categories-mobile" class="w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 bg-transparent text-gold-500 focus:ring-0" checked>
+                                    <label class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-slate-600 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-white/10 transition-all flex items-center justify-between group cursor-pointer border-b border-slate-200 dark:border-white/5 mb-1 pb-2">
+                                        <input type="checkbox" id="check-all-categories-mobile" class="peer hidden" checked>
+                                        <div class="flex items-center gap-1.5">
+                                            <div class="w-3 h-3 rounded border border-slate-300 dark:border-white/20 peer-checked:border-gold-500 flex items-center justify-center transition-colors">
+                                                <i class="fas fa-check text-[7px] text-gold-500 opacity-0 peer-checked:opacity-100 transition-opacity"></i>
+                                            </div>
+                                            <span class="text-gold-500 group-hover:text-gold-600 transition-colors">Pilih Semua</span>
+                                        </div>
                                     </label>
                                     @foreach($kategoriUnik as $kategori)
-                                    <label class="flex items-center justify-between p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg cursor-pointer transition-all">
-                                        <span class="text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">{{ $kategori }}</span>
-                                        <input type="checkbox" class="filter-category w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="{{ strtolower($kategori) }}" checked>
+                                    <label class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-slate-600 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-white/10 transition-all flex items-center justify-between group cursor-pointer">
+                                        <input type="checkbox" class="filter-category peer hidden" value="{{ strtolower($kategori) }}" checked>
+                                        <div class="flex items-center gap-1.5">
+                                            <div class="w-3 h-3 rounded border border-slate-300 dark:border-white/20 peer-checked:border-gold-500 flex items-center justify-center transition-colors">
+                                                <i class="fas fa-check text-[7px] text-gold-500 opacity-0 peer-checked:opacity-100 transition-opacity"></i>
+                                            </div>
+                                            <span class="group-hover:text-navy-900 dark:group-hover:text-white transition-colors">{{ $kategori }}</span>
+                                        </div>
                                     </label>
                                     @endforeach
                                 </div>
@@ -1015,26 +1049,37 @@
                             <div class="w-full">
                                 <h5 class="text-navy-900 dark:text-white text-xs font-black uppercase tracking-wider mb-2 opacity-80">Pilih Kecamatan</h5>
                                 <div class="bg-slate-50 dark:bg-white/5 rounded-xl border border-slate-200 dark:border-white/5 p-2 flex flex-col gap-1 max-h-[30vh] overflow-y-auto custom-scrollbar">
-                                    <label class="flex items-center justify-between p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg cursor-pointer transition-all border-b border-slate-200 dark:border-white/5 mb-1 pb-2">
-                                        <span class="text-xs font-black text-gold-500 uppercase tracking-wider">Pilih Semua</span>
-                                        <input type="checkbox" id="check-all-districts-mobile" class="w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 bg-transparent text-gold-500 focus:ring-0" checked>
+                                    <label class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-slate-600 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-white/10 transition-all flex items-center justify-between group cursor-pointer border-b border-slate-200 dark:border-white/5 mb-1 pb-2">
+                                        <input type="checkbox" id="check-all-districts-mobile" class="peer hidden" checked>
+                                        <div class="flex items-center gap-1.5">
+                                            <div class="w-3 h-3 rounded border border-slate-300 dark:border-white/20 peer-checked:border-gold-500 flex items-center justify-center transition-colors">
+                                                <i class="fas fa-check text-[7px] text-gold-500 opacity-0 peer-checked:opacity-100 transition-opacity"></i>
+                                            </div>
+                                            <span class="text-gold-500 group-hover:text-gold-600 transition-colors">Pilih Semua</span>
+                                        </div>
                                     </label>
                                     @foreach($semuaWilayah as $index => $wil)
-                                    <label class="flex items-center justify-between p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg cursor-pointer transition-all group">
-                                        <div class="flex items-center gap-2">
-                                            <input type="checkbox" class="filter-district w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="{{ $wil->id_kecamatan }}" checked>
-                                            <span class="text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">{{ $wil->nama_kecamatan }}</span>
+                                    <label class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-slate-600 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-white/10 transition-all flex items-center justify-between group cursor-pointer">
+                                    <input type="checkbox" class="filter-district peer hidden" value="{{ $wil->id_kecamatan }}" checked>
+                                    <div class="flex items-center gap-1.5">
+                                        <div class="w-3 h-3 rounded border border-slate-300 dark:border-white/20 peer-checked:border-gold-500 flex items-center justify-center transition-colors shrink-0">
+                                            <i class="fas fa-check text-[7px] text-gold-500 opacity-0 peer-checked:opacity-100 transition-opacity"></i>
                                         </div>
-                                        <div class="w-2 h-2 rounded-full" style="background: {{ $kecColors[$index % count($kecColors)] }}"></div>
-                                    </label>
+                                        <span class="whitespace-normal leading-tight group-hover:text-navy-900 dark:group-hover:text-white transition-colors text-left">{{ $wil->nama_kecamatan }}</span>
+                                    </div>
+                                    <div class="w-3 h-3 rounded border border-white/10 shrink-0" style="background-color: {{ $kecColors[$index % count($kecColors)] }}"></div>
+                                </label>
                                     @endforeach
-                                    <label class="flex items-center justify-between p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg cursor-pointer transition-all group">
-                                        <div class="flex items-center gap-2">
-                                            <input type="checkbox" class="filter-district w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 bg-transparent text-gold-500 focus:ring-0" value="" checked>
-                                            <span class="text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">Tanpa Wilayah</span>
+                                    <label class="w-full px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider text-slate-600 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-white/10 transition-all flex items-center justify-between group cursor-pointer">
+                                    <input type="checkbox" class="filter-district peer hidden" value="" checked>
+                                    <div class="flex items-center gap-1.5">
+                                        <div class="w-3 h-3 rounded border border-slate-300 dark:border-white/20 peer-checked:border-gold-500 flex items-center justify-center transition-colors shrink-0">
+                                            <i class="fas fa-check text-[7px] text-gold-500 opacity-0 peer-checked:opacity-100 transition-opacity"></i>
                                         </div>
-                                        <div class="w-2 h-2 rounded-full" style="background: #94a3b8"></div>
-                                    </label>
+                                        <span class="whitespace-normal leading-tight group-hover:text-navy-900 dark:group-hover:text-white transition-colors text-left">Tanpa Wilayah</span>
+                                    </div>
+                                    <div class="w-3 h-3 rounded border border-white/10 shrink-0" style="background-color: #94a3b8"></div>
+                                </label>
                                 </div>
                             </div>
 
