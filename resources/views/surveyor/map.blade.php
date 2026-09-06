@@ -207,15 +207,9 @@
                             <div class="w-6 h-6 rounded-md bg-blue-500/20 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all"><i class="fas fa-map text-[10px]"></i></div>
                             <span class="text-[10px] font-black uppercase tracking-wider text-gray-300 group-hover:text-white">Default</span>
                         </button>
-                        <div class="h-[1px] bg-white/10 my-0.5 mx-1"></div>
-                        <button onclick="toggleFloodLayer()" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-white/10 transition-all group w-full text-left">
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-water text-blue-400 text-[10px]"></i>
-                                <span class="text-[10px] font-black uppercase tracking-wider text-slate-300 group-hover:text-white transition-colors">Banjir</span>
-                            </div>
-                            <div class="w-5 h-2.5 rounded-full bg-slate-700 relative border border-white/10 transition-colors" id="flood-toggle-bg">
-                                <div id="flood-toggle-dot" class="absolute left-[2px] top-[1px] w-1.5 h-1.5 bg-slate-400 rounded-full transition-all"></div>
-                            </div>
+                        <button onclick="changeBaseLayer('banjir')" class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-white/10 transition-all group">
+                            <div class="w-6 h-6 rounded-md bg-cyan-500/20 flex items-center justify-center text-cyan-400 group-hover:bg-cyan-500 group-hover:text-white transition-all"><i class="fas fa-water text-[10px]"></i></div>
+                            <span class="text-[10px] font-black uppercase tracking-wider text-gray-300 group-hover:text-white">Banjir</span>
                         </button>
                     </div>
                 </div>
@@ -339,7 +333,8 @@
             satellite: L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', { maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'] }),
             osm: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'),
             dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'),
-            street: L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'] })
+            street: L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'] }),
+            banjir: L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', { maxZoom: 19 })
         };
         function updateClock() {
             const now = new Date();
@@ -381,6 +376,17 @@
             map.removeLayer(currentBaseLayer);
             currentBaseLayer = baseLayers[type];
             currentBaseLayer.addTo(map);
+            
+            if (type === 'banjir') {
+                if (typeof floodLayer !== 'undefined' && !map.hasLayer(floodLayer)) {
+                    map.addLayer(floodLayer);
+                }
+            } else {
+                if (typeof floodLayer !== 'undefined' && map.hasLayer(floodLayer)) {
+                    map.removeLayer(floodLayer);
+                }
+            }
+            
             const menu = document.getElementById('layer-options-desktop');
             if (menu) menu.classList.add('hidden');
         }
@@ -403,23 +409,7 @@
             L.circle([-3.330, 114.570], { color: '#f59e0b', fillColor: '#f59e0b', fillOpacity: 0.2, weight: 1, radius: 1000 }).bindPopup('<div class="text-center"><p class="text-xs font-black text-orange-500 uppercase">Zona Kuning</p><p class="text-xs">Rawan Banjir Sedang</p></div>')
         ]);
 
-        function toggleFloodLayer() {
-            showFloodLayer = !showFloodLayer;
-            const bg = document.getElementById('flood-toggle-bg');
-            const dot = document.getElementById('flood-toggle-dot');
-            
-            if(showFloodLayer) {
-                map.addLayer(floodLayer);
-                bg.classList.replace('bg-slate-700', 'bg-blue-500');
-                dot.classList.replace('bg-slate-400', 'bg-white ');
-                dot.classList.replace('left-[2px]', 'left-[14px]');
-            } else {
-                map.removeLayer(floodLayer);
-                bg.classList.replace('bg-blue-500', 'bg-slate-700');
-                dot.classList.replace('bg-white ', 'bg-slate-400');
-                dot.classList.replace('left-[14px]', 'left-[2px]');
-            }
-        }
+
         // ---------------------------------
 
         // Render Polygons (Territories)

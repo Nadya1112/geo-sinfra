@@ -1355,17 +1355,7 @@
                             let fillOpacity = 0;
                             let weight = showKelurahan ? 2.0 : 0.0;
 
-                            if (showBanjir) {
-                                const riskLevel = kel.id_kelurahan % 3; 
-                                if (riskLevel === 0) { // Tinggi
-                                    polygonColor = '#ef4444'; fillColor = '#ef4444'; fillOpacity = 0.5;
-                                } else if (riskLevel === 1) { // Sedang
-                                    polygonColor = '#f59e0b'; fillColor = '#f59e0b'; fillOpacity = 0.4;
-                                } else { // Aman
-                                    polygonColor = '#3b82f6'; fillColor = '#3b82f6'; fillOpacity = 0.2;
-                                }
-                                weight = 1.0;
-                            }
+
 
                             if (activeKelurahanId == kel.id_kelurahan) {
                                 polygonColor = '#c5a059'; fillColor = '#c5a059'; fillOpacity = 0.2; weight = 3.0;
@@ -1381,9 +1371,9 @@
                                     opacity: 0.8,
                                     fillOpacity: fillOpacity,
                                     fillColor: fillColor,
-                                    dashArray: (activeKelurahanId == kel.id_kelurahan || showBanjir) ? '0' : '5, 5'
+                                    dashArray: (activeKelurahanId == kel.id_kelurahan) ? '0' : '5, 5'
                                 }
-                            }).bindTooltip(`<div class="text-xs font-bold text-navy-900 leading-none">Kel. ${kel.nama_kelurahan}${showBanjir ? ' (Simulasi Banjir)' : ''}</div>`, { sticky: true }).addTo(polygonsLayer);
+                            }).bindTooltip(`<div class="text-xs font-bold text-navy-900 leading-none">Kel. ${kel.nama_kelurahan}</div>`, { sticky: true }).addTo(polygonsLayer);
 
                             // Event saat poligon kelurahan diklik
                             layer.on('click', function(e) {
@@ -1427,6 +1417,14 @@
                     }
                 }
             });
+
+            // 1.9 Draw Titik Rawan Banjir (Mock Data)
+            if (showBanjir) {
+                L.circle([-3.315, 114.590], { color: '#ef4444', fillColor: '#ef4444', fillOpacity: 0.2, weight: 1, radius: 800 }).bindPopup('<div class="text-center"><p class="text-xs font-black text-red-500 uppercase">Zona Merah</p><p class="text-xs">Rawan Banjir Tinggi</p></div>').addTo(polygonsLayer);
+                L.circle([-3.325, 114.598], { color: '#f59e0b', fillColor: '#f59e0b', fillOpacity: 0.2, weight: 1, radius: 1200 }).bindPopup('<div class="text-center"><p class="text-xs font-black text-orange-500 uppercase">Zona Kuning</p><p class="text-xs">Rawan Banjir Sedang</p></div>').addTo(polygonsLayer);
+                L.circle([-3.295, 114.580], { color: '#ef4444', fillColor: '#ef4444', fillOpacity: 0.2, weight: 1, radius: 900 }).bindPopup('<div class="text-center"><p class="text-xs font-black text-red-500 uppercase">Zona Merah</p><p class="text-xs">Rawan Banjir Tinggi</p></div>').addTo(polygonsLayer);
+                L.circle([-3.330, 114.570], { color: '#f59e0b', fillColor: '#f59e0b', fillOpacity: 0.2, weight: 1, radius: 1000 }).bindPopup('<div class="text-center"><p class="text-xs font-black text-orange-500 uppercase">Zona Kuning</p><p class="text-xs">Rawan Banjir Sedang</p></div>').addTo(polygonsLayer);
+            }
 
             // 2. Draw Aset Markers (Semua marker akan di-cluster otomatis)
             let countTotal = filteredInfra.length;

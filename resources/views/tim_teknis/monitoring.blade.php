@@ -238,15 +238,9 @@
                             </div>
                             <span class="text-[10px] font-black uppercase tracking-wider text-gray-300 group-hover:text-white">Default</span>
                         </button>
-                        <div class="h-[1px] bg-white/10 my-0.5 mx-1"></div>
-                        <button onclick="toggleFloodLayer()" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-white/10 transition-all group w-full text-left">
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-water text-blue-400 text-[10px]"></i>
-                                <span class="text-[10px] font-black uppercase tracking-wider text-slate-300 group-hover:text-white transition-colors">Banjir</span>
-                            </div>
-                            <div class="w-5 h-2.5 rounded-full bg-slate-700 relative border border-white/10 transition-colors" id="flood-toggle-bg">
-                                <div id="flood-toggle-dot" class="absolute left-[2px] top-[1px] w-1.5 h-1.5 bg-slate-400 rounded-full transition-all"></div>
-                            </div>
+                        <button onclick="changeBaseLayer('banjir')" class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-white/10 transition-all group">
+                            <div class="w-6 h-6 rounded-md bg-cyan-500/20 flex items-center justify-center text-cyan-400 group-hover:bg-cyan-500 group-hover:text-white transition-all"><i class="fas fa-water text-[10px]"></i></div>
+                            <span class="text-[10px] font-black uppercase tracking-wider text-gray-300 group-hover:text-white">Banjir</span>
                         </button>
                     </div>
                 </div>
