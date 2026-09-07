@@ -33,7 +33,7 @@
         <div class="text-right">
             <p class="text-xs font-black text-navy-900 dark:text-white" id="mini-clock">00:00 WITA</p>
             <p class="text-[10px] font-bold text-emerald-500 uppercase mt-0.5 sm:hidden">Aktif</p>
-            <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter hidden sm:block">{{ now()->translatedFormat('d M Y') }}</p>
+            <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter hidden sm:block">{{ now()->translatedFormat('l, d F Y') }}</p>
         </div>
         <div class="h-8 w-[1px] bg-slate-100 dark:bg-white/10"></div>
         <div class="flex items-center gap-3">

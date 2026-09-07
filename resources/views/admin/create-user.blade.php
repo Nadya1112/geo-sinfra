@@ -53,7 +53,7 @@
             <div class="flex items-center gap-3 md:gap-6">
                 <div class="text-right hidden sm:block text-left">
                     <p class="text-xs font-black text-navy-900 dark:text-white dark:text-white" id="mini-clock">00:00 WITA</p>
-                    <p class="text-[9px] font-bold text-slate-400 dark:text-slate-300 uppercase tracking-tighter">{{ now()->translatedFormat('d M Y') }}</p>
+                    <p class="text-[9px] font-bold text-slate-400 dark:text-slate-300 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                 </div>
                 <div class="h-8 w-[1px] bg-slate-100 dark:bg-navy-950/50"></div>
                 <div class="flex items-center gap-3">

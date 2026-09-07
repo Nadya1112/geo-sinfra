@@ -1693,7 +1693,7 @@
             } else if (type === 'osm') {
                 map.addLayer(osmMap);
             } else if (type === 'banjir') {
-                map.addLayer(googleStreets); 
+                map.addLayer(petaBanjirMap); 
             } else { 
                 map.addLayer(googleStreets); 
             }

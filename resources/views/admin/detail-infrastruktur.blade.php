@@ -87,7 +87,7 @@
                 <div class="text-right">
                     @if(($inf->status_verifikasi ?? 'Pending') != 'Verified')
                         <p class="text-xs font-black text-navy-900 dark:text-white dark:text-white" id="mini-clock">00:00 WITA</p>
-                        <p class="text-[9px] font-bold text-slate-400 dark:text-slate-300 uppercase tracking-tighter">{{ now()->translatedFormat('d M Y') }}</p>
+                        <p class="text-[9px] font-bold text-slate-400 dark:text-slate-300 uppercase tracking-tighter">{{ now()->translatedFormat('l, d F Y') }}</p>
                     @else
                         <p class="text-sm font-black text-navy-900 dark:text-white">{{ \Carbon\Carbon::parse($inf->updated_at)->translatedFormat('H:i') }} WITA</p>
                         <p class="text-[9px] font-bold text-slate-400 dark:text-slate-300 uppercase tracking-tighter">{{ \Carbon\Carbon::parse($inf->updated_at)->translatedFormat('l, d F Y') }}</p>
