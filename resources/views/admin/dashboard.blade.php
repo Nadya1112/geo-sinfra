@@ -5,18 +5,17 @@
 
 @section('content')
             
-            <!-- Welcome Banner (Premium Dark Mesh UI) -->
-            <div class="relative bg-premium-mesh rounded-[2.5rem] p-10 mb-8 overflow-hidden shadow-2xl shadow-navy-950/20 border border-slate-200 dark:border-white/5 text-left">
-                <div class="absolute inset-0 bg-pattern opacity-50 dark:opacity-30"></div>
-                <div class="absolute -right-10 -top-10 w-64 h-64 bg-white opacity-10 dark:opacity-5 rounded-full blur-3xl"></div>
+            <!-- Welcome Banner -->
+            <div class="relative bg-white dark:bg-navy-900 rounded-[2.5rem] p-10 mb-8 overflow-hidden shadow-xl shadow-navy-900/10 border border-slate-200 dark:border-white/5 text-left">
+                <div class="absolute -right-10 -top-10 w-64 h-64 bg-gold-500/20 rounded-full blur-3xl pointer-events-none"></div>
                 
                 <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 text-left">
                     <div class="text-left">
-                        <h3 class="text-3xl font-black text-white mb-2 leading-tight">Selamat Datang, Administrator!</h3>
-                        <p class="text-white/80 dark:text-slate-300 text-sm font-medium max-w-xl text-left">Pusat kendali manajemen infrastruktur dan pengguna Sistem Pemetaan Infrastruktur Permukiman Kota Banjarmasin. Apa yang ingin Anda kerjakan hari ini?</p>
+                        <h3 class="text-3xl font-black text-navy-900 dark:text-white mb-2 leading-tight">Selamat Datang, Administrator!</h3>
+                        <p class="text-slate-500 dark:text-slate-300 text-sm font-medium max-w-xl text-left">Pusat kendali manajemen infrastruktur dan pengguna Sistem Pemetaan Infrastruktur Permukiman Kota Banjarmasin. Apa yang ingin Anda kerjakan hari ini?</p>
                     </div>
                     <div class="hidden md:block">
-                        <div class="w-20 h-20 bg-white/10 backdrop-blur-md border border-white/20 dark:border-white/10 rounded-2xl flex items-center justify-center shadow-2xl text-gold-500 dark:text-gold-500">
+                        <div class="w-20 h-20 bg-slate-50 dark:bg-white/5 backdrop-blur-md border border-slate-200 dark:border-white/10 rounded-2xl flex items-center justify-center shadow-inner text-gold-500">
                             <i class="fas fa-shield-alt text-4xl"></i>
                         </div>
                     </div>
