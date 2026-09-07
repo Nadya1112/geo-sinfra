@@ -134,6 +134,18 @@
             const timeString = new Intl.DateTimeFormat('id-ID', options).format(now);
             const el = document.getElementById('mini-clock');
             if (el) el.textContent = timeString.replace('.', ':') + ' WITA';
+            
+            // Realtime Auto Theme Check
+            var currentTheme = localStorage.getItem('geo-theme');
+            if (!currentTheme || currentTheme === 'auto') {
+                var currentHour = now.getHours();
+                var isNight = currentHour < 6 || currentHour >= 18;
+                if (isNight && !document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.add('dark');
+                } else if (!isNight && document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                }
+            }
         }
         setInterval(updateClock, 1000); 
         updateClock();

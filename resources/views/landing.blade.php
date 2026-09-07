@@ -22,6 +22,20 @@
                 } else {
                     document.documentElement.classList.remove('dark');
                 }
+                
+                // Realtime Background Check for Auto Theme
+                setInterval(function() {
+                    var theme = localStorage.getItem('geo-theme');
+                    if (!theme || theme === 'auto') {
+                        var h = new Date().getHours();
+                        var night = h < 6 || h >= 18;
+                        if (night && !document.documentElement.classList.contains('dark')) {
+                            document.documentElement.classList.add('dark');
+                        } else if (!night && document.documentElement.classList.contains('dark')) {
+                            document.documentElement.classList.remove('dark');
+                        }
+                    }
+                }, 60000); // Check every minute
             } catch (e) {}
         })();
 
